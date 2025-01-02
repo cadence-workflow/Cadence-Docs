@@ -25,3 +25,17 @@ Mitigation: This error is caused by something unexpected within the activity cod
 
 Read more about [error handling](https://cadenceworkflow.io/docs/go-client/error-handling/)
 
+## Blob Size limits
+Description: This is an error caused when a decision contains data that exceeds the configured limit. If an API call contains data that exceeds the limit, the API call will fail. These limits are dynamically configured per cadence domain.
+
+Mitigation: It is recommended to store the data elsewhere in another storage technology and using its reference. The workflow can then take that reference and pass it around to other parts of the workflow to retrieve that data.
+
+Different cases for which Cadence checks the blob size:
+
+Signal input
+Workflow input and output
+Workflow continueAsNew input
+Activity input and output
+Workflow/Activity error_details
+Record marker
+Heartbeat details
