@@ -30,7 +30,7 @@ Description: This is an error caused when a decision contains data that exceeds 
 
 Mitigation: It is recommended to store the data elsewhere in another storage technology and using its reference. The workflow can then take that reference and pass it around to other parts of the workflow to retrieve that data.
 
-Different cases for which Cadence checks the blob size:
+Cadence enforces the maximum blob size in several cases. Some of these are: 
 
 Signal input
 Workflow input and output
