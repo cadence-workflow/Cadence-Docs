@@ -51,6 +51,7 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       items: [
         { type: 'doc', id: 'concepts/index' },
+        { type: 'doc', id: 'concepts/workflows' },
         { type: 'doc', id: 'concepts/activities' },
         { type: 'doc', id: 'concepts/events' },
         { type: 'doc', id: 'concepts/queries' },
