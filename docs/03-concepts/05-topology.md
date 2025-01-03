@@ -18,7 +18,7 @@ Note that both types of :worker:workers: as well as external clients are roles a
 ![Cadence Architecture](https://user-images.githubusercontent.com/14902200/160308507-2854a98a-0582-4748-87e4-e0695d3b6e86.jpg)
 
 
-At the core of Cadence is a highly scalable multitentant service. The service exposes all of its functionality through a strongly typed [gRPC API](https://github.com/cadence-workflow/cadence-idl/tree/master/proto/cadence-workflow/cadence/api/v1). A Cadence cluster include multiple services, each of which may run on multiple nodes for scalability and reliablity:
+At the core of Cadence is a highly scalable multitenant service. The service exposes all of its functionality through a strongly typed [gRPC API](https://github.com/cadence-workflow/cadence-idl/tree/master/proto/cadence-workflow/cadence/api/v1). A Cadence cluster include multiple services, each of which may run on multiple nodes for scalability and reliablity:
 - Front End: which is a stateless service used to handle incoming requests from Workers. It is expected that an external load balancing mechanism is used to distribute load between Front End instances.
 - History Service: where the core logic of orchestrating workflow steps and activities is implemented
 - Matching Service: matches workflow/activity tasks that need to be executed to workflow/activity workers that are able to execute them. Matching is assigned task for execution by the history service
@@ -29,7 +29,7 @@ Internally it depends on a persistent store. Currently, Apache Cassandra, MySQL,
 
 Cadence service is responsible for keeping :workflow: state and associated durable timers. It maintains internal queues (called :task_list:task_lists:) which are used to dispatch :task:tasks: to external :worker:workers:.
 
-Cadence service is multitentant. Therefore it is expected that multiple pools of :worker:workers: implementing different use cases connect to the same service instance. For example, at Uber a single service is used by more than a hundred applications. At the same time some external customers deploy an instance of Cadence service per application. For local development, a local Cadence service instance configured through docker-compose is used.
+Cadence service is multitenant. Therefore it is expected that multiple pools of :worker:workers: implementing different use cases connect to the same service instance. For example, at Uber a single service is used by more than a hundred applications. At the same time some external customers deploy an instance of Cadence service per application. For local development, a local Cadence service instance configured through docker-compose is used.
 
 ![Cadence Overview](https://user-images.githubusercontent.com/14902200/160308592-400e11bc-0b21-4dd1-b568-8ac59005e6b7.svg)
 

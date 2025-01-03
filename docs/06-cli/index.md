@@ -76,10 +76,13 @@ NAME:
    cadence - A command-line tool for cadence users
 
 USAGE:
-   cadence [global options] command [command options] [arguments...]
+   cadence [global options] command [command options]
 
 VERSION:
-   0.18.4
+   CLI feature version: 1.7.0
+   Release version: v1.2.15-prerelease09-dirty
+   Build commit: 2024-12-19T14:34:35-08:00-b22774ad3
+   Note: CLI feature version is for compatibility checking between server and CLI if enabled feature checking. Server is always backward compatible to older CLI versions, but not accepting newer than it can support.
 
 COMMANDS:
    domain, d     Operate cadence domain
@@ -90,11 +93,15 @@ COMMANDS:
    help, h       Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:
-   --address value, --ad value          host:port for cadence frontend service [$CADENCE_CLI_ADDRESS]
-   --domain value, --do value           cadence workflow domain [$CADENCE_CLI_DOMAIN]
-   --context_timeout value, --ct value  optional timeout for context of RPC call in seconds (default: 5) [$CADENCE_CONTEXT_TIMEOUT]
-   --help, -h                           show help
-   --version, -v                        print the version
+   --address value, --ad value              host:port for cadence frontend service [$CADENCE_CLI_ADDRESS]
+   --domain value, --do value               cadence workflow domain [$CADENCE_CLI_DOMAIN]
+   --context_timeout value, --ct value      optional timeout for context of RPC call in seconds (default: 5) [$CADENCE_CONTEXT_TIMEOUT]
+   --jwt value                              optional JWT for authorization. Either this or --jwt-private-key is needed for jwt authorization [$CADENCE_CLI_JWT]
+   --jwt-private-key value, --jwt-pk value  optional private key path to create JWT. Either this or --jwt is needed for jwt authorization. --jwt flag has priority over this one if both provided [$CADENCE_CLI_JWT_PRIVATE_KEY]
+   --transport value, -t value              optional argument for transport protocol format, either 'grpc' or 'tchannel'. Defaults to tchannel if not provided [$CADENCE_CLI_TRANSPORT_PROTOCOL]
+   --tls_cert_path value, --tcp value       optional argument for path to TLS certificate. Defaults to an empty string if not provided [$CADENCE_CLI_TLS_CERT_PATH]
+   --help, -h                               show help
+   --version, -v                            print the version
 ```
 And
 ```sh-session
@@ -103,9 +110,11 @@ NAME:
    cadence workflow - Operate cadence workflow
 
 USAGE:
-   cadence workflow command [command options] [arguments...]
+   cadence workflow command [command options]
 
 COMMANDS:
+   restart, res        restarts a previous workflow execution
+   diagnose, diag      diagnoses a previous workflow execution
    activity, act       operate activities of workflow
    show                show workflow history
    showid              show workflow history with given workflow_id and run_id (a shortcut of `show -w <wid> -r <rid>`). run_id is only required for archived history
@@ -121,14 +130,16 @@ COMMANDS:
    scan, sc, scanall   scan workflow executions (need to enable Cadence server on ElasticSearch). It will be faster than listall, but result are not sorted.
    count, cnt          count number of workflow executions (need to enable Cadence server on ElasticSearch)
    query               query workflow execution
+   query-types         list all available query types
    stack               query workflow execution with __stack_trace as query type
    describe, desc      show information of workflow execution
    describeid, descid  show information of workflow execution with given workflow_id and optional run_id (a shortcut of `describe -w <wid> -r <rid>`)
    observe, ob         show the progress of workflow history
    observeid, obid     show the progress of workflow history with given workflow_id and optional run_id (a shortcut of `observe -w <wid> -r <rid>`)
    reset, rs           reset the workflow, by either eventID or resetType.
-   reset-batch         reset workflow in batch by resetType: LastDecisionCompleted,LastContinuedAsNew,BadBinary,DecisionCompletedTime,FirstDecisionScheduled,LastDecisionScheduled,FirstDecisionCompletedTo get base workflowIDs/runIDs to reset, source is from input file or visibility query.
+   reset-batch         reset workflow in batch by resetType: LastContinuedAsNew,BadBinary,DecisionCompletedTime,FirstDecisionScheduled,LastDecisionScheduled,FirstDecisionCompleted,LastDecisionCompletedTo get base workflowIDs/runIDs to reset, source is from input file or visibility query.
    batch               batch operation on a list of workflows from query.
+   help, h             Shows a list of commands or help for one command
 
 OPTIONS:
    --help, -h  show help
@@ -140,15 +151,15 @@ NAME:
    cadence workflow signal - signal a workflow execution
 
 USAGE:
-   cadence workflow signal [command options] [arguments...]
+   cadence workflow signal [command options]
 
 OPTIONS:
-   --workflow_id value, --wid value, -w value  WorkflowID
-   --run_id value, --rid value, -r value       RunID
+   --workflow_id value, -w value, --wid value  WorkflowID
+   --run_id value, -r value, --rid value       RunID
    --name value, -n value                      SignalName
    --input value, -i value                     Input for the signal, in JSON format.
    --input_file value, --if value              Input for the signal from JSON file.
-
+   --help, -h                                  show help
 ```
 And etc.
 

@@ -18,12 +18,12 @@ Go to the [Maven Repository Uber Cadence Java Client Page](https://mvnrepository
 and find the latest version of the library. Include it as a dependency into your Java project. For example if you
 are using Gradle the dependency looks like:
 ```bash
-compile group: 'com.uber.cadence', name: 'cadence-client', version: '<latest_version>'
+implementation group: 'com.uber.cadence', name: 'cadence-client', version: '<latest_version>'
 ```
 Also add the following dependencies that cadence-client relies on:
 ```bash
-compile group: 'commons-configuration', name: 'commons-configuration', version: '1.9'
-compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+implementation group: 'commons-configuration', name: 'commons-configuration', version: '1.9'
+implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
 ```
 Make sure that the following code compiles:
 ```java
