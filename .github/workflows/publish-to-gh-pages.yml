@@ -1,40 +1,81 @@
 name: Build and Deploy
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
+
+permissions:
+  contents: write
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+    # Load environment variables from repository settings,
+    # environment should be named "production"
+    # https://github.com/cadence-workflow/Cadence-Docs/settings/environments
+    environment: production
+    env:
+      CADENCE_DOCS_URL: ${{ vars.CADENCE_DOCS_URL }}
+      BASE_URL: ${{ vars.BASE_URL }}
+      ORGANIZATION_NAME: ${{ vars.ORGANIZATION_NAME }}
+
     steps:
+      - name: Set environment variables
+        env:
+          REPO_NAME: ${{ github.repository }}
+        id: split
+        run: |
+          if [[ -z "${PROJECT_NAME}" ]]; then
+            echo "PROJECT_NAME not provided, using last part of repository name"
+            echo "PROJECT_NAME=${REPO_NAME##*/}" >> $GITHUB_ENV
+          fi
+          if [[ -z "${BASE_URL}" ]]; then
+            echo "BASE_URL not provided, using repo name for gh-pages"
+            echo "BASE_URL=/${REPO_NAME##*/}/" >> $GITHUB_ENV
+          fi
+          if [[ -z "${ORGANIZATION_NAME}" ]]; then
+            echo "ORGANIZATION_NAME not provided, using the first part of the repository name"
+            echo "ORGANIZATION_NAME=${REPO_NAME/\/*/}" >> $GITHUB_ENV
+          fi
+
+      - name: Test variable
+        run: |
+          echo "CADENCE_DOCS_URL is ${CADENCE_DOCS_URL}"
+          echo "PROJECT_NAME is ${PROJECT_NAME}"
+          echo "BASE_URL is ${BASE_URL}"
+          echo "ORGANIZATION_NAME is ${ORGANIZATION_NAME}"
+
       # same as build.yml
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - name: Use Node.js v18
-        uses: actions/setup-node@v3
+
+      # configure custom domain for github pages
+      # files placed under static folder will be copied to the root of the build folder
+      - name: Configure domain
+        uses: finnp/create-file-action@1.0.0
+        env:
+          FILE_NAME: "static/CNAME"
+          FILE_DATA: ${{ secrets.CUSTOM_DOMAIN }}
+
+      - name: Use Node.js lts/hydrogen (v18)
+        uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/hydrogen
           # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-          cache: 'npm'
+          cache: "npm"
+
       - name: Install and Build 🔧
         run: |
           npm install
           npm run build
 
-      # additional steps to deploy
-      - name: Configure domain
-        uses: finnp/create-file-action@1.0.0
-        env:
-          FILE_NAME: "dist/CNAME"
-          FILE_DATA: ${{ secrets.CUSTOM_DOMAIN }}
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@3.7.1
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: dist # The folder the action should deploy.
-          CLEAN: true # Automatically remove deleted files from the deploy branch
+      # - name: Deploy 🚀
+      #   uses: JamesIves/github-pages-deploy-action@v4
+      #   with:
+      #     branch: gh-pages # The branch the action should deploy to.
+      #     folder: build # The folder the action should deploy.
+      #     clean: true # Automatically remove deleted files from the deploy branch

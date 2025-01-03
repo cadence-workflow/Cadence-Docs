@@ -1,0 +1,44 @@
+community-spotlight:
+  label: Community Spotlight
+  permalink: /community-spotlights
+  description: Community Spotlight tag description
+
+announcement:
+  label: Announcement
+  permalink: /announcements
+  description: Announcement tag description
+
+deep-dive:
+  label: Deep Dives
+  permalink: /deep-dives
+  description: Deep Dives tag description
+
+release:
+  label: Releases
+  permalink: /releases
+  description: Releases tag description
+
+roadmap:
+  label: Roadmap
+  permalink: /roadmap
+  description: Roadmap tag description
+
+testing:
+  label: Testing
+  permalink: /testing
+  description: Testing tag description
+
+cadence-operations:
+  label: Cadence Operations
+  permalink: /cadence-operations
+  description: Cadence Operations tag description
+
+introduction-to-cadence:
+  label: Introduction to Cadence
+  permalink: /introduction-to-cadence
+  description: Introduction to Cadence tag description
+
+events:
+  label: Events
+  permalink: /events
+  description: Events tag description
