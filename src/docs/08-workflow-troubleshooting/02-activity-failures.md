@@ -32,10 +32,10 @@ Mitigation: It is recommended to store the data elsewhere in another storage tec
 
 Cadence enforces the maximum blob size in several cases. Some of these are: 
 
-Signal input
-Workflow input and output
-Workflow continueAsNew input
-Activity input and output
-Workflow/Activity error_details
-Record marker
-Heartbeat details
+- Signal input
+- Workflow input and output
+- Workflow continueAsNew input
+- Activity input and output
+- Workflow/Activity error_details
+- Record marker
+- Heartbeat details
