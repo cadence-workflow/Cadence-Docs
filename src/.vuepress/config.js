@@ -178,6 +178,7 @@ module.exports = {
             '08-workflow-troubleshooting/',
             '08-workflow-troubleshooting/01-timeouts',
             '08-workflow-troubleshooting/02-activity-failures',
+            '08-workflow-troubleshooting/03-retries',
           ],
         },
         {

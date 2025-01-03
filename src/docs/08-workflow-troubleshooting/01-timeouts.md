@@ -27,23 +27,40 @@ Optionally you can also increase the number of pollers per worker by providing t
 [Link to options in go client](https://pkg.go.dev/go.uber.org/cadence@v1.2.9/internal#WorkerOptions)
 [Link to options in java client](https://github.com/uber/cadence-java-client/blob/master/src/main/java/com/uber/cadence/internal/worker/PollerOptions.java#L124)
 
-## Timeouts without heartbeating enabled
+## No heartbeat timeout or retry policy configured
 
 Activities time out StartToClose or ScheduleToClose if the activity took longer than the configured timeout.
 
 [Link to description of timeouts](https://cadenceworkflow.io/docs/concepts/activities/#timeouts)
 
-For long running activities, while the activity is executing, the worker can die due to regular deployments or host restarts or failures. Cadence doesn't know about this and will wait for  StartToClose or ScheduleToClose timeouts to kick in.
+For long running activities, while the activity is executing, the worker can die due to regular deployments or host restarts or failures. Cadence doesn't know about this and will wait for StartToClose or ScheduleToClose timeouts to kick in.
 
-Mitigation: Consider enabling heartbeating
+Mitigation: Consider configuring heartbeat timeout and a retry policy
 
-[Configuring heartbeat timeout example](https://github.com/uber-common/cadence-samples/blob/df6f7bdba978d6565ad78e9f86d9cd31dfac9f78/cmd/samples/expense/workflow.go#L23)
+[Example](https://github.com/uber-common/cadence-samples/blob/df6f7bdba978d6565ad78e9f86d9cd31dfac9f78/cmd/samples/expense/workflow.go#L23)
+[Check retry policy for activity](https://cadenceworkflow.io/docs/concepts/activities/#retries)
 
 For short running activities, heart beating is not required but maybe consider increasing the timeout value to suit the actual activity execution time.
 
-## Heartbeat Timeouts after enabling heartbeating
+## Retry policy configured without setting heartbeat timeout
 
-Activity has enabled heart beating but the activity timed out with heart beat timeout. This is because the server did not receive a heart beat in the time interval configured as the heart beat timeout.
+Retry policies are configured so activities can be retried after timeouts or failures. For long-running activities, the worker can die while the activity is executing, e.g. due to regular deployments or host restarts or failures. Cadence doesn't know about this and will wait for StartToClose or ScheduleToClose timeouts to kick in. The retry is attempted only after this timeout. Configuring heartbeat timeout would cause the activity to timeout earlier so it can be retried on another worker.
+
+Mitigation: Consider configuring heartbeat timeout
+
+[Example](https://github.com/uber-common/cadence-samples/blob/df6f7bdba978d6565ad78e9f86d9cd31dfac9f78/cmd/samples/expense/workflow.go#L23)
+
+## Heartbeat timeout configured without a retry policy
+
+Heartbeat timeouts are used to detect when a worker died or restarted. With heartbeat timeout configured, the activity will timeout faster. But without a retry policy, it will not be scheduled again on a healthy worker.
+
+Mitigation: Consider adding retry policy to an activity
+
+[Check retry policy for activity](https://cadenceworkflow.io/docs/concepts/activities/#retries)
+
+## Heartbeat timeout seen after configuring heartbeat timeout
+
+Activity has configured heartbeat timeout and the activity timed out with heart beat timeout. This is because the server did not receive a heart beat in the time interval configured as the heart beat timeout. This could happen if the activity is actually not executing or the activity is not sending periodic heartbeats. The first case is good since the activity now times out instead of being stuck until startToClose or scheduleToClose kicks in. The second case needs a fix.
 
 Mitigation: Once heartbeat timeout is configured in activity options, you need to make sure the activity periodically sends a heart beat to the server to make sure the server is aware of the activity being alive.
 
@@ -51,4 +68,4 @@ Mitigation: Once heartbeat timeout is configured in activity options, you need t
 
 In go client, there is an option to register the activity with auto heart beating so that it is done automatically
 
-[Enabling auto heart beat during activity registration example](https://pkg.go.dev/go.uber.org/cadence@v1.2.9/internal#WorkerOptions)
+[Configuring auto heart beat during activity registration example](https://pkg.go.dev/go.uber.org/cadence@v1.2.9/internal#WorkerOptions)
