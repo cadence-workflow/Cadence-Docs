@@ -1,0 +1,99 @@
+chopincode:
+  name: Chris Qin
+  title: Applications Developer @ Uber
+  url:  https://www.linkedin.com/in/chrisqin0610/
+  image_url: https://github.com/chopincode.png
+  page: true
+  socials:
+    linkedin:  https://www.linkedin.com/in/chrisqin0610/
+    github: chopincode
+
+enderdemirkaya:
+  name: Ender Demirkaya
+  title: Senior Manager at Uber, Cadence. Author of the Software Engineering Handbook
+  url: https://www.linkedin.com/in/enderdemirkaya/
+  image_url: https://github.com/demirkayaender.png
+  page: true
+  socials:
+    linkedin: https://www.linkedin.com/in/enderdemirkaya/
+    github: demirkayaender
+
+jakobht:
+  name: Jakob Haahr Taankvist
+  title: Software Engineer II @ Uber
+  url: https://www.linkedin.com/in/jakob-taankvist/
+  image_url: https://github.com/jakobht.png
+  page: true
+  socials:
+    linkedin: https://www.linkedin.com/in/jakob-taankvist/
+    github: jakobht
+
+ibarrajo:
+  name: Josué Alexander Ibarra
+  title: Developer Advocate @ Uber
+  url: https://github.com/ibarrajo/
+  image_url: https://github.com/ibarrajo.png
+  page: true
+  socials:
+    github: ibarrajo
+    linkedin: https://www.linkedin.com/in/elninja/
+
+kcorbett-netapp:
+  name: Kevin Corbett
+  title: Open Source Community Manager | @instaclustr @NetApp
+  url: https://github.com/kcorbett-netapp
+  image_url: https://github.com/kcorbett-netapp.png
+  page: true
+  socials:
+    linkedin: https://www.linkedin.com/in/kcorb95/
+    github: kcorbett-netapp
+
+meiliang86:
+  name: Liang Mei
+  title: Engineering Manager @ Uber
+  url: https://www.linkedin.com/in/meiliang86/
+  image_url: https://github.com/meiliang86.png
+  page: true
+  socials:
+    linkedin: https://www.linkedin.com/in/meiliang86/
+    github: meiliang86
+
+sharanf:
+  name: Sharan Foga
+  title: Director of Operations & Customer Success @ Encube Technologies
+  url: https://www.linkedin.com/in/sfoga/
+  image_url: https://github.com/sharanf.png
+  page: true
+  socials:
+    linkedin: https://www.linkedin.com/in/sfoga/
+    github: sharanf
+
+taylanisikdemir:
+  name: Taylan Isikdemir
+  title: Sr. Staff Software Engineer @ Uber
+  url: https://www.linkedin.com/in/taylan-isikdemir
+  image_url: https://github.com/taylanisikdemir.png
+  page: true
+  socials:
+    linkedin: https://www.linkedin.com/in/taylan-isikdemir
+    github: taylanisikdemir
+
+vytautas-karpavicius:
+  name: Vytautas Karpavicius
+  title: Software Engineer @ Uber
+  url: https://www.linkedin.com/in/vytautas-karpavicius
+  image_url: https://github.com/vytautas-karpavicius.png
+  page: true
+  socials:
+    linkedin: https://www.linkedin.com/in/vytautas-karpavicius
+    github: vytautas-karpavicius
+
+shaddoll:
+  name: Zijian Chen
+  title: Software Engineer @ Uber
+  url: https://www.linkedin.com/in/zijian-chen-5868938b/
+  image_url: https://github.com/Shaddoll.png
+  page: true
+  socials:
+    linkedin: https://www.linkedin.com/in/zijian-chen-5868938b/
+    github: Shaddoll

@@ -1,39 +1,58 @@
 {
-  "name": "cadence-docs",
+  "name": "cadence",
   "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
+  "private": true,
   "scripts": {
-    "build:blog": "vuepress build src/blog",
-    "build:site": "vuepress build src",
-    "build": "export NODE_OPTIONS=--openssl-legacy-provider; npm run build:blog && npm run build:site && npm run copy:blog",
-    "copy:blog": "cp -a dist-blog/. dist",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run",
-    "start:blog": "export NODE_OPTIONS=--openssl-legacy-provider; vuepress dev src/blog",
-    "start": "export NODE_OPTIONS=--openssl-legacy-provider; vuepress dev src",
-    "start:local": "http-server ./dist",
-    "test": "npm run cypress:run"
-  },
-  "engines": {
-    "node": "v18.13.0",
-    "npm": "8.19.3"
+    "docusaurus": "docusaurus",
+    "start": "docusaurus start",
+    "build": "docusaurus build",
+    "swizzle": "docusaurus swizzle",
+    "deploy": "docusaurus deploy",
+    "clear": "docusaurus clear",
+    "serve": "docusaurus serve",
+    "write-translations": "docusaurus write-translations",
+    "write-heading-ids": "docusaurus write-heading-ids",
+    "typecheck": "tsc"
   },
   "dependencies": {
-    "@vuepress/plugin-back-to-top": "^1.4.1",
-    "@vuepress/plugin-search": "^1.6.0",
-    "@vuepress/theme-blog": "^2.3.3",
-    "vuepress": "^1.9.10",
-    "vuepress-plugin-clean-urls": "^1.1.1",
-    "vuepress-plugin-code-copy": "^1.0.6",
-    "vuepress-plugin-code-switcher": "^1.0.3",
-    "vuepress-plugin-fulltext-search": "^2.0.6",
-    "vuepress-plugin-glossary": "^1.0.2",
-    "vuepress-plugin-reading-progress": "^1.0.9",
-    "vuepress-plugin-redirect": "^1.2.5"
+    "@docusaurus/core": "^3.6.3",
+    "@docusaurus/plugin-client-redirects": "^3.6.3",
+    "@docusaurus/plugin-content-blog": "^3.6.3",
+    "@docusaurus/plugin-content-docs": "^3.6.3",
+    "@docusaurus/plugin-content-pages": "^3.6.3",
+    "@docusaurus/plugin-google-gtag": "^3.6.3",
+    "@docusaurus/plugin-google-tag-manager": "^3.6.3",
+    "@docusaurus/plugin-ideal-image": "^3.6.3",
+    "@docusaurus/preset-classic": "3.6.3",
+    "@docusaurus/remark-plugin-npm2yarn": "^3.6.3",
+    "@docusaurus/theme-search-algolia": "^3.6.3",
+    "@mdx-js/react": "^3.0.0",
+    "@pnpm/config.env-replace": "^3.0.0",
+    "clsx": "^2.0.0",
+    "prism-react-renderer": "^2.3.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "remark-math": "^6.0.0"
   },
   "devDependencies": {
-    "cypress": "^6.1.0",
-    "http-server": "^13.0.2"
+    "@docusaurus/module-type-aliases": "3.6.2",
+    "@docusaurus/tsconfig": "3.6.2",
+    "@docusaurus/types": "3.6.2",
+    "typescript": "~5.6.2"
+  },
+  "browserslist": {
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 3 chrome version",
+      "last 3 firefox version",
+      "last 5 safari version"
+    ]
+  },
+  "engines": {
+    "node": ">=18.0"
   }
 }
