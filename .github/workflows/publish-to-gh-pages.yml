@@ -40,13 +40,6 @@ jobs:
             echo "ORGANIZATION_NAME=${REPO_NAME/\/*/}" >> $GITHUB_ENV
           fi
 
-      - name: Test variable
-        run: |
-          echo "CADENCE_DOCS_URL is ${CADENCE_DOCS_URL}"
-          echo "PROJECT_NAME is ${PROJECT_NAME}"
-          echo "BASE_URL is ${BASE_URL}"
-          echo "ORGANIZATION_NAME is ${ORGANIZATION_NAME}"
-
       # same as build.yml
       - name: Checkout 🛎️
         uses: actions/checkout@v4
