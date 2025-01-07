@@ -6,6 +6,8 @@ export default {
     //   dirName: '.',
     // },
     { type: 'doc', id: 'support' },
+    { type: 'doc', id: 'how-to-contribute' },
+    { type: 'doc', id: 'governance' },
     { type: 'doc', id: 'team' },
     // { type: 'doc', id: 'resources' },
     // { type: 'doc', id: 'contributing' },
@@ -23,6 +25,11 @@ export default {
       type: 'link',
       label: 'Chat with us on Slack',
       href: 'http://t.uber.com/cadence-slack',
+    },
+    {
+      type: 'link',
+      label: 'Code of Conduct',
+      href: 'https://github.com/uber/.github/blob/dcd96c52f2d1d839208315a2572cf37f48e52e96/CODE_OF_CONDUCT.md',
     },
   ],
 };
