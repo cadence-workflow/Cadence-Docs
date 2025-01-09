@@ -16,7 +16,7 @@
 
 
 <link rel="search" type="application/opensearchdescription+xml" title="Cadence" href="/opensearch.xml"><link rel="stylesheet" href="/assets/css/styles.fc45ed42.css">
-<script src="/assets/js/runtime~main.1d7d38f6.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.f7416caf.js" defer="defer"></script>
 <script src="/assets/js/main.3ff8ed6a.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -29,7 +29,7 @@
 Note that both types of workers as well as external clients are roles and can be collocated in a single application process if necessary.</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="cadence-service">Cadence Service<a href="#cadence-service" class="hash-link" aria-label="Direct link to Cadence Service" title="Direct link to Cadence Service">​</a></h2>
 <p><img decoding="async" loading="lazy" src="https://user-images.githubusercontent.com/14902200/160308507-2854a98a-0582-4748-87e4-e0695d3b6e86.jpg" alt="Cadence Architecture" class="img_ev3q"></p>
-<p>At the core of Cadence is a highly scalable multitentant service. The service exposes all of its functionality through a strongly typed <a href="https://github.com/cadence-workflow/cadence-idl/tree/master/proto/cadence-workflow/cadence/api/v1" target="_blank" rel="noopener noreferrer">gRPC API</a>. A Cadence cluster include multiple services, each of which may run on multiple nodes for scalability and reliablity:</p>
+<p>At the core of Cadence is a highly scalable multitenant service. The service exposes all of its functionality through a strongly typed <a href="https://github.com/cadence-workflow/cadence-idl/tree/master/proto/cadence-workflow/cadence/api/v1" target="_blank" rel="noopener noreferrer">gRPC API</a>. A Cadence cluster include multiple services, each of which may run on multiple nodes for scalability and reliablity:</p>
 <ul>
 <li>Front End: which is a stateless service used to handle incoming requests from Workers. It is expected that an external load balancing mechanism is used to distribute load between Front End instances.</li>
 <li>History Service: where the core logic of orchestrating workflow steps and activities is implemented</li>
@@ -39,7 +39,7 @@ Note that both types of workers as well as external clients are roles and can be
 </ul>
 <p>Internally it depends on a persistent store. Currently, Apache Cassandra, MySQL, PostgreSQL, CockroachDB (<a href="https://www.cockroachlabs.com/docs/stable/postgresql-compatibility.html" target="_blank" rel="noopener noreferrer">PostgreSQL compatible</a>) and TiDB (<a href="https://docs.pingcap.com/tidb/dev/mysql-compatibility" target="_blank" rel="noopener noreferrer">MySQL compatible</a>) stores are supported out of the box. For listing workflows using complex predicates, ElasticSearch and OpenSearch cluster can be used.</p>
 <p>Cadence service is responsible for keeping workflow state and associated durable timers. It maintains internal queues (called task_lists) which are used to dispatch tasks to external workers.</p>
-<p>Cadence service is multitentant. Therefore it is expected that multiple pools of workers implementing different use cases connect to the same service instance. For example, at Uber a single service is used by more than a hundred applications. At the same time some external customers deploy an instance of Cadence service per application. For local development, a local Cadence service instance configured through docker-compose is used.</p>
+<p>Cadence service is multitenant. Therefore it is expected that multiple pools of workers implementing different use cases connect to the same service instance. For example, at Uber a single service is used by more than a hundred applications. At the same time some external customers deploy an instance of Cadence service per application. For local development, a local Cadence service instance configured through docker-compose is used.</p>
 <p><img decoding="async" loading="lazy" src="https://user-images.githubusercontent.com/14902200/160308592-400e11bc-0b21-4dd1-b568-8ac59005e6b7.svg" alt="Cadence Overview" class="img_ev3q"></p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="workflow-worker">Workflow Worker<a href="#workflow-worker" class="hash-link" aria-label="Direct link to Workflow Worker" title="Direct link to Workflow Worker">​</a></h2>
 <p>Cadence reuses terminology from <em>workflow automation</em> domain. So fault-oblivious stateful code is called workflow.</p>
