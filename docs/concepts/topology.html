@@ -24,7 +24,7 @@
 <link rel="preload" href="https://d1a3f4spazzrp4.cloudfront.net/dotcom-assets/fonts/UberMoveText-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
 <link rel="preload" href="https://d1a3f4spazzrp4.cloudfront.net/dotcom-assets/fonts/UberMoveText-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
 <link rel="preload" href="https://d1a3f4spazzrp4.cloudfront.net/dotcom-assets/fonts/UberMoveText-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.bc9141a3.css">
-<script src="/assets/js/runtime~main.479e55ec.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.da7bc06e.js" defer="defer"></script>
 <script src="/assets/js/main.63d10494.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -38,7 +38,7 @@
 Note that both types of workers as well as external clients are roles and can be collocated in a single application process if necessary.</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="cadence-service">Cadence Service<a href="#cadence-service" class="hash-link" aria-label="Direct link to Cadence Service" title="Direct link to Cadence Service">​</a></h2>
 <p><img decoding="async" loading="lazy" src="https://user-images.githubusercontent.com/14902200/160308507-2854a98a-0582-4748-87e4-e0695d3b6e86.jpg" alt="Cadence Architecture" class="img_ev3q"></p>
-<p>At the core of Cadence is a highly scalable multitenant service. The service exposes all of its functionality through a strongly typed <a href="https://github.com/cadence-workflow/cadence-idl/tree/master/proto/cadence-workflow/cadence/api/v1" target="_blank" rel="noopener noreferrer">gRPC API</a>. A Cadence cluster include multiple services, each of which may run on multiple nodes for scalability and reliablity:</p>
+<p>At the core of Cadence is a highly scalable multitenant service. The service exposes all of its functionality through a strongly typed <a href="https://github.com/cadence-workflow/cadence-idl/tree/master/proto/uber/cadence/api/v1" target="_blank" rel="noopener noreferrer">gRPC API</a>. A Cadence cluster include multiple services, each of which may run on multiple nodes for scalability and reliablity:</p>
 <ul>
 <li>Front End: which is a stateless service used to handle incoming requests from Workers. It is expected that an external load balancing mechanism is used to distribute load between Front End instances.</li>
 <li>History Service: where the core logic of orchestrating workflow steps and activities is implemented</li>
