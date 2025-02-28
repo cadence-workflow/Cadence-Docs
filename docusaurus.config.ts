@@ -56,6 +56,8 @@ const config: Config = {
           // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/cadence-workflow/Cadence-Docs/tree/master/',
+          showLastUpdateAuthor: true,
+          showLastUpdateTime: true,
           remarkPlugins: [glossary],
         } satisfies DocsOptions,
         blog: {
