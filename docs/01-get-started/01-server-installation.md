@@ -14,7 +14,7 @@ To get started with Cadence, you need to set up three components successfully.
 
 ## 0. Prerequisite - Install docker
 
-Follow the Docker installation instructions found here: [https://docs.docker.com/engine/installation/](https://docs.docker.com/engine/installation/)
+Follow the Docker installation instructions found here: [https://docs.docker.com/engine/installation/](https://docs.docker.com/engine/install/)
 
 ## 1. Run Cadence Server Using Docker Compose
 
@@ -65,10 +65,10 @@ Go to [Java HelloWorld](/docs/get-started/java-hello-world) or [Golang HelloWorl
 ## Troubleshooting
 There can be various reasons that `docker-compose up` cannot succeed:
 * In case of the image being too old, update the docker image by `docker pull ubercadence/server:master-auto-setup` and retry
-* In case of the local docker env is messed up: `docker system prune --all` and retry (see [details about it](https://docs.docker.com/config/pruning/) )
+* In case of the local docker env is messed up: `docker system prune --all` and retry (see [details about it](https://docs.docker.com/engine/manage-resources/pruning/) )
 * See logs of different container:
-  * If Cassandra is not able to get up: `docker logs -f docker_cassandra_1`
-  * If Cadence is not able to get up: `docker logs -f docker_cadence_1`
-  * If Cadence Web is not able to get up: `docker logs -f docker_cadence-web_1`
+  * If Cassandra is not able to get up: `docker logs -f docker-cassandra-1`
+  * If Cadence is not able to get up: `docker logs -f docker-cadence-1`
+  * If Cadence Web is not able to get up: `docker logs -f docker-cadence-web-1`
 
-If the above is still not working, [open an issue in Server(main) repo](https://github.com/cadence-workflow/cadence/issues/new/choose ).
+If the above is still not working, [open an issue in Server(main) repo](https://github.com/cadence-workflow/cadence/issues/new/choose)
