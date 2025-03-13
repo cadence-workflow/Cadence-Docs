@@ -43,7 +43,7 @@ Note that CLI versions of 0.20.0 works for all server versions of 0.12 to 0.19 a
 NOTE: On Docker versions 18.03 and later, you may get a "connection refused" error when connecting to local server. You can work around this by setting the host to "host.docker.internal" (see [here](https://docs.docker.com/docker-for-mac/networking/#use-cases-and-workarounds) for more info).
 
 ```bash
-docker run -it --rm ubercadence/cli:master --address host.docker.internal:7833 --domain samples-domain domain describe
+docker run -it --rm ubercadence/cli:master --address host.docker.internal:7833 --t grpc --domain samples-domain domain describe
 ```
 
 NOTE: Be sure to update your image when you want to try new features: `docker pull ubercadence/cli:master `
@@ -54,7 +54,7 @@ NOTE: If you are running docker-compose Cadence server, you can also logon to th
 $ docker exec -it docker_cadence_1 /bin/bash
 
 # this command runs within the container
-% cadence --address $(hostname -i):7833 --do samples-domain domain register
+% cadence --address $(hostname -i):7833 --t grpc --do samples-domain domain register
 ```
 
 ### Build it yourself
