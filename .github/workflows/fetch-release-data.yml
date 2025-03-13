@@ -6,25 +6,67 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+  pull-requests: write
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  BRANCH: fetch-release-data-update
+
 jobs:
   fetch-release-data:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Try checkout ${{ env.BRANCH }}
+        uses: actions/checkout@v4
+        id: try-checkout
+        continue-on-error: true
         with:
-          sparse-checkout: |
-            scripts
-            static/data/releases
-      - run: |
+          ref: ${{ env.BRANCH }}
+
+      - name: Fallback to default branch if checkout failed
+        if: steps.try-checkout.outcome == 'failure'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Ensure branch exists or create it
+        run: |
+          git fetch origin $BRANCH || true
+          if git rev-parse --verify $BRANCH; then
+            git checkout $BRANCH
+          else
+            git checkout -b $BRANCH
+          fi
+
+      - name: Fetch release data and update
+        id: fetch-release-data
+        run: |
+            # fetch release data
             ./scripts/fetch-releases.sh
+
+            # exit if there are no changes to be made
             if git diff --quiet static/data/releases; then
+              echo "skip_pr=true" >> $GITHUB_OUTPUT
               echo "No changes to commit"
               exit 0
             fi
-            git config user.name "github-actions[bot]"
-            git config user.email "github-actions[bot]@users.noreply.github.com"
+
+            job_url=$(gh run --repo ${{ github.repository }} view ${{ github.run_id }} --json jobs --jq '.jobs[] | select(.name == "${{ github.job }}") | .url')
+
+            # commit and push changes
             git add static/data/releases
-            git commit -m "Update release data"
-            git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            git commit -m "Update release data" -m "Job: $job_url"
+            git push origin $BRANCH
+
+      - name: Open a PR if needed
+        if: ${{ steps.fetch-release-data.outputs.skip_pr != 'true' }}
+        run: |
+            prs=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$BRANCH" --base 'master' --json title --jq 'length')
+            if ((prs == 0)); then
+              gh pr create -B master -H $BRANCH --title 'Update Cadence Release Data' --body "Created by Github action"
+            fi
