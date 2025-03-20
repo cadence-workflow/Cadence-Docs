@@ -24,7 +24,7 @@
 <link rel="preload" href="https://d1a3f4spazzrp4.cloudfront.net/dotcom-assets/fonts/UberMoveText-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
 <link rel="preload" href="https://d1a3f4spazzrp4.cloudfront.net/dotcom-assets/fonts/UberMoveText-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
 <link rel="preload" href="https://d1a3f4spazzrp4.cloudfront.net/dotcom-assets/fonts/UberMoveText-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.bc9141a3.css">
-<script src="/assets/js/runtime~main.5a6dff24.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.ef4519c0.js" defer="defer"></script>
 <script src="/assets/js/main.5e8f56c2.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -1253,7 +1253,7 @@
 <li>[CLI] fix nil pointer issue in domain migration command rendering by @shijiesheng in <a href="https://github.com/uber/cadence/pull/5378">https://github.com/uber/cadence/pull/5378</a></li>
 <li>Release v1.2.2 by @shijiesheng in <a href="https://github.com/uber/cadence/pull/5388">https://github.com/uber/cadence/pull/5388</a></li>
 </ul>
-<p><strong>Full Changelog</strong>: <a href="https://github.com/uber/cadence/compare/v1.2.1...v1.2.2">https://github.com/uber/cadence/compare/v1.2.1...v1.2.2</a></p><br></div><div><h2 class="anchor anchorWithStickyNavbar_LWe7" id="v1.2.1">Release <a href="https://github.com/cadence-workflow/cadence/releases/tag/v1.2.1" target="_blank" rel="noopener noreferrer">v1.2.1</a> published by<!-- --> <a href="https://github.com/davidporter-id-au" target="_blank" rel="noopener noreferrer">davidporter-id-au</a> on<!-- --> <!-- -->9/18/2023<a href="#v1.2.1" class="hash-link" aria-label="Direct link to v1.2.1" title="Direct link to v1.2.1">​</a></h2><h2>Project release: Zonal isolation</h2>
+<p><strong>Full Changelog</strong>: <a href="https://github.com/uber/cadence/compare/v1.2.1...v1.2.2">https://github.com/uber/cadence/compare/v1.2.1...v1.2.2</a></p><br></div><div><h2 class="anchor anchorWithStickyNavbar_LWe7" id="v1.2.1">Release <a href="https://github.com/cadence-workflow/cadence/releases/tag/v1.2.1" target="_blank" rel="noopener noreferrer">v1.2.1</a> published by<!-- --> <a href="https://github.com/davidporter-id-au" target="_blank" rel="noopener noreferrer">davidporter-id-au</a> on<!-- --> <!-- -->9/19/2023<a href="#v1.2.1" class="hash-link" aria-label="Direct link to v1.2.1" title="Direct link to v1.2.1">​</a></h2><h2>Project release: Zonal isolation</h2>
 <p>This version introduces a few resiliency concepts into customers&#x27; worker task processing such that they can detect deployment or configuration failures earlier. These features are opt-in.</p>
 <p>The high-level concept is to provide a means to subdivide work (called &#x27;isolation-groups&#x27;) for workers along whatever partitioning mechanism that is required for your service.</p>
 <p>By default the partitioning mechanism provided will attempt to keep workflows running in the location the are started, such that customers may identify broken changes earlier, rather than waiting for the deployment of an entire region. However, if there are no pollers available available in that subdivision, it&#x27;ll route the work elsewhere.</p>
@@ -2934,7 +2934,7 @@ a3fdf4c5b Cleanup unused setters in client.Bean (#4555)
 8ccb533b0 Minor ratelimit test cleanup
 82d83f924 Refactor task executor tests (#4475)
 93937370e Refactor config methods for internal use (#4448)
-88549ddba Refactor test for internal integration tests (#4437)</p><br></div><div><h2 class="anchor anchorWithStickyNavbar_LWe7" id="v0.23.2">Release <a href="https://github.com/cadence-workflow/cadence/releases/tag/v0.23.2" target="_blank" rel="noopener noreferrer">v0.23.2 Patch Release</a> published by<!-- --> <a href="https://github.com/yycptt" target="_blank" rel="noopener noreferrer">yycptt</a> on<!-- --> <!-- -->12/1/2021<a href="#v0.23.2" class="hash-link" aria-label="Direct link to v0.23.2" title="Direct link to v0.23.2">​</a></h2><h1>Release commits</h1>
+88549ddba Refactor test for internal integration tests (#4437)</p><br></div><div><h2 class="anchor anchorWithStickyNavbar_LWe7" id="v0.23.2">Release <a href="https://github.com/cadence-workflow/cadence/releases/tag/v0.23.2" target="_blank" rel="noopener noreferrer">v0.23.2 Patch Release</a> published by<!-- --> <a href="https://github.com/yycptt" target="_blank" rel="noopener noreferrer">yycptt</a> on<!-- --> <!-- -->12/2/2021<a href="#v0.23.2" class="hash-link" aria-label="Direct link to v0.23.2" title="Direct link to v0.23.2">​</a></h2><h1>Release commits</h1>
 <h2>Bug fix</h2>
 <p>ff5ef719a Fix ResponseInfo to work on all transports (#4649)
 97127f0e0 Fix remote sync match for standby domains and task creation time (#4654)</p>
@@ -2944,7 +2944,7 @@ a3fdf4c5b Cleanup unused setters in client.Bean (#4555)
 d367a88be Add Redirect policy to forward all domain APIs (#4657)
 00bbe50d4 Add logs for ID length violation checkers (#4655)</p>
 <h2>Misc.</h2>
-<p>8dd7a0818 Update docker files for 0.23.2 release</p><br></div><div><h2 class="anchor anchorWithStickyNavbar_LWe7" id="v0.23.1">Release <a href="https://github.com/cadence-workflow/cadence/releases/tag/v0.23.1" target="_blank" rel="noopener noreferrer">v0.23.1 Release</a> published by<!-- --> <a href="https://github.com/yycptt" target="_blank" rel="noopener noreferrer">yycptt</a> on<!-- --> <!-- -->11/18/2021<a href="#v0.23.1" class="hash-link" aria-label="Direct link to v0.23.1" title="Direct link to v0.23.1">​</a></h2><h1>Upgrade instructions (from 0.22.x releases)</h1>
+<p>8dd7a0818 Update docker files for 0.23.2 release</p><br></div><div><h2 class="anchor anchorWithStickyNavbar_LWe7" id="v0.23.1">Release <a href="https://github.com/cadence-workflow/cadence/releases/tag/v0.23.1" target="_blank" rel="noopener noreferrer">v0.23.1 Release</a> published by<!-- --> <a href="https://github.com/yycptt" target="_blank" rel="noopener noreferrer">yycptt</a> on<!-- --> <!-- -->11/19/2021<a href="#v0.23.1" class="hash-link" aria-label="Direct link to v0.23.1" title="Direct link to v0.23.1">​</a></h2><h1>Upgrade instructions (from 0.22.x releases)</h1>
 <h2>Schema upgrades (required)</h2>
 <ul>
 <li>Cassandra: upgrade schema to 0.32</li>
