@@ -45,6 +45,11 @@ BASE_URL=/cadence-docs/
 ORGANIZATION_NAME=cadence-workflow
 ```
 
+#### CNAME
+
+A file `static/CNAME` should be present in order to deploy to a [github pages site that uses a custom domain](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site). I.E. cadenceworkflow.io
+This file is created by the deploy action, but if deploying from a local environment, care should be taken to ensure the file exists.
+
 ### Deployment
 
 Using SSH:
@@ -66,6 +71,10 @@ If you are using GitHub pages for hosting, this command is a convenient way to b
 
 The release pages rely on data from GitHub that is persisted as json files under `static/data/releases/`.
 In order to update the release information for display, this can be done manually or be set up as part of the CI/CD process by running the `scripts/fetch-releases.sh` script. Script uses the [GitHub CLI](https://cli.github.com/) to fetch the release data.
+
+Automatic updates to release data are performed by a github action `fetch-release-data`. Which will check if new data is available, and if so update the release data with the latest information and open a branch named `fetch-release-data` and open a PR if one is not open already.
+
+Manual approval is required before merging and continuing to deployment.
 
 # NPM Registry
 
