@@ -4,9 +4,19 @@ title: Batch job
 permalink: /docs/use-cases/batch-job
 ---
 
-# Batch jobs with heartbeating
+## Batch job
+A lot of batch jobs are not pure data manipulation programs. For those, the existing big data frameworks are the best fit. Cadence is a more general orchestration mechanism and doesn't provide native SQL or worker data shuffle functionality out of the box, engineers wishing to rely on these would need to implement this functionality themselves.
+But if processing a record requires external API calls that might fail and potentially take a long time, Cadence might be preferable.
+
+#### Use Case:
+
+One of our internal Uber customers use Cadence for end of month statement generation. Each statement requires calls to multiple microservices and some statements can be really large. Cadence was chosen because it provides hard guarantees around durability of the financial data and seamlessly deals with long running operations, retries, and intermittent failures.
+
+## Batch jobs with heartbeating
 
 Cadence is able to coordinate, restart and track progress of large batch jobs by keeping track of their incremental progress and allowing them to resume if they're stopped for any reason. This predominantly relies on the `heartbeat` feature and activity retries. 
+
+This is used in production for customers who wish to work through large batch workloads 
 
 ### Considerations before starting
 
@@ -63,9 +73,9 @@ func (a *ABatchActivity) Execute(ctx context.Context, params Params) error {
     // offset so we don't redo work.
 	batchDataToProcess := a.DB.GetDataFromOffset(state.GetOffset())
 
-    // go through and process all the records:
+    // go through and process all the records through whatever side-effects are appropriate
     for i := range batchDataToProcess {
-        a.DB.Writerecord(i)
+        a.rpc.UpdateRecord(i)
     }
 	return nil
 }
