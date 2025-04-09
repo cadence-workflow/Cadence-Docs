@@ -102,7 +102,6 @@ func setActivityOptions(ctx workflow.Context) workflow.Context {
         RetryPolicy: &workflow.RetryPolicy{
 			InitialInterval:          time.Second,
 			MaximumInterval:          time.Minute * 10,
-			MaximumAttempts:          10,               // we expect this to have to restart a maximum of 10 times before giving up. 
 		},
 	})
 	return ctx
