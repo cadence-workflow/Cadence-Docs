@@ -40,8 +40,8 @@ func (a *ABatchActivity) Execute(ctx context.Context, params Params) error {
 
     // in this case this is just a struct with a mutex protecting it
     var state State
-
-    // when starting the activity, check at start time for a previous iteration 
+    if activity.HasHeartbeatDetails(ctx) {
+        // when starting the activity, check at start time for a previous iteration 
         err := activity.GetHeartbeatDetails(ctx, &state)
         if err != nil {
             return err
@@ -60,6 +60,7 @@ func (a *ABatchActivity) Execute(ctx context.Context, params Params) error {
             select {
             case <-ctx.Done():
                 return
+            case <-ticker.C:
                 reportState := state.Clone()
                 activity.RecordHeartbeat(ctx, reportState)
             }
