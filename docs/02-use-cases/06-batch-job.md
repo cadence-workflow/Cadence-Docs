@@ -20,7 +20,7 @@ This is used in production for customers who wish to work through large batch wo
 
 ### Considerations before starting
 
-Heartbeating cadence workers are workers who emit their progress at an appropriate interval (usually every few seconds) indicating where they are up to. Optionally, they may use progress information (like an offset number or iterator) to resume their progress. However, this necessarily implies that:
+Heartbeating cadence activities are activities who emit their progress at an appropriate interval (usually every few seconds) indicating where they are up to. Optionally, they may use progress information (like an offset number or iterator) to resume their progress. However, this necessarily implies that:
 
 - If activities get restarted, they may redo some work, so this is not suitable for non-idempotent operations.
 - The activity will be handling all the progress, so apart from heartbeat information, debugging about the granular operations being performed is not necessarily visible as compared by doing each operation in a distinct activity. 
@@ -28,7 +28,8 @@ Heartbeating cadence workers are workers who emit their progress at an appropria
 ### What problems this solves
 
 - This is for high-throughput operations where work may able to fit into a single long-running activity, or partitioned across multiple activities which can run for a longer duration.
-- This addresses problems customers may have running amounts of records through a cadence workflow where returning large blocks of data in each activity, or running large numbers of activities may hit resource limits (like the number of history entries) in a cadence workflow.
+- This addresses problems customers may have running workflows which are returning large blocks of data where the data is hitting up against Cadence activity limits
+- This is a good way avoid hitting Cadence workflow history limits Cadence History entries (since this only is a single activity which is long running vs many small short-lived activities).
 
 ### High level concept:
 
@@ -41,11 +42,11 @@ func (a *ABatchActivity) Execute(ctx context.Context, params Params) error {
 	var state State
 
     // when starting the activity, check at start time for a previous iteration 
-	if activity.HasHeartbeatDetails(ctx) {
 		err := activity.GetHeartbeatDetails(ctx, &state)
-		log.Info("resuming from a previous state", zap.Any("state", state))
 		if err != nil {
 			return err
+		}
+		log.Info("resuming from a previous state", zap.Any("state", state))
 		}
 	}
 
@@ -60,9 +61,8 @@ func (a *ABatchActivity) Execute(ctx context.Context, params Params) error {
             select {
             case <-ctx.Done():
                 return
-            case <-ticker.C:
-                state := state.GetLocked()
-                activity.RecordHeartbeat(ctx, state)
+                reportState := state.Clone()
+                activity.RecordHeartbeat(ctx, reportState)
             }
         }
     }()
@@ -76,6 +76,7 @@ func (a *ABatchActivity) Execute(ctx context.Context, params Params) error {
     // go through and process all the records through whatever side-effects are appropriate
     for i := range batchDataToProcess {
         a.rpc.UpdateRecord(i)
+        state.Finished(i)
     }
 	return nil
 }
@@ -102,7 +103,6 @@ func setActivityOptions(ctx workflow.Context) workflow.Context {
 			InitialInterval:          time.Second,
 			MaximumInterval:          time.Minute * 10,
 			MaximumAttempts:          10,               // we expect this to have to restart a maximum of 10 times before giving up. 
-			NonRetriableErrorReasons: []string{},
 		},
 	})
 	return ctx
@@ -115,7 +115,7 @@ func Workflow(ctx workflow.Context, config entity.Config) error {
     err := workflow.ExecuteActivity(ctx, ABatchActivityName, config).Get(ctx, nil)
     if err != nil {
         log.Error("failed to execute activity", zap.Error(err), zap.Any("input", config))
-        resultChan.Send(ctx, err)
+
     }
 
 	log.Info("Workflow complete")
