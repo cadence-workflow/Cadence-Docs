@@ -100,8 +100,8 @@ func setActivityOptions(ctx workflow.Context) workflow.Context {
         // It is unrealistic to assume that a long running activity will succeed
         // so add a retry-policy to restart it when there's a failure. 
         RetryPolicy: &workflow.RetryPolicy{
-			InitialInterval:          time.Second,
-			MaximumInterval:          time.Minute * 10,
+            InitialInterval:          time.Second,
+            MaximumInterval:          time.Minute * 10,
             MaximumAttempts:          10,               // we expect this to have to restart a maximum of 10 times before giving up. 	
 		},
 	})
