@@ -39,16 +39,15 @@ The idea is to create an activity which will handle a lot of records and record 
 func (a *ABatchActivity) Execute(ctx context.Context, params Params) error {
 
     // in this case this is just a struct with a mutex protecting it
-	var state State
+    var state State
 
     // when starting the activity, check at start time for a previous iteration 
-		err := activity.GetHeartbeatDetails(ctx, &state)
-		if err != nil {
-			return err
-		}
-		log.Info("resuming from a previous state", zap.Any("state", state))
-		}
-	}
+        err := activity.GetHeartbeatDetails(ctx, &state)
+        if err != nil {
+            return err
+        }
+        log.Info("resuming from a previous state", zap.Any("state", state))
+    }
 
     // in the background, every 5 seconds, emit where we're up to
     // so the cadence server knows the activity is still alive, and 
@@ -71,14 +70,14 @@ func (a *ABatchActivity) Execute(ctx context.Context, params Params) error {
     // records which will take a while to get through. Importantly, 
     // if we have to restart, don't start from the beginning, use the 
     // offset so we don't redo work.
-	batchDataToProcess := a.DB.GetDataFromOffset(state.GetOffset())
+    batchDataToProcess := a.DB.GetDataFromOffset(state.GetOffset())
 
     // go through and process all the records through whatever side-effects are appropriate
     for i := range batchDataToProcess {
         a.rpc.UpdateRecord(i)
         state.Finished(i)
     }
-	return nil
+    return nil
 }
 ```
 
@@ -88,37 +87,37 @@ And run this activity in a workflow with settings:
 // retry if the activity gets stopped for any reason
 func setActivityOptions(ctx workflow.Context) workflow.Context {
 
-	ctx = workflow.WithActivityOptions(ctx, workflow.ActivityOptions{
-		ScheduleToStartTimeout: time.Minute,           // how long we expect this task to sit waiting to be picked up. 
+    ctx = workflow.WithActivityOptions(ctx, workflow.ActivityOptions{
+        ScheduleToStartTimeout: time.Minute,           // how long we expect this task to sit waiting to be picked up. 
                                                        // Typically subseconds unless heavily contended
-		StartToCloseTimeout:    time.Hour,             // however long this activity is expected to take, maximum, from end to end. 
+        StartToCloseTimeout:    time.Hour,             // however long this activity is expected to take, maximum, from end to end. 
                                                        // This is workload dependent
-		HeartbeatTimeout:       time.Second * 30,      // How long we should wait before deciding to restart the activity because the 
+        HeartbeatTimeout:       time.Second * 30,      // How long we should wait before deciding to restart the activity because the 
                                                        // background thread hasn't checked in. Half a a minute is probably a bit 
                                                        // overgenous. In the example above we're picking 5 seconds to heartbeat
-		
+        
         // It is unrealistic to assume that a long running activity will succeed
         // so add a retry-policy to restart it when there's a failure. 
         RetryPolicy: &workflow.RetryPolicy{
             InitialInterval:          time.Second,
             MaximumInterval:          time.Minute * 10,
             MaximumAttempts:          10,               // we expect this to have to restart a maximum of 10 times before giving up. 	
-		},
-	})
-	return ctx
+        },
+    })
+    return ctx
 }
 
 func Workflow(ctx workflow.Context, config entity.Config) error {
 
-	log := workflow.GetLogger(ctx)
-	ctx = setActivityOptions(ctx, config)
+    log := workflow.GetLogger(ctx)
+    ctx = setActivityOptions(ctx, config)
     err := workflow.ExecuteActivity(ctx, ABatchActivityName, config).Get(ctx, nil)
     if err != nil {
         log.Error("failed to execute activity", zap.Error(err), zap.Any("input", config))
 
     }
 
-	log.Info("Workflow complete")
-	return nil
+    log.Info("Workflow complete")
+    return nil
 }
 ```
