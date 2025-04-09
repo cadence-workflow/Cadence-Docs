@@ -29,7 +29,7 @@ Heartbeating cadence activities are activities who emit their progress at an app
 
 - This is for high-throughput operations where work may able to fit into a single long-running activity, or partitioned across multiple activities which can run for a longer duration.
 - This addresses problems customers may have running workflows which are returning large blocks of data where the data is hitting up against Cadence activity limits
-Because heartbeat data is only temporarily recorded, this is a good way avoid hitting Cadence workflow limits on the number of history events: there only is a single activity which is long running vs many small short-lived activities (each of which needs multiple history events).
+- Because heartbeat data is only temporarily recorded, this is a good way avoid hitting Cadence workflow limits on the number of history events: there only is a single activity which is long running vs many small short-lived activities (each of which needs multiple history events).
 
 ### High level concept:
 
