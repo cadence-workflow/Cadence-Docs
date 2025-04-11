@@ -1,11 +1,11 @@
 chopincode:
   name: Chris Qin
   title: Applications Developer @ Uber
-  url:  https://www.linkedin.com/in/chrisqin0610/
+  url: https://www.linkedin.com/in/chrisqin0610/
   image_url: https://github.com/chopincode.png
   page: true
   socials:
-    linkedin:  https://www.linkedin.com/in/chrisqin0610/
+    linkedin: https://www.linkedin.com/in/chrisqin0610/
     github: chopincode
 
 enderdemirkaya:
@@ -20,7 +20,7 @@ enderdemirkaya:
 
 jakobht:
   name: Jakob Haahr Taankvist
-  title: Software Engineer II @ Uber
+  title: Senior Software Engineer @ Uber
   url: https://www.linkedin.com/in/jakob-taankvist/
   image_url: https://github.com/jakobht.png
   page: true
@@ -97,3 +97,13 @@ shaddoll:
   socials:
     linkedin: https://www.linkedin.com/in/zijian-chen-5868938b/
     github: Shaddoll
+
+adhityamamallan:
+  name: Adhitya Mamallan
+  title: Software Engineer II @ Uber
+  url: https://www.linkedin.com/in/adhityamamallan/
+  image_url: https://github.com/adhityamamallan.png
+  page: true
+  socials:
+    linkedin: https://www.linkedin.com/in/adhityamamallan/
+    github: adhityamamallan
