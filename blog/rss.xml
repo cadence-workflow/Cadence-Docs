@@ -4,10 +4,62 @@
         <title>Cadence Blog</title>
         <link>https://cadenceworkflow.io/blog</link>
         <description>Cadence Blog</description>
-        <lastBuildDate>Mon, 18 Nov 2024 14:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 11 Apr 2025 16:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Introducing cadence-web v4.0.0]]></title>
+            <link>https://cadenceworkflow.io/blog/2025/04/11/2025-04-11-announcing-cadence-web-v4/announcing-cadence-web-v4</link>
+            <guid>https://cadenceworkflow.io/blog/2025/04/11/2025-04-11-announcing-cadence-web-v4/announcing-cadence-web-v4</guid>
+            <pubDate>Fri, 11 Apr 2025 16:00:00 GMT</pubDate>
+            <description><![CDATA[We've released cadence-web v4.0.0, a complete rewrite of the Cadence Web UI with a modern UI and performance improvements! Learn more about the new features, technology stack, and how this update addresses past challenges for developers and users alike.]]></description>
+            <content:encoded><![CDATA[<p>We are excited to announce the release of <strong>cadence-web v4.0.0</strong>—a complete rewrite of the Cadence web app. Cadence has always been about empowering developers to manage complex workflows, and with this release, we not only modernize the web interface by embracing today’s cutting-edge technologies but also strengthen the open source community by aligning our tools with the broader trends seen across the industry.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="whats-new-in-cadence-web-v400">What's new in cadence-web v4.0.0<a href="https://cadenceworkflow.io/blog/2025/04/11/2025-04-11-announcing-cadence-web-v4/announcing-cadence-web-v4#whats-new-in-cadence-web-v400" class="hash-link" aria-label="Direct link to What's new in cadence-web v4.0.0" title="Direct link to What's new in cadence-web v4.0.0">​</a></h2>
+<ul>
+<li><strong>Revamped UI &amp; Experience</strong> – A fresh, modern interface designed for better usability and efficiency.</li>
+<li><strong>Multi-Cluster Support</strong> – The UI can now connect to multiple Cadence clusters.</li>
+<li><strong>Performance Improvements</strong> – Faster load times, optimised API calls, and a smoother experience.</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="history page comparison" src="https://cadenceworkflow.io/assets/images/v3-v4-history-comparison-9eaff564f6ee77e1ed0d9d605417b62c.png" width="2220" height="615" class="img_ev3q">
+<em>Comparison of the workflow history page between the old UI and the new UI</em></p>
+<p><img decoding="async" loading="lazy" alt="multi cluster comparison" src="https://cadenceworkflow.io/assets/images/multi-cluster-comparison-abfe4c9b6cac25d9702cd485ea2d47f7.png" width="1955" height="557" class="img_ev3q">
+<em>Interaction with a multi-cluster Cadence setup in the old UI vs in the new UI</em></p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="challenges-with-the-older-cadence-web">Challenges with the older cadence-web<a href="https://cadenceworkflow.io/blog/2025/04/11/2025-04-11-announcing-cadence-web-v4/announcing-cadence-web-v4#challenges-with-the-older-cadence-web" class="hash-link" aria-label="Direct link to Challenges with the older cadence-web" title="Direct link to Challenges with the older cadence-web">​</a></h2>
+<p>The older version of cadence-web had several issues for both users and Cadence developers alike.</p>
+<p>Users had to deal with slow loading and performance, and a suboptimal user experience filled with janky errors. Moreover, it did not work very well with multi-cluster setups, since each cadence-web server was tied to a single cluster.</p>
+<p>For Uber developers working on cadence-web, the main challenge was a different technology stack and UI framework. cadence-web was written in Vue.js, whereas the frameworks in use at Uber are all React-based. This slowed down developers working on cadence-web because they had to suddenly adapt to working on an entirely different framework. Moreover, the project used outdated tooling, was hard to run, and was not type-safe.</p>
+<p>Our internal version of cadence-web used an NPM package as a dependency, which limited our ability to extend it with Uber-specific enhancements. It also had a high dependency on run-time configurations, limiting how much could be tested while running locally.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="the-development-journey">The development journey<a href="https://cadenceworkflow.io/blog/2025/04/11/2025-04-11-announcing-cadence-web-v4/announcing-cadence-web-v4#the-development-journey" class="hash-link" aria-label="Direct link to The development journey" title="Direct link to The development journey">​</a></h2>
+<p>After evaluating multiple open source React-based frameworks, we chose to go with Vercel’s Next.js, which brings with it several of React’s bleeding edge optimizations, such as server components.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="what-went-into-making-the-new-cadence-web">What went into making the new cadence-web<a href="https://cadenceworkflow.io/blog/2025/04/11/2025-04-11-announcing-cadence-web-v4/announcing-cadence-web-v4#what-went-into-making-the-new-cadence-web" class="hash-link" aria-label="Direct link to What went into making the new cadence-web" title="Direct link to What went into making the new cadence-web">​</a></h3>
+<p>We took the migration as an opportunity to make the hop from plain JavaScript to TypeScript, while integrating Jest for testing and ESLint with Prettier for code quality.</p>
+<p>For data validation, we chose Zod, a popular schema validation library that provides runtime type checking and automatic type inference. For logging, we went with Pino, a well-established logging library that can integrate with monitoring tools like Sentry.</p>
+<p>The UI itself is built with Baseweb, Uber’s open-source component library. Baseweb is heavily integrated with Styletron, so we used that as our CSS-in-JS solution.</p>
+<p>To interact with Cadence services, the web UI uses React Query for data management, Next.js API routes as intermediaries, and grpc’s official JavaScript client (<a href="https://www.npmjs.com/package/@grpc/grpc-js" target="_blank" rel="noopener noreferrer">@grpc/grpc-js</a>). Type generation for Cadence endpoints (request and response params) is handled by using <a href="https://www.npmjs.com/package/@grpc/proto-loader" target="_blank" rel="noopener noreferrer">@grpc/proto-loader</a> to generate Typescript types from our existing Protobuf definitions.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="extending-cadence-web-internally">Extending cadence-web internally<a href="https://cadenceworkflow.io/blog/2025/04/11/2025-04-11-announcing-cadence-web-v4/announcing-cadence-web-v4#extending-cadence-web-internally" class="hash-link" aria-label="Direct link to Extending cadence-web internally" title="Direct link to Extending cadence-web internally">​</a></h3>
+<p>Since we wanted the ability to extend the codebase for specific use cases, we also designed the code in a modular fashion, allowing pieces of the UI to be added, replaced or removed using simple configurations.</p>
+<p>Our internal fork of cadence-web uses a virtual codebase which applies a set of internal overrides to the open source codebase using overlayfs while developing locally, and npm’s merge-dirs package at build time. This allows us to add extensions at will, and also modify certain files internally to meet use case-specific needs. To handle open-source changes to these modified files, we have a validation script that runs on every version update to highlight potential conflicts.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="a-unified-view-for-workflow-history">A unified view for Workflow History<a href="https://cadenceworkflow.io/blog/2025/04/11/2025-04-11-announcing-cadence-web-v4/announcing-cadence-web-v4#a-unified-view-for-workflow-history" class="hash-link" aria-label="Direct link to A unified view for Workflow History" title="Direct link to A unified view for Workflow History">​</a></h3>
+<p>Previously, the Workflow History experience was fragmented across multiple disconnected views—Compact, Grid, and JSON—each serving a different purpose but offering little cohesion. Depending on where you started, the experience varied significantly, making it difficult to navigate between views or maintain context. For example, users couldn’t easily locate an event in the compact view and then explore its surrounding context in the grid; they had to search again. Additionally, filtering was only available in the grid view, leaving the others lacking in usability.</p>
+<p>This disjointed setup made it hard for users to build intuitive flows or develop habits around history navigation.</p>
+<p>With this launch, we've reimagined the entire experience into a single, unified view that works seamlessly across use cases. The compact list and timeline now live side by side, enabling users to quickly locate an event and view its context in the timeline. Filters apply across both views, ensuring consistency and saving time. JSON export remains available, and new features like collapsible events bring the best of both Summary and Full Detail modes into one place.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="how-to-get-started">How to Get Started<a href="https://cadenceworkflow.io/blog/2025/04/11/2025-04-11-announcing-cadence-web-v4/announcing-cadence-web-v4#how-to-get-started" class="hash-link" aria-label="Direct link to How to Get Started" title="Direct link to How to Get Started">​</a></h2>
+<ul>
+<li><strong>GitHub Repository:</strong> You can find cadence-web v4.0.0 in our <a href="https://github.com/cadence-workflow/cadence-web" target="_blank" rel="noopener noreferrer">GitHub repository</a>.</li>
+<li><strong>Dockerhub:</strong> cadence-web v4.0.0 is also available on <a href="https://hub.docker.com/r/ubercadence/web" target="_blank" rel="noopener noreferrer">Dockerhub</a>, and  will be fetched by default when you run Cadence using Docker.</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="whats-next">What’s Next?<a href="https://cadenceworkflow.io/blog/2025/04/11/2025-04-11-announcing-cadence-web-v4/announcing-cadence-web-v4#whats-next" class="hash-link" aria-label="Direct link to What’s Next?" title="Direct link to What’s Next?">​</a></h2>
+<p>Now that we have a robust and modernized Cadence UI, our long-term plan is to enhance it to add more useful functionality. Our next steps include:</p>
+<ul>
+<li><strong>Workflow Actions:</strong> Adding more workflow actions such as start, restart, reset, and signal, allowing them to be invoked directly from the UI</li>
+<li><strong>Extended Domain Information:</strong> We will be adding more information to the Domain page to help you work with your domains and quickly identify any issues affecting them.</li>
+<li><strong>Workflow Diagnostics UI:</strong> Integrating with the new Workflow Diagnostics API to provide detailed insights into failed workflows.</li>
+</ul>
+<p>We invite you to explore cadence-web v4.0.0 and share your feedback with us. Please feel free to share your feedback with the new Cadence UI in our <a href="http://t.uber.com/cadence-slack" target="_blank" rel="noopener noreferrer">Slack workspace</a>! Your input is invaluable as we continue to evolve this platform.</p>
+<p>Happy coding, and thank you for being a part of the Cadence journey!</p>]]></content:encoded>
+            <category>Announcement</category>
+        </item>
         <item>
             <title><![CDATA[Cadence Repositories Have Moved!]]></title>
             <link>https://cadenceworkflow.io/blog/2024/11/18/cadence-workflows-github-organization</link>
@@ -945,41 +997,6 @@ It’s been a few months since our <a href="https://cadenceworkflow.io/blog/2023
 <ul>
 <li><a href="https://info.instaclustr.com/webinar-spinning-drones-cadence-kafka.html" target="_blank" rel="noopener noreferrer">On Demand Webinar: Spinning Your Drones with Cadence and Apache Kafka</a></li>
 </ul>
-<p>If you have any news or topics you'd like us to include in our next update then please join our <a href="http://t.uber.com/cadence-slack" target="_blank" rel="noopener noreferrer">Slack</a>#community channel.</p>
-<p>Please remember that this update is for you - so if you have any comments or feedback that could help us improve it then please share it with us in the #community <a href="http://t.uber.com/cadence-slack" target="_blank" rel="noopener noreferrer">Slack</a> channel.</p>]]></content:encoded>
-            <category>Community Spotlight</category>
-        </item>
-        <item>
-            <title><![CDATA[Cadence Community Spotlight Update - January 2023]]></title>
-            <link>https://cadenceworkflow.io/blog/2023/01/31/community-spotlight-january-2023</link>
-            <guid>https://cadenceworkflow.io/blog/2023/01/31/community-spotlight-january-2023</guid>
-            <pubDate>Tue, 31 Jan 2023 00:00:00 GMT</pubDate>
-            <description><![CDATA[Happy New Year everyone! Here’s the latest in our regular monthly Community Spotlight updates that gives you news from in and around the Cadence community!]]></description>
-            <content:encoded><![CDATA[<p>Happy New Year everyone! Here’s the latest in our regular monthly Community Spotlight updates that gives you news from in and around the Cadence community!</p>
-<p>Please see below for a roundup of the highlights:</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="closing-down-cadence-office-hours">Closing Down Cadence Office Hours<a href="https://cadenceworkflow.io/blog/2023/01/31/community-spotlight-january-2023#closing-down-cadence-office-hours" class="hash-link" aria-label="Direct link to Closing Down Cadence Office Hours" title="Direct link to Closing Down Cadence Office Hours">​</a></h2>
-<p>We have been running Office Hours sessions every month since May last year. The aim was to give the community an opportunity to speak directly with some of the Cadence core developers and experts to answer questions on particular issues you may be having. We have found that the most preferred method for community questions has been the support Slack channel so have decided to stop this monthly call.</p>
-<p>Thanks very much to <a href="https://www.linkedin.com/in/enderdemirkaya/" target="_blank" rel="noopener noreferrer">Ender Demirkaya</a>and the Uber team for making themselves available for these sessions.</p>
-<p>Please remember that if you have question about Cadence or are facing a specific issue then  you can post your question in our #support <a href="http://t.uber.com/cadence-slack" target="_blank" rel="noopener noreferrer">Slack</a> channel. If you also post the details on StackOverflow with the cadence workflow tag then there will be a searchable history for others who encounter the same issue to find a solution.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="update-on-iwf-support-for-cadence">Update on iWF Support for Cadence<a href="https://cadenceworkflow.io/blog/2023/01/31/community-spotlight-january-2023#update-on-iwf-support-for-cadence" class="hash-link" aria-label="Direct link to Update on iWF Support for Cadence" title="Direct link to Update on iWF Support for Cadence">​</a></h2>
-<p>Last October we featured an update in our monthly blog about <a href="https://github.com/indeedeng/iwf" target="_blank" rel="noopener noreferrer">iWF - Interpreter for Workflow</a>, a project built on top of Cadence by community member <a href="https://www.linkedin.com/in/prclqz/" target="_blank" rel="noopener noreferrer">Quanzheng Long</a>. It was announced recently that iWF has released a <a href="https://github.com/iworkflowio/iwf-golang-sdk" target="_blank" rel="noopener noreferrer">Golang SDK</a> and updated  versions of the <a href="https://github.com/indeedeng/iwf" target="_blank" rel="noopener noreferrer">Java SDK and server</a>.</p>
-<p>Long is really keen to get feedback so please take a look at iWF, try them out and presented him any feedback.
-Long has also created a couple of blog posts about iWF that we have featured in the Cadence in the News section below so please take a look.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="cadence-in-the-news">Cadence in the News!<a href="https://cadenceworkflow.io/blog/2023/01/31/community-spotlight-january-2023#cadence-in-the-news" class="hash-link" aria-label="Direct link to Cadence in the News!" title="Direct link to Cadence in the News!">​</a></h2>
-<p>Below are a selection of Cadence related articles, blogs and whitepapers. Please take a look and feel free to share via your own social media channels.</p>
-<ul>
-<li>
-<p><a href="https://medium.com/@qlong/a-letter-to-cadence-temporal-and-workflow-tech-community-b32e9fa97a0c" target="_blank" rel="noopener noreferrer">A Letter to Cadence/Temporal and Workflow Tech Community</a></p>
-</li>
-<li>
-<p><a href="https://medium.com/@qlong/iwf-vs-cadence-temporal-1e11b35960fe" target="_blank" rel="noopener noreferrer">iWF vs Cadence/Temporal</a></p>
-</li>
-<li>
-<p><a href="https://www.instaclustr.com/blog/aws-privatelink-for-cadence-on-instaclustr-by-netapp/" target="_blank" rel="noopener noreferrer">AWS PrivateLink Connectivity Is Now Available with Instaclustr for Cadence</a></p>
-</li>
-</ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="upcoming-events">Upcoming Events<a href="https://cadenceworkflow.io/blog/2023/01/31/community-spotlight-january-2023#upcoming-events" class="hash-link" aria-label="Direct link to Upcoming Events" title="Direct link to Upcoming Events">​</a></h2>
-<p>No upcoming events at the moment.</p>
 <p>If you have any news or topics you'd like us to include in our next update then please join our <a href="http://t.uber.com/cadence-slack" target="_blank" rel="noopener noreferrer">Slack</a>#community channel.</p>
 <p>Please remember that this update is for you - so if you have any comments or feedback that could help us improve it then please share it with us in the #community <a href="http://t.uber.com/cadence-slack" target="_blank" rel="noopener noreferrer">Slack</a> channel.</p>]]></content:encoded>
             <category>Community Spotlight</category>
