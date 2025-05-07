@@ -11,13 +11,13 @@
 ### Installation
 
 ```console
-$ npm install
+npm install
 ```
 
 ### Local Development
 
 ```console
-$ npm run start
+npm run start
 ```
 
 This command starts a local development server and opens up a browser window at http://localhost:3000/. Most changes are reflected live without having to restart the server.
@@ -25,7 +25,7 @@ This command starts a local development server and opens up a browser window at 
 ### Build
 
 ```console
-$ npm run build
+npm run build
 ```
 
 This command generates static content into the `build` directory and can be served using any static contents hosting service.
@@ -55,13 +55,13 @@ This file is created by the deploy action, but if deploying from a local environ
 Using SSH:
 
 ```console
-$ USE_SSH=true npm run deploy
+USE_SSH=true npm run deploy
 ```
 
 Not using SSH:
 
 ```console
-$ GIT_USER=<Your GitHub username> npm run deploy
+GIT_USER=<Your GitHub username> npm run deploy
 ```
 
 If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
@@ -83,4 +83,6 @@ This will ensure the dependencies are pulled from the correct source and to prev
 
 ## License
 
-MIT License, please see [LICENSE](https://github.com/cadence-workflow/Cadence-Docs/blob/master/LICENSE) for details.
+The source code in this repository is licensed under the Apache 2.0 License.
+The documentation in this repository is licensed under the Creative Commons Attribution 4.0 International License.
+See [LICENSE](https://github.com/cadence-workflow/Cadence-Docs/blob/master/LICENSE) for details.
