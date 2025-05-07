@@ -2,13 +2,13 @@
 
 ## Source Code
 
-The source code in this repository is licensed under the MIT License. See below for the full license text.
+The source code in this repository is licensed under the Apache 2.0 License. See below for the full license text.
 
 ## Documentation
 
 The documentation in this repository is licensed under the Creative Commons Attribution 4.0 International License. See below for the full license text.
 
-### MIT License
+### Apache 2.0 License
 
                                  Apache License
                            Version 2.0, January 2004
