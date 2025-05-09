@@ -98,7 +98,6 @@ export function MaintainersRow(): JSX.Element {
       <TeamProfileCardCol name="Andre Oliveira" githubUrl="https://github.com/uandreo"> </TeamProfileCardCol>
       <TeamProfileCardCol name="Assem Hafez" githubUrl="https://github.com/Assem-Uber"> </TeamProfileCardCol>
       <TeamProfileCardCol name="Bowen Xiao" githubUrl="https://github.com/bowenxia"> </TeamProfileCardCol>
-      <TeamProfileCardCol name="chopincode" githubUrl="https://github.com/chopincode"> </TeamProfileCardCol>
       <TeamProfileCardCol name="David Porter" githubUrl="https://github.com/davidporter-id-au"> </TeamProfileCardCol>
       <TeamProfileCardCol name="Felipe Imanishi" githubUrl="https://github.com/fimanishi" linkedinUrl="https://www.linkedin.com/in/fimanishi">
       Felipe is a Software Engineer contributing to Cadence from San Francisco. He found CS later in his career, and he is glad he did. Felipe is always looking to learn more and Cadence is provides an endless source of topics. Outside of work, Felipe is probably doing something with his two sons.
@@ -109,12 +108,10 @@ export function MaintainersRow(): JSX.Element {
         Jakob Haahr Taankvist is a Software Engineer, contributing to the Cadence project from Denmark. With a background in formal games and traffic optimization, he now explores workflow orchestration.<br />
         Outside of work, Jakob is on a mission to evaluate how well Danish ice hockey arenas double as programming spots while cheering on his son's games. 🏒💻
       </TeamProfileCardCol>
-      <TeamProfileCardCol name="Jonathan Baker" githubUrl="https://github.com/jonathanbaker7"> </TeamProfileCardCol>
       <TeamProfileCardCol name="Josué Alexander Ibarra" githubUrl="https://github.com/ibarrajo" linkedinUrl="https://www.linkedin.com/in/elninja/">
         Josue Ibarra is a Developer Advocate for Cadence Workflows at Uber, based in Seattle.<br />
         Passionate about building better systems with Cadence, he balances his love for coding with hobbies like motorcycles, sailing, and cooking. 🚀🍳🏍️
       </TeamProfileCardCol>
-      <TeamProfileCardCol name="Ketsia Mbaku" githubUrl="https://github.com/ketsiambaku"> </TeamProfileCardCol>
       <TeamProfileCardCol name="Nate Mortensen" githubUrl="https://github.com/natemort">
         Nate originally got into programming by modding Minecraft and has been contributing to open source software ever since.
         When he's not working on Cadence he's on a mission to try every pizza in Seattle.
