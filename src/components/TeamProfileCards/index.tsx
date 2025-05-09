@@ -85,17 +85,6 @@ function TeamProfileCardCol(props: ProfileProps) {
   );
 }
 
-/* Technical Steering Committee:  */
-export function TSCRow(): JSX.Element {
-  return (
-    <div className="row">
-      <TeamProfileCardCol name="Ender Demirkaya" githubUrl="https://github.com/demirkayaender" linkedinUrl="https://www.linkedin.com/in/enderdemirkaya/"></TeamProfileCardCol>
-      <TeamProfileCardCol name="Taylan Isikdemir" githubUrl="https://github.com/taylanisikdemir" linkedinUrl="https://www.linkedin.com/in/taylan-isikdemir"></TeamProfileCardCol>
-      <TeamProfileCardCol name="Kisel Jan" githubUrl="https://github.com/dkrotx"> </TeamProfileCardCol>
-    </div>
-  );
-}
-
 /* Maintainers:  */
 export function MaintainersRow(): JSX.Element {
   return (
@@ -143,6 +132,17 @@ export function MaintainersRow(): JSX.Element {
       <TeamProfileCardCol name="tubignat" githubUrl="https://github.com/tubignat"> </TeamProfileCardCol>
       <TeamProfileCardCol name="Vinay Kumar Yadav" githubUrl="https://github.com/vinay116"> </TeamProfileCardCol>
       <TeamProfileCardCol name="Vsevolod Kaloshin" githubUrl="https://github.com/arzonus"> </TeamProfileCardCol>
+    </div>
+  );
+}
+
+/* Technical Steering Committee:  */
+export function TSCRow(): JSX.Element {
+  return (
+    <div className="row">
+      <TeamProfileCardCol name="Ender Demirkaya" githubUrl="https://github.com/demirkayaender" linkedinUrl="https://www.linkedin.com/in/enderdemirkaya/"></TeamProfileCardCol>
+      <TeamProfileCardCol name="Taylan Isikdemir" githubUrl="https://github.com/taylanisikdemir" linkedinUrl="https://www.linkedin.com/in/taylan-isikdemir"></TeamProfileCardCol>
+      <TeamProfileCardCol name="Kisel Jan" githubUrl="https://github.com/dkrotx"> </TeamProfileCardCol>
     </div>
   );
 }
