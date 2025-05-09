@@ -89,17 +89,8 @@ function TeamProfileCardCol(props: ProfileProps) {
 export function TSCRow(): JSX.Element {
   return (
     <div className="row">
-      <TeamProfileCardCol name="Ender Demirkaya" githubUrl="https://github.com/demirkayaender" linkedinUrl="https://www.linkedin.com/in/enderdemirkaya/">
-      Ender joined the Cadence team as a tech lead and later transitioned into a management role. <br />
-      His career started with his own startup, followed with Microsoft, working for another startup and Meta. <br />
-      His prior work involves building Bing's/Azure's key value store (ObjectStore), distributed NAS, and search engines. <br />
-      He's into outdoors and endurance sports while not working.
-      </TeamProfileCardCol>
-      <TeamProfileCardCol name="Taylan Isikdemir" githubUrl="https://github.com/taylanisikdemir" linkedinUrl="https://www.linkedin.com/in/taylan-isikdemir">
-        Taylan majored in CS and his software engineering journey includes working at Microsoft Azure, Google Cloud, and helping build an observability startup from ground up. <br />
-        Taylan is tech lead of Cadence team at Uber, based in Seattle. <br />
-        When he is not working, you'll probably find him playing basketball or kickboxing.
-      </TeamProfileCardCol>
+      <TeamProfileCardCol name="Ender Demirkaya" githubUrl="https://github.com/demirkayaender" linkedinUrl="https://www.linkedin.com/in/enderdemirkaya/"></TeamProfileCardCol>
+      <TeamProfileCardCol name="Taylan Isikdemir" githubUrl="https://github.com/taylanisikdemir" linkedinUrl="https://www.linkedin.com/in/taylan-isikdemir"></TeamProfileCardCol>
       <TeamProfileCardCol name="Kisel Jan" githubUrl="https://github.com/dkrotx"> </TeamProfileCardCol>
     </div>
   );
