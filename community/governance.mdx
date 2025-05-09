@@ -1,6 +1,6 @@
 ---
 title: Governance
-date: 2025-01-07
+date: 2025-05-09
 authors: demirkayaender
 tags:
   - announcement
@@ -16,30 +16,77 @@ This document outlines the governance model for the Cadence Workflow project. It
 
 The governance of the Cadence project adheres to the following principles:
 
-1. **Transparency**: Discussions, decisions, and contributions are made in public forums.  
-2. **Inclusivity**: Contributions are welcome from anyone, regardless of affiliation, experience, or background.  
-3. **Meritocracy**: Decisions are guided by technical merit and the value of contributions to the community.  
+1. **Meritocracy**: Decisions are guided by technical merit and the value of contributions to the community.  
+2. **Transparency**: Discussions, decisions, and contributions are made in public forums.  
+3. **Inclusivity**: Contributions are welcome from anyone, regardless of affiliation, experience, or background.  
 4. **Sustainability**: Processes are designed to ensure the long-term health and success of the project.
 
+### Meritocracy
+Any official role (defined below) in the Cadence project requires a proven track record of contributions. 
+
+Cadence is used in many tier 0-2 services across many companies, which are part of their infra/foundation or core business. This is also necessary to keep Cadence reliable and trustable. We would like to grow our community with people who care about the project and put careful effort into improving it.
+
+Primary contributions are commits, publications in official Cadence mediums (GitHub, cadenceworkflow.io etc.), or community support (over Slack, GitHub, StackOverflow etc.) where the Cadence community can directly benefit from. 
+
+To become eligible for an official role, contributions should sustain for at least 6 months with a convincing case for future commitment. For example, to become a maintainer, a contributor should have regular commits within the last 6 months and should explain how they will continue contributing. 
+
+Candidates need to join at least one community meeting to gain familiarity from other members in related roles and to contribute in project processes.
+
+After being eligible, a contributor could apply to have an official role. Anyone with an official role should disclose their real name publicly apart from their GitHub aliases and provide their emails to the Cadence team for contact purposes. The Technical Steering Committee will then hold a voting process to move forward or to give feedback. 
+
+### Transparency
+Plans, roadmaps and projects are posted publicly. Similarly, Cadence community meetings are open to everyone. Planning discussions are held in community meetings. People with official roles are published publicly. Lastly, our decision making process is documented transparently (explained below). 
+
+Our decisions and processes are explained with clear reasons, motivation and goals; which are all based on addressing community needs and improving our technology.
+
+### Inclusivity
+The Cadence project strives to have contributions from more and diverse contributors. We believe we can build our best only if we can receive inputs from more people.
+
+Basic contributions such as sending PRs, leaving reviews, creating or responding to issues, and submitting project proposals are open to everyone without requiring any prior approval.
+
+Official roles are open to everyone regardless of affiliation, experience, or background. Our criteria will be merely based on the objective requirements mentioned above.
+
+### Sustainability
+Processes are designed to ensure the long-term health and success of the project.
+
+We aim to ensure avoiding bugs, security issues, having unfunded projects, half-done projects, unmaintained issues, launches without ownership. A clear understanding of maintainability is needed for any project’s approval.
+
+We strive to simplify our project to make it easier to understand, contribute, and avoid having a single point of failures.
+
 ---
 
-## Roles and Responsibilities
+## Official Roles
+### Maintainer
+A maintainer is a person who understands the Cadence codebase, with consistent past contributions. Maintainer rights and responsibilities are as follows:
+  * Merge rights (code-review is still required in most cases),
+  * Review Contributions,
+  * Fix Bugs and Update Dependencies,
+  * Release Updates,
+  * Manage Issues,
+  * Enforce Standards
 
-Ways to contribute to the Cadence project can be found in [this document](https://cadenceworkflow.io/community/how-to-contribute).
+Eligibility requirements are 
+  * Minimum 6 months of consistent code contributions (PRs)
+  * Attendance in community meetings to talk about updates and provide their inputs
+  * Voted approval from Technical Steering Committee
 
----
+### Member of the Technical Steering Committee (TSC)
+Cadence Technical Steering Committee
+  * Sets technical vision and strategy, 
+  * Makes technical decisions, 
+  * Approves design documents, 
+  * Resolves technical disagreements, 
+  * Contributes to planning, 
+  * Govern standards and practices,
+  * Facilitates contributions
 
-## Decision-Making Process
+Eligibility requirements are 
+  * Must already be a maintainer
+  * 2+ approved large project proposals
+  * Involvement in 2 large projects’ designs 
+  * Attendance in community meetings to talk about updates and provide their inputs
+  * Voted approval from Technical Steering Committee
 
-### 1\. Consensus-Based Decisions
-
-Most decisions are made through open discussions on GitHub or community meetings. Contributors and committers work towards consensus, ensuring that all voices are heard.
-
-Based on the requests from the past, feedback during planning sessions and the criticality of the features Cadence core team, which is also the technical steering committee, will propose a plan for the next year or 6 months. 
-
-### 2\. Appeals
-
-If a contributor disagrees with a decision, they can escalate the issue for review through Github or community meetings, explaining why a change in current proposal is necessary by comparing their ideas to existing items in the planning proposal.
 
 ---
 
@@ -62,6 +109,28 @@ If a contributor disagrees with a decision, they can escalate the issue for revi
 
 ---
 
+## Governing Model & Voting Process
+Cadence follows an **electoral** governing model where official voting will be held for certain decisions such as becoming an official member, technical discussions (major changes, controversial features, features deprecations, major releases etc.), planning, policy etc. 
+
+A member of TSC can call for voting for a subject in case they want an official opinion from every member. Before any election, two weeks notice should be given to members.
+
+Voting can be held online or offline if a member cannot make the meeting or if a common meeting time cannot be found. Even if the voting happens offline, members can still partially meet online to discuss the case. 
+
+Each election should be posted in a TSC dedicated GitHub repo. Each member is reached via their email, which is shared with every TSC member. It’s the member’s responsibility to provide a working email address in case the email bounces back. The member who calls for voting sends email notifications. 
+
+Voting has to be recorded and should clearly show a vote was casted from the voters account (email or GitHub or another account officially linked to the voter). A vote could be in “favor”, “not in favor” or “abstain”.
+
+In case, a response wasn’t received from all the members within two weeks. All the pending votes, with already 2 weeks notice period expired, will be casted till the end of the first day (Pacific Time) of the coming month. This way, every member can expect a voting might be happening and they can find voting issues in the dedicated repo. Decisions will be made based on received votes at that time. 
+
+At any time after the initial notification, if more than half of the total number of TSC members sends “favor” or “not in favor”, a decision can be made without waiting for other members, since their vote will have no effect.
+
+Otherwise, voting results are decided based on the total number of “favor” and “not in favor” votes, ignoring “abstain” votes. Whichever vote has a majority will be the decision. If no majority is reached, TSC can continue with a re-election or status-quo is maintained (i.e. no change).
+
+Every decision should be published at a TSC GitHub repo with vote numbers for TSC visibility, and announced publicly.
+
+
+---
+
 ## **Code of Conduct**
 
 The Cadence community follows a [Code of Conduct](https://github.com/uber/.github/blob/dcd96c52f2d1d839208315a2572cf37f48e52e96/CODE_OF_CONDUCT.md) to ensure a welcoming and inclusive environment for all participants.
@@ -70,19 +139,19 @@ The Cadence community follows a [Code of Conduct](https://github.com/uber/.githu
 
 ## **Project Roadmap**
 
-The core team is responsible for maintaining and updating the project roadmap. The roadmap outlines:
+The TSC is responsible for maintaining and updating the project roadmap. The roadmap outlines:
 
 * Upcoming features and milestones.  
 * Technical debt and areas of improvement.  
 * Long-term goals for the project.
 
-The roadmap is published and updated regularly on the [project website](https://cadenceworkflow.io/) and GitHub.
+The roadmap is published and updated regularly on the [GitHub Roadmap Project](https://github.com/orgs/cadence-workflow/projects/1) where high level details are posted in our [project website](https://cadenceworkflow.io/).
 
 ---
 
 ## **Licensing**
 
-All repositories under the Cadence Workflow organization are released under the [MIT License](https://github.com/cadence-workflow/cadence/blob/master/LICENSE), unless otherwise specified.
+All repositories under the Cadence Workflow organization are released under the [Apache 2.0 License](https://github.com/cadence-workflow/cadence/blob/master/LICENSE), unless otherwise specified.
 
 ---
 
