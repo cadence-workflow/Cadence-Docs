@@ -173,7 +173,7 @@ clusterMetadata:
 After the configuration is deployed:
 
 1. Register a global domain
-`cadence --do <domain_name> domain register --global_domain true  --clusters clusterDCA clusterDCB --active_cluster clusterDCA`
+`cadence --do <domain_name> domain register --global_domain true  --clusters clusterDCA,clusterDCB --active_cluster clusterDCA`
 
 
 2. Run some workflow and failover domain from one to another

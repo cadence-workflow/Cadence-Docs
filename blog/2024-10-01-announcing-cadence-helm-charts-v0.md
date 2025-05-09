@@ -23,7 +23,7 @@ Today, we are happy to announce the release of [Cadence Kubernetes Helm Chart v0
 Once Helm has been set up correctly, add the repo as follows:
 
 ```bash
-helm repo add cadence https://uber.github.io/cadence-charts
+helm repo add cadence https://cadence-workflow.github.io/cadence-charts
 ```
 
 If you had already added this repo earlier, run `helm repo update` to retrieve the latest versions of the packages.  You can then run `helm search repo cadence` to see the charts.

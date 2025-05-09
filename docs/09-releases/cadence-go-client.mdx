@@ -1,0 +1,28 @@
+---
+layout: default
+title: Cadence Go Client Releases
+description: Release Notes
+permalink: /docs/releases/cadence-go-client
+---
+
+# Cadence Go Client
+
+import {ListReleases, getReleaseData, getLatestRelease} from  '@site/src/components/CadenceReleases';
+export const releases = getReleaseData('cadence-go-client.json');
+export const latestRelease = getLatestRelease(releases);
+
+
+Cadence follows [semantic versioning](https://semver.org/spec/v2.0.0.html) and you can find more information about changes between version on the Cadence [changelog](https://github.com/cadence-workflow/cadence/blob/master/CHANGELOG.md).
+
+:::tip[Latest release for General Availability]
+
+> <strong><a href={latestRelease.html_url} target="_blank">{latestRelease.name}</a> </strong>published on {latestRelease.published_at_date}
+
+:::
+
+## Major Releases
+<ListReleases releases={releases}></ListReleases>
+
+---
+
+For a comprehensive list of changes and detailed release notes, please visit the [Cadence Go Client GitHub Releases page](https://github.com/cadence-workflow/cadence-go-client/releases).

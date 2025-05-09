@@ -94,7 +94,7 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'go-client/index' },
         { type: 'doc', id: 'go-client/workers' },
         { type: 'doc', id: 'go-client/create-workflows' },
-        { type: 'doc', id: 'go-client/02.5-starting-workflows' },
+        { type: 'doc', id: 'go-client/starting-workflows' },
         { type: 'doc', id: 'go-client/activities' },
         { type: 'doc', id: 'go-client/execute-activity' },
         { type: 'doc', id: 'go-client/child-workflows' },
@@ -111,6 +111,7 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'go-client/distributed-cron' },
         { type: 'doc', id: 'go-client/tracing' },
         { type: 'doc', id: 'go-client/workflow-replay-shadowing' },
+        { type: 'doc', id: 'go-client/workflow-non-deterministic-error' },
       ],
     },
     {
@@ -140,6 +141,15 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'workflow-troubleshooting/timeouts' },
         { type: 'doc', id: 'workflow-troubleshooting/activity-failures' },
         { type: 'doc', id: 'workflow-troubleshooting/retries' },
+      ],
+    },
+    {
+      label: 'Releases',
+      type: 'category',
+      items: [
+        { type: 'doc', 'id': 'releases/cadence', label: 'Cadence Service' },
+        { type: 'doc', 'id': 'releases/cadence-go-client', label: 'Cadence Go Client' },
+        { type: 'doc', 'id': 'releases/cadence-java-client', label: 'Cadence Java Client' },
       ],
     },
     {

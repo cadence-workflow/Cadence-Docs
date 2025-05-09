@@ -124,7 +124,7 @@ First of all, try replicating a single domain to make sure everything work. Here
 
 * 2.1 Assuming the domain only contain `currentCluster` in the cluster list, let's add the new cluster to the domain.
 ```bash
-cadence --address <currentClusterAddress> --do <domain_name> domain update --clusters <currentClusterName> <newClusterName>
+cadence --address <currentClusterAddress> --do <domain_name> domain update --clusters <currentClusterName>,<newClusterName>
 ```
 
 Run the command below to refresh the domain after adding a new cluster to the cluster list; we need to update the active_cluster to the same value that it appears to be.

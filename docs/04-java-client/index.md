@@ -10,9 +10,9 @@ permalink: /docs/java-client
 The following are important links for the Cadence Java client:
 
 
-- GitHub project: [https://github.com/cadence-workflow/cadence-java-client](https://github.com/cadence-workflow/cadence-java-client)
-- Samples: [https://github.com/cadence-workflow/cadence-java-samples](https://github.com/cadence-workflow/cadence-java-samples)
-- JavaDoc documentation: [https://www.javadoc.io/doc/com.uber.cadence/cadence-client](https://www.javadoc.io/doc/com.uber.cadence/cadence-client)
+- [Java Client repository](https://github.com/cadence-workflow/cadence-java-client)
+- [Java samples repository](https://github.com/cadence-workflow/cadence-java-samples)
+- [JavaDoc documentation](https://www.javadoc.io/doc/com.uber.cadence/cadence-client)
 
 
 Add *cadence-client* as a dependency to your *pom.xml*:

@@ -14,16 +14,17 @@ You can also review [Java-Client](/docs/java-client) and [java-docs](https://www
 
 ## Include Cadence Java Client Dependency
 
-Go to the [Maven Repository Uber Cadence Java Client Page](https://mvnrepository.com/artifact/com.uber.cadence/cadence-client)
-and find the latest version of the library. Include it as a dependency into your Java project. For example if you
-are using Gradle the dependency looks like:
-```bash
-compile group: 'com.uber.cadence', name: 'cadence-client', version: '<latest_version>'
+Custom snippets for including the Cadence Java Client can be found in the [cadence-client](https://central.sonatype.com/artifact/com.uber.cadence/cadence-client) page on Maven Central. Latest version is available in the [Cadence Java Client Releases](/docs/releases/cadence-java-client) page
+
+Include the cadence-client as a dependency into your Java project. For example if you
+are using Gradle, the dependency looks like:
+```gradle
+implementation group: 'com.uber.cadence', name: 'cadence-client', version: '<latest_version>'
 ```
 Also add the following dependencies that cadence-client relies on:
-```bash
-compile group: 'commons-configuration', name: 'commons-configuration', version: '1.9'
-compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+```gradle
+implementation group: 'commons-configuration', name: 'commons-configuration', version: '1.9'
+implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
 ```
 Make sure that the following code compiles:
 ```java

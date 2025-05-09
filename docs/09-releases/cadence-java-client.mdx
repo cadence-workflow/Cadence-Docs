@@ -1,0 +1,39 @@
+---
+layout: default
+title: Cadence Java Client Releases
+description: Release Notes
+permalink: /docs/releases/cadence-java-client
+---
+
+# Cadence Java Client
+
+import {ListReleases, getReleaseData, getLatestRelease} from  '@site/src/components/CadenceReleases';
+export const releases = getReleaseData('cadence-java-client.json');
+export const latestRelease = getLatestRelease(releases);
+
+
+Cadence follows [semantic versioning](https://semver.org/spec/v2.0.0.html) and you can find more information about changes between version on the Cadence [changelog](https://github.com/cadence-workflow/cadence/blob/master/CHANGELOG.md).
+
+:::tip[Latest release for General Availability]
+
+> <strong><a href={latestRelease.html_url} target="_blank">{latestRelease.name}</a> </strong>published on {latestRelease.published_at_date}
+
+:::
+
+:::info[Java Compatibility]
+
+Java versions 21, 17 and 11 are supported at this time.
+
+Due to backward compatibility, Java versions 17+ require the following JVM flag
+```
+--add-opens java.base/java.lang=ALL-UNNAMED
+```
+
+:::
+
+## Major Releases
+<ListReleases releases={releases}></ListReleases>
+
+---
+
+For a comprehensive list of changes and detailed release notes, please visit the [Cadence Java Client GitHub Releases page](https://github.com/cadence-workflow/cadence-java-client/releases).
