@@ -30,4 +30,8 @@ In both activity retries and workflow retries it is sufficient to mention a maxi
 
 In both activity retries and workflow retries it is sufficient to specify a maximum number of attempts or an expiration interval. The first retry attempt waits for the InitialIntervalInSeconds before starting and when an expiration interval is set lower than the initial interval, the retry policy becomes invalid and the activity or workflow will not be retried.
 
+## Heartbeat timeout being equal or higher than StartToClose timeout
 
+Heartbeat timeouts are used to detect when a worker died or restarted. With heartbeat timeout configured equal or higher than StartToClose timeout, cadence will timeout on the StartToClose timeout which essentially makes the configured heartbeat timeout to become useless. Ideally heartbeat timeouts should be configured to a few minutes so you can catch issues with the worker faster.
+
+[Read more abut long running activites](https://cadenceworkflow.io/docs/concepts/activities/#long-running-activities)

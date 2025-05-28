@@ -35,6 +35,8 @@ Activities time out StartToClose or ScheduleToClose if the activity took longer 
 
 For long running activities, while the activity is executing, the worker can die due to regular deployments or host restarts or failures. Cadence doesn't know about this and will wait for StartToClose or ScheduleToClose timeouts to kick in.
 
+[Read more abut long running activites](https://cadenceworkflow.io/docs/concepts/activities/#long-running-activities)
+
 Mitigation: Consider configuring heartbeat timeout and a retry policy
 
 [Example](https://github.com/cadence-workflow/cadence-samples/blob/df6f7bdba978d6565ad78e9f86d9cd31dfac9f78/cmd/samples/expense/workflow.go#L23)
