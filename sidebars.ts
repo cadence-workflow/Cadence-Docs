@@ -73,6 +73,7 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'java-client/implementing-workflows' },
         { type: 'doc', id: 'java-client/starting-workflow-executions' },
         { type: 'doc', id: 'java-client/activity-interface' },
+        { type: 'doc', id: 'java-client/implementing-activities' },
         { type: 'doc', id: 'java-client/versioning' },
         { type: 'doc', id: 'java-client/distributed-cron' },
         { type: 'doc', id: 'java-client/workers' },
