@@ -137,7 +137,10 @@ type.
 
 ## Safe Deployment of Versioned Workflows
 
-When deploying workflow changes in production environments, you may want to separate the versioning of the workflow code from the activation of new logic to ensure ability to roll back changes safely. The `ExecuteWithVersion`  and `ExecuteWithMinVersion` options provides this capability by allowing you to control which version is returned when `GetVersion()` is executed for the first time.
+When deploying workflow changes in production environments, you may want to separate the versioning 
+of the workflow code from the activation of new logic to ensure ability to roll back changes safely. 
+The `ExecuteWithVersion`  and `ExecuteWithMinVersion` options provides this capability by allowing you
+to control which version is returned when `GetVersion()` is executed for the first time.
 
 ### Step 1: Deploy with Compatibility
 
@@ -147,11 +150,12 @@ Initially, your workflow has the following code:
 err = workflow.ExecuteActivity(ctx, FooActivity).Get(ctx, nil)
 ```
 
-To safely roll out changes that replace `FooActivity` with `BarActivity`, you need both versions of your workflow code to be compatible with each other. Use `GetVersion` with the `ExecuteWithMinVersion` option:
+To safely roll out changes that replace `FooActivity` with `BarActivity`, you need both versions 
+of your workflow code to be compatible with each other. Use `GetVersion` with the `ExecuteWithMinVersion` option:
 
 ```go
 v := workflow.GetVersion(ctx, "fooToBarChange", workflow.DefaultVersion, 1, workflow.ExecuteWithMinVersion())
-// equalent to
+// equivalent to
 // v := workflow.GetVersion(ctx, "fooToBarChange", workflow.DefaultVersion, 1, workflow.ExecuteWithVersion(workflow.DefaultVersion))
 if v == workflow.DefaultVersion {
     err = workflow.ExecuteActivity(ctx, FooActivity).Get(ctx, nil)
@@ -189,11 +193,13 @@ At this step:
 When there are no running workflows using `DefaultVersion`, you can remove the corresponding branch:
 
 ```go
-_ := workflow.GetVersion(ctx, "fooToBarChange", 1, 1)
+workflow.GetVersion(ctx, "fooToBarChange", 1, 1)
 err = workflow.ExecuteActivity(ctx, BarActivity).Get(ctx, nil)
 ```
 
-`ExecuteWithMinVersion` and `ExecuteWithVersion` options are particularly useful when you want to ensure that your changes can be safely rolled back if needed, as both versions of the workflow code remain compatible with each other throughout the deployment process.
+`ExecuteWithMinVersion` and `ExecuteWithVersion` options are particularly useful when you want to ensure that 
+your changes can be safely rolled back if needed, as both versions of the workflow code remain compatible with 
+each other throughout the deployment process.
 
 ## Sanity checking
 
