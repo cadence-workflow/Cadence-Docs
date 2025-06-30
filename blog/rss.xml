@@ -4,10 +4,106 @@
         <title>Cadence Blog</title>
         <link>https://cadenceworkflow.io/blog</link>
         <description>Cadence Blog</description>
-        <lastBuildDate>Fri, 11 Apr 2025 16:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 30 Jun 2025 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Adaptive Tasklist Scaler]]></title>
+            <link>https://cadenceworkflow.io/blog/2025/06/30/adaptive-tasklist-scaler</link>
+            <guid>https://cadenceworkflow.io/blog/2025/06/30/adaptive-tasklist-scaler</guid>
+            <pubDate>Mon, 30 Jun 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[At Uber, we previously relied on a dynamic configuration service to manually control the number of partitions for scalable tasklists. This configuration approach introduced several operational challenges:]]></description>
+            <content:encoded><![CDATA[<p>At Uber, we previously relied on a dynamic configuration service to manually control the number of partitions for scalable tasklists. This configuration approach introduced several operational challenges:</p>
+<ul>
+<li><strong>Error-prone:</strong> Manual updates and deployments were required.</li>
+<li><strong>Unresponsive:</strong> Adjustments were typically reactive, often triggered by customer reports or observed backlogs.</li>
+<li><strong>Irreversible:</strong> Once increased, the number of partitions was rarely decreased due to the complexity of the two-phase process, especially when anticipating future traffic spikes.</li>
+</ul>
+<p>To address these issues, we introduced a new component in the Cadence Matching service: <strong>Adaptive Tasklist Scaler</strong>. This component dynamically monitors tasklist traffic and adjusts partition counts automatically. Since its rollout, we've seen a significant reduction in incidents and operational overhead caused by misconfigured tasklists.</p>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="what-is-a-scalable-tasklist">What is a Scalable Tasklist?<a href="https://cadenceworkflow.io/blog/2025/06/30/adaptive-tasklist-scaler#what-is-a-scalable-tasklist" class="hash-link" aria-label="Direct link to What is a Scalable Tasklist?" title="Direct link to What is a Scalable Tasklist?">​</a></h2>
+<p>A <strong>scalable tasklist</strong> is one that supports multiple partitions. Since Cadence’s Matching service is sharded by tasklist, all requests to a specific tasklist are routed to a single Matching host. To avoid bottlenecks and enhance scalability, tasklists can be partitioned so that multiple Matching hosts handle traffic concurrently.</p>
+<p>These partitions are transparent to clients. When a request arrives at the Cadence server for a scalable tasklist, the server selects an appropriate partition. More details can be found in <a href="https://github.com/cadence-workflow/cadence/blob/v1.3.1/docs/scalable_tasklist.md" target="_blank" rel="noopener noreferrer">this document</a>.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="how-is-the-number-of-partitions-manually-configured">How Is the Number of Partitions Manually Configured?<a href="https://cadenceworkflow.io/blog/2025/06/30/adaptive-tasklist-scaler#how-is-the-number-of-partitions-manually-configured" class="hash-link" aria-label="Direct link to How Is the Number of Partitions Manually Configured?" title="Direct link to How Is the Number of Partitions Manually Configured?">​</a></h3>
+<p>The number of partitions for a tasklist is controlled by two dynamic configuration properties:</p>
+<ol>
+<li><a href="https://github.com/cadence-workflow/cadence/blob/v1.2.13/common/dynamicconfig/constants.go#L3350" target="_blank" rel="noopener noreferrer"><code>matching.numTasklistReadPartitions</code></a>: Specifies the number of <strong>read</strong> partitions.</li>
+<li><a href="https://github.com/cadence-workflow/cadence/blob/v1.2.13/common/dynamicconfig/constants.go#L3344" target="_blank" rel="noopener noreferrer"><code>matching.numTasklistWritePartitions</code></a>: Specifies the number of <strong>write</strong> partitions.</li>
+</ol>
+<p>To prevent misconfiguration, a guardrail is in place to ensure that the number of read partitions is <strong>never less than</strong> the number of write partitions.</p>
+<p>When <strong>increasing</strong> the number of partitions, both properties are typically updated simultaneously. However, due to the guardrail, the order of updates doesn't matter—read and write partitions can be increased in any sequence.</p>
+<p>In contrast, <strong>decreasing</strong> the number of partitions is more complex and requires a <strong>two-phase process</strong>:</p>
+<ol>
+<li><strong>First</strong>, reduce the number of write partitions.</li>
+<li><strong>Then</strong>, wait for any backlog in the decommissioned partitions to drain completely.</li>
+<li><strong>Finally</strong>, reduce the number of read partitions.</li>
+</ol>
+<p>Because this process is tedious, error-prone, and backlog-sensitive, it is rarely performed in production environments.</p>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="how-does-adaptive-tasklist-scaler-work">How Does Adaptive Tasklist Scaler Work?<a href="https://cadenceworkflow.io/blog/2025/06/30/adaptive-tasklist-scaler#how-does-adaptive-tasklist-scaler-work" class="hash-link" aria-label="Direct link to How Does Adaptive Tasklist Scaler Work?" title="Direct link to How Does Adaptive Tasklist Scaler Work?">​</a></h2>
+<p>The architecture of the adaptive tasklist scaler is shown below:</p>
+<p><img decoding="async" loading="lazy" alt="adaptive tasklist scaler architecture" src="https://cadenceworkflow.io/assets/images/architecture-0c083477bee0b8657dc4cea752dc34ba.png" width="1200" height="980" class="img_ev3q"></p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="1-migrating-configuration-to-the-database">1. Migrating Configuration to the Database<a href="https://cadenceworkflow.io/blog/2025/06/30/adaptive-tasklist-scaler#1-migrating-configuration-to-the-database" class="hash-link" aria-label="Direct link to 1. Migrating Configuration to the Database" title="Direct link to 1. Migrating Configuration to the Database">​</a></h3>
+<p>The first key change was migrating partition count configuration from dynamic config to the Cadence cluster’s database. This allows the configuration to be updated programmatically.</p>
+<ul>
+<li>The <strong>adaptive tasklist scaler</strong> runs in the root partition only.</li>
+<li>It reads and updates the partition count.</li>
+<li>Updates propagate to non-root partitions via a <strong>push model</strong>, and to pollers and producers via a <strong>pull model</strong>.</li>
+<li>A <strong>version number</strong> is associated with each config. The version only increments through scaler updates, ensuring monotonicity and consistency across components.</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="2-monitoring-tasklist-traffic">2. Monitoring Tasklist Traffic<a href="https://cadenceworkflow.io/blog/2025/06/30/adaptive-tasklist-scaler#2-monitoring-tasklist-traffic" class="hash-link" aria-label="Direct link to 2. Monitoring Tasklist Traffic" title="Direct link to 2. Monitoring Tasklist Traffic">​</a></h3>
+<p>The scaler periodically monitors the <strong>write QPS</strong> of each tasklist.</p>
+<ul>
+<li>If QPS exceeds an upscale threshold for a sustained period, the number of <strong>read and write partitions</strong> is increased proportionally.</li>
+<li>If QPS falls below a downscale threshold, only the <strong>write partitions</strong> are reduced initially. The system then waits for drained partitions to clear before reducing the number of <strong>read partitions</strong>, ensuring backlog-free downscaling.</li>
+</ul>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="enabling-adaptive-tasklist-scaler">Enabling Adaptive Tasklist Scaler<a href="https://cadenceworkflow.io/blog/2025/06/30/adaptive-tasklist-scaler#enabling-adaptive-tasklist-scaler" class="hash-link" aria-label="Direct link to Enabling Adaptive Tasklist Scaler" title="Direct link to Enabling Adaptive Tasklist Scaler">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="prerequisites">Prerequisites<a href="https://cadenceworkflow.io/blog/2025/06/30/adaptive-tasklist-scaler#prerequisites" class="hash-link" aria-label="Direct link to Prerequisites" title="Direct link to Prerequisites">​</a></h3>
+<p>To use this feature, upgrade Cadence to <a href="https://github.com/cadence-workflow/cadence/tree/v1.3.0" target="_blank" rel="noopener noreferrer">v1.3.0 or later</a>.</p>
+<p>Also, migrate tasklist partition configurations to the database using <a href="https://github.com/cadence-workflow/cadence/blob/v1.3.0/docs/migration/tasklist-partition-config.md" target="_blank" rel="noopener noreferrer">this guide</a>.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="configuration">Configuration<a href="https://cadenceworkflow.io/blog/2025/06/30/adaptive-tasklist-scaler#configuration" class="hash-link" aria-label="Direct link to Configuration" title="Direct link to Configuration">​</a></h3>
+<p>The scaler is governed by the following dynamic configuration parameters:</p>
+<ul>
+<li><code>matching.enableAdaptiveScaler</code>: Enables the scaler at the tasklist level.</li>
+<li><code>matching.partitionUpscaleSustainedDuration</code>: Duration that QPS must stay above threshold before triggering upscale.</li>
+<li><code>matching.partitionDownscaleSustainedDuration</code>: Duration below threshold required before triggering downscale.</li>
+<li><code>matching.adaptiveScalerUpdateInterval</code>: Frequency at which the scaler evaluates and updates partition counts.</li>
+<li><code>matching.partitionUpscaleRPS</code>: QPS threshold per partition that triggers upscale.</li>
+<li><code>matching.partitionDownscaleFactor</code>: Factor applied to introduce hysteresis, lowering the QPS threshold for downscaling to avoid oscillations.</li>
+</ul>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="monitoring-and-metrics">Monitoring and Metrics<a href="https://cadenceworkflow.io/blog/2025/06/30/adaptive-tasklist-scaler#monitoring-and-metrics" class="hash-link" aria-label="Direct link to Monitoring and Metrics" title="Direct link to Monitoring and Metrics">​</a></h2>
+<p>Several metrics have been introduced to help monitor the scaler’s behavior:</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="qps-and-thresholds">QPS and Thresholds<a href="https://cadenceworkflow.io/blog/2025/06/30/adaptive-tasklist-scaler#qps-and-thresholds" class="hash-link" aria-label="Direct link to QPS and Thresholds" title="Direct link to QPS and Thresholds">​</a></h3>
+<ul>
+<li><code>estimated_add_task_qps_per_tl</code>: Estimated QPS of task additions per tasklist.</li>
+<li><code>tasklist_partition_upscale_threshold</code>: Upscale threshold for task additions.</li>
+<li><code>tasklist_partition_downscale_threshold</code>: Downscale threshold for task additions.</li>
+</ul>
+<blockquote>
+<p>The <code>estimated_add_task_qps_per_tl</code> value should remain between the upscale and downscale thresholds. If not, the scaler may not be functioning properly.</p>
+</blockquote>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="partition-configurations">Partition Configurations<a href="https://cadenceworkflow.io/blog/2025/06/30/adaptive-tasklist-scaler#partition-configurations" class="hash-link" aria-label="Direct link to Partition Configurations" title="Direct link to Partition Configurations">​</a></h3>
+<ul>
+<li><code>task_list_partition_config_num_read</code>: Number of current <strong>read</strong> partitions.</li>
+<li><code>task_list_partition_config_num_write</code>: Number of current <strong>write</strong> partitions.</li>
+<li><code>task_list_partition_config_version</code>: Version of the current partition configuration.</li>
+</ul>
+<p>These metrics are emitted by various components: root and non-root partitions, pollers, and producers. Their values should align under normal conditions, except immediately after updates.</p>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="status-at-uber">Status at Uber<a href="https://cadenceworkflow.io/blog/2025/06/30/adaptive-tasklist-scaler#status-at-uber" class="hash-link" aria-label="Direct link to Status at Uber" title="Direct link to Status at Uber">​</a></h2>
+<p>We enabled adaptive tasklist scaler across all Uber clusters in <strong>March 2025</strong>. Since its deployment:</p>
+<ul>
+<li><strong>Zero incidents</strong> have been reported due to misconfigured tasklists.</li>
+<li><strong>Operational workload</strong> related to manual scaling has been eliminated.</li>
+<li><strong>Scalability and resilience</strong> of Matching service have improved significantly.</li>
+</ul>]]></content:encoded>
+            <category>Deep Dives</category>
+            <category>Cadence Operations</category>
+            <category>cadence-matching</category>
+        </item>
         <item>
             <title><![CDATA[Introducing cadence-web v4.0.0]]></title>
             <link>https://cadenceworkflow.io/blog/2025/04/11/2025-04-11-announcing-cadence-web-v4/announcing-cadence-web-v4</link>
@@ -962,43 +1058,6 @@ It’s been a few months since our <a href="https://cadenceworkflow.io/blog/2023
 <p>Your engagement and contributions are what make the Cadence community thrive. Whether you have innovative ideas, insightful feedback, or just want to chat about Cadence, we encourage you to join our <a href="http://t.uber.com/cadence-slack" target="_blank" rel="noopener noreferrer">Slack #community channel</a>.</p>
 <p>We're committed to making this update as useful and informative as possible, so please share any feedback or suggestions you might have. Let’s keep building a vibrant and collaborative Cadence community together!</p>
 <p>Looking forward to sharing more exciting updates next month!</p>]]></content:encoded>
-            <category>Community Spotlight</category>
-        </item>
-        <item>
-            <title><![CDATA[Cadence Community Spotlight Update - February 2023]]></title>
-            <link>https://cadenceworkflow.io/blog/2023/02/28/community-spotlight-february</link>
-            <guid>https://cadenceworkflow.io/blog/2023/02/28/community-spotlight-february</guid>
-            <pubDate>Tue, 28 Feb 2023 00:00:00 GMT</pubDate>
-            <description><![CDATA[Here’s the latest in our regular monthly Community Spotlight updates that gives you news from in and around the Cadence community!]]></description>
-            <content:encoded><![CDATA[<p>Here’s the latest in our regular monthly Community Spotlight updates that gives you news from in and around the Cadence community!</p>
-<p>Please see below for a roundup of the highlights:</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="community-survey">Community Survey<a href="https://cadenceworkflow.io/blog/2023/02/28/community-spotlight-february#community-survey" class="hash-link" aria-label="Direct link to Community Survey" title="Direct link to Community Survey">​</a></h2>
-<p>We've been talking about doing a community survey for a while and during February we sent it out. We are still collating the results so it's not too late to send in your response.</p>
-<p>The survey takes 5 minutes and is your opportunity to provide feedback to the project and highlight areas you think we need to focus on.</p>
-<p>Use this <a href="https://uber.surveymonkey.com/r/ZS83WJW" target="_blank" rel="noopener noreferrer">Survey Link</a></p>
-<p>Please take a few minutes to give us your opinion.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="cadence-and-temporal">Cadence and Temporal<a href="https://cadenceworkflow.io/blog/2023/02/28/community-spotlight-february#cadence-and-temporal" class="hash-link" aria-label="Direct link to Cadence and Temporal" title="Direct link to Cadence and Temporal">​</a></h2>
-<p>During user surveys we've had a few queries about whether Cadence and <a href="https://temporal.io/" target="_blank" rel="noopener noreferrer">Temporal</a> are the same project. The answer is No - they are not the same project but they do share the same origin. At a high level Temporal is a fork of the Cadence project. Both Temporal and Cadence are now being developed by different communities so are independent.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="cadence-at-doordash">Cadence at DoorDash<a href="https://cadenceworkflow.io/blog/2023/02/28/community-spotlight-february#cadence-at-doordash" class="hash-link" aria-label="Direct link to Cadence at DoorDash" title="Direct link to Cadence at DoorDash">​</a></h2>
-<p>Although published a few months ago we missed including an article by <a href="https://doordash.engineering/" target="_blank" rel="noopener noreferrer">DoorDash</a> about how they are using Cadence to build real time event processing with <a href="https://flink.apache.org/" target="_blank" rel="noopener noreferrer">Apache Flink</a> and <a href="https://kafka.apache.org/" target="_blank" rel="noopener noreferrer">Apache Kafka</a>.</p>
-<p>Here is the link to the article: <a href="https://doordash.engineering/2022/08/02/building-scalable-real-time-event-processing-with-kafka-and-flink/" target="_blank" rel="noopener noreferrer">Building Scalable Real Time Event Processing with Kafka and Flink</a></p>
-<p>Remember to let us know if you have news, articles or blog posts about Cadence that you'd like us to include in these monthly updates.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="cadence-in-the-news">Cadence in the News!<a href="https://cadenceworkflow.io/blog/2023/02/28/community-spotlight-february#cadence-in-the-news" class="hash-link" aria-label="Direct link to Cadence in the News!" title="Direct link to Cadence in the News!">​</a></h2>
-<p>Below are a selection of Cadence related articles, blogs and whitepapers. Please take a look and feel free to share via your own social media channels.</p>
-<ul>
-<li>
-<p><a href="https://opensource.com/article/22/6/cadence-open-source-workflow-engine" target="_blank" rel="noopener noreferrer">Getting Started with Cadence, an Open Source Workflow Engine</a></p>
-</li>
-<li>
-<p><a href="https://thenewstack.io/meet-cadence-workflow-engine-for-taming-complex-processes/" target="_blank" rel="noopener noreferrer">Meet Cadence: Workflow Engine for Taming Complex Processes</a></p>
-</li>
-</ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="upcoming-events">Upcoming Events<a href="https://cadenceworkflow.io/blog/2023/02/28/community-spotlight-february#upcoming-events" class="hash-link" aria-label="Direct link to Upcoming Events" title="Direct link to Upcoming Events">​</a></h2>
-<ul>
-<li><a href="https://info.instaclustr.com/webinar-spinning-drones-cadence-kafka.html" target="_blank" rel="noopener noreferrer">On Demand Webinar: Spinning Your Drones with Cadence and Apache Kafka</a></li>
-</ul>
-<p>If you have any news or topics you'd like us to include in our next update then please join our <a href="http://t.uber.com/cadence-slack" target="_blank" rel="noopener noreferrer">Slack</a>#community channel.</p>
-<p>Please remember that this update is for you - so if you have any comments or feedback that could help us improve it then please share it with us in the #community <a href="http://t.uber.com/cadence-slack" target="_blank" rel="noopener noreferrer">Slack</a> channel.</p>]]></content:encoded>
             <category>Community Spotlight</category>
         </item>
     </channel>
