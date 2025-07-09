@@ -205,11 +205,11 @@ The previous deployment flow for versioned workflows included only Steps 0, 2, a
 
 Using the new options adds an extra step, which can lead to increased deployment time. If your service has a dynamic configuration, you can integrate it with the new functions to eliminate this problem and maintain the same number of deployments.
 
-The solution combines the code changes from [Step 1](https://docs.google.com/document/d/1mNR3BPqX94dY4-Hd_vBGe2es4XpIbylrE0TCH8xl7Fc/edit?tab=t.0#bookmark=id.rnkz0efm7hc1) and [Step 2](https://docs.google.com/document/d/1mNR3BPqX94dY4-Hd_vBGe2es4XpIbylrE0TCH8xl7Fc/edit?tab=t.0#bookmark=id.txibbvf2qjv) into a single code change. [Step 2](https://docs.google.com/document/d/1mNR3BPqX94dY4-Hd_vBGe2es4XpIbylrE0TCH8xl7Fc/edit?tab=t.0#bookmark=id.txibbvf2qjv) becomes a change in Dynamic Configuration rather than a new version deployment. Therefore, in this case, the deployment will include the following steps:
+The solution combines the code changes from [Step 1](#step-1) and [Step 2](#step-2) into a single code change. Step 2 becomes a change in Dynamic Configuration rather than a new version deployment. Therefore, in this case, the deployment will include the following steps:
 
 #### Step 1
 
-This Step 1 is similar to the original [Step 1](https://docs.google.com/document/d/1mNR3BPqX94dY4-Hd_vBGe2es4XpIbylrE0TCH8xl7Fc/edit?tab=t.0#bookmark=id.rnkz0efm7hc1) but introduces the retrieval of a value from the Dynamic Configuration. To achieve forward and backward compatibility of the change, the Dynamic Configuration must have the value of the minimum support version \- `workflow.DefaultVersion` at this step.
+This Step 1 is similar to the original [Step 1](#step-1) but introduces the retrieval of a value from the Dynamic Configuration. To achieve forward and backward compatibility of the change, the Dynamic Configuration must have the value of the minimum support version \- `workflow.DefaultVersion` at this step.
 
 ```go
 
