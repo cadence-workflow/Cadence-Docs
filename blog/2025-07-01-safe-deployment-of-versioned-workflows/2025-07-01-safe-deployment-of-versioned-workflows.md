@@ -201,57 +201,6 @@ This change finalizes the safe rollout of the new versioned workflow. At each st
 
 The previous deployment flow for versioned workflows included only Steps 0, 2, and 3\. Therefore, a direct upgrade from Step 0 to Step 2 (skipping Step 1\) was not safe due to the inability to perform a safe rollback. The new functions enabled customers to have Step 1, thereby making the deployment process safe.
 
-### Deployment with Dynamic Configuration
-
-Using the new options adds an extra step, which can lead to increased deployment time. If your service has a dynamic configuration, you can integrate it with the new functions to eliminate this problem and maintain the same number of deployments.
-
-The solution combines the code changes from [Step 1](#step-1) and [Step 2](#step-2) into a single code change. Step 2 becomes a change in Dynamic Configuration rather than a new version deployment. Therefore, in this case, the deployment will include the following steps:
-
-#### Step 1
-
-This Step 1 is similar to the original [Step 1](#step-1) but introduces the retrieval of a value from the Dynamic Configuration. To achieve forward and backward compatibility of the change, the Dynamic Configuration must have the value of the minimum support version \- `workflow.DefaultVersion` at this step.
-
-```go
-
-var (
-	// Get dynamic config client during app initialization 
-dcClient, _ 	= dynamicConfig.NewClient()
-region 	= getRegion()
-)
-
-// Git tag: v0.2   
-// MyWorkflow supports: workflow.DefaultVersion and 1
-func MyWorkflow(ctx workflow.Context) error {   
-// The call of the dynamic configuration client is safe for the workflow execution
-	// because it's not saved in the history events. 
-    changeIDExecVersion, err := dcClient.GetIntValue("changeId", map[string]interface{
-	"region": region,
-})
-if err != nil {
-	// Error handling must be non-deterministic 
-}
-    
-    // When GetVersion is executed for the first time, changeIDExecVersion will be returned
-    version := workflow.GetVersion(ctx, "MyChange", workflow.DefaultVersion, 1, workflow.ExecuteWithVersion(changeIDExecVersion))
-    
-    if version == workflow.DefaultVersion {
-       return workflow.ExecuteActivity(ctx, FooActivity).Get(ctx, nil)
-    } 
-    
-    return workflow.ExecuteActivity(ctx, BarActivity).Get(ctx, nil)
-  }
-
-
-```
-
-#### Step 2
-
-Once all v0.2 workers are replaced by v0.1 workers, you need to change the Dynamic Configuration value to the next version (in this case, 1). This will activate the new logic for new workflow executions. To roll back from Step 2 to Step 1, simply revert the dynamic configuration value.
-
-#### Safety
-
-The new options do not alter the logic of replaying, so dynamically changing the value will not cause non-deterministic errors during the replay of old or new workflow executions; therefore, it is safe to change the value. Only the minimum and maximum supported versions are used during replay, indicating which versions the code supports.
-
 ## Conclusion
 
 The new options introduced into `GetVersion` address gaps in the Versioning logic that previously led to failed workflow executions. This enhancement improves the safety of deploying versioned workflows, allowing for the separation of code changes from the activation of new logic, making the deployment process more predictable. This extension of `GetVersion` is a significant improvement that opens the way for future optimizations.
