@@ -6,6 +6,8 @@ permalink: /docs/codelabs/workflow-tests-go-replayer-shadower
 
 # **Codelab: How to Write Tests With Workflow Replayer and Shadower**
 
+**A video companion to this Codelab is available on our YouTube channel [here](https://www.youtube.com/watch?v=LHOr0NOp0Gc).**
+
 This Codelab is a step-by-step guide to help you create tests for your Cadence Workflows. By the end of this guide, you will be able to build a safety net for your workflow code, ensuring that changes you make don't break existing, long-running workflows.
 
 We will cover two powerful testing tools and three keys concepts in the Go client:
