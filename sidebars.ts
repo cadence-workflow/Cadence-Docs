@@ -64,6 +64,13 @@ const sidebars: SidebarsConfig = {
       ],
     },
     {
+      label: 'Codelabs',
+      type: 'category',
+      items: [
+        { type: 'doc', id: 'codelabs/workflow-tests-go-replayer-shadower' },
+      ],
+    },
+    {
       label: 'Java Client',
       type: 'category',
       items: [
