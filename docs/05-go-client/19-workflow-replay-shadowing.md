@@ -8,15 +8,21 @@ permalink: /docs/go-client/workflow-replay-shadowing
 
 In the Versioning section, we mentioned that incompatible changes to workflow definition code could cause non-deterministic issues when processing workflow tasks if versioning is not done correctly. However, it may be hard for you to tell if a particular change is incompatible or not and whether versioning logic is needed. To help you identify incompatible changes and catch them before production traffic is impacted, we implemented Workflow Replayer and Workflow Shadower.
 
+## Hands-On Codelab
+**Ready for hands-on learning?** Follow our step-by-step [**Workflow Testing Codelab**](/docs/00-codelabs/01-workflow-tests-go-replayer-shadower.md) to build a complete testing setup from scratch. 
+
+**You'll learn:** Replayer setup • Shadower integration • Breaking change detection
+**Time commitment:** 30-45 minutes 
+
 ## Workflow Replayer
 
-Workflow Replayer is a testing component for replaying existing workflow histories against a workflow definition. The replaying logic is the same as the one used for processing workflow tasks, so if there's any incompatible changes in the workflow definition, the replay test will fail.
+Workflow Replayer is a testing component for replaying existing workflow histories against a workflow definition. The replaying logic is the same as the one used for processing workflow tasks, so if there are any incompatible changes in the workflow definition, the replay test will fail.
 
 ### Write a Replay Test
 
 #### Step 1: Create workflow replayer
 
-Create a workflow Replayer by:
+Create a Workflow Replayer by:
 
 ```go
 replayer := worker.NewWorkflowReplayer()
@@ -60,7 +66,7 @@ The dumped workflow history will be stored in the file at the path you specified
 
 #### Step 4: Call the replay method
 
-Once you have the workflow history or have the connection to Cadence server for fetching history, call one of the four replay methods to start the replay test.
+Once you have the workflow history or have the connection to the Cadence server for fetching history, call one of the four replay methods to start the replay test.
 
 ```go
 // if workflow history has been loaded into memory
@@ -70,7 +76,7 @@ err := replayer.ReplayWorkflowHistory(logger, history)
 err = replayer.ReplayWorkflowHistoryFromJSONFile(logger, jsonFileName)
 
 // if workflow history is stored in a json file and you only want to replay part of it
-// NOTE: lastEventID can't be set arbitrarily. It must be the end of of a history events batch
+// NOTE: lastEventID can't be set arbitrarily. It must be the end of a history events batch
 // when in doubt, set to the eventID of decisionTaskStarted events.
 err = replayer.ReplayPartialWorkflowHistoryFromJSONFile(logger, jsonFileName, lastEventID)
 
@@ -81,9 +87,9 @@ err = replayer.ReplayWorkflowExecution(ctx, cadenceServiceClient, logger, domain
 
 #### Step 5: Check returned error
 
-If an error is returned from the replay method, it means there's a incompatible change in the workflow definition and the error message will contain more information regarding where the non-deterministic error happens.
+If an error is returned from the replay method, it means there's an incompatible change in the workflow definition and the error message will contain more information regarding where the non-deterministic error happens.
 
-Note: currently an error will be returned if there are less than 3 events in the history. It is because the first 3 events in the history has nothing to do with the workflow code, so Replayer can't tell if there's a incompatible change or not.
+Note: currently an error will be returned if there are less than 3 events in the history. It is because the first 3 events in the history have nothing to do with the workflow code, so Replayer can't tell if there's an incompatible change or not.
 
 ### Sample Replay Test
 
@@ -100,7 +106,7 @@ func TestReplayWorkflowHistoryFromFile(t *testing.T) {
 
 ## Workflow Shadower
 
-Workflow Replayer works well when verifying the compatibility against a small number of workflow histories. If there are lots of workflows in production need to be verified, dumping all histories manually clearly won't work. Directly fetching histories from cadence server might be a solution, but the time to replay all workflow histories might be too long for a test.
+Workflow Replayer works well when verifying the compatibility against a small number of workflow histories. If there are a lot of workflows in production that need to be verified, dumping all histories manually clearly won't work. Directly fetching histories from cadence server might be a solution, but the time to replay all workflow histories might be too long for a test.
 
 Workflow Shadower is built on top of Workflow Replayer to address this problem. The basic idea of shadowing is: scan workflows based on the filters you defined, fetch history for each of workflow in the scan result from Cadence server and run the replay test. It can be run either as a test to serve local development purpose or as a workflow in your worker to continuously replay production workflows.
 
@@ -119,12 +125,12 @@ Complete documentation on shadow options which includes default values, accepted
 #### Shadow Exit Condition
 
 - ExpirationInterval: Shadowing will exit when the specified interval has passed.
-- ShadowCount: Shadowing will exit after this number of workflow has been replayed. Note: replay maybe skipped due to errors like can't fetch history, history too short, etc. Skipped workflows won't be taken account into ShadowCount.
+- ShadowCount: Shadowing will exit after this number of workflow has been replayed. Note: replay may be skipped due to errors like can't fetch history, history too short, etc. Skipped workflows won't be taken into account in ShadowCount.
 
 #### Shadow Mode
 
-- Normal: Shadowing will complete after all workflows matches WorkflowQuery (after sampling) have been replayed or when exit condition is met.
-- Continuous: A new round of shadowing will be started after all workflows matches WorkflowQuery have been replayed. There will be a 5 min wait period between each round, and currently this wait period is not configurable. Shadowing will complete only when ExitCondition is met. ExitCondition must be specified when using this mode.
+- Normal: Shadowing will complete after all workflows that match WorkflowQuery (after sampling) have been replayed or when exit condition is met.
+- Continuous: A new round of shadowing will be started after all workflows that match WorkflowQuery have been replayed. There will be a 5 min wait period between each round, and currently this wait period is not configurable. Shadowing will complete only when ExitCondition is met. ExitCondition must be specified when using this mode.
 
 #### Shadow Concurrency
 
@@ -132,7 +138,7 @@ Complete documentation on shadow options which includes default values, accepted
 
 ### Local Shadowing Test
 
-Local shadowing test is similar to the replay test. First create a workflow shadower with optional shadow and replay options, then register the workflow that need to be shadowed. Finally, call the `Run` method to start the shadowing. The method will return if shadowing has finished or any non-deterministic error is found.
+Local shadowing test is similar to the replay test. First create a workflow shadower with optional shadow and replay options, then register the workflow that needs to be shadowed. Finally, call the `Run` method to start the shadowing. The method will return if shadowing has finished or any non-deterministic error is found.
 
 Here's a simple example. The example is also available [here](https://github.com/cadence-workflow/cadence-samples/blob/master/cmd/samples/recipes/helloworld/shadow_test.go).
 
@@ -163,7 +169,7 @@ NOTE:
 - **All shadow workflows are running in one Cadence system domain, and right now, every user domain can only have one shadow workflow at a time.**
 - **The Cadence server used for scanning and getting workflow history will also be the Cadence server for running your shadow workflow.** Currently, there's no way to specify different Cadence servers for hosting the shadowing workflow and scanning/fetching workflow.
 
-Your worker can also be configured to run in shadow mode to run shadow tests as a workflow. This is useful if there's a number of workflows need to be replayed. Using a workflow can make sure the shadowing won't accidentally fail in the middle and the replay load can be distributed by deploying more shadow mode workers. It can also be incorporated into your deployment process to make sure there's no failed replay checks before deploying your change to production workers.
+Your worker can also be configured to run in shadow mode to run shadow tests as a workflow. This is useful if there are a number of workflows that need to be replayed. Using a workflow can make sure the shadowing won't accidentally fail in the middle and the replay load can be distributed by deploying more shadow mode workers. It can also be incorporated into your deployment process to make sure there's no failed replay checks before deploying your change to production workers.
 
 When running in shadow mode, the normal decision, activity and session worker will be disabled so that it won't update any production workflows. A special shadow activity worker will be started to execute activities for scanning and replaying workflows. The actual shadow workflow logic is controlled by Cadence server and your worker is only responsible for scanning and replaying workflows.
 
