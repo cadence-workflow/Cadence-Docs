@@ -93,7 +93,7 @@ Note: currently an error will be returned if there are less than 3 events in the
 
 ### Sample Unit Test
 
-This sample is also available in our samples repo at [here](https://github.com/cadence-workflow/cadence-samples/blob/master/cmd/samples/recipes/helloworld/replay_test.go#L39).
+This sample is also available in our samples repo at [here](https://github.com/cadence-workflow/cadence-samples/blob/6350c61d16487d3a6cf9b31e3fac6967170c71ba/cmd/samples/recipes/helloworld/replay_test.go#L18).
 
 ```go
 func TestReplayWorkflowHistoryFromFile(t *testing.T) {
@@ -112,7 +112,7 @@ Workflow Shadower is built on top of Workflow Replayer to address this problem. 
 
 ### Shadow Options
 
-Complete documentation on shadow options which includes default values, accepted values, etc. can be found [here](https://github.com/cadence-workflow/cadence-go-client/blob/master/internal/workflow_shadower.go#L53). The following sections are just a brief description of each option.
+Complete documentation on shadow options which includes default values, accepted values, etc. can be found [here](https://github.com/cadence-workflow/cadence-go-client/blob/2af19f25b056ce1039feaeabd3fb0e803d20010b/internal/workflow_shadower.go#L53). The following sections are just a brief description of each option.
 
 #### Scan Filters: Advanced Query
 - **WorkflowQuery**: Use advanced visibility query syntax for complex filtering.
@@ -144,7 +144,7 @@ Complete documentation on shadow options which includes default values, accepted
 
 Local shadowing with the Workflow Shadower is similar to the replay test. First create a workflow shadower with optional shadow and replay options, then register the workflow that needs to be shadowed. Finally, call the `Run` method to start the shadowing. The method will return if shadowing has finished or any non-deterministic error is found.
 
-Here's a simple example. The example is also available [here](https://github.com/cadence-workflow/cadence-samples/blob/master/cmd/samples/recipes/helloworld/shadow_test.go).
+Here's a simple example. The example is also available [here](https://github.com/cadence-workflow/cadence-samples/blob/6350c61d16487d3a6cf9b31e3fac6967170c71ba/cmd/samples/recipes/helloworld/shadow_test.go#L21).
 
 ```go
 func TestShadowWorkflow(t *testing.T) {
@@ -178,11 +178,11 @@ Your worker can also be configured to run in shadow mode to run shadow tests as 
 
 When running in shadow mode, the normal decision, activity and session worker will be disabled so that it won't update any production workflows. A special shadow activity worker will be started to execute activities for scanning and replaying workflows. The actual shadow workflow logic is controlled by Cadence server and your worker is only responsible for scanning and replaying workflows.
 
-[Replay succeed, skipped, and failed metrics](https://github.com/cadence-workflow/cadence-go-client/blob/master/internal/common/metrics/constants.go#L105) will be emitted by your worker when executing the shadow workflow and you can monitor those metrics to see if there's any incompatible changes.
+[Replay succeed, skipped, and failed metrics](https://github.com/cadence-workflow/cadence-go-client/blob/654b9a72a6abb40317387c8d97b19d882d1aaa6c/internal/common/metrics/constants.go#L108-L111) will be emitted by your worker when executing the shadow workflow and you can monitor those metrics to see if there's any incompatible changes.
 
 To enable the shadow mode, the only change needed is setting the `EnableShadowWorker` field in `worker.Options` to `true`, and then specify the `ShadowOptions`.
 
 Registered workflows will be forwarded to the underlying WorkflowReplayer. DataConverter, WorkflowInterceptorChainFactories, ContextPropagators, and Tracer specified in the `worker.Options` will also be used as ReplayOptions. Since all shadow workflows are running in one system domain, to avoid conflict, **the actual task list name used will be `domain-tasklist`.**
 
 ### How to Setup
-A sample of this setup can be found [here](https://github.com/cadence-workflow/cadence-samples/blob/master/cmd/samples/recipes/helloworld/main.go#L77).
+A sample of this setup can be found [here](https://github.com/cadence-workflow/cadence-samples/blob/6350c61d16487d3a6cf9b31e3fac6967170c71ba/cmd/samples/recipes/helloworld/main.go#L77).
