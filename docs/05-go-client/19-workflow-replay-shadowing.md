@@ -11,7 +11,7 @@ In the Versioning section, we mentioned that incompatible changes to workflow de
 ## Hands-On Codelab
 **Ready for hands-on learning?** Follow our step-by-step [**Workflow Testing Codelab**](/docs/00-codelabs/01-workflow-tests-go-replayer-shadower.md) to build a complete testing setup from scratch. 
 
-**You'll learn:** Replayer setup • Shadower integration • Breaking change detection
+**You'll learn:** Replayer setup • Shadower integration • Breaking change detection<br/>
 **Time commitment:** 30-45 minutes 
 
 ## Workflow Replayer
