@@ -32,6 +32,8 @@ Complete documentation on replay options which includes default values, accepted
 - **WorkflowInterceptorChainFactories**: Slice of interceptor factories for workflow execution middleware.
 - **Tracer**: OpenTracing tracer interface for distributed tracing support.
 
+>⚠️ **Important:** Replay options must exactly match your production worker settings to ensure accurate replay results.
+
 #### Registration Methods
 - **RegisterWorkflow(workflowFunc)**: Standard registration using Go function name as workflow type.
 - **RegisterWorkflow(workflowFunc, RegisterOptions)**: Registration with custom workflow name and additional options.
@@ -48,6 +50,11 @@ Complete documentation on replay options which includes default values, accepted
 - **Non-deterministic Changes**: Workflow code modifications that alter execution flow will cause replay failures.
 - **Insufficient History**: Minimum of 3 workflow events required for meaningful replay validation.
 
+#### Downloading History
+Replayer can read workflow history from a local JSON file or fetch it directly from the Cadence server. If you would like to use the first method, you can use the following CLI command, otherwise you can skip to the next step.
+```bash
+cadence --do <domain> workflow show --wid <workflowID> --rid <runID> --of <output file name>
+```
 ### Sample Unit Test
 
 This sample is also available in our samples repo [here](https://github.com/cadence-workflow/cadence-samples/blob/6350c61d16487d3a6cf9b31e3fac6967170c71ba/cmd/samples/recipes/helloworld/replay_test.go#L18).
