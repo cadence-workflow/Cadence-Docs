@@ -101,6 +101,7 @@ const sidebars: SidebarsConfig = {
       items: [
         { type: 'doc', id: 'go-client/index' },
         { type: 'doc', id: 'go-client/workers' },
+        { type: 'doc', id: 'go-client/worker-auto-scaling' },
         { type: 'doc', id: 'go-client/create-workflows' },
         { type: 'doc', id: 'go-client/starting-workflows' },
         { type: 'doc', id: 'go-client/activities' },
