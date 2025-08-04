@@ -64,13 +64,6 @@ const sidebars: SidebarsConfig = {
       ],
     },
     {
-      label: 'Codelabs',
-      type: 'category',
-      items: [
-        { type: 'doc', id: 'codelabs/workflow-tests-go-replayer-shadower' },
-      ],
-    },
-    {
       label: 'Java Client',
       type: 'category',
       items: [
@@ -80,7 +73,6 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'java-client/implementing-workflows' },
         { type: 'doc', id: 'java-client/starting-workflow-executions' },
         { type: 'doc', id: 'java-client/activity-interface' },
-        { type: 'doc', id: 'java-client/implementing-activities' },
         { type: 'doc', id: 'java-client/versioning' },
         { type: 'doc', id: 'java-client/distributed-cron' },
         { type: 'doc', id: 'java-client/workers' },
@@ -120,6 +112,7 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'go-client/tracing' },
         { type: 'doc', id: 'go-client/workflow-replay-shadowing' },
         { type: 'doc', id: 'go-client/workflow-non-deterministic-error' },
+        { type: 'doc', id: 'go-client/sleep' },      
       ],
     },
     {
@@ -149,15 +142,6 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'workflow-troubleshooting/timeouts' },
         { type: 'doc', id: 'workflow-troubleshooting/activity-failures' },
         { type: 'doc', id: 'workflow-troubleshooting/retries' },
-      ],
-    },
-    {
-      label: 'Releases',
-      type: 'category',
-      items: [
-        { type: 'doc', 'id': 'releases/cadence', label: 'Cadence Service' },
-        { type: 'doc', 'id': 'releases/cadence-go-client', label: 'Cadence Go Client' },
-        { type: 'doc', 'id': 'releases/cadence-java-client', label: 'Cadence Java Client' },
       ],
     },
     {
