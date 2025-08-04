@@ -23,7 +23,7 @@ The AutoScaler addresses these critical production problems:
 - **Production reliability**: Prevents scaling-related incidents and workflow processing delays
 
 ### How to get started
-To get started, just add the following to your worker options.
+>To get started, just add the following to your worker options:
 ```go
 worker.Options{
     ...
@@ -32,6 +32,33 @@ worker.Options{
     }
 }
 ```
+
+>⚠️ **Note:** If enabled, the AutoScaler will ignore these options:
+```go
+worker.Options{
+    ...
+    MaxConcurrentActivityTaskPollers: 4,
+    MaxConcurrentDecisionTaskPollers: 2, 
+    ...
+}
+```
+### Compatibility considerations
+
+**Poller Count Setup**: Before enabling AutoScaler, ensure your initial poller count equals the maximum of your decision and activity worker poller counts. This prevents AutoScaler from starting with insufficient polling capacity.
+
+>For example:
+```go
+worker.Options{
+    ...
+    AutoScalerOptions: worker.AutoScalerOptions{
+			Enabled: true,
+            PollerMinCount: 2,
+            PollerMaxCount: 8,
+            PollerInitCount: 4, // Max of previous manually configured pollers (4 and 2 above)
+    }
+}
+```
+
 
 ## Scenario: Low CPU Utilization
 
@@ -102,7 +129,7 @@ This approach ensures that polling capacity is always aligned with actual demand
 
 
 
-## Metrics and Compatibility Guide
+## Metrics Guide
 
 ### Key metrics to monitor
 
@@ -137,8 +164,5 @@ Monitor these key metrics to understand AutoScaler performance:
 ![Activity Poller Wait Time](img/dash-activity-poller-wait-time.png)
 
 
-### Compatibility considerations
-
-**Poller Count Setup**: Before enabling AutoScaler, ensure your initial poller count equals the maximum of your decision and activity worker poller counts. This prevents AutoScaler from starting with insufficient polling capacity.
 
 
