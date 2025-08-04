@@ -11,7 +11,8 @@ permalink: /docs/go-client/worker-auto-scaling
 Cadence Worker AutoScaler automatically adjusts your worker configuration to optimize resource utilization and prevent common scaling issues. Instead of manually tuning poller counts, AutoScaler monitors real-time metrics from your workers and the Cadence service to make intelligent scaling decisions.
 
 The AutoScaler addresses these critical production problems:
-- **Incorrect downscaling**: Prevents compute autoscalers (e.g. AWS EC2 Auto Scaling) from scaling down workers due to low CPU utilization when workers are actually busy polling
+- **Insufficient throughput capacity**: Automatically scales up pollers when task load increases, ensuring workflows are processed without delays
+- **Better resource utilization**: By adjusting poller counts based on actual task demand rather than static configuration, workers utilize their allocated CPU resources more efficiently, preventing unnecessary downscaling by compute autoscalers (e.g. AWS EC2 Auto Scaling)
 - **Manual configuration complexity**: Eliminates the need for service owners to understand and tune complex worker parameters
 
 ### Key benefits
