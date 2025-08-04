@@ -61,6 +61,7 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'concepts/cross-dc-replication' },
         { type: 'doc', id: 'concepts/search-workflows' },
         { type: 'doc', id: 'concepts/http-api' },
+        { type: 'doc', id: 'concepts/data-converter' },
       ],
     },
     {
