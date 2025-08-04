@@ -120,6 +120,7 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'go-client/tracing' },
         { type: 'doc', id: 'go-client/workflow-replay-shadowing' },
         { type: 'doc', id: 'go-client/workflow-non-deterministic-error' },
+        { type: 'doc', id: 'go-client/sleep' },
       ],
     },
     {
