@@ -39,26 +39,35 @@ cd cadence/docker/grafana/provisioning/dashboards
 2. Upload the JSON files from the directory.
 
 ## Available Dashboards
+### List of Pre-configured Dashboards
 
-### Workflow Metrics Dashboard
+The following dashboards are available in the Cadence GitHub repository:
 
-- **Purpose**: Monitor workflow execution times, success rates, and failures.
-- **Usage**: Identify bottlenecks and optimize workflows.
+1. **Cadence Frontend Dashboard**  
+  Monitors the performance and health of the Cadence Frontend service, including request rates, latencies, and errors.
 
-### Task Queue Metrics Dashboard
+2. **Cadence History Dashboard**  
+  Provides insights into the Cadence History service, including workflow execution metrics, shard performance, and persistence latencies.
 
-- **Purpose**: Track task queue latency, throughput, and errors.
-- **Usage**: Ensure efficient task processing.
+3. **Cadence Matching Dashboard**  
+  Tracks metrics related to the Matching service, such as task queue throughput, poller activity, and task latencies.
 
-### System Health Dashboard
+4. **Cadence Persistence Dashboard**  
+  Provides metrics related to persistence operations, including database query latencies, error rates, and throughput. 
 
-- **Purpose**: Monitor resource usage (CPU, memory) for Cadence services.
-- **Usage**: Diagnose system-level issues.
+5. **Cadence Workflow Dashboard**  
+  Focuses on workflow execution metrics, including success rates, failure rates, and execution durations.
 
-### Service Metrics Dashboards
+  6. **Cadence Client Dashboard**  
+    Provides metrics related to client-side operations, including API call latencies, request rates, and error rates.
 
-- **Purpose**: Provide detailed metrics for individual Cadence services (history, matching, frontend).
-- **Usage**: Analyze service-specific performance.
+  7. **Cadence Server Dashboard**  
+    Monitors server-side metrics such as resource utilization, request handling performance, and service-specific latencies.
+
+  8. **Cadence Archival Dashboard**  
+    Tracks metrics for archival operations, including storage usage, archival throughput, and error rates.
+
+Each dashboard is available as a JSON file in the [Cadence GitHub repository](https://github.com/cadence-workflow/cadence/tree/master/docker/grafana/provisioning/dashboards) and can be imported into Grafana for monitoring.
 
 ## Customization
 
