@@ -62,6 +62,7 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'concepts/search-workflows' },
         { type: 'doc', id: 'concepts/http-api' },
         { type: 'doc', id: 'concepts/data-converter' },
+        { type: 'doc', id: 'concepts/grafana-metrics-dashboards' },        
       ],
     },
     {
