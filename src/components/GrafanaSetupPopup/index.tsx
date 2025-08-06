@@ -25,9 +25,9 @@ const GrafanaSetupPopup: React.FC = () => {
       <NewFeaturePopup
         featureId="grafana_helm_setup_2025_ultra_v2"
         title="✨ Brand New: Grafana Helm Setup Guide"
-        description="🎯 Get production-ready monitoring for your Cadence workflows! Our comprehensive guide covers ServiceMonitor setup, automated metrics scraping, and pre-built dashboards. Perfect for Kubernetes deployments."
+        description=""
         linkUrl="/docs/concepts/grafana-helm-setup"
-        linkText="🚀 Explore the Guide"
+        linkText="📖 View Guide"
         showDays={365}
       />
     </div>

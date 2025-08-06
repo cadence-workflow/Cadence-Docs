@@ -4,6 +4,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import Heading from '@theme/Heading';
+import GrafanaSetupPopup from '@site/src/components/GrafanaSetupPopup';
 
 import styles from './index.module.css';
 
@@ -37,6 +38,7 @@ export default function Home(): JSX.Element {
       title={`${siteConfig.title}`}
       description="Cadence is an open-source workflow orchestration engine that simplifies building scalable, reliable, and resilient distributed applications. Explore our platform for advanced workflow management, comprehensive documentation, and community-driven support.">
       <HomepageHeader />
+      <GrafanaSetupPopup />
       <main>
         <HomepageFeatures />
       </main>

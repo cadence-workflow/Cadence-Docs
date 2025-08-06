@@ -20,28 +20,34 @@
   display: none;
 }
 
-/* Top announcement popup banner */
+/* Header banner below title bar */
 .popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  position: relative;
+  width: 100%;
   background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
   color: white;
-  padding: 16px;
-  z-index: 9999;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  padding: 8px 0;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
   transition: all 0.3s ease;
+}
+
+.popup:hover {
+  background: linear-gradient(135deg, #5b5ff5 0%, #8c5cf6 100%);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  transform: translateY(-1px);
 }
 
 .popupVisible {
   opacity: 1;
-  transform: translateY(0);
+  display: block;
 }
 
 .popupHidden {
   opacity: 0;
-  transform: translateY(-100%);
+  display: none;
 }
 
 /* Remove decorative top bar for banner style */
@@ -54,24 +60,17 @@
   display: none;
 }
 
-/* Banner header layout */
+/* Hide header for running banner */
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0;
+  display: none;
 }
 
 .iconContainer {
-  display: flex;
-  align-items: center;
+  display: none;
 }
 
 .sparkles {
-  font-size: 20px;
-  margin-right: 8px;
+  display: none;
 }
 
 .iconGlow {
@@ -79,38 +78,27 @@
 }
 
 .closeButton {
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
+  display: none;
+}
+
+/* Header banner content */
+.content {
+  position: relative;
+  white-space: nowrap;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  color: white;
-  transition: all 0.2s ease;
-}
-
-.closeButton:hover {
-  background: rgba(255, 255, 255, 0.3);
-  color: white;
-}
-
-/* Banner content layout */
-.content {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
   gap: 16px;
-  flex-wrap: wrap;
+  padding: 0 20px;
 }
+
+
 
 /* Banner badge */
 .badge {
   display: inline-flex;
   margin: 0;
+  animation: goldBlink 2s ease-in-out infinite;
 }
 
 .badgeInner {
@@ -126,7 +114,19 @@
 }
 
 .badgeText {
-  /* No special styling needed */
+  color: white;
+  font-weight: 700;
+}
+
+@keyframes goldBlink {
+  0%, 50% { 
+    opacity: 1;
+    transform: scale(1);
+  }
+  51%, 100% { 
+    opacity: 0.3;
+    transform: scale(0.95);
+  }
 }
 
 .badgeShine {
@@ -137,105 +137,88 @@
   display: none;
 }
 
-/* Banner typography */
+/* Header banner typography */
 .title {
   margin: 0;
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1.2;
+  font-size: 15px;
+  font-weight: 600;
   color: white;
-  flex-shrink: 0;
+  display: inline;
 }
 
 .description {
   margin: 0;
-  color: rgba(255, 255, 255, 0.9);
-  line-height: 1.4;
-  font-size: 14px;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 13px;
   font-weight: 400;
-  flex: 1;
+  display: inline;
+  margin-left: 8px;
 }
 
-/* Banner feature list */
+/* Running banner features */
 .features {
-  display: flex;
-  gap: 12px;
-  margin: 0;
-  padding: 0;
-  flex-wrap: wrap;
-  flex-shrink: 0;
+  display: inline-flex;
+  gap: 16px;
+  margin-left: 20px;
 }
 
 .feature {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-size: 11px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.featureIcon {
-  font-size: 12px;
-}
-
-/* Banner action buttons */
-.actions {
-  display: flex;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-.primaryButton {
-  background: white;
-  color: #6366f1;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-weight: 600;
   font-size: 13px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
   white-space: nowrap;
 }
 
+.featureIcon {
+  font-size: 14px;
+}
+
+/* Click indicator */
+.clickIndicator {
+  display: inline-flex;
+  margin-left: 16px;
+  align-items: center;
+}
+
+.clickText {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.popup:hover .clickText {
+  color: white;
+  transform: translateX(2px);
+}
+
+/* Legacy button styles - no longer used */
+.actions {
+  display: none;
+}
+
+.primaryButton {
+  display: none;
+}
+
 .buttonText {
-  /* No special styling needed */
+  display: none;
 }
 
 .buttonShine {
   display: none;
 }
 
-.primaryButton:hover {
-  background: rgba(255, 255, 255, 0.9);
-  transform: translateY(-1px);
-}
-
 .buttonIcon {
-  width: 12px;
-  height: 12px;
+  display: none;
 }
 
 .secondaryButton {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-weight: 500;
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-}
-
-.secondaryButton:hover {
-  background: rgba(255, 255, 255, 0.2);
+  display: none;
 }
 
 /* Remove gradient border */
