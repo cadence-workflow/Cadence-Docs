@@ -51,7 +51,7 @@ cadence --do cadence-system workflow query --wid diag123wid --rid diag123rid --q
 
 2. The cadence web UI will have a diagnostics tab on the workflow execution page that displays the results of running diagnostics on the workflow. It lists the various issues identified, the potential rootcause and the link to runbooks.
 
-## How to add new use-case to workflow diagnostics?
+## How to add a new use-case to workflow diagnostics?
 
 1. Define an implementation of the invariant interface. [link](https://github.com/cadence-workflow/cadence/tree/master/service/worker/diagnostics/invariant/failure)
 
