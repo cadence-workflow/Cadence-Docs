@@ -28,6 +28,16 @@ jakobht:
     linkedin: https://www.linkedin.com/in/jakob-taankvist/
     github: jakobht
 
+sankari165:
+  name: sankari Gopalakrishnan
+  title: Senior Software Engineer @ Uber
+  url: https://www.linkedin.com/in/sankari-gopalakrishnan165/
+  image_url: https://github.com/sankari165.png
+  page: true
+  socials:
+    linkedin: https://www.linkedin.com/in/sankari-gopalakrishnan165/
+    github: sankari165
+
 ibarrajo:
   name: Josué Alexander Ibarra
   title: Developer Advocate @ Uber
