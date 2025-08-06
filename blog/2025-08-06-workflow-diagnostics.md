@@ -43,7 +43,7 @@ Workflow diagnosis started. Query the diagnostic workflow to get diagnostics rep
 Domain: cadence-system, Workflow Id: diag123wid, Run Id: diag123rid
 ```
 
-Use wokflow query command to fetch the results of the diagnostics
+Use workflow query command to fetch the results of the diagnostics
 
 ```bash
 cadence --do cadence-system workflow query --wid diag123wid --rid diag123rid --qt query-diagnostics-report
