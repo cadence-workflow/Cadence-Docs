@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcadence=self.webpackChunkcadence||[]).push([[8146],{29328:e=>{e.exports=JSON.parse('{"metadata":{"permalink":"/blog","page":1,"postsPerPage":10,"totalPages":4,"totalCount":39,"nextPage":"/blog/page/2","blogDescription":"The latest news and updates from the Cadence team","blogTitle":"Cadence Blog"}}')}}]);

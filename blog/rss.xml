@@ -4,10 +4,62 @@
         <title>Cadence Blog</title>
         <link>https://cadenceworkflow.io/blog</link>
         <description>Cadence Blog</description>
-        <lastBuildDate>Thu, 10 Jul 2025 16:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 06 Aug 2025 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Workflow Diagnostics]]></title>
+            <link>https://cadenceworkflow.io/blog/2025/08/06/workflow-diagnostics</link>
+            <guid>https://cadenceworkflow.io/blog/2025/08/06/workflow-diagnostics</guid>
+            <pubDate>Wed, 06 Aug 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Cadence users, especially new users, often struggle with failed/stuck workflows and are unable to understand what is wrong with their workflow. This can now be addressed by a tool that runs on demand to check the workflow and provide diagnostics with actionable information via clear runbooks that users can follow. The overarching goal is to help cadence users understand what is wrong with their workflow]]></description>
+            <content:encoded><![CDATA[<p>Cadence users, especially new users, often struggle with failed/stuck workflows and are unable to understand what is wrong with their workflow. This can now be addressed by a tool that runs on demand to check the workflow and provide diagnostics with actionable information via clear runbooks that users can follow. The overarching goal is to help cadence users understand what is wrong with their workflow</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="introducing-workflow-diagnostics">Introducing Workflow Diagnostics<a href="https://cadenceworkflow.io/blog/2025/08/06/workflow-diagnostics#introducing-workflow-diagnostics" class="hash-link" aria-label="Direct link to Introducing Workflow Diagnostics" title="Direct link to Introducing Workflow Diagnostics">​</a></h2>
+<p>Cadence workflow diagnostics fetches the workflow execution history and identifies the issues in the workflow i.e. points out the different items that did not work as expected. For example, workflow timeouts. Next, for the issue identified, it provides the potential root cause by listing the different reasons that must've caused the issue. For example, the tasklist does not have pollers. Lastly, it provides ways to resolve the issue since we want the cadence users to have actionable diagnostics. For example, timeouts could occur when the workflow is running on a tasklist without enough workers to start the activities</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="how-it-works">How it works?<a href="https://cadenceworkflow.io/blog/2025/08/06/workflow-diagnostics#how-it-works" class="hash-link" aria-label="Direct link to How it works?" title="Direct link to How it works?">​</a></h2>
+<p>Cadence Workflow Diagnostics will be initiated on demand by a user for a given workflow execution in a cadence domain. The call will be made to cadence-frontend service which in turn triggers a diagnostics workflow that runs in the cadence-worker service to perform the diagnostics based on workflow execution history.</p>
+<p>Code references:</p>
+<ol>
+<li>
+<p>The <a href="https://github.com/cadence-workflow/cadence/tree/master/service/worker/diagnostics/invariant" target="_blank" rel="noopener noreferrer">invariant interface</a> where each invariant implementation checks and root causes one specific issue like timeouts or failures.</p>
+</li>
+<li>
+<p>The <a href="https://github.com/cadence-workflow/cadence/blob/master/service/worker/diagnostics/workflow.go" target="_blank" rel="noopener noreferrer">diagnostics workflow</a> that runs as a cadence workflow where it has 2 activities: one to identify the issues using the invariant checks and other to root cause them. Some invariants might not have a rootcause implementation too.</p>
+</li>
+<li>
+<p><a href="https://github.com/cadence-workflow/cadence/blob/master/service/worker/diagnostics/parent_workflow.go" target="_blank" rel="noopener noreferrer">Parent workflow</a> to trigger diagnostics as a child workflow followed by emission of some usage logs for observability</p>
+</li>
+</ol>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="how-to-use-this-feature">How to use this feature?<a href="https://cadenceworkflow.io/blog/2025/08/06/workflow-diagnostics#how-to-use-this-feature" class="hash-link" aria-label="Direct link to How to use this feature?" title="Direct link to How to use this feature?">​</a></h2>
+<ol>
+<li><a href="https://github.com/cadence-workflow/cadence/blob/master/service/frontend/api/interface.go#L47" target="_blank" rel="noopener noreferrer">Frontend API</a> or cadence CLI that triggers a call to start the diagnostics workflow - This starts the diagnostics workflow and provides the wf execution details.</li>
+</ol>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">cadence </span><span class="token parameter variable" style="color:#36acaa">--do</span><span class="token plain"> cadence-sample-domain workflow diag </span><span class="token parameter variable" style="color:#36acaa">--wid</span><span class="token plain"> w123 </span><span class="token parameter variable" style="color:#36acaa">--rid</span><span class="token plain"> </span><span class="token number" style="color:#36acaa">123</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>The above command would start performing diagnostics via a cadence workflow and return its details. Sample output:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">Workflow diagnosis started. Query the diagnostic workflow to get diagnostics report.</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token operator" style="color:#393A34">==</span><span class="token operator" style="color:#393A34">==</span><span class="token operator" style="color:#393A34">==</span><span class="token operator" style="color:#393A34">==</span><span class="token operator" style="color:#393A34">==</span><span class="token operator" style="color:#393A34">==</span><span class="token plain">Diagnostic Workflow </span><span class="token assign-left variable" style="color:#36acaa">details</span><span class="token operator" style="color:#393A34">==</span><span class="token operator" style="color:#393A34">==</span><span class="token operator" style="color:#393A34">==</span><span class="token operator" style="color:#393A34">==</span><span class="token operator" style="color:#393A34">==</span><span class="token operator" style="color:#393A34">==</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">Domain: cadence-system, Workflow Id: diag123wid, Run Id: diag123rid</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>Use workflow query command to fetch the results of the diagnostics</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">cadence </span><span class="token parameter variable" style="color:#36acaa">--do</span><span class="token plain"> cadence-system workflow query </span><span class="token parameter variable" style="color:#36acaa">--wid</span><span class="token plain"> diag123wid </span><span class="token parameter variable" style="color:#36acaa">--rid</span><span class="token plain"> diag123rid </span><span class="token parameter variable" style="color:#36acaa">--qt</span><span class="token plain"> query-diagnostics-report</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<ol start="2">
+<li>The cadence web UI will have a diagnostics tab on the workflow execution page that displays the results of running diagnostics on the workflow. It lists the various issues identified, the potential rootcause and the link to runbooks.</li>
+</ol>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="how-to-add-a-new-use-case-to-workflow-diagnostics">How to add a new use-case to workflow diagnostics?<a href="https://cadenceworkflow.io/blog/2025/08/06/workflow-diagnostics#how-to-add-a-new-use-case-to-workflow-diagnostics" class="hash-link" aria-label="Direct link to How to add a new use-case to workflow diagnostics?" title="Direct link to How to add a new use-case to workflow diagnostics?">​</a></h2>
+<ol>
+<li>
+<p>Define an implementation of the invariant interface. <a href="https://github.com/cadence-workflow/cadence/tree/master/service/worker/diagnostics/invariant/failure" target="_blank" rel="noopener noreferrer">link</a></p>
+</li>
+<li>
+<p>Add it to the list of invariants provided on service start up. <a href="https://github.com/cadence-workflow/cadence/blob/master/cmd/server/cadence/server.go#L265" target="_blank" rel="noopener noreferrer">link</a></p>
+</li>
+<li>
+<p>Update the diagnostics workflow to be able to construct the diagnostics result <a href="https://github.com/cadence-workflow/cadence/blob/master/service/worker/diagnostics/workflow.go#L201" target="_blank" rel="noopener noreferrer">link</a></p>
+</li>
+<li>
+<p>Provide a runbook for the issues/rootcause and link it up along with the diagnostics result</p>
+</li>
+</ol>]]></content:encoded>
+            <category>Announcement</category>
+        </item>
         <item>
             <title><![CDATA[Safe deployments of Versioned workflows]]></title>
             <link>https://cadenceworkflow.io/blog/2025/07/01/2025-07-01-safe-deployment-of-versioned-workflows/safe-deployment-of-versioned-workflows</link>
@@ -1057,46 +1109,6 @@ All of our main use cases were used across the board. While we mentioned the mos
 <p>Our users are interested in learning more about guidelines, capacity expectations in on-prem and in managed solutions. While we have been providing feedback per user basis before, we plan to release more generic guidelines with our observability updates mentioned above.</p>
 <p>We also would like to thank our community for the increased interest and engagement with us! Cadence has been more active in different mediums (LinkedIn, Slack, blog, etc.) this year. In the first quarter, we observed that our user base and activities has almost doubled (+96% and +90% respectively) through both new and returning users. Based on such immediate positive reactions, we will keep increasing our community investments in different channels.</p>]]></content:encoded>
             <category>Announcement</category>
-        </item>
-        <item>
-            <title><![CDATA[Cadence Community Spotlight Update - March 2023]]></title>
-            <link>https://cadenceworkflow.io/blog/2023/03/31/community-spotlight-march-2023</link>
-            <guid>https://cadenceworkflow.io/blog/2023/03/31/community-spotlight-march-2023</guid>
-            <pubDate>Fri, 31 Mar 2023 00:00:00 GMT</pubDate>
-            <description><![CDATA[Welcome to the latest of our regular monthly Community Spotlight updates that gives you news from in and around the Cadence community!]]></description>
-            <content:encoded><![CDATA[<p>Welcome to the latest of our regular monthly Community Spotlight updates that gives you news from in and around the Cadence community!</p>
-<p>Please see below for a roundup of the highlights:</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="cadence-at-open-source-summit-north-america">Cadence at Open Source Summit, North America<a href="https://cadenceworkflow.io/blog/2023/03/31/community-spotlight-march-2023#cadence-at-open-source-summit-north-america" class="hash-link" aria-label="Direct link to Cadence at Open Source Summit, North America" title="Direct link to Cadence at Open Source Summit, North America">​</a></h2>
-<p>We are very pleased to let you know that a talk on Cadence has been accepted for the Linux Foundation's <a href="https://events.linuxfoundation.org/open-source-summit-north-america/" target="_blank" rel="noopener noreferrer">Open Source Summit, North America</a> in Vancouver on 10th - 12th May 2023.</p>
-<p>The talk called <a href="https://ossna2023.sched.com/event/1K5B1" target="_blank" rel="noopener noreferrer">Cadence: The New Open Source Project for Building Complex Distributed Applications</a> will be given by <a href="https://www.linkedin.com/in/enderdemirkaya/" target="_blank" rel="noopener noreferrer">Ender Demirkaya</a> and <a href="https://www.linkedin.com/in/emrahseker/" target="_blank" rel="noopener noreferrer">Emrah Seker</a> If you are planning to attend the Open Source Summit then please don't forget to attend the talk and take time catch up with Ender and Emrah!</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="community-activity">Community Activity<a href="https://cadenceworkflow.io/blog/2023/03/31/community-spotlight-march-2023#community-activity" class="hash-link" aria-label="Direct link to Community Activity" title="Direct link to Community Activity">​</a></h2>
-<p>Our Slack #support channel has been very active over the last few months as we continue to get an continual stream of questions. Here are the stats:</p>
-<ul>
-<li>February 2023 : 16 questions asked</li>
-<li>March 2023 : 12 questions asked</li>
-</ul>
-<p>All of these questions are being answered collaboratively by the community. Thanks everyone for sharing your knowledge and we are looking forward to receiving more of your questions!</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="cadence-developer-advocate">Cadence Developer Advocate<a href="https://cadenceworkflow.io/blog/2023/03/31/community-spotlight-march-2023#cadence-developer-advocate" class="hash-link" aria-label="Direct link to Cadence Developer Advocate" title="Direct link to Cadence Developer Advocate">​</a></h2>
-<p>Please welcome Yizhe Qin - the new Cadence Developer Advocate from Uber team that will be working to help support the community.</p>
-<p>Yizhe's role will involve responding to support questions, organising documentation and anything else that will help keep the community running smoothly.</p>
-<p>Please feel free to say Hi to Yizhe on the Slack channel!</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="cadence-in-the-news">Cadence in the News!<a href="https://cadenceworkflow.io/blog/2023/03/31/community-spotlight-march-2023#cadence-in-the-news" class="hash-link" aria-label="Direct link to Cadence in the News!" title="Direct link to Cadence in the News!">​</a></h2>
-<p>Below are a selection of Cadence related articles, blogs and whitepapers. Please take a look and feel free to share via your own social media channels.</p>
-<ul>
-<li>
-<p><a href="https://www.instaclustr.com/blog/instaclustr-cadence-workflow-developer/" target="_blank" rel="noopener noreferrer">Instaclustr Cadence Developer Offering - General Availability</a></p>
-</li>
-<li>
-<p><a href="https://www.instaclustr.com/blog/improving-the-reliability-of-cadence-search-queries/" target="_blank" rel="noopener noreferrer">Improving Reliability of Cadence Search Queries That Use OpenSearch/Elasticsearch</a></p>
-</li>
-</ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="upcoming-events">Upcoming Events<a href="https://cadenceworkflow.io/blog/2023/03/31/community-spotlight-march-2023#upcoming-events" class="hash-link" aria-label="Direct link to Upcoming Events" title="Direct link to Upcoming Events">​</a></h2>
-<ul>
-<li><a href="https://netapp.zoom.us/webinar/register/WN__5fuwxmNQuWeZ6DiI5wUqg" target="_blank" rel="noopener noreferrer">Webinar: Microservices - A Modern Orchestration Approach with Cadence</a></li>
-</ul>
-<p>If you have any news or topics you'd like us to include in our next update then please join our <a href="http://t.uber.com/cadence-slack" target="_blank" rel="noopener noreferrer">Slack</a>#community channel.</p>
-<p>Please remember that this update is for you - so if you have any comments or feedback that could help us improve it then please share it with us in the #community <a href="http://t.uber.com/cadence-slack" target="_blank" rel="noopener noreferrer">Slack</a> channel.</p>]]></content:encoded>
-            <category>Community Spotlight</category>
         </item>
     </channel>
 </rss>
