@@ -62,6 +62,7 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'concepts/search-workflows' },
         { type: 'doc', id: 'concepts/http-api' },
         { type: 'doc', id: 'concepts/data-converter' },
+        { type: 'doc', id: 'concepts/grafana-helm-setup' },
       ],
     },
     {
@@ -102,6 +103,7 @@ const sidebars: SidebarsConfig = {
       items: [
         { type: 'doc', id: 'go-client/index' },
         { type: 'doc', id: 'go-client/workers' },
+        { type: 'doc', id: 'go-client/worker-auto-scaling' },
         { type: 'doc', id: 'go-client/create-workflows' },
         { type: 'doc', id: 'go-client/starting-workflows' },
         { type: 'doc', id: 'go-client/activities' },
@@ -121,6 +123,7 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'go-client/tracing' },
         { type: 'doc', id: 'go-client/workflow-replay-shadowing' },
         { type: 'doc', id: 'go-client/workflow-non-deterministic-error' },
+        { type: 'doc', id: 'go-client/sleep' },
       ],
     },
     {
