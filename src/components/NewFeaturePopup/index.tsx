@@ -28,10 +28,7 @@ const NewFeaturePopup: React.FC<NewFeaturePopupProps> = ({
     const lastShown = localStorage.getItem(`popup_${featureId}_lastShown`);
     const dismissed = localStorage.getItem(`popup_${featureId}_dismissed`);
     
-    console.log('🚀 Popup check:', { featureId, lastShown, dismissed, showDays });
-    
     if (dismissed) {
-      console.log('✅ Popup dismissed, not showing');
       return;
     }
 
@@ -39,15 +36,12 @@ const NewFeaturePopup: React.FC<NewFeaturePopupProps> = ({
     
     if (!lastShown) {
       // First time - show popup immediately
-      console.log('🎯 First time, showing popup immediately');
       setIsVisible(true);
       setIsAnimating(true);
       localStorage.setItem(`popup_${featureId}_lastShown`, now.toString());
     } else {
       const daysSinceLastShown = (now - parseInt(lastShown)) / (1000 * 60 * 60 * 24);
-      console.log('📅 Days since last shown:', daysSinceLastShown);
       if (daysSinceLastShown < showDays) {
-        console.log('✨ Within show period, showing popup immediately');
         setIsVisible(true);
         setIsAnimating(true);
       } else {
