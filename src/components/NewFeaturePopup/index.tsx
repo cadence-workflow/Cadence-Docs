@@ -78,11 +78,15 @@ const NewFeaturePopup: React.FC<NewFeaturePopupProps> = ({
   }
 
   return (
-    <div 
-      className={`${styles.popup} ${isAnimating ? styles.popupVisible : styles.popupHidden}`}
-      onClick={handleNavigate}
-    >
-      <div className={styles.content}>
+    <div className={`${styles.popup} ${isAnimating ? styles.popupVisible : styles.popupHidden}`}>
+      {/* Close button */}
+      <button className={styles.closeButton} onClick={handleDismiss} aria-label="Close popup">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
+          <path d="M9 7.5l3.5-3.5a1 1 0 111.414 1.414L10.414 9l3.5 3.5a1 1 0 11-1.414 1.414L9 10.414l-3.5 3.5a1 1 0 11-1.414-1.414L7.586 9 4.086 5.5A1 1 0 115.5 4.086L9 7.5z"/>
+        </svg>
+      </button>
+
+      <div className={styles.content} onClick={handleNavigate}>
         {/* Badge */}
         <div className={styles.badge}>
           <div className={styles.badgeInner}>
@@ -98,6 +102,11 @@ const NewFeaturePopup: React.FC<NewFeaturePopupProps> = ({
           <span className={styles.clickText}>Click to explore →</span>
         </div>
       </div>
+
+      {/* Maybe later button */}
+      <button className={styles.secondaryButton} onClick={handleDismiss}>
+        <span>Maybe later</span>
+      </button>
     </div>
   );
 };
