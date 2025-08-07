@@ -102,7 +102,7 @@ const NewFeaturePopup: React.FC<NewFeaturePopupProps> = ({
             <div className={styles.sparkles}>✨</div>
             <div className={styles.iconGlow}></div>
           </div>
-          <button className={styles.closeButton} onClick={handleClose} aria-label="Close popup">
+          <button className={styles.closeButton} onClick={handleDismiss} aria-label="Close popup">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
               <path d="M9 7.5l3.5-3.5a1 1 0 111.414 1.414L10.414 9l3.5 3.5a1 1 0 11-1.414 1.414L9 10.414l-3.5 3.5a1 1 0 11-1.414-1.414L7.586 9 4.086 5.5A1 1 0 115.5 4.086L9 7.5z"/>
             </svg>
