@@ -17,7 +17,14 @@ You must finish part 2 and 3 by following the [first section](/docs/get-started/
 We are using domain called `test-domain` for this tutorial project.
 
 ## Step 1. Implement A Cadence Worker Service
-Create a new `main.go` file in your local directory and paste the basic worker service layout.
+
+1. Init your go module:
+
+```bash
+go mod init <your-go-module>
+```
+
+2. Create a new `main.go` file in your local directory and paste the basic worker service layout.
 
 ```go
 package main
@@ -28,7 +35,7 @@ import (
     "go.uber.org/cadence/compatibility"
     "go.uber.org/cadence/worker"
 
-    apiv1 "github.com/cadence-workflow/cadence-idl/go/proto/api/v1"
+    apiv1 "github.com/uber/cadence-idl/go/proto/api/v1"
     "github.com/uber-go/tally"
     "go.uber.org/zap"
     "go.uber.org/zap/zapcore"
@@ -92,11 +99,15 @@ func startWorker(logger *zap.Logger, service workflowserviceclient.Interface) {
         MetricsScope: tally.NewTestScope(TaskListName, map[string]string{}),
     }
 
-    worker := worker.New(
+    worker, err := worker.NewV2(
         service,
         Domain,
         TaskListName,
         workerOptions)
+    if err != nil {
+        panic("Failed to initalize worker")
+    }
+
     err := worker.Start()
     if err != nil {
         panic("Failed to start worker")
@@ -106,7 +117,16 @@ func startWorker(logger *zap.Logger, service workflowserviceclient.Interface) {
 }
 ```
 
-In this worker service, we start a HTTP server and create a new Cadence client running continuously at the background. Then start the server on your local, you may see logs such like
+In this worker service, we start a HTTP server and create a new Cadence client running continuously at the background.
+
+3. Run the following command to install dependencies
+
+```bash
+go get go.uber.org/yarpc@v1.80.0
+go mod tidy
+```
+
+4. Start the server on your local, you may see logs such like
 
 ```log
 2023-07-03T11:46:46.266-0700    INFO    internal/internal_worker.go:826 Worker has no workflows registered, so workflow worker will not be started.     {"Domain": "test-domain", "TaskList": "test-worker", "WorkerID": "35987@uber-C02F18EQMD6R@test-worker@90c0260e-ba5c-4652-9f10-c6d1f9e29c1d"}
@@ -160,10 +180,13 @@ func init() {
 }
 ```
 
-Import the `context` module if it was not automatically added.
+Import the missing modules if they were not automatically added.
 ```go
 import (
     "context"
+    "time"
+    "go.uber.org/cadence/activity"
+    "go.uber.org/cadence/workflow"
 )
 ```
 
@@ -173,6 +196,12 @@ Restart your worker and run the following command to interact with your workflow
 
 ```bash
 cadence --domain test-domain workflow start --et 60 --tl test-worker --workflow_type main.helloWorldWorkflow --input '"World"'
+```
+
+or use this alternative dockerized cadence command
+
+```bash
+docker run --network=host --rm ubercadence/cli:master --domain test-domain workflow start --et 60 --tl test-worker --workflow_type main.helloWorldWorkflow --input '"World"'
 ```
 
 You should see logs in your worker terminal like
