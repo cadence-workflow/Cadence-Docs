@@ -142,7 +142,7 @@ You may see this because there are no activities and workflows registered to the
 Let's write a hello world activity, which take a single input called `name` and greet us after the workflow is finished.
 
 ```go
-func helloWorldWorkflow(ctx workflow.Context, name string) error {
+func helloWorldWorkflow(ctx workflow.Context, name string) (*string, error) {
 	ao := workflow.ActivityOptions{
 		ScheduleToStartTimeout: time.Minute,
 		StartToCloseTimeout:    time.Minute,
@@ -156,12 +156,12 @@ func helloWorldWorkflow(ctx workflow.Context, name string) error {
 	err := workflow.ExecuteActivity(ctx, helloWorldActivity, name).Get(ctx, &helloworldResult)
 	if err != nil {
 		logger.Error("Activity failed.", zap.Error(err))
-		return err
+		return nil, err
 	}
 
 	logger.Info("Workflow completed.", zap.String("Result", helloworldResult))
 
-	return nil
+	return &helloworldResult, nil
 }
 
 func helloWorldActivity(ctx context.Context, name string) (string, error) {
