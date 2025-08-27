@@ -7,7 +7,6 @@ interface NewFeaturePopupProps {
   title: string;
   description: string;
   linkUrl: string;
-  linkText: string;
   showDays?: number;
 }
 
@@ -16,7 +15,6 @@ const NewFeaturePopup: React.FC<NewFeaturePopupProps> = ({
   title,
   description,
   linkUrl,
-  linkText,
   showDays = 7,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -65,7 +63,10 @@ const NewFeaturePopup: React.FC<NewFeaturePopupProps> = ({
     setTimeout(() => setIsVisible(false), 400);
   };
 
-  const handleDismiss = () => {
+  const handleDismiss = (e?: React.MouseEvent) => {
+    if (e) {
+      e.stopPropagation(); // Prevent popup click event from firing
+    }
     localStorage.setItem(`popup_${featureId}_dismissed`, 'true');
     setIsAnimating(false);
     setTimeout(() => setIsVisible(false), 400);
@@ -87,7 +88,11 @@ const NewFeaturePopup: React.FC<NewFeaturePopupProps> = ({
         className={`${styles.overlay} ${isAnimating ? styles.overlayVisible : styles.overlayHidden}`} 
         onClick={handleClose} 
       />
-      <div className={`${styles.popup} ${isAnimating ? styles.popupVisible : styles.popupHidden}`}>
+      <div 
+        className={`${styles.popup} ${isAnimating ? styles.popupVisible : styles.popupHidden}`}
+        onClick={handleNavigate}
+        style={{ cursor: 'pointer' }}
+      >
         {/* Decorative elements */}
         <div className={styles.decorativeTop}></div>
         <div className={styles.floatingOrbs}>
@@ -126,32 +131,14 @@ const NewFeaturePopup: React.FC<NewFeaturePopupProps> = ({
           {/* Description */}
           <p className={styles.description}>{description}</p>
           
-          {/* Feature highlights */}
-          <div className={styles.features}>
-            <div className={styles.feature}>
-              <div className={styles.featureIcon}>⚡</div>
-              <span>Quick Setup</span>
-            </div>
-            <div className={styles.feature}>
-              <div className={styles.featureIcon}>📊</div>
-              <span>Pre-built Dashboards</span>
-            </div>
-            <div className={styles.feature}>
-              <div className={styles.featureIcon}>🔄</div>
-              <span>Auto ServiceMonitor</span>
-            </div>
+          {/* Click instruction */}
+          <div className={styles.clickInstruction}>
+            <p className={styles.clickText}>Click anywhere to explore!!</p>
+            <div className={styles.clickIndicator}>👆</div>
           </div>
           
-          {/* Actions */}
+          {/* Keep Maybe later button */}
           <div className={styles.actions}>
-            <button className={styles.primaryButton} onClick={handleNavigate}>
-              <span className={styles.buttonText}>{linkText}</span>
-              <div className={styles.buttonShine}></div>
-              <svg className={styles.buttonIcon} width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                <path d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
-                <path d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
-              </svg>
-            </button>
             <button className={styles.secondaryButton} onClick={handleDismiss}>
               <span>Maybe later</span>
             </button>

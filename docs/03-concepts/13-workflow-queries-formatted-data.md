@@ -6,26 +6,19 @@ permalink: /docs/concepts/workflow-queries-formatted-data
 
 # Workflow Queries with Formatted Data
 
-<details>
-<summary><h2>Introduction</h2></summary>
-
-This guide explains how to implement workflow queries that return preformatted data for enhanced rendering in Cadence Web UI. This feature allows workflow authors to return structured data in various formats (Markdown, CSV, images, etc.) that can be rendered directly in the Cadence Web interface, providing richer visualization and better user experience.
+This guide explains how to implement workflow queries that return preformatted data for enhanced rendering in Cadence Web UI. This feature allows workflow authors to return structured data in Markdown format that can be rendered directly in the Cadence Web interface, providing richer visualization and better user experience.
 
 The formatted data feature enables workflows to respond to queries with data that includes rendering instructions, allowing the UI to display content beyond simple text responses.
 
-</details>
+---
 
-<details>
-<summary><h2>Overview</h2></summary>
+## Overview
 
 ### The Goal
 
 Support rendering preformatted data on cadence-web in places such as the Query API. Examples of data that can be preformatted include:
 
 - **Markdown** - Rich text with formatting, links, and structure
-- **CSV** - Tabular data for easy viewing
-- **JPEG/PNG images** - Visual content and charts
-- **SVG** - Scalable vector graphics
 
 The reason for prerendering is that workflow authors have access to workflow data that they may wish to render on the Cadence UI, and such rendering entirely client-side is difficult given the current Cadence workflow API.
 
@@ -37,10 +30,9 @@ When a workflow query responds with data in a specific shape, Cadence Web can re
 2. A MIME type format specifier  
 3. The actual formatted data
 
-</details>
+---
 
-<details>
-<summary><h2>Response Format</h2></summary>
+## Response Format
 
 ### Basic Structure
 
@@ -54,21 +46,15 @@ To enable formatted rendering, your workflow query must respond with data in the
 }
 ```
 
-### Supported MIME Types
+### Supported MIME Type
 
-The `format` field should contain well-known MIME type identifiers:
+The `format` field should contain the supported MIME type identifier:
 
 - `text/markdown` - Markdown content
-- `text/csv` - Comma-separated values
-- `image/png` - PNG images
-- `image/jpeg` - JPEG images  
-- `image/svg+xml` - SVG graphics
-- `text/html` - HTML content (sanitized)
 
-</details>
+---
 
-<details>
-<summary><h2>Examples</h2></summary>
+## Examples
 
 ### Markdown Response
 
@@ -94,30 +80,9 @@ This would render as:
 
 **Progress:** 75% complete
 
-### CSV Response
+---
 
-```json
-{
-  "cadenceResponseType": "formattedData", 
-  "format": "text/csv",
-  "data": [["Task", "Status", "Duration"], ["Data Validation", "Complete", "2m 15s"], ["Processing", "In Progress", "5m 30s"], ["Verification", "Pending", "0s"]]
-}
-```
-
-### Image Response
-
-```json
-{
-  "cadenceResponseType": "formattedData",
-  "format": "image/svg+xml", 
-  "data": "<svg width=\"200\" height=\"100\"><rect width=\"200\" height=\"100\" fill=\"lightblue\"/><text x=\"100\" y=\"50\" text-anchor=\"middle\">Workflow Progress</text></svg>"
-}
-```
-
-</details>
-
-<details>
-<summary><h2>Go Implementation</h2></summary>
+## Go Implementation
 
 ### Type Definition
 
@@ -192,16 +157,6 @@ func NewMarkdownQueryResponse(md string) PrerenderedQueryResponse {
     }
 }
 
-// Helper function for CSV responses
-func NewCSVQueryResponse(rows [][]string) PrerenderedQueryResponse {
-    data, _ := json.Marshal(rows)
-    return PrerenderedQueryResponse{
-        CadenceResponseType: "formattedData",
-        Format:              "text/csv",
-        Data:                data,
-    }
-}
-
 // Register the query handler
 func init() {
     workflow.RegisterQueryHandler("workflow_status", WorkflowStatusQuery)
@@ -215,10 +170,6 @@ func DetailedWorkflowQuery(ctx workflow.Context, queryType string) (interface{},
     switch queryType {
     case "status":
         return createStatusMarkdown(ctx)
-    case "metrics":
-        return createMetricsCSV(ctx)
-    case "diagram":
-        return createProgressDiagram(ctx)
     default:
         return nil, fmt.Errorf("unknown query type: %s", queryType)
     }
@@ -253,52 +204,24 @@ func createStatusMarkdown(ctx workflow.Context) (PrerenderedQueryResponse, error
 }
 ```
 
-</details>
+---
 
-<details>
-<summary><h2>Security Considerations</h2></summary>
+## Security Considerations
 
 ### XSS Prevention
 
-Taking input from a workflow and rendering it as HTML without sanitization is a potential XSS (Cross-Site Scripting) vector. An attacker could inject malicious HTML tags including:
+Taking input from a workflow and rendering it as Markdown without sanitization is a potential XSS (Cross-Site Scripting) vector. An attacker could inject malicious content including:
 
-- `<script>` tags for JavaScript execution
-- `<img>` tags that make unauthorized HTTP requests  
-- Other tags that could exfiltrate data or leak secure tokens
+- Raw HTML tags that might be processed by the Markdown renderer
+- JavaScript in HTML tags embedded within Markdown
+- Malicious links or images that could exfiltrate data
 
 ### Mitigation Strategies
 
 1. **Server-Side Sanitization**: All content must be sanitized before rendering
 2. **Content Security Policy (CSP)**: Implement strict CSP headers
 3. **Input Validation**: Validate format types and data structure
-4. **Allowlist Approach**: Only allow known-safe MIME types
-
-### Implementation Guidelines
-
-```go
-// Example sanitization for markdown content
-func sanitizeMarkdown(input string) string {
-    // Use a markdown sanitizer library
-    policy := bluemonday.UGCPolicy()
-    return policy.Sanitize(input)
-}
-
-// Validate response format
-func validateFormat(format string) error {
-    allowedFormats := map[string]bool{
-        "text/markdown":   true,
-        "text/csv":        true,
-        "image/png":       true,
-        "image/jpeg":      true,
-        "image/svg+xml":   true,
-    }
-    
-    if !allowedFormats[format] {
-        return fmt.Errorf("unsupported format: %s", format)
-    }
-    return nil
-}
-```
+4. **Allowlist Approach**: Only allow the known-safe MIME type
 
 ### Best Practices
 
@@ -308,10 +231,9 @@ func validateFormat(format string) error {
 - Regularly audit and update sanitization libraries
 - Consider implementing rate limiting for query requests
 
-</details>
+---
 
-<details>
-<summary><h2>Integration with Cadence Web</h2></summary>
+## Integration with Cadence Web
 
 ### Client-Side Rendering
 
@@ -325,9 +247,6 @@ The Cadence Web UI automatically detects formatted responses and renders them ap
 ### Supported Renderers
 
 - **Markdown**: Rendered using a markdown parser with syntax highlighting
-- **CSV**: Displayed as interactive tables with sorting/filtering
-- **Images**: Embedded directly with proper sizing
-- **SVG**: Rendered as scalable graphics with interaction support
 
 ### Fallback Behavior
 
@@ -337,10 +256,9 @@ If the formatted response cannot be rendered:
 2. Show an error message indicating the format issue
 3. Provide option to view raw response data
 
-</details>
+---
 
-<details>
-<summary><h2>Testing and Debugging</h2></summary>
+## Testing and Debugging
 
 ### Testing Formatted Responses
 
@@ -370,23 +288,6 @@ func TestFormattedQueryResponse(t *testing.T) {
     assert.NotEmpty(t, response.Data)
 }
 ```
-
-### CLI Testing
-
-```bash
-# Query workflow with formatted response
-cadence --domain samples-domain workflow query \
-  --workflow_id my-workflow-123 \
-  --query_type status
-
-# Expected output structure:
-{
-  "cadenceResponseType": "formattedData",
-  "format": "text/markdown", 
-  "data": "### Status Report\n..."
-}
-```
-
 ### Debugging Tips
 
 1. **Validate JSON Structure**: Ensure response matches expected format
@@ -394,10 +295,9 @@ cadence --domain samples-domain workflow query \
 3. **Test Sanitization**: Confirm content is properly sanitized
 4. **Monitor Performance**: Large formatted responses may impact query performance
 
-</details>
+---
 
-<details>
-<summary><h2>Additional Resources</h2></summary>
+## Additional Resources
 
 ### Related Documentation
 
@@ -414,5 +314,3 @@ cadence --domain samples-domain workflow query \
 
 - [Cadence Community Slack](https://join.slack.com/t/cadenceworkflow/shared_invite/enQtNDczNTgxMjYyNzlmLTJmZDlkMjNhZjRmNjhkYjdlN2I0NGQ0YzgwZGUxM2JmNWFlZTI0OTM0NDgzZTZjNTk4YWYyOGQ3YjgzNzUwNjQ)
 - [GitHub Discussions](https://github.com/cadence-workflow/cadence/discussions)
-
-</details>

@@ -63,6 +63,7 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'concepts/http-api' },
         { type: 'doc', id: 'concepts/data-converter' },
         { type: 'doc', id: 'concepts/grafana-helm-setup' },
+        { type: 'doc', id: 'concepts/workflow-queries-formatted-data' },
       ],
     },
     {

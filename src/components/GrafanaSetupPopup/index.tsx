@@ -7,7 +7,7 @@ const GrafanaSetupPopup: React.FC = () => {
   // Prevent multiple instances and add debug logging
   React.useEffect(() => {
     // Check if popup is already being rendered
-    const existingPopup = document.querySelector('[data-popup-id="grafana_helm_setup_2025_ultra_v2"]');
+    const existingPopup = document.querySelector('[data-popup-id="workflow_queries_formatted_data_2025"]');
     if (!existingPopup) {
       console.log('🚀 GrafanaSetupPopup component mounted - rendering popup');
       setShouldRender(true);
@@ -21,13 +21,13 @@ const GrafanaSetupPopup: React.FC = () => {
   }
 
   return (
-    <div data-popup-id="grafana_helm_setup_2025_ultra_v2">
+    <div data-popup-id="workflow_queries_formatted_data_2025">
       <NewFeaturePopup
-        featureId="grafana_helm_setup_2025_ultra_v2"
-        title="✨ Brand New: Grafana Helm Setup Guide"
-        description="🎯 Get production-ready monitoring for your Cadence workflows! Our comprehensive guide covers ServiceMonitor setup, automated metrics scraping, and pre-built dashboards. Perfect for Kubernetes deployments."
-        linkUrl="/docs/concepts/grafana-helm-setup"
-        linkText="🚀 Explore the Guide"
+        featureId="workflow_queries_formatted_data_2025"
+        title="🎨 Workflow Queries with Formatted Data "
+        description="Transform your workflow queries with rich formatting! Return Markdown directly in Cadence Web UI. Create interactive status reports, data tables for better workflow monitoring."
+        linkUrl="/docs/concepts/workflow-queries-formatted-data"
+        linkText="📖 Learn More"
         showDays={365}
       />
     </div>
