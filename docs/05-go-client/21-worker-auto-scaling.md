@@ -68,7 +68,7 @@ worker.Options{
 
 One of the most common production issues with Cadence workers occurs when compute autoscalers incorrectly scale down worker instances due to low CPU utilization. This creates a deceptive situation where workers appear to be underutilized from a resource perspective, but are actually performing critical work.
 
-Here's what typically happens: Cadence workers spend most of their time polling the Cadence service for tasks. This polling activity is lightweight and doesn't consume significant CPU resources, leading to consistently low CPU usage metrics (often 5-15%). Compute autoscalers like Kubernetes HPA (Horizontal Pod Autoscaler) or cloud provider autoscaling groups see these low CPU numbers and interpret them as a signal that fewer worker instances are needed.
+Here's what typically happens: Cadence workers spend most of their time polling the Cadence service for tasks. This polling activity is lightweight and doesn't consume significant CPU resources, leading to consistently low CPU usage metrics (often 5-15%). Compute autoscalers like Kubernetes HPA (Horizontal Pod Autoscaler) or cloud provider autoscaling groups see these low CPU numbers and interpret them as signals that fewer worker instances are needed.
 
 When the autoscaler reduces the number of worker instances, several problems emerge:
 - **Reduced polling capacity**: Fewer workers means fewer pollers actively checking for new tasks, which can delay task processing
@@ -160,28 +160,28 @@ Monitor these key metrics to understand AutoScaler performance:
 
 #### Decision Poller Quota
 - **Description:** Track decision poller count over time
-- **Name:** cadence_concurrency_auto_scaler_poller_quota_bucket
+- **Name:** `cadence_concurrency_auto_scaler_poller_quota_bucket`
 - **WorkerType:** DecisionWorker
 - **Type:** Heatmap
 ![Decision Poller Quota](img/dash-decision-poller-quota.png)
 
 #### Activity Poller Quota
 - **Description:** Track activity poller count over time
-- **Name:** cadence-concurrency-auto-scaler.poller-quota
+- **Name:** `cadence-concurrency-auto-scaler.poller-quota`
 - **WorkerType:** ActivityWorker
 - **Type:** Heatmap
 ![Activity Poller Quota](img/dash-activity-poller-quota.png)
 
 #### Decision Poller Wait Time
 - **Description:** Track decision poller wait time over time
-- **Name:** cadence-concurrency-auto-scaler.poller-wait-time
+- **Name:** `cadence-concurrency-auto-scaler.poller-wait-time`
 - **WorkerType:** DecisionWorker
 - **Type:** Heatmap
 ![Decision Poller Wait Time](img/dash-decision-poller-wait-time.png)
 
 #### Activity Poller Wait Time
 - **Description:** Track activity poller wait time over time
-- **Name:** cadence-concurrency-auto-scaler.poller-wait-time
+- **Name:** `cadence-concurrency-auto-scaler.poller-wait-time`
 - **WorkerType:** ActivityWorker
 - **Type:** Heatmap
 ![Activity Poller Wait Time](img/dash-activity-poller-wait-time.png)
