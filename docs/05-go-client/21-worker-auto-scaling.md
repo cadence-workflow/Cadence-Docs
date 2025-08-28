@@ -153,7 +153,9 @@ The following dashboard shows how AutoScaler addresses task list imbalances:
 
 ### Key metrics to monitor
 
-Cadence Grafana Dashboard Link: http://localhost:3000/d/dehkspwgabvuoc/cadence-client
+**Client Dashboards** http://localhost:3000/d/dehkspwgabvuoc/cadence-client
+> **Note**: Make sure to select a Domain in Grafana for the dashboards to display data. The dashboards will be empty until a domain is selected from the dropdown.
+
 
 Monitor these key metrics to understand AutoScaler performance:
 
