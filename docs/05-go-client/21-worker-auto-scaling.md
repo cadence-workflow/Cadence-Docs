@@ -4,6 +4,20 @@ title: Worker auto scaling
 permalink: /docs/go-client/worker-auto-scaling
 ---
 
+## From Manual Tuning to Zero-Config: The AutoScaler That Eliminates Cadence Scaling Headaches
+
+### Visualizing the CPU utilization problem
+
+The following Grafana dashboards demonstrate the CPU utilization issue that AutoScaler solves:
+
+#### CPU Utilization vs CPU Quota
+![CPU Utilization](img/cpu-utilization-vs-quota.png)
+*Low CPU utilization (5-15%) despite active workflow processing, leading to incorrect downscaling by compute autoscalers. See how utilization jumps inside the target range (45%) once the worker autoscaler is enabled.*
+
+#### Worker Instance Count Impact
+![Worker Instances](img/worker-instance-count.png)
+*Worker instance count fluctuations caused by CPU-based autoscaling decisions. Once the autoscaler is enabled, the instance count decreases 50%, saving on compute spend.*
+
 ## Overview
 
 ### What AutoScaler does
@@ -23,7 +37,7 @@ The AutoScaler addresses these critical production problems:
 - **Production reliability**: Prevents scaling-related incidents and workflow processing delays
 
 ### How to get started
->To get started, just add the following to your worker options:
+> To get started, just add the following to your worker options:
 ```go
 worker.Options{
     ...
@@ -48,7 +62,7 @@ worker.Options{
 
 **Poller Count Setup**: Before enabling AutoScaler, ensure your initial poller count equals the maximum of your decision and activity worker poller counts. This prevents AutoScaler from starting with insufficient polling capacity.
 
->For example:
+> For example:
 ```go
 worker.Options{
     ...
@@ -96,17 +110,7 @@ When AutoScaler detects that workers are genuinely underutilized (based on Caden
 
 This approach prevents the common scenario where compute autoscalers scale down workers that appear idle but are actually critical for maintaining workflow performance. AutoScaler provides a more accurate representation of worker utilization that can be used to make better scaling decisions at both the worker configuration level and the compute infrastructure level.
 
-### Visualizing the CPU utilization problem
-
-The following Grafana dashboards demonstrate the CPU utilization issue that AutoScaler solves:
-
-#### CPU Utilization vs CPU Quota
-![CPU Utilization](img/cpu-utilization-vs-quota.png)
-*Low CPU utilization (5-15%) despite active workflow processing, leading to incorrect downscaling by compute autoscalers*
-
-#### Worker Instance Count Impact
-![Worker Instances](img/worker-instance-count.png)
-*Worker instance count fluctuations caused by CPU-based autoscaling decisions*
+> 📊 **See the problem in action**: [See visualizations above](#visualizing-the-cpu-utilization-problem)
 
 
 ## Scenario: Task List Backlogs
@@ -153,9 +157,8 @@ The following dashboard shows how AutoScaler addresses task list imbalances:
 
 ### Key metrics to monitor
 
-**Client Dashboards** http://localhost:3000/d/dehkspwgabvuoc/cadence-client
+**Client Dashboards**: http://localhost:3000/d/dehkspwgabvuoc/cadence-client
 > **Note**: Make sure to select a Domain in Grafana for the dashboards to display data. The dashboards will be empty until a domain is selected from the dropdown.
-
 
 Monitor these key metrics to understand AutoScaler performance:
 
