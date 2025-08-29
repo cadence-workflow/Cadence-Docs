@@ -1,20 +1,14 @@
 ---
 layout: default
 title: Grafana Helm Setup
-permalink: /docs/concepts/grafana-helm-setup
+permalink: /docs/get-started/grafana-helm-setup
 ---
 
 # Grafana Helm Setup
 
-<details>
-<summary><h2>Introduction</h2></summary>
-
 This guide explains how to set up Grafana for monitoring Cadence workflows and services using Helm charts. Helm simplifies the deployment and management of Grafana in Kubernetes environments. Pre-configured dashboards for Cadence are available to visualize metrics effectively.
 
-</details>
-
-<details>
-<summary><h2>Prerequisites</h2></summary>
+## Prerequisites
 
 Before proceeding, ensure the following:
 
@@ -22,10 +16,7 @@ Before proceeding, ensure the following:
 - Helm is installed on your system. Refer to the [Helm installation guide](https://helm.sh/docs/intro/install/).
 - Access to the Cadence Helm charts repository.
 
-</details>
-
-<details>
-<summary><h2>Setup Steps</h2></summary>
+## Setup Steps
 
 ### Step 1: Add Cadence Helm Repository
 
@@ -108,10 +99,7 @@ curl https://raw.githubusercontent.com/cadence-workflow/cadence/refs/heads/maste
 3. **Select Prometheus** as data source when prompted
 4. Try the same steps for other dashboards
 
-</details>
-
-<details>
-<summary><h2>Customization</h2></summary>
+## Customization
 
 The Grafana dashboards can be customized by editing the JSON files or modifying panels directly in Grafana. Additionally, Helm values can be overridden during installation to customize Grafana settings.
 
@@ -129,13 +117,8 @@ Install Grafana with the custom values:
 helm install grafana cadence/grafana -n cadence-monitoring -f values.yaml
 ```
 
-</details>
-
-<details>
-<summary><h2>Additional Information</h2></summary>
+## Additional Information
 
 - [Cadence Helm Charts Repository](https://github.com/cadence-workflow/cadence-charts)
 - [Grafana Documentation](https://grafana.com/docs/)
 - [Helm Documentation](https://helm.sh/docs/)
-
-</details>

@@ -24,6 +24,7 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'get-started/java-hello-world' },
         { type: 'doc', id: 'get-started/golang-hello-world' },
         { type: 'doc', id: 'get-started/video-tutorials' },
+        { type: 'doc', id: 'get-started/grafana-helm-setup' },
       ],
     },
     {
@@ -62,7 +63,6 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'concepts/search-workflows' },
         { type: 'doc', id: 'concepts/http-api' },
         { type: 'doc', id: 'concepts/data-converter' },
-        { type: 'doc', id: 'concepts/grafana-helm-setup' },
         { type: 'doc', id: 'concepts/workflow-queries-formatted-data' },
       ],
     },
