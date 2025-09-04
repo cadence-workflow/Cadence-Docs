@@ -202,14 +202,6 @@ const config: Config = {
     },
   ],
   themeConfig: {
-    announcementBar: {
-      id: 'survey_announcement',
-      content:
-        'We are looking to hear your feedback, please fill the <a target="_blank" rel="noopener noreferrer" href="https://www.surveymonkey.com/r/9RL7YX9">Cadence 2024 OSS community survey</a>',
-      backgroundColor: '#fafbfc',
-      textColor: '#091E42',
-      isCloseable: true,
-    },
 
     algolia: {
       // The application ID provided by Algolia
