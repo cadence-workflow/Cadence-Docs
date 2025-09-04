@@ -18,6 +18,11 @@ The following Grafana dashboards demonstrate the CPU utilization issue that Auto
 ![Worker Instances](img/worker-instance-count.png)
 *Worker instance count fluctuations caused by CPU-based autoscaling decisions. Once the autoscaler is enabled, the instance count decreases 50%, saving on compute spend.*
 
+### Golang Sample Demo
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/CUivn-eZTco?si=VOWdEjPso9G5xo92" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+>📚 **Interactive Learning Sample**: Try our [AutoScaler sample implementation](https://github.com/cadence-workflow/cadence-samples/tree/master/cmd/samples/advanced/autoscaling-monitoring) with built-in load generation, real-time metrics collection, and monitoring dashboards. Perfect for understanding how AutoScaler responds to different workload patterns and visualizing poller state changes in real-time.
 ## Overview
 
 ### What AutoScaler does
