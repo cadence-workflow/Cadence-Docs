@@ -127,3 +127,13 @@ arzonus:
   socials:
     linkedin: https://www.linkedin.com/in/seva-kaloshin/
     github: arzonus
+
+kevinb:
+  name: Kevin Burns
+  title: Developer Advocate @ Uber
+  url: https://www.linkedin.com/in/kevin-burns-8182aa58/
+  image_url: https://github.com/bueller87.png
+  page: true
+  socials:
+    linkedin: https://www.linkedin.com/in/kevin-burns-8182aa58/
+    github: bueller87
