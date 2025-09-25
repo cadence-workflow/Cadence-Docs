@@ -1,7 +1,7 @@
 ---
 title: "Introducing Batch Future: Controlled Concurrency for Activity Execution"
 description: "We're excited to announce Batch Future, a new feature in the Cadence Go client that provides controlled concurrency for bulk operations, preventing overwhelming downstream services while maintaining efficient parallel processing."
-date: 2025-09-19
+date: 2025-09-15
 authors: kevinb
 tags:
   - announcement
@@ -11,7 +11,7 @@ tags:
 
 Are you struggling with uncontrolled concurrency when processing multiple activities? Do you find yourself hitting rate limits or overwhelming downstream services when running bulk operations? We've got great news for you!
 
-Today, we're thrilled to announce **Batch Future**—a powerful new feature in the Cadence Go client that provides controlled concurrency for bulk operations. You can now process multiple activities in parallel while maintaining precise control over how many run simultaneously.
+Today, we're thrilled to announce **Batch Future**, a powerful new feature in the Cadence Go client that provides controlled concurrency for bulk operations. You can now process multiple activities in parallel while maintaining precise control over how many run simultaneously.
 
 <!-- truncate -->
 
@@ -155,7 +155,6 @@ func ProcessOrdersWithRetry(ctx workflow.Context, orders []Order) error {
 }
 ```
 
-
 ## How It Works Under the Hood
 
 Batch Future leverages Cadence's existing activity infrastructure with controlled concurrency:
@@ -218,7 +217,6 @@ return batch.Get(ctx, nil)
 - **Error Handling**: Implement proper error handling for individual activity failures
 - **Resource Management**: Consider memory usage for large batches
 - **Monitoring**: Use heartbeats for long-running activities within the batch
-
 
 ## Try It Today!
 
