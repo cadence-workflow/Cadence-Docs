@@ -1,5 +1,5 @@
 ---
-title: "Introducing Batch Future: Controlled Concurrency for Activity Execution"
+title: "Introducing Batch Future with Concurrency Control"
 description: "We're excited to announce Batch Future, a new feature in the Cadence Go client that provides controlled concurrency for bulk operations, preventing overwhelming downstream services while maintaining efficient parallel processing."
 date: 2025-09-25
 authors: kevinb
@@ -8,7 +8,7 @@ tags:
   - release
 ---
 
-Are you struggling with uncontrolled concurrency when processing multiple activities? Do you find yourself hitting rate limits or overwhelming downstream services when running bulk operations? We've got great news for you!
+Are you struggling with uncontrolled concurrency when trying to process thousands of activities or child workflows? Do you find yourself hitting rate limits or overwhelming downstream services when running bulk operations? We've got great news for you!
 
 Today, we're thrilled to announce **Batch Future**, a powerful new feature in the Cadence Go client that provides controlled concurrency for bulk operations. You can now process multiple activities in parallel while maintaining precise control over how many run simultaneously.
 
@@ -41,6 +41,7 @@ This approach works, but it has **uncontrolled concurrency**:
 - No way to limit concurrent executions
 - Difficult to manage resource usage
 - Can cause rate limiting or timeouts
+- Causing hot shard in Cadence server's task processing
 
 ## The Solution: Batch Future
 
@@ -158,11 +159,11 @@ func ProcessOrdersWithRetry(ctx workflow.Context, orders []Order) error {
 
 Batch Future leverages Cadence's existing activity infrastructure with controlled concurrency:
 
-1. **Activity Factories**: Creates lazy-evaluated activity functions that aren't executed until needed
-2. **Concurrency Control**: Limits the number of activities running simultaneously
-3. **Queue Management**: Maintains a queue of pending activities and starts new ones as others complete
-4. **Future Management**: Returns a single future that completes when all activities finish
-5. **Error Propagation**: If any activity fails, the entire batch can be cancelled or retried
+1. **Future Factories**: Creates lazy-evaluated future creation functions that aren't scheduled until needed
+2. **Concurrency Control**: Limits the number of pending futures
+3. **Queue Management**: Maintains a queue of to-be-scheduled futures and starts new ones as others complete
+4. **Future Management**: Returns a single future that completes when all futures finish
+5. **Error Propagation**: If any future fails, the error is stored in a multi-error wrapper entity, users can either cancel or fail open
 
 ## Getting Started
 
