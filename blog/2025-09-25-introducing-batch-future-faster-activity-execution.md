@@ -179,36 +179,45 @@ go get github.com/uber/cadence-go-client@latest
 ### 2. Try the Sample
 Check out our [Batch Future sample](https://github.com/cadence-workflow/cadence-samples/tree/master/cmd/samples/batch) to see it in action.
 
-### 3. Migrate Your Workflows
-Identify workflows that process multiple items and convert them to use Batch Future:
+### 3. Migrate Your Workflows (With Caution)
 
-```go
-// Before: Uncontrolled concurrency
-var futures []workflow.Future
-for _, item := range items {
-    future := workflow.ExecuteActivity(ctx, ProcessItem, item)
-    futures = append(futures, future)
-}
-for _, future := range futures {
-    if err := future.Get(ctx, nil); err != nil {
-        return err
-    }
-}
+**This is not a simple code change**. Migrating to Batch Future requires workflow versioning and careful production planning.
 
-// After: Controlled concurrency with Batch Future
-factories := make([]func(workflow.Context) workflow.Future, len(items))
-for i, item := range items {
-    item := item // Capture loop variable
-    factories[i] = func(ctx workflow.Context) workflow.Future {
-        return workflow.ExecuteActivity(ctx, ProcessItem, item)
-    }
-}
-batch, err := workflow.NewBatchFuture(ctx, 3, factories) // Limit to 3 concurrent
-if err != nil {
-    return err
-}
-return batch.Get(ctx, nil)
-```
+#### The Challenge
+Batch Future changes your workflow's execution pattern from individual activities to controlled batching. This creates non-deterministic changes that will break existing running workflows without proper versioning.
+
+#### Migration Approaches
+
+**Option A: Versioned Migration (Recommended for Production)**
+- Use [workflow.GetVersion()](https://cadenceworkflow.io/docs/go-client/workflow-versioning) to support both old and new patterns
+- Deploy code that handles both execution patterns
+- Gradually transition new workflows to use Batch Future
+- Clean up old code after all workflows complete
+
+**Option B: New Workflow Type (Simpler but Requires Coordination)**
+- Create a new workflow type specifically for Batch Future
+- Update callers to use the new workflow type
+- Deprecate the old workflow type after migration
+
+**Option C: Gradual Migration (For Large Systems)**
+- Use workflow signals to trigger batch processing for new items
+- Keep existing workflows running with individual processing
+- Migrate callers incrementally
+
+#### Testing Strategy
+Before deploying, use [Workflow Shadowing](https://cadenceworkflow.io/docs/go-client/workflow-replay-shadowing) to replay production workflow histories against your new code. This catches compatibility issues before they reach production.
+
+#### Key Considerations
+- **Timeline**: Plan for weeks, not days
+- **Coordination**: Requires careful coordination between teams
+- **Monitoring**: Essential during transition period
+- **Rollback**: Always have a rollback plan ready
+- **Testing**: Extensive testing in staging environment required
+
+#### When NOT to Migrate
+- If you have long-running workflows (weeks/months)
+- If you can't coordinate a proper versioning strategy
+- If the performance benefits don't justify the migration complexity
 
 ## Best Practices
 
