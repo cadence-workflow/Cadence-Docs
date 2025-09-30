@@ -199,10 +199,10 @@ Batch Future changes your workflow's execution pattern from individual activitie
 - Update callers to use the new workflow type
 - Deprecate the old workflow type after migration
 
-**Option C: Gradual Migration (For Large Systems)**
-- Use workflow signals to trigger batch processing for new items
-- Keep existing workflows running with individual processing
-- Migrate callers incrementally
+**Option C: Workflow Replacement (Not Gradual)**
+- Terminate existing workflows (if acceptable)
+- Deploy new code with Batch Future
+- Start new workflows with the new pattern
 
 #### Testing Strategy
 Before deploying, use [Workflow Shadowing](https://cadenceworkflow.io/docs/go-client/workflow-replay-shadowing) to replay production workflow histories against your new code. This catches compatibility issues before they reach production.
