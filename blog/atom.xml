@@ -2,11 +2,43 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cadenceworkflow.io/blog</id>
     <title>Cadence Blog</title>
-    <updated>2025-09-25T00:00:00.000Z</updated>
+    <updated>2025-10-06T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cadenceworkflow.io/blog"/>
     <subtitle>Cadence Blog</subtitle>
     <icon>https://cadenceworkflow.io/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Cadence Joins CNCF (Cloud Native Computing Foundation)]]></title>
+        <id>https://cadenceworkflow.io/blog/2025/10/06/cadence-joins-cncf-cloud-native-computing-foundation</id>
+        <link href="https://cadenceworkflow.io/blog/2025/10/06/cadence-joins-cncf-cloud-native-computing-foundation"/>
+        <updated>2025-10-06T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[using.png]]></summary>
+        <content type="html"><![CDATA[<p><img decoding="async" loading="lazy" alt="using.png" src="https://cadenceworkflow.io/assets/images/cadence-joins-cncf-03b6cd48f3a98aa4a9e65b4f5c8b09a1.png" width="889" height="344" class="img_ev3q"></p>
+<p>We’re proud to announce that <a href="https://cadenceworkflow.io/" target="_blank" rel="noopener noreferrer">the Cadence project</a> has joined the <a href="https://www.cncf.io/" target="_blank" rel="noopener noreferrer">CNCF (Cloud Native Computing Foundation)</a>®, the open-source foundation that hosts and maintains critical components of modern cloud-native infrastructure including Kubernetes®, Prometheus®, and Envoy® under the <a href="https://www.linuxfoundation.org/" target="_blank" rel="noopener noreferrer">Linux Foundation</a>®.</p>
+<p>Cadence is an open-source, fault-tolerant, and highly scalable workflow orchestration engine created at Uber to help developers build and run resilient applications. It’s been powering thousands of use cases at Uber and other companies. By managing distributed state, retries, scaling, and failure recovery, Cadence enables teams to focus on business logic rather than infrastructure complexity. Mission-critical applications across industries including finance, e-commerce, healthcare, and transportation depend on Cadence.</p>
+<p>Joining CNCF marks a significant milestone for the Cadence project, emphasizing the project’s open source commitment. With its <a href="https://cadenceworkflow.io/community/governance" target="_blank" rel="noopener noreferrer">open governance</a>, companies can join as maintainers and help improve long-term confidence. Increased transparency in roadmap and execution make upcoming features predictable.</p>
+<p>Since its inception, the Cadence project’s ecosystem has reached over 150 companies and counting. Partners like NetApp® Instaclustr adopted the project and have offered it as a managed solution at scale. With CNCF’s support, the project aims to further its mission of simplifying distributed service development while delivering production-grade reliability at scale.</p>
+<p>In the last several years, Cadence has made significant investments in its scalability, reliability, multitenancy, deployment safety, and portability, laying the necessary foundation to build enterprise-level features at scale, efficiently and reliably. It’s now a great time to build those features together, and we invite anyone to be a part of this future. Especially in the era of AI, Cadence will play a crucial role in durable orchestration.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="whats-changing-in-the-community">What’s Changing in the Community?<a href="https://cadenceworkflow.io/blog/2025/10/06/cadence-joins-cncf-cloud-native-computing-foundation#whats-changing-in-the-community" class="hash-link" aria-label="Direct link to What’s Changing in the Community?" title="Direct link to What’s Changing in the Community?">​</a></h2>
+<p>We’ll stop using our Slack workspace (<a href="http://uber-cadence.slack.com/" target="_blank" rel="noopener noreferrer">uber-cadence.slack.com</a>). Going forward, we’ll use CNCF’s Slack workspace (<a href="https://cloud-native.slack.com/" target="_blank" rel="noopener noreferrer">cloud-native.slack.com</a>). Join this new workspace using <a href="https://communityinviter.com/apps/cloud-native/cncf" target="_blank" rel="noopener noreferrer">Community Inviter</a> and join the <em>#cadence-users</em> channel to contact us.</p>
+<p>Our website (<a href="http://cadenceworkflow.io/" target="_blank" rel="noopener noreferrer">cadenceworkflow.io</a>) and our GitHub org (<a href="http://github.com/cadence-workflow" target="_blank" rel="noopener noreferrer">github.com/cadence-workflow</a>) will stay the same and we’ll continue sharing new features from there.</p>
+<p>We’ll publish our roadmap at <a href="https://github.com/orgs/cadence-workflow/projects" target="_blank" rel="noopener noreferrer">https://github.com/orgs/cadence-workflow/projects</a>. We’ll hold community meetings to brainstorm about and prioritize upcoming features. Project tracking will move from internal tools to GitHub. Projects will have dedicated issues so you can track pull requests, updates, and timelines.</p>
+<p>We’ll organize regular meetups (in-person and virtual) to showcase new features, have discussions, and learn from valuable guests.</p>
+<p>For maintainers, we’ll hold regular meetings to update each other. If you’d like to become a maintainer, please contact us on Slack so we can help with starter tasks and larger projects as you gain experience.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="how-to-become-a-maintainer">How to Become a Maintainer?<a href="https://cadenceworkflow.io/blog/2025/10/06/cadence-joins-cncf-cloud-native-computing-foundation#how-to-become-a-maintainer" class="hash-link" aria-label="Direct link to How to Become a Maintainer?" title="Direct link to How to Become a Maintainer?">​</a></h2>
+<p>We invite companies that are already using Cadence, or plan to adopt it in the future, to become official maintainers and help shape this critical piece of infrastructure for your organization.</p>
+<p>With this important milestone, we are prioritizing the addition of new maintainers and working to make the onboarding experience as smooth as possible. Our goal is to scale the project responsibly across all areas including development, decision making, efficiency, modernization, prioritization, and more.</p>
+<p>If you are interested, please reach out to us in the #cadence-users channel mentioned above, and we will help you find suitable projects to contribute to. If you already have something in mind, feel free to open an issue in the appropriate repository under <a href="http://github.com/cadence-workflow" target="_blank" rel="noopener noreferrer">github.com/cadence-workflow</a>.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="acknowledgments">Acknowledgments<a href="https://cadenceworkflow.io/blog/2025/10/06/cadence-joins-cncf-cloud-native-computing-foundation#acknowledgments" class="hash-link" aria-label="Direct link to Acknowledgments" title="Direct link to Acknowledgments">​</a></h2>
+<p><em>CNCF® and the CNCF logo design are registered trademarks of the Cloud Native Computing Foundation.</em></p>
+<p><em>Envoy®, Kubernetes®, Prometheus®, and their logos are registered trademarks of The Linux Foundation® in the United States and other countries. No endorsement by The Linux Foundation is implied by the use of these marks.</em></p>
+<p><em>Instaclustr® and NetApp® are trademarks of NetApp, Inc.</em></p>]]></content>
+        <author>
+            <name>Ender Demirkaya</name>
+            <uri>https://www.linkedin.com/in/enderdemirkaya/</uri>
+        </author>
+        <category label="Announcement" term="Announcement"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Introducing Batch Future with Concurrency Control]]></title>
         <id>https://cadenceworkflow.io/blog/2025/09/25/introducing-batch-future-faster-activity-execution</id>
@@ -1198,73 +1230,5 @@ There are multiple ways to address this issue. Customers can either run jobs in 
         </author>
         <category label="Deep Dives" term="Deep Dives"/>
         <category label="Introduction to Cadence" term="Introduction to Cadence"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Cadence Community Spotlight Update - June 2023]]></title>
-        <id>https://cadenceworkflow.io/blog/2023/06/30/community-spotlight-june-2023</id>
-        <link href="https://cadenceworkflow.io/blog/2023/06/30/community-spotlight-june-2023"/>
-        <updated>2023-06-30T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[We've had a short break but now we are back. Welcome to the latest of our regular monthly Community Spotlight updates that gives you news from in and around the Cadence community!]]></summary>
-        <content type="html"><![CDATA[<p>We've had a short break but now we are back. Welcome to the latest of our regular monthly Community Spotlight updates that gives you news from in and around the Cadence community!</p>
-<p>Please see below for a roundup of the highlights:</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="cadence-release-10">Cadence Release 1.0<a href="https://cadenceworkflow.io/blog/2023/06/30/community-spotlight-june-2023#cadence-release-10" class="hash-link" aria-label="Direct link to Cadence Release 1.0" title="Direct link to Cadence Release 1.0">​</a></h2>
-<p>Just in case you missed it - at the end of April <a href="https://github.com/cadence-workflow/cadence/releases/tag/v1.0.0" target="_blank" rel="noopener noreferrer">Cadence v1.0</a> was officially released. This release is a significant milestone for the project and the community. It indicates that we are confident in the stability of the code that we can recommend it and promote it widely to more users. Kudos to everyone that worked together to make this release happen.</p>
-<p>And the Uber team also gave Cadence a writeup on the <a href="https://www.uber.com/en-SE/blog/announcing-cadence/" target="_blank" rel="noopener noreferrer">Uber Engineering Blog</a> so please take a look.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="community-survey-results">Community Survey Results<a href="https://cadenceworkflow.io/blog/2023/06/30/community-spotlight-june-2023#community-survey-results" class="hash-link" aria-label="Direct link to Community Survey Results" title="Direct link to Community Survey Results">​</a></h2>
-<p>The results of our Community Survey have been published and you can find <a href="https://cadenceworkflow.io/blog/2023/06/08/survey-results/" target="_blank" rel="noopener noreferrer">the details right here on our blog</a>. From the results we can see that:</p>
-<ul>
-<li>our community is a good mix of people using, evaluating, testing or thinking about migrating to Cadence</li>
-<li>Software Engineers featured highly as a community user profile</li>
-<li>Europe seems to be the most common community timezone</li>
-<li>People prefer using our Slack channel for questions</li>
-<li>Debugging is what most people need help with</li>
-</ul>
-<p>Thank you to Ender for compiling the data and to  everyone who participated.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="cadence-video-open-source-summit-north-america">Cadence Video Open Source Summit, North America<a href="https://cadenceworkflow.io/blog/2023/06/30/community-spotlight-june-2023#cadence-video-open-source-summit-north-america" class="hash-link" aria-label="Direct link to Cadence Video Open Source Summit, North America" title="Direct link to Cadence Video Open Source Summit, North America">​</a></h2>
-<p>In May <a href="https://www.linkedin.com/in/enderdemirkaya/" target="_blank" rel="noopener noreferrer">Ender Demirkaya</a> gave a talk called on Cadence at the Linux Foundation's <a href="https://events.linuxfoundation.org/open-source-summit-north-america/" target="_blank" rel="noopener noreferrer">Open Source Summit, North America</a> in Vancouver. The presentation attracted a sizeable audience and was very well received. There was also a lot of questions from the audience which is a sign that Cadence sounded potentially useful to them.</p>
-<p>A recording of the talk <a href="https://www.youtube.com/watch?v=vFPJlE6d4xs" target="_blank" rel="noopener noreferrer">Cadence: The New Open Source Project for Building Complex Distributed Applications</a> is now available.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="overcoming-potential-workflow-versioning-maintenance-challenges">Overcoming Potential Workflow Versioning Maintenance Challenges<a href="https://cadenceworkflow.io/blog/2023/06/30/community-spotlight-june-2023#overcoming-potential-workflow-versioning-maintenance-challenges" class="hash-link" aria-label="Direct link to Overcoming Potential Workflow Versioning Maintenance Challenges" title="Direct link to Overcoming Potential Workflow Versioning Maintenance Challenges">​</a></h2>
-<p>Community member <a href="https://www.linkedin.com/in/prclqz/" target="_blank" rel="noopener noreferrer">Quanzheng Long</a> has written a <a href="https://medium.com/@qlong/how-to-overcome-some-maintenance-challenges-of-temporal-cadence-workflow-versioning-f893815dd18d" target="_blank" rel="noopener noreferrer">detailed article on Medium</a> about some of the potential maintenance challenges of workflow versioning. It's a short read and has some good examples that explains the potential problems and identifies some approaches for dealing with them.</p>
-<p>Thanks Long for sharing this knowledge with the community!</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="cadence-in-the-news">Cadence in the News!<a href="https://cadenceworkflow.io/blog/2023/06/30/community-spotlight-june-2023#cadence-in-the-news" class="hash-link" aria-label="Direct link to Cadence in the News!" title="Direct link to Cadence in the News!">​</a></h2>
-<p>Below are a selection of Cadence related articles, blogs and whitepapers. Please take a look and feel free to share via your own social media channels.</p>
-<ul>
-<li>
-<p><a href="https://www.uber.com/en-SE/blog/announcing-cadence/" target="_blank" rel="noopener noreferrer">Announcing Cadence 1.0: The Powerful Workflow Platform Built for Scale and Reliability</a></p>
-</li>
-<li>
-<p><a href="https://www.instaclustr.com/blog/cadence-1-0-released-on-the-instaclustr-managed-platform/" target="_blank" rel="noopener noreferrer">Cadence 1.0 Released on the Instaclustr Managed Platform</a></p>
-</li>
-<li>
-<p><a href="https://medium.com/@qlong/how-to-overcome-some-maintenance-challenges-of-temporal-cadence-workflow-versioning-f893815dd18d" target="_blank" rel="noopener noreferrer">How to Overcome Some Maintenance Challenges of Temporal/Cadence Workflow Versioning</a></p>
-</li>
-<li>
-<p><a href="https://www.youtube.com/watch?v=vFPJlE6d4xs" target="_blank" rel="noopener noreferrer">Video: Cadence - The New Open Source Project for Building Complex Distributed Applications</a></p>
-</li>
-<li>
-<p><a href="https://www.instaclustr.com/blog/instaclustr-releases-multi-region-cadence-workflow-2/" target="_blank" rel="noopener noreferrer">Instaclustr Releases Multi-Region Cadence Workflow</a></p>
-</li>
-<li>
-<p><a href="https://cadenceworkflow.io/blog/2023/07/01/components-of-cadence-application-setup/" target="_blank" rel="noopener noreferrer">Understanding Components of Cadence Application</a></p>
-</li>
-<li>
-<p><a href="https://www.instaclustr.com/blog/improving-the-reliability-of-cadence-search-queries/" target="_blank" rel="noopener noreferrer">Improving the Reliability of Cadence Search Queries That Use OpenSearch/Elasticsearch</a></p>
-</li>
-<li>
-<p><a href="https://www.instaclustr.com/blog/instaclustr-cadence-workflow-developer/" target="_blank" rel="noopener noreferrer">Instaclustr Cadence Workflow Developer Offering Hits General Availability</a></p>
-</li>
-</ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="upcoming-events">Upcoming Events<a href="https://cadenceworkflow.io/blog/2023/06/30/community-spotlight-june-2023#upcoming-events" class="hash-link" aria-label="Direct link to Upcoming Events" title="Direct link to Upcoming Events">​</a></h2>
-<ul>
-<li>None</li>
-</ul>
-<p>If you have any news or topics you'd like us to include in our next update then please join our <a href="http://t.uber.com/cadence-slack" target="_blank" rel="noopener noreferrer">Slack</a>#community channel.</p>
-<p>Please remember that this update is for you - so if you have any comments or feedback that could help us improve it then please share it with us in the #community <a href="http://t.uber.com/cadence-slack" target="_blank" rel="noopener noreferrer">Slack</a> channel.</p>]]></content>
-        <author>
-            <name>Sharan Foga</name>
-            <uri>https://www.linkedin.com/in/sfoga/</uri>
-        </author>
-        <category label="Community Spotlight" term="Community Spotlight"/>
-        <category label="Releases" term="Releases"/>
     </entry>
 </feed>
