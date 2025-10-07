@@ -82,6 +82,38 @@ This would render as:
 
 ---
 
+## UI Examples
+
+The following screenshots demonstrate how formatted query responses appear in the Cadence Web UI:
+
+### Employee Database Query Results
+
+This example shows formatted data returned from an employee database query, demonstrating how tabular data can be presented:
+
+![Employee Database Query Results](img/employee-database-query.png)
+
+*Employee records displayed in a structured table format showing Employee name, Title, and description columns with sample data for multiple employees.*
+
+### Hello World Workflow Query Results
+
+Here's an example of how query results are displayed for a simple workflow:
+
+![Hello World Workflow Query Results](img/hello-world-workflow-query.png)
+
+*The Hello World Workflow query interface showing basic workflow concepts and activity execution information, including real-world use case details and sample code links.*
+
+### Query Interface
+
+The Queries tab provides an interface for executing workflow queries with various predefined options:
+
+![Cadence Web Queries Interface](img/cadence-queries-interface.png)
+
+*The Queries tab showing available query operations including `__open_sessions`, `get_runtime_data`, and other predefined queries, along with an "Operator Runbook" option.*
+
+These examples illustrate how the formatted data feature enhances the user experience by providing rich, structured displays instead of raw JSON responses.
+
+---
+
 ## Go Implementation
 
 ### Type Definition
