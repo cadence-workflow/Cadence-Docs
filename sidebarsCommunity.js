@@ -6,7 +6,14 @@ export default {
     //   dirName: '.',
     // },
     { type: 'doc', id: 'support' },
-    { type: 'doc', id: 'how-to-contribute' },
+    {
+      type: 'category',
+      label: 'How to Contribute',
+      items: [
+        { type: 'doc', id: 'how-to-contribute/index' },
+        { type: 'doc', id: 'how-to-contribute/coding-conventions' },
+      ],
+    },
     { type: 'doc', id: 'governance' },
     { type: 'doc', id: 'team' },
     // { type: 'doc', id: 'resources' },
