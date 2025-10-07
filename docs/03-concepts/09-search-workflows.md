@@ -1,10 +1,10 @@
 ---
 layout: default
-title: Search workflows(Advanced visibility)
+title: Search workflows (Advanced visibility)
 permalink: /docs/concepts/search-workflows
 ---
 
-# Searching Workflows(Advanced visibility)
+# Searching Workflows (Advanced visibility)
 
 ## Introduction
 
