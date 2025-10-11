@@ -317,8 +317,8 @@ const config: Config = {
               href: 'https://stackoverflow.com/questions/tagged/cadence-workflow+uber-cadence',
             },
             {
-              label: 'Cadence Community Slack',
-              href: 'http://t.uber.com/cadence-slack',
+              label: 'Cadence Community on CNCF Slack',
+              href: 'https://communityinviter.com/apps/cloud-native/cncf',
             },
             {
               label: 'LinkedIn',
