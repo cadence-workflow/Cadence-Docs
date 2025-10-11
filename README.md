@@ -6,7 +6,7 @@
 
 [Cadence docs](https://cadenceworkflow.io) is built using [Docusaurus](https://docusaurus.io/).
 
-
+> 📚 **New to contributing to Cadence?** Check out our [Contributing Guide](https://cadenceworkflow.io/community/how-to-contribute/getting-started) for an overview of the contribution process across all Cadence repositories. This document contains cadence backend specific setup and development instructions.
 
 ### Installation
 

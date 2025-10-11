@@ -11,7 +11,8 @@ export default {
       label: 'How to Contribute',
       items: [
         { type: 'doc', id: 'how-to-contribute/index' },
-        { type: 'doc', id: 'how-to-contribute/coding-conventions' },
+        { type: 'doc', id: 'how-to-contribute/getting-started' },
+        { type: 'doc', id: 'how-to-contribute/pull-request-conventions' },
       ],
     },
     { type: 'doc', id: 'governance' },
@@ -31,7 +32,7 @@ export default {
     {
       type: 'link',
       label: 'Chat with us on Slack',
-      href: 'http://t.uber.com/cadence-slack',
+      href: 'https://communityinviter.com/apps/cloud-native/cncf',
     },
     {
       type: 'link',
