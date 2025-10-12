@@ -137,3 +137,13 @@ kevinb:
   socials:
     linkedin: https://www.linkedin.com/in/kevin-burns-8182aa58/
     github: bueller87
+
+assem-hafez:
+  name: Assem Hafez
+  title: Software Engineer @ Uber
+  url: https://github.com/assem-hafez
+  image_url: https://github.com/assem-hafez.png
+  page: true
+  socials:
+    linkedin: https://www.linkedin.com/in/assem-hafez-160553b7/
+    github: Assem-Hafez
