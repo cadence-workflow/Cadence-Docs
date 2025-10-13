@@ -11,7 +11,7 @@ For a long time, controlling Cadence workflows was primarily done through the cl
 
 Over the past releases, we’ve been steadily introducing interactive capabilities such as **Terminate**, **Cancel**, **Restart**, **Signal**, and **Reset**. Each of these brought Cadence Web closer to becoming a full-featured operational console.
 
-Today, we’re completing that journey with the introduction of the **`Start Workflow`** action, operators can now manage the full workflow lifecycle—from initiation to completion—entirely within the Web UI.
+Today, we’re completing that journey with the introduction of the **`Start Workflow`** action. Operators can now manage the full workflow lifecycle—from initiation to completion—entirely within the Web UI.
 
 ***
 
