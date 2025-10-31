@@ -3,6 +3,7 @@ layout: default
 title: Mutual TLS (mTLS) Authentication
 permalink: /docs/concepts/mutual-tls
 
+---
 # Mutual TLS (mTLS) Authentication
 
 This guide explains how to implement Mutual TLS (mTLS) authentication in Cadence to secure communication between clients and servers. mTLS provides bidirectional authentication, ensuring that both the client and server verify each other's identities before exchanging data.
