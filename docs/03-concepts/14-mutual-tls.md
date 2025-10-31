@@ -1,6 +1,7 @@
 ---
-
-## layout: default title: Mutual TLS (mTLS) Authentication permalink: /docs/concepts/mutual-tls
+layout: default
+title: Mutual TLS (mTLS) Authentication
+permalink: /docs/concepts/mutual-tls
 
 # Mutual TLS (mTLS) Authentication
 
