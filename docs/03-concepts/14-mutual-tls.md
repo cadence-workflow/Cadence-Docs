@@ -22,6 +22,8 @@ In mTLS, both the client and server have a certificate, and both sides authentic
 - Servers can verify the identity of connecting clients  
 - All communication is encrypted end-to-end
 
+<https://www.youtube.com/watch?v=Sn9tVxqIPeI>
+
 ---
 
 ## How mTLS Works
