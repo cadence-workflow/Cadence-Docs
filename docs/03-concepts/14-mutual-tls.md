@@ -85,7 +85,7 @@ To enable mTLS in Cadence server, you need to configure TLS settings and start t
 
 Use the `--zone` flag to specify the TLS configuration when starting the Cadence server:
 
-```shell
+```bash
 ./cadence-server --env development --zone tls start
 ```
 
@@ -101,7 +101,7 @@ To connect a Cadence client with mTLS, you need to configure TLS credentials and
 
 ## Complete Working Example
 
-The [helloworld\_tls sample](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/client_samples/helloworld_tls) provides a complete, tested implementation of mTLS with Cadence, including:
+The [helloworld_tls sample](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/client_samples/helloworld_tls) provides a complete, tested implementation of mTLS with Cadence, including:
 
 - Certificate generation scripts  
 - Complete client implementation with mTLS  
