@@ -6,6 +6,8 @@ tags:
   - release
   - announcement
 ---
+## See Start Workflow in Action
+<iframe width="560" height="315" src="https://www.youtube.com/embed/juQhG8JIMvc?si=5YYwIFjGuSgkKR1z" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 For a long time, controlling Cadence workflows was primarily done through the client SDKs or the administrative CLI. Our vision for **Cadence Web** has been to evolve it from a read-only inspection tool into a **Unified Operational Hub** for all workflow management needs. This means putting every essential workflow action directly in the hands of operators, support engineers, and developers—right where they observe workflows.
 
@@ -14,6 +16,7 @@ Over the past releases, we’ve been steadily introducing interactive capabiliti
 Today, we’re completing that journey with the introduction of the **`Start Workflow`** action. Operators can now manage the full workflow lifecycle—from initiation to completion—entirely within the Web UI.
 
 ***
+
 
 ## Where to Find the New Controls
 
