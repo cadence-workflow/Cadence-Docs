@@ -90,6 +90,10 @@ The following screenshots demonstrate how formatted query responses appear in th
 
 This example shows a workflow query that returns formatted data for a restaurant lunch voting system, demonstrating how interactive voting interfaces can be presented:
 
+**Implementation References:**
+- [Restaurant voting workflow implementation](https://github.com/cadence-workflow/cadence-samples/blob/master/cmd/samples/blocks/blocks_workflow.go#L71)
+- [Blocks package documentation](https://github.com/cadence-workflow/cadence-go-client/tree/master/x/blocks)
+
 ![Restaurant Menu Voting Interface](img/restaurant_menu.png)
 
 *A lunch voting interface displaying restaurant menu options with images and descriptions. Shows "Farmhouse - Red Thai Curry", "Ler Ros: Lemongrass Tofu Bahn Mi", and "Ethiopian Wat" options with detailed descriptions and voting buttons. The interface includes meal requests tracking and vote counts.*
