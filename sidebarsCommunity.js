@@ -6,7 +6,15 @@ export default {
     //   dirName: '.',
     // },
     { type: 'doc', id: 'support' },
-    { type: 'doc', id: 'how-to-contribute' },
+    {
+      type: 'category',
+      label: 'How to Contribute',
+      items: [
+        { type: 'doc', id: 'how-to-contribute/index' },
+        { type: 'doc', id: 'how-to-contribute/getting-started' },
+        { type: 'doc', id: 'how-to-contribute/pull-request-conventions' },
+      ],
+    },
     { type: 'doc', id: 'governance' },
     { type: 'doc', id: 'team' },
     // { type: 'doc', id: 'resources' },
@@ -24,7 +32,7 @@ export default {
     {
       type: 'link',
       label: 'Chat with us on Slack',
-      href: 'http://t.uber.com/cadence-slack',
+      href: 'https://communityinviter.com/apps/cloud-native/cncf',
     },
     {
       type: 'link',

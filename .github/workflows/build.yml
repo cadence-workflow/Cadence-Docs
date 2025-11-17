@@ -17,14 +17,14 @@ jobs:
       uses: actions/checkout@v4
       with:
         persist-credentials: false
-    - name: Use Node.js lts/hydrogen (v18)
+    - name: Use Node.js lts/jod (v22)
       # https://github.com/actions/setup-node
       uses: actions/setup-node@v4
       with:
-        node-version: lts/hydrogen
+        node-version: lts/jod
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
         cache: 'npm'
     - name: Install and Build 🔧
       run: |
-        npm install
+        npm ci
         npm run build

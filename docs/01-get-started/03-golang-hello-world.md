@@ -17,23 +17,30 @@ You must finish part 2 and 3 by following the [first section](/docs/get-started/
 We are using domain called `test-domain` for this tutorial project.
 
 ## Step 1. Implement A Cadence Worker Service
-Create a new `main.go` file in your local directory and paste the basic worker service layout.
+
+1. Init your go module:
+
+```bash
+go mod init <your-go-module>
+```
+
+2. Create a new `main.go` file in your local directory and paste the basic worker service layout.
 
 ```go
 package main
 
 import (
-    "net/http"
-    "go.uber.org/cadence/.gen/go/cadence/workflowserviceclient"
-    "go.uber.org/cadence/compatibility"
-    "go.uber.org/cadence/worker"
+	"net/http"
+	"go.uber.org/cadence/.gen/go/cadence/workflowserviceclient"
+	"go.uber.org/cadence/compatibility"
+	"go.uber.org/cadence/worker"
 
-    apiv1 "github.com/cadence-workflow/cadence-idl/go/proto/api/v1"
-    "github.com/uber-go/tally"
-    "go.uber.org/zap"
-    "go.uber.org/zap/zapcore"
-    "go.uber.org/yarpc"
-    "go.uber.org/yarpc/transport/grpc"
+	apiv1 "github.com/uber/cadence-idl/go/proto/api/v1"
+	"github.com/uber-go/tally"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
+	"go.uber.org/yarpc"
+	"go.uber.org/yarpc/transport/grpc"
 )
 
 var HostPort = "127.0.0.1:7833"
@@ -43,70 +50,83 @@ var ClientName = "test-worker"
 var CadenceService = "cadence-frontend"
 
 func main() {
-    startWorker(buildLogger(), buildCadenceClient())
-    err := http.ListenAndServe(":8080", nil)
-    if err != nil {
-        panic(err)
-    }
+	startWorker(buildLogger(), buildCadenceClient())
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		panic(err)
+	}
 }
 
 func buildLogger() *zap.Logger {
-    config := zap.NewDevelopmentConfig()
-    config.Level.SetLevel(zapcore.InfoLevel)
+	config := zap.NewDevelopmentConfig()
+	config.Level.SetLevel(zapcore.InfoLevel)
 
-    var err error
-    logger, err := config.Build()
-    if err != nil {
-        panic("Failed to setup logger")
-    }
+	var err error
+	logger, err := config.Build()
+	if err != nil {
+		panic("Failed to setup logger")
+	}
 
-    return logger
+	return logger
 }
 
 func buildCadenceClient() workflowserviceclient.Interface {
-    dispatcher := yarpc.NewDispatcher(yarpc.Config{
+	dispatcher := yarpc.NewDispatcher(yarpc.Config{
 		Name: ClientName,
 		Outbounds: yarpc.Outbounds{
-		  CadenceService: {Unary: grpc.NewTransport().NewSingleOutbound(HostPort)},
+			CadenceService: {Unary: grpc.NewTransport().NewSingleOutbound(HostPort)},
 		},
-	  })
-	  if err := dispatcher.Start(); err != nil {
+	})
+	if err := dispatcher.Start(); err != nil {
 		panic("Failed to start dispatcher")
-	  }
+	}
 
-	  clientConfig := dispatcher.ClientConfig(CadenceService)
+	clientConfig := dispatcher.ClientConfig(CadenceService)
 
-	  return compatibility.NewThrift2ProtoAdapter(
+	return compatibility.NewThrift2ProtoAdapter(
 		apiv1.NewDomainAPIYARPCClient(clientConfig),
 		apiv1.NewWorkflowAPIYARPCClient(clientConfig),
 		apiv1.NewWorkerAPIYARPCClient(clientConfig),
 		apiv1.NewVisibilityAPIYARPCClient(clientConfig),
-	  )
+	)
 }
 
 func startWorker(logger *zap.Logger, service workflowserviceclient.Interface) {
-    // TaskListName identifies set of client workflows, activities, and workers.
-    // It could be your group or client or application name.
-    workerOptions := worker.Options{
-        Logger:       logger,
-        MetricsScope: tally.NewTestScope(TaskListName, map[string]string{}),
-    }
+	// TaskListName identifies set of client workflows, activities, and workers.
+	// It could be your group or client or application name.
+	workerOptions := worker.Options{
+		Logger:       logger,
+		MetricsScope: tally.NewTestScope(TaskListName, map[string]string{}),
+	}
 
-    worker := worker.New(
-        service,
-        Domain,
-        TaskListName,
-        workerOptions)
-    err := worker.Start()
-    if err != nil {
-        panic("Failed to start worker")
-    }
+	worker, err := worker.NewV2(
+		service,
+		Domain,
+		TaskListName,
+		workerOptions)
+	if err != nil {
+		panic("Failed to initialize worker")
+	}
 
-    logger.Info("Started Worker.", zap.String("worker", TaskListName))
+	err = worker.Start()
+	if err != nil {
+		panic("Failed to start worker")
+	}
+
+	logger.Info("Started Worker.", zap.String("worker", TaskListName))
 }
 ```
 
-In this worker service, we start a HTTP server and create a new Cadence client running continuously at the background. Then start the server on your local, you may see logs such like
+In this worker service, we start a HTTP server and create a new Cadence client running continuously at the background.
+
+3. Run the following command to install dependencies
+
+```bash
+go get go.uber.org/yarpc@v1.80.0
+go mod tidy
+```
+
+4. Start the server on your local, you may see logs such like
 
 ```log
 2023-07-03T11:46:46.266-0700    INFO    internal/internal_worker.go:826 Worker has no workflows registered, so workflow worker will not be started.     {"Domain": "test-domain", "TaskList": "test-worker", "WorkerID": "35987@uber-C02F18EQMD6R@test-worker@90c0260e-ba5c-4652-9f10-c6d1f9e29c1d"}
@@ -122,7 +142,7 @@ You may see this because there are no activities and workflows registered to the
 Let's write a hello world activity, which take a single input called `name` and greet us after the workflow is finished.
 
 ```go
-func helloWorldWorkflow(ctx workflow.Context, name string) error {
+func helloWorldWorkflow(ctx workflow.Context, name string) (*string, error) {
 	ao := workflow.ActivityOptions{
 		ScheduleToStartTimeout: time.Minute,
 		StartToCloseTimeout:    time.Minute,
@@ -136,12 +156,12 @@ func helloWorldWorkflow(ctx workflow.Context, name string) error {
 	err := workflow.ExecuteActivity(ctx, helloWorldActivity, name).Get(ctx, &helloworldResult)
 	if err != nil {
 		logger.Error("Activity failed.", zap.Error(err))
-		return err
+		return nil, err
 	}
 
 	logger.Info("Workflow completed.", zap.String("Result", helloworldResult))
 
-	return nil
+	return &helloworldResult, nil
 }
 
 func helloWorldActivity(ctx context.Context, name string) (string, error) {
@@ -154,16 +174,18 @@ func helloWorldActivity(ctx context.Context, name string) (string, error) {
 Don't forget to register the workflow and activity to the worker.
 
 ```go
-func init() {
-    workflow.Register(helloWorldWorkflow)
-    activity.Register(helloWorldActivity)
-}
+// add the following lines to the function startWorker before calling worker.Start()
+worker.RegisterWorkflow(helloWorldWorkflow)
+worker.RegisterActivity(helloWorldActivity)
 ```
 
-Import the `context` module if it was not automatically added.
+Import the missing modules if they were not automatically added.
 ```go
 import (
     "context"
+    "time"
+    "go.uber.org/cadence/activity"
+    "go.uber.org/cadence/workflow"
 )
 ```
 
@@ -173,6 +195,12 @@ Restart your worker and run the following command to interact with your workflow
 
 ```bash
 cadence --domain test-domain workflow start --et 60 --tl test-worker --workflow_type main.helloWorldWorkflow --input '"World"'
+```
+
+or use this alternative dockerized cadence command
+
+```bash
+docker run --network=host --rm ubercadence/cli:master --domain test-domain workflow start --et 60 --tl test-worker --workflow_type main.helloWorldWorkflow --input '"World"'
 ```
 
 You should see logs in your worker terminal like

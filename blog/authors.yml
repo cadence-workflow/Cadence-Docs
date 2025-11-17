@@ -1,11 +1,11 @@
 chopincode:
   name: Chris Qin
   title: Applications Developer @ Uber
-  url:  https://www.linkedin.com/in/chrisqin0610/
+  url: https://www.linkedin.com/in/chrisqin0610/
   image_url: https://github.com/chopincode.png
   page: true
   socials:
-    linkedin:  https://www.linkedin.com/in/chrisqin0610/
+    linkedin: https://www.linkedin.com/in/chrisqin0610/
     github: chopincode
 
 enderdemirkaya:
@@ -20,13 +20,23 @@ enderdemirkaya:
 
 jakobht:
   name: Jakob Haahr Taankvist
-  title: Software Engineer II @ Uber
+  title: Senior Software Engineer @ Uber
   url: https://www.linkedin.com/in/jakob-taankvist/
   image_url: https://github.com/jakobht.png
   page: true
   socials:
     linkedin: https://www.linkedin.com/in/jakob-taankvist/
     github: jakobht
+
+sankari165:
+  name: Sankari Gopalakrishnan
+  title: Senior Software Engineer @ Uber
+  url: https://www.linkedin.com/in/sankari-gopalakrishnan165/
+  image_url: https://github.com/sankari165.png
+  page: true
+  socials:
+    linkedin: https://www.linkedin.com/in/sankari-gopalakrishnan165/
+    github: sankari165
 
 ibarrajo:
   name: Josué Alexander Ibarra
@@ -97,3 +107,43 @@ shaddoll:
   socials:
     linkedin: https://www.linkedin.com/in/zijian-chen-5868938b/
     github: Shaddoll
+
+adhityamamallan:
+  name: Adhitya Mamallan
+  title: Software Engineer II @ Uber
+  url: https://www.linkedin.com/in/adhityamamallan/
+  image_url: https://github.com/adhityamamallan.png
+  page: true
+  socials:
+    linkedin: https://www.linkedin.com/in/adhityamamallan/
+    github: adhityamamallan
+
+arzonus:
+  name: Seva Kaloshin
+  title: Software Engineer II @ Uber
+  url: https://www.linkedin.com/in/seva-kaloshin/
+  image_url: https://github.com/arzonus.png
+  page: true
+  socials:
+    linkedin: https://www.linkedin.com/in/seva-kaloshin/
+    github: arzonus
+
+kevinb:
+  name: Kevin Burns
+  title: Developer Advocate @ Uber
+  url: https://www.linkedin.com/in/kevin-burns-8182aa58/
+  image_url: https://github.com/bueller87.png
+  page: true
+  socials:
+    linkedin: https://www.linkedin.com/in/kevin-burns-8182aa58/
+    github: bueller87
+
+assem-hafez:
+  name: Assem Hafez
+  title: Software Engineer @ Uber
+  url: https://github.com/assem-hafez
+  image_url: https://github.com/assem-hafez.png
+  page: true
+  socials:
+    linkedin: https://www.linkedin.com/in/assem-hafez-160553b7/
+    github: Assem-Hafez

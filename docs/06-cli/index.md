@@ -357,12 +357,15 @@ cadence --do samples-domain wf batch terminate -jid <batch-job-id>
 ```
 Note that the operation performed by a batch will not be rolled back by terminating the batch. However, you can use reset to rollback your :workflow:workflows:.
 
-#### Restart, reset workflow
+#### Reset workflow
 The Reset command allows resetting a :workflow: to a particular point and continue running from there.
 There are a lot of use cases:
+
 - Rerun a failed :workflow: from the beginning with the same start parameters.
 - Rerun a failed :workflow: from the failing point without losing the achieved progress(history).
 - After deploying new code, reset an open :workflow: to let the :workflow: run to different flows.
+
+What this command allows you to do conceptually is to go back to an earlier point in the workflow's history and re-run from that point. It allows you to pick the beginning of the workflow's history, the most recent events (the end) or in (most) segements of the workflow's history. 
 
 You can reset to some predefined :event: types:
 ```bash

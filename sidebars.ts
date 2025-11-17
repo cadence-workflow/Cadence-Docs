@@ -24,6 +24,7 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'get-started/java-hello-world' },
         { type: 'doc', id: 'get-started/golang-hello-world' },
         { type: 'doc', id: 'get-started/video-tutorials' },
+        { type: 'doc', id: 'get-started/grafana-helm-setup' },
       ],
     },
     {
@@ -61,6 +62,15 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'concepts/cross-dc-replication' },
         { type: 'doc', id: 'concepts/search-workflows' },
         { type: 'doc', id: 'concepts/http-api' },
+        { type: 'doc', id: 'concepts/data-converter' },
+        { type: 'doc', id: 'concepts/workflow-queries-formatted-data' },
+      ],
+    },
+    {
+      label: 'Codelabs',
+      type: 'category',
+      items: [
+        { type: 'doc', id: 'codelabs/workflow-tests-go-replayer-shadower' },
       ],
     },
     {
@@ -73,6 +83,7 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'java-client/implementing-workflows' },
         { type: 'doc', id: 'java-client/starting-workflow-executions' },
         { type: 'doc', id: 'java-client/activity-interface' },
+        { type: 'doc', id: 'java-client/implementing-activities' },
         { type: 'doc', id: 'java-client/versioning' },
         { type: 'doc', id: 'java-client/distributed-cron' },
         { type: 'doc', id: 'java-client/workers' },
@@ -93,6 +104,7 @@ const sidebars: SidebarsConfig = {
       items: [
         { type: 'doc', id: 'go-client/index' },
         { type: 'doc', id: 'go-client/workers' },
+        { type: 'doc', id: 'go-client/worker-auto-scaling' },
         { type: 'doc', id: 'go-client/create-workflows' },
         { type: 'doc', id: 'go-client/starting-workflows' },
         { type: 'doc', id: 'go-client/activities' },
@@ -112,6 +124,7 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'go-client/tracing' },
         { type: 'doc', id: 'go-client/workflow-replay-shadowing' },
         { type: 'doc', id: 'go-client/workflow-non-deterministic-error' },
+        { type: 'doc', id: 'go-client/sleep' },
       ],
     },
     {

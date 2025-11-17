@@ -56,6 +56,8 @@ const config: Config = {
           // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/cadence-workflow/Cadence-Docs/tree/master/',
+          showLastUpdateAuthor: true,
+          showLastUpdateTime: true,
           remarkPlugins: [glossary],
         } satisfies DocsOptions,
         blog: {
@@ -109,7 +111,7 @@ const config: Config = {
           title: 'Cadence Docs changelog',
           description:
             'Keep yourself up-to-date about new features in every release',
-          copyright: `Copyright © ${new Date().getFullYear()} Uber Technologies, Inc.`,
+          copyright: `Copyright © Cadence a Series of LF Projects, LLC. <br/>For website terms of use, trademark policy and other project policies please see <a href="https://lfprojects.org/policies/" target="_blank">lfprojects.org/policies/</a>.`,
           language: defaultLocale,
         },
         onInlineAuthors: 'warn',
@@ -200,14 +202,6 @@ const config: Config = {
     },
   ],
   themeConfig: {
-    announcementBar: {
-      id: 'survey_announcement',
-      content:
-        'We are looking to hear your feedback, please fill the <a target="_blank" rel="noopener noreferrer" href="https://www.surveymonkey.com/r/9RL7YX9">Cadence 2024 OSS community survey</a>',
-      backgroundColor: '#fafbfc',
-      textColor: '#091E42',
-      isCloseable: true,
-    },
 
     algolia: {
       // The application ID provided by Algolia
@@ -323,8 +317,8 @@ const config: Config = {
               href: 'https://stackoverflow.com/questions/tagged/cadence-workflow+uber-cadence',
             },
             {
-              label: 'Cadence Community Slack',
-              href: 'http://t.uber.com/cadence-slack',
+              label: 'Cadence Community on CNCF Slack',
+              href: 'https://communityinviter.com/apps/cloud-native/cncf',
             },
             {
               label: 'LinkedIn',
@@ -346,7 +340,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Uber Technologies, Inc.`,
+      copyright: `Copyright © Cadence a Series of LF Projects, LLC. <br/>For website terms of use, trademark policy and other project policies please see <a href="https://lfprojects.org/policies/" target="_blank">lfprojects.org/policies/</a>.`,
     },
     prism: {
       theme: prismThemes.github,

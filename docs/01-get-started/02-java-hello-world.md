@@ -23,8 +23,7 @@ implementation group: 'com.uber.cadence', name: 'cadence-client', version: '<lat
 ```
 Also add the following dependencies that cadence-client relies on:
 ```gradle
-implementation group: 'commons-configuration', name: 'commons-configuration', version: '1.9'
-implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.5.18'
 ```
 Make sure that the following code compiles:
 ```java
@@ -38,7 +37,7 @@ public class GettingStarted {
 
     public interface HelloWorld {
         @WorkflowMethod
-        void sayHello(String name);
+        String sayHello(String name);
     }
 
 }
@@ -67,7 +66,6 @@ Also add the following logback config file somewhere in your classpath:
 
 Let's add `HelloWorldImpl` with the `sayHello` method that just logs the "Hello ..." and returns.
 ```java
-import com.uber.cadence.worker.Worker;
 import com.uber.cadence.workflow.Workflow;
 import com.uber.cadence.workflow.WorkflowMethod;
 import org.slf4j.Logger;
@@ -78,14 +76,16 @@ public class GettingStarted {
 
     public interface HelloWorld {
         @WorkflowMethod
-        void sayHello(String name);
+        String sayHello(String name);
     }
 
     public static class HelloWorldImpl implements HelloWorld {
 
         @Override
         public void sayHello(String name) {
-            logger.info("Hello " + name + "!");
+            final String result =  "Hello " + name + "!";
+            logger.info("{}", result);
+            return result;
         }
     }
 }
@@ -94,17 +94,33 @@ To link the :workflow: implementation to the Cadence framework, it should be reg
 a Cadence Service. By default the :worker: connects to the locally running Cadence service.
 
 ```java
-public static void main(String[] args) {
-  WorkflowClient workflowClient =
-      WorkflowClient.newInstance(
-          new WorkflowServiceTChannel(ClientOptions.defaultInstance()),
-          WorkflowClientOptions.newBuilder().setDomain(DOMAIN).build());
-  // Get worker to poll the task list.
-  WorkerFactory factory = WorkerFactory.newInstance(workflowClient);
-  Worker worker = factory.newWorker(TASK_LIST);
-  worker.registerWorkflowImplementationTypes(HelloWorldImpl.class);
-  factory.start();
-}
+import com.uber.cadence.client.WorkflowClient;
+import com.uber.cadence.client.WorkflowClientOptions;
+import com.uber.cadence.serviceclient.ClientOptions;
+import com.uber.cadence.serviceclient.WorkflowServiceTChannel;
+import com.uber.cadence.worker.Worker;
+import com.uber.cadence.worker.WorkerFactory;
+
+// other imports
+
+public class GettingStarted {
+
+    private static final String DOMAIN = "test-domain";
+    private static final String TASK_LIST = "HelloWorldTaskList";
+
+    // existing code
+
+    public static void main(String[] args) {
+        WorkflowClient workflowClient =
+                WorkflowClient.newInstance(
+                        new WorkflowServiceTChannel(ClientOptions.defaultInstance()),
+                        WorkflowClientOptions.newBuilder().setDomain(DOMAIN).build());
+        // Get worker to poll the task list.
+        WorkerFactory factory = WorkerFactory.newInstance(workflowClient);
+        Worker worker = factory.newWorker(TASK_LIST);
+        worker.registerWorkflowImplementationTypes(HelloWorldImpl.class);
+        factory.start();
+    }
 ```
 
 The code is slightly different if you are using client version prior to 3.0.0:

@@ -20,12 +20,13 @@ Follow the Docker installation instructions found here: [https://docs.docker.com
 
 Download the Cadence docker-compose file:
 
+Clone the repo
 ```bash
-curl -O https://raw.githubusercontent.com/cadence-workflow/cadence/master/docker/docker-compose.yml && curl -O https://raw.githubusercontent.com/cadence-workflow/cadence/master/docker/prometheus/prometheus.yml
+git clone https://github.com/cadence-workflow/cadence.git
 ```
 Then start Cadence Service by running:
 ```bash
-docker-compose up
+cd cadence/docker && docker-compose up
 ```
 Please keep this process running at background.
 
