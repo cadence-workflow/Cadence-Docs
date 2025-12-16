@@ -177,7 +177,7 @@ $ docker run --network=host --rm ubercadence/cli:master --do test-domain workflo
 ```
 Now let's look at the :workflow_execution: history:
 ```sh-session
-$ docker run --network=host --rm ubercadence/cli:master --do test-domain workflow showid 1965109f-607f-4b14-a5f2-24399a7b8fa7
+$ docker run --network=host --rm ubercadence/cli:master --do test-domain workflow showid bcacfabd-9f9a-46ac-9b25-83bcea5d7fd7
   1  WorkflowExecutionStarted    {WorkflowType:{Name:HelloWorld::sayHello},
                                   TaskList:{Name:HelloWorldTaskList},
                                   Input:["World"],
