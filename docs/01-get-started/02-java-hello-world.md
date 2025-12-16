@@ -82,7 +82,7 @@ public class GettingStarted {
     public static class HelloWorldImpl implements HelloWorld {
 
         @Override
-        public void sayHello(String name) {
+        public String sayHello(String name) {
             final String result =  "Hello " + name + "!";
             logger.info("{}", result);
             return result;
