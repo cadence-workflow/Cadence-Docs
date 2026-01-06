@@ -82,10 +82,10 @@ const config: Config = {
           customCss: './src/css/custom.css',
         },
         googleTagManager: {
-          containerId: 'G-W63QD8QE6E',
+          containerId: 'G-5H527B3JZX',
         },
         gtag: {
-          trackingID: 'G-W63QD8QE6E',
+          trackingID: 'G-5H527B3JZX',
           anonymizeIP: true,
         },
       } satisfies Preset.Options,
