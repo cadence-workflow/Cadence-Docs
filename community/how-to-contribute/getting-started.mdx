@@ -4,28 +4,64 @@ title: Getting Started
 
 # Getting Started 
 
-Thank you for your interest in contributing to Cadence! We're excited to have you join our community. This guide will help you get started with contributing to any Cadence repository.
+Thank you for your interest in contributing to Cadence! We're excited to have you join our community. There are many [ways](ways-to-contribute) to contribute to Cadence. This guide focuses on technical contributions.
 
 ## Join the Community
 
-The best way to get started is to connect with the Cadence community:
-
-### CNCF Slack Workspace
-
-Join our community on the CNCF Slack workspace:
+Consider joining our community on the CNCF Slack workspace:
 - **Join via**: [Community Inviter](https://communityinviter.com/apps/cloud-native/cncf)
-- **Channel**: **#cadence-users**
+- **Channel**: **#cadence-contributors**
 
 This is the best place to ask questions, discuss features, and connect with maintainers and other contributors.
 
-### Other Community Channels
+---
 
-- For general Q&A, support/help, and announcements see [GitHub Discussions](https://github.com/cadence-workflow/cadence/discussions) 
-- To report bugs or request new features use [GitHub Issues](https://github.com/cadence-workflow/cadence/issues) 
-- For specific code questions/bugs use [Stack Overflow](https://stackoverflow.com/questions/tagged/cadence-workflow) 
+## 1 -  Find an Issue
 
-## Contributing
+Issues may be created in any of the Cadence repositories, but we frequently aggregate issues in the main [Cadence](https://github.com/cadence-workflow/cadence/issues) repository. In particular, we try and maintain a set of [good first issues](https://github.com/cadence-workflow/cadence/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22good%20first%20issue%22%20label%3Aup-for-grabs). These are curated issues that we would eagerly accept and are limited in scope.
 
-We will continue fleshing out our contribution guide. Until then, refer to our repository README files for details. 
+Once you've found an issue, we encourage you to comment on it indicating that you're interested in working on it. This gives maintainers an opportunity to provide any additional context and helps ensure that there isn't any duplicated effort.
 
-Once you are ready to open a pull request, see [Pull Request Conventions](pull-request-conventions).
+### Creating New Issues
+
+If you don't find something that interests you or you have a more specific contribution, feel free to create a new issue. This provides an opportunity to collect feedback and describe the issue independent of a specific implementation.
+
+Whether Cadence accepts specific contributions is up to the project maintainers, as described in the [governance model](/community/governance).
+
+## 2 - Address the Issue
+
+Each repository has a `CONTRIBUTING.md` file in its root which provides specific instructions regarding tooling, code standards, and conventions. A great first step for contributing to any project is building the code and running the tests. If you are ever unsure on how to proceed, please reach out on Slack.
+
+Where possible, issues should include specific references to the relevant code. If you don't know where to begin, comment on the issue or reach out in slack.
+
+## 3 - Write Tests
+
+Test coverage is mandatory, regardless of the author. This has been an effective strategy in finding bugs and ensuring code quality. Beyond demonstrating that new functionality works, it ensures that future changes don't accidentally break it.
+
+Where possible, integration tests are another powerful tool for ensuring that functionality works end to end. Cadence is a complex distributed system supporting many different databases and clients written in many languages. Integration tests ensure that behavior works consistently across all of them.
+
+## 4 - Create a Pull Request
+
+Once you're ready to collect fedback, create a Pull Request. Refer to the [Pull Request Conventions](pull-request-conventions) for more details.
+
+We don't expect pull requests to be a fully polished and complete contribution. Bias for opening one sooner rather than later to start discussions about the approach and specific implementation details.
+
+Github Actions are used to execute the tests and any other validations. These must be approved by a maintainer in order to run.
+
+Based on availability and experience, a specific maintainer will be assigned to review the contribution. They will make a best effort attempt to promptly respond to questions/comments.
+
+At any point feel free to reach out in `#cadence-contributors` asking for additional review or feedback.
+
+## 5 - Receive Feedback
+
+All contributions, regardless of the author, will receive comments and feedback. Writing software is a collaborative process and there is no such thing as perfect code.
+
+Comments that begin with `nit:` indicate that the reviewer is expressingly a stylistic preference. They'd prefer the proposed change, such as renaming a variable, but it isn't considered to be an issue that would block merging in the pull request.
+
+All comments and feedback should be respectful and constructive, following Cadence's [Contribution Guidelines](/community/governance#contribution-guidelines). Reviewers ask the same in return.
+
+## 6 - Approval
+
+Work with the assigned reviewer(s), iterating on the pull request to receive approval for the changes.
+
+Pull Requests require approval from at least two maintainers to be merged. Merging or authoring a pull request is considered implicit approval.

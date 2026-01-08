@@ -10,8 +10,8 @@ export default {
       type: 'category',
       label: 'How to Contribute',
       items: [
-        { type: 'doc', id: 'how-to-contribute/index' },
         { type: 'doc', id: 'how-to-contribute/getting-started' },
+        { type: 'doc', id: 'how-to-contribute/ways-to-contribute' },
         { type: 'doc', id: 'how-to-contribute/pull-request-conventions' },
       ],
     },
