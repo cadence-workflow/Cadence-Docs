@@ -205,7 +205,7 @@ const config: Config = {
     announcementBar: {
       id: 'survey_2025',
       content:
-        'We are looking to hear your feedback, please fill the <a target="_blank" rel="noopener noreferrer" href="https://uber.surveymonkey.com/r/CY7FTZ2">Cadence 2025 OSS community survey</a>',
+        'We are looking to hear your feedback, please fill out the <a target="_blank" rel="noopener noreferrer" href="https://uber.surveymonkey.com/r/CY7FTZ2">Cadence 2025 OSS community survey</a>',
       backgroundColor: '#fafbfc',
       textColor: '#091E42',
       isCloseable: true,
@@ -223,7 +223,7 @@ const config: Config = {
       // Optional: see doc section below
       contextualSearch: false,
 
-      // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
+      // Optional: Specify domains where the navigation should occur through window.location instead of history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
       externalUrlRegex: 'external\\.com|domain\\.com',
 
       // Optional: Replace parts of the item URLs from Algolia. Useful when using the same search index for multiple deployments using a different baseUrl. You can use regexp or string in the `from` param. For example: localhost:3000 vs myCompany.com/docs

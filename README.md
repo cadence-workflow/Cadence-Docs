@@ -6,7 +6,7 @@
 
 [Cadence docs](https://cadenceworkflow.io) is built using [Docusaurus](https://docusaurus.io/).
 
-> 📚 **New to contributing to Cadence?** Check out our [Contributing Guide](https://cadenceworkflow.io/community/how-to-contribute/getting-started) for an overview of the contribution process across all Cadence repositories. This document contains cadence backend specific setup and development instructions.
+> 📚 **New to contributing to Cadence?** Check out our [Contributing Guide](https://cadenceworkflow.io/community/how-to-contribute/getting-started) for an overview of the contribution process across all Cadence repositories. This document contains Cadence backend specific setup and development instructions.
 
 ### Installation
 
@@ -35,19 +35,19 @@ This command generates static content into the `build` directory and can be serv
 In order to deploy to multiple environments, some configuration options in `docusaurus.config.ts` are made available for override through environment variables.
 
 ```bash
-# Can be replaced by your GH pages url, ie. https://<userId>.github.io/
+# Can be replaced by your GH pages URL, i.e., https://<userId>.github.io/
 CADENCE_DOCS_URL=https://cadenceworkflow.io
 
 # For GitHub pages deployment, it is often /<projectName>/ defaults to `/`
 BASE_URL=/cadence-docs/
 
-# For Github pages only, this is your Github org/user name.
+# For GitHub pages only, this is your GitHub org/user name.
 ORGANIZATION_NAME=cadence-workflow
 ```
 
 #### CNAME
 
-A file `static/CNAME` should be present in order to deploy to a [github pages site that uses a custom domain](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site). I.E. cadenceworkflow.io
+A file `static/CNAME` should be present in order to deploy to a [GitHub pages site that uses a custom domain](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site), i.e., cadenceworkflow.io.
 This file is created by the deploy action, but if deploying from a local environment, care should be taken to ensure the file exists.
 
 ### Deployment
@@ -69,10 +69,10 @@ If you are using GitHub pages for hosting, this command is a convenient way to b
 
 ### Updating Release Data
 
-The release pages rely on data from GitHub that is persisted as json files under `static/data/releases/`.
+The release pages rely on data from GitHub that is persisted as JSON files under `static/data/releases/`.
 In order to update the release information for display, this can be done manually or be set up as part of the CI/CD process by running the `scripts/fetch-releases.sh` script. Script uses the [GitHub CLI](https://cli.github.com/) to fetch the release data.
 
-Automatic updates to release data are performed by a github action `fetch-release-data`. Which will check if new data is available, and if so update the release data with the latest information and open a branch named `fetch-release-data` and open a PR if one is not open already.
+Automatic updates to release data are performed by a GitHub Action `fetch-release-data`, which will check if new data is available, and if so, update the release data with the latest information and open a branch named `fetch-release-data` and open a PR if one is not open already.
 
 Manual approval is required before merging and continuing to deployment.
 
