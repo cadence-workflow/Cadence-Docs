@@ -8,9 +8,9 @@ well-defined action; it can be short or long running. An activity can be impleme
 as a synchronous method or fully asynchronously involving multiple processes.
 An activity can be retried indefinitely according to the provided exponential retry policy.
 If for any reason an activity is not completed within the specified timeout, an error is reported to the workflow and the workflow decides how to handle it. There is no limit on potential activity duration."
-    activity task: "A task that contains an activity invocation information that is delivered to an activity worker through and an  activity task list. An activity worker upon receiving activity task executes a correponding activity"
+    activity task: "A task that contains an activity invocation information that is delivered to an activity worker through an activity task list. An activity worker upon receiving activity task executes a corresponding activity."
     activity task list: "Task list that is used to deliver activity task to activity worker"
-    activity worker: "An object that is executed in the client application and receives activity task from an  activity task list it is subscribed to. Once task is received it invokes a correspondent activity."
+    activity worker: "An object that is executed in the client application and receives activity task from an activity task list it is subscribed to. Once task is received it invokes a corresponding activity."
     archival: "Archival is a feature that automatically moves event history from persistence to a blobstore after the workflow retention period. The purpose of archival is to be able to keep histories as long as needed while not overwhelming the persistence store. There are two reasons you may want to keep the histories after the retention period has passed:
 1. Compliance: For legal reasons, histories may need to be stored for a long period of time.
 2. Debugging: Old histories can still be accessed for debugging."
@@ -22,8 +22,8 @@ query, or signal the corresponding workflow.
 
 The Go client doesn't use this."
     decision: "Any action taken by the workflow durable function is called a decision. For example:
-scheduling an activity, canceling a child workflow, or starting a timer. A decision task contains an optional list of decisions. Every decision is recorded in the event history as an event. See also [1] for more explanation"
-    decision task: "Every time a new external event that might affect a workflow state is recorded, a decision task that contains it is added to a decision task list and then picked up by a workflow worker. After the new event is handled, the decision task is completed with a list of decision. Note that handling of a decision task is usually very fast and is not related to duration of operations that the workflow invokes. See also [1] for more explanation"
+scheduling an activity, canceling a child workflow, or starting a timer. A decision task contains an optional list of decisions. Every decision is recorded in the event history as an event. See also [1] for more explanation."
+    decision task: "Every time a new external event that might affect a workflow state is recorded, a decision task that contains it is added to a decision task list and then picked up by a workflow worker. After the new event is handled, the decision task is completed with a list of decisions. Note that handling of a decision task is usually very fast and is not related to duration of operations that the workflow invokes. See also [1] for more explanation."
     decision task list: "Task list that is used to deliver decision task to workflow worker. From user's point of view, it can be viewed as a worker pool. It defines a pool of worker executing workflow or activity tasks."
     domain: "Cadence is backed by a multitenant service. The unit of isolation is called a domain. Each domain acts as a namespace for task list names as well as workflow IDs. For example, when a workflow is started, it is started in a
 specific domain. Cadence guarantees a unique workflow ID within a domain, and
@@ -71,10 +71,8 @@ duration."
 uniqueness of an ID within a domain. An attempt to start a workflow with a
 duplicate ID results in an already started error."
     workflow task: "Synonym of the decision task."
-    workflow worker: "An object that is executed in the client application and receives decision task from an  decision task list it is subscribed to. Once task is received it is handled by a correponding workflow."
+    workflow worker: "An object that is executed in the client application and receives decision task from a decision task list it is subscribed to. Once task is received it is handled by a corresponding workflow."
 ---
-
-# Glossary
 
 <!-- <Glossary :terms="$frontmatter.terms" /> -->
 
