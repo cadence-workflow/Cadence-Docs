@@ -4,8 +4,6 @@ title: Storage scan
 permalink: /docs/use-cases/partitioned-scan
 ---
 
-# Storage scan
-
 It is common to have large data sets partitioned across a large number of hosts or databases, or having billions of files in an Amazon S3 bucket.
 Cadence is an ideal solution for implementing the full scan of such data in a scalable and resilient way. The standard pattern
 is to run an :activity: (or multiple parallel :activity:activities: for partitioned data sets) that performs the scan and heartbeats its progress

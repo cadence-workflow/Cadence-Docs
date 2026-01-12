@@ -4,9 +4,7 @@ title: Event driven application
 permalink: /docs/use-cases/event-driven
 ---
 
-# Event driven application
-
-Many applications listen to multiple :event: sources, update the state of correspondent business entities,
+Many applications listen to multiple :event: sources, update the state of corresponding business entities,
 and have to execute actions if some state is reached.
 Cadence is a good fit for many of these. It has direct support for asynchronous :event:events: (aka :signal:signals:),
 has a simple programming model that obscures a lot of complexity

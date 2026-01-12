@@ -4,8 +4,6 @@ title: Periodic execution
 permalink: /docs/use-cases/periodic-execution
 ---
 
-# Periodic execution (aka Distributed Cron)
-
 Periodic execution, frequently referred to as distributed cron, is when you execute business logic periodically. The advantage of Cadence for these scenarios is that it guarantees execution, sophisticated error handling, retry policies, and visibility into execution history.
 
 Another important dimension is scale. Some use cases require periodic execution for a large number of entities.

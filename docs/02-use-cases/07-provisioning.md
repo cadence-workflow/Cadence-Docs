@@ -4,8 +4,6 @@ title: Infrastructure provisioning
 permalink: /docs/use-cases/provisioning
 ---
 
-# Infrastructure provisioning
-
 Provisioning a new datacenter or a pool of machines in a public cloud is a potentially long running operation with
 a lot of possibilities for intermittent failures. The scale is also a concern when tens or even hundreds of thousands of resources should be provisioned and configured. One useful feature for provisioning scenarios is Cadence support for routing :activity: execution to a specific process or host.
 

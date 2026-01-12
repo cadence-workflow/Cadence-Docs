@@ -23,7 +23,7 @@ This is used in production for customers who wish to work through large batch wo
 Heartbeating cadence activities are activities who emit their progress at an appropriate interval (usually every few seconds) indicating where they are up to. Optionally, they may use progress information (like an offset number or iterator) to resume their progress. However, this necessarily implies that:
 
 - If activities get restarted, they may redo some work, so this is not suitable for non-idempotent operations.
-- The activity will be handling all the progress, so apart from heartbeat information, debugging about the granular operations being performed is not necessarily visible as compared by doing each operation in a distinct activity. 
+- The activity will be handling all the progress, so apart from heartbeat information, debugging about the granular operations being performed is not necessarily visible as compared to doing each operation in a distinct activity. 
 
 ### What problems this solves
 
@@ -94,8 +94,8 @@ func setActivityOptions(ctx workflow.Context) workflow.Context {
         StartToCloseTimeout:    time.Hour,             // however long this activity is expected to take, maximum, from end to end. 
                                                        // This is workload dependent
         HeartbeatTimeout:       time.Second * 30,      // How long we should wait before deciding to restart the activity because the 
-                                                       // background thread hasn't checked in. Half a a minute is probably a bit 
-                                                       // overgenous. In the example above we're picking 5 seconds to heartbeat
+                                                       // background thread hasn't checked in. Half a minute is probably a bit 
+                                                       // overgenerous. In the example above we're picking 5 seconds to heartbeat
         
         // It is unrealistic to assume that a long running activity will succeed
         // so add a retry-policy to restart it when there's a failure. 
