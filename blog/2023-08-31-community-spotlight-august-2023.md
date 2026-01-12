@@ -21,7 +21,7 @@ Here are the latest topics:
 
 - [Non-Determistic Errors, Replayers and Shadowers](https://cadenceworkflow.io/blog/2023/08/27/nondeterministic-errors-replayers-shadowers/)
 
-Even if you have not encountered these use cases - it is good to be prepared and have a solution ready.Please take a look and let us have your feedback.
+Even if you have not encountered these use cases - it is good to be prepared and have a solution ready. Please take a look and let us have your feedback.
 
 Chris is also going to take a look at the [Cadence Samples](https://cadenceworkflow.io/docs/java-client/client-overview/#samples) to make sure they are all working and if not - he's going to re-write them so that they do!
 
@@ -29,7 +29,7 @@ Thanks very much Chris for all the work you are doing to help improve the projec
 
 <!-- truncate -->
 
-## More iWF Examaples ##
+## More iWF Examples ##
 
 Community member [Quanzheng Long](https://www.linkedin.com/in/prclqz/) has also been busy writing this month. In previous blogs Long has told us about [iWF](https://github.com/indeedeng/iwf) that is a layer implemented over of Cadence.
 
@@ -45,7 +45,7 @@ Please take a look and if you've enjoyed reading them then let Long and us know!
 
 Last month we mentioned the Cadence Helm charts and all the previous work that had been done by [Mark Sagi-Kazar](https://www.linkedin.com/in/sagikazarmark/). We were looking to ensure they are maintained.
 
-So a special thanks goes out this month to [Edmondo](ttps://github.com/edmondop ) for contributing some work on the [Cadence Helm Chart](https://github.com/edmondop/cadence-helm-chart/).
+So a special thanks goes out this month to [Edmondo](https://github.com/edmondop) for contributing some work on the [Cadence Helm Chart](https://github.com/edmondop/cadence-helm-chart/).
 
 ## Community Support! ##
 

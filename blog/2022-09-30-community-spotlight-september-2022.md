@@ -15,7 +15,7 @@ Please see below for a roundup of the highlights:
 
 A Cadence talk by [Ender Demirkaya](https://www.linkedin.com/in/enderdemirkaya/) and [Ben Slater](https://www.linkedin.com/in/ben-slater-2720562/) has been accepted for [Developer Week Enterprise](https://www.developerweek.com/global/conference/enterprise/).
 
-The talk is scheduled to for 16th November so please make a note in your calendars.
+The talk is scheduled for 16th November so please make a note in your calendars.
 
 # Sharing Knowledge
 

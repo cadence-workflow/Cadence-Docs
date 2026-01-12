@@ -15,13 +15,13 @@ Please see below for a roundup of the highlights:
 
 This month Uber Engineering published a really nice article on one of the ways they are using Cadence. The article is called [How Uber Optimizes the Timing of Push Notifications using ML and Linear Programming](https://www.uber.com/en-US/blog/how-uber-optimizes-push-notifications-using-ml/).
 
-The Uber team take you through the details of the problem that they are looking to solve, so you can understand the scope limitations and depedencies - so please take a look.
+The Uber team take you through the details of the problem that they are looking to solve, so you can understand the scope, limitations, and dependencies - so please take a look.
 
 ## Cadence @ DeveloperWeek Enterprise ##
 
-DevNetwork run a series of conferences and during November Cadence was featured in at [DeveloperWeek Enterprise](https://www.developerweek.com/global/conference/enterprise/). [Ender Demirkaya](https://www.linkedin.com/in/enderdemirkaya/) and [Ben Slater](https://www.linkedin.com/in/ben-slater-2720562/) presented a talk called [Espress Complex Business Logic as Code with Open Source Cadence!](https://embed.emamo.com/event/developerweek-enterprise-2022/s/express-complex-business-logic-as-code-with-open-source-cadence-WKLMvo).
+DevNetwork run a series of conferences and during November Cadence was featured in at [DeveloperWeek Enterprise](https://www.developerweek.com/global/conference/enterprise/). [Ender Demirkaya](https://www.linkedin.com/in/enderdemirkaya/) and [Ben Slater](https://www.linkedin.com/in/ben-slater-2720562/) presented a talk called [Express Complex Business Logic as Code with Open Source Cadence!](https://embed.emamo.com/event/developerweek-enterprise-2022/s/express-complex-business-logic-as-code-with-open-source-cadence-WKLMvo).
 
-It is good to see that we are finding new channels for us to present the benefits of using Cadence. Huge hanks to Ben and Ender for the presentation and to everyone that attended.
+It is good to see that we are finding new channels for us to present the benefits of using Cadence. Huge thanks to Ben and Ender for the presentation and to everyone that attended.
 
 <!-- truncate -->
 

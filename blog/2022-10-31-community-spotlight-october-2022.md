@@ -15,11 +15,11 @@ Please see below for a roundup of the highlights:
 
 It's always great to get the community together and we had planned to run another Cadence Meetup in early November. Unfortunately we didn't have enough time to get things organised so we've decided to postpone it. So please watch out for an announcement for the new Cadence meetup date.
 
-## Doordash Technnical Showcase Featuring Cadence
+## DoorDash Technical Showcase Featuring Cadence
 
 We have had some great feedback from people who attended Technical Showcase that was run this month by Doordash. It featured their financial products but also highlighted some of the key technologies they use...and guess what Cadence is one of them!
 
-If you missed the session then you will be happy to know that it was recorded and we've inlcuded a link to the [the recording on Youtube](https://www.youtube.com/watch?v=uNwbdQyLpns).
+If you missed the session then you will be happy to know that it was recorded and we've included a link to [the recording on YouTube](https://www.youtube.com/watch?v=uNwbdQyLpns).
 
 Thanks to the Doordash team for running the session and helping support Cadence by sharing their knowledge.
 
@@ -27,7 +27,7 @@ Thanks to the Doordash team for running the session and helping support Cadence 
 
 ## iWF Support for Cadence ##
 
-Community member [Quanzheng Long](https://www.linkedin.com/in/prclqz/) has been busy working on a new project that has been built on top of Cadence. The project is called [iWF - Interpreter for Workflow](https://github.com/indeedeng/iwf). It's great to see that Cadence is now growing it's own ecosystem!
+Community member [Quanzheng Long](https://www.linkedin.com/in/prclqz/) has been busy working on a new project that has been built on top of Cadence. The project is called [iWF - Interpreter for Workflow](https://github.com/indeedeng/iwf). It's great to see that Cadence is now growing its own ecosystem!
 
 Please feel free to take a look and let Long know what you think!
 

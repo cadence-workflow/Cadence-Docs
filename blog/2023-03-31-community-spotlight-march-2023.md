@@ -16,7 +16,7 @@ We are very pleased to let you know that a talk on Cadence has been accepted for
 The talk called [Cadence: The New Open Source Project for Building Complex Distributed Applications](https://ossna2023.sched.com/event/1K5B1) will be given by [Ender Demirkaya](https://www.linkedin.com/in/enderdemirkaya/) and [Emrah Seker](https://www.linkedin.com/in/emrahseker/) If you are planning to attend the Open Source Summit then please don't forget to attend the talk and take time catch up with Ender and Emrah!
 
 ## Community Activity ##
-Our Slack #support channel has been very active over the last few months as we continue to get an continual stream of questions. Here are the stats:
+Our Slack #support channel has been very active over the last few months as we continue to get a continual stream of questions. Here are the stats:
 
 - February 2023 : 16 questions asked
 - March 2023 : 12 questions asked

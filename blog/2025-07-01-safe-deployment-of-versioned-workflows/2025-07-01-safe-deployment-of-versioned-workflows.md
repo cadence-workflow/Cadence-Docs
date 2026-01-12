@@ -68,7 +68,7 @@ If a rollout is completed successfully, both the new and old workflows will cont
 
 ## Versioned Workflow Rescheduling Problem
 
-Workflows typically execute on the same worker on which they started. However, various factors can necessitate rescheduling with a different worker.:
+Workflows typically execute on the same worker on which they started. However, various factors can necessitate rescheduling to a different worker:
 
 * **Worker Shutdown**: Occurs when a worker is shut down due to reasons such as rollouts, rollbacks, restarts, or instance crashes.
 * **Worker Unavailability**: Occurs when a worker is running but loses connection to the server, becoming unavailable.

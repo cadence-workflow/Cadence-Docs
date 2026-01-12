@@ -29,7 +29,7 @@ We are always looking for ways to encourage project participation.  It doesn't m
 
 ## Share Your News!
 
-Our #support [Slack](http://t.uber.com/cadence-slack) channel is always full of questions and activity so we know that there are are lot of people out there exploring, trying out and setting up Cadence. We are always interested in hearing about what the community are doing so if you have something to you want to share as a blog post or part of this montly update then please contact us in the #community [Slack](http://t.uber.com/cadence-slack) channel.
+Our #support [Slack](http://t.uber.com/cadence-slack) channel is always full of questions and activity so we know that there are are lot of people out there exploring, trying out and setting up Cadence. We are always interested in hearing about what the community are doing so if you have something you want to share as a blog post or part of this monthly update then please contact us in the #community [Slack](http://t.uber.com/cadence-slack) channel.
 
 ## Next Cadence Technical Office Hours: 3rd and  27th June 2022
 

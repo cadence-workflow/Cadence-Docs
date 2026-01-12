@@ -14,9 +14,9 @@ Please see below for a roundup of the highlights:
 
 ## Getting Started with Cadence ##
 
-Are you new to  Cadence and want to understand the basic concepts and architecture? Well we have some great information for you!
+Are you new to Cadence and want to understand the basic concepts and architecture? Well we have some great information for you!
 
-Community member [Chris Qin](https://www.linkedin.com/in/chrisqin0610/) has written a [short blog post](https://cadenceworkflow.io/blog/2023/07/01/components-of-cadence-application-setup/) that takes you through the the three main components that make up a Cadence application. Please take a look and feel free to give us your comments and feedback.
+Community member [Chris Qin](https://www.linkedin.com/in/chrisqin0610/) has written a [short blog post](https://cadenceworkflow.io/blog/2023/07/01/components-of-cadence-application-setup/) that takes you through the three main components that make up a Cadence application. Please take a look and feel free to give us your comments and feedback.
 
 Thanks Chris for sharing your knowledge and helping others to get started.
 

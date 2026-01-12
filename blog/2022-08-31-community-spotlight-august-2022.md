@@ -44,7 +44,7 @@ If you are interested in speaking at our next meetup then please contact [Ender 
 
 ## Looking for a Cadence Role?
 
-The Cadence teeam at Uber are recruiting for a Fullstack Engineer. If you are interested then please contact [Ender Demirkaya](https://www.linkedin.com/in/enderdemirkaya/) for more details.
+The Cadence team at Uber is recruiting for a Fullstack Engineer. If you are interested then please contact [Ender Demirkaya](https://www.linkedin.com/in/enderdemirkaya/) for more details.
 
 ## Cadence in the News!
 

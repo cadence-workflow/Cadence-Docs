@@ -22,7 +22,7 @@ Please remember that if you have question about Cadence or are facing a specific
 ## Update on iWF Support for Cadence ##
 Last October we featured an update in our monthly blog about [iWF - Interpreter for Workflow](https://github.com/indeedeng/iwf), a project built on top of Cadence by community member [Quanzheng Long](https://www.linkedin.com/in/prclqz/). It was announced recently that iWF has released a [Golang SDK](https://github.com/iworkflowio/iwf-golang-sdk) and updated  versions of the [Java SDK and server](https://github.com/indeedeng/iwf).
 
-Long is really keen to get feedback so please take a look at iWF, try them out and presented him any feedback.
+Long is really keen to get feedback so please take a look at iWF, try it out and present him with any feedback.
 Long has also created a couple of blog posts about iWF that we have featured in the Cadence in the News section below so please take a look.
 
 ## Cadence in the News!
