@@ -4,8 +4,6 @@ title: Activity and workflow retries
 permalink: /docs/go-client/retries
 ---
 
-# Activity and workflow retries
-
 :activity:Activities: and :workflow:workflows: can fail due to various intermediate conditions. In those cases, we want
 to retry the failed :activity: or child :workflow: or even the parent :workflow:. This can be achieved
 by supplying an optional retry policy. A retry policy looks like the following:
@@ -69,7 +67,7 @@ ctx = workflow.WithActivityOptions(ctx, ao)
 activityFuture := workflow.ExecuteActivity(ctx, SampleActivity, params)
 ```
 
-If :activity: heartbeat its progress before it failed, the retry attempt will contain the progress
+If :activity: heartbeats its progress before it fails, the retry attempt will contain the progress
 so :activity: implementation could resume from failed progress like:
 
 ``` go

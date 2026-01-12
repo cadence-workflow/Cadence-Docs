@@ -4,8 +4,6 @@ title: Continue as new
 permalink: /docs/go-client/continue-as-new
 ---
 
-# Continue as new
-
 :workflow:Workflows: that need to rerun periodically could naively be implemented as a big **for** loop with
 a sleep where the entire logic of the :workflow: is inside the body of the **for** loop. The problem
 with this approach is that the history for that :workflow: will keep growing to a point where it

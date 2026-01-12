@@ -4,8 +4,6 @@ title: Versioning
 permalink: /docs/go-client/workflow-versioning
 ---
 
-# Versioning
-
 The definition code of a Cadence :workflow: must be deterministic because Cadence uses :event: sourcing
 to reconstruct the :workflow: state by replaying the saved history :event: data on the :workflow:
 definition code. This means that any incompatible update to the :workflow: definition code could cause

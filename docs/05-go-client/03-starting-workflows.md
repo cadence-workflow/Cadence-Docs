@@ -4,8 +4,6 @@ title: Starting workflows
 permalink: /docs/go-client/start-workflows
 ---
 
-# Starting workflows
-
 Starting workflows can be done from any service that can send requests to
 the Cadence server. There is no requirement for workflows to be started from the
 worker services. 
@@ -28,8 +26,8 @@ function:
 import "go.uber.org/cadence/client"
 
 var cadenceClient client.Client 
-# Initialize cadenceClient
 
+// Initialize cadenceClient
 cadenceClient.StartWorkflow(
     ctx,
     client.StartWorkflowOptions{
@@ -44,7 +42,7 @@ cadenceClient.StartWorkflow(
 )
 ```
 
-The will start the workflow defined in the function `WorkflowFunc`, note that
+This will start the workflow defined in the function `WorkflowFunc`, note that
 for named workflows `WorkflowFunc` could be replaced by the name e.g.
 `"WorkflowFuncName"`. 
 
@@ -87,8 +85,8 @@ to the options like so,
 import "go.uber.org/cadence/client"
 
 var cadenceClient client.Client
-# Initialize cadenceClient
 
+// Initialize cadenceClient
 cadenceClient.StartWorkflow(
     ctx,
     client.StartWorkflowOptions{

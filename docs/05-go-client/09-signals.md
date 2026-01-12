@@ -4,8 +4,6 @@ title: Signals
 permalink: /docs/go-client/signals
 ---
 
-# Signals
-
 :signal:Signals: provide a mechanism to send data directly to a running :workflow:. Previously, you had
 two options for passing data to the :workflow: implementation:
 

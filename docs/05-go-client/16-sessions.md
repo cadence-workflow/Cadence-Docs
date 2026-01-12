@@ -4,8 +4,6 @@ title: Sessions
 permalink: /docs/go-client/sessions
 ---
 
-# Sessions
-
 The session framework provides a straightforward interface for scheduling multiple :activity:activities: on a single :worker: without requiring you to manually specify the :task_list: name. It also includes features like **concurrent session limitation** and **worker failure detection**.
 
 ## Use Cases

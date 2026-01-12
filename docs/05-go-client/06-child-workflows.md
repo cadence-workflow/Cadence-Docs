@@ -4,8 +4,6 @@ title: Child workflows
 permalink: /docs/go-client/child-workflows
 ---
 
-# Child workflows
-
 `workflow.ExecuteChildWorkflow` enables the scheduling of other :workflow:workflows: from within a :workflow:workflow:'s
 implementation. The parent :workflow: has the ability to monitor and impact the lifecycle of the child
 :workflow:, similar to the way it does for an :activity: that it invoked.
@@ -27,11 +25,11 @@ if err := future.Get(ctx, &result); err != nil {
 ```
 Let's take a look at each component of this call.
 
-Before calling `workflow.ExecuteChildworkflow()`, you must configure `ChildWorkflowOptions` for the
+Before calling `workflow.ExecuteChildWorkflow()`, you must configure `ChildWorkflowOptions` for the
 invocation. These options customize various execution timeouts, and are passed in by creating a child
 context from the initial context and overwriting the desired values. The child context is then passed
 into the `workflow.ExecuteChildWorkflow()` call. If multiple child :workflow:workflows: are sharing the same option
-values, then the same context instance can be used when calling `workflow.ExecuteChildworkflow()`.
+values, then the same context instance can be used when calling `workflow.ExecuteChildWorkflow()`.
 
 The first parameter in the call is the required `cadence.Context` object. This type is a copy of
 `context.Context` with the `Done()` method returning `cadence.Channel` instead of the native Go `chan`.
@@ -48,7 +46,7 @@ The method call returns immediately and returns a `cadence.Future`. This allows 
 code without having to wait for the scheduled :workflow: to complete.
 
 When you are ready to process the results of the :workflow:, call the `Get()` method on the returned future
-object. The parameters to this method is the `ctx` object we passed to the
+object. The parameters to this method are the `ctx` object we passed to the
 `workflow.ExecuteChildWorkflow()` call and an output parameter that will receive the output of the
 :workflow:. The type of the output parameter must match the type of the return value declared by the
 :workflow: function. The `Get()` method will block until the :workflow: completes and results are

@@ -4,8 +4,6 @@ title: Introduction
 permalink: /docs/go-client
 ---
 
-# Go client
-
 ## Overview
 
 Go client attempts to follow Go language conventions. The conversion of a Go program to the fault-oblivious :workflow: function is expected to be pretty mechanical.

@@ -4,14 +4,12 @@ title: Async activity completion
 permalink: /docs/go-client/activity-async-completion
 ---
 
-# Asynchronous activity completion
-
 There are certain scenarios when completing an :activity: upon completion of its function is not possible
 or desirable. For example, you might have an application that requires user input in order to complete
 the :activity:. You could implement the :activity: with a polling mechanism, but a simpler and less
 resource-intensive implementation is to asynchronously complete a Cadence :activity:.
 
-There two parts to implementing an asynchronously completed activity:
+There are two parts to implementing an asynchronously completed activity:
 
 1. The :activity: provides the information necessary for completion from an external system and notifies
 the Cadence service that it is waiting for that outside callback.

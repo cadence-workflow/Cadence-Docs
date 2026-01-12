@@ -4,8 +4,6 @@ title: Creating workflows
 permalink: /docs/go-client/create-workflows
 ---
 
-# Creating workflows
-
 The :workflow: is the implementation of the coordination logic. The Cadence programming framework
 (aka client library) allows you to write the :workflow: coordination logic as simple procedural code
 that uses standard Go data modeling. The client library takes care of the communication between
@@ -62,7 +60,7 @@ func SimpleWorkflow(ctx workflow.Context, value string) error {
 
 ## Declaration
 
-In the Cadence programing model, a :workflow: is implemented with a function. The function declaration
+In the Cadence programming model, a :workflow: is implemented with a function. The function declaration
 specifies the parameters the :workflow: accepts as well as any values it might return.
 
 ```go
@@ -121,7 +119,7 @@ that the :workflow: code execution is deterministic and repeatable within an exe
 
 Coroutine related constructs:
 
-* **workflow.Go** : This is a replacement for the the **go** statement.
+* **workflow.Go** : This is a replacement for the **go** statement.
 * **workflow.Channel** : This is a replacement for the native **chan** type. Cadence provides
   support for both buffered and unbuffered channels.
 * **workflow.Selector** : This is a replacement for the **select** statement.

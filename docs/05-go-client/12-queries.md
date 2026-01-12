@@ -4,8 +4,6 @@ title: Queries
 permalink: /docs/go-client/queries
 ---
 
-# Queries
-
 If a :workflow_execution: has been stuck at a state for longer than an expected period of time, you
 might want to :query: the current call stack. You can use the Cadence :CLI: to perform this :query:. For
 example:

@@ -4,8 +4,6 @@ title: Error handling
 permalink: /docs/go-client/error-handling
 ---
 
-# Error handling
-
 An :activity:, or child :workflow:, might fail and you could handle errors differently based on different
 error cases. If the :activity: returns an error as `errors.New()` or `fmt.Errorf()`, those errors will
 be converted to `workflow.GenericError`. If the :activity: returns an error as

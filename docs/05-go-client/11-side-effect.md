@@ -4,8 +4,6 @@ title: Side effect
 permalink: /docs/go-client/side-effect
 ---
 
-# Side effect
-
 `workflow.SideEffect` is useful for short, nondeterministic code snippets, such as getting a random
 value or generating a UUID. It executes the provided function once and records its result into the
 :workflow: history. `workflow.SideEffect` does not re-execute upon replay, but instead returns the

@@ -4,8 +4,6 @@ title: Workflow Non-deterministic errors
 permalink: /docs/go-client/workflow-non-deterministic-error
 ---
 
-# Workflow Non-deterministic errors
-
 ## Root cause of non-deterministic errors
 Cadence workflows are designed as long-running operations, and therefore the workflow code you write must be deterministic so that no matter how many time it is executed it always produce the same results.
 
@@ -17,13 +15,13 @@ Consider the following diagram where `Workflow A` is running on `Host A` but sud
 
 Workflow A then will be picked up by Host B and continues its execution. This process is called <b>change of workflow ownership</b>. However, after Host B gains ownership of the Workflow A, it does not have any information about its historical executions. For example, Workflow A may have executed many activities and it fails. Host B needs to redo all its history until the moment of failure. The process of reconstructing history of a workflow is called <b>history replay</b>.
 
-In general, any errors occurs during the replay process are called <b>non-deterministic errors</b>. We will explore different types of non-deterministic errors in sections below but first let's try to understand how Cadence is able to perform the replay of workflow in case of failure.
+In general, any errors that occur during the replay process are called <b>non-deterministic errors</b>. We will explore different types of non-deterministic errors in sections below but first let's try to understand how Cadence is able to perform the replay of workflow in case of failure.
 
 ## Decision tasks of workflow
 
 In the previous section, we learned that Cadence is able to replay workflow histories in case of failure. We will learn exactly how Cadence keeps track of histories and how they get replayed when necessary.
 
-Workflow histories are built based on event-sourcing, and each history event are persisted in Cadence storage. In Cadence, we call these history events <b>decision tasks</b>, the foundation of history replay. Most decision tasks have three status - <b>Scheduled</b>, <b>Started</b>, <b>Completed</b> and we will go over decision tasks produced by each Cadence operation in section below.
+Workflow histories are built based on event-sourcing, and each history event is persisted in Cadence storage. In Cadence, we call these history events <b>decision tasks</b>, the foundation of history replay. Most decision tasks have three states (**Scheduled**, **Started**, and **Completed**); we will go over the decision tasks produced by each Cadence operation in the section below.
 
 When changing a workflow ownership of host and replaying a workflow, the decision tasks are downloaded from database and persisted in memory. Then during the workflow replaying process, if Cadence finds a decision task already exists for a particular step, it will immediately return the value of a decision task instead of rerunning the whole workflow logic. Let's take a look at the following simple workflow implementation and explicitly list all decision tasks produced by this workflow.
 
@@ -161,13 +159,13 @@ These are some common changes that can be categorized by these previous 4 types 
 
 1. Changing the order of executing Cadence defined operations, such as activities, timer, child workflows, signals, cancelRequest.
 2. Change the duration of a timer
-3. Use build-in goroutine of golang instead of using `workflow.Go`
-4. Use build-in channel of golang instead of using `workflow.Channel`
-5. Use build-in sleep function instead of using `workflow.Sleep`
+3. Use built-in goroutine of Go instead of using `workflow.Go`
+4. Use built-in channel of Go instead of using `workflow.Channel`
+5. Use built-in sleep function instead of using `workflow.Sleep`
 
 ### What are some changes that will NOT trigger non-deterministic errors?
 
-Code changes that are free of non-deterministic erorrs normally do not involve decision tasks in Cadence.
+Code changes that are free of non-deterministic errors normally do not involve decision tasks in Cadence.
 
 1. Activity input and output changes do not directly cause non-deterministic errors because the contents are not checked.  However, changes may produce serialization errors based on your data converter implementation (type or number-of-arg changes are particularly prone to problems, so we recommend you always use a single struct).  Cadence uses `json.Marshal` and `json.Unmarshal` (with `Decoder.UseNumber()`) by default.
 2. Code changes that does not modify history events are safe to be checked in. For example, logging or metrics implementations.

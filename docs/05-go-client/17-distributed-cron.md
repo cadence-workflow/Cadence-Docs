@@ -4,8 +4,6 @@ title: Distributed CRON
 permalink: /docs/go-client/distributed-cron
 ---
 
-# Distributed CRON
-
 It is relatively straightforward to turn any Cadence :workflow: into a Cron :workflow:. All you need
 is to supply a cron schedule when starting the :workflow: using the CronSchedule
 parameter of

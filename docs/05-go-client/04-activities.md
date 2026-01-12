@@ -4,8 +4,6 @@ title: Activity overview
 permalink: /docs/go-client/activities
 ---
 
-# Activity overview
-
 An :activity: is the implementation of a particular :task: in the business logic.
 
 :activity:Activities: are implemented as functions. Data can be passed directly to an :activity: via function
@@ -53,7 +51,7 @@ Let's take a look at each component of this activity.
 
 ### Declaration
 
-In the Cadence programing model, an :activity: is implemented with a function. The function declaration specifies the parameters the :activity: accepts as well as any values it might return. An :activity: function can take zero or many :activity: specific parameters and can return one or two values. It must always at least return an error value. The :activity: function can accept as parameters and return as results any serializable type.
+In the Cadence programming model, an :activity: is implemented with a function. The function declaration specifies the parameters the :activity: accepts as well as any values it might return. An :activity: function can take zero or many :activity: specific parameters and can return one or two values. It must always at least return an error value. The :activity: function can accept as parameters and return as results any serializable type.
 
 `func SimpleActivity(ctx context.Context, value string) (string, error)`
 
