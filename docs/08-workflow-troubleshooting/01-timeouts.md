@@ -4,8 +4,6 @@ title: Timeouts
 permalink: /docs/workflow-troubleshooting/timeouts
 ---
 
-#  Timeouts
-
 A workflow could fail if an activity times out and will timeout when the entire workflow execution times out. Workflows or activities time out when their time to execute or time to start has been longer than their configured timeout. Some of the common causes for timeouts have been listed here.
 
 ## Missing Pollers
@@ -35,7 +33,7 @@ Activities time out StartToClose or ScheduleToClose if the activity took longer 
 
 For long running activities, while the activity is executing, the worker can die due to regular deployments or host restarts or failures. Cadence doesn't know about this and will wait for StartToClose or ScheduleToClose timeouts to kick in.
 
-[Read more abut long running activites](https://cadenceworkflow.io/docs/concepts/activities/#long-running-activities)
+[Read more about long running activities](https://cadenceworkflow.io/docs/concepts/activities/#long-running-activities)
 
 Mitigation: Consider configuring heartbeat timeout and a retry policy
 

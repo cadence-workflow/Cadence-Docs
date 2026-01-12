@@ -4,7 +4,6 @@ title: Cluster Maintenance
 permalink: /docs/operation-guide/maintain
 ---
 
-# Cluster Maintenance
 This includes how to use and maintain a Cadence cluster for both clients and server clusters.
 
 ## Scale up & down Cluster
@@ -65,7 +64,7 @@ Make sure rolling restart to keep high availability.
 * Default Stores is for Cadence’ core data model, which requires strong consistency. So it cannot use replicas.  VisibilityStore is not for core data models. It’s recommended to use a separate DB for visibility store if using DB based visibility.
 * Visibility Stores usually take much less connection as the workload is much lightweight(less QPS and no explicit transactions).
 * Visibility Stores require eventual consistency for read. So it can use replicas.
-* MaxIdelConns should be less than MaxConns, so that the connections can be distributed better across hosts.
+* MaxIdleConns should be less than MaxConns, so that the connections can be distributed better across hosts.
 
 
 ## Upgrading Server

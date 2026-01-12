@@ -3,7 +3,7 @@ layout: default
 title: Activity Failures
 permalink: /docs/workflow-troubleshooting/activity-failures
 ---
-#  Activity failures
+
 An activity fails when it encounters an error during its execution. This results in ActivityTaskFailed event in the workflow execution with some details of the error. The different kinds of errors that can be seen in activity failures are listed here.
 
 ## Panic errors
@@ -12,7 +12,7 @@ Description: There is a issue in the activity code that is causing a panic.
 Mitigation: Panics are usually caused by nil pointer dereferences or out-of-range array access and should never be expected in a workflow. Check the stack trace provided in the error details to find where in the activity code, the panic is seen. Fix the rootcause of the panic.
 
 ## Custom errors
-Description: This is a customised error returned by the activity.
+Description: This is a customized error returned by the activity.
 
 Mitigation: This is a way of facilitating error handling done within the activity code. Check your activity code to find where it returns a NewCustomError with some information. This is ideally an expected error scenario and should be handled within the workflow that executed the activity.
 

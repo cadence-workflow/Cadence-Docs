@@ -4,8 +4,6 @@ title: Introduction
 permalink: /docs/cli
 ---
 
-# Command Line Interface
-
 The Cadence :CLI: is a command-line tool you can use to perform various :task:tasks: on a Cadence server. It can perform
 :domain: operations such as register, update, and describe as well as :workflow: operations like start
 :workflow:, show :workflow: history, and :signal: :workflow:.
@@ -21,7 +19,7 @@ After the installation is done, you can use CLI:
 ```bash
 cadence --help
 ```
-This will always install the latest version. Follow [this instructions](https://github.com/cadence-workflow/cadence/discussions/4457) if you need to install older versions of Cadence CLI.
+This will always install the latest version. Follow [these instructions](https://github.com/cadence-workflow/cadence/discussions/4457) if you need to install older versions of Cadence CLI.
 
 ### Docker
 The Cadence :CLI: can be used directly from the Docker Hub image *ubercadence/cli* or by building the :CLI: tool
@@ -188,7 +186,7 @@ cadence --domain samples-domain domain register
 # OR using short alias
 cadence --do samples-domain d re
 ```
-If your Cadence cluster has enable [global domain(XDC replication)](https://cadenceworkflow.io/docs/concepts/cross-dc-replication/), then you have to specify the replicaiton settings when registering a domain:
+If your Cadence cluster has enabled [global domain (XDC replication)](https://cadenceworkflow.io/docs/concepts/cross-dc-replication/), then you have to specify the replication settings when registering a domain:
 ```bash
 cadence --domains samples-domain domain register --active_cluster clusterNameA --clusters clusterNameA,clusterNameB
 ```
@@ -216,7 +214,7 @@ To run a :workflow:, the user must specify the following:
 3. Execution start to close timeout in seconds (--et)
 4. Input in JSON format (--i) (optional)
 
-s example uses [this cadence-samples workflow](https://github.com/cadence-workflow/cadence-samples/blob/master/cmd/samples/recipes/helloworld/helloworld_workflow.go)
+This example uses [this cadence-samples workflow](https://github.com/cadence-workflow/cadence-samples/blob/master/cmd/samples/recipes/helloworld/helloworld_workflow.go)
 and takes a string as input with the `-i '"cadence"'` parameter. Single quotes (`''`) are used to wrap input as JSON.
 
 **Note:** You need to start the :worker: so that the :workflow: can make progress.
@@ -329,7 +327,7 @@ Canceling a running :workflow_execution: will record a WorkflowExecutionCancelRe
 
 #### Signal, cancel, terminate workflows as a batch job
 Batch job is based on List Workflow Query(**--query**). It supports :signal:, cancel and terminate as batch job type.
-For terminating :workflow:workflows: as batch job, it will terminte the children recursively.
+For terminating :workflow:workflows: as batch job, it will terminate the children recursively.
 
 Start a batch job(using :signal: as batch type):
 ```bash
@@ -365,7 +363,7 @@ There are a lot of use cases:
 - Rerun a failed :workflow: from the failing point without losing the achieved progress(history).
 - After deploying new code, reset an open :workflow: to let the :workflow: run to different flows.
 
-What this command allows you to do conceptually is to go back to an earlier point in the workflow's history and re-run from that point. It allows you to pick the beginning of the workflow's history, the most recent events (the end) or in (most) segements of the workflow's history. 
+What this command allows you to do conceptually is to go back to an earlier point in the workflow's history and re-run from that point. It allows you to pick the beginning of the workflow's history, the most recent events (the end) or in (most) segments of the workflow's history. 
 
 You can reset to some predefined :event: types:
 ```bash

@@ -4,7 +4,7 @@ title: License
 permalink: /docs/about/license
 ---
 
-# License: Apache v2.0 & Creative Commons Attribution 4.0 International
+## Apache v2.0 & Creative Commons Attribution 4.0 International
 
 ```text
 # License

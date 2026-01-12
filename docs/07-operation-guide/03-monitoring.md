@@ -4,8 +4,6 @@ title: Cluster Monitoring
 permalink: /docs/operation-guide/monitor
 ---
 
-# Cluster Monitoring
-
 ## Instructions
 
 Cadence emits metrics for both Server and client libraries:
@@ -18,7 +16,7 @@ Cadence emits metrics for both Server and client libraries:
   * You can use other metrics emitter like [M3](https://github.com/uber-java/tally/tree/master/m3)
   * Alternatively, you can implement the tally [Reporter interface](https://github.com/uber-java/tally/blob/master/core/src/main/java/com/uber/m3/tally/Scope.java)
 
-* For running Cadence services in production, please follow this [example of hemlchart](https://github.com/banzaicloud/banzai-charts/blob/master/cadence/templates/server-service-monitor.yaml) to emit server side metrics. Or you can follow [the example of local environment](https://github.com/cadence-workflow/cadence/blob/master/config/development_prometheus.yaml#L40) to Prometheus. All services need to expose a HTTP port to provide metircs like below
+* For running Cadence services in production, please follow this [example of Helm chart](https://github.com/banzaicloud/banzai-charts/blob/master/cadence/templates/server-service-monitor.yaml) to emit server side metrics. Or you can follow [the example of local environment](https://github.com/cadence-workflow/cadence/blob/master/config/development_prometheus.yaml#L40) to Prometheus. All services need to expose a HTTP port to provide metrics like below
 
 ```yaml
 metrics:
@@ -61,7 +59,7 @@ Note: `host.docker.internal` [may not work for some docker versions](https://doc
 
 * Go to [local Grafana](http://localhost:3000) , login as `admin/admin`.
 * Configure Prometheus as datasource: use `http://host.docker.internal:9090` as URL of prometheus.
-* Import the [Grafana dashboard tempalte](monitoring#grafanaprometheus-dashboard-templates) as JSON files.
+* Import the [Grafana dashboard template](monitoring#grafanaprometheus-dashboard-templates) as JSON files.
 
 Client side dashboard looks like this:
 <img width="1513" alt="Screen Shot 2021-02-20 at 12 32 23 PM" src="https://user-images.githubusercontent.com/4523955/108607838-b7fc4d80-7377-11eb-8fd9-edc0e58afaad.png"></img>
@@ -100,7 +98,7 @@ This [package](https://github.com/cadence-workflow/Cadence-Docs/tree/master/src/
 
 ## Periodic tests(Canary) for health check
 
-It's recommended that you run periodical test to get signals on the healthness of your cluster. Please following instructions in [our canary package](https://github.com/cadence-workflow/cadence/tree/master/canary) to set these tests up.
+It's recommended that you run periodical tests to get signals on the health of your cluster. Please following instructions in [our canary package](https://github.com/cadence-workflow/cadence/tree/master/canary) to set these tests up.
 
 ## Cadence Frontend Monitoring
 This section describes recommended dashboards for monitoring Cadence services in your cluster. The structure mostly follows the DataDog dashboard template listed above.
@@ -579,7 +577,7 @@ sum:cadence_history.task_requests_per_domain{operation:timeractive*} by {domain}
 
 ### Transfer Latency by Type
 * If latency is too high then it’s an issue for a workflow. For example, if transfer task latency is 5 second, then it takes 5 second for activity/decision to actual receive the task.
-* Monitor should be set on diffeernt types of latency. Note that `queue_latency` can go very high during deployment and it's expected. See below NOTE for explanation.
+* Monitor should be set on different types of latency. Note that `queue_latency` can go very high during deployment and it's expected. See below NOTE for explanation.
 * When fired, check if it’s due to some persistence issue.
 If so then investigate the database(may need to scale up)
 If not then see if need to scale up Cadence deployment(K8s instance)
@@ -592,7 +590,7 @@ avg:cadence_history.task_latency_queue.quantile{$pXXLatency,operation:transfer*}
 
 ### Timer Task Latency by type
 * If latency is too high then it’s an issue for a workflow. For example, if you set the workflow.sleep() for 10 seconds and the timer latency is 5 secs then the workflow will sleep for 15 seconds.
-* Monitor should be set on diffeernt types of latency.
+* Monitor should be set on different types of latency.
 * When fired, check if it’s due to some persistence issue.
 If so then investigate the database(may need to scale up) [Mostly]
 If not then see if need to scale up Cadence deployment(K8s instance)
@@ -768,7 +766,7 @@ sum:cadence_matching.asyncmatch_latency_per_tl.quantile{$pXXLatency} by {operati
 ```
 
 ## Cadence Default Persistence Monitoring
-The following monotors should be set up for Cadence persistence.
+The following monitors should be set up for Cadence persistence.
 
 ### Persistence Availability
 * The availability of the primary database for your Cadence server
@@ -974,7 +972,7 @@ sum:cadence_worker.es_processor_process_msg_latency.quantile{$pXXLatency} by {op
 
 
 ### Computing platform metrics for Cadence deployment
-Cadence server being deployed on any computing platform(e.g. Kubernetese) should be monitored on the blow metrics:
+Cadence server being deployed on any computing platform (e.g. Kubernetes) should be monitored on the below metrics:
 * CPU
 * Memory
 

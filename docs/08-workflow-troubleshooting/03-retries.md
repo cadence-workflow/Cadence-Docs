@@ -4,8 +4,6 @@ title: Retries
 permalink: /docs/workflow-troubleshooting/retries
 ---
 
-# Retries
-
 Cadence has a retry feature where a retry policy can be configured so that an activity or a workflow will be retried when it fails or times out.
 
 Read more about [activity retries](https://cadenceworkflow.io/docs/concepts/activities/#retries) and [workflow retries](https://cadenceworkflow.io/docs/concepts/workflows/#workflow-retries).
@@ -34,4 +32,4 @@ In both activity retries and workflow retries it is sufficient to specify a maxi
 
 Heartbeat timeouts are used to detect when a worker died or restarted. With heartbeat timeout configured equal or higher than StartToClose timeout, cadence will timeout on the StartToClose timeout which essentially makes the configured heartbeat timeout to become useless. Ideally heartbeat timeouts should be configured to a few minutes so you can catch issues with the worker faster.
 
-[Read more abut long running activites](https://cadenceworkflow.io/docs/concepts/activities/#long-running-activities)
+[Read more about long running activities](https://cadenceworkflow.io/docs/concepts/activities/#long-running-activities)

@@ -3,14 +3,14 @@ layout: default
 title: Cluster Migration
 permalink: /docs/operation-guide/migration
 ---
-# Migrate Cadence cluster.
+
 There could be some reasons that you need to migrate Cadence clusters:
 * Migrate to different storage, for example from Postgres/MySQL to Cassandra, or using multiple SQL database as a sharded SQL cluster for Cadence
 * Split traffic
 * Datacenter migration
 * Scale up -- to change numOfHistoryShards.
 
-Below is two different approaches for migrating a cluster.
+Below are two different approaches for migrating a cluster.
 
 ## Migrate with naive approach
 

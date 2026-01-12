@@ -4,8 +4,6 @@ title: Cluster Configuration
 permalink: /docs/operation-guide/setup
 ---
 
-# Cluster Configuration
-
 This section will help to understand what you need for setting up a Cadence cluster.
 
 You should understand some basic static configuration of Cadence cluster.
@@ -16,7 +14,7 @@ Cadence’s minimum dependency is a database(Cassandra or SQL based like MySQL/P
 
 For production you also need a metric server(Prometheus/Statsd/M3/etc).
 
-For [advanced features](/docs/operation-guide/setup/#other-advanced-features) Cadence depends on others like Elastisearch/OpenSearch+Kafka if you need [Advanced visibility feature to search workflows](/docs/concepts/search-workflows/). Cadence will depends on a blob store like S3 if you need to enable [archival feature](/docs/concepts/archival/).
+For [advanced features](/docs/operation-guide/setup/#other-advanced-features) Cadence depends on others like Elasticsearch/OpenSearch+Kafka if you need [Advanced visibility feature to search workflows](/docs/concepts/search-workflows/). Cadence will depends on a blob store like S3 if you need to enable [archival feature](/docs/concepts/archival/).
 
 ## Static configuration
 
@@ -215,7 +213,7 @@ After changing the client to `configstore` and restarting Cadence, you can manag
 ## Deployment & Release
 Kubernetes is the most popular way to deploy Cadence cluster. And easiest way is to use [Cadence Helm Charts](https://github.com/banzaicloud/banzai-charts/tree/master/cadence) that maintained by a community project.
 
-If you are looking for deploying Cadence using other technologies, then it's reccomended to use Cadence docker images. You can use offical ones, or you may customize it based on what you need. See [Cadence docker package](https://github.com/cadence-workflow/cadence/tree/master/docker#using-docker-image-for-production) for how to run the images.
+If you are looking for deploying Cadence using other technologies, then it's recommended to use Cadence docker images. You can use offical ones, or you may customize it based on what you need. See [Cadence docker package](https://github.com/cadence-workflow/cadence/tree/master/docker#using-docker-image-for-production) for how to run the images.
 
 It's always recommended to use the latest release. See [Cadence release pages](https://github.com/cadence-workflow/cadence/releases).
 
