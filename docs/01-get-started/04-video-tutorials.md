@@ -4,7 +4,6 @@ title: Video Tutorials
 permalink: /docs/get-started/video-tutorials
 ---
 
-# Overview
 An Introduction to the Cadence programming model and value proposition.
 
 <figure class="video-container">
@@ -18,7 +17,7 @@ An Introduction to the Cadence programming model and value proposition.
 
 
 ## HelloWorld
-A step-by-step video tutorial about how to install and run HellowWorld(Java).
+A step-by-step video tutorial about how to install and run HelloWorld (Java).
 <figure class="video-container">
   <iframe
     src="https://www.youtube.com/embed/5mBLspVKOAI"

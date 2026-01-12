@@ -4,7 +4,6 @@ title: Overview
 description: A large number of use cases span beyond a single request-reply, require tracking of a complex state, respond to asynchronous events, and communicate to external unreliable dependencies.
 permalink: /docs/get-started/
 ---
-# Overview
 
 A large number of use cases span beyond a single request-reply, require tracking
 of a complex state, respond to asynchronous :event:events:, and communicate to external unreliable dependencies.
@@ -33,6 +32,6 @@ image for the Cadence server is available on Docker Hub at
 
 ## What's Next
 Let's try with some sample workflows.
-To start with, go to [server installation](/docs/get-started/server-installation) to install cadence locally, and run a HelloWorld sample with [Java](/docs/get-started/java-hello-world) or [Golang](/docs/get-started/golang-hello-world).
+To start with, go to [server installation](/docs/get-started/server-installation) to install Cadence locally, and run a HelloWorld sample with [Java](/docs/get-started/java-hello-world) or [Golang](/docs/get-started/golang-hello-world).
 
-When you have any trouble with the instructions, you can watch the [video tutorials](/docs/get-started/video-tutorials), and reach out to us on [Slack Channel](http://t.uber.com/cadence-slack), or raise any question on [StackOverflow](https://stackoverflow.com/questions/tagged/cadence-workflow) or open an [Github issue](https://github.com/cadence-workflow/cadence/issues/new/choose).
+When you have any trouble with the instructions, you can watch the [video tutorials](/docs/get-started/video-tutorials), and reach out to us on our [Slack Channel](http://t.uber.com/cadence-slack), or raise any question on [Stack Overflow](https://stackoverflow.com/questions/tagged/cadence-workflow) or open a [GitHub issue](https://github.com/cadence-workflow/cadence/issues/new/choose).

@@ -4,7 +4,6 @@ title: Java hello world
 permalink: /docs/get-started/java-hello-world
 ---
 
-# Java Hello World
 This section provides step by step instructions on how to write and run a HelloWorld with Java.
 
 For complete, ready to build samples covering all the key Cadence concepts go to [Cadence-Java-Samples](https://github.com/cadence-workflow/cadence-java-samples).

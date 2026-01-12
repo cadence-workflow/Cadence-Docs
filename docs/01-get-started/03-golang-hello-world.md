@@ -4,7 +4,6 @@ title: Golang hello world
 permalink: /docs/get-started/golang-hello-world
 ---
 
-# Golang Hello World
 This section provides step-by-step instructions on how to write and run a HelloWorld workflow in Cadence with Golang. You will learn two critical building blocks of Cadence: activities and workflows. First, you will write an activity function that prints a "Hello World!" message in the log. Then, you will write a workflow function that executes this activity.
 
 ## Prerequisite
@@ -13,7 +12,7 @@ To successfully run this hello world sample, follow this checklist of setting up
 2. Your Cadence server is running (check your background docker container process)
 3. You have successfully registered a domain for this workflow
 
-You must finish part 2 and 3 by following the [first section](/docs/get-started/server-installation) to proceed the next steps.
+You must finish parts 2 and 3 by following the [first section](/docs/get-started/server-installation) to proceed with the next steps.
 We are using domain called `test-domain` for this tutorial project.
 
 ## Step 1. Implement A Cadence Worker Service
@@ -139,7 +138,7 @@ You may see this because there are no activities and workflows registered to the
 
 ## Step 2. Write a simple Cadence hello world activity and workflow
 
-Let's write a hello world activity, which take a single input called `name` and greet us after the workflow is finished.
+Let's write a hello world activity, which takes a single input called `name` and greets us after the workflow is finished.
 
 ```go
 func helloWorldWorkflow(ctx workflow.Context, name string) (*string, error) {
@@ -208,7 +207,7 @@ You should see logs in your worker terminal like
 2023-07-16T11:30:02.717-0700    INFO    cadence-worker/code.go:104      Workflow completed. {"Domain": "test-domain", "TaskList": "test-worker", "WorkerID": "11294@uber-C02F18EQMD6R@test-worker@5829c68e-ace0-472f-b5f3-6ccfc7903dd5", "WorkflowType": "main.helloWorldWorkflow", "WorkflowID": "8acbda3c-d240-4f27-8388-97c866b8bfb5", "RunID": "4b91341f-056f-4f0b-ab64-83bcc3a53e5a", "Result": "Hello World!"}
 ```
 
-Congratulations! You just launched your very first Cadence workflow from scratch
+Congratulations! You just launched your very first Cadence workflow from scratch.
 
 ## (Optional) Step 4. Monitor Cadence workflow with Cadence web UI
 When you start the Cadence backend server, it also automatically starts a front end portal for your workflow. Open you browser and go to
