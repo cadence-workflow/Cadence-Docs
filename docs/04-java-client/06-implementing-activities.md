@@ -4,8 +4,6 @@ title: Implementing activities
 permalink: /docs/java-client/implementing-activities
 ---
 
-# Implementing activities
-
 :activity:Activity: implementation is an implementation of an :activity: interface. A single instance of the :activity:activities: implementation
 is shared across multiple simultaneous :activity: invocations. Therefore, the :activity: implementation code must be *thread safe*.
 

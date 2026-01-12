@@ -4,8 +4,6 @@ title: Client SDK Overview
 permalink: /docs/java-client/client-overview
 ---
 
-# Client SDK Overview
-
 - [Cadence Java Samples](https://github.com/cadence-workflow/cadence-java-samples)
 - [JavaDoc documentation](https://javadoc.io/doc/com.uber.cadence/cadence-client)
 

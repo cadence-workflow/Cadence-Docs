@@ -4,9 +4,7 @@ title: Exception Handling
 permalink: /docs/java-client/exception-handling
 ---
 
-# Exception Handling
-
-By default, Exceptions thrown by an activity are received by the workflow wrapped into an `com.uber.cadence.workflow.ActivityFailureException`,
+By default, Exceptions thrown by an activity are received by the workflow wrapped into a `com.uber.cadence.workflow.ActivityFailureException`.
 
 Exceptions thrown by a child workflow are received by a parent workflow wrapped into a `com.uber.cadence.workflow.ChildWorkflowFailureException`
 

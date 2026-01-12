@@ -4,8 +4,6 @@ title: Workflow interface
 permalink: /docs/java-client/workflow-interface
 ---
 
-# Workflow interface
-
 :workflow:Workflow: encapsulates the orchestration of :activity:activities: and child :workflow:workflows:.
 It can also answer synchronous :query:queries: and receive external :event:events: (also known as :signal:signals:).
 

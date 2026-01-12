@@ -4,8 +4,6 @@ title: Versioning
 permalink: /docs/java-client/versioning
 ---
 
-# Versioning
-
 As outlined in the _Workflow Implementation Constraints_ section, :workflow: code has to be deterministic by taking the same
 code path when replaying history :event:events:. Any :workflow: code change that affects the order in which :decision:decisions: are generated breaks
 this assumption. The solution that allows updating code of already running :workflow:workflows: is to keep both the old and new code.

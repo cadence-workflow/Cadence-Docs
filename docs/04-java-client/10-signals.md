@@ -4,8 +4,6 @@ title: Signals
 permalink: /docs/java-client/signals
 ---
 
-# Signals
-
 :signal:Signals: provide a mechanism to send data directly to a running :workflow:. Previously, you had
 two options for passing data to the :workflow: implementation:
 
@@ -161,7 +159,7 @@ The
 [WorkflowClient](https://www.javadoc.io/doc/com.uber.cadence/cadence-client/latest/com/cadence-workflow/cadence/client/WorkflowClient.html) API allows you to send signal (or SignalWithStartWorkflow) from outside of the workflow
 to send a :signal: to the current :workflow:.
 
-Note that when using `newWorkflowStub` to signal a workflow, you MUST NOT passing WorkflowOptions.
+Note that when using `newWorkflowStub` to signal a workflow, you MUST NOT pass WorkflowOptions.
 
 The [WorkflowStub](https://www.javadoc.io/static/com.uber.cadence/cadence-client/2.7.9-alpha/com/cadence-workflow/cadence/client/WorkflowClient.html#newWorkflowStub-java.lang.Class-com.uber.cadence.client.WorkflowOptions-) with WorkflowOptions is only for starting workflows.
 

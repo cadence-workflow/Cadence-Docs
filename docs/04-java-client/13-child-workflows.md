@@ -4,8 +4,6 @@ title: Child workflows
 permalink: /docs/java-client/child-workflows
 ---
 
-# Child workflows
-
 Besides :activity:activities:, a :workflow: can also orchestrate other :workflow:workflows:.
 
 `workflow.ExecuteChildWorkflow` enables the scheduling of other :workflow:workflows: from within a :workflow:workflow:'s

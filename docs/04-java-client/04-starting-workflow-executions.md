@@ -4,14 +4,12 @@ title: Starting workflows
 permalink: /docs/java-client/starting-workflow-executions
 ---
 
-# Starting workflow executions
-
 ## Creating a WorkflowClient
 
 A :workflow: interface that executes a :workflow: requires initializing a `WorkflowClient` instance, creating
 a client side stub to the :workflow:, and then calling a method annotated with @WorkflowMethod.
 
-A simple `WorkflowClient` instance that utilises the :tchannel: communication protocol can be initialised as follows:
+A simple `WorkflowClient` instance that utilizes the :tchannel: communication protocol can be initialized as follows:
 
 ```java
 WorkflowClient workflowClient =

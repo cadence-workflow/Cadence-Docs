@@ -4,9 +4,6 @@ title: Introduction
 permalink: /docs/java-client
 ---
 
-# Java client ![Java Client Release](https://img.shields.io/github/v/release/cadence-workflow/cadence-java-client?sort=semver&display_name=tag&label=Latest%20Release&link=https%3A%2F%2Fgithub.com%2Fuber%2Fcadence-java-client%2Freleases%2Flatest)
-
-
 The following are important links for the Cadence Java client:
 
 

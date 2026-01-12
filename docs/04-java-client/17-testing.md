@@ -4,8 +4,6 @@ title: Testing
 permalink: /docs/java-client/testing
 ---
 
-# Activity Test Environment
-
 [TestActivityEnvironment](https://www.javadoc.io/static/com.uber.cadence/cadence-client/2.7.9-alpha/com/cadence-workflow/cadence/testing/TestActivityEnvironment.html) is the helper class for unit testing activity implementations. Supports calls to Activity methods from the tested activities. An example test:
 
 [See full example here.](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/test/java/com/uber/cadence/samples/hello/HelloActivityTest.java)

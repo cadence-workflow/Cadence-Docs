@@ -4,8 +4,6 @@ title: Implementing workflows
 permalink: /docs/java-client/implementing-workflows
 ---
 
-# Implementing workflows
-
 A :workflow: implementation implements a :workflow: interface. Each time a new :workflow_execution: is started,
 a new instance of the :workflow: implementation object is created. Then, one of the methods
 (depending on which :workflow: type has been started) annotated with `@WorkflowMethod` is invoked. As soon as this method
@@ -143,7 +141,7 @@ Cadence uses the [Microsoft Azure Event Sourcing pattern](https://docs.microsoft
 the state of a :workflow: object including its threads and local variable values.
 In essence, every time a :workflow: state has to be restored, its code is re-executed from the beginning. When replaying, side
 effects (such as :activity: invocations) are ignored because they are already recorded in the :workflow: :event_history:.
-When writing :workflow: logic, the replay is not visible, so the code should be written since it executes only once.
+When writing :workflow: logic, the replay is not visible, so the code should be written as if it executes only once.
 This design puts the following constraints on the :workflow: implementation:
 
 - Do not use any mutable global variables because multiple instances of :workflow:workflows: are executed in parallel.

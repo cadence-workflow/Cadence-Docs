@@ -4,8 +4,6 @@ title: Activity interface
 permalink: /docs/java-client/activity-interface
 ---
 
-# Activity interface
-
 An :activity: is a manifestation of a particular :task: in the business logic.
 
 :activity:Activities: are defined as methods of a plain Java interface. Each method defines a single :activity: type. A single
@@ -30,7 +28,7 @@ public interface FileProcessingActivities {
 }
 
 ```
-We recommend to use a single value type argument for :activity: methods. In this way, adding new arguments as fields
+We recommend using a single value type argument for :activity: methods. In this way, adding new arguments as fields
 to the value type is a backwards-compatible change.
 
 An optional @ActivityMethod annotation can be used to specify :activity: options like timeouts or a :task_list:. Required options

@@ -4,9 +4,7 @@ title: Queries
 permalink: /docs/java-client/queries
 ---
 
-# Queries
-
-Query is to expose this internal state to the external world Cadence provides a synchronous :query: feature. From the :workflow: implementer point of view the :query: is exposed as a synchronous callback that is invoked by external entities. Multiple such callbacks can be provided per :workflow: type exposing different information to different external systems.
+The Query feature exposes workflow internal state to the external world. Cadence provides a synchronous :query: feature. From the :workflow: implementer point of view the :query: is exposed as a synchronous callback that is invoked by external entities. Multiple such callbacks can be provided per :workflow: type exposing different information to different external systems.
 
 :query:Query: callbacks must be read-only not mutating the :workflow: state in any way. The other limitation is that the :query: callback cannot contain any blocking code. Both above limitations rule out ability to invoke :activity:activities: from the :query: handlers.
 
