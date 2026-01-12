@@ -4,8 +4,6 @@ title: Deployment topology
 permalink: /docs/concepts/topology
 ---
 
-# Deployment topology
-
 ## Overview
 
 Cadence is a highly scalable fault-oblivious stateful code platform. The fault-oblivious code is a next level of abstraction over commonly used techniques to achieve fault tolerance and durability.
@@ -18,10 +16,10 @@ Note that both types of :worker:workers: as well as external clients are roles a
 ![Cadence Architecture](https://user-images.githubusercontent.com/14902200/160308507-2854a98a-0582-4748-87e4-e0695d3b6e86.jpg)
 
 
-At the core of Cadence is a highly scalable multitenant service. The service exposes all of its functionality through a strongly typed [gRPC API](https://github.com/cadence-workflow/cadence-idl/tree/master/proto/uber/cadence/api/v1). A Cadence cluster include multiple services, each of which may run on multiple nodes for scalability and reliablity:
+At the core of Cadence is a highly scalable multitenant service. The service exposes all of its functionality through a strongly typed [gRPC API](https://github.com/cadence-workflow/cadence-idl/tree/master/proto/uber/cadence/api/v1). A Cadence cluster includes multiple services, each of which may run on multiple nodes for scalability and reliability:
 - Front End: which is a stateless service used to handle incoming requests from Workers. It is expected that an external load balancing mechanism is used to distribute load between Front End instances.
 - History Service: where the core logic of orchestrating workflow steps and activities is implemented
-- Matching Service: matches workflow/activity tasks that need to be executed to workflow/activity workers that are able to execute them. Matching is assigned task for execution by the history service
+- Matching Service: matches workflow/activity tasks that need to be executed to workflow/activity workers that are able to execute them. Matching is assigned tasks for execution by the history service.
 - Internal Worker Service: implements Cadence workflows and activities for internal requirements such as archiving
 - Workers: are effectively the client apps for Cadence. This is where user created workflow and activity logic is executed
 

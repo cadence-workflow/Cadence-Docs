@@ -4,8 +4,6 @@ title: Archival
 permalink: /docs/concepts/archival
 ---
 
-# Archival
-
 :archival:Archival: is a feature that automatically moves :workflow: histories (history archival) and visibility records (visibility archival) from persistence to a secondary data store after the retention period, thus allowing users to keep workflow history and visibility records as long as necessary without overwhelming Cadence primary data store. There are two reasons you may consider turning on archival for your domain:
 1. **Compliance:** For legal reasons histories may need to be stored for a long period of time.
 2. **Debugging:** Old histories can still be accessed for debugging.
@@ -76,13 +74,13 @@ domainDefaults:
       URI: "s3://put-name-of-your-s3-bucket-here"
     visibility:
       status: "enabled"
-      URI: "s3://put-name-of-your-s3-bucket-here" # most proably the same as the previous URI
+      URI: "s3://put-name-of-your-s3-bucket-here" # probably the same as the previous URI
 ```
 
 ## FAQ
 
 ### When does archival happen?
-In theory, we would like both history and visibility archival happen after workflow closes and retention period passes. However, due to some limitations in the implementation, only history archival happens after the retention period, while visibility archival happens immediately after workflow closes. Please treat this as an implementation details inside Cadence and do not relay on this fact. Archived data should only be checked after the retention period, and we may change the way we do visibility archival in the future.
+In theory, we would like both history and visibility archival to happen after workflow closes and the retention period passes. However, due to some limitations in the implementation, only history archival happens after the retention period, while visibility archival happens immediately after workflow closes. Please treat this as an implementation detail inside Cadence and do not rely on this fact. Archived data should only be checked after the retention period, and we may change the way we do visibility archival in the future.
 
 ### What's the query syntax for visibility archival?
 The `listArchived` CLI command and API accept a SQL-like query for retrieving archived visibility records, similar to how the `listWorkflow` command works. Unfortunately, since different Archiver implementations have very different capability, there's currently no universal query syntax that works for all Archiver implementations. Please check the README (for example, [S3](https://github.com/cadence-workflow/cadence/tree/master/common/archiver/s3store) and [GCP](https://github.com/cadence-workflow/cadence/tree/master/common/archiver/gcloud)) of the Archiver used by your domain for the supported query syntax and limitations.
@@ -99,7 +97,7 @@ Each :domain: can only have one URI for history :archival: and one URI for visib
 No cadence :workflow: should ever operate on clear text PII. Cadence can be thought of as a database and just as one would not store PII in a database PII should not be stored in Cadence. This is even more important when :archival: is enabled because these histories can be kept forever.
 
 ## Planned Future Work
-* Support retriving archived workflow histories without providing runID.
+* Support retrieving archived workflow histories without providing runID.
 * Provide guarantee that no history or visibility record is deleted from primary persistence before being archived.
 * Implement **Paused** state. In this state no :archival:archivals: will occur but histories or visibility record also will not be deleted from persistence.
 Once enabled again from paused state, all skipped :archival:archivals: will occur.

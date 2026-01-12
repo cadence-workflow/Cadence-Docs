@@ -4,8 +4,6 @@ title: Event handling
 permalink: /docs/concepts/events
 ---
 
-# Event handling
-
 Fault-oblivious stateful :workflow:workflows: can be :signal:signalled: about an external :event:. A :signal: is always point to point destined to a specific :workflow: instance. :signal:Signals: are always processed in the order in which they are received.
 
 There are multiple scenarios for which :signal:signals: are useful.

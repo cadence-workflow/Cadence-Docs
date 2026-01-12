@@ -4,7 +4,6 @@ title: Cross DC replication
 permalink: /docs/concepts/cross-dc-replication
 ---
 
-# Cross-DC replication
 The Cadence Global :domain:Domain: feature provides clients with the capability to continue their :workflow_execution: from another
 cluster in the event of a datacenter failover. Although you can configure a Global :domain:Domain: to be replicated to any number of
 clusters, it is only considered active in a single cluster.
@@ -16,7 +15,7 @@ We call it `passive` or `standby` when not active in other clusters.
 
 The number of standby clusters can be zero, if a global domain only configured to one cluster. This is preferred/recommended.
 
-Any workflow of a global domain can only make make progress in its `active` cluster. And the workflow progress is replicated to other `standby` clusters. For example,
+Any workflow of a global domain can only make progress in its `active` cluster. And the workflow progress is replicated to other `standby` clusters. For example,
 starting workflow by calling `StartWorkflow`, or starting activity(by `PollForActivityTask` API), can only be processed in its active cluster. After active cluster made progress,
 standby clusters (if any) will poll the history from active to replicate the workflow states.
 
@@ -179,7 +178,7 @@ After the configuration is deployed:
 2. Run some workflow and failover domain from one to another
 `cadence --do <domain_name> domain update  --active_cluster clusterDCB`
 
-Then the domain should be failed over to clusterDCB. Now worklfows are read-only in clusterDCA. So your workers polling tasks from clusterDCA will become idle.
+Then the domain should be failed over to clusterDCB. Now workflows are read-only in clusterDCA. So your workers polling tasks from clusterDCA will become idle.
 
 Note 1: that even though clusterDCA is standy/read-only for this domain, it can be active for another domain. So being active/standy is per domain basis not per clusters. In other words, for example if you use XDC in case of DC failure of clusterDCA, you need to failover all domains from clusterDCA to clusterDCB.
 

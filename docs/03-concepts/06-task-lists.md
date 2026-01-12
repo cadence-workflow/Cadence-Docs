@@ -4,8 +4,6 @@ title: Task lists
 permalink: /docs/concepts/task-lists
 ---
 
-# Task lists
-
 When a :workflow: invokes an :activity:, it sends the ```ScheduleActivityTask``` :decision: to the
 Cadence service. As a result, the service updates the :workflow: state and dispatches
 an :activity_task: to a :worker: that implements the :activity:.

@@ -4,8 +4,6 @@ title: Search workflows (Advanced visibility)
 permalink: /docs/concepts/search-workflows
 ---
 
-# Searching Workflows (Advanced visibility)
-
 ## Introduction
 
 Cadence supports creating :workflow:workflows: with customized key-value pairs, updating the information within the :workflow: code, and then listing/searching :workflow:workflows: with a SQL-like :query:. For example, you can create :workflow:workflows: with keys `city` and `age`, then search all :workflow:workflows: with `city = seattle and age > 22`.
@@ -202,7 +200,7 @@ Note that you will only see :workflow:workflows: from one domain when :query:que
 ### Default Attributes
 
 More and more default attributes are added in newer versions.
-Please get the  by using the :CLI: get-search-attr command or the GetSearchAttributes API.
+Please get the full list by using the :CLI: get-search-attr command or the GetSearchAttributes API.
 Some names and types are as follows:
 
 | KEY                 | VALUE TYPE |

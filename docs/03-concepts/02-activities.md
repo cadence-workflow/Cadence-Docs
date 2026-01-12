@@ -4,8 +4,6 @@ title: Activities
 permalink: /docs/concepts/activities
 ---
 
-# Activities
-
 Fault-oblivious stateful :workflow: code is the core abstraction of Cadence. But, due to deterministic execution requirements, they are not allowed to call any external API directly.
 Instead they orchestrate execution of :activity:activities:. In its simplest form, a Cadence :activity: is a function or an object method in one of the supported languages.
 Cadence does not recover :activity: state in case of failures. Therefore an :activity: function is allowed to contain any code without restrictions.
@@ -77,14 +75,14 @@ To support such use cases, Cadence allows :activity: implementations that do not
 
 ## Local Activities
 
-Some of the :activity:activities: are very short lived and do not need the queing semantic, flow control, rate limiting and routing capabilities. For these Cadence supports so called _:local_activity:_ feature. :local_activity:Local_activities: are executed in the same :worker: process as the :workflow: that invoked them. 
+Some of the :activity:activities: are very short lived and do not need the queuing semantic, flow control, rate limiting, and routing capabilities. For these Cadence supports the so-called _:local_activity:_ feature. :local_activity:Local_activities: are executed in the same :worker: process as the :workflow: that invoked them.
 
-What you will trade off by using local activities
-* Less Debuggability: There is no ActivityTaskScheduled and ActivityTaskStarted events. So you would not able to see the input. 
+What you will trade off by using local activities:
+* Less Debuggability: There are no ActivityTaskScheduled and ActivityTaskStarted events. So you would not be able to see the input.
 * No tasklist dispatching: The worker is always the same as the workflow decision worker. You don't have a choice of using activity workers.
-* More possibility of duplicated execution. Though regular activity could also execute multiple times when using retry policy, local activity has more chance of ocurring. Because local activity result is not recorded into history until DecisionTaskCompleted. Also when executing multiple local activities in a row, SDK(Java+Golang) would optimize recording in a way that only recording by interval(before current decision task timeout). 
-* No long running capability with record heartbeat
-* No Tasklist global ratelimiting 
+* More possibility of duplicated execution. Though regular activity could also execute multiple times when using retry policy, local activity has more chance of occurring. Because local activity result is not recorded into history until DecisionTaskCompleted. Also when executing multiple local activities in a row, SDK (Java+Golang) would optimize recording in a way that only recording by interval (before current decision task timeout).
+* No long running capability with record heartbeat.
+* No Tasklist global rate limiting.
 
 Consider using :local_activity:local_activities: for functions that are:
 
@@ -93,7 +91,7 @@ Consider using :local_activity:local_activities: for functions that are:
 * do not require global rate limiting
 * do not require routing to specific :worker:workers: or pools of :worker:workers:
 * can be implemented in the same binary as the :workflow: that invokes them
-* non business critical so that losing some debuggability is okay(e.g. logging, loading config)
+* non-business-critical so that losing some debuggability is okay (e.g., logging, loading config)
 * when you really need optimization. For example, if there are many timers firing at the same time to invoke activities, it could overload Cadence's server. Using local activities can help save the server capacity. 
 
 The main benefit of :local_activity:local_activities: is that they are much more efficient in utilizing Cadence service resources and have much lower latency overhead comparing to the usual :activity: invocation.

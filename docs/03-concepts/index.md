@@ -4,8 +4,6 @@ title: Introduction
 permalink: /docs/concepts
 ---
 
-# Concepts
-
 Cadence is a new developer friendly way to develop distributed applications.
 
 It borrows the core terminology from the workflow-automation space. So its concepts include [workflows](01-workflows.md) and [activities](02-activities.md). :workflow:Workflows: can react to [events](03-events.md) and return internal state through [queries](04-queries.md).

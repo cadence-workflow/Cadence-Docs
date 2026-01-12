@@ -4,8 +4,6 @@ title: Data Converter
 permalink: /docs/concepts/data-converter
 ---
 
-# Data Converter
-
 Data Converters in Cadence handle serialization and deserialization of data exchanged between workflows, activities, and the Cadence service. They ensure data is correctly encoded and decoded during communication.
 
 ---

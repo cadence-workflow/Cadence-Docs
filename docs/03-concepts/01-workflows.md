@@ -4,8 +4,6 @@ title: Workflows
 permalink: /docs/concepts/workflows
 ---
 
-# Fault-oblivious stateful workflow code
-
 ## Overview
 
 Cadence core abstraction is a **fault-oblivious stateful :workflow:**. The state of the :workflow: code, including local variables and threads it creates, is immune to process and Cadence service failures.
@@ -65,7 +63,7 @@ public class SubscriptionWorkflowImpl implements SubscriptionWorkflow {
         // Cadence supports indefinitely running workflow but some advanced techniques are needed
         while (billingPeriodNum < customer.getSubscription().getPeriodsInSubcription()) {
 
-            // Workflow.await tells Cadence to pause the workflow at this stage (saving it's state to the database)
+            // Workflow.await tells Cadence to pause the workflow at this stage (saving its state to the database)
             // Execution restarts when the billing period time has passed or the subscriptionCancelled event is received , whichever comes first
             Workflow.await(customer.getSubscription().getBillingPeriod(), () -> subscriptionCancelled);
 
@@ -186,4 +184,4 @@ Some :workflow:workflows: require a guarantee that they keep running even in pre
 - `NonRetryableErrorReasons` allows to specify errors that shouldn't be retried. For example, retrying invalid arguments error doesn't make sense in some scenarios.
 
 ## How does workflow run 
-You may wonder how it works. Behind the scenes, workflow decision is driving the whole workflow running. It's the internal entities for client and server to run your workflows. If this is interesting to you, read this [stack Overflow QA](https://stackoverflow.com/questions/62904129/what-exactly-is-a-cadence-decision-task/63964726#63964726).
+You may wonder how it works. Behind the scenes, workflow decision is driving the whole workflow running. It's the internal entities for client and server to run your workflows. If this is interesting to you, read this [Stack Overflow QA](https://stackoverflow.com/questions/62904129/what-exactly-is-a-cadence-decision-task/63964726#63964726).

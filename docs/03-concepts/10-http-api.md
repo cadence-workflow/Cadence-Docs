@@ -4,8 +4,6 @@ title: HTTP API
 permalink: /docs/concepts/http-api
 ---
 
-# Using HTTP API
-
 ## Introduction
 
 From **version 1.2.0** onwards, Cadence has introduced HTTP API support, which allows you to interact with the Cadence server
@@ -1879,7 +1877,7 @@ HTTP code: 200
 <details>
 <summary><code>POST</code> <code><b>uber.cadence.api.v1.WorkflowAPI::SignalWithStartWorkflowExecution</b></code></summary>
 
-#### Signal the current open workflow if exists, or attempt to start a new run based on IDResuePolicy and signals it
+#### Signal the current open workflow if one exists, or attempt to start a new run based on IDReusePolicy and signal it
 
 ##### Headers
 

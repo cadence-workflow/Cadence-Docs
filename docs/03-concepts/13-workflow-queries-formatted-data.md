@@ -4,8 +4,6 @@ title: Workflow Queries with Formatted Data
 permalink: /docs/concepts/workflow-queries-formatted-data
 ---
 
-# Workflow Queries with Formatted Data
-
 This guide explains how to implement workflow queries that return preformatted data for enhanced rendering in Cadence Web UI. This feature allows workflow authors to return structured data in Markdown format that can be rendered directly in the Cadence Web interface, providing richer visualization and better user experience.
 
 The formatted data feature enables workflows to respond to queries with data that includes rendering instructions, allowing the UI to display content beyond simple text responses.
@@ -332,6 +330,7 @@ func TestFormattedQueryResponse(t *testing.T) {
     assert.NotEmpty(t, response.Data)
 }
 ```
+
 ### Debugging Tips
 
 1. **Validate JSON Structure**: Ensure response matches expected format
@@ -346,12 +345,11 @@ func TestFormattedQueryResponse(t *testing.T) {
 ### Related Documentation
 
 - [Basic Workflow Queries](/docs/concepts/queries) - Overview of standard query functionality
-- [Cadence Web UI Documentation](https://github.com/uber/cadence-web) - UI components and rendering
+- [Cadence Web UI Documentation](https://github.com/cadence-workflow/cadence-web) - UI components and rendering
 - [OWASP XSS Prevention](https://owasp.org/www-community/attacks/xss/) - Security best practices
 
 ### Code References
 
-- [Go Implementation Example](https://sg.uberinternal.com/code.uber.internal/uber-code/go-code/-/blob/src/code.uber.internal/cadence/operations/workflow/history-db-scan/instructions.go?L22)
 - [Cadence Go Client Documentation](https://pkg.go.dev/go.uber.org/cadence)
 
 ### Community Resources
