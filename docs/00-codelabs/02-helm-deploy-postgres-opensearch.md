@@ -116,8 +116,9 @@ helm repo add cadence https://cadence-workflow.github.io/cadence-charts
 helm repo update
 ```
 
-Note: If using the remote repo, replace `./charts/cadence` with `cadence/cadence` in install commands.
-
+:::note[Note]
+If using the remote repo, replace `./charts/cadence` with `cadence/cadence` in install commands.
+:::
 ---
 
 ### Step 1: Connect to your GKE cluster and create a namespace
@@ -196,13 +197,33 @@ The values file is well-commented and describes each configuration option. Key p
 
 ### Step 3: Install Cadence with Helm
 
-#### Build chart dependencies
+#### Add required Helm repositories
 
 First, ensure you're in the `cadence-charts` directory:
 
 ```bash
 cd cadence-charts
 ```
+
+Add the Bitnami repo (for PostgreSQL and Kafka):
+
+```bash
+helm repo add bitnami https://charts.bitnami.com/bitnami
+```
+
+Add the OpenSearch repo:
+
+```bash
+helm repo add opensearch https://opensearch-project.github.io/helm-charts/
+```
+
+Update repos to fetch the latest chart versions:
+
+```bash
+helm repo update
+```
+
+#### Build chart dependencies
 
 Download the dependency charts:
 
@@ -302,7 +323,7 @@ Register a domain:
 ```bash
 kubectl exec -n cadence-postgres-os2 -it "$POD" -- \
   cadence --address cadence-release-frontend:7833 \
-  --do sample-domain domain register -rd 1
+  --do cadence-samples domain register -rd 1
 ```
 
 Verify domain creation:
