@@ -71,6 +71,7 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       items: [
         { type: 'doc', id: 'codelabs/workflow-tests-go-replayer-shadower' },
+        { type: 'doc', id: 'codelabs/helm-deploy-postgres-opensearch' },
       ],
     },
     {
