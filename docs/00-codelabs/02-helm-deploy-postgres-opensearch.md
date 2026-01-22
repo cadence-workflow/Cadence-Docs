@@ -264,27 +264,13 @@ You should see pods for:
 
 All pods should show `Running` status (or `Completed` for jobs).
 
+:::tip[Having issues?]
+If pods are stuck or crashing, see the [Troubleshooting](#troubleshooting) section below.
+:::
+
 ---
 
 ### Step 4: Access Cadence services
-
-#### Check schema jobs
-
-Verify schema jobs completed successfully:
-
-```bash
-kubectl get jobs -n cadence-postgres-os2
-```
-
-Jobs should show `COMPLETIONS` as `1/1`. If needed, check logs:
-
-```bash
-kubectl logs job/cadence-release-schema-postgresql -n cadence-postgres-os2 --tail=100
-```
-
-```bash
-kubectl logs job/cadence-release-schema-elasticsearch -n cadence-postgres-os2 --tail=100
-```
 
 #### Port-forward to Cadence services
 
@@ -384,6 +370,30 @@ Remove `--wait` and monitor manually:
 ```bash
 kubectl get pods -n cadence-postgres-os2 -w
 ```
+
+#### Schema Job Issues
+
+**Check schema job status:**
+
+```bash
+kubectl get jobs -n cadence-postgres-os2
+```
+
+Jobs should show `COMPLETIONS` as `1/1`.
+
+**View PostgreSQL schema job logs:**
+
+```bash
+kubectl logs job/cadence-release-schema-postgresql -n cadence-postgres-os2 --tail=100
+```
+
+**View OpenSearch schema job logs:**
+
+```bash
+kubectl logs job/cadence-release-schema-elasticsearch -n cadence-postgres-os2 --tail=100
+```
+
+Look for connection errors or permission issues. Schema jobs typically fail if the database or search service isn't ready yet.
 
 #### OpenSearch Issues
 
