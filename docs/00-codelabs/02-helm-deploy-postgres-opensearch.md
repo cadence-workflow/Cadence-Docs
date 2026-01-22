@@ -76,13 +76,19 @@ Set your GCP project (replace `<YOUR_GCP_PROJECT_ID>` with your actual project I
 gcloud config set project <YOUR_GCP_PROJECT_ID>
 ```
 
+:::tip[Finding your project ID]
+Run `gcloud projects list` or check the project dropdown in the [Cloud Console](https://console.cloud.google.com).
+:::
+
 Set your preferred region:
 
 ```bash
 gcloud config set compute/region us-central1
 ```
 
-Set your preferred zone:
+:::note[GKE Autopilot]
+Autopilot clusters are regional, so you only need to set the region. The zone setting below is optional and only needed for zonal resources.
+:::
 
 ```bash
 gcloud config set compute/zone us-central1-a
@@ -128,11 +134,13 @@ Get credentials for your existing GKE cluster (replace `cadence-test-gke-1` with
 gcloud container clusters get-credentials cadence-test-gke-1
 ```
 
-**Note:** If this command fails (404, not found), you may need to specify the region or zone where your cluster is located:
+:::note[Cluster not found?]
+If this command fails (404, not found), you may need to specify the region or zone where your cluster is located:
 
 ```bash
 gcloud container clusters get-credentials cadence-test-gke-1 --region us-central1
 ```
+:::
 
 Verify the connection by listing nodes:
 
@@ -213,7 +221,9 @@ helm upgrade --install cadence-release ./charts/cadence \
 
 The `--wait` flag keeps the command running until all pods are ready (typically 5-10 minutes).
 
-**Note:** GKE Autopilot warnings about "autopilot-default-resources-mutator" are normal and not errors.
+:::info
+GKE Autopilot warnings about "autopilot-default-resources-mutator" are normal and not errors.
+:::
 
 #### Verify installation
 
@@ -306,7 +316,9 @@ kubectl exec -n cadence-postgres-os2 -it "$POD" -- \
 
 ### Step 6: Cleanup (optional)
 
-**Warning:** These operations will delete all data.
+:::warning
+These operations will delete all data.
+:::
 
 **Recommended: Delete the namespace** (complete cleanup):
 
@@ -322,7 +334,9 @@ This removes all resources including PersistentVolumeClaims. Deletion may take a
 helm uninstall cadence-release -n cadence-postgres-os2
 ```
 
-**Note:** `helm uninstall` intentionally preserves PersistentVolumeClaims to prevent accidental data loss. To fully clean up after helm uninstall:
+:::note
+`helm uninstall` intentionally preserves PersistentVolumeClaims to prevent accidental data loss. To fully clean up after helm uninstall:
+:::
 
 ```bash
 kubectl delete pvc --all -n cadence-postgres-os2
