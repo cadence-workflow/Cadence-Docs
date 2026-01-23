@@ -308,15 +308,20 @@ Register a domain:
 
 ```bash
 kubectl exec -n cadence-postgres-os2 -it "$POD" -- \
-  cadence --address cadence-release-frontend:7833 \
+  cadence --address cadence-release-frontend:7833 --transport grpc \
   --do cadence-samples domain register -rd 1
 ```
+
+:::note
+The `--transport grpc` flag is required because the CLI defaults to tchannel protocol, but port 7833 is the gRPC port.
+:::
 
 Verify domain creation:
 
 ```bash
 kubectl exec -n cadence-postgres-os2 -it "$POD" -- \
-  cadence --address cadence-release-frontend:7833 domain list
+  cadence --address cadence-release-frontend:7833 --transport grpc \
+  --do cadence-samples domain describe
 ```
 
 ---
