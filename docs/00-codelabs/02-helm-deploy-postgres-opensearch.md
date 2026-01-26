@@ -1,5 +1,5 @@
 ---
-layout: default 
+layout: default
 title: Deploy Cadence with Helm on GKE (PostgreSQL + OpenSearch)
 permalink: /docs/codelabs/helm-deploy-postgres-opensearch
 
@@ -23,7 +23,7 @@ This codelab walks you through deploying Cadence on GKE using official Helm char
 
 ---
 
-### Step 0: Setup your local tools
+### Step 0: Set up your local tools
 
 This step ensures you have the necessary tools installed and configured. The examples below use macOS commands, but the official documentation links provide instructions for all platforms.
 
@@ -64,7 +64,7 @@ gcloud init
 
 Or configure manually:
 
-Login to your Google account:
+Log in to your Google account:
 
 ```bash
 gcloud auth login
@@ -116,9 +116,10 @@ helm repo add cadence https://cadence-workflow.github.io/cadence-charts
 helm repo update
 ```
 
-:::note[Note]
+:::note[Remote Helm repo]
 If using the remote repo, replace `./charts/cadence` with `cadence/cadence` in install commands.
 :::
+
 ---
 
 ### Step 1: Connect to your GKE cluster and create a namespace
@@ -326,7 +327,7 @@ kubectl exec -n cadence-postgres-os2 -it "$POD" -- \
 
 ---
 
-### Step 6: Cleanup (optional)
+### Step 6: Clean up (optional)
 
 :::warning
 These operations will delete all data.
