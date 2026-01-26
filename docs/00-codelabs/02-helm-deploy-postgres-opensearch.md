@@ -4,11 +4,15 @@ title: Deploy Cadence with Helm on GKE (PostgreSQL + OpenSearch)
 permalink: /docs/codelabs/helm-deploy-postgres-opensearch
 
 ---
-## Codelab: Deploy Cadence with Helm on GKE
+**A video companion to this Codelab is available on our YouTube channel:**
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/atlIDsDunAo?si=pYmNKKIOSUJPuSzT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+## Codelab Overview
 
 This codelab walks you through deploying Cadence on GKE using official Helm charts with PostgreSQL, Kafka, and OpenSearch for advanced visibility.
 
-**Prerequisites:**
+### Prerequisites
 - Google Cloud project with billing enabled
 - An existing GKE cluster with kubectl access
   - If you need to create a cluster, see [Creating a GKE cluster](https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-zonal-cluster)
