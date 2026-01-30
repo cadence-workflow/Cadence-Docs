@@ -221,7 +221,7 @@ Some names and types are as follows:
 | StartTime           | INT        |
 | WorkflowID          | KEYWORD    |
 | WorkflowType        | KEYWORD    |
-| Tasklist            | KEYWORD    |
+| TaskList            | KEYWORD    |
 
 
 There are some special considerations for these attributes:
