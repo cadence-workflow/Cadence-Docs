@@ -1257,8 +1257,6 @@
     "tarball_url": "https://api.github.com/repos/cadence-workflow/cadence-go-client/tarball/v0.14.1",
     "zipball_url": "https://api.github.com/repos/cadence-workflow/cadence-go-client/zipball/v0.14.1",
     "body": "## Bug Fixes\r\n- ecf10b1 Fix UpsertSearchAttributes mocking (#1027)\r\n"
-<<<<<<< HEAD
-=======
   },
   {
     "url": "https://api.github.com/repos/cadence-workflow/cadence-go-client/releases/32000400",
@@ -1341,6 +1339,5 @@
     "tarball_url": "https://api.github.com/repos/cadence-workflow/cadence-go-client/tarball/v0.13.4",
     "zipball_url": "https://api.github.com/repos/cadence-workflow/cadence-go-client/zipball/v0.13.4",
     "body": "##  Bug fixes\r\n- Fix workflow replay to ignore -fm suffix (#1014)"
->>>>>>> origin/master
   }
 ]
