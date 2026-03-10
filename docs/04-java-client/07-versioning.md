@@ -136,10 +136,15 @@ These options enable a safe deployment pattern for gradually rolling out new cod
 
 **Step 1: Deploy code that supports both versions.**
 
-Deploy :workflow: code that handles both the old and new code paths using `getVersion` with `executeWithMinVersion()`. This ensures all new :workflow: executions default to the old code path (`minSupported`), even though the new code is present.
+Deploy :workflow: code that handles both the old and new code paths using `getVersion` with dynamic `GetVersionOptions`. The options are controlled by a configuration or feature flag (e.g., `shouldEnableNewFeature()`), defaulting to `executeWithMinVersion()` so all new :workflow: executions use the old code path.
 
 ```java
-int version = Workflow.getVersionWithMinVersion("newFeature", 0, 1);
+// Controlled by operator configuration / feature flag
+GetVersionOptions options = shouldEnableNewFeature()
+    ? GetVersionOptions.executeWithVersion(1)
+    : GetVersionOptions.executeWithMinVersion();
+
+int version = Workflow.getVersion("newFeature", 0, 1, options);
 if (version == 0) {
     // Old code path (all new workflows go here by default)
     activities.oldProcess();
@@ -151,16 +156,7 @@ if (version == 0) {
 
 **Step 2: Selectively activate the new version.**
 
-Without deploying new code, use `executeWithVersion` to activate the new code path for specific :workflow:workflows: or gradually increase the rollout percentage. Operators can control this via configuration or feature flags that set the options at runtime.
-
-```java
-// Controlled by operator configuration — no code deploy needed
-GetVersionOptions options = shouldEnableNewFeature()
-    ? GetVersionOptions.executeWithVersion(1)
-    : GetVersionOptions.executeWithMinVersion();
-
-int version = Workflow.getVersion("newFeature", 0, 1, options);
-```
+Without deploying new code, flip the feature flag (e.g., `shouldEnableNewFeature()`) to return `true` for specific :workflow:workflows: or gradually increase the rollout percentage. Since the dynamic options infrastructure was already deployed in Step 1, this runtime configuration change causes `shouldEnableNewFeature()` to return `true`, selecting `executeWithVersion(1)` and activating the new code path immediately.
 
 **Step 3: Retire the old code.**
 
