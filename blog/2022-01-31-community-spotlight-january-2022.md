@@ -44,4 +44,4 @@ Below are a selection of Cadence related articles, blogs and whitepapers. Please
 
 - [Webinar : What is Cadence? And is it right for you?](https://info.instaclustr.com/webinar-emea-what-is-cadence.html?_ga=2.191041518.510582234.1643223308-2138855655.1638190316)
 
-If you have any news or topics you'd like us to include in our next update then please join our [slack](http://t.uber.com/cadence-slack)#community channel.
+If you have any news or topics you'd like us to include in our next update then please join our [slack](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ)#community channel.

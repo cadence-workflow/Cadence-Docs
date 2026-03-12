@@ -7,7 +7,7 @@ tags:
   - announcement
 ---
 
-We released a user survey earlier this year to learn about who our users are, how they use Cadence, and how we can help them. It was shared from our [Slack workspace](https://uber-cadence.slack.com/), [cadenceworkflow.io](https://cadenceworkflow.io) Blog and [LinkedIn](https://www.linkedin.com/company/cadenceworkflow/). After collecting the feedback, we wanted to share the results with our community. Thank you everyone for filling it out! Your feedback is invaluable and it helps us shape our roadmap for the future.
+We released a user survey earlier this year to learn about who our users are, how they use Cadence, and how we can help them. It was shared from our [Slack workspace](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ), [cadenceworkflow.io](https://cadenceworkflow.io) Blog and [LinkedIn](https://www.linkedin.com/company/cadenceworkflow/). After collecting the feedback, we wanted to share the results with our community. Thank you everyone for filling it out! Your feedback is invaluable and it helps us shape our roadmap for the future.
 
 
 Here are some highlights in text and you can check out the visuals to get more details:
@@ -32,7 +32,7 @@ Most survey responders were from Europe compared to any other place. This is in-
 
 ![channels.png](./2023-survey-results/channels.png)
 
-Cadence is followed in [Slack](https://uber-cadence.slack.com/) the most, then [Github](https://github.com/cadence-workflow/cadence) and [LinkedIn](https://www.linkedin.com/company/cadenceworkflow/). We are the most active in Slack and we plan to be more active in other mediums as well.
+Cadence is followed in [Slack](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ) the most, then [Github](https://github.com/cadence-workflow/cadence) and [LinkedIn](https://www.linkedin.com/company/cadenceworkflow/). We are the most active in Slack and we plan to be more active in other mediums as well.
 
 ![scenarios.png](./2023-survey-results/scenarios.png)
 All of our main use cases were used across the board. While we mentioned the most common cases, several others were mentioned as a comment: enhanced timers, leader election etc.

@@ -24,7 +24,7 @@ Thanks very much to everyone that worked on this!
 
 ## Community Supporting the Community
 
-During February 16 questions were posted in the Cadence #support [Slack](http://t.uber.com/cadence-slack) channel from new Cadence users and existing community members looking for help and guidance. A very big thank you to the following community members who took the time to help others:  Ali, David, Tamas Weisz, Liang Mei, Quanzheng Long, peaceChoi, Emrah Seker, Ben Slater and Sathyaraju Sekaran.
+During February 16 questions were posted in the Cadence #support [Slack](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ) channel from new Cadence users and existing community members looking for help and guidance. A very big thank you to the following community members who took the time to help others:  Ali, David, Tamas Weisz, Liang Mei, Quanzheng Long, peaceChoi, Emrah Seker, Ben Slater and Sathyaraju Sekaran.
 
 It’s great to see that we are supporting each other - and that is exactly what communities do!
 
@@ -60,6 +60,6 @@ Below are a selection of Cadence related articles, blogs and whitepapers. Please
 
 - [Webinar : What is Cadence? And is it right for you? (APAC)](https://info.instaclustr.com/webinar-apac-what-is-cadence.html)
 
-If you have any news or topics you'd like us to include in our next update then please join our [Slack](http://t.uber.com/cadence-slack)#community channel.
+If you have any news or topics you'd like us to include in our next update then please join our [Slack](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ)#community channel.
 
-Please remember that this update is for you - so if you have any comments or feedback that could help us improve it then please share it with us in the #community [Slack](http://t.uber.com/cadence-slack) channel.
+Please remember that this update is for you - so if you have any comments or feedback that could help us improve it then please share it with us in the #community [Slack](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ) channel.

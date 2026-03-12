@@ -52,7 +52,7 @@ Check out this recent webinar, "Building with Cadence: Quantifiable Efficiency,"
 \
 That’s all for this month!
 
-Your engagement and contributions are what make the Cadence community thrive. Whether you have innovative ideas, insightful feedback, or just want to chat about Cadence, we encourage you to join our [Slack #community channel](http://t.uber.com/cadence-slack).
+Your engagement and contributions are what make the Cadence community thrive. Whether you have innovative ideas, insightful feedback, or just want to chat about Cadence, we encourage you to join our [Slack #community channel](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ).
 
 We're committed to making this update as useful and informative as possible, so please share any feedback or suggestions you might have. Let’s keep building a vibrant and collaborative Cadence community together!
 

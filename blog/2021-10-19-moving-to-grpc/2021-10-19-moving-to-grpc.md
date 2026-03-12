@@ -52,6 +52,6 @@ In order to start using gRPC please upgrade Cadence server to **[v0.22.0](https:
 * With internal tooling updated, we are starting to onboard services to use the Go SDK gRPC compatibility layer.
 
 ---
-Do not hesitate to reach out to us ([cadence-oss@googlegroups.com](mailto:cadence-oss@googlegroups.com) or [slack](http://t.uber.com/cadence-slack)) if you have any questions.
+Do not hesitate to reach out to us ([cadence-oss@googlegroups.com](mailto:cadence-oss@googlegroups.com) or [slack](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ)) if you have any questions.
 
 The Uber Cadence team

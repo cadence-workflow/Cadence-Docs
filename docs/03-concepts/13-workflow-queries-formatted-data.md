@@ -354,5 +354,5 @@ func TestFormattedQueryResponse(t *testing.T) {
 
 ### Community Resources
 
-- [Cadence Community Slack](https://join.slack.com/t/cadenceworkflow/shared_invite/enQtNDczNTgxMjYyNzlmLTJmZDlkMjNhZjRmNjhkYjdlN2I0NGQ0YzgwZGUxM2JmNWFlZTI0OTM0NDgzZTZjNTk4YWYyOGQ3YjgzNzUwNjQ)
+- [Cadence Community Slack](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ)
 - [GitHub Discussions](https://github.com/cadence-workflow/cadence/discussions)
