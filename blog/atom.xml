@@ -305,7 +305,7 @@ A very common case for some domains is to have separate documentation for their 
 </ul>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="try-it-today">Try It Today!<a href="https://cadenceworkflow.io/blog/2025/09/25/introducing-batch-future-faster-activity-execution#try-it-today" class="hash-link" aria-label="Direct link to Try It Today!" title="Direct link to Try It Today!" translate="no">​</a></h2>
 <p>Batch Future is available now in the latest Cadence Go client. We can't wait to see how you use it to optimize your workflows!</p>
-<p>Have questions or feedback? Join our <a href="http://t.uber.com/cadence-slack" target="_blank" rel="noopener noreferrer">Slack community</a> or open an issue on <a href="https://github.com/cadence-workflow/cadence-go-client" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
+<p>Have questions or feedback? Join our <a href="https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ" target="_blank" rel="noopener noreferrer">Slack community</a> or open an issue on <a href="https://github.com/cadence-workflow/cadence-go-client" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
 <p>Happy coding, and here's to faster, more efficient workflows!</p>]]></content>
         <author>
             <name>Kevin Burns</name>
@@ -607,7 +607,7 @@ During rollouts, the service should continue to serve production traffic, allowi
 <li><strong>Extended Domain Information:</strong> We will be adding more information to the Domain page to help you work with your domains and quickly identify any issues affecting them.</li>
 <li><strong>Workflow Diagnostics UI:</strong> Integrating with the new Workflow Diagnostics API to provide detailed insights into failed workflows.</li>
 </ul>
-<p>We invite you to explore cadence-web v4.0.0 and share your feedback with us. Please feel free to share your feedback with the new Cadence UI in our <a href="http://t.uber.com/cadence-slack" target="_blank" rel="noopener noreferrer">Slack workspace</a>! Your input is invaluable as we continue to evolve this platform.</p>
+<p>We invite you to explore cadence-web v4.0.0 and share your feedback with us. Please feel free to share your feedback with the new Cadence UI in our <a href="https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ" target="_blank" rel="noopener noreferrer">Slack workspace</a>! Your input is invaluable as we continue to evolve this platform.</p>
 <p>Happy coding, and thank you for being a part of the Cadence journey!</p>]]></content>
         <author>
             <name>Adhitya Mamallan</name>
@@ -913,7 +913,7 @@ Rate limiting users of a healthy domain because of requests from a completely di
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="team">Team<a href="https://cadenceworkflow.io/blog/2024/07/11/2024-07-11-yearly-roadmap-update/yearly-roadmap-update#team" class="hash-link" aria-label="Direct link to Team" title="Direct link to Team" translate="no">​</a></h3>
 <p>Today the Cadence team comprises 26 people. We have people working from Uber’s US offices (Seattle, San Francisco and Sunnyvale) as well as Europe offices (Aarhus-DK and Amsterdam-NL).</p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="community">Community<a href="https://cadenceworkflow.io/blog/2024/07/11/2024-07-11-yearly-roadmap-update/yearly-roadmap-update#community" class="hash-link" aria-label="Direct link to Community" title="Direct link to Community" translate="no">​</a></h3>
-<p>Cadence is an actively built open source project. We invest in both our internal and open source community (<a href="http://t.uber.com/cadence-slack" target="_blank" rel="noopener noreferrer">Slack</a>, <a href="https://github.com/cadence-workflow/cadence/issues" target="_blank" rel="noopener noreferrer">Github</a>), responding to new features and enhancements.</p>
+<p>Cadence is an actively built open source project. We invest in both our internal and open source community (<a href="https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ" target="_blank" rel="noopener noreferrer">Slack</a>, <a href="https://github.com/cadence-workflow/cadence/issues" target="_blank" rel="noopener noreferrer">Github</a>), responding to new features and enhancements.</p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="scale">Scale<a href="https://cadenceworkflow.io/blog/2024/07/11/2024-07-11-yearly-roadmap-update/yearly-roadmap-update#scale" class="hash-link" aria-label="Direct link to Scale" title="Direct link to Scale" translate="no">​</a></h3>
 <p>It’s one of the most popular platforms at Uber executing ~100K workflow updates per second. There are about 30 different Cadence clusters, several of which serve hundreds of domains. There are ~1000 domains (use cases) varying from tier 0 (most critical) to tier 5 scenarios.</p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="managed-solutions">Managed Solutions<a href="https://cadenceworkflow.io/blog/2024/07/11/2024-07-11-yearly-roadmap-update/yearly-roadmap-update#managed-solutions" class="hash-link" aria-label="Direct link to Managed Solutions" title="Direct link to Managed Solutions" translate="no">​</a></h3>
@@ -989,7 +989,7 @@ Rate limiting users of a healthy domain because of requests from a completely di
 <p>In the next year, we plan to finish our seamless client based migration to be able to safely migrate domains from one cluster to another, one technology (even if it’s not Cadence) to another and one cloud solution to another. There are only a few features left to achieve this.</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="community-1">Community<a href="https://cadenceworkflow.io/blog/2024/07/11/2024-07-11-yearly-roadmap-update/yearly-roadmap-update#community-1" class="hash-link" aria-label="Direct link to Community" title="Direct link to Community" translate="no">​</a></h2>
 <p>Do you want to hear more about Cadence? Do you need help with your set-up or usage? Are you evaluating your options? Do you want to contribute? Feel free to join our community and reach out to us.</p>
-<p>Slack: <a href="https://uber-cadence.slack.com/" target="_blank" rel="noopener noreferrer">https://uber-cadence.slack.com/</a></p>
+<p>Slack: <a href="https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ" target="_blank" rel="noopener noreferrer">https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ</a></p>
 <p>Github: <a href="https://github.com/cadence-workflow/cadence" target="_blank" rel="noopener noreferrer">https://github.com/cadence-workflow/cadence</a></p>
 <p>Since last year, we have been contacted by various companies to take on bigger projects on the Cadence project. As we have been investing in code coverage and refactoring Cadence for a cleaner codebase, this will be a lot easier now. Let us know if you have project ideas to contribute or if you’d like to pick something we already planned.</p>
 <p>Our monthly community meetings are still ongoing, too. That is the best place to get heard and be involved in our decision-making process. Let us know so we can send you an invite. We are also working on a broader governing model to open up this project to more people. Stay tuned for updates on this topic!</p>]]></content>
@@ -1105,7 +1105,7 @@ trigger non-deterministic errors.</p>
 <p>Note that the old samples will be removed once the new samples are fully refreshed.</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="cadence-retrospective">Cadence Retrospective<a href="https://cadenceworkflow.io/blog/2023/11/30/community-spotlight-update-november-2023#cadence-retrospective" class="hash-link" aria-label="Direct link to Cadence Retrospective" title="Direct link to Cadence Retrospective" translate="no">​</a></h2>
 <p>We are nearly at the end of another year and yes it has gone so fast! Over this year Cadence and the community have evolved and grown. This is a good time to reflect about all the things that have happened in the project over the year and think about a possible roadmap for the future.</p>
-<p>If you have any feedback, or comments about the project or ideas about what features you'd like to see in the roadmap then please feel free to begin a discussion in the #community <a href="http://t.uber.com/cadence-slack" target="_blank" rel="noopener noreferrer">Slack</a>  channel.</p>
+<p>If you have any feedback, or comments about the project or ideas about what features you'd like to see in the roadmap then please feel free to begin a discussion in the #community <a href="https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ" target="_blank" rel="noopener noreferrer">Slack</a>  channel.</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="cadence-in-the-news">Cadence in the News!<a href="https://cadenceworkflow.io/blog/2023/11/30/community-spotlight-update-november-2023#cadence-in-the-news" class="hash-link" aria-label="Direct link to Cadence in the News!" title="Direct link to Cadence in the News!" translate="no">​</a></h2>
 <p>Below are a selection of Cadence related articles, blogs and whitepapers.
 Please take a look and feel free to share via your own social media channels.</p>
@@ -1127,8 +1127,8 @@ Please take a look and feel free to share via your own social media channels.</p
 <ul>
 <li><a href="https://netapp.zoom.us/webinar/register/WN_jT5fxSldRhuzV0NSllBd7g#/registration" target="_blank" rel="noopener noreferrer">On Demand Webinar: Building With Cadence<!-- -->:Quantifiable<!-- --> Efficiency</a></li>
 </ul>
-<p>If you have any news or topics you'd like us to include in our next update then please join our <a href="http://t.uber.com/cadence-slack" target="_blank" rel="noopener noreferrer">Slack</a> #community channel.</p>
-<p>Please remember that this update is for you - so if you have any comments or feedback that could help us improve it then please share it with us in the #community <a href="http://t.uber.com/cadence-slack" target="_blank" rel="noopener noreferrer">Slack</a> channel.</p>]]></content>
+<p>If you have any news or topics you'd like us to include in our next update then please join our <a href="https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ" target="_blank" rel="noopener noreferrer">Slack</a> #community channel.</p>
+<p>Please remember that this update is for you - so if you have any comments or feedback that could help us improve it then please share it with us in the #community <a href="https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ" target="_blank" rel="noopener noreferrer">Slack</a> channel.</p>]]></content>
         <author>
             <name>Sharan Foga</name>
             <uri>https://www.linkedin.com/in/sfoga/</uri>
@@ -1174,7 +1174,7 @@ Please take a look and feel free to share via your own social media channels.</p
 <p>Last month we mentioned the Cadence Helm charts and all the previous work that had been done by <a href="https://www.linkedin.com/in/sagikazarmark/" target="_blank" rel="noopener noreferrer">Mark Sagi-Kazar</a>. We were looking to ensure they are maintained.</p>
 <p>So a special thanks goes out this month to <a href="https://github.com/edmondop" target="_blank" rel="noopener noreferrer">Edmondo</a> for contributing some work on the <a href="https://github.com/edmondop/cadence-helm-chart/" target="_blank" rel="noopener noreferrer">Cadence Helm Chart</a>.</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="community-support">Community Support!<a href="https://cadenceworkflow.io/blog/2023/08/31/community-spotlight-august-2023#community-support" class="hash-link" aria-label="Direct link to Community Support!" title="Direct link to Community Support!" translate="no">​</a></h2>
-<p>Our <a href="http://t.uber.com/cadence-slack" target="_blank" rel="noopener noreferrer">Slack</a> channel continues to be the main place where people are asking for help and support with Cadence. During August (which is supposed to be holiday season), we still had 9 questions raised around various topics.</p>
+<p>Our <a href="https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ" target="_blank" rel="noopener noreferrer">Slack</a> channel continues to be the main place where people are asking for help and support with Cadence. During August (which is supposed to be holiday season), we still had 9 questions raised around various topics.</p>
 <p>Huge thanks to the following community members who took time to respond and help others: David, Edmondo, Chris Qin, Rony Rahman and Ben Slater.</p>
 <p>It's good to see that we are continuing to support each other - doing exactly what communities do!</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="cadence-in-the-news">Cadence in the News!<a href="https://cadenceworkflow.io/blog/2023/08/31/community-spotlight-august-2023#cadence-in-the-news" class="hash-link" aria-label="Direct link to Cadence in the News!" title="Direct link to Cadence in the News!" translate="no">​</a></h2>
@@ -1203,8 +1203,8 @@ Please take a look and feel free to share via your own social media channels.</p
 <p><a href="https://www.instaclustr.com/events/spinning-your-drones-with-cadence-and-apache-kafka/" target="_blank" rel="noopener noreferrer">On Demand Webinar: Spinning Your Drones with Cadence and Apache Kafka</a></p>
 </li>
 </ul>
-<p>If you have any news or topics you'd like us to include in our next update then please join our <a href="http://t.uber.com/cadence-slack" target="_blank" rel="noopener noreferrer">Slack</a> #community channel.</p>
-<p>Please remember that this update is for you - so if you have any comments or feedback that could help us improve it then please share it with us in the #community <a href="http://t.uber.com/cadence-slack" target="_blank" rel="noopener noreferrer">Slack</a> channel.</p>]]></content>
+<p>If you have any news or topics you'd like us to include in our next update then please join our <a href="https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ" target="_blank" rel="noopener noreferrer">Slack</a> #community channel.</p>
+<p>Please remember that this update is for you - so if you have any comments or feedback that could help us improve it then please share it with us in the #community <a href="https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ" target="_blank" rel="noopener noreferrer">Slack</a> channel.</p>]]></content>
         <author>
             <name>Sharan Foga</name>
             <uri>https://www.linkedin.com/in/sfoga/</uri>
@@ -1252,7 +1252,7 @@ Workflow Replayer works well when verifying the compatibility against a small nu
 <p>This month saw the release of <a href="https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.0.0" target="_blank" rel="noopener noreferrer">v1.0 of the Cadence Go Client</a>. Note that the work done on this release was as a result of community feedback asking for it - so we are listening and responding to community needs.</p>
 <p>Thanks very much to everyone who worked hard to get this release out!</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="cadence-release-strategy">Cadence Release Strategy<a href="https://cadenceworkflow.io/blog/2023/07/31/community-spotlight-july-2023#cadence-release-strategy" class="hash-link" aria-label="Direct link to Cadence Release Strategy" title="Direct link to Cadence Release Strategy" translate="no">​</a></h2>
-<p>A recent discussion on the Cadence Release strategy was posted in <a href="https://github.com/cadence-workflow/cadence/discussions/5362" target="_blank" rel="noopener noreferrer">Cadence Github Discussions</a> (and also our #general channel on our <a href="http://t.uber.com/cadence-slack" target="_blank" rel="noopener noreferrer">Slack</a> about the approach we'd like to take for future releases. As a community we want to ensure code stability and to not burden people with having to upgrade frequently.</p>
+<p>A recent discussion on the Cadence Release strategy was posted in <a href="https://github.com/cadence-workflow/cadence/discussions/5362" target="_blank" rel="noopener noreferrer">Cadence Github Discussions</a> (and also our #general channel on our <a href="https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ" target="_blank" rel="noopener noreferrer">Slack</a> about the approach we'd like to take for future releases. As a community we want to ensure code stability and to not burden people with having to upgrade frequently.</p>
 <p>Based on feedback from the community we will be introducing quarterly release cycles but also give people the ability to make use of patches and minor releases. We will be communicating the intention to make a release at least a month beforehand so that the community has time to finalise any features they want to be included in the upcoming release.</p>
 <p>For those of you wanting to keep up to date or try out new features in between releases, the core team at Uber will continue to make patch and minor version updates available to the community.</p>
 <p>As always we welcome your feedback so please feel free to add your thoughts and comments to the discussion.</p>
@@ -1264,8 +1264,8 @@ Workflow Replayer works well when verifying the compatibility against a small nu
 <ul>
 <li>None</li>
 </ul>
-<p>If you have any news or topics you'd like us to include in our next update then please join our <a href="http://t.uber.com/cadence-slack" target="_blank" rel="noopener noreferrer">Slack</a> #community channel.</p>
-<p>Please remember that this update is for you - so if you have any comments or feedback that could help us improve it then please share it with us in the #community <a href="http://t.uber.com/cadence-slack" target="_blank" rel="noopener noreferrer">Slack</a> channel.</p>]]></content>
+<p>If you have any news or topics you'd like us to include in our next update then please join our <a href="https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ" target="_blank" rel="noopener noreferrer">Slack</a> #community channel.</p>
+<p>Please remember that this update is for you - so if you have any comments or feedback that could help us improve it then please share it with us in the #community <a href="https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ" target="_blank" rel="noopener noreferrer">Slack</a> channel.</p>]]></content>
         <author>
             <name>Sharan Foga</name>
             <uri>https://www.linkedin.com/in/sfoga/</uri>
