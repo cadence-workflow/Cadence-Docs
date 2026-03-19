@@ -231,6 +231,6 @@ Before deploying, use [Workflow Shadowing](https://cadenceworkflow.io/docs/go-cl
 
 Batch Future is available now in the latest Cadence Go client. We can't wait to see how you use it to optimize your workflows!
 
-Have questions or feedback? Join our [Slack community](http://t.uber.com/cadence-slack) or open an issue on [GitHub](https://github.com/cadence-workflow/cadence-go-client).
+Have questions or feedback? Join our [Slack community](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ) or open an issue on [GitHub](https://github.com/cadence-workflow/cadence-go-client).
 
 Happy coding, and here's to faster, more efficient workflows! 

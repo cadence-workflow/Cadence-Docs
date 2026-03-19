@@ -49,7 +49,7 @@ So a special thanks goes out this month to [Edmondo](https://github.com/edmondop
 
 ## Community Support! ##
 
-Our [Slack](http://t.uber.com/cadence-slack) channel continues to be the main place where people are asking for help and support with Cadence. During August (which is supposed to be holiday season), we still had 9 questions raised around various topics.
+Our [Slack](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ) channel continues to be the main place where people are asking for help and support with Cadence. During August (which is supposed to be holiday season), we still had 9 questions raised around various topics.
 
 Huge thanks to the following community members who took time to respond and help others: David, Edmondo, Chris Qin, Rony Rahman and Ben Slater.
 
@@ -75,6 +75,6 @@ Please take a look and feel free to share via your own social media channels.
 
 - [On Demand Webinar: Spinning Your Drones with Cadence and Apache Kafka](https://www.instaclustr.com/events/spinning-your-drones-with-cadence-and-apache-kafka/)
 
-If you have any news or topics you'd like us to include in our next update then please join our [Slack](http://t.uber.com/cadence-slack) #community channel.
+If you have any news or topics you'd like us to include in our next update then please join our [Slack](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ) #community channel.
 
-Please remember that this update is for you - so if you have any comments or feedback that could help us improve it then please share it with us in the #community [Slack](http://t.uber.com/cadence-slack) channel.
+Please remember that this update is for you - so if you have any comments or feedback that could help us improve it then please share it with us in the #community [Slack](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ) channel.

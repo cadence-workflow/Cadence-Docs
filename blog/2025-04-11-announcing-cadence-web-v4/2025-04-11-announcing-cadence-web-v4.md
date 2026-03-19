@@ -67,6 +67,6 @@ Now that we have a robust and modernized Cadence UI, our long-term plan is to en
 * **Extended Domain Information:** We will be adding more information to the Domain page to help you work with your domains and quickly identify any issues affecting them.  
 * **Workflow Diagnostics UI:** Integrating with the new Workflow Diagnostics API to provide detailed insights into failed workflows.
 
-We invite you to explore cadence-web v4.0.0 and share your feedback with us. Please feel free to share your feedback with the new Cadence UI in our [Slack workspace](http://t.uber.com/cadence-slack)\! Your input is invaluable as we continue to evolve this platform.
+We invite you to explore cadence-web v4.0.0 and share your feedback with us. Please feel free to share your feedback with the new Cadence UI in our [Slack workspace](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ)\! Your input is invaluable as we continue to evolve this platform.
 
 Happy coding, and thank you for being a part of the Cadence journey\!

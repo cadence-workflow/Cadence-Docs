@@ -55,7 +55,7 @@ Note that the old samples will be removed once the new samples are fully refresh
 
 We are nearly at the end of another year and yes it has gone so fast! Over this year Cadence and the community have evolved and grown. This is a good time to reflect about all the things that have happened in the project over the year and think about a possible roadmap for the future.
 
-If you have any feedback, or comments about the project or ideas about what features you'd like to see in the roadmap then please feel free to begin a discussion in the #community [Slack](http://t.uber.com/cadence-slack)  channel.
+If you have any feedback, or comments about the project or ideas about what features you'd like to see in the roadmap then please feel free to begin a discussion in the #community [Slack](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ)  channel.
 
 ## Cadence in the News!
 
@@ -74,6 +74,6 @@ Please take a look and feel free to share via your own social media channels.
 
 - [On Demand Webinar: Building With Cadence:Quantifiable Efficiency](https://netapp.zoom.us/webinar/register/WN_jT5fxSldRhuzV0NSllBd7g#/registration)
 
-If you have any news or topics you'd like us to include in our next update then please join our [Slack](http://t.uber.com/cadence-slack) #community channel.
+If you have any news or topics you'd like us to include in our next update then please join our [Slack](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ) #community channel.
 
-Please remember that this update is for you - so if you have any comments or feedback that could help us improve it then please share it with us in the #community [Slack](http://t.uber.com/cadence-slack) channel.
+Please remember that this update is for you - so if you have any comments or feedback that could help us improve it then please share it with us in the #community [Slack](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ) channel.

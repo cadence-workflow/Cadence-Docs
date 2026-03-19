@@ -19,7 +19,7 @@ The talk is scheduled for 16th November so please make a note in your calendars.
 
 # Sharing Knowledge
 
-Over the last few months we have had a continual stream of Cadence questions in our [Slack](http://t.uber.com/cadence-slack) #support channel or on [StackOverflow](https://stackoverflow.com/questions/tagged/cadence-workflow). As a result of the increased interest some members from the Cadence core team have decided to spend some time each day responding to your questions.
+Over the last few months we have had a continual stream of Cadence questions in our [Slack](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ) #support channel or on [StackOverflow](https://stackoverflow.com/questions/tagged/cadence-workflow). As a result of the increased interest some members from the Cadence core team have decided to spend some time each day responding to your questions.
 
 Remember that if you have received a response that has solved your problem especially on StackOverflow then please don't forget to accept answer!
 
@@ -47,6 +47,6 @@ Below are a selection of Cadence related articles, blogs and whitepapers. Please
 - [Cadence Technical Office Hours - 31st October 2022 @ 9am PT](https://calendar.google.com/calendar/u/0/embed?src=e6r40gp3c2r01054id7e99dlac@group.calendar.google.com&ctz=America/Los_Angeles)
 
 
-If you have any news or topics you'd like us to include in our next update then please join our [Slack](http://t.uber.com/cadence-slack)#community channel.
+If you have any news or topics you'd like us to include in our next update then please join our [Slack](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ)#community channel.
 
-Please remember that this update is for you - so if you have any comments or feedback that could help us improve it then please share it with us in the #community [Slack](http://t.uber.com/cadence-slack) channel.
+Please remember that this update is for you - so if you have any comments or feedback that could help us improve it then please share it with us in the #community [Slack](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ) channel.

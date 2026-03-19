@@ -15,7 +15,7 @@ We have been running Office Hours sessions every month since May last year. The 
 
 Thanks very much to [Ender Demirkaya](https://www.linkedin.com/in/enderdemirkaya/)and the Uber team for making themselves available for these sessions.
 
-Please remember that if you have question about Cadence or are facing a specific issue then  you can post your question in our #support [Slack](http://t.uber.com/cadence-slack) channel. If you also post the details on StackOverflow with the cadence workflow tag then there will be a searchable history for others who encounter the same issue to find a solution.
+Please remember that if you have question about Cadence or are facing a specific issue then  you can post your question in our #support [Slack](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ) channel. If you also post the details on StackOverflow with the cadence workflow tag then there will be a searchable history for others who encounter the same issue to find a solution.
 
 <!-- truncate -->
 
@@ -39,6 +39,6 @@ Below are a selection of Cadence related articles, blogs and whitepapers. Please
 
 No upcoming events at the moment.
 
-If you have any news or topics you'd like us to include in our next update then please join our [Slack](http://t.uber.com/cadence-slack)#community channel.
+If you have any news or topics you'd like us to include in our next update then please join our [Slack](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ)#community channel.
 
-Please remember that this update is for you - so if you have any comments or feedback that could help us improve it then please share it with us in the #community [Slack](http://t.uber.com/cadence-slack) channel.
+Please remember that this update is for you - so if you have any comments or feedback that could help us improve it then please share it with us in the #community [Slack](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ) channel.
