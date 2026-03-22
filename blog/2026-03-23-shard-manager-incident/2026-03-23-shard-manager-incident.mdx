@@ -13,6 +13,8 @@ import { logData } from './LogHistogram/data';
 import ArchitectureFlow from './ArchitectureFlow';
 import LogTable from './LogTable';
 import { logTableData } from './LogTable';
+import TimeSeriesChart from './TimeSeriesChart';
+import { podCountData } from './TimeSeriesChart/data';
 
 ## How the new Cadence Shard Manager Found and Mitigated a Latent Deadlock
 
@@ -69,3 +71,11 @@ Apparently resolving within 10 minutes. So what went wrong? First lets look at
 what the logs are, lets group them by message and error:
 
 <LogTable data={logTableData} />
+
+So first we get a lot of updates in the system, so many that the instances cannot keep
+up, then we start getting errors saying there is no active executors (matching
+instances). Lets check the deployment system and see if there was instances.
+
+Number of instances according to the deployment system:
+
+<TimeSeriesChart series={podCountData} yLabel="instances" yMin0 />
