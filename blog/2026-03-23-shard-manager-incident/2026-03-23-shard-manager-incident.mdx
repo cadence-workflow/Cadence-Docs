@@ -79,3 +79,19 @@ instances). Lets check the deployment system and see if there was instances.
 Number of instances according to the deployment system:
 
 <TimeSeriesChart series={podCountData} yLabel="instances" yMin0 />
+
+So there were instances! Interestingly right when the errors started happening
+the number of instances dropped from 3 to 2. And when the errors stopped happening
+the number of instances went back up to 3.
+
+So it's strange, did the instance removal trigger something in the Shard
+Manager?
+
+<h3>A red herring <img src="/img/red-herring.svg" alt="red herring" style={{height: '1.2em', verticalAlign: 'middle'}} /> - leader election</h3>
+
+
+ Shard Manager elects a leader, and that leader is responsible for
+detecting stale instances and removing them, and reassigning the shards.
+
+Was the leader working? Lets check the leadership election logs of the Shard
+Manager:
