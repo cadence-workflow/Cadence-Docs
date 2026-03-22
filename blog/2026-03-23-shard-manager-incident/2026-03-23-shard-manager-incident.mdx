@@ -11,14 +11,61 @@ tags:
 import LogHistogram from '@site/src/components/LogHistogram';
 import { logData } from '@site/src/components/LogHistogram/data';
 import ArchitectureFlow from '@site/src/components/ArchitectureFlow';
+import LogTable from '@site/src/components/LogTable';
+import { logTableData } from '@site/src/components/LogTable';
 
 ## How the new Cadence Shard Manager Found and Mitigated a Latent Deadlock
 
-The shard manager architecture looks like this:
+Over the past year the Cadence team has been working on a new Shard Manager
+service. This service will replace the existing hash ring based routing
+mechanism with a centralized component. To understand the problem we solved,
+first we need to understand the new architecture.
+
+### Shard Manager Architecture
+
+Cadence has two sharded services,
+Matching and History. We will here focus on the Matching service.
+
+In the matching service the shards are the Cadence task lists. A single Cadence
+task list is owned by a single Matching instance, and all requests to that
+particular task list are routed to the owning instance.
+
+The new architecture with the Shard Manager has several benefits:
+
+1. It's easier to reason about which instance of Cadence Matching owns a
+   task list.
+2. Observability of the system is easier. With the HashRing based routing the
+state of the system is spread across all instances of all the Cadence services.
+Meaning even subtle issues are very hard to debug and reason about.
+3. A centralized component makes it possible to manage shards intelligently. For
+example, we can now move shards between instances to balance the load. We can
+isolate bad shards, and we can drain bad hosts.
+
+The shard manager architecture looks like this.
 
 <ArchitectureFlow />
 
+The matching instances heartbeat to the shard manager, the shard manager keeps
+track of the live instances. It assigns the shards to the instances, and in the
+heartbeat responses it sends the shards currently assigned to the instance.
+On every change to the shard assignments it pushes the new assignments to the
+frontend services, so the services have a full routing map. When the frontend
+service then receives a request it can route it to the instance owning the task
+list.
 
-On Thursday morning we woke up to this:
+### The Incident
+
+We have been rolling out the new Shard Manager service to our environments for a
+few weeks, we have currently rolled out to our customer facing staging
+environments, and will roll out to production in the next few weeks.
+
+On Thursday morning we woke up to this histogram of log messages in the Shard
+Manager service:
 
 <LogHistogram data={logData} />
+
+Two spikes of thousands of error and warn messages in a very short time frame.
+Apparently resolving within 10 minutes. So what went wrong? First lets look at
+what the logs are, lets group them by message and error:
+
+<LogTable data={logTableData} />
