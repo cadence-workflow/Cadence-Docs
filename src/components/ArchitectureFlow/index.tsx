@@ -10,19 +10,19 @@ const STEP_LABELS: Record<number, string> = {
 
 // Layout constants
 const W = 720;
-const H = 370;
+const H = 340;
 
 // Box positions
-const SM = { x: 480, y: 20, w: 200, h: 50 };
-const FE = { x: 40, y: 130, w: 180, h: 50 };
-const M1 = { x: 40, y: 280, w: 180, h: 70 };
-const M2 = { x: 270, y: 280, w: 180, h: 70 };
-const M3 = { x: 500, y: 280, w: 180, h: 70 };
+const SM = { x: 480, y: 50, w: 200, h: 50 };
+const FE = { x: 40, y: 10, w: 200, h: 110 };
+const M1 = { x: 40, y: 250, w: 180, h: 70 };
+const M2 = { x: 270, y: 250, w: 180, h: 70 };
+const M3 = { x: 500, y: 250, w: 180, h: 70 };
 
 // Connection endpoints
-const smOut = { x: SM.x, y: SM.y + SM.h / 2 };
+const smLeft = { x: SM.x, y: SM.y + SM.h / 2 };
 const smBot = { x: SM.x + SM.w / 2, y: SM.y + SM.h };
-const feTop = { x: FE.x + FE.w / 2, y: FE.y };
+const feRight = { x: FE.x + FE.w, y: FE.y + 18 };
 const feBot = { x: FE.x + FE.w / 2, y: FE.y + FE.h };
 const feLeft = { x: FE.x, y: FE.y + FE.h / 2 };
 const m1Top = { x: M1.x + M1.w / 2, y: M1.y };
@@ -135,6 +135,97 @@ function TaskListBoxes({
         );
       })}
     </>
+  );
+}
+
+const ROUTING_ENTRIES = [
+  { tl: "TL1,2", inst: "M1" },
+  { tl: "TL3,4", inst: "M2" },
+  { tl: "TL5,6", inst: "M3" },
+];
+
+function RoutingMap({ visible }: { visible: boolean }) {
+  const x = FE.x + 10;
+  const y = FE.y + 30;
+  const rowH = 18;
+  const colW = 80;
+
+  if (!visible) {
+    return (
+      <text
+        x={FE.x + FE.w / 2}
+        y={FE.y + 70}
+        textAnchor="middle"
+        dominantBaseline="middle"
+        fontSize={11}
+        fontFamily="system-ui, sans-serif"
+        fontStyle="italic"
+        fill="#94a3b8"
+      >
+        routing map empty
+      </text>
+    );
+  }
+
+  return (
+    <g>
+      {/* Header */}
+      <text
+        x={x + 4}
+        y={y + 12}
+        fontSize={10}
+        fontFamily="system-ui, sans-serif"
+        fontWeight={700}
+        fill="#64748b"
+      >
+        TaskList
+      </text>
+      <text
+        x={x + colW + 4}
+        y={y + 12}
+        fontSize={10}
+        fontFamily="system-ui, sans-serif"
+        fontWeight={700}
+        fill="#64748b"
+      >
+        Owner
+      </text>
+      <line
+        x1={x}
+        y1={y + 16}
+        x2={x + FE.w - 20}
+        y2={y + 16}
+        stroke="#cbd5e1"
+        strokeWidth={0.5}
+      />
+      {/* Rows */}
+      {ROUTING_ENTRIES.map((entry, i) => {
+        const ry = y + 20 + i * rowH;
+        return (
+          <g key={i}>
+            <text
+              x={x + 4}
+              y={ry + 10}
+              fontSize={10}
+              fontFamily="monospace"
+              fill="#334155"
+            >
+              {entry.tl}
+            </text>
+            <text
+              x={x + colW + 4}
+              y={ry + 10}
+              fontSize={10}
+              fontFamily="monospace"
+              fontWeight={600}
+              fill="#1d4ed8"
+            >
+              → {entry.inst}
+            </text>
+          </g>
+        );
+      })}
+    </g>
   );
 }
 
@@ -427,10 +518,10 @@ export default function ArchitectureFlow() {
       >
         {/* Connections: SM to FE */}
         <DashedLine
-          x1={smOut.x}
-          y1={smOut.y}
-          x2={feTop.x}
-          y2={feTop.y}
+          x1={smLeft.x}
+          y1={smLeft.y}
+          x2={feRight.x}
+          y2={feRight.y}
           highlight={step === 1}
         />
 
@@ -499,6 +590,7 @@ export default function ArchitectureFlow() {
           label="Frontend Service"
           highlight={step === 2}
         />
+        <RoutingMap visible={step >= 2} />
 
         {/* Matching Instances */}
         <Box
@@ -555,10 +647,10 @@ export default function ArchitectureFlow() {
         {/* Step 1: dot from SM to FE */}
         {step === 1 && (
           <AnimatedDot
-            x1={smOut.x}
-            y1={smOut.y}
-            x2={feTop.x}
-            y2={feTop.y}
+            x1={smLeft.x}
+            y1={smLeft.y}
+            x2={feRight.x}
+            y2={feRight.y}
             color="#3b82f6"
             duration={1200}
             onDone={() => handleStepDone(1)}
