@@ -99,3 +99,21 @@ Was the leader working? Lets check the leadership election logs of the Shard
 Manager:
 
 <LogTimeline data={leadershipLogs} />
+
+We see that the leader resigns then another instance becomes leader etc. However
+at 22:03 something interesting happens. `host-1` resigns as leader, but there is no new
+"Became leader" log. The next log message is `host-2` resigning as leader. Thats
+strange, how can `host-2` resign when it didn't become leader?
+
+This thread lead to a lot of investigation, which ultimately led us to the
+conclusion;
+
+The `"Became leader"` log message were simply lost at some point, there was always
+a leader.
+
+### Back to the missing executors.
+
+We now found what would turn out to be the right question; are the
+executors (matching instances) heart beating? If not the Shard Manager server is
+doing what it's supposed to do. Lets check the network metrics for the
+heartbeats.
