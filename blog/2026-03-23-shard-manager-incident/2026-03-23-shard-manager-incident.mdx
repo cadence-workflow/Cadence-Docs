@@ -15,6 +15,8 @@ import LogTable from './LogTable';
 import { logTableData } from './LogTable';
 import TimeSeriesChart from './TimeSeriesChart';
 import { podCountData } from './TimeSeriesChart/data';
+import LogTimeline from './LogTimeline';
+import { leadershipLogs } from './LogTimeline/data';
 
 ## How the new Cadence Shard Manager Found and Mitigated a Latent Deadlock
 
@@ -95,3 +97,5 @@ detecting stale instances and removing them, and reassigning the shards.
 
 Was the leader working? Lets check the leadership election logs of the Shard
 Manager:
+
+<LogTimeline data={leadershipLogs} />
