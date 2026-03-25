@@ -29,6 +29,33 @@ export const logTableData: LogEntry[] = [
   },
 ];
 
+export const matchingLogData: LogEntry[] = [
+  {
+    message: "adaptive task list scaler state changed",
+    error: "null",
+    level: "warn",
+    count: 9056,
+  },
+  {
+    message: "get task list partition config from db",
+    error: "null",
+    level: "warn",
+    count: 4564,
+  },
+  {
+    message: "Task list manager state changed",
+    error: "null",
+    level: "warn",
+    count: 4345,
+  },
+  {
+    message: "DBUnavailable Error",
+    error: "LeaseTaskList: Cannot achieve consistency level LOCAL_SERIAL",
+    level: "error",
+    count: 157,
+  },
+];
+
 export default function LogTable({ data }: { data: LogEntry[] }) {
   return (
     <div
