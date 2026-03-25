@@ -22,6 +22,11 @@ import { cpuData } from './TimeSeriesChart/cpuData';
 
 ## How the new Cadence Shard Manager Found and Mitigated a Latent Deadlock
 
+A brief database hiccup in our staging environment revealed a deadlock that had
+been hiding in the Cadence Matching service for years. Two engineers found and
+fixed it in a single day — and the new Shard Manager automatically kept the
+system running while they did. Here's how it happened.
+
 Over the past year the Cadence team has been working on a new Shard Manager
 service. This service will replace the existing hash ring based routing
 mechanism with a centralized component. To understand the problem we solved,
@@ -155,10 +160,10 @@ they should have heartbeated they emitted a log `still doing assignment,
 skipping heartbeat`.
 
 When an executor heartbeats the Shard Manager responds with a new assignment of
-shards. The executor then stops the shards it does not own any longer, and
-starts any newly assigned shards. If this reconciliation takes too long, we skip
-the next heartbeat. This is an extreme case of this, the reconciliation
-deadlocks somewhere, so we never heartbeat again.
+shards. The executor then reconciles its state: it stops any shards it no longer
+owns and starts any newly assigned ones. During this reconciliation the executor
+skips heartbeating. Normally this completes in milliseconds, but in this case
+the reconciliation deadlocked, so the executor never heartbeated again.
 
 ### Finding the deadlock
 
@@ -194,9 +199,11 @@ if c.partitionConfig != nil {
 ```
 
 And here we see the issue.
-- On line 7 we add one to the stopWG wait group. A wait group in go enables us
-  to wait for a group of go routines to finish. In this case we are adding the go
-  routine starting on line 8 to the general stop wait group for the task list.
+- On line 7 we add one to the `stopWG` wait group. In Go, a
+  [WaitGroup](https://pkg.go.dev/sync#WaitGroup) lets you wait for a set of
+  goroutines to finish before proceeding. Here, `stopWG` is used during
+  shutdown — the task list manager won't fully stop until every goroutine
+  registered with `stopWG` has completed.
 - Then in the go routine we call the `notifyPartitionConfig` method, *and here
   the problem is!*. We are calling `notifyPartitionConfig` with
   `context.Background()`. The background context is a context that is never
@@ -218,11 +225,16 @@ introduced in [this pull request](https://github.com/cadence-workflow/cadence/pu
 
 ### Conclusion
 
-The Cadence Matching service had a latent deadlock, the deadlock was made
-observable by the Shard Manager and was fixed. Additionally when the shard
-manager detected, via the missing heartbeats, that the matching instances were
-in a bad state it automatically moved all the shards (task lists) to the healthy
-instance, and ensured the system continued to function.
+The Cadence Matching service had a latent deadlock that could be triggered by a
+transient database issue. The new Shard Manager made this visible — under the
+old hash-ring routing, the same deadlock would have caused silent degradation
+that would have been extremely difficult to diagnose.
 
-When new healthy instances appeared the Shard Manager immediately moved shards
-to these in order to balance the load.
+Instead, the Shard Manager detected the missing heartbeats, automatically moved
+all shards to the one healthy instance, and kept the system running while we
+investigated. When new healthy instances appeared it immediately rebalanced
+the load across them.
+
+The fix was three lines of code: replacing `context.Background()` with a
+context that has a timeout. Found in a day, by two engineers, thanks to the
+observability the Shard Manager provides.
