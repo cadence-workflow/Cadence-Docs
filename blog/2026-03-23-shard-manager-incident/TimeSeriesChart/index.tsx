@@ -177,6 +177,7 @@ export default function TimeSeriesChart({
         borderRadius: 8,
         border: "1px solid #e2e8f0",
         position: "relative",
+        maxWidth: W + 32,
       }}
       onMouseMove={handleMouseMove}
       onMouseLeave={() => { setHoverIdx(null); setMousePos(null); }}
