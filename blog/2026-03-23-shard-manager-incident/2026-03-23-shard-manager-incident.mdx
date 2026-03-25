@@ -17,6 +17,8 @@ import TimeSeriesChart from './TimeSeriesChart';
 import { podCountData } from './TimeSeriesChart/data';
 import LogTimeline from './LogTimeline';
 import { leadershipLogs } from './LogTimeline/data';
+import { heartbeatData } from './TimeSeriesChart/heartbeatData';
+import { cpuData } from './TimeSeriesChart/cpuData';
 
 ## How the new Cadence Shard Manager Found and Mitigated a Latent Deadlock
 
@@ -117,3 +119,48 @@ We now found what would turn out to be the right question; are the
 executors (matching instances) heart beating? If not the Shard Manager server is
 doing what it's supposed to do. Lets check the network metrics for the
 heartbeats.
+
+<TimeSeriesChart series={heartbeatData} yLabel="req/s" yMin0 />
+
+This is interesting, up until 20:40 we clearly have 3 heartbeats per second, one
+for each matching instance, exactly like we expect, but then, after 20:40, we
+suddenly only have one heartbeat per second.
+
+And even more interesting, right when the errors started the number of
+heartbeats dropped all the way to zero. And when the errors stopped happening
+the number of heartbeats went back up to 1.
+
+But we have 3 instances, so why did two of them suddenly stop heartbeating?
+
+We also looked at the CPU utilization of the matching instances, and we saw
+this:
+
+<TimeSeriesChart series={cpuData} yLabel="CPU %" />
+
+This is cool, we see that the CPU utilization was exactly the same for all three
+instances, then two stopped heart beating, so Shard Manager moved all the shards
+to the last instance, and it's CPU utilization went up, we also see that as soon
+as the replacement instances appears shard manager assigns all the shards to it.
+And then at around 22:50 there was a deploy of the matching services, so all the
+instances got replaced and then they all started heartbeating again.
+
+### The Deadlock
+
+So, two out of three matching instances stopped heart beating. And as soon as
+the instances were replaced all instances started heart beating again. This is
+the telltale sign of a deadlock.
+
+We checked the locked matching instances logs, and we saw that every second when
+they should have heart beated they emitted a log `still doing assignment,
+skipping heartbeat`.
+
+When an executor heartbeats Shard Manager responds with a new assignment of
+shards. The executor then stops the shards it does not own any longer, and
+starts any newly assigned shards. If this reconciliation takes too long, we skip
+the next heartbeat. This is an extreme case of this, the reconciliation
+deadlocks somewhere, so we never heartbeat again.
+
+### Finding the deadlock
+
+So, we know that two instances of the matching service deadlocked at around
+20:40, lets check the logs for the matching service around that time.
