@@ -9,10 +9,10 @@ tags:
 ---
 
 import LogHistogram from './LogHistogram';
-import { logData } from './LogHistogram/data';
+import { logData, matchingLogHistData } from './LogHistogram/data';
 import ArchitectureFlow from './ArchitectureFlow';
 import LogTable from './LogTable';
-import { logTableData } from './LogTable';
+import { logTableData, matchingLogData } from './LogTable';
 import TimeSeriesChart from './TimeSeriesChart';
 import { podCountData } from './TimeSeriesChart/data';
 import LogTimeline from './LogTimeline';
@@ -164,3 +164,7 @@ deadlocks somewhere, so we never heartbeat again.
 
 So, we know that two instances of the matching service deadlocked at around
 20:40, lets check the logs for the matching service around that time.
+
+<LogHistogram data={matchingLogHistData} />
+
+<LogTable data={matchingLogData} />
