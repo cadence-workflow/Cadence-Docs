@@ -93,11 +93,22 @@ export default function TimeSeriesChart({
       const lookup = new Map(s.data.map((d) => [d.time, d.value]));
       const points = allTimes.map((t, i) => ({
         x: xScale(i),
-        y: yScale(lookup.get(t) ?? 0),
-        value: lookup.get(t) ?? 0,
+        y: lookup.has(t) ? yScale(lookup.get(t)!) : null,
+        value: lookup.get(t) ?? null,
         time: t,
       }));
-      const d = points.map((p, i) => `${i === 0 ? "M" : "L"}${p.x},${p.y}`).join(" ");
+      // Build path segments, breaking at gaps (null values)
+      const segments: string[] = [];
+      let inSegment = false;
+      for (const p of points) {
+        if (p.y !== null) {
+          segments.push(`${inSegment ? "L" : "M"}${p.x},${p.y}`);
+          inSegment = true;
+        } else {
+          inSegment = false;
+        }
+      }
+      const d = segments.join(" ");
       return { ...s, points, d };
     });
   }, [series, allTimes, xScale, yScale]);
@@ -270,11 +281,11 @@ export default function TimeSeriesChart({
               strokeWidth={1}
               strokeDasharray="4 3"
             />
-            {seriesData.map((s) => (
+            {seriesData.filter((s) => s.points[hoverIdx].y !== null).map((s) => (
               <circle
                 key={`dot-${s.name}`}
                 cx={s.points[hoverIdx].x}
-                cy={s.points[hoverIdx].y}
+                cy={s.points[hoverIdx].y!}
                 r={5}
                 fill={s.color}
                 stroke="#fff"
@@ -284,15 +295,6 @@ export default function TimeSeriesChart({
           </>
         )}
 
-        {/* Legend */}
-        {seriesData.map((s, i) => (
-          <g key={`leg-${s.name}`} transform={`translate(${PAD.left + i * 100}, ${H - 8})`}>
-            <rect width={12} height={3} rx={1} fill={s.color} y={-2} />
-            <text x={16} y={2} fontSize={11} fontFamily="system-ui, sans-serif" fill="#64748b">
-              {s.name}
-            </text>
-          </g>
-        ))}
       </svg>
 
       {/* Tooltip rendered as HTML overlay outside SVG */}
@@ -301,7 +303,7 @@ export default function TimeSeriesChart({
           <div style={{ fontWeight: 600, marginBottom: 2 }}>
             {formatTime(allTimes[hoverIdx])}
           </div>
-          {seriesData.map((s) => (
+          {seriesData.filter((s) => s.points[hoverIdx].value !== null).map((s) => (
             <div key={s.name} style={{ display: "flex", alignItems: "center", gap: 6 }}>
               <span
                 style={{
