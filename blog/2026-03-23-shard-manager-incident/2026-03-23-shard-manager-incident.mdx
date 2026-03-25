@@ -167,4 +167,66 @@ So, we know that two instances of the matching service deadlocked at around
 
 <LogHistogram data={matchingLogHistData} />
 
+We see a spike in both errors and warnings, lets group the logs by the message,
+and the error:
 <LogTable data={matchingLogData} />
+
+So we see errors about the database being unavailable, we then see warnings
+about task list managers (the shards managed by Shard Manager) stopping and
+restarting. As it turns out, the most interesting log message is the `get task
+list partition config from db`. If we look at [the code around
+that:](https://github.com/cadence-workflow/cadence/blob/master/service/matching/tasklist/task_list_manager.go#L293-L304)
+
+```go showLineNumbers
+c.logger.Info("get task list partition config from db",
+    tag.Dynamic("root-partition", c.taskListID.GetRoot()),
+    tag.Dynamic("task-list-partition-config", c.partitionConfig))
+if c.partitionConfig != nil {
+    startConfig := c.partitionConfig
+    // push update notification to all non-root partitions on start
+    c.stopWG.Add(1)
+    go func() {
+        defer c.stopWG.Done()
+        ctx, cancel := context.WithTimeout(
+            context.Background(),
+            notifyPartitionConfigTimeout,
+        )
+        defer cancel()
+        c.notifyPartitionConfig(ctx, nil, startConfig)
+    }()
+}
+```
+
+And here we see the issue.
+- On line 7 we add one to the stopWG wait group. A wait group in go enables us
+  to wait for a group of goroutines to finish. In this case we are adding the go
+  routine starting on line 8 to the general stop wait group for the task list.
+- Then in the go routine we call the `notifyPartitionConfig` method, *and here
+  the problem is!*. We are calling `notifyPartitionConfig` with
+  `context.Background()`. The background context is a context that is never
+  cancelled, and which never times out.
+- In the `notifyPartitionConfig` method we make an RPC call, and due to the DB
+  unavailability this call fails, however, since we use the background context
+  we just wait for the response forever.
+
+In the `Stop` method of the `TaskListManager` we then *wait* for the stopWG,
+however since the go routine with the `notifyPartitionConfig` call is blocked
+the stopWG never finishes.
+
+This means that when the Shard Manager does the reconciliation, it will try to
+stop the task list manager, but this never finishes, and the reconciliation
+blocks heart beating indefinitely!
+
+The fix is simple, we just need to use a context that times out, as was
+introduced in [this pull request](https://github.com/cadence-workflow/cadence/pull/7833).
+
+### Conclusion
+
+The Cadence Matching service had a latent deadlock, the deadlock was made
+observable by the Shard Manager and was fixed. Additionally when the shard
+manager detected, via the missing heartbeats, that the matching instances were
+in a bad state it automatically moved all the shards (task lists) to the healthy
+instance, and ensured the system continued to function.
+
+When new healthy instances appeared the Shard Manager immediately moved shards
+to these in order to balance the load.
