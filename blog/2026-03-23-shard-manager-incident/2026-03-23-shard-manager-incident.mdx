@@ -23,12 +23,12 @@ import { cpuData } from './TimeSeriesChart/cpuData';
 ## How the new Cadence Shard Manager Found and Mitigated a Latent Deadlock
 
 A brief database hiccup in our staging environment revealed a deadlock that had
-been hiding in the Cadence Matching service for years. Two engineers found and
-fixed it in a single day — and the new Shard Manager automatically kept the
-system running while they did. Here's how it happened.
+been hiding in the Cadence Matching service. Two engineers found and
+fixed it in a day — and the new Shard Manager automatically kept the
+system running while they did. Here's how we did it.
 
 Over the past year the Cadence team has been working on a new Shard Manager
-service. This service will replace the existing hash ring based routing
+service. This service will eventually replace the existing hash ring based routing
 mechanism with a centralized component. To understand the problem we solved,
 first we need to understand the new architecture.
 
@@ -37,7 +37,7 @@ first we need to understand the new architecture.
 Cadence has two sharded services,
 Matching and History. In this blog post we will focus on the Matching service.
 
-In the matching service the shards are the Cadence task lists. A single Cadence
+In the Matching service the shards are the Cadence task lists. A single Cadence
 task list is owned by a single Matching instance, and all requests to that
 particular task list are routed to the owning instance.
 
@@ -56,12 +56,12 @@ The shard manager architecture looks like this.
 
 <ArchitectureFlow />
 
-The matching instances heartbeat periodically to the shard manager, the shard manager keeps
+The Matching instances heartbeat periodically to the Shard Manager, the Shard Manager keeps
 track of the live instances. It assigns the shards to the instances, and in the
-heartbeat responses it sends the shards currently assigned to the instance.
+heartbeat responses it sends the shards currently assigned to the instances.
 On every change to the shard assignments it pushes the new assignments to the
-frontend services, so the services have a full routing map. When the frontend
-service then receives a request it can route it to the instance owning the task
+Frontend services, so the services have a full routing map. When the Frontend
+service receives a request it can route it directly to the instance owning the task
 list.
 
 ### The Incident
@@ -112,41 +112,42 @@ at 22:03 something interesting happens. `host-1` resigns as leader, but there is
 "Became leader" log. The next log message is `host-2` resigning as leader. That's
 strange, how can `host-2` resign when it didn't become leader?
 
-This thread led to a lot of investigation, which ultimately led us to the
+This thread of led to a lot of investigation, which ultimately led us to the
 conclusion;
 
-The `"Became leader"` log message were simply lost at some point, there was always
-a leader.
+The `Became leader` log message were simply lost at some point, there was always
+a leader, it just wasn't logged.
 
 ### Back to the missing executors.
 
 We now found what would turn out to be the right question; are the
-executors (matching instances) heartbeating? If not the Shard Manager server is
+executors (Matching instances) heartbeating? If not the Shard Manager server is
 doing what it's supposed to do. Let's check the network metrics for the
 heartbeats.
 
 <TimeSeriesChart series={heartbeatData} yLabel="req/s" yMin0 />
 
 This is interesting, up until 20:40 we clearly have 3 heartbeats per second, one
-for each matching instance, exactly like we expect, but then, after 20:40, we
+for each Matching instance, exactly like we expect, but then, after 20:40, we
 suddenly only have one heartbeat per second.
 
 And even more interesting, right when the errors started the number of
 heartbeats dropped all the way to zero. And when the errors stopped happening
 the number of heartbeats went back up to 1.
 
-But we have 3 instances, so why did two of them suddenly stop heartbeating?
+But we have 3 instances, so why did two of them suddenly stop heartbeating? And
+why did the third instance continue to heartbeat?
 
-We also looked at the CPU utilization of the matching instances, and we saw
+We also looked at the CPU utilization of the Matching instances, and we saw
 this:
 
 <TimeSeriesChart series={cpuData} yLabel="CPU %" />
 
 This is cool, we see that the CPU utilization was exactly the same for all three
 instances, then two stopped heartbeating, so Shard Manager moved all the shards
-to the last instance, and its CPU utilization went up, we also see that as soon
-as the replacement instances appeared the Shard Manager assigns all the shards to it.
-And then at around 22:50 there was a deploy of the matching services, so all the
+to the last instance, and its CPU utilization went up. We also see that as soon
+as the replacement instances appeared the Shard Manager assigned all the shards to it.
+And then at around 22:50 there was a deploy of the Matching services, so all the
 instances got replaced and then they all started heartbeating again.
 
 ### The Deadlock
@@ -156,7 +157,7 @@ the instances were replaced all instances started heartbeating again. This is
 the telltale sign of a deadlock.
 
 We checked logs of the locked matching instances, and we saw that every second when
-they should have heartbeated they emitted a log `still doing assignment,
+they should have heartbeated they emitted a log; `still doing assignment,
 skipping heartbeat`.
 
 When an executor heartbeats the Shard Manager responds with a new assignment of
@@ -179,7 +180,7 @@ and the error:
 So we see errors about the database being unavailable, we then see warnings
 about task list managers (the shards managed by Shard Manager) stopping and
 restarting. As it turns out, the most interesting log message is the `get task
-list partition config from db`. If we look at [the code around
+list partition config from db`. Let's look at [the code around
 that:](https://github.com/jakobht/cadence/blob/bc57c106043c0b13ef242cad876e330b093e1b1b/service/matching/tasklist/task_list_manager.go#L289-L301)
 
 ```go showLineNumbers
