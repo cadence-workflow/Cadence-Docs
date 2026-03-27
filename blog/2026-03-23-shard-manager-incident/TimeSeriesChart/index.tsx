@@ -12,10 +12,7 @@ interface Props {
 const PAD = { top: 20, right: 20, bottom: 40, left: 50 };
 
 function formatTime(iso: string): string {
-  const d = new Date(iso);
-  const h = d.getHours().toString().padStart(2, "0");
-  const m = d.getMinutes().toString().padStart(2, "0");
-  return `${h}:${m}`;
+  return iso.slice(11, 16);
 }
 
 function niceYTicks(min: number, max: number): number[] {
