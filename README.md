@@ -1,4 +1,5 @@
 # [Cadence docs](https://cadenceworkflow.io) &middot; ![Build and Deploy](https://img.shields.io/github/actions/workflow/status/cadence-workflow/Cadence-Docs/publish-to-gh-pages.yml?label=Build%20and%20Deploy&link=https%3A%2F%2Fgithub.com%2Fcadence-workflow%2FCadence-Docs%2Factions%2Fworkflows%2Fpublish-to-gh-pages.yml) ![Nightly integration test](https://img.shields.io/github/actions/workflow/status/cadence-workflow/Cadence-Docs/nightly-integration-test.yml?label=Nightly%20integration%20test&link=https%3A%2F%2Fgithub.com%2Fcadence-workflow%2FCadence-Docs%2Factions%2Fworkflows%2Fnightly-integration-test.yml)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fcadence-workflow%2FCadence-Docs.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fcadence-workflow%2FCadence-Docs?ref=badge_shield)
 
 
 
@@ -86,3 +87,6 @@ This will ensure the dependencies are pulled from the correct source and to prev
 The source code in this repository is licensed under the Apache 2.0 License.
 The documentation in this repository is licensed under the Creative Commons Attribution 4.0 International License.
 See [LICENSE](https://github.com/cadence-workflow/Cadence-Docs/blob/master/LICENSE) for details.
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fcadence-workflow%2FCadence-Docs.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fcadence-workflow%2FCadence-Docs?ref=badge_large)
