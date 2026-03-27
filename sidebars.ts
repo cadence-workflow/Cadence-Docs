@@ -25,6 +25,7 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'get-started/golang-hello-world' },
         { type: 'doc', id: 'get-started/video-tutorials' },
         { type: 'doc', id: 'get-started/grafana-helm-setup' },
+        { type: 'doc', id: 'get-started/code-block-usage' },
       ],
     },
     {
