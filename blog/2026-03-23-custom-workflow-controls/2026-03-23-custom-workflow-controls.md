@@ -20,7 +20,7 @@ Cadence workflows already have [queries](/docs/concepts/queries), a way to peek 
 
 Custom Workflow Controls change that. Your query handler returns **markdown**, and Cadence Web renders it with tables, formatted text, images, and **interactive buttons** that can signal a running workflow or start a new one.
 
-No separate admin panel. No CLI copy-paste. Just your workflow's state, live and actionable.
+No separate admin panel. No CLI copy-paste. Just your workflow's state, live and actionable. And it's secure by design: Cadence Web uses [Markdoc](https://markdoc.dev/) to parse responses, so raw HTML is stripped and only markdown plus the defined extension tags are rendered.
 
 ## See It in Action
 
@@ -65,4 +65,6 @@ All you need is **Cadence Web v4.0.14+** and a running Cadence cluster.
 
 This is just the beginning. Custom Workflow Controls are currently supported in workflow queries, and we plan to extend them to other areas of Cadence Web. We'd love your feedback on what you build with them.
 
-Got questions? Join us on [CNCF Slack](https://communityinviter.com/apps/cloud-native/cncf) in the **#cadence** channel, or start a [GitHub Discussion](https://github.com/cadence-workflow/cadence/discussions).
+- **Suggest a tag extension** - [Open an issue on cadence-web](https://github.com/cadence-workflow/cadence-web/issues)
+- **Ask a question** - [#cadence on CNCF Slack](https://communityinviter.com/apps/cloud-native/cncf)
+- **Discuss use cases** - [GitHub Discussions](https://github.com/cadence-workflow/cadence/discussions)

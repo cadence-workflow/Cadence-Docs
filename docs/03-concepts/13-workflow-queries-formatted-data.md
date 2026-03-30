@@ -204,8 +204,7 @@ Or start a fresh workflow:
 
 ### Sized Images
 
-Embed sized images with `{% image %}`:
-
+Standard markdown images (`![alt](url)`) work, but offer no size control. The `{% image %}` tag lets you set width and height. It also exists because Cadence Web strips raw HTML from query responses for security purposes.
 ```markdown
 {% image src="https://cadenceworkflow.io/img/cadence-logo.svg" alt="Cadence Logo" width="200" /%}
 ```
