@@ -313,8 +313,6 @@ private String sig(String signalName, String label, String input) {
 </TabItem>
 </Tabs>
 
-<img src={require('./img/dashboard-hero.png').default} alt="The OrderFulfillmentWorkflow dashboard showing order details, action buttons that change per state, and an action history log" style={{border: '1px solid #000'}} />
-
 Each time the user clicks **Run** on the query, the dashboard reflects the latest workflow state with the appropriate actions.
 
 ---
