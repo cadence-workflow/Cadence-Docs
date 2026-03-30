@@ -20,6 +20,10 @@ const config: Config = {
   title: 'Cadence',
   tagline: 'Orchestrate with Confidence: The Open-Source Workflow Engine for Tomorrow',
   favicon: 'img/favicon.ico',
+  markdown: {
+    mermaid: true,
+  },
+  themes: ['@docusaurus/theme-mermaid'],
 
   url: envReplace('${CADENCE_DOCS_URL:-https://cadenceworkflow.io}', process.env),
 

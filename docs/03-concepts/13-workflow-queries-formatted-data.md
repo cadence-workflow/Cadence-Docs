@@ -7,21 +7,75 @@ permalink: /docs/concepts/workflow-queries-formatted-data
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/SLlOk_BbtKo?si=YPL9F4ZM8ZlHlxh5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+### Introduction
 Your workflow has internal state. What if your users could see it *and* act on it, directly from Cadence Web, without building a separate admin panel?
 
-![Raw JSON query result on the left, rendered dashboard with action buttons on the right](img/query-before-after.png)
+![Dashboard rendered in Cadence Web](img/query-before-after.png)
+
+<details>
+<summary>View the markdown source that produces this dashboard</summary>
+
+```markdown
+### ⚡ Available Actions
+
+**Payment Review:**
+
+{% signal
+        signalName="approve_payment"
+        label="✓ Approve Payment"
+        domain="cadence-samples"
+        cluster="cluster0"
+        workflowId="a8decc9c-8248-498d-b5f4-5dcc6f8ba620"
+        runId="5942783c-beca-4305-98c3-b7bc247d053c"
+        input={"operator":"ops-user"}
+/%}
+{% signal
+        signalName="reject_payment"
+        label="✗ Reject: Policy Violation"
+        domain="cadence-samples"
+        cluster="cluster0"
+        workflowId="a8decc9c-8248-498d-b5f4-5dcc6f8ba620"
+        runId="5942783c-beca-4305-98c3-b7bc247d053c"
+        input={"reason":"Policy Violation","operator":"ops-user"}
+/%}
+{% signal
+        signalName="reject_payment"
+        label="✗ Reject: Fraud Suspected"
+        domain="cadence-samples"
+        cluster="cluster0"
+        workflowId="a8decc9c-8248-498d-b5f4-5dcc6f8ba620"
+        runId="5942783c-beca-4305-98c3-b7bc247d053c"
+        input={"reason":"Fraud Suspected","operator":"ops-user"}
+/%}
+{% signal
+        signalName="reject_payment"
+        label="✗ Reject: Customer Request"
+        domain="cadence-samples"
+        cluster="cluster0"
+        workflowId="a8decc9c-8248-498d-b5f4-5dcc6f8ba620"
+        runId="5942783c-beca-4305-98c3-b7bc247d053c"
+        input={"reason":"Customer Request","operator":"ops-user"}
+/%}
+```
+
+</details>
 
 Cadence Web renders **markdown** returned by workflow queries. Add three MarkDoc tags ([`{% signal %}`](#-signal-), [`{% start %}`](#-start-), [`{% image %}`](#-image-)) and your query response becomes a live ops dashboard. Below, we'll build one from scratch in three steps. See the full [Tag Reference](#tag-reference) for all attributes.
-
-### Demo
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/SLlOk_BbtKo?si=YPL9F4ZM8ZlHlxh5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ---
 
 ## How It Works
 
-![Diagram: User runs query → Workflow returns markdown + tags → Cadence Web renders UI → User clicks button → Signal sent to workflow → cycle repeats](img/how-it-works.png)
+```mermaid
+flowchart LR
+  A["1. Query: dashboard"] --> B["2. Workflow returns\nMarkdown + Tags"]
+  B --> C["3. Cadence Web\nrenders UI"]
+  C --> D["4. User clicks\nbutton"]
+  D --> E["5. Signal sent\nto workflow"]
+  E --> A
+```
 
 1. The user runs a **query** from the Cadence Web **Queries** tab
 2. Your workflow returns **markdown with MarkDoc tags** in a special JSON shape
@@ -108,9 +162,11 @@ public MarkdownFormattedResponse statusQuery() {
 
 ---
 
-## Level 2: Add Interactive Controls
+## Level 2: Beyond Plain Text
 
-Add `{% signal %}` and `{% start %}` tags to your markdown string. Cadence Web renders them as buttons that send real signals or start new workflows. No CLI required.
+### Signal and Start Buttons
+
+Add `{% signal %}` and `{% start %}` tags to your markdown string. Cadence Web renders them as buttons that send real signals or start new workflows, without switching to the Cadence CLI or writing a separate client.
 
 ```markdown
 ## My Workflow
@@ -139,13 +195,27 @@ Or start a fresh workflow:
 /%}
 ```
 
+<details>
+<summary>View the rendered result in Cadence Web</summary>
+
 ![Signal and start buttons rendered as clickable controls in Cadence Web](img/controls-rendered.png)
 
-You can also embed sized images with `{% image %}`:
+</details>
+
+### Sized Images
+
+Embed sized images with `{% image %}`:
 
 ```markdown
-{% image src="https://example.com/logo.png" alt="Logo" width="200" /%}
+{% image src="https://cadenceworkflow.io/img/cadence-logo.svg" alt="Cadence Logo" width="200" /%}
 ```
+
+<details>
+<summary>View the rendered result in Cadence Web</summary>
+
+<img src="https://cadenceworkflow.io/img/cadence-logo.svg" alt="Cadence Logo" width="200" />
+
+</details>
 
 ---
 
@@ -155,7 +225,22 @@ The real power: **change which buttons appear** based on your workflow's current
 
 The **OrderFulfillmentWorkflow** sample demonstrates this. An order moves through states, and the dashboard shows only the actions valid for the current state:
 
-![Order fulfillment state machine: pending_payment → payment_approved → ready_to_ship → shipped → delivered, with cancel and refund branches](img/order-state-machine.png)
+```mermaid
+stateDiagram-v2
+  classDef success fill:#d4edda,stroke:#28a745,stroke-width:2px,font-weight:bold
+  classDef failure fill:#f8d7da,stroke:#dc3545,stroke-width:2px,font-weight:bold
+
+  pending_payment --> payment_approved: Approve
+  pending_payment --> cancelled: Reject
+  payment_approved --> ready_to_ship: Mark Ready
+  payment_approved --> refunded: Refund
+  ready_to_ship --> shipped: Ship
+  ready_to_ship --> cancelled: Cancel
+  shipped --> delivered: Confirm Delivery
+
+  class delivered success
+  class cancelled,refunded failure
+```
 
 | State | Available Actions |
 |-------|-------------------|
