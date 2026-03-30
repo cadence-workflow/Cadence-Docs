@@ -12,7 +12,7 @@ import TabItem from '@theme/TabItem';
 ### Introduction
 Your workflow has internal state. What if your users could see it *and* act on it, directly from Cadence Web, without building a separate admin panel?
 
-![Dashboard rendered in Cadence Web](img/query-before-after.png)
+<img src={require('./img/query-before-after.png').default} alt="Dashboard rendered in Cadence Web" style={{border: '1px solid #000'}} />
 
 <details>
 <summary>View the markdown source that produces this dashboard</summary>
@@ -313,7 +313,7 @@ private String sig(String signalName, String label, String input) {
 </TabItem>
 </Tabs>
 
-![The OrderFulfillmentWorkflow dashboard showing order details, action buttons that change per state, and an action history log](img/dashboard-hero.png)
+<img src={require('./img/dashboard-hero.png').default} alt="The OrderFulfillmentWorkflow dashboard showing order details, action buttons that change per state, and an action history log" style={{border: '1px solid #000'}} />
 
 Each time the user clicks **Run** on the query, the dashboard reflects the latest workflow state with the appropriate actions.
 
