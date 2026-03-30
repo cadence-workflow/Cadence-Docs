@@ -1,358 +1,295 @@
 ---
 layout: default
-title: Workflow Queries with Formatted Data
+title: Custom Workflow Controls
 permalink: /docs/concepts/workflow-queries-formatted-data
 ---
 
-This guide explains how to implement workflow queries that return preformatted data for enhanced rendering in Cadence Web UI. This feature allows workflow authors to return structured data in Markdown format that can be rendered directly in the Cadence Web interface, providing richer visualization and better user experience.
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-The formatted data feature enables workflows to respond to queries with data that includes rendering instructions, allowing the UI to display content beyond simple text responses.
+Your workflow has internal state. What if your users could see it *and* act on it, directly from Cadence Web, without building a separate admin panel?
+
+![Raw JSON query result on the left, rendered dashboard with action buttons on the right](img/query-before-after.png)
+
+Cadence Web renders **markdown** returned by workflow queries. Add three MarkDoc tags ([`{% signal %}`](#-signal-), [`{% start %}`](#-start-), [`{% image %}`](#-image-)) and your query response becomes a live ops dashboard. Below, we'll build one from scratch in three steps. See the full [Tag Reference](#tag-reference) for all attributes.
+
+### Demo
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/SLlOk_BbtKo?si=YPL9F4ZM8ZlHlxh5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ---
 
-## Overview
+## How It Works
 
-### The Goal
+![Diagram: User runs query → Workflow returns markdown + tags → Cadence Web renders UI → User clicks button → Signal sent to workflow → cycle repeats](img/how-it-works.png)
 
-Support rendering preformatted data on cadence-web in places such as the Query API. Examples of data that can be preformatted include:
-
-- **Markdown** - Rich text with formatting, links, and structure
-
-The reason for prerendering is that workflow authors have access to workflow data that they may wish to render on the Cadence UI, and such rendering entirely client-side is difficult given the current Cadence workflow API.
-
-### How It Works
-
-When a workflow query responds with data in a specific shape, Cadence Web can render it with appropriate formatting. The response must include:
-
-1. A response type identifier
-2. A MIME type format specifier  
-3. The actual formatted data
+1. The user runs a **query** from the Cadence Web **Queries** tab
+2. Your workflow returns **markdown with MarkDoc tags** in a special JSON shape
+3. Cadence Web **renders** it: tables, text, images, and action buttons
+4. The user clicks a button → Cadence Web sends a **signal** or starts a new workflow
+5. The workflow state updates → next query shows the new state
 
 ---
 
 ## Response Format
 
-### Basic Structure
-
-To enable formatted rendering, your workflow query must respond with data in the following shape:
-
-```json
-{
-  "cadenceResponseType": "formattedData",
-  "format": "<mime-type format>",
-  "data": "<formatted data specific to the format>"
-}
-```
-
-### Supported MIME Type
-
-The `format` field should contain the supported MIME type identifier:
-
-- `text/markdown` - Markdown content
-
----
-
-## Examples
-
-### Markdown Response
+Your query handler returns an object with this shape:
 
 ```json
 {
   "cadenceResponseType": "formattedData",
   "format": "text/markdown",
-  "data": "### Workflow Status Report\n\n**Current Stage:** Processing\n\n- [x] Data validation completed\n- [x] Initial processing done\n- [ ] Final verification pending\n\n[View detailed logs](https://internal.example.com/logs/workflow-123)\n\n**Progress:** 75% complete"
+  "data": "## Your markdown here\n\n{% signal signalName=\"approve\" ... /%}"
 }
 ```
 
-This would render as:
-
-### Workflow Status Report
-
-**Current Stage:** Processing
-
-- [x] Data validation completed
-- [x] Initial processing done
-- [ ] Final verification pending
-
-[View detailed logs](https://internal.example.com/logs/workflow-123)
-
-**Progress:** 75% complete
+| Field | Value |
+|-------|-------|
+| `cadenceResponseType` | Must be `"formattedData"` |
+| `format` | Must be `"text/markdown"` |
+| `data` | Your markdown string (supports MarkDoc tags) |
 
 ---
 
-## UI Examples
+## Level 1: Return Markdown
 
-The following screenshots demonstrate how formatted query responses appear in the Cadence Web UI:
+The simplest case: return a markdown string from your query handler. Cadence Web renders it as formatted text instead of raw JSON.
 
-### Restaurant Menu Voting Interface
-
-This example shows a workflow query that returns formatted data for a restaurant lunch voting system, demonstrating how interactive voting interfaces can be presented:
-
-**Implementation References:**
-- [Restaurant voting workflow implementation](https://github.com/cadence-workflow/cadence-samples/blob/master/cmd/samples/blocks/blocks_workflow.go#L71)
-- [Blocks package documentation](https://github.com/cadence-workflow/cadence-go-client/tree/master/x/blocks)
-
-![Restaurant Menu Voting Interface](img/restaurant_menu.png)
-
-*A lunch voting interface displaying restaurant menu options with images and descriptions. Shows "Farmhouse - Red Thai Curry", "Ler Ros: Lemongrass Tofu Bahn Mi", and "Ethiopian Wat" options with detailed descriptions and voting buttons. The interface includes meal requests tracking and vote counts.*
-
-### Employee Database Query Results
-
-This example shows formatted data returned from an employee database query, demonstrating how tabular data can be presented:
-
-![Employee Database Query Results](img/employee-database-query.png)
-
-*Employee records displayed in a structured table format showing Employee name, Title, and description columns with sample data for multiple employees.*
-
-### Hello World Workflow Query Results
-
-Here's an example of how query results are displayed for a simple workflow:
-
-![Hello World Workflow Query Results](img/hello-world-workflow-query.png)
-
-*The Hello World Workflow query interface showing basic workflow concepts and activity execution information, including real-world use case details and sample code links.*
-
-### Query Interface
-
-The Queries tab provides an interface for executing workflow queries with various predefined options:
-
-![Cadence Web Queries Interface](img/cadence-queries-interface.png)
-
-*The Queries tab showing available query operations including `__open_sessions`, `get_runtime_data`, and other predefined queries, along with an "Operator Runbook" option.*
-
-These examples illustrate how the formatted data feature enhances the user experience by providing rich, structured displays instead of raw JSON responses.
-
----
-
-## Go Implementation
-
-### Type Definition
+<Tabs groupId="lang">
+<TabItem value="go" label="Go">
 
 ```go
-// PrerenderedQueryResponse defines the structure for formatted query responses
-type PrerenderedQueryResponse struct {
-    CadenceResponseType string          `json:"cadenceResponseType"`
-    Format             string          `json:"format"`
-    Data               json.RawMessage `json:"data"`
+type markdownFormattedResponse struct {
+	CadenceResponseType string `json:"cadenceResponseType"`
+	Format              string `json:"format"`
+	Data                string `json:"data"`
 }
+
+workflow.SetQueryHandler(ctx, "status", func() (markdownFormattedResponse, error) {
+	md := fmt.Sprintf("## Order Status\n\n**Customer:** %s\n\n| Item | Qty |\n|------|-----|\n| %s | %d |",
+		order.CustomerName, order.Items[0].Name, order.Items[0].Quantity)
+
+	return markdownFormattedResponse{
+		CadenceResponseType: "formattedData",
+		Format:              "text/markdown",
+		Data:                md,
+	}, nil
+})
 ```
 
-### Example Usage
+</TabItem>
+<TabItem value="java" label="Java">
 
-```go
-package main
+```java
+public class MarkdownFormattedResponse {
+    private final String cadenceResponseType = "formattedData";
+    private final String format = "text/markdown";
+    private final String data;
 
-import (
-    "context"
-    "encoding/json"
-    "go.uber.org/cadence/workflow"
-)
-
-// Example workflow with formatted query response
-func SampleWorkflow(ctx workflow.Context) error {
-    // Workflow implementation...
-    return nil
-}
-
-// Query handler that returns formatted markdown
-func WorkflowStatusQuery(ctx workflow.Context) (PrerenderedQueryResponse, error) {
-    // Get current workflow state
-    progress := getWorkflowProgress(ctx)
-    
-    // Create markdown content
-    markdown := fmt.Sprintf(`### Workflow Status Report
-
-**Current Stage:** %s
-
-**Progress:** %d%% complete
-
-**Tasks Completed:**
-%s
-
-**Next Steps:**
-%s
-
----
-*Last updated: %s*
-`, 
-        progress.CurrentStage,
-        progress.PercentComplete,
-        formatTaskList(progress.CompletedTasks),
-        formatTaskList(progress.PendingTasks),
-        time.Now().Format("2006-01-02 15:04:05"),
-    )
-    
-    return PrerenderedQueryResponse{
-        CadenceResponseType: "formattedData",
-        Format:              "text/markdown",
-        Data:                json.RawMessage(fmt.Sprintf(`"%s"`, markdown)),
-    }, nil
-}
-
-// Helper function for creating markdown responses
-func NewMarkdownQueryResponse(md string) PrerenderedQueryResponse {
-    data, _ := json.Marshal(md)
-    return PrerenderedQueryResponse{
-        CadenceResponseType: "formattedData",
-        Format:              "text/markdown", 
-        Data:                data,
+    public MarkdownFormattedResponse(String markdownData) {
+        this.data = markdownData;
     }
+    public String getCadenceResponseType() { return cadenceResponseType; }
+    public String getFormat() { return format; }
+    public String getData() { return data; }
 }
 
-// Register the query handler
-func init() {
-    workflow.RegisterQueryHandler("workflow_status", WorkflowStatusQuery)
+@QueryMethod(name = "status")
+public MarkdownFormattedResponse statusQuery() {
+    String md = String.format("## Order Status\n\n**Customer:** %s\n\n| Item | Qty |\n|------|-----|\n| %s | %d |",
+        order.customerName, order.items[0].name, order.items[0].quantity);
+
+    return new MarkdownFormattedResponse(md);
 }
 ```
 
-### Advanced Example with Error Handling
+</TabItem>
+</Tabs>
+
+---
+
+## Level 2: Add Interactive Controls
+
+Add `{% signal %}` and `{% start %}` tags to your markdown string. Cadence Web renders them as buttons that send real signals or start new workflows. No CLI required.
+
+```markdown
+## My Workflow
+
+Click to approve this order:
+
+{% signal
+  signalName="approve_payment"
+  label="Approve Payment"
+  domain="my-domain"
+  cluster="my-cluster"
+  workflowId="order-123"
+  runId="run-456"
+  input={"operator":"ops-user"}
+/%}
+
+Or start a fresh workflow:
+
+{% start
+  workflowType="MyWorkflow"
+  label="Start New Order"
+  domain="my-domain"
+  cluster="my-cluster"
+  taskList="my-task-list"
+  timeoutSeconds=3600
+/%}
+```
+
+![Signal and start buttons rendered as clickable controls in Cadence Web](img/controls-rendered.png)
+
+You can also embed sized images with `{% image %}`:
+
+```markdown
+{% image src="https://example.com/logo.png" alt="Logo" width="200" /%}
+```
+
+---
+
+## Level 3: State-Driven Dashboards
+
+The real power: **change which buttons appear** based on your workflow's current state.
+
+The **OrderFulfillmentWorkflow** sample demonstrates this. An order moves through states, and the dashboard shows only the actions valid for the current state:
+
+![Order fulfillment state machine: pending_payment → payment_approved → ready_to_ship → shipped → delivered, with cancel and refund branches](img/order-state-machine.png)
+
+| State | Available Actions |
+|-------|-------------------|
+| Pending Payment | Approve Payment, Reject (Policy / Fraud / Customer Request) |
+| Payment Approved | Mark Ready to Ship, Full Refund, Partial Refund |
+| Ready to Ship | Ship via UPS / FedEx / USPS, Cancel Order |
+| Shipped | Mark as Delivered |
+| Delivered / Cancelled / Refunded | *No actions, order complete* |
+
+The query handler builds the button list dynamically based on `order.Status`:
+
+<Tabs groupId="lang">
+<TabItem value="go" label="Go">
 
 ```go
-func DetailedWorkflowQuery(ctx workflow.Context, queryType string) (interface{}, error) {
-    switch queryType {
-    case "status":
-        return createStatusMarkdown(ctx)
-    default:
-        return nil, fmt.Errorf("unknown query type: %s", queryType)
+func makeActionButtons(ctx workflow.Context, order Order) string {
+	wfID := workflow.GetInfo(ctx).WorkflowExecution.ID
+	runID := workflow.GetInfo(ctx).WorkflowExecution.RunID
+
+	switch order.Status {
+	case StatusPendingPayment:
+		return fmt.Sprintf(`
+{%% signal signalName="approve_payment" label="Approve Payment"
+  domain="cadence-samples" cluster="cluster0"
+  workflowId="%s" runId="%s" input={"operator":"ops-user"} /%%}
+{%% signal signalName="reject_payment" label="Reject: Fraud Suspected"
+  domain="cadence-samples" cluster="cluster0"
+  workflowId="%s" runId="%s" input={"reason":"Fraud Suspected","operator":"ops-user"} /%%}
+`, wfID, runID, wfID, runID)
+
+	case StatusReadyToShip:
+		return fmt.Sprintf(`
+{%% signal signalName="ship_order" label="Ship via UPS"
+  domain="cadence-samples" cluster="cluster0"
+  workflowId="%s" runId="%s"
+  input={"trackingNumber":"1Z999AA10123456784","carrier":"UPS","operator":"ops-user"} /%%}
+`, wfID, runID)
+	// ... other states
+	}
+	return "*No actions available*"
+}
+```
+
+</TabItem>
+<TabItem value="java" label="Java">
+
+```java
+private String makeActionButtons() {
+    switch (order.status) {
+        case STATUS_PENDING_PAYMENT:
+            return sig("approve_payment", "Approve Payment",
+                       "{\"operator\":\"ops-user\"}")
+                 + sig("reject_payment", "Reject: Fraud Suspected",
+                       "{\"reason\":\"Fraud Suspected\",\"operator\":\"ops-user\"}");
+        case STATUS_READY_TO_SHIP:
+            return sig("ship_order", "Ship via UPS",
+                       "{\"trackingNumber\":\"1Z999AA10123456784\",\"carrier\":\"UPS\",\"operator\":\"ops-user\"}");
+        // ... other states
     }
+    return "*No actions available*";
 }
 
-func createStatusMarkdown(ctx workflow.Context) (PrerenderedQueryResponse, error) {
-    status := getCurrentStatus(ctx)
-    
-    markdown := fmt.Sprintf(`# Workflow Execution Report
-
-## Summary
-- **ID:** %s
-- **Status:** %s
-- **Started:** %s
-- **Duration:** %s
-
-## Recent Activities
-%s
-
-## Errors
-%s
-`, 
-        workflow.GetInfo(ctx).WorkflowExecution.ID,
-        status.State,
-        status.StartTime.Format("2006-01-02 15:04:05"),
-        time.Since(status.StartTime).String(),
-        formatActivities(status.Activities),
-        formatErrors(status.Errors),
-    )
-    
-    return NewMarkdownQueryResponse(markdown), nil
+private String sig(String signalName, String label, String input) {
+    return "{% signal signalName=\"" + signalName + "\" label=\"" + label + "\""
+        + " domain=\"" + DOMAIN + "\" cluster=\"" + CLUSTER + "\""
+        + " workflowId=\"" + cachedWorkflowId + "\" runId=\"" + cachedRunId + "\""
+        + " input=" + input + " /%}\n";
 }
 ```
 
----
+</TabItem>
+</Tabs>
 
-## Security Considerations
+![The OrderFulfillmentWorkflow dashboard showing order details, action buttons that change per state, and an action history log](img/dashboard-hero.png)
 
-### XSS Prevention
-
-Taking input from a workflow and rendering it as Markdown without sanitization is a potential XSS (Cross-Site Scripting) vector. An attacker could inject malicious content including:
-
-- Raw HTML tags that might be processed by the Markdown renderer
-- JavaScript in HTML tags embedded within Markdown
-- Malicious links or images that could exfiltrate data
-
-### Mitigation Strategies
-
-1. **Server-Side Sanitization**: All content must be sanitized before rendering
-2. **Content Security Policy (CSP)**: Implement strict CSP headers
-3. **Input Validation**: Validate format types and data structure
-4. **Allowlist Approach**: Only allow the known-safe MIME type
-
-### Best Practices
-
-- Always validate the `cadenceResponseType` field
-- Sanitize all user-provided content before rendering
-- Use Content Security Policy headers
-- Regularly audit and update sanitization libraries
-- Consider implementing rate limiting for query requests
+Each time the user clicks **Run** on the query, the dashboard reflects the latest workflow state with the appropriate actions.
 
 ---
 
-## Integration with Cadence Web
+## Tag Reference
 
-### Client-Side Rendering
+### `{% signal %}`
 
-The Cadence Web UI automatically detects formatted responses and renders them appropriately:
+Sends a signal to a running workflow.
 
-1. **Detection**: Check for `cadenceResponseType: "formattedData"`
-2. **Format Processing**: Parse the `format` field to determine renderer
-3. **Data Rendering**: Apply appropriate rendering logic based on MIME type
-4. **Sanitization**: Apply security sanitization before display
+| Attribute | Required | Description |
+|-----------|----------|-------------|
+| `signalName` | Yes | Signal type the workflow listens for |
+| `label` | Yes | Button text |
+| `domain` | Yes | Cadence domain |
+| `cluster` | Yes | Cluster name configured in Cadence Web |
+| `workflowId` | Yes | Target workflow execution ID |
+| `runId` | Yes | Target workflow run ID |
+| `input` | No | Signal payload: `true`, `false`, `"string"`, or `{"json":"object"}` |
 
-### Supported Renderers
+### `{% start %}`
 
-- **Markdown**: Rendered using a markdown parser with syntax highlighting
+Starts a new workflow execution.
 
-### Fallback Behavior
+| Attribute | Required | Description |
+|-----------|----------|-------------|
+| `workflowType` | Yes | Registered workflow type name |
+| `label` | Yes | Button text |
+| `domain` | Yes | Cadence domain |
+| `cluster` | Yes | Cluster name configured in Cadence Web |
+| `taskList` | Yes | Worker task list |
+| `wfId` | No | Custom workflow ID |
+| `input` | No | Workflow input |
+| `timeoutSeconds` | No | Execution timeout in seconds |
+| `sdkLanguage` | No | `"GO"` or `"JAVA"` |
 
-If the formatted response cannot be rendered:
+### `{% image %}`
 
-1. Display the raw data as JSON
-2. Show an error message indicating the format issue
-3. Provide option to view raw response data
+Renders an image with optional size control. Standard markdown images (`![alt](url)`) also work.
 
----
-
-## Testing and Debugging
-
-### Testing Formatted Responses
-
-```go
-func TestFormattedQueryResponse(t *testing.T) {
-    // Create test workflow environment
-    env := testsuite.NewTestWorkflowEnvironment()
-    
-    // Register workflow and query
-    env.RegisterWorkflow(SampleWorkflow)
-    env.SetQueryHandler("status", WorkflowStatusQuery)
-    
-    // Start workflow
-    env.ExecuteWorkflow(SampleWorkflow)
-    
-    // Query with formatted response
-    result, err := env.QueryWorkflow("status")
-    require.NoError(t, err)
-    
-    var response PrerenderedQueryResponse
-    err = result.Get(&response)
-    require.NoError(t, err)
-    
-    // Validate response structure
-    assert.Equal(t, "formattedData", response.CadenceResponseType)
-    assert.Equal(t, "text/markdown", response.Format)
-    assert.NotEmpty(t, response.Data)
-}
-```
-
-### Debugging Tips
-
-1. **Validate JSON Structure**: Ensure response matches expected format
-2. **Check MIME Types**: Verify format field contains valid MIME type
-3. **Test Sanitization**: Confirm content is properly sanitized
-4. **Monitor Performance**: Large formatted responses may impact query performance
+| Attribute | Required | Description |
+|-----------|----------|-------------|
+| `src` | Yes | Image URL |
+| `alt` | Yes | Alt text |
+| `width` | No | Width in pixels |
+| `height` | No | Height in pixels |
 
 ---
 
-## Additional Resources
+## Sample Code
 
-### Related Documentation
+Full working examples in both Go and Java:
 
-- [Basic Workflow Queries](/docs/concepts/queries) - Overview of standard query functionality
-- [Cadence Web UI Documentation](https://github.com/cadence-workflow/cadence-web) - UI components and rendering
-- [OWASP XSS Prevention](https://owasp.org/www-community/attacks/xss/) - Security best practices
+| Sample | Description | Go | Java |
+|--------|-------------|----|------|
+| **MarkdownQueryWorkflow** | Signals, start buttons, images | [Go source](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/query/markdown_query.go) | [Java source](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/query/MarkdownQueryWorkflow.java) |
+| **LunchVoteWorkflow** | Interactive voting with live results | [Go source](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/query/lunch_vote_workflow.go) | [Java source](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/query/LunchVoteWorkflow.java) |
+| **OrderFulfillmentWorkflow** | Full ops dashboard with state machine | [Go source](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/query/order_fulfillment_workflow.go) | [Java source](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/query/OrderFulfillmentWorkflow.java) |
 
-### Code References
-
-- [Cadence Go Client Documentation](https://pkg.go.dev/go.uber.org/cadence)
-
-### Community Resources
-
-- [Cadence Community Slack](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ)
-- [GitHub Discussions](https://github.com/cadence-workflow/cadence/discussions)
+:::note
+Requires **Cadence Web v4.0.14+** for MarkDoc rendering support.
+:::
