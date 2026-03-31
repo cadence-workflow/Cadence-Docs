@@ -25,7 +25,7 @@
     "@docusaurus/plugin-ideal-image": "^3.8.1",
     "@docusaurus/preset-classic": "^3.8.1",
     "@docusaurus/remark-plugin-npm2yarn": "^3.8.1",
-    "@docusaurus/theme-mermaid": "^3.9.1",
+    "@docusaurus/theme-mermaid": "^3.8.1",
     "@docusaurus/theme-search-algolia": "^3.8.1",
     "@iconify/react": "^5.2.0",
     "@mdx-js/react": "^3.0.0",
