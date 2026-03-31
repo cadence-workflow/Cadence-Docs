@@ -42,3 +42,7 @@ events:
   label: Events
   permalink: /events
   description: Events tag description
+
+cadence-web:
+  label: Cadence Web
+  description: Posts about Cadence Web UI features
