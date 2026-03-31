@@ -1,0 +1,95 @@
+---
+layout: default 
+title: Cadence vs Temporal
+permalink: /faq/cadence-vs-temporal
+---
+
+This document is to address a popular inquiry from potential Cadence users.   
+*“Please explain the differences between Cadence and Temporal?”*
+
+## Feature Comparison
+
+| Feature | Cadence | Temporal |
+| ----- | ----- | ----- |
+| **COMMON IN BOTH** |  |  |
+| **Long Running Workflows** | Supported | Supported |
+| **Distributed Cron** | Supported | Supported |
+| **Singleton in Distributed Env** | Supported | Supported |
+| **Synchronous Interactions (Signals)** | Supported | Supported |
+| **Batch Processing** | Supported | Supported |
+| **AI/Agent Orchestration** | Supported | Supported |
+| **TLS** | Supported | Supported |
+| **Tenancy/Context Propagation** | Supported | Supported |
+| **Persistence** | Cassandra, MySQL, PostgreSQL | Cassandra, MySQL, PostgreSQL |
+| **Visibility** | OpenSearch, Elasticsearch, Pinot, and above DBs | OpenSearch, Elasticsearch, and above DBs |
+| **Data Encryption** | Client-side encryption | Client-side encryption |
+| **Local Development** | CLI or Docker | CLI or Docker |
+| **Multi-Region** | Global Namespaces (Multi-cluster replication) | Global Namespaces (Multi-cluster replication) |
+| **Observability** | Prometheus/Grafana Web UI (MultiEnvironment, Batch Operations) | Prometheus/Grafana Web UI (Single Environment) |
+| **Pricing Model** | Infrastructure-based (Nodes/Storage) | Pay-per-Action (State transitions) |
+| **TEMPORAL IS BETTER** |  |  |
+| **Payload Metadata** | Workflows, Activities, Signals | Workflows, Activities, Signals, Decisions |
+| **SDKs** | Go, Java, Python, TS (in progress) | Go, Java, Python, TS, .NET, Ruby, PHP |
+| **Schedules** | In progress | Supported |
+| **Multi-application workloads** | Custom | via Nexus |
+| **Provisioning** | Helm Charts | Helm Charts, K8s Operator |
+| **Unknown** |  |  |
+| **Multi-tenancy** | Environments with 2K+ domains Auto noisy neighbor isolation features | *No shared data* |
+| **Replication Latency** | 2s (Cassandra) | *No shared data* |
+| **CADENCE IS BETTER** |  |  |
+| **Managed Cost** | [78% cheaper](https://www.instaclustr.com/blog/cadence-vs-temporal-understanding-workflow-orchestration-and-temporal-cloud-pricing/) for the same scale |  |
+| **Management** | Self-host, AWS/Azure/GCP (separate or users' own env) | Self-host, Temporal Cloud |
+| **Governance** | CNCF Sandbox (Community-led) | Commercial (Temporal Technologies) |
+| **Domains** | Active-Active | Active-Passive |
+| **Custom Workflow Controls** | Supported | Not Supported |
+| **Zonal Isolation** | Supported | Not Supported |
+| **Adaptive User Workload Scaling** | Adaptive Tasklist Partitions, Worker Autoscaling | Worker Autoscaling |
+| **Max Throughput** | Higher limits achieved with secondary sharding using multiple DB instances | Limited by the storage technology |
+| **Async Workflows** | Supported (allows starting/signaling millions of workflows per second) | Not Supported |
+| **Quota Management** | Global Ratelimiters; guaranteed quotas | Per host, traffic skews create quota bottlenecks |
+| **Rate Limit Granularity** | Down to Per Workflow Rate Limits (Least possible disruption against noisy neighbors) | Down to Per Domain Rate Limits |
+| **Test Traffic Region Forwarding** | Supported | Not Supported |
+
+*Note that this is a live document which is expected to be updated with changing features from both sides. You can raise a PR to update in the [Cadence-Docs repo](https://github.com/cadence-workflow/Cadence-Docs) as well as find the update history.*
+
+**Why does the gap exist in the first place?**
+
+Since the separation of Cadence and Temporal, the two projects have focused on distinct operation goals. Temporal prioritized expanding its ecosystem and broadening its user base. In contrast, Cadence focused on deep investments in reliability, scalability, and cost-efficiency to keep pace with exponential growth within massive production environments.
+
+The impact of this focus is best illustrated by the project’s evolution at Uber. At the time these projects diverged, Uber managed fewer than 100 domains; today, that figure has grown to over 4,000. Currently, a single Cadence environment can host more than 2,000 domains with total isolation, ensuring zero “noisy neighbor” issues even at this extreme scale.
+
+## Background
+
+Temporal is a fork of Cadence that exists as an independent Github repository instead of a linked project.
+
+Cadence leverages the expertise of the original Amazon SWF ([2012](https://aws.amazon.com/about-aws/whats-new/2012/02/21/aws-announces-swf/)) and Azure Durable Functions ([2017](https://arxiv.org/abs/1807.11248)) creators. You can explore the [history of this architecture](https://temporal.io/blog/building-resilient-workflows-from-azure-to-cadence-to-temporal) or view the [licensing documentation](https://github.com/cadence-workflow/cadence-java-client/blob/master/LICENSE.txt) that confirms its foundational roots in SWF.
+
+Both projects are currently active and receive regular maintenance. However, since 2019, they have diverged to meet different market demands. Neither is objectively superior; they are simply optimized for different outcomes, as detailed in the comparison below.
+
+## Vendor Lock Concerns
+
+This represents the most significant difference between the two projects. A common issue when open-source software is forked for commercial sale. 
+
+In many cases, vendors gate premium features under different names to create “vendor lock-in,” securing lifetime business relationships. For technologies like these, which rely on SDKs and are deeply integrated into your codebase, the cost of a later migration is exceptionally high.
+
+Similarly, vendors may offer open-source versions but reserve the most critical features and improvements exclusively for their managed solutions.
+
+While single-vendor dependency carries long-term risks for pricing and support, fully open-source projects like Cadence are community-owned. This ensures you have the freedom to self-host or choose from multiple service providers. This commitment to transparency and independence is the primary reason the Cadence project continues to see active investment and maintenance.
+
+## Open Source & Open Governance
+
+[Cadence](https://www.cncf.io/projects/cadence-workflow/) is a [CNCF](https://www.cncf.io/) project under [the Linux Foundation](https://www.linuxfoundation.org/) with an [Excellent Health Score](https://insights.linuxfoundation.org/project/cadence). It operates under an [open governance structure](https://cadenceworkflow.io/community/governance) with an ecosystem that includes \~150 companies. At Uber alone, Cadence facilitates billions of workflows and hundreds of billions of updates every month ([Adopters List](https://github.com/cadence-workflow/cadence/blob/master/ADOPTERS.md), [Scale Overview](https://www.youtube.com/watch?v=UmCFfEpAqNg), [Uber Case Study](https://www.youtube.com/watch?v=-qj_Lb_basY), [Cloudera Integration](https://docs.cloudera.com/machine-learning/1.5.4/quota-management/topics/ml-quota-mgt-enable.html)).
+
+These factors are essential when evaluating project maturity, risk, and long-term viability. The Cadence project features maintainers and contributors from a wide range of companies, with advancement based on commitment and past contributions. Any company or individual can start as a contributor and rise to the Technical Steering Committee by meeting eligibility requirements and gaining approval from official members.
+
+This is a proven model that builds a healthy ecosystem where the companies most involved in the project can participate in decision-making, rather than simply requesting features from a vendor. This commitment to meritocracy and diversity ensures that the resulting open-source projects are truly best-in-class.
+
+Because over 90% of Cadence maintainers and contributors are also active users, the project focuses on building superior software without the bias of commercial profit motives. This user-first perspective drives high-impact projects like the [worker autoscaler](https://cadenceworkflow.io/blog#cadence-worker-auto-scaler), which optimizes workers operating outside of Cadence, and automated [noisy neighbor isolation](https://cadenceworkflow.io/blog#history-queues-v2), which allows multiple Cadence domains to be hosted in a single environment without disruption.
+
+## Managed Solutions & Pricing
+
+Managed Temporal is provided by Temporal Technologies, while managed Cadence is offered by Instaclustr by NetApp. Since Cadence’s inclusion in the CNCF, interest in managed hosting options has surged as more organizations look for enterprise-grade support ([Community Discussion](https://github.com/cadence-workflow/cadence/issues/7830)).
+
+Managed Cadence can be [approximately 80% more cost-effective](https://www.instaclustr.com/blog/cadence-vs-temporal-understanding-workflow-orchestration-and-temporal-cloud-pricing/) than Temporal for comparable configurations. This is primarily due to the Cadence pricing model, which is based on resource usage (CPU, memory, and disk) rather than "per-call" metrics. At high scales, this host-based approach is far more efficient and predictable than call-based pricing. Furthermore, Cadence offers the flexibility of on-premises deployment and support-only contracts. Our maintainers partner closely with all vendors to ensure the success of every deployment.
+
+In addition to vendor options, Cadence maintainers provide direct, voluntary assistance to help users navigate the journey from their first local run to a successful production launch. This community-led onboarding is a completely free resource for those getting started. You can reach us through our primary [CNCF \#cadence-users channel](https://communityinviter.com/apps/cloud-native/cncf) or our [dedicated Slack workspace](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ). As with the best open-source projects, we believe that investing in our users' success today drives the future contributions that keep the ecosystem thriving.
