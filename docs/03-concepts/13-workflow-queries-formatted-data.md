@@ -62,7 +62,7 @@ Your workflow has internal state. What if your users could see it *and* act on i
 
 </details>
 
-Cadence Web renders **markdown** returned by workflow queries. Add three MarkDoc tags ([`{% signal %}`](#-signal-), [`{% start %}`](#-start-), [`{% image %}`](#-image-)) and your query response becomes a live ops dashboard. Below, we'll build one from scratch in three steps. See the full [Tag Reference](#tag-reference) for all attributes.
+Cadence Web renders **markdown** returned by workflow queries. Add three Markdoc tags ([`{% signal %}`](#-signal-), [`{% start %}`](#-start-), [`{% image %}`](#-image-)) and your query response becomes a live ops dashboard. Below, we'll build one from scratch in three steps. See the full [Tag Reference](#tag-reference) for all attributes.
 
 ---
 
@@ -204,7 +204,8 @@ Or start a fresh workflow:
 
 ### Sized Images
 
-Standard markdown images (`![alt](url)`) work, but offer no size control. The `{% image %}` tag lets you set width and height. It also exists because Cadence Web strips raw HTML from query responses for security purposes.
+Standard markdown images (`![alt](url)`) work, but offer no size control. The `{% image %}` tag lets you set width and height. It also exists because Cadence Web strips raw HTML from query responses to prevent XSS, so `<img>` tags in your markdown will not render.
+
 ```markdown
 {% image src="https://cadenceworkflow.io/img/cadence-logo.svg" alt="Cadence Logo" width="200" /%}
 ```

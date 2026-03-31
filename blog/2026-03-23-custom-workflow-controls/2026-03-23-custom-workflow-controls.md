@@ -26,9 +26,9 @@ No separate admin panel. No CLI copy-paste. Just your workflow's state, live and
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/SLlOk_BbtKo?si=YPL9F4ZM8ZlHlxh5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-## Three MarkDoc Tags, Endless Possibilities
+## Three Markdoc Tags, Endless Possibilities
 
-Cadence Web uses [Markdoc](https://markdoc.dev/) (by Stripe) to safely render your markdown. We've added three custom tags:
+We've added three custom tags:
 
 | Tag | What It Does |
 |-----|--------------|
