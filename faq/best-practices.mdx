@@ -53,7 +53,7 @@ In an extreme case, if all workflows hash to the same shard where it receives ma
 In the case of scheduled work that happens at every given frequency (etc. end of month backfill), we encourage the use of Async API and/or Jitter start which prevents massive traffic hitting the server at the same time.
 
 ## Unsuitable Use Cases
-It's important to know that Cadence comes two overheads:
+It's important to know that Cadence comes with two overheads:
 - Storage: Every step (decisions, activities, signals, timers, ...) is stored in a DB. 
 - Async: Because every step is stored and every next step is queued in Cadence servers, this comes with a small (low milliseconds) latency cost.
 
