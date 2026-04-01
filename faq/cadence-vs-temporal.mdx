@@ -46,6 +46,7 @@ This document is to address a popular inquiry from potential Cadence users.
 | **Adaptive User Workload Scaling** | Adaptive Tasklist Partitions, Worker Autoscaling | Worker Autoscaling |
 | **Max Throughput** | Higher limits achieved with secondary sharding using multiple DB instances | Limited by the storage technology |
 | **Async Workflows** | Supported (allows starting/signaling millions of workflows per second) | Not Supported |
+| **Batch Futures** | Built-in | Custom (user needs to implement it) |
 | **Quota Management** | Global Ratelimiters; guaranteed quotas | Per host, traffic skews create quota bottlenecks |
 | **Rate Limit Granularity** | Down to Per Workflow Rate Limits (Least possible disruption against noisy neighbors) | Down to Per Domain Rate Limits |
 | **Test Traffic Region Forwarding** | Supported | Not Supported |
