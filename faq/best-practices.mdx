@@ -1,0 +1,63 @@
+---
+layout: default 
+title: Bad Patterns and Best Practice Alternatives
+permalink: /faq/best-practices
+---
+
+## Using Cadence as a Database
+
+Cadence is a workflow orchestration engine that makes complex state machine management significantly simpler. Payload in Cadence workflows is intended for a small size (ideally \<1 MB) of parameters, which are inputs to workflows and activities. 
+
+A common misconception is to use Cadence as a database where the user stores business critical information via this payload and queries from outside. Correct usage should be to query the “state of a workflow” and store business critical data in a separate database.
+
+Regarding the size limitation, it exists because Cadence uses hot storage (e.g. Cassandra) with hundreds of thousands of queries per second. Hot storages are known to perform poorly when the payload size is high.
+
+## Non Deterministic Functions / Structures
+
+Non-deterministic code results in a different workflow execution each time, therefore replays will fail with non-deterministic errors (see the [Guide about Non-Determinism](https://github.com/cadence-workflow/cadence/blob/master/docs/non-deterministic-error.md)). Typical non-deterministic objects:
+
+* Time.now calls would return a different result each time. Therefore your workflow logic (not the activity logic) cannot depend on time objects. You can use Workflow.Now/Workflow.Sleep APIs or you can use time objects inside the activities as long as your activities still stay idempotent.  
+  * Python SDK: Use workflow.sleep instead of asyncio.sleep (currently)  
+* More generic to the guideline above, your workflow logic shouldn’t depend on an external source like files, network calls etc.  
+* Workflow logic shouldn’t use objects like a map that the iteration would be in a different order each time.  
+* Workflow logic shouldn’t use native multithreading in the code to avoid non-determinism; instead it should use following:  
+  * Go SDK: Use Workflow.Go instead of go func()  
+  * Java SDK: Use [Promise and CompletablePromise](https://github.com/cadence-workflow/cadence-java-client/blob/f9baec2bd0800fd0c5b12111d7b108d9f4f43de2/src/main/java/com/uber/cadence/workflow/Workflow.java#L367) instead of       java.util.concurrent.Future and java.util.concurrent.CompletableFuture.  
+  * Python SDK: compatible with asyncio package to run workflow asynchronously. In the background, we implemented our own eventloop to achieve determinism.   
+* You should avoid using non-deterministic data types like hashmaps where the iteration order could be different each time.
+
+## Backward Incompatible Deployments
+
+Should be both backward compatible. When you are deploying a new code, you need to make sure already working workflows will generate the same state machine. Otherwise, replays will fail with non-deterministic errors. 
+
+You need to avoid non-deterministic errors in case you need to rollback but this may not be possible every time since old code may not handle the workflows started with the new code. When you get non-deterministic errors due to rollbacks; you’d need to reset or terminate your workflows. You can use our [replayers and shadowers](https://cadenceworkflow.io/docs/codelabs/workflow-tests-go-replayer-shadower) to avoid backward-incompatibility.
+
+## Idempotent Workflows and Activities
+
+Idempotency is defined as a function or a service returning the result for the same parameters. Your workflows and activities need to be idempotent. 
+
+We have already discussed the workflow non-determinism problem above. 
+
+Cadence guarantees it will run an activity at-least-once. The issue with activities occurs when you fail over your service and replication hasn’t caught up yet. Your activity might run again in the new region; therefore you need to build guards against that. For example, activities like executing a bank transaction, this could cause the double withdrawal/deposit issue. You need to add something like a unique transaction id so it would return the same response but it wouldn’t execute the same transaction twice.
+
+## Highly Active Workflows
+
+Cadence is a sharded system where the traffic is sharded based on workflow ids. In critical tables primary keys are based on workflow or run ids. 
+
+Ideally you want to distribute your workload with separate workflows with separate ids, so the hash of the workflow ids would map to a different shard. 
+
+In an extreme case, if all workflows hash to the same shard where it receives many updates per second, Cadence won’t scale because it will use the same resource in the DB. 
+
+## Spiky traffic
+
+In the case of scheduled work that happens at every given frequency (etc. end of month backfill), we encourage the use of Async API and/or Jitter start which prevents massive traffic hitting the server at the same time.
+
+## Unsuitable Use Cases
+It's important to know that Cadence comes with two overheads:
+- Storage: Every step (decisions, activities, signals, timers, ...) is stored in a DB. 
+- Async: Because every step is stored and every next step is queued in Cadence servers, this comes with a small (low milliseconds) latency cost.
+
+There are some cases that would simply not work well with these overheads. For example, building a multiplayer video game such as Counter-Strike with Cadence where every ms is important would not be the best choice.
+
+## Unsure about your case?
+Please reach out to the Cadence maintainers through Github or Slack so we can help you. See [our support page](https://cadenceworkflow.io/community/support) for more information.
