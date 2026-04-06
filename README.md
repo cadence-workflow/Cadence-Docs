@@ -30,6 +30,28 @@ npm run build
 
 This command generates static content into the `build` directory and can be served using any static contents hosting service.
 
+### Preview the production / GitHub Pages build
+
+Our [website](https://cadenceworkflow.io) is deployed by using GitHub pages, which are static HTML pages generated from the codebase. Before you land your changes you need to check how they are going to look like in the website. Here are the steps to perform that test:
+
+Run this once:
+
+```console
+chmod +x scripts/preview-github-pages-build.sh
+```
+
+Run this before every test:
+
+```console
+./scripts/preview-github-pages-build.sh --serve      # then open http://localhost:4173/
+```
+
+Alternatively, you can run the following:
+
+```console
+npm run preview:github-pages -- --serve
+```
+
 ### Environment Variables
 
 In order to deploy to multiple environments, some configuration options in `docusaurus.config.ts` are made available for override through environment variables.
@@ -38,8 +60,9 @@ In order to deploy to multiple environments, some configuration options in `docu
 # Can be replaced by your GH pages URL, i.e., https://<userId>.github.io/
 CADENCE_DOCS_URL=https://cadenceworkflow.io
 
-# For GitHub pages deployment, it is often /<projectName>/ defaults to `/`
-BASE_URL=/cadence-docs/
+# For GitHub Pages project sites (e.g. username.github.io/Cadence-Docs/), use /<repo>/
+# Official cadenceworkflow.io build uses BASE_URL=/
+BASE_URL=/Cadence-Docs/
 
 # For GitHub pages only, this is your GitHub org/user name.
 ORGANIZATION_NAME=cadence-workflow
@@ -47,8 +70,7 @@ ORGANIZATION_NAME=cadence-workflow
 
 #### CNAME
 
-A file `static/CNAME` should be present in order to deploy to a [GitHub pages site that uses a custom domain](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site), i.e., cadenceworkflow.io.
-This file is created by the deploy action, but if deploying from a local environment, care should be taken to ensure the file exists.
+A file `static/CNAME` should be present to use a [custom domain for GitHub Pages](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site) (e.g. cadenceworkflow.io). The deploy workflow creates it from **`secrets.CUSTOM_DOMAIN`** (`finnp/create-file-action`).
 
 ### Deployment
 
