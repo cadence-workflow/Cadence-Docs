@@ -6,7 +6,7 @@ permalink: /faq/best-practices
 
 ## Using Cadence as a Database
 
-Cadence is a workflow orchestration engine that makes complex state machine management significantly simpler. Payload in Cadence workflows is intended for a small size (ideally \<1 MB) of parameters, which are inputs to workflows and activities. 
+Inputs to Workflows, Activities, and Signals are intended to be a small size (ideally \<1 MB). 
 
 A common misconception is to use Cadence as a database where the user stores business critical information via this payload and queries from outside. Correct usage should be to query the “state of a workflow” and store business critical data in a separate database.
 
@@ -17,18 +17,18 @@ Regarding the size limitation, it exists because Cadence uses hot storage (e.g. 
 Non-deterministic code results in a different workflow execution each time, therefore replays will fail with non-deterministic errors (see the [Guide about Non-Determinism](https://github.com/cadence-workflow/cadence/blob/master/docs/non-deterministic-error.md)). Typical non-deterministic objects:
 
 * Time.now calls would return a different result each time. Therefore your workflow logic (not the activity logic) cannot depend on time objects. You can use Workflow.Now/Workflow.Sleep APIs or you can use time objects inside the activities as long as your activities still stay idempotent.  
-  * Python SDK: Use workflow.sleep instead of asyncio.sleep (currently)  
-* More generic to the guideline above, your workflow logic shouldn’t depend on an external source like files, network calls etc.  
-* Workflow logic shouldn’t use objects like a map that the iteration would be in a different order each time.  
+* More generic to the guideline above, your workflow logic shouldn’t depend on an external source like files, network calls etc.
 * Workflow logic shouldn’t use native multithreading in the code to avoid non-determinism; instead it should use following:  
   * Go SDK: Use Workflow.Go instead of go func()  
-  * Java SDK: Use [Promise and CompletablePromise](https://github.com/cadence-workflow/cadence-java-client/blob/f9baec2bd0800fd0c5b12111d7b108d9f4f43de2/src/main/java/com/uber/cadence/workflow/Workflow.java#L367) instead of       java.util.concurrent.Future and java.util.concurrent.CompletableFuture.  
+  * Java SDK: Use [Promise and CompletablePromise](https://github.com/cadence-workflow/cadence-java-client/blob/f9baec2bd0800fd0c5b12111d7b108d9f4f43de2/src/main/java/com/uber/cadence/workflow/Workflow.java#L367) instead of `java.util.concurrent.Future` and `java.util.concurrent.CompletableFuture`.  
   * Python SDK: compatible with asyncio package to run workflow asynchronously. In the background, we implemented our own eventloop to achieve determinism.   
 * You should avoid using non-deterministic data types like hashmaps where the iteration order could be different each time.
 
+In some cases, users do need to use a non-deterministic structure or a function. [Cadence side effects](https://cadenceworkflow.io/docs/go-client/side-effect) allow them to be used in a deterministic way where the first response is saved for the later replays.
+
 ## Backward Incompatible Deployments
 
-Should be both backward compatible. When you are deploying a new code, you need to make sure already working workflows will generate the same state machine. Otherwise, replays will fail with non-deterministic errors. 
+When you are deploying a new code, you need to make sure already working workflows will generate the same state machine. Otherwise, replays will fail with non-deterministic errors. 
 
 You need to avoid non-deterministic errors in case you need to rollback but this may not be possible every time since old code may not handle the workflows started with the new code. When you get non-deterministic errors due to rollbacks; you’d need to reset or terminate your workflows. You can use our [replayers and shadowers](https://cadenceworkflow.io/docs/codelabs/workflow-tests-go-replayer-shadower) to avoid backward-incompatibility.
 
@@ -50,7 +50,7 @@ In an extreme case, if all workflows hash to the same shard where it receives ma
 
 ## Spiky traffic
 
-In the case of scheduled work that happens at every given frequency (etc. end of month backfill), we encourage the use of Async API and/or Jitter start which prevents massive traffic hitting the server at the same time.
+In the case of scheduled work that happens at every given frequency (e.g. end of month backfill), we encourage the use of Async API and/or Jitter start which prevents massive traffic hitting the server at the same time.
 
 ## Unsuitable Use Cases
 It's important to know that Cadence comes with two overheads:

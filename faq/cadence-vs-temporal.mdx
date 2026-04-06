@@ -9,9 +9,9 @@ This document is to address a popular inquiry from potential Cadence users.
 
 ## Feature Comparison
 
+### Similar/Common in Both
 | Feature | Cadence | Temporal |
 | ----- | ----- | ----- |
-| **COMMON IN BOTH** |  |  |
 | **Long Running Workflows** | Supported | Supported |
 | **Distributed Cron** | Supported | Supported |
 | **Singleton in Distributed Env** | Supported | Supported |
@@ -27,16 +27,27 @@ This document is to address a popular inquiry from potential Cadence users.
 | **Multi-Region** | Global Namespaces (Multi-cluster replication) | Global Namespaces (Multi-cluster replication) |
 | **Observability** | Prometheus/Grafana Web UI (MultiEnvironment, Batch Operations) | Prometheus/Grafana Web UI (Single Environment) |
 | **Pricing Model** | Infrastructure-based (Nodes/Storage) | Pay-per-Action (State transitions) |
-| **TEMPORAL IS BETTER** |  |  |
+
+
+### Temporal is Better
+| Feature | Cadence | Temporal |
+| ----- | ----- | ----- |
 | **Payload Metadata** | Workflows, Activities, Signals | Workflows, Activities, Signals, Decisions |
 | **SDKs** | Go, Java, Python, TS (in progress) | Go, Java, Python, TS, .NET, Ruby, PHP |
 | **Schedules** | In progress | Supported |
 | **Multi-application workloads** | Custom | via Nexus |
 | **Provisioning** | Helm Charts | Helm Charts, K8s Operator |
-| **Unknown** |  |  |
+
+
+### No Shared Temporal Data
+| Feature | Cadence | Temporal |
+| ----- | ----- | ----- |
 | **Multi-tenancy** | Environments with 2K+ domains Auto noisy neighbor isolation features | *No shared data* |
 | **Replication Latency** | 2s (Cassandra) | *No shared data* |
-| **CADENCE IS BETTER** |  |  |
+
+### Cadence is Better
+| Feature | Cadence | Temporal |
+| ----- | ----- | ----- |
 | **Managed Cost** | [78% cheaper](https://www.instaclustr.com/blog/cadence-vs-temporal-understanding-workflow-orchestration-and-temporal-cloud-pricing/) for the same scale |  |
 | **Management** | Self-host, AWS/Azure/GCP (separate or users' own env) | Self-host, Temporal Cloud |
 | **Governance** | CNCF Sandbox (Community-led) | Commercial (Temporal Technologies) |
@@ -91,6 +102,6 @@ Because over 90% of Cadence maintainers and contributors are also active users, 
 
 Managed Temporal is provided by Temporal Technologies, while managed Cadence is offered by Instaclustr by NetApp. Since Cadence’s inclusion in the CNCF, interest in managed hosting options has surged as more organizations look for enterprise-grade support ([Community Discussion](https://github.com/cadence-workflow/cadence/issues/7830)).
 
-Managed Cadence can be [approximately 80% more cost-effective](https://www.instaclustr.com/blog/cadence-vs-temporal-understanding-workflow-orchestration-and-temporal-cloud-pricing/) than Temporal for comparable configurations. This is primarily due to the Cadence pricing model, which is based on resource usage (CPU, memory, and disk) rather than "per-call" metrics. At high scales, this host-based approach is far more efficient and predictable than call-based pricing. Furthermore, Cadence offers the flexibility of on-premises deployment and support-only contracts. Our maintainers partner closely with all vendors to ensure the success of every deployment.
+Managed Cadence can be [approximately 78% more cost-effective](https://www.instaclustr.com/blog/cadence-vs-temporal-understanding-workflow-orchestration-and-temporal-cloud-pricing/) than Temporal for comparable configurations. This is primarily due to the Cadence pricing model, which is based on resource usage (CPU, memory, and disk) rather than "per-call" metrics. At high scales, this host-based approach is far more efficient and predictable than call-based pricing. Furthermore, Cadence offers the flexibility of on-premises deployment and support-only contracts. Our maintainers partner closely with all vendors to ensure the success of every deployment.
 
 In addition to vendor options, Cadence maintainers provide direct, voluntary assistance to help users navigate the journey from their first local run to a successful production launch. This community-led onboarding is a completely free resource for those getting started. You can reach us through our primary [CNCF \#cadence-users channel](https://communityinviter.com/apps/cloud-native/cncf) or our [dedicated Slack workspace](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ). As with the best open-source projects, we believe that investing in our users' success today drives the future contributions that keep the ecosystem thriving.
