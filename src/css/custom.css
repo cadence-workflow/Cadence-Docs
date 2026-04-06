@@ -6,7 +6,11 @@
 
 @import url('fonts.css');
 
-:root {
+/*
+ * Use html[data-theme='…'] so these beat later :root blocks from Infima after
+ * CSS splitting (production / GitHub Pages); :root and [data-theme] alone tie on specificity.
+ */
+html[data-theme='light'] {
   /*
   Verdana could provide good fallback.
   UberMove-Bold used for headings,
@@ -30,7 +34,11 @@
   --ifm-code-font-size: 100%; /* Ensure code font size is clear and legible */
   --docusaurus-highlighted-code-line-bg: rgba(91, 70, 54, 0.1); /* Subtle highlight for code lines */
 }
-[data-theme='dark'] {
+
+html[data-theme='dark'] {
+  --ifm-font-family-base: UberMoveText, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --ifm-font-family-monospace: UberMoveMono, UberMove, UberMoveText, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --ifm-heading-font-family: UberMove, UberMoveMono, "Lucida Console", Monaco, monospace;
 
   --ifm-font-color-base: #FFE6CC;
   --ifm-link-color: #FFF8E7;
@@ -42,21 +50,23 @@
   --ifm-color-primary-light: #4A3B2D; /* A subtle brown shade for UI elements */
   --ifm-color-primary-lighter: #5B4636; /* Rich brown for secondary elements */
   --ifm-color-primary-lightest: #FFF8E7; /* Cosmic Latte as the highlight */
+  --ifm-code-font-size: 100%;
   --docusaurus-highlighted-code-line-bg: rgba(255, 230, 204, 0.1); /* Warm tone for code line highlights */
 }
 
-.hero.hero--primary[data-theme='light'] {
+html[data-theme='light'] .hero.hero--primary {
   --ifm-hero-background-color: #1A140E; /* A warm background color for hero sections */
 }
-.hero.hero--primary[data-theme='dark'] {
-  --ifm-hero-background-color: #FFE6CC; /* A darker background color for dark mode hero sections */
+
+html[data-theme='dark'] .hero.hero--primary {
+  --ifm-hero-background-color: #FFE6CC; /* Hero background in dark mode */
 }
 
 /* https://docusaurus.io/docs/search */
-[data-theme='light'] .DocSearch  {
+html[data-theme='light'] .DocSearch {
   --docsearch-highlight-color: #276ef1; /* Highlight color for search results */
 }
 
-[data-theme='dark'] .DocSearch {
+html[data-theme='dark'] .DocSearch {
   --docsearch-highlight-color: #276ef1; /* Highlight color for search results */
 }
