@@ -135,6 +135,19 @@ const config: Config = {
       } satisfies DocsOptions,
     ],
     [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'faq',
+        path: 'faq',
+        routeBasePath: 'faq',
+        editUrl: 'https://github.com/cadence-workflow/Cadence-Docs/edit/master/faq/',
+        remarkPlugins: [npm2yarn],
+        sidebarPath: './sidebarsFAQ.js',
+        showLastUpdateAuthor: true,
+        showLastUpdateTime: true,
+      } satisfies DocsOptions,
+    ],
+    [
       '@docusaurus/plugin-client-redirects',
       {
         // redirects here only work in production build, not development
@@ -277,6 +290,12 @@ const config: Config = {
           activeBaseRegex: `/community/`,
         },
         {
+          to: '/faq/best-practices',
+          label: 'FAQ',
+          position: 'left',
+          activeBaseRegex: `/faq/`,
+        },
+        {
           type: 'dropdown',
           position: 'right',
           label: 'Repositories',
@@ -335,6 +354,23 @@ const config: Config = {
             {
               label: 'LinkedIn',
               href: 'https://www.linkedin.com/company/cadenceworkflow/',
+            },
+          ],
+        },
+        {
+          title: 'FAQ',
+          items: [
+            {
+              label: 'Bad Patterns and Best Practice Alternatives',
+              to: '/faq/best-practices',
+            },
+            {
+              label: 'Cadence vs Temporal',
+              to: '/faq/cadence-vs-temporal',
+            },
+            {
+              label: 'How to Add a New FAQ',
+              to: '/faq/how-to-add-a-new-faq',
             },
           ],
         },
