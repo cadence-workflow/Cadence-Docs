@@ -1,0 +1,241 @@
+---
+title: "1 Day, 2 Engineers, 3 Lines of Code"
+description: "How the new Cadence Shard Manager Found and Mitigated a Latent Deadlock"
+
+date: 2026-03-21
+authors: [jakobht, eleonoradgr]
+tags:
+  - shard-manager, matching
+---
+
+import LogHistogram from './LogHistogram';
+import { logData, matchingLogHistData } from './LogHistogram/data';
+import ArchitectureFlow from './ArchitectureFlow';
+import LogTable from './LogTable';
+import { logTableData, matchingLogData } from './LogTable';
+import TimeSeriesChart from './TimeSeriesChart';
+import { podCountData } from './TimeSeriesChart/data';
+import LogTimeline from './LogTimeline';
+import { leadershipLogs } from './LogTimeline/data';
+import { heartbeatData } from './TimeSeriesChart/heartbeatData';
+import { cpuData } from './TimeSeriesChart/cpuData';
+
+## How the new Cadence Shard Manager Found and Mitigated a Latent Deadlock
+
+A brief database hiccup in our staging environment revealed a deadlock that had
+been hiding in the Cadence Matching service. Two engineers found and
+fixed it in a day — and the new Shard Manager automatically kept the
+system running while they did. Here's how we did it.
+
+Over the past year the Cadence team has been working on a new Shard Manager
+service. This service will eventually replace the existing hash ring based routing
+mechanism with a centralized component. To understand the problem we solved,
+first we need to understand the new architecture.
+
+### Shard Manager Architecture
+
+Cadence has two sharded services,
+Matching and History. In this blog post we will focus on the Matching service.
+
+In the Matching service the shards are the Cadence task lists. A single Cadence
+task list is owned by a single Matching instance, and all requests to that
+particular task list are routed to the owning instance.
+
+The new architecture with the Shard Manager has several benefits:
+
+1. It's easier to reason about which instance of Cadence Matching owns a
+   task list.
+2. Observability of the system is easier. With the HashRing based routing the
+state of the system is spread across all instances of all the Cadence services.
+Meaning even subtle issues are very hard to debug and reason about.
+3. A centralized component makes it possible to manage shards intelligently. For
+example, we can now move shards between instances to balance the load. We can
+isolate bad shards, and we can drain bad hosts.
+
+The shard manager architecture looks like this.
+
+<ArchitectureFlow />
+
+The Matching instances heartbeat periodically to the Shard Manager, the Shard Manager keeps
+track of the live instances. It assigns the shards to the instances, and in the
+heartbeat responses it sends the shards currently assigned to the instances.
+On every change to the shard assignments it pushes the new assignments to the
+Frontend services, so the services have a full routing map. When the Frontend
+service receives a request it can route it directly to the instance owning the task
+list.
+
+### The Incident
+
+We have been rolling out the new Shard Manager service to our environments for a
+few weeks, we have currently rolled out to our customer facing staging
+environments, and will roll out to production in the next few weeks.
+
+On Thursday morning we woke up to this histogram of log messages in the Shard
+Manager service:
+
+<LogHistogram data={logData} />
+
+Two spikes of thousands of error and warn messages in a very short time frame.
+Apparently resolving within 10 minutes. So what went wrong? First let's look at
+what the logs are, let's group them by message and error:
+
+<LogTable data={logTableData} />
+
+So first we get a lot of updates in the system, so many that the instances cannot keep
+up, then we start getting errors saying there are no active executors (matching
+instances). Let's check the deployment system and see if there were instances.
+
+Number of instances according to the deployment system:
+
+<TimeSeriesChart series={podCountData} yLabel="instances" yMin0 />
+
+So there were instances! Interestingly right when the errors started happening
+the number of instances dropped from 3 to 2. And when the errors stopped happening
+the number of instances went back up to 3.
+
+So it's strange, did the instance removal trigger something in the Shard
+Manager?
+
+<h3>A red herring <img src="/img/red-herring.svg" alt="red herring" style={{height: '1.2em', verticalAlign: 'middle'}} /> - leader election</h3>
+
+
+The Shard Manager elects a leader, and that leader is responsible for
+detecting stale instances and removing them, and reassigning the shards.
+
+Was the leader working? Let's check the leadership election logs of the Shard
+Manager:
+
+<LogTimeline data={leadershipLogs} />
+
+We see that the leader resigns then another instance becomes leader etc. However
+at 22:03 something interesting happens. `host-1` resigns as leader, but there is no new
+"Became leader" log. The next log message is `host-2` resigning as leader. That's
+strange, how can `host-2` resign when it didn't become leader?
+
+This thread of led to a lot of investigation, which ultimately led us to the
+conclusion;
+
+The `Became leader` log message were simply lost at some point, there was always
+a leader, it just wasn't logged.
+
+### Back to the missing executors.
+
+We now found what would turn out to be the right question; are the
+executors (Matching instances) heartbeating? If not the Shard Manager server is
+doing what it's supposed to do. Let's check the network metrics for the
+heartbeats.
+
+<TimeSeriesChart series={heartbeatData} yLabel="req/s" yMin0 />
+
+This is interesting, up until 20:40 we clearly have 3 heartbeats per second, one
+for each Matching instance, exactly like we expect, but then, after 20:40, we
+suddenly only have one heartbeat per second.
+
+And even more interesting, right when the errors started the number of
+heartbeats dropped all the way to zero. And when the errors stopped happening
+the number of heartbeats went back up to 1.
+
+But we have 3 instances, so why did two of them suddenly stop heartbeating? And
+why did the third instance continue to heartbeat?
+
+We also looked at the CPU utilization of the Matching instances, and we saw
+this:
+
+<TimeSeriesChart series={cpuData} yLabel="CPU %" />
+
+This is cool, we see that the CPU utilization was exactly the same for all three
+instances, then two stopped heartbeating, so Shard Manager moved all the shards
+to the last instance, and its CPU utilization went up. We also see that as soon
+as the replacement instances appeared the Shard Manager assigned all the shards to it.
+And then at around 22:50 there was a deploy of the Matching services, so all the
+instances got replaced and then they all started heartbeating again.
+
+### The Deadlock
+
+So, two out of three matching instances stopped heartbeating. And as soon as
+the instances were replaced all instances started heartbeating again. This is
+the telltale sign of a deadlock.
+
+We checked logs of the locked matching instances, and we saw that every second when
+they should have heartbeated they emitted a log; `still doing assignment,
+skipping heartbeat`.
+
+When an executor heartbeats the Shard Manager responds with a new assignment of
+shards. The executor then reconciles its state: it stops any shards it no longer
+owns and starts any newly assigned ones. During this reconciliation the executor
+skips heartbeating. Normally this completes in milliseconds, but in this case
+the reconciliation deadlocked, so the executor never heartbeated again.
+
+### Finding the deadlock
+
+So, we know that two instances of the matching service deadlocked at around
+20:40, let's check the logs for the matching service around that time.
+
+<LogHistogram data={matchingLogHistData} />
+
+We see a spike in both errors and warnings, let's group the logs by the message,
+and the error:
+<LogTable data={matchingLogData} />
+
+So we see errors about the database being unavailable, we then see warnings
+about task list managers (the shards managed by Shard Manager) stopping and
+restarting. As it turns out, the most interesting log message is the `get task
+list partition config from db`. Let's look at [the code around
+that:](https://github.com/jakobht/cadence/blob/bc57c106043c0b13ef242cad876e330b093e1b1b/service/matching/tasklist/task_list_manager.go#L289-L301)
+
+```go showLineNumbers
+c.logger.Info("get task list partition config from db",
+  tag.Dynamic("root-partition", c.taskListID.GetRoot()),
+  tag.Dynamic("task-list-partition-config", c.partitionConfig))
+if c.partitionConfig != nil {
+  startConfig := c.partitionConfig
+  // push update notification to all non-root partitions on start
+  c.stopWG.Add(1)
+  go func() {
+    defer c.stopWG.Done()
+    c.notifyPartitionConfig(context.Background(),
+      nil, startConfig)
+  }()
+}
+```
+
+And here we see the issue.
+- On line 7 we add one to the `stopWG` wait group. In Go, a
+  [WaitGroup](https://pkg.go.dev/sync#WaitGroup) lets you wait for a set of
+  goroutines to finish before proceeding. Here, `stopWG` is used during
+  shutdown — the task list manager won't fully stop until every goroutine
+  registered with `stopWG` has completed.
+- Then in the go routine we call the `notifyPartitionConfig` method, *and here
+  the problem is!*. We are calling `notifyPartitionConfig` with
+  `context.Background()`. The background context is a context that is never
+  cancelled, and which never times out.
+- In the `notifyPartitionConfig` method we make an RPC call, and due to the DB
+  unavailability this call hands, and since we use the background context
+  we wait forever for the response.
+
+In the `Stop` method of the `TaskListManager` we then *wait* for the stopWG,
+however since the go routine with the `notifyPartitionConfig` call is blocked
+the stopWG never finishes.
+
+This means that when the Shard Manager does the reconciliation, it will try to
+stop the task list manager, but this never finishes, and the reconciliation
+blocks heartbeating indefinitely!
+
+The fix is simple, we just need to use a context that times out, as was
+introduced in [this pull request](https://github.com/cadence-workflow/cadence/pull/7833).
+
+### Conclusion
+
+The Cadence Matching service had a latent deadlock that could be triggered by a
+transient database issue. The new Shard Manager made this visible — under the
+old hash-ring routing, the same deadlock would have caused silent degradation
+that would have been extremely difficult to diagnose.
+
+Instead, the Shard Manager detected the missing heartbeats, automatically moved
+all shards to the one healthy instance, and kept the system running while we
+investigated. When new healthy instances appeared it immediately rebalanced
+the load across them.
+
+The fix was three lines of code: replacing `context.Background()` with a
+context that has a timeout. Found in a day, by two engineers, thanks to the
+observability the Shard Manager provides.

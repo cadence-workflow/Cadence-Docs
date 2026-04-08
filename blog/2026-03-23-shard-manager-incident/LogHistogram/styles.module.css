@@ -1,0 +1,167 @@
+.container {
+  margin: 1.5rem 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;
+  position: relative;
+  z-index: 1;
+}
+
+.title {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 8px;
+  font-family: monospace;
+}
+
+.legend {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 8px;
+  font-size: 12px;
+  color: #666;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.legendDot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.chartArea {
+  display: flex;
+  position: relative;
+}
+
+.yAxis {
+  position: relative;
+  width: 40px;
+  flex-shrink: 0;
+  height: 160px;
+}
+
+.yTick {
+  position: absolute;
+  left: 0;
+  right: 0;
+  transform: translateY(50%);
+}
+
+.yLabel {
+  font-size: 10px;
+  color: #888;
+  position: absolute;
+  right: 6px;
+  transform: translateY(-50%);
+  white-space: nowrap;
+}
+
+.yGridLine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #eee;
+  pointer-events: none;
+}
+
+.barsArea {
+  flex: 1;
+  position: relative;
+  overflow: visible;
+}
+
+.bars {
+  display: flex;
+  align-items: flex-end;
+  height: 160px;
+  gap: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.barWrapper {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.barWrapper:hover .bar {
+  opacity: 0.85;
+}
+
+.barHovered {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.bar {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  min-height: 0;
+  transition: height 0.15s ease;
+}
+
+.barSegment {
+  width: 100%;
+  min-height: 0;
+}
+
+.tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 8px 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.tooltipTime {
+  font-weight: 600;
+  margin-bottom: 4px;
+  font-family: monospace;
+}
+
+.tooltipRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  padding: 1px 0;
+}
+
+.tooltipRow strong {
+  margin-left: auto;
+  padding-left: 12px;
+}
+
+.xAxis {
+  position: relative;
+  height: 24px;
+  margin-top: 4px;
+  margin-left: 0;
+}
+
+.xLabel {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: #888;
+  white-space: nowrap;
+}

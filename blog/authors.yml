@@ -147,3 +147,13 @@ assem-hafez:
   socials:
     linkedin: https://www.linkedin.com/in/assem-hafez-160553b7/
     github: Assem-Hafez
+
+eleonoradgr:
+  name: Eleonora Di Gregorio
+  title: Senior Software Engineer @ Uber
+  url: https://www.linkedin.com/in/eleonora-di-gregorio-244248167/
+  image_url: https://github.com/eleonoradgr.png
+  page: true
+  socials:
+    linkedin: https://www.linkedin.com/in/eleonora-di-gregorio-244248167/
+    github: eleonoradgr
