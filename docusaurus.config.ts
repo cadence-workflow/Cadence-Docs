@@ -284,7 +284,7 @@ const config: Config = {
           position: 'left'
         },
         {
-          to: '/community/support',
+          to: '/community/contact-us',
           label: 'Community',
           position: 'left',
           activeBaseRegex: `/community/`,
