@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkcadence=globalThis.webpackChunkcadence||[]).push([[7296],{27829(e){e.exports=JSON.parse('{"metadata":{"permalink":"/changelog","page":1,"postsPerPage":20,"totalPages":1,"totalCount":0,"blogDescription":"Keep yourself up-to-date about new features in every release","blogTitle":"Cadence changelog"}}')}}]);

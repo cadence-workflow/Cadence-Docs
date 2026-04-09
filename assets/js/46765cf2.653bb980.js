@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkcadence=globalThis.webpackChunkcadence||[]).push([[6822],{67525(e){e.exports=JSON.parse('{"name":"changelog-plugin","id":"default"}')}}]);
