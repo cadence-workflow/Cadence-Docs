@@ -94,7 +94,7 @@ export function MaintainersRow(): JSX.Element {
         githubUrl="https://github.com/zawadzkidiana"
         linkedinUrl="https://www.linkedin.com/in/diana-laura-zawadzki-9b3607202/"
       >
-        Diana grew up in Berlin, Germany, and studied Computer Science at Stanford. Before joining full-time, she interned twice at Uber: software engineering on large backend systems in San Francisco, then six months on a machine learning platform team in Amsterdam.<br />
+        Diana grew up in Berlin, Germany, and studied Computer Science at Stanford. Before joining full-time, she interned twice at Uber: the Java Monorepo team in San Francisco, then six months on the AI/ML Platform team Michelangelo in Amsterdam.<br />
         She is elated to now work full-time as a Software Engineer I on the Cadence team.<br />
         She works on distributed systems and agentic workflow orchestration and helps grow the Cadence open-source community.<br />
         As a Women @ Uber lead in San Francisco, she invests in community growth, outreach, and developer advocacy, with a focus on welcoming new contributors to Cadence and open source.
