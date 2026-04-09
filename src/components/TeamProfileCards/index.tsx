@@ -103,10 +103,8 @@ export function MaintainersRow(): JSX.Element {
         githubUrl="https://github.com/zawadzkidiana"
         linkedinUrl="https://www.linkedin.com/in/diana-laura-zawadzki-9b3607202/"
       >
-        Diana grew up in Berlin, Germany, and studied Computer Science at Stanford. Before joining full-time, she interned twice at Uber: the Java Monorepo team in San Francisco, then six months on the AI/ML Platform team Michelangelo in Amsterdam.<br />
-        She is elated to now work full-time as a Software Engineer I on the Cadence team.<br />
-        She works on distributed systems and agentic workflow orchestration and helps grow the Cadence open-source community.<br />
-        As a Women @ Uber lead in San Francisco, she invests in community growth, outreach, and developer advocacy, with a focus on welcoming new contributors to Cadence and open source.
+        Diana grew up in Berlin and studied Computer Science at Stanford. She interned on the Java Monorepo and on the Michelangelo AI/ML platform team at Uber and joined Cadence as a SWE in 2025.<br />
+        Passionate about distributed systems, agentic workflow orchestration, and growing the open-source community. She leads Women @ Uber in San Francisco and focuses on outreach and developer advocacy.
       </TeamProfileCardCol>
       <TeamProfileCardCol name="Felipe Imanishi" githubUrl="https://github.com/fimanishi" linkedinUrl="https://www.linkedin.com/in/fimanishi">
       Felipe is a Software Engineer contributing to Cadence from San Francisco. He found CS later in his career, and he is glad he did. Felipe is always looking to learn more and Cadence is provides an endless source of topics. Outside of work, Felipe is probably doing something with his two sons.
