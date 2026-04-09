@@ -230,6 +230,45 @@ const config: Config = {
       isCloseable: true,
     },
 
+    // Site-wide <meta> only. Do not set description / og:title / og:description / og:url / twitter:*
+    // here — they duplicate every page and often win over DocItem Layout PageMetadata in crawlers.
+    // Per-page: docs/blog frontmatter `description` + `keywords`; homepage uses Layout `description` in index.tsx.
+    // og:image default: themeConfig.image below. og:url + og:locale: SiteMetadata + AlternateLangHeaders.
+    // twitter:card: theme SiteMetadata sets summary_large_image.
+    metadata: [
+      {
+        name: 'keywords',
+        content:
+          'Cadence, Workflow, Orchestration, CNCF, Open Source, Community, Support, GitHub, Stack Overflow, LinkedIn, YouTube, X',
+      },
+      {property: 'og:site_name', content: 'Cadence Workflow'},
+      {property: 'og:type', content: 'website'},
+    ],
+    headTags: [
+      // Declare a <link> preconnect tag
+      {
+        tagName: 'link',
+        attributes: {
+          rel: 'preconnect',
+          href: 'https://cadenceworkflow.io',
+        },
+      },
+      // Declare some json-ld structured data
+      {
+        tagName: 'script',
+        attributes: {
+          type: 'application/ld+json',
+        },
+        innerHTML: JSON.stringify({
+          '@context': 'https://schema.org/',
+          '@type': 'Organization',
+          name: 'Cadence Workflow',
+          url: 'https://cadenceworkflow.io/',
+          logo: 'https://cadenceworkflow.io/img/cadence-logo.svg',
+        }),
+      },
+    ],
+
     algolia: {
       // The application ID provided by Algolia
       appId: 'J7SVDVT89Z',
@@ -263,7 +302,7 @@ const config: Config = {
       //... other Algolia params
     },
     // Replace with your project's social card
-    image: 'img/social-card-min.jpg',
+    image: 'img/cadence-logo.svg',
     navbar: {
       title: '',
       logo: {
