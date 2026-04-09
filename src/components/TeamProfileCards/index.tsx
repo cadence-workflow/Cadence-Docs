@@ -25,8 +25,6 @@ type ProfileProps = {
   name: string;
   children: ReactNode;
   githubUrl: string;
-  /** Static avatar under `static/img/...` (site path `/img/...`); default is GitHub profile image. */
-  avatarSrc?: string;
   xUrl?: string;
   linkedinUrl?: string;
 };
@@ -36,7 +34,6 @@ function TeamProfileCard({
   name,
   children,
   githubUrl,
-  avatarSrc,
   xUrl,
   linkedinUrl
 }: ProfileProps) {
@@ -47,7 +44,7 @@ function TeamProfileCard({
           <div className="avatar avatar--horizontal">
             <img
               className="avatar__photo avatar__photo--xl"
-              src={avatarSrc ?? `${githubUrl}.png`}
+              src={`${githubUrl}.png`}
               alt={`${name}'s avatar`}
             />
             <div className="avatar__intro">
