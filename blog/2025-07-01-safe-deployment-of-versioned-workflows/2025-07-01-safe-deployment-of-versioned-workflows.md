@@ -11,6 +11,8 @@ At Uber, we manage billions of workflows with lifetimes ranging from seconds to 
 
 To address these issues, we have made recent enhancements to [the Versioning API](https://cadenceworkflow.io/docs/go-client/workflow-versioning), enabling the safe deployment of versioned workflows by separating code changes from the activation of new logic.
 
+<!-- truncate -->
+
 ## What is a Versioned Workflow?
 
 Cadence reconstructs a workflow's execution history by replaying past events against your workflow code, expecting the exact same outcome every time. If your workflow code changes in an incompatible way, this replaying process can lead to non-deterministic errors.

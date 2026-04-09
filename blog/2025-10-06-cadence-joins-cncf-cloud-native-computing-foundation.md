@@ -13,6 +13,8 @@ tags:
 
 We’re proud to announce that [the Cadence project](https://cadenceworkflow.io/) has joined the [CNCF (Cloud Native Computing Foundation)](https://www.cncf.io/)®, the open-source foundation that hosts and maintains critical components of modern cloud-native infrastructure including Kubernetes®, Prometheus®, and Envoy® under the [Linux Foundation](https://www.linuxfoundation.org/)®.
 
+<!-- truncate -->
+
 Cadence is an open-source, fault-tolerant, and highly scalable workflow orchestration engine created at Uber to help developers build and run resilient applications. It’s been powering thousands of use cases at Uber and other companies. By managing distributed state, retries, scaling, and failure recovery, Cadence enables teams to focus on business logic rather than infrastructure complexity. Mission-critical applications across industries including finance, e-commerce, healthcare, and transportation depend on Cadence.
 
 Joining CNCF marks a significant milestone for the Cadence project, emphasizing the project’s open source commitment. With its [open governance](https://cadenceworkflow.io/community/governance), companies can join as maintainers and help improve long-term confidence. Increased transparency in roadmap and execution make upcoming features predictable.
