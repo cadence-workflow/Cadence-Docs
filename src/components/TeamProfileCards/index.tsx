@@ -98,7 +98,16 @@ export function MaintainersRow(): JSX.Element {
       <TeamProfileCardCol name="Andre Oliveira" githubUrl="https://github.com/uandreo"> </TeamProfileCardCol>
       <TeamProfileCardCol name="Assem Hafez" githubUrl="https://github.com/Assem-Uber"> </TeamProfileCardCol>
       <TeamProfileCardCol name="Bowen Xiao" githubUrl="https://github.com/bowenxia"> </TeamProfileCardCol>
-      <TeamProfileCardCol name="David Porter" githubUrl="https://github.com/davidporter-id-au"> </TeamProfileCardCol>
+      <TeamProfileCardCol
+        name="Diana Zawadzki"
+        githubUrl="https://github.com/zawadzkidiana"
+        linkedinUrl="https://www.linkedin.com/in/diana-laura-zawadzki-9b3607202/"
+      >
+        Diana grew up in Berlin, Germany, and studied Computer Science at Stanford. Before joining full-time, she interned twice at Uber: the Java Monorepo team in San Francisco, then six months on the AI/ML Platform team Michelangelo in Amsterdam.<br />
+        She is elated to now work full-time as a Software Engineer I on the Cadence team.<br />
+        She works on distributed systems and agentic workflow orchestration and helps grow the Cadence open-source community.<br />
+        As a Women @ Uber lead in San Francisco, she invests in community growth, outreach, and developer advocacy, with a focus on welcoming new contributors to Cadence and open source.
+      </TeamProfileCardCol>
       <TeamProfileCardCol name="Felipe Imanishi" githubUrl="https://github.com/fimanishi" linkedinUrl="https://www.linkedin.com/in/fimanishi">
       Felipe is a Software Engineer contributing to Cadence from San Francisco. He found CS later in his career, and he is glad he did. Felipe is always looking to learn more and Cadence is provides an endless source of topics. Outside of work, Felipe is probably doing something with his two sons.
       </TeamProfileCardCol>
