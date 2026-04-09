@@ -25,6 +25,8 @@ type ProfileProps = {
   name: string;
   children: ReactNode;
   githubUrl: string;
+  /** Static avatar under `static/img/...` (site path `/img/...`); default is GitHub profile image. */
+  avatarSrc?: string;
   xUrl?: string;
   linkedinUrl?: string;
 };
@@ -34,6 +36,7 @@ function TeamProfileCard({
   name,
   children,
   githubUrl,
+  avatarSrc,
   xUrl,
   linkedinUrl
 }: ProfileProps) {
@@ -44,7 +47,7 @@ function TeamProfileCard({
           <div className="avatar avatar--horizontal">
             <img
               className="avatar__photo avatar__photo--xl"
-              src={`${githubUrl}.png`}
+              src={avatarSrc ?? `${githubUrl}.png`}
               alt={`${name}'s avatar`}
             />
             <div className="avatar__intro">
@@ -89,6 +92,16 @@ function TeamProfileCardCol(props: ProfileProps) {
 export function MaintainersRow(): JSX.Element {
   return (
     <div className="row">
+      <TeamProfileCardCol
+        name="Diana Zawadzki"
+        githubUrl="https://github.com/zawadzkidiana"
+        linkedinUrl="https://www.linkedin.com/in/diana-laura-zawadzki-9b3607202/"
+      >
+        Diana grew up in Berlin, Germany, and studied Computer Science at Stanford. Before joining full-time, she interned twice at Uber: software engineering on large backend systems in San Francisco, then six months on a machine learning platform team in Amsterdam.<br />
+        She is elated to now work full-time as a Software Engineer I on the Cadence team.<br />
+        She works on distributed systems and agentic workflow orchestration and helps grow the Cadence open-source community.<br />
+        As a Women @ Uber lead in San Francisco, she invests in community growth, outreach, and developer advocacy, with a focus on welcoming new contributors to Cadence and open source.
+      </TeamProfileCardCol>
       <TeamProfileCardCol name="Abhishek Jha" githubUrl="https://github.com/abhishekj720" linkedinUrl="https://www.linkedin.com/in/mrjhaabhishek/">
         👋🏻 Abhishek Jha is a Software Developer for Cadence Workflows at Uber, specializing in developing robust distributed systems.<br />
         He is passionate about leveraging emerging technologies, particularly Applied AI, to enhance system reliability and scalability.<br />
