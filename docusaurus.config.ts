@@ -245,14 +245,6 @@ const config: Config = {
       {property: 'og:type', content: 'website'},
     ],
     headTags: [
-      // Declare a <link> preconnect tag
-      {
-        tagName: 'link',
-        attributes: {
-          rel: 'preconnect',
-          href: 'https://cadenceworkflow.io',
-        },
-      },
       // Declare some json-ld structured data
       {
         tagName: 'script',
@@ -302,7 +294,7 @@ const config: Config = {
       //... other Algolia params
     },
     // Replace with your project's social card
-    image: 'img/cadence-logo.svg',
+    image: 'img/social-card-min.png',
     navbar: {
       title: '',
       logo: {
