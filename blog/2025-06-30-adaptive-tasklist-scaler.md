@@ -17,6 +17,8 @@ At Uber, we previously relied on a dynamic configuration service to manually con
 
 To address these issues, we introduced a new component in the Cadence Matching service: **Adaptive Tasklist Scaler**. This component dynamically monitors tasklist traffic and adjusts partition counts automatically. Since its rollout, we've seen a significant reduction in incidents and operational overhead caused by misconfigured tasklists.
 
+<!-- truncate -->
+
 ---
 
 ## What is a Scalable Tasklist?
