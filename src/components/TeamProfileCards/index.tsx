@@ -135,7 +135,9 @@ export function MaintainersRow(): JSX.Element {
       <TeamProfileCardCol name="Tim Li" githubUrl="https://github.com/timl3136"> </TeamProfileCardCol>
       <TeamProfileCardCol name="tubignat" githubUrl="https://github.com/tubignat"> </TeamProfileCardCol>
       <TeamProfileCardCol name="Vinay Kumar Yadav" githubUrl="https://github.com/vinay116"> </TeamProfileCardCol>
-      <TeamProfileCardCol name="Vsevolod Kaloshin" githubUrl="https://github.com/arzonus"> </TeamProfileCardCol>
+      <TeamProfileCardCol name="Seva Kaloshin" githubUrl="https://github.com/arzonus" linkedinUrl="https://www.linkedin.com/in/seva-kaloshin/">
+        Seva was born and grew up in Saint Petersburg, Russia, and studied Information Security at Saint Petersburg Electrotechnical University. Throughout his career he's worked across both DevOps and backend engineering — rarely one without the other. When he's not working on Cadence, he's spending time with his wife and two kids in Denmark.
+      </TeamProfileCardCol>
     </div>
   );
 }
