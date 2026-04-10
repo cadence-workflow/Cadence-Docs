@@ -2,6 +2,16 @@
 layout: default
 title: Signals
 permalink: /docs/go-client/signals
+description: This page explains how to use signals in Cadence to send data asynchronously to running workflows, including how to receive signals via channels and use the SignalWithStart API.
+keywords:
+  - cadence signals
+  - workflow signals
+  - SignalWithStart
+  - signal channel
+  - workflow communication
+  - async workflow
+  - go client signals
+  - cadence go client
 ---
 
 :signal:Signals: provide a mechanism to send data directly to a running :workflow:. Previously, you had

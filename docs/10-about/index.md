@@ -2,6 +2,15 @@
 layout: default
 title: Contact us
 permalink: /docs/about
+description: This page provides contact and community resources for Cadence, including links to Stack Overflow, Slack, and GitHub repositories for filing issues or feature requests.
+keywords:
+  - cadence contact
+  - cadence community
+  - cadence slack
+  - cadence github
+  - cadence support
+  - cadence feature request
+  - cadence bug report
 ---
 
 If you have a question, check whether it is already answered at Stack Overflow under [cadence-workflow](https://stackoverflow.com/questions/tagged/cadence-workflow) tag.

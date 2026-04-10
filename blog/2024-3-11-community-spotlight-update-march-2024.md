@@ -1,6 +1,17 @@
 ---
 title: Cadence Community Spotlight Update - March 2024
 
+description: The March 2024 Cadence community spotlight covering the plugin system proposal, Admin API permission discussions, new Java signal workflow samples, Go client updates, and release notes for v1.2.6 and v1.2.7.
+keywords:
+  - cadence community spotlight
+  - cadence march 2024
+  - cadence plugin system
+  - cadence java samples
+  - cadence go client release
+  - cadence v1.2.6
+  - cadence v1.2.7
+  - cadence news
+
 date: 2023-03-11
 authors: kcorbett-netapp
 tags:

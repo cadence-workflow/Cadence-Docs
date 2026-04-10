@@ -2,6 +2,15 @@
 layout: default
 title: HTTP API
 permalink: /docs/concepts/http-api
+description: This page explains how to enable and use the Cadence HTTP API to interact with the Cadence server using HTTP/JSON, available from version 1.2.0 onwards.
+keywords:
+  - cadence http api
+  - cadence rest api
+  - http json cadence
+  - cadence api setup
+  - cadence rpc http
+  - start workflow http
+  - cadence server http
 ---
 
 ## Introduction

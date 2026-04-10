@@ -2,6 +2,15 @@
 layout: default
 title: Child workflows
 permalink: /docs/java-client/child-workflows
+description: This page explains how to schedule and manage child workflows from a parent workflow in Java using Cadence, including async execution and lifecycle control.
+keywords:
+  - cadence child workflow java
+  - ExecuteChildWorkflow java
+  - cadence parent child workflow
+  - cadence nested workflow java
+  - cadence child workflow async
+  - cadence java child workflow example
+  - newChildWorkflowStub java
 ---
 
 Besides :activity:activities:, a :workflow: can also orchestrate other :workflow:workflows:.

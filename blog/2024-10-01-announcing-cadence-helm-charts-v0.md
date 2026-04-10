@@ -1,6 +1,16 @@
 ---
 title: "Announcement: Cadence Helm Charts v0 Release"
 
+description: Announcing the official Cadence Kubernetes Helm Chart v0, the new standardized way to deploy and operate Cadence clusters on Kubernetes with supported configuration and Cassandra included.
+keywords:
+  - cadence helm chart
+  - cadence kubernetes deployment
+  - cadence helm v0
+  - deploy cadence kubernetes
+  - cadence k8s
+  - cadence installation
+  - cadence cluster setup
+
 date: 2024-10-01
 authors: taylanisikdemir
 tags:

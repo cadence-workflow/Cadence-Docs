@@ -2,6 +2,15 @@
 layout: default
 title: Starting workflows
 permalink: /docs/go-client/start-workflows
+description: This page explains how to start Cadence workflow executions from Go code using client.StartWorkflow, including starting by function reference or registered name.
+keywords:
+  - cadence start workflow go
+  - cadence go client StartWorkflow
+  - cadence golang start workflow
+  - cadence workflow execution go
+  - cadence go sdk start workflow
+  - start workflow programmatically cadence
+  - cadence go workflow trigger
 ---
 
 Starting workflows can be done from any service that can send requests to

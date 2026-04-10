@@ -2,6 +2,15 @@
 layout: default
 title: Grafana Helm Setup
 permalink: /docs/get-started/grafana-helm-setup
+description: This page explains how to set up Grafana monitoring for Cadence workflows on Kubernetes using Helm charts and pre-configured dashboards.
+keywords:
+  - cadence grafana
+  - cadence monitoring
+  - cadence helm grafana
+  - cadence metrics
+  - cadence prometheus
+  - cadence kubernetes monitoring
+  - grafana dashboard cadence
 ---
 
 This guide explains how to set up Grafana for monitoring Cadence workflows and services using Helm charts. Helm simplifies the deployment and management of Grafana in Kubernetes environments. Pre-configured dashboards for Cadence are available to visualize metrics effectively.

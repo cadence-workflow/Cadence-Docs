@@ -1,6 +1,17 @@
 ---
 title: "Minimizing blast radius in Cadence: Introducing Workflow ID-based Rate Limits"
 
+description: Learn how Cadence's new workflow ID-based rate limits protect multi-tenant clusters from hot shards and noisy neighbors by throttling external calls and internal actions per workflow.
+keywords:
+  - cadence rate limits
+  - workflow ID rate limiting
+  - cadence hot shard
+  - cadence noisy neighbor
+  - cadence multi-tenant
+  - cadence blast radius
+  - workflow throttling
+  - cadence cluster stability
+
 date: 2024-09-05
 authors: jakobht
 tags:

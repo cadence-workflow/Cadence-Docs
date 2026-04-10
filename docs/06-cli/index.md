@@ -2,6 +2,17 @@
 layout: default
 title: Introduction
 permalink: /docs/cli
+description: This page introduces the Cadence CLI, covering installation via Homebrew or Docker, and provides examples of domain and workflow operations including starting, signaling, querying, and resetting workflows.
+keywords:
+  - cadence cli
+  - cadence command line
+  - cadence workflow commands
+  - cadence domain commands
+  - cadence CLI tutorial
+  - workflow signal cli
+  - workflow query cli
+  - workflow reset cli
+  - cadence CLI docker
 ---
 
 The Cadence :CLI: is a command-line tool you can use to perform various :task:tasks: on a Cadence server. It can perform

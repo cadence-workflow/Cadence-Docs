@@ -2,6 +2,17 @@
 layout: default
 title: Worker auto scaling
 permalink: /docs/go-client/worker-auto-scaling
+description: This page explains how to use the Cadence Worker AutoScaler to automatically adjust poller counts based on real-time task demand, solving low CPU utilization and task list backlog problems.
+keywords:
+  - cadence worker autoscaling
+  - AutoScaler
+  - worker scaling
+  - poller count
+  - CPU utilization
+  - task list backlog
+  - worker auto scaling
+  - go client autoscaler
+  - dynamic poller management
 ---
 
 ## From Manual Tuning to Zero-Config: The AutoScaler That Eliminates Cadence Scaling Headaches

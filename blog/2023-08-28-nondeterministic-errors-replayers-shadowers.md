@@ -1,6 +1,17 @@
 ---
 title: Non-deterministic errors, replayers and shadowers
 
+description: Learn what causes non-deterministic errors in Cadence workflows and how to detect and prevent them using workflow replayers and shadowers during testing.
+keywords:
+  - cadence non-deterministic errors
+  - workflow replayer
+  - workflow shadower
+  - cadence testing
+  - cadence determinism
+  - event sourcing cadence
+  - workflow history replay
+  - cadence debugging
+
 date: 2023-08-27
 authors: chopincode
 tags:

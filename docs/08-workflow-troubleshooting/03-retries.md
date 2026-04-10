@@ -2,6 +2,16 @@
 layout: default
 title: Retries
 permalink: /docs/workflow-troubleshooting/retries
+description: This page explains how activity and workflow retries work in Cadence and covers common retry misconfiguration issues such as MaximumAttempts set to 1, expiration shorter than initial interval, and heartbeat/StartToClose timeout conflicts.
+keywords:
+  - cadence retries troubleshooting
+  - activity retry
+  - workflow retry
+  - MaximumAttempts
+  - ExpirationInterval
+  - heartbeat timeout retry
+  - retry misconfiguration
+  - cadence retry policy
 ---
 
 Cadence has a retry feature where a retry policy can be configured so that an activity or a workflow will be retried when it fails or times out.

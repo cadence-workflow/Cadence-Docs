@@ -1,6 +1,15 @@
 ---
 title: Cadence Community Spotlight Update - August 2023
 
+description: The August 2023 Cadence community spotlight highlighting new how-to blog posts, iWF ContinueAsNew guides, Helm chart contributions, and community Slack activity.
+keywords:
+  - cadence community spotlight
+  - cadence august 2023
+  - cadence iwf
+  - cadence continueAsNew
+  - cadence helm chart
+  - cadence news
+
 date: 2023-08-31
 authors: sharanf
 tags:

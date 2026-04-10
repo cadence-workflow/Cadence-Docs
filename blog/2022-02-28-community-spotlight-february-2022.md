@@ -5,6 +5,15 @@ date: 2022-02-28
 authors: sharanf
 tags:
   - community-spotlight
+description: Monthly Cadence community update for February 2022, covering the new notification service alpha release, Slack support activity, YouTube channel, contribution opportunities, and the public community calendar.
+keywords:
+  - cadence community spotlight
+  - cadence february 2022
+  - cadence community update
+  - cadence notification service
+  - cadence contributors
+  - cadence calendar
+  - cadence office hours
 ---
 
 Welcome to the Cadence Community Spotlight update!

@@ -6,6 +6,15 @@ authors: sharanf
 tags:
   - community-spotlight
   - roadmap
+description: The first Cadence Community Spotlight monthly update, covering office hours, the new Code of Conduct, the November meetup recording, and recent Cadence news and articles.
+keywords:
+  - cadence community spotlight
+  - cadence january 2022
+  - cadence community update
+  - cadence news
+  - cadence office hours
+  - cadence code of conduct
+  - cadence meetup
 ---
 
 Welcome to our very first Cadence Community Spotlight update!

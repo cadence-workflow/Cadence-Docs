@@ -2,6 +2,15 @@
 layout: default
 title: Sleep
 permalink: /docs/go-client/sleep
+description: This page explains how to use workflow.Sleep in Cadence to pause a workflow for a durable, deterministic duration that survives worker restarts without consuming worker resources.
+keywords:
+  - cadence sleep
+  - workflow.Sleep
+  - durable sleep
+  - workflow timer
+  - pause workflow
+  - workflow delay
+  - go client sleep
 ---
 
 The `workflow.Sleep` function allows a Cadence workflow to pause its execution for a specified duration. This is similar to `time.Sleep` in Go, but is safe and deterministic for use within Cadence workflows. The workflow will be paused and resumed by the Cadence service, and the sleep is durable—meaning the workflow can survive worker restarts or failures during the sleep period.

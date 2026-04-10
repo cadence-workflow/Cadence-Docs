@@ -2,6 +2,17 @@
 layout: default
 title: Queries
 permalink: /docs/go-client/queries
+description: This page explains how to query the state of a running Cadence workflow using built-in and custom query types, including consistent queries and how to register query handlers in Go.
+keywords:
+  - cadence queries
+  - workflow query
+  - query handler
+  - SetQueryHandler
+  - consistent query
+  - strong consistency query
+  - __stack_trace
+  - go client queries
+  - QueryWorkflow
 ---
 
 If a :workflow_execution: has been stuck at a state for longer than an expected period of time, you

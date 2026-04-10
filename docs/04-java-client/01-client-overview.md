@@ -2,6 +2,15 @@
 layout: default
 title: Client SDK Overview
 permalink: /docs/java-client/client-overview
+description: This page provides an overview of the Cadence Java client SDK packages, including APIs for activities, workflows, workers, and testing, along with links to JavaDoc and sample code.
+keywords:
+  - cadence java client
+  - cadence java sdk
+  - cadence java api
+  - cadence java samples
+  - java workflow sdk
+  - cadence javadoc
+  - cadence java packages
 ---
 
 - [Cadence Java Samples](https://github.com/cadence-workflow/cadence-java-samples)

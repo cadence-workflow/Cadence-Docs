@@ -2,6 +2,15 @@
 layout: default
 title: Continue as new
 permalink: /docs/go-client/continue-as-new
+description: This page explains how to use ContinueAsNew in Cadence to restart a workflow with a fresh history, preventing event history from growing too large in long-running periodic workflows.
+keywords:
+  - cadence continue as new
+  - ContinueAsNew
+  - workflow history limit
+  - periodic workflow
+  - long running workflow
+  - ContinueAsNewError
+  - go client
 ---
 
 :workflow:Workflows: that need to rerun periodically could naively be implemented as a big **for** loop with

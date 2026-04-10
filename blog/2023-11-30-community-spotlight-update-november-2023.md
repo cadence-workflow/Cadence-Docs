@@ -1,6 +1,16 @@
 ---
 title: Cadence Community Spotlight Update - November 2023
 
+description: The November 2023 Cadence community spotlight covering native authentication proposals, iWF updates, new Go v2 samples, and a year-end retrospective on the project.
+keywords:
+  - cadence community spotlight
+  - cadence november 2023
+  - cadence authentication
+  - cadence go samples
+  - cadence iwf
+  - cadence retrospective
+  - cadence news
+
 date: 2023-11-30
 authors: sharanf
 tags:

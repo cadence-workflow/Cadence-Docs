@@ -2,6 +2,15 @@
 layout: default
 title: Workflow interface
 permalink: /docs/java-client/workflow-interface
+description: This page explains how to define a Cadence workflow interface in Java using @WorkflowMethod, @SignalMethod, and @QueryMethod annotations.
+keywords:
+  - cadence java workflow interface
+  - WorkflowMethod annotation
+  - SignalMethod java
+  - QueryMethod java
+  - cadence java workflow definition
+  - java workflow annotations
+  - cadence workflow interface java
 ---
 
 :workflow:Workflow: encapsulates the orchestration of :activity:activities: and child :workflow:workflows:.

@@ -5,6 +5,16 @@ date: 2023-06-08
 authors: enderdemirkaya
 tags:
   - announcement
+description: Results of the 2023 Cadence community survey covering who uses Cadence, at what scale, what improvements users want most, and how the team plans to respond to feedback.
+keywords:
+  - cadence community survey
+  - cadence survey results
+  - cadence user feedback
+  - cadence roadmap
+  - cadence documentation improvements
+  - cadence scale
+  - cadence community
+  - cadence 2023
 ---
 
 We released a user survey earlier this year to learn about who our users are, how they use Cadence, and how we can help them. It was shared from our [Slack workspace](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ), [cadenceworkflow.io](https://cadenceworkflow.io) Blog and [LinkedIn](https://www.linkedin.com/company/cadenceworkflow/). After collecting the feedback, we wanted to share the results with our community. Thank you everyone for filling it out! Your feedback is invaluable and it helps us shape our roadmap for the future.

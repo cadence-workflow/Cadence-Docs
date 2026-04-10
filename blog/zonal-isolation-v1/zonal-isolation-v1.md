@@ -1,6 +1,17 @@
 ---
 title: "Zonal Isolation for Cadence Workflows"
 
+description: Learn how Cadence's zonal isolation feature pins workflows to the availability zone they were started in, limiting the blast radius of zone failures to a subset of workflows rather than the entire cluster.
+keywords:
+  - cadence zonal isolation
+  - cadence availability zones
+  - cadence regional resilience
+  - cadence zone failure
+  - cadence task dispatch
+  - cadence isolation group
+  - cadence zone drain
+  - cadence multi-zone
+
 subtitle: test
 
 date: 2024-10-14

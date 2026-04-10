@@ -5,6 +5,16 @@ date: 2022-11-30
 authors: sharanf
 tags:
   - community-spotlight
+description: Monthly Cadence community update for November 2022, featuring Uber's Cadence-powered push notification ML system, presentations at DeveloperWeek Enterprise and W-JAX, and recent news.
+keywords:
+  - cadence community spotlight
+  - cadence november 2022
+  - cadence community update
+  - cadence uber push notifications
+  - cadence developerweek
+  - cadence w-jax
+  - cadence conference talk
+  - cadence microservices orchestration
 ---
 
 Here’s the latest in our regular monthly Community Spotlight updates that gives you news from in and around the Cadence community!

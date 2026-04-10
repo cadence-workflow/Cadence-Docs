@@ -2,6 +2,15 @@
 layout: default
 title: Deployment
 permalink: /docs/use-cases/deployment
+description: This page explains how Cadence is used to build CI/CD pipelines and deployment workflows, including rolling upgrades, canary deployments, and rollbacks.
+keywords:
+  - cadence deployment
+  - cadence ci/cd
+  - cadence rolling upgrade
+  - cadence canary deployment
+  - cadence use case
+  - deployment workflow
+  - cadence rollback
 ---
 
 Implementing CI/CD pipelines and deployment of applications to containers or virtual or physical machines is a non-trivial process.

@@ -2,6 +2,15 @@
 layout: default
 title: Activities
 permalink: /docs/concepts/activities
+description: This page explains Cadence activities, which are the units of work that interact with external systems, along with their timeout configurations, retry policies, and heartbeating.
+keywords:
+  - cadence activities
+  - cadence activity concept
+  - activity timeout
+  - activity retry policy
+  - cadence heartbeat
+  - long running activity
+  - cadence activity worker
 ---
 
 Fault-oblivious stateful :workflow: code is the core abstraction of Cadence. But, due to deterministic execution requirements, they are not allowed to call any external API directly.

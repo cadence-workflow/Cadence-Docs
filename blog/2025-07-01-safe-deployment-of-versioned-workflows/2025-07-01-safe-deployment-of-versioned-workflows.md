@@ -1,5 +1,15 @@
 ---
 title: Safe deployments of Versioned workflows
+description: Learn how recent enhancements to the Cadence Versioning API enable safe rollouts and rollbacks of workflow code changes by separating code deployment from logic activation.
+keywords:
+  - cadence versioned workflows
+  - cadence safe deployment
+  - cadence workflow versioning
+  - cadence GetVersion
+  - cadence rollback
+  - cadence non-deterministic errors
+  - cadence workflow code change
+  - cadence forward compatibility
 authors: arzonus
 date: 2025-07-10T16:00
 tags:

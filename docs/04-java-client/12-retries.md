@@ -2,6 +2,15 @@
 layout: default
 title: Retries
 permalink: /docs/java-client/retries
+description: This page explains how to configure retry policies for Cadence activities and workflows in Java using RetryOptions, including backoff, max attempts, and expiration settings.
+keywords:
+  - cadence retry java
+  - cadence RetryOptions java
+  - cadence retry policy java
+  - activity retry java
+  - cadence backoff retry
+  - cadence workflow retry
+  - cadence java retry example
 ---
 
 :activity:Activities: and :workflow:workflows: can fail due to various intermediate conditions. In those cases, we want

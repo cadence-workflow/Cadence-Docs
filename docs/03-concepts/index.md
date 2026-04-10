@@ -2,6 +2,15 @@
 layout: default
 title: Introduction
 permalink: /docs/concepts
+description: This page introduces the core concepts of Cadence, including workflows, activities, events, queries, and deployment topology for building distributed applications.
+keywords:
+  - cadence concepts
+  - cadence introduction
+  - cadence workflows
+  - cadence activities
+  - cadence distributed applications
+  - cadence overview
+  - cadence topology
 ---
 
 Cadence is a new developer friendly way to develop distributed applications.

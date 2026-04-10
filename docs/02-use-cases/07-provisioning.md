@@ -2,6 +2,15 @@
 layout: default
 title: Infrastructure provisioning
 permalink: /docs/use-cases/provisioning
+description: This page describes how Cadence is used for infrastructure provisioning scenarios, providing fault-tolerant orchestration of long-running operations at scale with uniqueness guarantees.
+keywords:
+  - cadence provisioning
+  - infrastructure provisioning cadence
+  - cadence kubernetes provisioning
+  - cadence cloud provisioning
+  - cadence locking
+  - cadence fault tolerant provisioning
+  - cadence use case
 ---
 
 Provisioning a new datacenter or a pool of machines in a public cloud is a potentially long running operation with

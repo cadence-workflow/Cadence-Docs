@@ -1,6 +1,17 @@
 ---
 title: "Workflow Diagnostics"
 
+description: Introducing Cadence Workflow Diagnostics, an on-demand tool that analyzes workflow execution history, identifies issues like timeouts and failures, surfaces root causes, and provides actionable runbook links.
+keywords:
+  - cadence workflow diagnostics
+  - cadence stuck workflow
+  - cadence failed workflow
+  - cadence debugging tool
+  - cadence workflow issues
+  - cadence root cause analysis
+  - cadence runbook
+  - cadence diag CLI
+
 date: 2025-08-06
 authors: sankari165
 tags:

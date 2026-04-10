@@ -2,6 +2,15 @@
 layout: default
 title: Workflow Replay and Shadowing
 permalink: /docs/java-client/workflow-replay-shadowing
+description: This page explains how to use Cadence Workflow Replayer and Workflow Shadower in Java to detect incompatible workflow definition changes before they impact production traffic.
+keywords:
+  - cadence workflow replay java
+  - cadence workflow shadowing java
+  - cadence replay test java
+  - cadence non-deterministic change java
+  - cadence workflow versioning test
+  - WorkflowReplayer java
+  - cadence shadow test java
 ---
 
 In the Versioning section, we mentioned that incompatible changes to workflow definition code could cause non-deterministic issues when processing workflow tasks if versioning is not done correctly. However, it may be hard for you to tell if a particular change is incompatible or not and whether versioning logic is needed. To help you identify incompatible changes and catch them before production traffic is impacted, we implemented Workflow Replayer and Workflow Shadower.

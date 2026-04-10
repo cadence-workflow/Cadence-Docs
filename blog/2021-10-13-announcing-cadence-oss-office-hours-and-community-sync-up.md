@@ -6,6 +6,15 @@ authors: meiliang86
 tags:
   - announcement
   - roadmap
+description: Uber announces bi-weekly Cadence OSS office hours where users can talk directly with core team members about workflow design, production operations, and the Cadence roadmap.
+keywords:
+  - cadence office hours
+  - cadence community
+  - cadence oss
+  - cadence support
+  - cadence workflow
+  - cadence meetup
+  - cadence zoom
 ---
 
 Are you a current Cadence user, do you operate Cadence services, or are you interested in learning about workflow technologies and wonder what problems Cadence could solve for you? We would like to talk to you!

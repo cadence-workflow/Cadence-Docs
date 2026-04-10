@@ -5,6 +5,15 @@ date: 2022-03-31
 authors: sharanf
 tags:
   - community-spotlight
+description: Monthly Cadence community update for March 2022, highlighting the updated topology diagram, community statistics, StackOverflow usage guidelines, and recent Cadence articles and events.
+keywords:
+  - cadence community spotlight
+  - cadence march 2022
+  - cadence community update
+  - cadence topology diagram
+  - cadence stackoverflow
+  - cadence statistics
+  - cadence office hours
 ---
 
 Welcome to our Cadence Community Spotlight update!

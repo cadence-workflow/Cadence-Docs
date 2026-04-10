@@ -2,6 +2,15 @@
 layout: default
 title: Introduction
 permalink: /docs/java-client
+description: This page introduces the Cadence Java client, with links to the client repository, sample code, JavaDoc, and instructions for adding the dependency to Maven or Gradle projects.
+keywords:
+  - cadence java client introduction
+  - cadence java sdk setup
+  - cadence java dependency maven
+  - cadence java gradle
+  - cadence java client getting started
+  - cadence java repository
+  - com.uber.cadence cadence-client
 ---
 
 The following are important links for the Cadence Java client:

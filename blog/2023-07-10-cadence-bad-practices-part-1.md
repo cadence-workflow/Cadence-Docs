@@ -1,6 +1,17 @@
 ---
 title: Bad practices and Anti-patterns with Cadence (Part 1)
 
+description: Learn about common bad practices and anti-patterns in Cadence workflows, including hot shards caused by reused workflow IDs and cache thrashing from excessive concurrent timers.
+keywords:
+  - cadence anti-patterns
+  - cadence bad practices
+  - hot shard cadence
+  - workflow id reuse
+  - cadence performance
+  - cache thrashing
+  - cadence batch jobs
+  - cadence timers
+
 date: 2023-07-10
 authors: chopincode
 tags:

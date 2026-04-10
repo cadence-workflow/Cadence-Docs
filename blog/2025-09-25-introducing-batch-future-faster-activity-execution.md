@@ -1,6 +1,14 @@
 ---
 title: "Introducing Batch Future with Concurrency Control"
-description: "We're excited to announce Batch Future, a new feature in the Cadence Go client that provides controlled concurrency for bulk operations, preventing overwhelming downstream services while maintaining efficient parallel processing."
+description: Batch Future is a new Cadence Go client feature that lets you run many activities or child workflows in parallel with a configurable concurrency limit, preventing hot shards and downstream overload.
+keywords:
+  - cadence batch future
+  - cadence concurrency control
+  - cadence parallel activities
+  - cadence go client feature
+  - cadence bulk operations
+  - cadence rate limiting
+  - cadence hot shard prevention
 date: 2025-09-25
 authors: kevinb
 tags:

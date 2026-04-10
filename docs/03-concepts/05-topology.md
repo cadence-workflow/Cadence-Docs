@@ -2,6 +2,17 @@
 layout: default
 title: Deployment topology
 permalink: /docs/concepts/topology
+description: This page explains the Cadence deployment topology, including the frontend, history, matching, and worker services, and how they interact in a scalable cluster.
+keywords:
+  - cadence topology
+  - cadence architecture
+  - cadence deployment
+  - cadence cluster
+  - cadence services
+  - cadence frontend service
+  - cadence history service
+  - cadence matching service
+  - cadence worker service
 ---
 
 ## Overview

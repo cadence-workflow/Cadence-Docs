@@ -2,6 +2,17 @@
 layout: default
 title: Timeouts
 permalink: /docs/workflow-troubleshooting/timeouts
+description: This page explains common causes of workflow and activity timeouts in Cadence, including missing pollers, task list backlogs, missing heartbeat configuration, and how to mitigate each issue.
+keywords:
+  - cadence timeouts
+  - activity timeout
+  - workflow timeout
+  - heartbeat timeout
+  - missing pollers
+  - task list backlog
+  - StartToClose timeout
+  - ScheduleToClose timeout
+  - cadence troubleshooting timeouts
 ---
 
 A workflow could fail if an activity times out and will timeout when the entire workflow execution times out. Workflows or activities time out when their time to execute or time to start has been longer than their configured timeout. Some of the common causes for timeouts have been listed here.

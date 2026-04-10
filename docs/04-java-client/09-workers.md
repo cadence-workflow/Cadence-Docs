@@ -2,6 +2,15 @@
 layout: default
 title: Worker service
 permalink: /docs/java-client/workers
+description: This page explains how to configure and start a Cadence worker service in Java using WorkerFactory, including registering workflow and activity implementations.
+keywords:
+  - cadence worker java
+  - cadence WorkerFactory java
+  - java worker service cadence
+  - cadence worker setup java
+  - register workflow java
+  - cadence task list java
+  - cadence worker configuration
 ---
 
 A :worker: or *:worker: service* is a service that hosts the :workflow: and :activity: implementations. The :worker: polls the *Cadence service* for :task:tasks:, performs those :task:tasks:, and communicates :task: execution results back to the *Cadence service*. :worker:Worker: services are developed, deployed, and operated by Cadence customers.

@@ -2,6 +2,15 @@
 layout: default
 title: Creating workflows
 permalink: /docs/go-client/create-workflows
+description: This page explains how to write and register Cadence workflow functions in Go, including requirements, constraints, and how the framework manages state persistence across worker failures.
+keywords:
+  - cadence create workflow go
+  - cadence go workflow implementation
+  - cadence workflow golang
+  - cadence workflow function go
+  - cadence go workflow example
+  - cadence workflow registration go
+  - cadence go sdk workflow
 ---
 
 The :workflow: is the implementation of the coordination logic. The Cadence programming framework
