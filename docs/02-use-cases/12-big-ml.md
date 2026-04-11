@@ -1,6 +1,15 @@
 ---
 layout: default
 title: Big data and ML
+description: This page explains how Cadence is used as a control plane for ETL pipelines and machine learning training and deployment workflows, including model routing to specific hosts.
+keywords:
+  - cadence big data
+  - cadence machine learning
+  - cadence ml workflow
+  - cadence etl
+  - cadence use case
+  - cadence ml pipeline
+  - cadence task routing
 permalink: /docs/use-cases/big-ml
 ---
 

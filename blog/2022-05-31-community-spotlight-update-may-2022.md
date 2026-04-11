@@ -1,6 +1,15 @@
 ---
 title: Cadence Community Spotlight Update - May 2022
 
+description: Monthly Cadence community update for May 2022, featuring the new Cadence polling cookbook, a first-time contributor celebration, and upcoming webinars and office hours.
+keywords:
+  - cadence community spotlight
+  - cadence may 2022
+  - cadence community update
+  - cadence polling cookbook
+  - cadence contributors
+  - cadence instaclustr
+  - cadence office hours
 date: 2022-05-31
 authors: sharanf
 tags:

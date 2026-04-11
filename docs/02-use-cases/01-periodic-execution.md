@@ -1,6 +1,14 @@
 ---
 layout: default
 title: Periodic execution
+description: This page describes how Cadence supports periodic execution use cases, including distributed cron jobs at massive scale with guaranteed execution, retries, and full visibility.
+keywords:
+  - cadence periodic execution
+  - cadence cron job
+  - distributed cron
+  - cadence scheduled workflow
+  - cadence recurring workflow
+  - cadence cron use case
 permalink: /docs/use-cases/periodic-execution
 ---
 

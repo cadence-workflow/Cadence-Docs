@@ -1,7 +1,16 @@
 ---
 layout: default
 title: Overview
-description: A large number of use cases span beyond a single request-reply, require tracking of a complex state, respond to asynchronous events, and communicate to external unreliable dependencies.
+description: This page introduces the Cadence fault-oblivious stateful programming model and explains how it simplifies building scalable distributed applications beyond simple request-reply patterns.
+keywords:
+  - cadence overview
+  - cadence introduction
+  - cadence getting started
+  - what is cadence
+  - cadence workflow platform
+  - distributed application cadence
+  - cadence programming model
+  - cadence vs queues
 permalink: /docs/get-started/
 ---
 

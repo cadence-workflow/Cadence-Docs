@@ -1,6 +1,15 @@
 ---
 layout: default
 title: Synchronous query
+description: This page explains the Cadence query feature, which allows external clients to synchronously read the internal state of a running workflow without mutating it.
+keywords:
+  - cadence query
+  - cadence synchronous query
+  - workflow state query
+  - cadence stack trace query
+  - cadence query workflow
+  - cadence concepts
+  - read workflow state
 permalink: /docs/concepts/queries
 ---
 

@@ -1,6 +1,16 @@
 ---
 title: Moving to gRPC
 
+description: This post covers Cadence's migration from TChannel/Thrift to gRPC, including the approach taken, system overview, migration steps for server and clients, and current status at Uber.
+keywords:
+  - cadence grpc
+  - cadence tchannel
+  - cadence grpc migration
+  - cadence thrift
+  - cadence go sdk grpc
+  - cadence transport
+  - cadence protocol
+  - cadence server upgrade
 date: 2021-10-19
 authors: vytautas-karpavicius
 tags:

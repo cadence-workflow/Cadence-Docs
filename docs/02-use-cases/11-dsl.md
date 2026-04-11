@@ -1,6 +1,16 @@
 ---
 layout: default
 title: DSL workflows
+description: This page explains how Cadence can serve as an execution engine for domain-specific language (DSL) workflows, replacing systems like Apache Airflow or AWS Step Functions.
+keywords:
+  - cadence dsl
+  - cadence domain specific language
+  - cadence airflow replacement
+  - cadence step functions
+  - cadence use case
+  - dsl workflow engine
+  - cadence bpmn
+  - cadence iwf
 permalink: /docs/use-cases/dsl
 ---
 

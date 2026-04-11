@@ -1,6 +1,17 @@
 ---
 layout: default
 title: Activity and workflow retries
+description: This page explains how to configure retry policies for activities and workflows in Cadence using the Go client, including backoff settings, expiration intervals, and heartbeat-based progress recovery.
+keywords:
+  - cadence retries
+  - activity retry policy
+  - workflow retry
+  - retry backoff
+  - exponential backoff
+  - go client retries
+  - RetryPolicy
+  - heartbeat progress
+  - cadence go client
 permalink: /docs/go-client/retries
 ---
 

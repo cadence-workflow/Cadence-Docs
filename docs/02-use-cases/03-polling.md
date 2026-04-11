@@ -1,6 +1,14 @@
 ---
 layout: default
 title: Polling
+description: This page explains how Cadence handles polling use cases such as monitoring external APIs, S3 buckets, or network hosts using long-running activities and unlimited retries.
+keywords:
+  - cadence polling
+  - cadence long running activity
+  - cadence external API polling
+  - cadence S3 polling
+  - cadence monitoring use case
+  - cadence heartbeat
 permalink: /docs/use-cases/polling
 ---
 

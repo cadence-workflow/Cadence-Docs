@@ -1,6 +1,17 @@
 ---
 layout: default
 title: Workflow Replay and Shadowing
+description: This page explains how to use the Cadence Workflow Replayer and Workflow Shadower to detect non-deterministic workflow code changes before they impact production.
+keywords:
+  - cadence workflow replayer
+  - workflow shadowing
+  - replay test
+  - workflow history replay
+  - non-deterministic detection
+  - WorkflowShadower
+  - NewWorkflowReplayer
+  - shadow mode
+  - go client replay
 permalink: /docs/go-client/workflow-replay-shadowing
 ---
 

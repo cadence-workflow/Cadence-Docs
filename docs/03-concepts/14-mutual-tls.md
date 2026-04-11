@@ -1,6 +1,15 @@
 ---
 layout: default
 title: Mutual TLS (mTLS) Authentication
+description: This page explains how to configure Mutual TLS (mTLS) authentication in Cadence to secure bidirectional communication between clients and servers using certificate-based identity verification.
+keywords:
+  - cadence mtls
+  - mutual tls cadence
+  - cadence tls authentication
+  - cadence secure communication
+  - cadence certificate auth
+  - cadence client server tls
+  - cadence encryption in transit
 permalink: /docs/concepts/mutual-tls
 ---
 

@@ -1,6 +1,15 @@
 ---
 title: Cadence Community Spotlight Update - September 2022
 
+description: Monthly Cadence community update for September 2022, covering a Cadence talk accepted at DeveloperWeek Enterprise, increased core team support activity in Slack and StackOverflow, and recent articles.
+keywords:
+  - cadence community spotlight
+  - cadence september 2022
+  - cadence community update
+  - cadence developerweek
+  - cadence stackoverflow
+  - cadence support
+  - cadence airflow comparison
 date: 2022-10-11
 authors: sharanf
 tags:

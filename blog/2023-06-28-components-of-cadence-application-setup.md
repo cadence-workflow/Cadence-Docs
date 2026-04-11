@@ -1,6 +1,16 @@
 ---
 title: Understanding components of Cadence application
 
+description: This post explains the three essential components of a Cadence application — the backend server, a registered domain, and a worker service — and how they work together to run workflows.
+keywords:
+  - cadence application setup
+  - cadence components
+  - cadence backend server
+  - cadence domain
+  - cadence worker
+  - cadence local setup
+  - cadence getting started
+  - cadence docker
 date: 2023-07-01
 authors: chopincode
 tags:

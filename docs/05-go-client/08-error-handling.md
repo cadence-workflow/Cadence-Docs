@@ -1,6 +1,17 @@
 ---
 layout: default
 title: Error handling
+description: This page explains how to handle different error types returned by activities and child workflows in Cadence Go client, including custom errors, timeout errors, panic errors, and canceled errors.
+keywords:
+  - cadence error handling
+  - activity errors
+  - workflow errors
+  - CustomError
+  - GenericError
+  - TimeoutError
+  - PanicError
+  - CanceledError
+  - go client error handling
 permalink: /docs/go-client/error-handling
 ---
 

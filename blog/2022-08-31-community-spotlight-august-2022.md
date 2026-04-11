@@ -1,6 +1,16 @@
 ---
 title: Cadence Community Spotlight Update - August 2022
 
+description: Monthly Cadence community update for August 2022, announcing the upcoming community survey, increased GitHub and Slack activity, the planned in-person meetup, and a Cadence engineering job opening at Uber.
+keywords:
+  - cadence community spotlight
+  - cadence august 2022
+  - cadence community update
+  - cadence community survey
+  - cadence meetup
+  - cadence github activity
+  - cadence jobs
+  - cadence contributors
 date: 2022-08-31
 authors: sharanf
 tags:

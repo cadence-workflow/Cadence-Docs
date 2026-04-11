@@ -1,6 +1,16 @@
 ---
 title: Write your first workflow with Cadence
 
+description: A step-by-step tutorial for writing your first HelloWorld workflow and activity with Cadence in Go, including registering, running, and starting the workflow.
+keywords:
+  - cadence hello world
+  - first cadence workflow
+  - cadence go tutorial
+  - cadence workflow example
+  - cadence activity example
+  - cadence getting started
+  - write cadence workflow
+
 date: 2023-07-16
 authors: chopincode
 tags:

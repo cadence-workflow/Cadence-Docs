@@ -1,6 +1,15 @@
 ---
 layout: default
 title: Worker service
+description: This page explains how to build and configure a Cadence worker service in Go that polls for and executes workflow and activity tasks using TChannel or gRPC transport.
+keywords:
+  - cadence worker go
+  - cadence go worker service
+  - cadence worker golang
+  - cadence go sdk worker
+  - cadence tchannel worker
+  - go cadence worker example
+  - cadence worker setup go
 permalink: /docs/go-client/workers
 ---
 

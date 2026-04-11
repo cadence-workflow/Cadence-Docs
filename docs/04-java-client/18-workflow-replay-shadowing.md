@@ -1,6 +1,15 @@
 ---
 layout: default
 title: Workflow Replay and Shadowing
+description: This page explains how to use Cadence Workflow Replayer and Workflow Shadower in Java to detect incompatible workflow definition changes before they impact production traffic.
+keywords:
+  - cadence workflow replay java
+  - cadence workflow shadowing java
+  - cadence replay test java
+  - cadence non-deterministic change java
+  - cadence workflow versioning test
+  - WorkflowReplayer java
+  - cadence shadow test java
 permalink: /docs/java-client/workflow-replay-shadowing
 ---
 

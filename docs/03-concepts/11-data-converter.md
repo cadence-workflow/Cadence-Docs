@@ -1,6 +1,15 @@
 ---
 layout: default
 title: Data Converter
+description: This page explains how Cadence Data Converters handle serialization and deserialization of workflow and activity data, including support for custom formats, compression, and encryption.
+keywords:
+  - cadence data converter
+  - workflow serialization
+  - custom data converter
+  - cadence encryption
+  - cadence payload compression
+  - cadence data encoding
+  - cadence serialization formats
 permalink: /docs/concepts/data-converter
 ---
 

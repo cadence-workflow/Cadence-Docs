@@ -1,6 +1,16 @@
 ---
 title: Cadence Community Spotlight Update - March 2023
 
+description: Monthly Cadence community update for March 2023, announcing a Cadence talk at the Linux Foundation Open Source Summit, introducing the new Cadence Developer Advocate, and sharing community activity stats.
+keywords:
+  - cadence community spotlight
+  - cadence march 2023
+  - cadence community update
+  - cadence open source summit
+  - cadence linux foundation
+  - cadence developer advocate
+  - cadence support activity
+  - cadence conference
 date: 2023-03-31
 authors: sharanf
 tags:

@@ -1,6 +1,15 @@
 ---
 layout: default
 title: Activity interface
+description: This page explains how to define activity interfaces in Java for Cadence, including method annotations, timeout configuration, and data serialization requirements.
+keywords:
+  - cadence java activity interface
+  - ActivityMethod annotation
+  - cadence activity definition java
+  - java activity timeout
+  - cadence activity java
+  - activity interface java
+  - cadence java activity example
 permalink: /docs/java-client/activity-interface
 ---
 

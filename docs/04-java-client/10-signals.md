@@ -1,6 +1,15 @@
 ---
 layout: default
 title: Signals
+description: This page explains how to use Cadence signals in Java to send data to running workflows asynchronously and durably, including implementing signal handlers and blocking on signal channels.
+keywords:
+  - cadence signals java
+  - cadence signal workflow java
+  - send signal workflow java
+  - SignalMethod java
+  - cadence async signal
+  - cadence signal channel
+  - cadence java signal example
 permalink: /docs/java-client/signals
 ---
 

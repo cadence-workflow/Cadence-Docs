@@ -1,6 +1,17 @@
 ---
 layout: default
 title: Cluster Monitoring
+description: This page explains how to monitor a Cadence cluster and client applications using Prometheus, Grafana, and DataDog dashboards, including key metrics for frontend, history, matching, and persistence services.
+keywords:
+  - cadence monitoring
+  - cadence metrics
+  - cadence grafana dashboard
+  - cadence prometheus
+  - cadence datadog
+  - workflow metrics
+  - activity metrics
+  - cadence cluster monitoring
+  - cadence SLO
 permalink: /docs/operation-guide/monitor
 ---
 

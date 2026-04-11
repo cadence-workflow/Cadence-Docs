@@ -1,6 +1,16 @@
 ---
 title: Cadence Community Spotlight Update - January 2023
 
+description: Monthly Cadence community update for January 2023, announcing the closure of monthly office hours, updates to the iWF Golang and Java SDKs, and recent community news and articles.
+keywords:
+  - cadence community spotlight
+  - cadence january 2023
+  - cadence community update
+  - cadence office hours closed
+  - iwf golang sdk
+  - cadence iwf
+  - cadence temporal comparison
+  - cadence support slack
 date: 2023-01-31
 authors: sharanf
 tags:

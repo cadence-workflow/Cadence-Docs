@@ -1,6 +1,17 @@
 ---
 layout: default
 title: Versioning
+description: This page explains how to safely make changes to Cadence workflow definitions using GetVersion to maintain backward compatibility with existing workflow executions and avoid non-deterministic errors.
+keywords:
+  - cadence workflow versioning
+  - workflow.GetVersion
+  - workflow code changes
+  - backward compatibility
+  - non-deterministic workflow
+  - safe deployment
+  - ExecuteWithMinVersion
+  - ExecuteWithVersion
+  - go client versioning
 permalink: /docs/go-client/workflow-versioning
 ---
 

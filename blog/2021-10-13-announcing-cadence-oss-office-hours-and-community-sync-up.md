@@ -1,6 +1,15 @@
 ---
 title: Announcing Cadence OSS office hours and community sync up
 
+description: Uber announces bi-weekly Cadence OSS office hours where users can talk directly with core team members about workflow design, production operations, and the Cadence roadmap.
+keywords:
+  - cadence office hours
+  - cadence community
+  - cadence oss
+  - cadence support
+  - cadence workflow
+  - cadence meetup
+  - cadence zoom
 date: 2021-10-13
 authors: meiliang86
 tags:

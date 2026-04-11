@@ -1,6 +1,15 @@
 ---
 layout: default
 title: Queries
+description: This page explains how to use Cadence queries in Java to synchronously expose workflow internal state to external callers, including built-in stack trace queries and custom query handlers.
+keywords:
+  - cadence query workflow java
+  - QueryMethod java
+  - cadence synchronous query
+  - cadence workflow state java
+  - cadence stack trace query
+  - cadence java query example
+  - cadence read workflow state
 permalink: /docs/java-client/queries
 ---
 

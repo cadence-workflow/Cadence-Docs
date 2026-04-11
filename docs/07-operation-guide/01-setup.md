@@ -1,6 +1,17 @@
 ---
 layout: default
 title: Cluster Configuration
+description: This page covers how to configure a Cadence cluster, including static configuration options like numHistoryShards and persistence, dynamic configuration tuning, and deployment using Kubernetes and Helm charts.
+keywords:
+  - cadence cluster configuration
+  - cadence setup
+  - static configuration
+  - dynamic configuration
+  - numHistoryShards
+  - cadence persistence
+  - cadence kubernetes
+  - cadence helm chart
+  - cadence production setup
 permalink: /docs/operation-guide/setup
 ---
 

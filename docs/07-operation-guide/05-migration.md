@@ -1,6 +1,16 @@
 ---
 layout: default
 title: Cluster Migration
+description: This page explains how to migrate a Cadence cluster to a new one using either a naive dual-cluster approach or the global domain XDC replication feature for seamless traffic failover.
+keywords:
+  - cadence cluster migration
+  - cadence migrate cluster
+  - global domain replication
+  - XDC migration
+  - cadence failover
+  - datacenter migration
+  - numHistoryShards migration
+  - cadence domain failover
 permalink: /docs/operation-guide/migration
 ---
 

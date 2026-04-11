@@ -1,6 +1,15 @@
 ---
 layout: default
 title: Task lists
+description: This page explains Cadence task lists, the internal queues used to dispatch activity and decision tasks to workers, including their advantages over direct RPC calls.
+keywords:
+  - cadence task lists
+  - cadence task queue
+  - cadence activity task list
+  - cadence decision task list
+  - cadence worker routing
+  - cadence concepts
+  - cadence task dispatch
 permalink: /docs/concepts/task-lists
 ---
 

@@ -1,6 +1,15 @@
 ---
 layout: default
 title: Starting workflows
+description: This page explains how to create a WorkflowClient and start workflow executions in Java using TChannel or gRPC, including TLS-enabled client configuration.
+keywords:
+  - cadence start workflow java
+  - WorkflowClient java
+  - cadence java workflow execution
+  - start workflow execution java
+  - cadence grpc java
+  - cadence tchannel java
+  - cadence java client setup
 permalink: /docs/java-client/starting-workflow-executions
 ---
 

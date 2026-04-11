@@ -1,6 +1,16 @@
 ---
 layout: default
 title: Activity Failures
+description: This page explains the different types of activity failures in Cadence, including panic errors, custom errors, generic errors, and blob size limit violations, with guidance on how to mitigate each.
+keywords:
+  - cadence activity failures
+  - activity panic error
+  - custom error
+  - generic error
+  - blob size limit
+  - ActivityTaskFailed
+  - cadence troubleshooting
+  - activity error types
 permalink: /docs/workflow-troubleshooting/activity-failures
 ---
 

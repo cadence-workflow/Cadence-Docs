@@ -1,6 +1,15 @@
 ---
 title: Cadence Community Spotlight Update - June 2022
 
+description: Monthly Cadence community update for June 2022, covering Slack support activity, improvements to office hours, stability improvements, German-language blog posts, and upcoming events.
+keywords:
+  - cadence community spotlight
+  - cadence june 2022
+  - cadence community update
+  - cadence stability
+  - cadence office hours
+  - cadence blog
+  - cadence support
 date: 2022-06-30
 authors: sharanf
 tags:
