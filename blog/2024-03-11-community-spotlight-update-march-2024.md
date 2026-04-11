@@ -12,7 +12,7 @@ keywords:
   - cadence v1.2.7
   - cadence news
 
-date: 2023-03-11
+date: 2024-03-11
 authors: kcorbett-netapp
 tags:
   - community-spotlight
