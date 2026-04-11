@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Continue As New
-permalink: /docs/java-client/continue-as-new
 description: This page explains how to use ContinueAsNew in Cadence Java workflows to reset execution history for long-running periodic workflows and avoid hitting history size limits.
 keywords:
   - cadence continue as new java
@@ -11,6 +10,7 @@ keywords:
   - cadence workflow reset java
   - cadence periodic workflow java
   - cadence java continueAsNew example
+permalink: /docs/java-client/continue-as-new
 ---
 
 :workflow:Workflows: that need to rerun periodically could naively be implemented as a big **for** loop with

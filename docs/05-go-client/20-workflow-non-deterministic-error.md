@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Workflow Non-deterministic errors
-permalink: /docs/go-client/workflow-non-deterministic-error
 description: This page explains the root causes and categories of non-deterministic errors in Cadence workflows, how decision tasks are used for history replay, and what code changes are safe or unsafe to make.
 keywords:
   - cadence non-deterministic error
@@ -13,6 +12,7 @@ keywords:
   - mismatched decisions
   - workflow code changes
   - go client non-deterministic
+permalink: /docs/go-client/workflow-non-deterministic-error
 ---
 
 ## Root cause of non-deterministic errors

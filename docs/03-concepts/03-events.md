@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Event handling
-permalink: /docs/concepts/events
 description: This page explains how Cadence workflows handle external events using signals, covering event aggregation, human tasks, process alteration, and workflow synchronization patterns.
 keywords:
   - cadence events
@@ -12,6 +11,7 @@ keywords:
   - cadence human task
   - cadence synchronization
   - cadence signalWorkflowExecution
+permalink: /docs/concepts/events
 ---
 
 Fault-oblivious stateful :workflow:workflows: can be :signal:signalled: about an external :event:. A :signal: is always point to point destined to a specific :workflow: instance. :signal:Signals: are always processed in the order in which they are received.

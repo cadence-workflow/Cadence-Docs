@@ -1,10 +1,6 @@
 ---
 title: Cadence Community Spotlight Update - April 2022
 
-date: 2022-04-30
-authors: sharanf
-tags:
-  - community-spotlight
 description: Monthly Cadence community update for April 2022, covering Cadence being named SD Times Open Source Project of the Week, the new LinkedIn and Twitter accounts, a workflow design proposal, and upcoming events.
 keywords:
   - cadence community spotlight
@@ -15,6 +11,10 @@ keywords:
   - cadence linkedin
   - cadence twitter
   - cadence workflow design
+date: 2022-04-30
+authors: sharanf
+tags:
+  - community-spotlight
 ---
 
 Welcome to our Cadence Community Spotlight update!

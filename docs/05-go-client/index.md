@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Introduction
-permalink: /docs/go-client
 description: This page introduces the Cadence Go client, explaining its conventions, determinism requirements, and the key interfaces it provides for building fault-oblivious workflows in Go.
 keywords:
   - cadence go client
@@ -12,6 +11,7 @@ keywords:
   - workflow.Channel
   - workflow.Selector
   - cadence sdk go
+permalink: /docs/go-client
 ---
 
 ## Overview

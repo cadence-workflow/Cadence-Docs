@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Java hello world
-permalink: /docs/get-started/java-hello-world
 description: This page provides step-by-step instructions for writing and running your first Cadence workflow using the Java client, including how to define activities, workers, and start a workflow execution.
 keywords:
   - cadence java hello world
@@ -11,6 +10,7 @@ keywords:
   - cadence java sample
   - cadence java gradle
   - cadence workflow java
+permalink: /docs/get-started/java-hello-world
 ---
 
 This section provides step by step instructions on how to write and run a HelloWorld with Java.

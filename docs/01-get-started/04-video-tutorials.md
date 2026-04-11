@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Video Tutorials
-permalink: /docs/get-started/video-tutorials
 description: This page collects video tutorials introducing the Cadence programming model and walking through HelloWorld examples in Java and other languages.
 keywords:
   - cadence video tutorial
@@ -10,6 +9,7 @@ keywords:
   - cadence youtube
   - cadence programming model
   - learn cadence
+permalink: /docs/get-started/video-tutorials
 ---
 
 An Introduction to the Cadence programming model and value proposition.

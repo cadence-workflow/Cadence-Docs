@@ -1,11 +1,6 @@
 ---
 title: Cadence Community Spotlight Update - June 2023
 
-date: 2023-06-30
-authors: sharanf
-tags:
-  - community-spotlight
-  - release
 description: Monthly Cadence community update for June 2023, celebrating the Cadence v1.0 release, sharing community survey results, and highlighting a talk at the Linux Foundation Open Source Summit.
 keywords:
   - cadence community spotlight
@@ -16,6 +11,11 @@ keywords:
   - cadence open source summit
   - cadence survey results
   - cadence workflow versioning
+date: 2023-06-30
+authors: sharanf
+tags:
+  - community-spotlight
+  - release
 ---
 We've had a short break but now we are back. Welcome to the latest of our regular monthly Community Spotlight updates that gives you news from in and around the Cadence community!
 

@@ -1,10 +1,6 @@
 ---
 title: Cadence Community Spotlight Update - July 2022
 
-date: 2022-07-31
-authors: sharanf
-tags:
-  - community-spotlight
 description: Monthly Cadence community update for July 2022, featuring a drone delivery use case demo built with Cadence, GitHub activity statistics, and an upcoming roadmap announcement.
 keywords:
   - cadence community spotlight
@@ -15,6 +11,10 @@ keywords:
   - cadence github
   - cadence roadmap
   - cadence kafka
+date: 2022-07-31
+authors: sharanf
+tags:
+  - community-spotlight
 ---
 
 Here’s our monthly Community Spotlight update that gives you news from in and around the Cadence community!

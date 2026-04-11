@@ -9,13 +9,13 @@ keywords:
   - cadence auto scaling
   - cadence operational overhead
   - cadence partition configuration
-subtitle: test
 date: 2025-06-30
 authors: shaddoll
 tags:
   - deep-dive
   - cadence-operations
   - cadence-matching
+subtitle: test
 ---
 
 At Uber, we previously relied on a dynamic configuration service to manually control the number of partitions for scalable tasklists. This configuration approach introduced several operational challenges:

@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Workflow Replay and Shadowing
-permalink: /docs/go-client/workflow-replay-shadowing
 description: This page explains how to use the Cadence Workflow Replayer and Workflow Shadower to detect non-deterministic workflow code changes before they impact production.
 keywords:
   - cadence workflow replayer
@@ -13,6 +12,7 @@ keywords:
   - NewWorkflowReplayer
   - shadow mode
   - go client replay
+permalink: /docs/go-client/workflow-replay-shadowing
 ---
 
 In the Versioning section, we mentioned that incompatible changes to workflow definition code could cause non-deterministic issues when processing workflow tasks if versioning is not done correctly. However, it may be hard for you to tell if a particular change is incompatible or not and whether versioning logic is needed. To help you identify incompatible changes and catch them before production traffic is impacted, we implemented Workflow Replayer and Workflow Shadower.

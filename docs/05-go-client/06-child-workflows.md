@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Child workflows
-permalink: /docs/go-client/child-workflows
 description: This page explains how to schedule and manage child workflows from a parent workflow in Go using workflow.ExecuteChildWorkflow, including options configuration and lifecycle control.
 keywords:
   - cadence child workflow go
@@ -11,6 +10,7 @@ keywords:
   - cadence parent child workflow go
   - cadence golang child workflow example
   - ChildWorkflowOptions go
+permalink: /docs/go-client/child-workflows
 ---
 
 `workflow.ExecuteChildWorkflow` enables the scheduling of other :workflow:workflows: from within a :workflow:workflow:'s

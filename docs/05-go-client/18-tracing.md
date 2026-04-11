@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Tracing and context propagation
-permalink: /docs/go-client/tracing
 description: This page explains how to configure distributed tracing with OpenTracing and propagate custom context across Cadence workflows and activities using context propagators.
 keywords:
   - cadence tracing
@@ -13,6 +12,7 @@ keywords:
   - HeaderWriter
   - HeaderReader
   - go client tracing
+permalink: /docs/go-client/tracing
 ---
 
 ## Tracing

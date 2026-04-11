@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Archival
-permalink: /docs/concepts/archival
 description: This page explains the Cadence archival feature, which automatically moves workflow histories and visibility records to secondary storage after the retention period for compliance and debugging.
 keywords:
   - cadence archival
@@ -12,6 +11,7 @@ keywords:
   - cadence compliance
   - cadence concepts
   - workflow history storage
+permalink: /docs/concepts/archival
 ---
 
 :archival:Archival: is a feature that automatically moves :workflow: histories (history archival) and visibility records (visibility archival) from persistence to a secondary data store after the retention period, thus allowing users to keep workflow history and visibility records as long as necessary without overwhelming Cadence primary data store. There are two reasons you may consider turning on archival for your domain:

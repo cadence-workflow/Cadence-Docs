@@ -1,11 +1,6 @@
 ---
 title: Understanding components of Cadence application
 
-date: 2023-07-01
-authors: chopincode
-tags:
-  - deep-dive
-  - introduction-to-cadence
 description: This post explains the three essential components of a Cadence application — the backend server, a registered domain, and a worker service — and how they work together to run workflows.
 keywords:
   - cadence application setup
@@ -16,6 +11,11 @@ keywords:
   - cadence local setup
   - cadence getting started
   - cadence docker
+date: 2023-07-01
+authors: chopincode
+tags:
+  - deep-dive
+  - introduction-to-cadence
 ---
 
 Cadence is a powerful, scalable, and fault-tolerant workflow orchestration framework that helps developers implement and manage complex workflow tasks. In most cases, developers contribute activities and workflows directly to their codebases, and they may not have a full understanding of the components behind a running Cadence application. We receive numerous inquiries about setting up Cadence in a local environment from scratch for testing. Therefore, in this article, we will explore the components that power a Cadence cluster.

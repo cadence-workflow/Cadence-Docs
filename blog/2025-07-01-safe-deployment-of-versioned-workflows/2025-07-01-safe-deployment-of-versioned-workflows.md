@@ -10,8 +10,8 @@ keywords:
   - cadence non-deterministic errors
   - cadence workflow code change
   - cadence forward compatibility
-authors: arzonus
 date: 2025-07-10T16:00
+authors: arzonus
 tags:
   - deep-dive
   - announcement

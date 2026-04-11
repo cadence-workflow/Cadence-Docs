@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Golang hello world
-permalink: /docs/get-started/golang-hello-world
 description: This page walks you through writing and running your first Cadence workflow in Go, covering how to implement activities, workflows, and a worker service.
 keywords:
   - cadence golang hello world
@@ -11,6 +10,7 @@ keywords:
   - cadence go sample
   - cadence workflow golang
   - cadence activity golang
+permalink: /docs/get-started/golang-hello-world
 ---
 
 This section provides step-by-step instructions on how to write and run a HelloWorld workflow in Cadence with Golang. You will learn two critical building blocks of Cadence: activities and workflows. First, you will write an activity function that prints a "Hello World!" message in the log. Then, you will write a workflow function that executes this activity.

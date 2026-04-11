@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Polling
-permalink: /docs/use-cases/polling
 description: This page explains how Cadence handles polling use cases such as monitoring external APIs, S3 buckets, or network hosts using long-running activities and unlimited retries.
 keywords:
   - cadence polling
@@ -10,6 +9,7 @@ keywords:
   - cadence S3 polling
   - cadence monitoring use case
   - cadence heartbeat
+permalink: /docs/use-cases/polling
 ---
 
 Polling is executing a periodic action checking for a state change. Examples are pinging a host, calling a REST API, or listing an Amazon S3 bucket for newly uploaded files.

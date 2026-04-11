@@ -10,11 +10,11 @@ keywords:
   - cadence ops dashboard
   - cadence markdoc
   - cadence web UI controls
+date: 2026-03-23T10:00
 authors: kevinb
 tags:
   - announcement
   - cadence-web
-date: 2026-03-23T10:00
 ---
 
 What if your workflow could tell operators exactly what's happening, and let them take action, right from the Cadence Web UI?

@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Event driven application
-permalink: /docs/use-cases/event-driven
 description: This page describes how Cadence supports event-driven applications by handling asynchronous signals, managing state transitions, and triggering actions when conditions are met.
 keywords:
   - cadence event driven
@@ -11,6 +10,7 @@ keywords:
   - cadence loyalty program
   - cadence fraud detection
   - cadence use case
+permalink: /docs/use-cases/event-driven
 ---
 
 Many applications listen to multiple :event: sources, update the state of corresponding business entities,

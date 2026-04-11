@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Worker service
-permalink: /docs/go-client/workers
 description: This page explains how to build and configure a Cadence worker service in Go that polls for and executes workflow and activity tasks using TChannel or gRPC transport.
 keywords:
   - cadence worker go
@@ -11,6 +10,7 @@ keywords:
   - cadence tchannel worker
   - go cadence worker example
   - cadence worker setup go
+permalink: /docs/go-client/workers
 ---
 
 A :worker: or *:worker: service* is a service that hosts the :workflow: and :activity: implementations. The :worker: polls the *Cadence service* for :task:tasks:, performs those :task:tasks:, and communicates :task: execution results back to the *Cadence service*. :worker:Worker: services are developed, deployed, and operated by Cadence customers.

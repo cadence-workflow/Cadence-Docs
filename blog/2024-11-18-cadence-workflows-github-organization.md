@@ -10,9 +10,9 @@ keywords:
   - cadence open source
   - cadence repository links
 
+date: 2024-11-18T14:00
 authors: ibarrajo
 tags: [announcement]
-date: 2024-11-18T14:00
 ---
 
 We’re excited to announce that all Cadence GitHub repositories have been consolidated under the [cadence-workflow](https://github.com/cadence-workflow) organization! 🎉

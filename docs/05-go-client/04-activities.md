@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Activity overview
-permalink: /docs/go-client/activities
 description: This page explains how to define and implement Cadence activity functions in Go, including parameter requirements, context usage, return values, and execution history considerations.
 keywords:
   - cadence activity go
@@ -11,6 +10,7 @@ keywords:
   - cadence go sdk activity
   - cadence activity context go
   - cadence activity example go
+permalink: /docs/go-client/activities
 ---
 
 An :activity: is the implementation of a particular :task: in the business logic.

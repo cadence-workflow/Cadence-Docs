@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Batch job
-permalink: /docs/use-cases/batch-job
 description: This page explains how Cadence is used to run batch jobs involving external API calls, long-running operations, and incremental progress tracking via heartbeating activities.
 keywords:
   - cadence batch job
@@ -11,6 +10,7 @@ keywords:
   - cadence durability
   - cadence high throughput
   - cadence use case
+permalink: /docs/use-cases/batch-job
 ---
 
 ## Batch job

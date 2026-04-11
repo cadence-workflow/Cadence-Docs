@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Task lists
-permalink: /docs/concepts/task-lists
 description: This page explains Cadence task lists, the internal queues used to dispatch activity and decision tasks to workers, including their advantages over direct RPC calls.
 keywords:
   - cadence task lists
@@ -11,6 +10,7 @@ keywords:
   - cadence worker routing
   - cadence concepts
   - cadence task dispatch
+permalink: /docs/concepts/task-lists
 ---
 
 When a :workflow: invokes an :activity:, it sends the ```ScheduleActivityTask``` :decision: to the

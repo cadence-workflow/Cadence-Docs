@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Distributed CRON
-permalink: /docs/java-client/distributed-cron
 description: This page explains how to schedule recurring Cadence workflows using cron expressions in Java with CronSchedule in StartWorkflowOptions.
 keywords:
   - cadence cron workflow java
@@ -11,6 +10,7 @@ keywords:
   - cadence recurring workflow
   - cadence cron schedule
   - cadence java cron example
+permalink: /docs/java-client/distributed-cron
 ---
 
 It is relatively straightforward to turn any Cadence :workflow: into a Cron :workflow:. All you need

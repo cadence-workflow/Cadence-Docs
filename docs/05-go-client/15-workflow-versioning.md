@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Versioning
-permalink: /docs/go-client/workflow-versioning
 description: This page explains how to safely make changes to Cadence workflow definitions using GetVersion to maintain backward compatibility with existing workflow executions and avoid non-deterministic errors.
 keywords:
   - cadence workflow versioning
@@ -13,6 +12,7 @@ keywords:
   - ExecuteWithMinVersion
   - ExecuteWithVersion
   - go client versioning
+permalink: /docs/go-client/workflow-versioning
 ---
 
 The definition code of a Cadence :workflow: must be deterministic because Cadence uses :event: sourcing

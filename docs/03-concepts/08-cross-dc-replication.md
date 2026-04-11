@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Cross DC replication
-permalink: /docs/concepts/cross-dc-replication
 description: This page explains Cadence Global Domains and cross-datacenter replication, enabling workflows to continue in a different cluster during a datacenter failover.
 keywords:
   - cadence cross dc replication
@@ -12,6 +11,7 @@ keywords:
   - cadence datacenter replication
   - cadence concepts
   - cadence disaster recovery
+permalink: /docs/concepts/cross-dc-replication
 ---
 
 The Cadence Global :domain:Domain: feature provides clients with the capability to continue their :workflow_execution: from another

@@ -1,5 +1,4 @@
 ---
-id: glossary
 layout: default
 title: Glossary
 description: This page defines key Cadence terms including workflow, activity, domain, signal, query, decision task, worker, and other core concepts used throughout the Cadence documentation.
@@ -14,6 +13,7 @@ keywords:
   - cadence worker
   - decision task
   - event history
+id: glossary
 terms:
     activity: "A business-level function that implements your application logic such as calling a service or transcoding a media file. An activity usually implements a single
 well-defined action; it can be short or long running. An activity can be implemented

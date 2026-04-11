@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Synchronous query
-permalink: /docs/concepts/queries
 description: This page explains the Cadence query feature, which allows external clients to synchronously read the internal state of a running workflow without mutating it.
 keywords:
   - cadence query
@@ -11,6 +10,7 @@ keywords:
   - cadence query workflow
   - cadence concepts
   - read workflow state
+permalink: /docs/concepts/queries
 ---
 
 :workflow:Workflow: code is stateful with the Cadence framework preserving it over various software and hardware failures. The state is constantly mutated during :workflow_execution:. To expose this internal state to the external world Cadence provides a synchronous :query: feature. From the :workflow: implementer point of view the :query: is exposed as a synchronous callback that is invoked by external entities. Multiple such callbacks can be provided per :workflow: type exposing different information to different external systems.

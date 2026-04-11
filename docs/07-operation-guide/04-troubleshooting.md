@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Cluster Troubleshooting
-permalink: /docs/operation-guide/troubleshooting
 description: This page covers common Cadence cluster operation issues and their mitigations, including persistence QPS errors, shard locking problems, high API latency, and task dispatching slowness.
 keywords:
   - cadence troubleshooting
@@ -12,6 +11,7 @@ keywords:
   - tasklist overloaded
   - cadence runbook
   - cadence operation issues
+permalink: /docs/operation-guide/troubleshooting
 ---
 # Cluster Troubleshooting
 

@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Exception Handling
-permalink: /docs/java-client/exception-handling
 description: This page explains how exceptions are propagated in Cadence Java workflows, including how activity and child workflow failures are wrapped and how to handle them in parent workflows.
 keywords:
   - cadence exception handling java
@@ -11,6 +10,7 @@ keywords:
   - WorkflowFailureException java
   - cadence error handling java
   - cadence java exception example
+permalink: /docs/java-client/exception-handling
 ---
 
 By default, Exceptions thrown by an activity are received by the workflow wrapped into a `com.uber.cadence.workflow.ActivityFailureException`.

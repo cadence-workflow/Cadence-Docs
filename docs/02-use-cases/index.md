@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Introduction
-permalink: /docs/use-cases/
 description: This page introduces the range of use cases where Cadence excels, from orchestration and periodic execution to event-driven systems and ML pipelines.
 keywords:
   - cadence use cases
@@ -11,6 +10,7 @@ keywords:
   - cadence distributed application
   - cadence durable function
   - cadence orchestration
+permalink: /docs/use-cases/
 ---
 
 As Cadence developers, we face a difficult non-technical problem: How to position and describe the Cadence platform.

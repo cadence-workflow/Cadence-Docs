@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Testing
-permalink: /docs/java-client/testing
 description: This page explains how to write unit and integration tests for Cadence workflows and activities in Java using TestActivityEnvironment and TestWorkflowEnvironment.
 keywords:
   - cadence testing java
@@ -11,6 +10,7 @@ keywords:
   - cadence workflow test java
   - cadence activity test java
   - cadence java test example
+permalink: /docs/java-client/testing
 ---
 
 [TestActivityEnvironment](https://www.javadoc.io/static/com.uber.cadence/cadence-client/2.7.9-alpha/com/cadence-workflow/cadence/testing/TestActivityEnvironment.html) is the helper class for unit testing activity implementations. Supports calls to Activity methods from the tested activities. An example test:

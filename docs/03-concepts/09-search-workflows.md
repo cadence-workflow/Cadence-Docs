@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Search workflows (Advanced visibility)
-permalink: /docs/concepts/search-workflows
 description: This page explains Cadence advanced visibility, which enables searching and filtering workflows using SQL-like queries on custom key-value search attributes backed by Elasticsearch.
 keywords:
   - cadence search workflows
@@ -12,6 +11,7 @@ keywords:
   - cadence workflow query
   - cadence concepts
   - cadence memo
+permalink: /docs/concepts/search-workflows
 ---
 
 ## Introduction

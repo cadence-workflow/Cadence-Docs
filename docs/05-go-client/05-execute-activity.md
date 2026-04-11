@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Executing activities
-permalink: /docs/go-client/execute-activity
 description: This page explains how to execute Cadence activities from a Go workflow using workflow.ExecuteActivity, including how to configure activity options such as timeouts and task lists.
 keywords:
   - cadence execute activity go
@@ -11,6 +10,7 @@ keywords:
   - cadence go sdk execute activity
   - cadence activity scheduling go
   - cadence golang activity execution
+permalink: /docs/go-client/execute-activity
 ---
 
 The primary responsibility of a :workflow: implementation is to schedule :activity:activities: for execution. The

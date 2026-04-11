@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Server Installation
-permalink: /docs/get-started/installation
 description: This page explains how to install and run a Cadence server locally using Docker, register a domain, and set up a worker service to get started.
 keywords:
   - cadence server installation
@@ -11,6 +10,7 @@ keywords:
   - cadence domain register
   - install cadence
   - cadence getting started
+permalink: /docs/get-started/installation
 ---
 
 To get started with Cadence, you need to set up three components successfully.

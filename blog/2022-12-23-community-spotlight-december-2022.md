@@ -1,10 +1,6 @@
 ---
 title: Cadence Community Spotlight Update - December 2022
 
-date: 2022-12-23
-authors: sharanf
-tags:
-  - community-spotlight
 description: The December 2022 Cadence Community Spotlight wraps up a busy year for the project, shares year-end community highlights including iWF and TLS connection examples, and looks ahead to 2023.
 keywords:
   - cadence community spotlight
@@ -15,6 +11,10 @@ keywords:
   - cadence tls
   - cadence child workflow
   - cadence 2023
+date: 2022-12-23
+authors: sharanf
+tags:
+  - community-spotlight
 ---
 
 I know we are a little early this month as many people will be taking some time out for holidays.

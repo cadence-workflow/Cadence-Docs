@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Implementing workflows
-permalink: /docs/java-client/implementing-workflows
 description: This page explains how to implement a Cadence workflow in Java, including calling activities, using timers, handling signals, and managing workflow state.
 keywords:
   - cadence java workflow implementation
@@ -11,6 +10,7 @@ keywords:
   - cadence workflow code java
   - newActivityStub java
   - cadence java workflow example
+permalink: /docs/java-client/implementing-workflows
 ---
 
 A :workflow: implementation implements a :workflow: interface. Each time a new :workflow_execution: is started,

@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Orchestration
-permalink: /docs/use-cases/orchestration
 description: This page explains how Cadence is used to orchestrate multi-step microservice workflows with guaranteed completion, automatic retries, and compensation logic via the Saga pattern.
 keywords:
   - cadence orchestration
@@ -11,6 +10,7 @@ keywords:
   - cadence workflow compensation
   - cadence retry
   - cadence use case
+permalink: /docs/use-cases/orchestration
 ---
 
 It is common that some business processes are implemented as multiple microservice calls.

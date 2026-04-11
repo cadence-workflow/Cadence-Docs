@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Activity interface
-permalink: /docs/java-client/activity-interface
 description: This page explains how to define activity interfaces in Java for Cadence, including method annotations, timeout configuration, and data serialization requirements.
 keywords:
   - cadence java activity interface
@@ -11,6 +10,7 @@ keywords:
   - cadence activity java
   - activity interface java
   - cadence java activity example
+permalink: /docs/java-client/activity-interface
 ---
 
 An :activity: is a manifestation of a particular :task: in the business logic.

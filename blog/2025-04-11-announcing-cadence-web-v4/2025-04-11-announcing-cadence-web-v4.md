@@ -12,9 +12,9 @@ keywords:
   - cadence workflow history view
   - cadence web release
 
+date: 2025-04-11T16:00
 authors: adhityamamallan
 tags: [announcement]
-date: 2025-04-11T16:00
 ---
 
 We are excited to announce the release of **cadence-web v4.0.0**—a complete rewrite of the Cadence web app. Cadence has always been about empowering developers to manage complex workflows, and with this release, we not only modernize the web interface by embracing today’s cutting-edge technologies but also strengthen the open source community by aligning our tools with the broader trends seen across the industry.

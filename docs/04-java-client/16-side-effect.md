@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Side Effect
-permalink: /docs/java-client/side-effect
 description: This page explains how to use Workflow.sideEffect in Cadence Java workflows to safely execute non-deterministic code and record the result in workflow history for deterministic replay.
 keywords:
   - cadence side effect java
@@ -11,6 +10,7 @@ keywords:
   - cadence random number workflow
   - cadence sideEffect replay
   - cadence java side effect example
+permalink: /docs/java-client/side-effect
 ---
 
 Side Effect allows a workflow to execute the provided function once and record its result into the workflow history.

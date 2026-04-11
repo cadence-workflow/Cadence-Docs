@@ -1,10 +1,6 @@
 ---
 title: Cadence Community Spotlight Update - February 2023
 
-date: 2023-02-28
-authors: sharanf
-tags:
-  - community-spotlight
 description: Monthly Cadence community update for February 2023, announcing the first community survey, clarifying the relationship between Cadence and Temporal, and highlighting DoorDash's real-time event processing use case.
 keywords:
   - cadence community spotlight
@@ -15,6 +11,10 @@ keywords:
   - cadence doordash
   - cadence kafka flink
   - cadence open source
+date: 2023-02-28
+authors: sharanf
+tags:
+  - community-spotlight
 ---
 Here’s the latest in our regular monthly Community Spotlight updates that gives you news from in and around the Cadence community!
 

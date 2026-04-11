@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Operational management
-permalink: /docs/use-cases/operational-management
 description: This page describes how Cadence is used for operational management systems that automate monitoring, recovery, provisioning, and configuration of databases and infrastructure.
 keywords:
   - cadence operational management
@@ -11,6 +10,7 @@ keywords:
   - cadence self-operating
   - cadence elasticsearch management
   - cadence cassandra management
+permalink: /docs/use-cases/operational-management
 ---
 
 Imagine that you have to create a self operating database similar to Amazon RDS. Cadence is used in multiple projects

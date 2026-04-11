@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Queries
-permalink: /docs/java-client/queries
 description: This page explains how to use Cadence queries in Java to synchronously expose workflow internal state to external callers, including built-in stack trace queries and custom query handlers.
 keywords:
   - cadence query workflow java
@@ -11,6 +10,7 @@ keywords:
   - cadence stack trace query
   - cadence java query example
   - cadence read workflow state
+permalink: /docs/java-client/queries
 ---
 
 The Query feature exposes workflow internal state to the external world. Cadence provides a synchronous :query: feature. From the :workflow: implementer point of view the :query: is exposed as a synchronous callback that is invoked by external entities. Multiple such callbacks can be provided per :workflow: type exposing different information to different external systems.

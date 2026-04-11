@@ -12,13 +12,13 @@ keywords:
   - cadence zone drain
   - cadence multi-zone
 
-subtitle: test
-
 date: 2024-10-14
 authors: shaddoll
 tags:
   - deep-dive
   - cadence-operations
+subtitle: test
+
 ---
 At Uber, we want to achieve regional resilience such that losing a zone within a region can be tolerated without requiring a cross-region failover. We also want to make sure that losing a zone only affects a subset of workload, at most, rather than everything. However, in Cadence-based systems, the workload in a region is distributed randomly across all workers in the region at a “task-level granularity”, which means a workflow may be worked on by any worker in the region where the domain is active. To achieve this goal, we introduced Zonal Isolation for Cadence Workflows - a feature designed to pin workflows to the zone they are started in, so that zonal isolation can be achieved at a workflow-level.
 

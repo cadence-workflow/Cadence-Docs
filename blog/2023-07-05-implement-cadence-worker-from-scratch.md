@@ -1,11 +1,6 @@
 ---
 title: Implement a Cadence worker service from scratch
 
-date: 2023-07-05
-authors: chopincode
-tags:
-  - deep-dive
-  - introduction-to-cadence
 description: A step-by-step Go tutorial showing how to build a Cadence worker service from scratch, including setting up a gRPC client, logger, and worker process that connects to a Cadence backend.
 keywords:
   - cadence worker tutorial
@@ -16,6 +11,11 @@ keywords:
   - cadence grpc client
   - cadence getting started
   - cadence golang
+date: 2023-07-05
+authors: chopincode
+tags:
+  - deep-dive
+  - introduction-to-cadence
 ---
 
 In the previous [blog](/blog/2023-06-28-components-of-cadence-application-setup.md), we have introduced three critical components for a Cadence application: the Cadence backend, domain, and worker. Among these, the worker service is the most crucial focus for developers as it hosts the activities and workflows of a Cadence application. In this blog, I will provide a short tutorial on how to implement a simple worker service from scratch in Go.

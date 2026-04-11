@@ -1,9 +1,5 @@
 ---
 title: Long-term commitment and support for the Cadence project, and its community
-date: 2021-09-30
-authors: meiliang86
-tags:
-  - announcement
 description: Uber reaffirms its long-term commitment to the Cadence open source project and community in response to Temporal's announcement of dropping Cadence support.
 keywords:
   - cadence commitment
@@ -13,6 +9,10 @@ keywords:
   - temporal eol cadence
   - cadence community
   - cadence roadmap
+date: 2021-09-30
+authors: meiliang86
+tags:
+  - announcement
 ---
 
 Dear valued Cadence users and developers,

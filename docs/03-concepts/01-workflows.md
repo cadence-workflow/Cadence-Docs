@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Workflows
-permalink: /docs/concepts/workflows
 description: This page explains the Cadence workflow abstraction, a fault-oblivious stateful function that encapsulates state, timers, and event handlers across failures and restarts.
 keywords:
   - cadence workflow
@@ -11,6 +10,7 @@ keywords:
   - cadence durable function
   - cadence workflow definition
   - cadence workflow example
+permalink: /docs/concepts/workflows
 ---
 
 ## Overview
