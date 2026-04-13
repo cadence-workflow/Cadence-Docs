@@ -94,6 +94,31 @@ const config: Config = {
           trackingID: 'G-W63QD8QE6E',
           anonymizeIP: true,
         },
+        sitemap: {
+          changefreq: 'weekly',
+          createSitemapItems: async (params) => {
+            const {defaultCreateSitemapItems, ...rest} = params;
+            const items = await defaultCreateSitemapItems(rest);
+            return items.map((item) => {
+              if (item.url === 'https://cadenceworkflow.io/') {
+                return {...item, priority: 1.0};
+              }
+              if (item.url.includes('/docs/get-started')) {
+                return {...item, priority: 0.9};
+              }
+              if (item.url.includes('/faq/')) {
+                return {...item, priority: 0.8};
+              }
+              if (item.url.includes('/docs/')) {
+                return {...item, priority: 0.7};
+              }
+              if (item.url.includes('/blog/') && !item.url.includes('/tags') && !item.url.includes('/page/') && !item.url.includes('/authors')) {
+                return {...item, priority: 0.6};
+              }
+              return {...item, priority: 0.5};
+            });
+          },
+        },
       } satisfies Preset.Options,
     ],
   ],
