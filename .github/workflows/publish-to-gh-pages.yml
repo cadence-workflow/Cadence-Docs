@@ -83,8 +83,10 @@ jobs:
             echo "ALGOLIA_ADMIN_API_KEY secret not set, skipping re-indexing"
             exit 0
           fi
+          # Pinned to https://hub.docker.com/v2/repositories/algolia/docsearch-scraper/tags/latest
+          # on 2026-04-13, please update this to the latest version occasionally.
           docker run --rm \
             -e APPLICATION_ID \
             -e API_KEY \
             -e "CONFIG=$(cat docsearch-config.json | jq -r tostring)" \
-            algolia/docsearch-scraper
+            algolia/docsearch-scraper@sha256:7bc1cd5aa4783bf24be9ddd6ef22a629b6b43e217b3fa220b6a0acbdeb83b8f8
