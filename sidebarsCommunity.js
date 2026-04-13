@@ -6,7 +6,6 @@ export default {
     //   dirName: '.',
     // },
     { type: 'doc', id: 'contact-us' },
-    { type: 'doc', id: 'support' },
     {
       type: 'category',
       label: 'How to Contribute',
@@ -18,7 +17,6 @@ export default {
     },
     { type: 'doc', id: 'governance' },
     { type: 'doc', id: 'team' },
-    // { type: 'doc', id: 'resources' },
     // { type: 'doc', id: 'contributing' },
     // {
     //   type: 'link',

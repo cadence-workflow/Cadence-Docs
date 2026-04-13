@@ -1,6 +1,16 @@
 ---
 title: 2023 Cadence Community Survey Results
 
+description: Results of the 2023 Cadence community survey covering who uses Cadence, at what scale, what improvements users want most, and how the team plans to respond to feedback.
+keywords:
+  - cadence community survey
+  - cadence survey results
+  - cadence user feedback
+  - cadence roadmap
+  - cadence documentation improvements
+  - cadence scale
+  - cadence community
+  - cadence 2023
 date: 2023-06-08
 authors: enderdemirkaya
 tags:

@@ -1,6 +1,15 @@
 ---
-layout: default 
-title: How To Write Tests With Workflow Replayer and Shadower 
+layout: default
+title: How To Write Tests With Workflow Replayer and Shadower
+description: This codelab walks you through writing tests for Cadence workflows in Go using the Workflow Replayer and Workflow Shadower to detect non-deterministic changes.
+keywords:
+  - cadence workflow testing
+  - workflow replayer
+  - workflow shadower
+  - non-deterministic errors
+  - go workflow tests
+  - cadence go client
+  - workflow replay shadowing
 permalink: /docs/codelabs/workflow-tests-go-replayer-shadower
 ---
 

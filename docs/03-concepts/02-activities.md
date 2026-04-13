@@ -1,6 +1,15 @@
 ---
 layout: default
 title: Activities
+description: This page explains Cadence activities, which are the units of work that interact with external systems, along with their timeout configurations, retry policies, and heartbeating.
+keywords:
+  - cadence activities
+  - cadence activity concept
+  - activity timeout
+  - activity retry policy
+  - cadence heartbeat
+  - long running activity
+  - cadence activity worker
 permalink: /docs/concepts/activities
 ---
 

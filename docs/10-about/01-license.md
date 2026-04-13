@@ -1,6 +1,13 @@
 ---
 layout: default
 title: License
+description: This page contains the full license text for Cadence, with source code licensed under Apache 2.0 and documentation licensed under Creative Commons Attribution 4.0 International.
+keywords:
+  - cadence license
+  - apache 2.0 license
+  - creative commons license
+  - cadence open source license
+  - cadence legal
 permalink: /docs/about/license
 ---
 

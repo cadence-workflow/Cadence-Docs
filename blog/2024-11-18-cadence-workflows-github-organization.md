@@ -1,11 +1,18 @@
 ---
 title: Cadence Repositories Have Moved!
 
-description: Discover the latest update for Cadence Workflow! Our GitHub repositories have moved to the new cadence-workflow organization. Learn more about the migration, including updated links and how this change supports the growing Cadence community
+description: All Cadence GitHub repositories have been consolidated under the cadence-workflow organization. Learn what changed, where to find the new repository URLs, and how to update your bookmarks.
+keywords:
+  - cadence github migration
+  - cadence-workflow organization
+  - cadence repository moved
+  - cadence github org
+  - cadence open source
+  - cadence repository links
 
+date: 2024-11-18T14:00
 authors: ibarrajo
 tags: [announcement]
-date: 2024-11-18T14:00
 ---
 
 We’re excited to announce that all Cadence GitHub repositories have been consolidated under the [cadence-workflow](https://github.com/cadence-workflow) organization! 🎉

@@ -1,6 +1,15 @@
 ---
 layout: default
 title: Testing
+description: This page explains how to write unit and integration tests for Cadence workflows and activities in Java using TestActivityEnvironment and TestWorkflowEnvironment.
+keywords:
+  - cadence testing java
+  - cadence unit test java
+  - TestActivityEnvironment java
+  - TestWorkflowEnvironment java
+  - cadence workflow test java
+  - cadence activity test java
+  - cadence java test example
 permalink: /docs/java-client/testing
 ---
 

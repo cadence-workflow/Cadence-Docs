@@ -1,6 +1,16 @@
 ---
 title: Help Cadence Reach CNCF Incubation
 
+description: Cadence is a CNCF sandbox project working toward incubation status. Learn how adding your company to ADOPTERS.md helps the project grow and benefits the entire community.
+keywords:
+  - cadence CNCF incubation
+  - cadence adopters
+  - cadence sandbox project
+  - cadence open source adoption
+  - cadence community contribution
+  - CNCF maturity levels
+  - cadence ADOPTERS.md
+
 date: 2025-11-12
 authors: enderdemirkaya
 tags:

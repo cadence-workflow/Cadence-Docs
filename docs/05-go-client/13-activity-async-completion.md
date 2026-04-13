@@ -1,6 +1,15 @@
 ---
 layout: default
 title: Async activity completion
+description: This page explains how to implement asynchronous activity completion in Cadence, where an external system completes an activity after the activity function has already returned.
+keywords:
+  - cadence async activity completion
+  - asynchronous activity
+  - activity task token
+  - CompleteActivity
+  - ErrResultPending
+  - external activity completion
+  - go client async activity
 permalink: /docs/go-client/activity-async-completion
 ---
 

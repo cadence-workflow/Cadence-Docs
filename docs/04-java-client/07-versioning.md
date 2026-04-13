@@ -1,6 +1,15 @@
 ---
 layout: default
 title: Versioning
+description: This page explains how to safely update running Cadence workflows in Java using Workflow.getVersion to maintain determinism and avoid non-deterministic replay errors.
+keywords:
+  - cadence workflow versioning java
+  - Workflow.getVersion java
+  - cadence deterministic workflow
+  - cadence workflow update java
+  - workflow versioning cadence
+  - cadence backward compatibility
+  - cadence workflow replay java
 permalink: /docs/java-client/versioning
 ---
 

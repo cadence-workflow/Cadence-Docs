@@ -1,5 +1,15 @@
 ---
 title: Controlling Workflows From Web
+description: Cadence Web now supports the full workflow lifecycle from the browser, including the new Start Workflow action alongside existing Terminate, Cancel, Restart, Signal, and Reset controls.
+keywords:
+  - cadence web workflow controls
+  - cadence start workflow UI
+  - cadence web operational hub
+  - cadence terminate workflow
+  - cadence cancel workflow
+  - cadence signal workflow UI
+  - cadence web actions
+  - cadence workflow management
 date: 2025-10-10
 authors: assem-hafez
 tags:

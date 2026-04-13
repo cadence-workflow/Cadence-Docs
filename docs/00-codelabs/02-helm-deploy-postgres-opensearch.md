@@ -1,8 +1,18 @@
 ---
 layout: default
 title: Deploy Cadence with Helm on GKE (PostgreSQL + OpenSearch)
-permalink: /docs/codelabs/helm-deploy-postgres-opensearch
+description: This codelab guides you through deploying Cadence on Google Kubernetes Engine using Helm charts with PostgreSQL, Kafka, and OpenSearch for advanced visibility.
+keywords:
+  - cadence helm deploy
+  - cadence GKE
+  - cadence kubernetes
+  - cadence postgresql
+  - cadence opensearch
+  - helm chart cadence
+  - cadence advanced visibility
+  - cadence kafka
 
+permalink: /docs/codelabs/helm-deploy-postgres-opensearch
 ---
 **A video companion to this Codelab is available on our YouTube channel:**
 

@@ -1,6 +1,16 @@
 ---
 title: Cadence non-deterministic errors common question Q&A (part 1)
 
+description: A Q&A covering the most common questions about non-deterministic errors in Cadence, including which workflow and activity changes are safe and which will break existing executions.
+keywords:
+  - cadence non-deterministic errors
+  - cadence determinism Q&A
+  - workflow definition change
+  - activity definition change
+  - cadence versioning
+  - cadence workflow code change
+  - cadence history replay
+
 date: 2024-03-10
 authors: chopincode
 tags:

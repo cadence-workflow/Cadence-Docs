@@ -1,6 +1,15 @@
 ---
 layout: default
 title: Implementing activities
+description: This page explains how to implement Cadence activity classes in Java, covering thread safety requirements, execution history considerations, and best practices for data transfer.
+keywords:
+  - cadence java activity implementation
+  - implementing activities java
+  - cadence thread safe activity
+  - cadence activity class java
+  - java activity execution history
+  - cadence activity best practices
+  - cadence java activity example
 permalink: /docs/java-client/implementing-activities
 ---
 

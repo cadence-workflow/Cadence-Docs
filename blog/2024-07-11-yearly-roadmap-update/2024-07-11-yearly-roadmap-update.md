@@ -1,6 +1,16 @@
 ---
 title: 2024 Cadence Yearly Roadmap Update
 
+description: The 2024 Cadence yearly roadmap update covering what Cadence is, its benefits, team growth, community milestones, and planned improvements for scalability, reliability, and developer experience.
+keywords:
+  - cadence roadmap 2024
+  - cadence yearly update
+  - cadence workflow orchestration
+  - cadence features
+  - cadence scalability
+  - cadence team
+  - cadence future plans
+
 date: 2024-07-11
 authors: enderdemirkaya
 tags:

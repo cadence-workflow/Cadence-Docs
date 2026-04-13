@@ -1,6 +1,17 @@
 ---
 title: Cadence Joins CNCF (Cloud Native Computing Foundation)
 
+description: Cadence has officially joined the Cloud Native Computing Foundation (CNCF) as a sandbox project, marking a major open-source milestone and opening new paths for community governance and contribution.
+keywords:
+  - cadence CNCF
+  - cadence cloud native computing foundation
+  - cadence open source
+  - cadence linux foundation
+  - cadence sandbox project
+  - cadence governance
+  - cadence maintainer
+  - cadence community
+
 date: 2025-10-06
 authors: enderdemirkaya
 tags:

@@ -1,11 +1,20 @@
 ---
 title: "Custom Workflow Controls: Turn Queries Into Dashboards"
-description: Workflow queries can now return interactive markdown with signal and start buttons, rendered natively in Cadence Web. Build ops dashboards without leaving the UI.
+description: Custom Workflow Controls let your Cadence workflow queries return interactive markdown with signal and start buttons, rendered natively in Cadence Web so operators can manage workflows without leaving the UI.
+keywords:
+  - cadence custom workflow controls
+  - cadence workflow queries markdown
+  - cadence web interactive controls
+  - cadence signal button
+  - cadence start button
+  - cadence ops dashboard
+  - cadence markdoc
+  - cadence web UI controls
+date: 2026-03-23T10:00
 authors: kevinb
 tags:
   - announcement
   - cadence-web
-date: 2026-03-23T10:00
 ---
 
 What if your workflow could tell operators exactly what's happening, and let them take action, right from the Cadence Web UI?

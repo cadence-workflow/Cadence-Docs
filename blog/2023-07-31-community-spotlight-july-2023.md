@@ -1,6 +1,15 @@
 ---
 title: Cadence Community Spotlight Update - July 2023
 
+description: The July 2023 Cadence community spotlight covering the Go client v1.0 release, the new quarterly release strategy, and plans for official Cadence Helm chart maintenance.
+keywords:
+  - cadence community spotlight
+  - cadence july 2023
+  - cadence go client v1.0
+  - cadence release strategy
+  - cadence helm charts
+  - cadence news
+
 date: 2023-07-31
 authors: sharanf
 tags:

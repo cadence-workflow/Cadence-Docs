@@ -1,6 +1,15 @@
 ---
 layout: default
 title: Exception Handling
+description: This page explains how exceptions are propagated in Cadence Java workflows, including how activity and child workflow failures are wrapped and how to handle them in parent workflows.
+keywords:
+  - cadence exception handling java
+  - cadence activity failure java
+  - ActivityFailureException java
+  - ChildWorkflowFailureException java
+  - WorkflowFailureException java
+  - cadence error handling java
+  - cadence java exception example
 permalink: /docs/java-client/exception-handling
 ---
 
