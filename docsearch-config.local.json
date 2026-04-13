@@ -1,10 +1,10 @@
 {
   "index_name": "cadenceworkflow",
   "start_urls": [
-    "https://cadenceworkflow.io/"
+    "http://host.docker.internal:3000/"
   ],
   "sitemap_urls": [
-    "https://cadenceworkflow.io/sitemap.xml"
+    "http://host.docker.internal:3000/sitemap.xml"
   ],
   "sitemap_alternate_links": true,
   "stop_urls": [

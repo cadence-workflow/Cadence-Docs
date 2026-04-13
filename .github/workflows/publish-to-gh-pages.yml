@@ -76,17 +76,13 @@ jobs:
 
       - name: Re-index Algolia search 🔍
         env:
-          APPLICATION_ID: N9YD9IU5NA
-          API_KEY: ${{ secrets.ALGOLIA_ADMIN_API_KEY }}
+          ALGOLIA_CRAWLER_ID: ${{ secrets.ALGOLIA_CRAWLER_ID }}
+          ALGOLIA_CRAWLER_API_KEY: ${{ secrets.ALGOLIA_CRAWLER_API_KEY }}
         run: |
-          if [ -z "$API_KEY" ]; then
-            echo "ALGOLIA_ADMIN_API_KEY secret not set, skipping re-indexing"
+          if [ -z "$ALGOLIA_CRAWLER_ID" ] || [ -z "$ALGOLIA_CRAWLER_API_KEY" ]; then
+            echo "ALGOLIA_CRAWLER_ID or ALGOLIA_CRAWLER_API_KEY secret not set, skipping re-indexing"
             exit 0
           fi
-          # Pinned to https://hub.docker.com/v2/repositories/algolia/docsearch-scraper/tags/latest
-          # on 2026-04-13, please update this to the latest version occasionally.
-          docker run --rm \
-            -e APPLICATION_ID \
-            -e API_KEY \
-            -e "CONFIG=$(cat docsearch-config.json | jq -r tostring)" \
-            algolia/docsearch-scraper@sha256:7bc1cd5aa4783bf24be9ddd6ef22a629b6b43e217b3fa220b6a0acbdeb83b8f8
+          curl -X POST "https://crawler.algolia.com/api/1/crawlers/${ALGOLIA_CRAWLER_ID}/reindex" \
+            --user "${ALGOLIA_CRAWLER_API_KEY}:" \
+            --fail
