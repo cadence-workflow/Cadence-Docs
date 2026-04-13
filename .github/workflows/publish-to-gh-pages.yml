@@ -73,3 +73,18 @@ jobs:
           branch: gh-pages # The branch the action should deploy to.
           folder: build # The folder the action should deploy.
           clean: true # Automatically remove deleted files from the deploy branch
+
+      - name: Re-index Algolia search 🔍
+        env:
+          APPLICATION_ID: N9YD9IU5NA
+          API_KEY: ${{ secrets.ALGOLIA_ADMIN_API_KEY }}
+        run: |
+          if [ -z "$API_KEY" ]; then
+            echo "ALGOLIA_ADMIN_API_KEY secret not set, skipping re-indexing"
+            exit 0
+          fi
+          docker run --rm \
+            -e APPLICATION_ID \
+            -e API_KEY \
+            -e "CONFIG=$(cat docsearch-config.json | jq -r tostring)" \
+            algolia/docsearch-scraper

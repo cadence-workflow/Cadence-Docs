@@ -172,6 +172,13 @@ const config: Config = {
 
   headTags: [
     {
+      tagName: 'meta',
+      attributes: {
+        name: 'algolia-site-verification',
+        content: '0985E180AA68E235',
+      },
+    },
+    {
       tagName: 'link',
       attributes: {
         rel: 'preload',
@@ -255,10 +262,10 @@ const config: Config = {
 
     algolia: {
       // The application ID provided by Algolia
-      appId: 'J7SVDVT89Z',
+      appId: 'N9YD9IU5NA',
 
       // Public API key: it is safe to commit it
-      apiKey: 'e96333af9178875d6417a55ac276d718',
+      apiKey: 'b1e19704002d5d620299a443771ea84e',
 
       indexName: 'cadenceworkflow',
 

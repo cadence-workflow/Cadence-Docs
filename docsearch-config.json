@@ -1,0 +1,89 @@
+{
+  "index_name": "cadenceworkflow",
+  "start_urls": [
+    {
+      "url": "https://cadenceworkflow.io/docs/",
+      "selectors_key": "lvl0",
+      "variables": {
+        "lvl0": "Docs"
+      }
+    },
+    {
+      "url": "https://cadenceworkflow.io/faq/",
+      "selectors_key": "lvl0",
+      "variables": {
+        "lvl0": "FAQ"
+      }
+    },
+    {
+      "url": "https://cadenceworkflow.io/community/",
+      "selectors_key": "lvl0",
+      "variables": {
+        "lvl0": "Community"
+      }
+    },
+    {
+      "url": "https://cadenceworkflow.io/blog/",
+      "selectors_key": "lvl0",
+      "variables": {
+        "lvl0": "Blog"
+      }
+    },
+    {
+      "url": "https://cadenceworkflow.io/changelog/",
+      "selectors_key": "lvl0",
+      "variables": {
+        "lvl0": "Changelog"
+      }
+    }
+  ],
+  "stop_urls": [
+    "/blog/archive",
+    "/blog/authors",
+    "/blog/tags",
+    "/blog/page/",
+    "/community/tags",
+    "/faq/tags",
+    "/search",
+    "/markdown-page"
+  ],
+  "selectors": {
+    "default": {
+      "lvl0": {
+        "selector": "",
+        "type": "constant",
+        "default_value": "Documentation"
+      },
+      "lvl1": ".theme-doc-breadcrumbs .breadcrumbs__item:last-child .breadcrumbs__link, article h1",
+      "lvl2": "article h2",
+      "lvl3": "article h3",
+      "lvl4": "article h4",
+      "lvl5": "article h5",
+      "text": "article p, article li"
+    }
+  },
+  "selectors_exclude": [
+    ".theme-admonition",
+    ".docusaurus-highlight-code-line",
+    ".table-of-contents"
+  ],
+  "custom_settings": {
+    "separatorsToIndex": "_",
+    "attributesForFaceting": [
+      "language",
+      "version",
+      "type",
+      "docusaurus_tag"
+    ],
+    "attributesToRetrieve": [
+      "hierarchy",
+      "content",
+      "anchor",
+      "url",
+      "url_without_anchor",
+      "type"
+    ]
+  },
+  "min_indexed_level": 0,
+  "nb_shards": 1
+}
