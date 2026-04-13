@@ -94,6 +94,31 @@ const config: Config = {
           trackingID: 'G-W63QD8QE6E',
           anonymizeIP: true,
         },
+        sitemap: {
+          changefreq: 'weekly',
+          createSitemapItems: async (params) => {
+            const {defaultCreateSitemapItems, ...rest} = params;
+            const items = await defaultCreateSitemapItems(rest);
+            return items.map((item) => {
+              if (item.url === 'https://cadenceworkflow.io/') {
+                return {...item, priority: 1.0};
+              }
+              if (item.url.includes('/docs/get-started')) {
+                return {...item, priority: 0.9};
+              }
+              if (item.url.includes('/faq/')) {
+                return {...item, priority: 0.8};
+              }
+              if (item.url.includes('/docs/')) {
+                return {...item, priority: 0.7};
+              }
+              if (item.url.includes('/blog/') && !item.url.includes('/tags') && !item.url.includes('/page/') && !item.url.includes('/authors')) {
+                return {...item, priority: 0.6};
+              }
+              return {...item, priority: 0.5};
+            });
+          },
+        },
       } satisfies Preset.Options,
     ],
   ],
@@ -171,6 +196,13 @@ const config: Config = {
   ],
 
   headTags: [
+    {
+      tagName: 'meta',
+      attributes: {
+        name: 'algolia-site-verification',
+        content: '0985E180AA68E235',
+      },
+    },
     {
       tagName: 'link',
       attributes: {
@@ -255,10 +287,10 @@ const config: Config = {
 
     algolia: {
       // The application ID provided by Algolia
-      appId: 'J7SVDVT89Z',
+      appId: 'N9YD9IU5NA',
 
       // Public API key: it is safe to commit it
-      apiKey: 'e96333af9178875d6417a55ac276d718',
+      apiKey: 'b1e19704002d5d620299a443771ea84e',
 
       indexName: 'cadenceworkflow',
 
