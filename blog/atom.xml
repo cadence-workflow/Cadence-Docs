@@ -12,7 +12,7 @@
         <id>https://cadenceworkflow.io/blog/2026/03/23/2026-03-23-custom-workflow-controls/custom-workflow-controls</id>
         <link href="https://cadenceworkflow.io/blog/2026/03/23/2026-03-23-custom-workflow-controls/custom-workflow-controls"/>
         <updated>2026-03-23T10:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Workflow queries can now return interactive markdown with signal and start buttons, rendered natively in Cadence Web. Build ops dashboards without leaving the UI.]]></summary>
+        <summary type="html"><![CDATA[Custom Workflow Controls let your Cadence workflow queries return interactive markdown with signal and start buttons, rendered natively in Cadence Web so operators can manage workflows without leaving the UI.]]></summary>
         <content type="html"><![CDATA[<p>What if your workflow could tell operators exactly what's happening, and let them take action, right from the Cadence Web UI?</p>
 <p>With <strong>Custom Workflow Controls</strong>, now it can.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-idea">The Idea<a href="https://cadenceworkflow.io/blog/2026/03/23/2026-03-23-custom-workflow-controls/custom-workflow-controls#the-idea" class="hash-link" aria-label="Direct link to The Idea" title="Direct link to The Idea" translate="no">​</a></h2>
@@ -54,7 +54,7 @@
         <id>https://cadenceworkflow.io/blog/2026/01/13/2026-01-13-cadence-in-2025/cadence-in-2025</id>
         <link href="https://cadenceworkflow.io/blog/2026/01/13/2026-01-13-cadence-in-2025/cadence-in-2025"/>
         <updated>2026-01-13T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[A look-back to Cadence improvements in the Cadence project, explaining what’s new, how you can use and why you should use it]]></summary>
+        <summary type="html"><![CDATA[A 2025 year-in-review for the Cadence project covering the CNCF donation, 60% database cost reduction, adaptive tasklist partitioning, history queues v2, active-active domains, and more.]]></summary>
         <content type="html"><![CDATA[<p>Hi Cadence Community,</p>
 <p>At the beginning of every year, we share about what happened in the last year. Here’s a look back at our 2025 improvements, explaining what’s new, and how you can use them. 2025 was one of the most exciting years for the Cadence project and we hope this will only get better in the future. Here are some highlights:</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="cadence-joins-cncf">Cadence joins CNCF<a href="https://cadenceworkflow.io/blog/2026/01/13/2026-01-13-cadence-in-2025/cadence-in-2025#cadence-joins-cncf" class="hash-link" aria-label="Direct link to Cadence joins CNCF" title="Direct link to Cadence joins CNCF" translate="no">​</a></h2>
@@ -153,7 +153,7 @@ A very common case for some domains is to have separate documentation for their 
         <id>https://cadenceworkflow.io/blog/2025/11/12/help-cadence-reach-cncf-incubation</id>
         <link href="https://cadenceworkflow.io/blog/2025/11/12/help-cadence-reach-cncf-incubation"/>
         <updated>2025-11-12T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Help Cadence Reach CNCF Incubation]]></summary>
+        <summary type="html"><![CDATA[Cadence is a CNCF sandbox project working toward incubation status. Learn how adding your company to ADOPTERS.md helps the project grow and benefits the entire community.]]></summary>
         <content type="html"><![CDATA[<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="help-cadence-reach-cncf-incubation">Help Cadence Reach CNCF Incubation<a href="https://cadenceworkflow.io/blog/2025/11/12/help-cadence-reach-cncf-incubation#help-cadence-reach-cncf-incubation" class="hash-link" aria-label="Direct link to Help Cadence Reach CNCF Incubation" title="Direct link to Help Cadence Reach CNCF Incubation" translate="no">​</a></h2>
 <p>Cadence is an <strong>open-source</strong> workflow orchestration platform. Our community currently includes more than 150 companies and it continues to grow. Many critical services are built with Cadence as it simplifies complex systems by separating business logic from its distributed system concerns.</p>
 <p>Recently, Cadence was <a href="https://cadenceworkflow.io/blog/2025/10/06/cadence-joins-cncf-cloud-native-computing-foundation" target="_blank" rel="noopener noreferrer" class="">donated</a> to <a href="https://www.cncf.io/" target="_blank" rel="noopener noreferrer" class="">Cloud Native Computing Foundation (CNCF)</a>, which is a major step towards making it an industry standard and receiving support from all around the world. In other words, the Cadence project is now a Linux Foundation project, licensed under <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener noreferrer" class="">Apache v2</a> which allows anyone to use and extend it freely. The project operates with open, merit-based governance, giving everyone the opportunity to help shape its future.</p>
@@ -186,7 +186,7 @@ A very common case for some domains is to have separate documentation for their 
         <id>https://cadenceworkflow.io/blog/2025/10/12/2025-10-12-controlling-workflows-from-web/controlling-workflows-from-web</id>
         <link href="https://cadenceworkflow.io/blog/2025/10/12/2025-10-12-controlling-workflows-from-web/controlling-workflows-from-web"/>
         <updated>2025-10-10T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[See Start Workflow in Action]]></summary>
+        <summary type="html"><![CDATA[Cadence Web now supports the full workflow lifecycle from the browser, including the new Start Workflow action alongside existing Terminate, Cancel, Restart, Signal, and Reset controls.]]></summary>
         <content type="html"><![CDATA[<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="see-start-workflow-in-action">See Start Workflow in Action<a href="https://cadenceworkflow.io/blog/2025/10/12/2025-10-12-controlling-workflows-from-web/controlling-workflows-from-web#see-start-workflow-in-action" class="hash-link" aria-label="Direct link to See Start Workflow in Action" title="Direct link to See Start Workflow in Action" translate="no">​</a></h2>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/juQhG8JIMvc?si=5YYwIFjGuSgkKR1z" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe>
 <p>For a long time, controlling Cadence workflows was primarily done through the client SDKs or the administrative CLI. Our vision for <strong>Cadence Web</strong> has been to evolve it from a read-only inspection tool into a <strong>Unified Operational Hub</strong> for all workflow management needs. This means putting every essential workflow action directly in the hands of operators, support engineers, and developers—right where they observe workflows.</p>
@@ -215,7 +215,7 @@ A very common case for some domains is to have separate documentation for their 
         <id>https://cadenceworkflow.io/blog/2025/10/06/cadence-joins-cncf-cloud-native-computing-foundation</id>
         <link href="https://cadenceworkflow.io/blog/2025/10/06/cadence-joins-cncf-cloud-native-computing-foundation"/>
         <updated>2025-10-06T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[using.png]]></summary>
+        <summary type="html"><![CDATA[Cadence has officially joined the Cloud Native Computing Foundation (CNCF) as a sandbox project, marking a major open-source milestone and opening new paths for community governance and contribution.]]></summary>
         <content type="html"><![CDATA[<p><img decoding="async" loading="lazy" alt="using.png" src="https://cadenceworkflow.io/assets/images/cadence-joins-cncf-03b6cd48f3a98aa4a9e65b4f5c8b09a1.png" width="889" height="344" class="img_ev3q"></p>
 <p>We’re proud to announce that <a href="https://cadenceworkflow.io/" target="_blank" rel="noopener noreferrer" class="">the Cadence project</a> has joined the <a href="https://www.cncf.io/" target="_blank" rel="noopener noreferrer" class="">CNCF (Cloud Native Computing Foundation)</a>®, the open-source foundation that hosts and maintains critical components of modern cloud-native infrastructure including Kubernetes®, Prometheus®, and Envoy® under the <a href="https://www.linuxfoundation.org/" target="_blank" rel="noopener noreferrer" class="">Linux Foundation</a>®.</p>
 <p>Cadence is an open-source, fault-tolerant, and highly scalable workflow orchestration engine created at Uber to help developers build and run resilient applications. It’s been powering thousands of use cases at Uber and other companies. By managing distributed state, retries, scaling, and failure recovery, Cadence enables teams to focus on business logic rather than infrastructure complexity. Mission-critical applications across industries including finance, e-commerce, healthcare, and transportation depend on Cadence.</p>
@@ -247,7 +247,7 @@ A very common case for some domains is to have separate documentation for their 
         <id>https://cadenceworkflow.io/blog/2025/09/25/introducing-batch-future-faster-activity-execution</id>
         <link href="https://cadenceworkflow.io/blog/2025/09/25/introducing-batch-future-faster-activity-execution"/>
         <updated>2025-09-25T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[We're excited to announce Batch Future, a new feature in the Cadence Go client that provides controlled concurrency for bulk operations, preventing overwhelming downstream services while maintaining efficient parallel processing.]]></summary>
+        <summary type="html"><![CDATA[Batch Future is a new Cadence Go client feature that lets you run many activities or child workflows in parallel with a configurable concurrency limit, preventing hot shards and downstream overload.]]></summary>
         <content type="html"><![CDATA[<p>Are you struggling with uncontrolled concurrency when trying to process thousands of activities or child workflows? Do you find yourself hitting rate limits or overwhelming downstream services when running bulk operations? We've got great news for you!</p>
 <p>Today, we're thrilled to announce <strong>Batch Future</strong>, a powerful new feature in the Cadence Go client that provides controlled concurrency for bulk operations. You can now process multiple activities in parallel while maintaining precise control over how many run simultaneously.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-problem-uncontrolled-concurrency">The Problem: Uncontrolled Concurrency<a href="https://cadenceworkflow.io/blog/2025/09/25/introducing-batch-future-faster-activity-execution#the-problem-uncontrolled-concurrency" class="hash-link" aria-label="Direct link to The Problem: Uncontrolled Concurrency" title="Direct link to The Problem: Uncontrolled Concurrency" translate="no">​</a></h2>
@@ -361,7 +361,7 @@ A very common case for some domains is to have separate documentation for their 
         <id>https://cadenceworkflow.io/blog/2025/08/06/workflow-diagnostics</id>
         <link href="https://cadenceworkflow.io/blog/2025/08/06/workflow-diagnostics"/>
         <updated>2025-08-06T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Cadence users, especially new users, often struggle with failed/stuck workflows and are unable to understand what is wrong with their workflow. This can now be addressed by a tool that runs on demand to check the workflow and provide diagnostics with actionable information via clear runbooks that users can follow. The overarching goal is to help cadence users understand what is wrong with their workflow]]></summary>
+        <summary type="html"><![CDATA[Introducing Cadence Workflow Diagnostics, an on-demand tool that analyzes workflow execution history, identifies issues like timeouts and failures, surfaces root causes, and provides actionable runbook links.]]></summary>
         <content type="html"><![CDATA[<p>Cadence users, especially new users, often struggle with failed/stuck workflows and are unable to understand what is wrong with their workflow. This can now be addressed by a tool that runs on demand to check the workflow and provide diagnostics with actionable information via clear runbooks that users can follow. The overarching goal is to help cadence users understand what is wrong with their workflow</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="introducing-workflow-diagnostics">Introducing Workflow Diagnostics<a href="https://cadenceworkflow.io/blog/2025/08/06/workflow-diagnostics#introducing-workflow-diagnostics" class="hash-link" aria-label="Direct link to Introducing Workflow Diagnostics" title="Direct link to Introducing Workflow Diagnostics" translate="no">​</a></h2>
 <p>Cadence workflow diagnostics fetches the workflow execution history and identifies the issues in the workflow i.e. points out the different items that did not work as expected. For example, workflow timeouts. Next, for the issue identified, it provides the potential root cause by listing the different reasons that must've caused the issue. For example, the tasklist does not have pollers. Lastly, it provides ways to resolve the issue since we want the cadence users to have actionable diagnostics. For example, timeouts could occur when the workflow is running on a tasklist without enough workers to start the activities</p>
@@ -417,7 +417,7 @@ A very common case for some domains is to have separate documentation for their 
         <id>https://cadenceworkflow.io/blog/2025/07/01/2025-07-01-safe-deployment-of-versioned-workflows/safe-deployment-of-versioned-workflows</id>
         <link href="https://cadenceworkflow.io/blog/2025/07/01/2025-07-01-safe-deployment-of-versioned-workflows/safe-deployment-of-versioned-workflows"/>
         <updated>2025-07-10T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[At Uber, we manage billions of workflows with lifetimes ranging from seconds to years. Over the course of their lifetime, workflow code logic often requires changes. To prevent non-deterministic errors that changes may cause, Cadence offers a Versioning feature. However, the feature's usage is limited because changes are only backward-compatible, but not forward-compatible. This makes potential rollbacks or workflow execution rescheduling unsafe.]]></summary>
+        <summary type="html"><![CDATA[Learn how recent enhancements to the Cadence Versioning API enable safe rollouts and rollbacks of workflow code changes by separating code deployment from logic activation.]]></summary>
         <content type="html"><![CDATA[<p>At Uber, we manage billions of workflows with lifetimes ranging from seconds to years. Over the course of their lifetime, workflow code logic often requires changes. To prevent non-deterministic errors that changes may cause, Cadence offers <a href="https://cadenceworkflow.io/docs/go-client/workflow-versioning" target="_blank" rel="noopener noreferrer" class="">a Versioning feature</a>. However, the feature's usage is limited because changes are only backward-compatible, but not forward-compatible. This makes potential rollbacks or workflow execution rescheduling unsafe.</p>
 <p>To address these issues, we have made recent enhancements to <a href="https://cadenceworkflow.io/docs/go-client/workflow-versioning" target="_blank" rel="noopener noreferrer" class="">the Versioning API</a>, enabling the safe deployment of versioned workflows by separating code changes from the activation of new logic.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-is-a-versioned-workflow">What is a Versioned Workflow?<a href="https://cadenceworkflow.io/blog/2025/07/01/2025-07-01-safe-deployment-of-versioned-workflows/safe-deployment-of-versioned-workflows#what-is-a-versioned-workflow" class="hash-link" aria-label="Direct link to What is a Versioned Workflow?" title="Direct link to What is a Versioned Workflow?" translate="no">​</a></h2>
@@ -506,7 +506,7 @@ During rollouts, the service should continue to serve production traffic, allowi
         <id>https://cadenceworkflow.io/blog/2025/06/30/adaptive-tasklist-scaler</id>
         <link href="https://cadenceworkflow.io/blog/2025/06/30/adaptive-tasklist-scaler"/>
         <updated>2025-06-30T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[At Uber, we previously relied on a dynamic configuration service to manually control the number of partitions for scalable tasklists. This configuration approach introduced several operational challenges:]]></summary>
+        <summary type="html"><![CDATA[The Adaptive Tasklist Scaler is a new Cadence Matching service component that automatically adjusts tasklist partition counts based on live traffic, eliminating the need for manual configuration and reducing operational incidents.]]></summary>
         <content type="html"><![CDATA[<p>At Uber, we previously relied on a dynamic configuration service to manually control the number of partitions for scalable tasklists. This configuration approach introduced several operational challenges:</p>
 <ul>
 <li class=""><strong>Error-prone:</strong> Manual updates and deployments were required.</li>
@@ -606,7 +606,7 @@ During rollouts, the service should continue to serve production traffic, allowi
         <id>https://cadenceworkflow.io/blog/2025/04/11/2025-04-11-announcing-cadence-web-v4/announcing-cadence-web-v4</id>
         <link href="https://cadenceworkflow.io/blog/2025/04/11/2025-04-11-announcing-cadence-web-v4/announcing-cadence-web-v4"/>
         <updated>2025-04-11T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[We've released cadence-web v4.0.0, a complete rewrite of the Cadence Web UI with a modern UI and performance improvements! Learn more about the new features, technology stack, and how this update addresses past challenges for developers and users alike.]]></summary>
+        <summary type="html"><![CDATA[cadence-web v4.0.0 is a complete rewrite of the Cadence Web UI using Next.js, TypeScript, and React, bringing multi-cluster support, a unified workflow history view, and significantly improved performance.]]></summary>
         <content type="html"><![CDATA[<p>We are excited to announce the release of <strong>cadence-web v4.0.0</strong>—a complete rewrite of the Cadence web app. Cadence has always been about empowering developers to manage complex workflows, and with this release, we not only modernize the web interface by embracing today’s cutting-edge technologies but also strengthen the open source community by aligning our tools with the broader trends seen across the industry.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="whats-new-in-cadence-web-v400">What's new in cadence-web v4.0.0<a href="https://cadenceworkflow.io/blog/2025/04/11/2025-04-11-announcing-cadence-web-v4/announcing-cadence-web-v4#whats-new-in-cadence-web-v400" class="hash-link" aria-label="Direct link to What's new in cadence-web v4.0.0" title="Direct link to What's new in cadence-web v4.0.0" translate="no">​</a></h2>
 <ul>
@@ -662,7 +662,7 @@ During rollouts, the service should continue to serve production traffic, allowi
         <id>https://cadenceworkflow.io/blog/2024/11/18/cadence-workflows-github-organization</id>
         <link href="https://cadenceworkflow.io/blog/2024/11/18/cadence-workflows-github-organization"/>
         <updated>2024-11-18T14:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Discover the latest update for Cadence Workflow! Our GitHub repositories have moved to the new cadence-workflow organization. Learn more about the migration, including updated links and how this change supports the growing Cadence community]]></summary>
+        <summary type="html"><![CDATA[All Cadence GitHub repositories have been consolidated under the cadence-workflow organization. Learn what changed, where to find the new repository URLs, and how to update your bookmarks.]]></summary>
         <content type="html"><![CDATA[<p>We’re excited to announce that all Cadence GitHub repositories have been consolidated under the <a href="https://github.com/cadence-workflow" target="_blank" rel="noopener noreferrer" class="">cadence-workflow</a> organization! 🎉</p>
 <p>Previously, Cadence repositories were distributed across multiple organizations at Uber: <a href="https://github.com/uber" target="_blank" rel="noopener noreferrer" class=""><code>uber</code></a>, <a href="https://github.com/uber-go" target="_blank" rel="noopener noreferrer" class=""><code>uber-go</code></a>, <a href="https://github.com/uber-common" target="_blank" rel="noopener noreferrer" class=""><code>uber-common</code></a>. To improve developer cohesiveness and simplify access, the Cadence Core team has migrated all open-source repositories to the <a href="https://github.com/cadence-workflow" target="_blank" rel="noopener noreferrer" class=""><code>cadence-workflow</code></a> organization.</p>
 <p>For example, our main repository has moved from:</p>
@@ -683,7 +683,7 @@ During rollouts, the service should continue to serve production traffic, allowi
         <id>https://cadenceworkflow.io/blog/zonal-isolation-v1/zonal-isolation-v1</id>
         <link href="https://cadenceworkflow.io/blog/zonal-isolation-v1/zonal-isolation-v1"/>
         <updated>2024-10-14T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[At Uber, we want to achieve regional resilience such that losing a zone within a region can be tolerated without requiring a cross-region failover. We also want to make sure that losing a zone only affects a subset of workload, at most, rather than everything. However, in Cadence-based systems, the workload in a region is distributed randomly across all workers in the region at a “task-level granularity”, which means a workflow may be worked on by any worker in the region where the domain is active. To achieve this goal, we introduced Zonal Isolation for Cadence Workflows - a feature designed to pin workflows to the zone they are started in, so that zonal isolation can be achieved at a workflow-level.]]></summary>
+        <summary type="html"><![CDATA[Learn how Cadence's zonal isolation feature pins workflows to the availability zone they were started in, limiting the blast radius of zone failures to a subset of workflows rather than the entire cluster.]]></summary>
         <content type="html"><![CDATA[<p>At Uber, we want to achieve regional resilience such that losing a zone within a region can be tolerated without requiring a cross-region failover. We also want to make sure that losing a zone only affects a subset of workload, at most, rather than everything. However, in Cadence-based systems, the workload in a region is distributed randomly across all workers in the region at a “task-level granularity”, which means a workflow may be worked on by any worker in the region where the domain is active. To achieve this goal, we introduced Zonal Isolation for Cadence Workflows - a feature designed to pin workflows to the zone they are started in, so that zonal isolation can be achieved at a workflow-level.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-is-zonal-isolation-for-cadence-workflows">What is Zonal Isolation for Cadence Workflows?<a href="https://cadenceworkflow.io/blog/zonal-isolation-v1/zonal-isolation-v1#what-is-zonal-isolation-for-cadence-workflows" class="hash-link" aria-label="Direct link to What is Zonal Isolation for Cadence Workflows?" title="Direct link to What is Zonal Isolation for Cadence Workflows?" translate="no">​</a></h2>
 <p>At high-level, Zonal Isolation for Cadence Workflows can be thought in 2 levels:</p>
@@ -780,7 +780,7 @@ It’s important to note that any update to the <code>system.allIsolationGroups<
         <id>https://cadenceworkflow.io/blog/2024/10/01/announcing-cadence-helm-charts-v0</id>
         <link href="https://cadenceworkflow.io/blog/2024/10/01/announcing-cadence-helm-charts-v0"/>
         <updated>2024-10-01T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[We’ve heard your feedback: deploying Cadence has been a challenge, especially with limited documentation on operational aspects. So far, we’ve only provided a few docker compose files to help you get started on a development machine. However, deploying and managing Cadence at scale requires a deep understanding of underlying services, configurations and their dependencies.]]></summary>
+        <summary type="html"><![CDATA[Announcing the official Cadence Kubernetes Helm Chart v0, the new standardized way to deploy and operate Cadence clusters on Kubernetes with supported configuration and Cassandra included.]]></summary>
         <content type="html"><![CDATA[<p>We’ve heard your feedback: deploying Cadence has been a challenge, especially with limited documentation on operational aspects. So far, we’ve only provided a few <a href="https://github.com/cadence-workflow/cadence/tree/master/docker" target="_blank" rel="noopener noreferrer" class="">docker compose files</a> to help you get started on a development machine. However, deploying and managing Cadence at scale requires a deep understanding of underlying services, configurations and their dependencies.</p>
 <p>To address these challenges, we’re launching several initiatives to make it easier to deploy and operate Cadence clusters. These include deployment specs for common scenarios, monitoring dashboards, alerts, runbooks, and more comprehensive documentation.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="introducing-cadence-kubernetes-helm-chart-v0">Introducing Cadence Kubernetes Helm Chart v0<a href="https://cadenceworkflow.io/blog/2024/10/01/announcing-cadence-helm-charts-v0#introducing-cadence-kubernetes-helm-chart-v0" class="hash-link" aria-label="Direct link to Introducing Cadence Kubernetes Helm Chart v0" title="Direct link to Introducing Cadence Kubernetes Helm Chart v0" translate="no">​</a></h2>
@@ -829,7 +829,7 @@ It’s important to note that any update to the <code>system.allIsolationGroups<
         <id>https://cadenceworkflow.io/blog/2024/09/05/workflow-specific-rate-limits</id>
         <link href="https://cadenceworkflow.io/blog/2024/09/05/workflow-specific-rate-limits"/>
         <updated>2024-09-05T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[At Uber, we run several big multitenant Cadence clusters with hundreds of domains in each. The clusters being multi-tenant means potential noisy neighbor effects between domains.]]></summary>
+        <summary type="html"><![CDATA[Learn how Cadence's new workflow ID-based rate limits protect multi-tenant clusters from hot shards and noisy neighbors by throttling external calls and internal actions per workflow.]]></summary>
         <content type="html"><![CDATA[<p>At Uber, we run several big multitenant Cadence clusters with hundreds of domains in each. The clusters being multi-tenant means potential <a href="https://en.wikipedia.org/wiki/Cloud_computing_issues#Performance_interference_and_noisy_neighbors" target="_blank" rel="noopener noreferrer" class="">noisy neighbor</a> effects between domains.</p>
 <p>An essential aspect of avoiding this is managing how workflows interact with our infrastructure to prevent any single workflow from causing instability for the whole cluster. To this end, we are excited to introduce Workflow ID-based rate limits — a new feature designed to protect our clusters from problematic workflows and ensure stability across the board.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-workflow-id-based-rate-limits">Why Workflow ID-based Rate Limits?<a href="https://cadenceworkflow.io/blog/2024/09/05/workflow-specific-rate-limits#why-workflow-id-based-rate-limits" class="hash-link" aria-label="Direct link to Why Workflow ID-based Rate Limits?" title="Direct link to Why Workflow ID-based Rate Limits?" translate="no">​</a></h2>
@@ -919,7 +919,7 @@ Rate limiting users of a healthy domain because of requests from a completely di
         <id>https://cadenceworkflow.io/blog/2024/07/11/2024-07-11-yearly-roadmap-update/yearly-roadmap-update</id>
         <link href="https://cadenceworkflow.io/blog/2024/07/11/2024-07-11-yearly-roadmap-update/yearly-roadmap-update"/>
         <updated>2024-07-11T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Introduction]]></summary>
+        <summary type="html"><![CDATA[The 2024 Cadence yearly roadmap update covering what Cadence is, its benefits, team growth, community milestones, and planned improvements for scalability, reliability, and developer experience.]]></summary>
         <content type="html"><![CDATA[<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="introduction">Introduction<a href="https://cadenceworkflow.io/blog/2024/07/11/2024-07-11-yearly-roadmap-update/yearly-roadmap-update#introduction" class="hash-link" aria-label="Direct link to Introduction" title="Direct link to Introduction" translate="no">​</a></h2>
 <p>If you haven’t heard about Cadence, this section is for you. In a short description, Cadence is a code-driven workflow orchestration engine. The definition itself may not tell enough, so it would help splitting it into three parts:</p>
 <ul>
@@ -1043,11 +1043,62 @@ Rate limiting users of a healthy domain because of requests from a completely di
         <category label="Deep Dives" term="Deep Dives"/>
     </entry>
     <entry>
+        <title type="html"><![CDATA[Cadence Community Spotlight Update - March 2024]]></title>
+        <id>https://cadenceworkflow.io/blog/2024/03/11/community-spotlight-update-march-2024</id>
+        <link href="https://cadenceworkflow.io/blog/2024/03/11/community-spotlight-update-march-2024"/>
+        <updated>2024-03-11T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[The March 2024 Cadence community spotlight covering the plugin system proposal, Admin API permission discussions, new Java signal workflow samples, Go client updates, and release notes for v1.2.6 and v1.2.7.]]></summary>
+        <content type="html"><![CDATA[<p>Welcome back to the latest in our regular Cadence community spotlight updates where we aim to deliver you news from in and around the Cadence community!
+It’s been a few months since our <a href="https://cadenceworkflow.io/blog/2023/11/30/community-spotlight-update-november-2023/" target="_blank" rel="noopener noreferrer" class="">last update</a>, so I have a bunch of exciting updates to share.</p>
+<p>Let’s get started!</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="proposal-for-cadence-plugin-system">Proposal for Cadence Plugin System<a href="https://cadenceworkflow.io/blog/2024/03/11/community-spotlight-update-march-2024#proposal-for-cadence-plugin-system" class="hash-link" aria-label="Direct link to Proposal for Cadence Plugin System" title="Direct link to Proposal for Cadence Plugin System" translate="no">​</a></h2>
+<p>Community member <a href="https://lt.linkedin.com/in/mantassidlauskas" target="_blank" rel="noopener noreferrer" class="">Mantas Sidlauskas</a> drafted a thorough proposal around putting together a plugin system in Cadence. Aimed at enhancing the flexibility of integrating various components like storage, document search, and archival, this system encourages the use of external plugins, promoting innovation and reducing dependency complications. Your insights and feedback are crucial; learn more and contribute your thoughts at the link below:</p>
+<ul>
+<li class=""><a href="https://github.com/cadence-workflow/cadence/issues/5593" target="_blank" rel="noopener noreferrer" class="">Cadence Plugin System Proposal</a></li>
+</ul>
+<p>A huge thank you to Mantas for initiating this work. This is an excellent example of how we can collaborate together to bring about new features that benefit us all.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="admin-api-permissions-rethinking">Admin API Permissions Rethinking<a href="https://cadenceworkflow.io/blog/2024/03/11/community-spotlight-update-march-2024#admin-api-permissions-rethinking" class="hash-link" aria-label="Direct link to Admin API Permissions Rethinking" title="Direct link to Admin API Permissions Rethinking" translate="no">​</a></h2>
+<p>The community is deliberating on the permission requirements for the Admin API DescribeCluster endpoint. This vital discussion aims to ensure Cadence web's accessibility across different user levels. We're exploring various solutions and your participation would greatly influence the decision-making process. Feel free to chime in <a href="https://github.com/cadence-workflow/cadence/issues/5683" target="_blank" rel="noopener noreferrer" class="">here</a>!</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="new-java-samples-for-cadence-signal-workflow-interactions">New Java Samples for Cadence: Signal Workflow Interactions<a href="https://cadenceworkflow.io/blog/2024/03/11/community-spotlight-update-march-2024#new-java-samples-for-cadence-signal-workflow-interactions" class="hash-link" aria-label="Direct link to New Java Samples for Cadence: Signal Workflow Interactions" title="Direct link to New Java Samples for Cadence: Signal Workflow Interactions" translate="no">​</a></h2>
+<p>In some exciting news for Java enthusiasts, a new sample has been added to the Cadence Java Samples repository, demonstrating how to initiate and interact with a signal workflow using the Cadence client. This practical example is a huge win for developers looking to deepen their understanding of workflow signaling in Java. Explore the new sample and expand your Cadence toolkit <a href="https://github.com/cadence-workflow/cadence-java-samples/pull/78" target="_blank" rel="noopener noreferrer" class="">here</a>.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="new-golang-client--cadence-web-enhancements">New GoLang client &amp; Cadence Web Enhancements<a href="https://cadenceworkflow.io/blog/2024/03/11/community-spotlight-update-march-2024#new-golang-client--cadence-web-enhancements" class="hash-link" aria-label="Direct link to New GoLang client &amp; Cadence Web Enhancements" title="Direct link to New GoLang client &amp; Cadence Web Enhancements" translate="no">​</a></h2>
+<p>Updates to the Cadence GoLang Client and Cadence Web have been rolled out, bringing new features and improvements that streamline user experiences. Highlights include upgraded Cassandra images, refined workflow interceptors, and more intuitive Cadence Web interfaces. Discover the full scope of updates on our GitHub repositories.</p>
+<ul>
+<li class=""><a href="https://github.com/cadence-workflow/cadence-go-client/releases" target="_blank" rel="noopener noreferrer" class="">GoLang Client Releases</a></li>
+<li class=""><a href="https://github.com/cadence-workflow/cadence-web/releases" target="_blank" rel="noopener noreferrer" class="">Cadence Web Releases</a></li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="release-updates-v126--v127">Release Updates: v1.2.6 &amp; v1.2.7<a href="https://cadenceworkflow.io/blog/2024/03/11/community-spotlight-update-march-2024#release-updates-v126--v127" class="hash-link" aria-label="Direct link to Release Updates: v1.2.6 &amp; v1.2.7" title="Direct link to Release Updates: v1.2.6 &amp; v1.2.7" translate="no">​</a></h2>
+<p>Cadence recently saw the release of versions v1.2.6 and v1.2.7, featuring significant improvements and fixes that enhance the overall Cadence experience. These updates reflect a commitment to respond to the community's valuable feedback. Check out the detailed release notes on the <a href="https://github.com/cadence-workflow/cadence/releases" target="_blank" rel="noopener noreferrer" class="">GitHub releases page</a>!</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="cadence-in-the-news">Cadence in the News!<a href="https://cadenceworkflow.io/blog/2024/03/11/community-spotlight-update-march-2024#cadence-in-the-news" class="hash-link" aria-label="Direct link to Cadence in the News!" title="Direct link to Cadence in the News!" translate="no">​</a></h2>
+<p>Below is a selection of Cadence related articles and blogs. Take a look and feel free to share your own with us via your own social media channels!</p>
+<ul>
+<li class=""><a href="https://www.instaclustr.com/blog/how-to-avoid-domain-update-too-frequent-error-in-multi-region-cadence/" target="_blank" rel="noopener noreferrer" class="">How to Avoid “Domain update too frequent” Error in Multi-Region Cadence</a></li>
+<li class=""><a href="https://levelup.gitconnected.com/build-a-digital-collectibles-portal-using-flow-and-cadence-part-1-2783f2902ef6" target="_blank" rel="noopener noreferrer" class="">Build a Digital Collectibles Portal Using Flow and Cadence (Part 1)</a></li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="recent-events">Recent Events<a href="https://cadenceworkflow.io/blog/2024/03/11/community-spotlight-update-march-2024#recent-events" class="hash-link" aria-label="Direct link to Recent Events" title="Direct link to Recent Events" translate="no">​</a></h2>
+<p>Check out this recent webinar, "Building with Cadence: Quantifiable Efficiency," available on-demand now. Discover the robust features of Cadence and how it can streamline the development of distributed applications through an engaging demonstration by <a href="https://au.linkedin.com/in/john-del-castillo-28b87b90?trk=people-guest_people_search-card" target="_blank" rel="noopener noreferrer" class="">John Del Castillo</a>.</p>
+<ul>
+<li class=""><a href="https://netapp.zoom.us/webinar/register/WN_jT5fxSldRhuzV0NSllBd7g#/registration" target="_blank" rel="noopener noreferrer" class="">On Demand: Building with Cadence: Quantifiable Efficiency</a></li>
+</ul>
+<p><br>
+<br>
+<br>
+<!-- -->That’s all for this month!</p>
+<p>Your engagement and contributions are what make the Cadence community thrive. Whether you have innovative ideas, insightful feedback, or just want to chat about Cadence, we encourage you to join our <a href="https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ" target="_blank" rel="noopener noreferrer" class="">Slack #community channel</a>.</p>
+<p>We're committed to making this update as useful and informative as possible, so please share any feedback or suggestions you might have. Let’s keep building a vibrant and collaborative Cadence community together!</p>
+<p>Looking forward to sharing more exciting updates next month!</p>]]></content>
+        <author>
+            <name>Kevin Corbett</name>
+            <uri>https://github.com/kcorbett-netapp</uri>
+        </author>
+        <category label="Community Spotlight" term="Community Spotlight"/>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[Cadence non-deterministic errors common question Q&A (part 1)]]></title>
         <id>https://cadenceworkflow.io/blog/2024/02/15/cadence-non-deterministic-common-qa</id>
         <link href="https://cadenceworkflow.io/blog/2024/02/15/cadence-non-deterministic-common-qa"/>
         <updated>2024-03-10T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[If I change code logic inside an Cadence activity (for example, my activity is calling database A but now I want it to call database B),  will it trigger an non-deterministic error?]]></summary>
+        <summary type="html"><![CDATA[A Q&A covering the most common questions about non-deterministic errors in Cadence, including which workflow and activity changes are safe and which will break existing executions.]]></summary>
         <content type="html"><![CDATA[<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="if-i-change-code-logic-inside-an-cadence-activity-for-example-my-activity-is-calling-database-a-but-now-i-want-it-to-call-database-b--will-it-trigger-an-non-deterministic-error">If I change code logic inside an Cadence activity (for example, my activity is calling database A but now I want it to call database B),  will it trigger an non-deterministic error?<a href="https://cadenceworkflow.io/blog/2024/02/15/cadence-non-deterministic-common-qa#if-i-change-code-logic-inside-an-cadence-activity-for-example-my-activity-is-calling-database-a-but-now-i-want-it-to-call-database-b--will-it-trigger-an-non-deterministic-error" class="hash-link" aria-label="Direct link to If I change code logic inside an Cadence activity (for example, my activity is calling database A but now I want it to call database B),  will it trigger an non-deterministic error?" title="Direct link to If I change code logic inside an Cadence activity (for example, my activity is calling database A but now I want it to call database B),  will it trigger an non-deterministic error?" translate="no">​</a></h3>
 <p><b>NO</b>. This change will not trigger non-deterministic error.</p>
 <p>An Activity is the smallest unit of execution for Cadence and what happens inside activities are not recorded as historical events and therefore will not be replayed. In short, this change is deterministic and it is fine to modify logic inside activities.</p>
@@ -1107,7 +1158,7 @@ trigger non-deterministic errors.</p>
         <id>https://cadenceworkflow.io/blog/2023/11/30/community-spotlight-update-november-2023</id>
         <link href="https://cadenceworkflow.io/blog/2023/11/30/community-spotlight-update-november-2023"/>
         <updated>2023-11-30T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Welcome to the latest of our regular monthly Community Spotlight updates that gives you news from in and around the Cadence community!]]></summary>
+        <summary type="html"><![CDATA[The November 2023 Cadence community spotlight covering native authentication proposals, iWF updates, new Go v2 samples, and a year-end retrospective on the project.]]></summary>
         <content type="html"><![CDATA[<p>Welcome to the latest of our regular monthly Community Spotlight updates that gives you news from in and around the Cadence community!</p>
 <p>It's been a couple of months since our last update so we have a lot of updates to share with you.</p>
 <p>Please see below for a roundup of the highlights:</p>
@@ -1183,7 +1234,7 @@ Please take a look and feel free to share via your own social media channels.</p
         <id>https://cadenceworkflow.io/blog/2023/08/31/community-spotlight-august-2023</id>
         <link href="https://cadenceworkflow.io/blog/2023/08/31/community-spotlight-august-2023"/>
         <updated>2023-08-31T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Welcome to the latest of our regular monthly Community Spotlight updates that gives you news from in and around the Cadence community!]]></summary>
+        <summary type="html"><![CDATA[The August 2023 Cadence community spotlight highlighting new how-to blog posts, iWF ContinueAsNew guides, Helm chart contributions, and community Slack activity.]]></summary>
         <content type="html"><![CDATA[<p>Welcome to the latest of our regular monthly Community Spotlight updates that gives you news from in and around the Cadence community!</p>
 <p>Please see below for a roundup of the highlights:</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="more-cadence-how-tos">More Cadence How To's<a href="https://cadenceworkflow.io/blog/2023/08/31/community-spotlight-august-2023#more-cadence-how-tos" class="hash-link" aria-label="Direct link to More Cadence How To's" title="Direct link to More Cadence How To's" translate="no">​</a></h2>
@@ -1259,7 +1310,7 @@ Please take a look and feel free to share via your own social media channels.</p
         <id>https://cadenceworkflow.io/blog/2023/08/28/nondeterministic-errors-replayers-shadowers</id>
         <link href="https://cadenceworkflow.io/blog/2023/08/28/nondeterministic-errors-replayers-shadowers"/>
         <updated>2023-08-27T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[It is conceivable that developers constantly update their Cadence workflow code based upon new business use cases and needs. However,]]></summary>
+        <summary type="html"><![CDATA[Learn what causes non-deterministic errors in Cadence workflows and how to detect and prevent them using workflow replayers and shadowers during testing.]]></summary>
         <content type="html"><![CDATA[<p>It is conceivable that developers constantly update their Cadence workflow code based upon new business use cases and needs. However,
 the definition of a Cadence workflow must be deterministic because behind the scenes cadence uses event sourcing to construct
 the workflow state by replaying the historical events stored for this specific workflow. Introducing components that are not compatible
@@ -1277,43 +1328,5 @@ Workflow Replayer works well when verifying the compatibility against a small nu
         </author>
         <category label="Deep Dives" term="Deep Dives"/>
         <category label="Testing" term="Testing"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Cadence Community Spotlight Update - July 2023]]></title>
-        <id>https://cadenceworkflow.io/blog/2023/07/31/community-spotlight-july-2023</id>
-        <link href="https://cadenceworkflow.io/blog/2023/07/31/community-spotlight-july-2023"/>
-        <updated>2023-07-31T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Welcome to the latest of our regular monthly Community Spotlight updates that gives you news from in and around the Cadence community!]]></summary>
-        <content type="html"><![CDATA[<p>Welcome to the latest of our regular monthly Community Spotlight updates that gives you news from in and around the Cadence community!</p>
-<p>Please see below for a roundup of the highlights:</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="getting-started-with-cadence">Getting Started with Cadence<a href="https://cadenceworkflow.io/blog/2023/07/31/community-spotlight-july-2023#getting-started-with-cadence" class="hash-link" aria-label="Direct link to Getting Started with Cadence" title="Direct link to Getting Started with Cadence" translate="no">​</a></h2>
-<p>Are you new to Cadence and want to understand the basic concepts and architecture? Well we have some great information for you!</p>
-<p>Community member <a href="https://www.linkedin.com/in/chrisqin0610/" target="_blank" rel="noopener noreferrer" class="">Chris Qin</a> has written a <a href="https://cadenceworkflow.io/blog/2023/07/01/components-of-cadence-application-setup/" target="_blank" rel="noopener noreferrer" class="">short blog post</a> that takes you through the three main components that make up a Cadence application. Please take a look and feel free to give us your comments and feedback.</p>
-<p>Thanks Chris for sharing your knowledge and helping others to get started.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="cadence-go-client-v10-released">Cadence Go Client v1.0 Released<a href="https://cadenceworkflow.io/blog/2023/07/31/community-spotlight-july-2023#cadence-go-client-v10-released" class="hash-link" aria-label="Direct link to Cadence Go Client v1.0 Released" title="Direct link to Cadence Go Client v1.0 Released" translate="no">​</a></h2>
-<p>This month saw the release of <a href="https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.0.0" target="_blank" rel="noopener noreferrer" class="">v1.0 of the Cadence Go Client</a>. Note that the work done on this release was as a result of community feedback asking for it - so we are listening and responding to community needs.</p>
-<p>Thanks very much to everyone who worked hard to get this release out!</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="cadence-release-strategy">Cadence Release Strategy<a href="https://cadenceworkflow.io/blog/2023/07/31/community-spotlight-july-2023#cadence-release-strategy" class="hash-link" aria-label="Direct link to Cadence Release Strategy" title="Direct link to Cadence Release Strategy" translate="no">​</a></h2>
-<p>A recent discussion on the Cadence Release strategy was posted in <a href="https://github.com/cadence-workflow/cadence/discussions/5362" target="_blank" rel="noopener noreferrer" class="">Cadence Github Discussions</a> (and also our #general channel on our <a href="https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ" target="_blank" rel="noopener noreferrer" class="">Slack</a> about the approach we'd like to take for future releases. As a community we want to ensure code stability and to not burden people with having to upgrade frequently.</p>
-<p>Based on feedback from the community we will be introducing quarterly release cycles but also give people the ability to make use of patches and minor releases. We will be communicating the intention to make a release at least a month beforehand so that the community has time to finalise any features they want to be included in the upcoming release.</p>
-<p>For those of you wanting to keep up to date or try out new features in between releases, the core team at Uber will continue to make patch and minor version updates available to the community.</p>
-<p>As always we welcome your feedback so please feel free to add your thoughts and comments to the discussion.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="cadence-helm-charts">Cadence Helm Charts<a href="https://cadenceworkflow.io/blog/2023/07/31/community-spotlight-july-2023#cadence-helm-charts" class="hash-link" aria-label="Direct link to Cadence Helm Charts" title="Direct link to Cadence Helm Charts" translate="no">​</a></h2>
-<p>Community member <a href="https://www.linkedin.com/in/sagikazarmark/" target="_blank" rel="noopener noreferrer" class="">Mark Sagi-Kazar</a> has been maintaining the Banzai Cloud Cadence Helm Charts for the community. As the Helm Charts are a key tool for the community we are planning to take over the maintenance of them.</p>
-<p>Our plan is to move the charts into the Cadence repository and to maintain an official and supported Kubernetes solution with Cadence.</p>
-<p>Huge thanks to Mark for all the work you have done and it's great to see the task being handed over and made into a community effort.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="upcoming-events">Upcoming Events<a href="https://cadenceworkflow.io/blog/2023/07/31/community-spotlight-july-2023#upcoming-events" class="hash-link" aria-label="Direct link to Upcoming Events" title="Direct link to Upcoming Events" translate="no">​</a></h2>
-<ul>
-<li class="">None</li>
-</ul>
-<p>If you have any news or topics you'd like us to include in our next update then please join our <a href="https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ" target="_blank" rel="noopener noreferrer" class="">Slack</a> #community channel.</p>
-<p>Please remember that this update is for you - so if you have any comments or feedback that could help us improve it then please share it with us in the #community <a href="https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ" target="_blank" rel="noopener noreferrer" class="">Slack</a> channel.</p>]]></content>
-        <author>
-            <name>Sharan Foga</name>
-            <uri>https://www.linkedin.com/in/sfoga/</uri>
-        </author>
-        <category label="Releases" term="Releases"/>
-        <category label="Announcement" term="Announcement"/>
-        <category label="Community Spotlight" term="Community Spotlight"/>
     </entry>
 </feed>
