@@ -2,10 +2,11 @@
 title: "1 Day, 2 Engineers, 6 Lines of Code"
 description: "How the new Cadence Shard Manager Found and Mitigated Two Latent Deadlocks"
 
-date: 2026-03-21
+date: 2026-04-20
 authors: [jakobht, eleonoradgr]
 tags:
-  - shard-manager, matching
+  - shard-manager
+  - matching
 ---
 
 import LogHistogram from './LogHistogram';
@@ -194,7 +195,7 @@ So we see errors about the database being unavailable, we then see warnings
 about task list managers (the shards managed by Shard Manager) stopping and
 restarting. As it turns out, the most interesting log message is the `get task
 list partition config from db`. Let's look at [the code around
-that:](https://github.com/jakobht/cadence/blob/bc57c106043c0b13ef242cad876e330b093e1b1b/service/matching/tasklist/task_list_manager.go#L289-L301)
+that:](https://github.com/cadence-workflow/cadence/blob/bc57c106043c0b13ef242cad876e330b093e1b1b/service/matching/tasklist/task_list_manager.go#L289-L301)
 
 ```go showLineNumbers
 c.logger.Info("get task list partition config from db",
@@ -223,7 +224,7 @@ And here we see the issue.
   `context.Background()`. The background context is a context that is never
   cancelled, and which never times out.
 - In the `notifyPartitionConfig` method we make an RPC call, and due to the DB
-  unavailability this call hands, and since we use the background context
+  unavailability this call hangs, and since we use the background context
   we wait forever for the response.
 
 In the `Stop` method of the `TaskListManager` we then *wait* for the stopWG,
