@@ -20,11 +20,11 @@ import { leadershipLogs } from './LogTimeline/data';
 import { heartbeatData } from './TimeSeriesChart/heartbeatData';
 import { cpuData } from './TimeSeriesChart/cpuData';
 
-## How the new Cadence Shard Manager Found and Mitigated a Latent Deadlock
+## How the new Cadence Shard Manager Found and Mitigated two latent Deadlocks
 
-A brief database hiccup in our staging environment revealed a deadlock that had
+A brief database hiccup in our staging environment revealed two deadlocks that had
 been hiding in the Cadence Matching service. Two engineers found and
-fixed it in a day — and the new Shard Manager automatically kept the
+fixed them in a day — and the new Shard Manager automatically kept the
 system running while they did. Here's how we did it.
 
 Over the past year the Cadence team has been working on a new Shard Manager
@@ -166,7 +166,12 @@ owns and starts any newly assigned ones. During this reconciliation the executor
 skips heartbeating. Normally this completes in milliseconds, but in this case
 the reconciliation deadlocked, so the executor never heartbeated again.
 
-### Finding the deadlock
+It turns out that the Cadence Matching service was hiding not just one, but *two* latent deadlocks. 
+While they had completely different scopes and triggers, they both resulted 
+in the exact same catastrophic behavior for the shard manager: blocking the 
+shard distributor heartbeat loop and failing liveness checks.
+
+### Finding the first deadlock: The Database Trigger
 
 So, we know that two instances of the matching service deadlocked at around
 20:40, let's check the logs for the matching service around that time.
@@ -224,18 +229,79 @@ blocks heartbeating indefinitely!
 The fix is simple, we just need to use a context that times out, as was
 introduced in [this pull request](https://github.com/cadence-workflow/cadence/pull/7833).
 
+#### Finding the second deadlock: The Task Pump Self-Deadlock
+
+Over the weekend, while the fix for the first deadlock was rolling out, we observed 
+the exact same behavior again: missing executors and failing liveness checks. 
+However, this time there were absolutely zero database issues at play. 
+By profiling the live service, we uncovered a second, cascading self-deadlock within the shard distributor executor client. 
+
+The root cause originates from a self-deadlock within the `getTasksPump` goroutine in Cadence Matching. 
+Let's look at a simplified version of the execution chain that caused this trap:
+
+```go showLineNumbers
+func (tr *taskReader) getTasksPump() {
+  tr.stopWg.Add(1)
+  defer tr.stopWg.Done() // This must run to unblock Wait()
+  
+  for {
+    // ... attempt to read tasks from DB ...
+    if err != nil {
+      tr.handleErr(err)
+    }
+  }
+}
+
+func (tr *taskReader) handleErr(err error) {
+  if _, ok := err.(*persistence.ConditionFailedError); ok {
+    // We lost ownership of the task list, shut down!
+    tr.tlMgr.Stop() 
+  }
+}
+
+func (tr *taskReader) Stop() {
+  tr.cancel()
+  tr.stopWg.Wait() // Wait for getTasksPump to finish
+}
+```
+
+And here is how the execution fatally loops back on itself:
+- On line 2, `getTasksPump` adds to the `stopWg`. It guarantees it will call `Done()` via the `defer` on line 3 when the function exits.
+- During its periodic event loop, it encounters a `ConditionFailedError` (indicating the task list has been taken over by another host) and calls `handleErr`.
+- `handleErr` detects the ownership loss and synchronously calls `Stop()` on the parent task list manager (`tlMgr.Stop()`). Crucially, *the `getTasksPump` goroutine is the one executing this synchronous code path.*
+- The task list manager begins tearing down sub-components and eventually calls `taskReader.Stop()` to wait for background goroutines to finish gracefully.
+- Inside `taskReader.Stop()`, it cancels its context and then calls `tr.stopWg.Wait()` (line 22) to wait for the `getTasksPump` goroutine to finish.
+
+**The Trap:** Because `getTasksPump` is the very goroutine executing `Wait()`, it is effectively waiting for *itself* to finish. It is blocked mid-execution, 
+meaning it can never return, and the deferred `tr.stopWg.Done()` will never be called!
+
+The result is a self-deadlock that can trap the goroutine for hours (we observed goroutines blocked for over 22 hours during the incident). 
+Just like the first deadlock, this completely stalls the `Stop` execution, which in turn freezes the reconciliation and blocks heartbeating indefinitely.
+
+### Architectural Flaws & Remediation
+
+It is crucial to note that the two deadlocks were independent of the new shard-manager integration itself; they were actually pre-existing issues deeply embedded in the Cadence Matching teardown logic. 
+However, the introduction of the Shard Manager acted as a catalyst, exposing these latent bugs. 
+Seeing how a localized teardown hang could freeze the entire node made us realize that decoupling liveness from teardown was a necessary architectural change to prevent node-wide failures. 
+This exposed two major design flaws in how we handled lifecycle management:
+
+* **Coupled Liveness and Teardown Latency:** The heartbeat is meant to be a lightweight RPC that fires on a strict interval to prove node liveness. By coupling this liveness signal to the synchronous teardown latency of potentially thousands of task list managers, a single stuck task list poisoned the entire executor's liveness signal.
+* **Unbounded Synchronous Work:** `shardProcessorImpl.Stop()` iterates through task list managers sequentially without any timeouts.
+
+We rolled out fixes to solve both deadlocks and harden the architecture:
+
+* **Fixing the Deadlocks (6 lines of code total):** The fix for the first database-triggered deadlock was just three lines of code: replacing `context.Background()` with a context that has a timeout, as introduced in [this pull request](https://github.com/cadence-workflow/cadence/pull/7833). The fix for the second self-deadlock was to [rely only on context cancellation for a graceful shutdown](https://github.com/cadence-workflow/cadence/commit/75cbf7559df9c8f46650aa81521b5ae2943e441d#diff-e32af0dd1f70c1f05923e186de58670da9847bd8bacf7e30e40a6c57808ded5bL157-L163), which was also accomplished in exactly three lines of code.
+* **Hardening the Heartbeat Loop:** To fix the exposed architectural flaw and decouple liveness from teardown latency, `managedProcessor.processor.Stop()` and `Start()` [were moved to separate goroutines with non-blocking handoffs](https://github.com/cadence-workflow/cadence/commit/e4c7e792a3d2baa1c272fb83eccc56595f70c263) and strict timeouts. This guarantees that a single stuck task list manager can never hold an entire shard processor hostage indefinitely.
+
+
 ### Conclusion
 
-The Cadence Matching service had a latent deadlock that could be triggered by a
-transient database issue. The new Shard Manager made this visible — under the
-old hash-ring routing, the same deadlock would have caused silent degradation
-that would have been extremely difficult to diagnose.
+The new Shard Manager made both of these deadlocks visible — under the old hash-ring routing, the same deadlocks would have caused silent degradation that would have been extremely difficult to diagnose.
 
 Instead, the Shard Manager detected the missing heartbeats, automatically moved
 all shards to the one healthy instance, and kept the system running while we
 investigated. When new healthy instances appeared it immediately rebalanced
 the load across them.
 
-The fix was three lines of code: replacing `context.Background()` with a
-context that has a timeout. Found in a day, by two engineers, thanks to the
+Found in a day, by two engineers, thanks to the
 observability the Shard Manager provides.
