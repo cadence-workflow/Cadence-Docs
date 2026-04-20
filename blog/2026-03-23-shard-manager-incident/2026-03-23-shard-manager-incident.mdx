@@ -1,6 +1,6 @@
 ---
-title: "1 Day, 2 Engineers, 3 Lines of Code"
-description: "How the new Cadence Shard Manager Found and Mitigated a Latent Deadlock"
+title: "1 Day, 2 Engineers, 6 Lines of Code"
+description: "How the new Cadence Shard Manager Found and Mitigated Two Latent Deadlocks"
 
 date: 2026-03-21
 authors: [jakobht, eleonoradgr]
@@ -20,7 +20,7 @@ import { leadershipLogs } from './LogTimeline/data';
 import { heartbeatData } from './TimeSeriesChart/heartbeatData';
 import { cpuData } from './TimeSeriesChart/cpuData';
 
-## How the new Cadence Shard Manager Found and Mitigated two latent Deadlocks
+## How the new Cadence Shard Manager Found and Mitigated Two Latent Deadlocks
 
 A brief database hiccup in our staging environment revealed two deadlocks that had
 been hiding in the Cadence Matching service. Two engineers found and
@@ -171,7 +171,7 @@ While they had completely different scopes and triggers, they both resulted
 in the exact same catastrophic behavior for the shard manager: blocking the 
 shard distributor heartbeat loop and failing liveness checks.
 
-### Finding the first deadlock: The Database Trigger
+### Finding the first deadlock: The Database Unavailability
 
 So, we know that two instances of the matching service deadlocked at around
 20:40, let's check the logs for the matching service around that time.
@@ -229,12 +229,12 @@ blocks heartbeating indefinitely!
 The fix is simple, we just need to use a context that times out, as was
 introduced in [this pull request](https://github.com/cadence-workflow/cadence/pull/7833).
 
-#### Finding the second deadlock: The Task Pump Self-Deadlock
+### Finding the second deadlock: The Task Pump Self-Deadlock
 
 Over the weekend, while the fix for the first deadlock was rolling out, we observed 
 the exact same behavior again: missing executors and failing liveness checks. 
 However, this time there were absolutely zero database issues at play. 
-By profiling the live service, we uncovered a second, cascading self-deadlock within the shard distributor executor client. 
+By profiling the live service, we uncovered a second, cascading self-deadlock within the Cadence Matching. 
 
 The root cause originates from a self-deadlock within the `getTasksPump` goroutine in Cadence Matching. 
 Let's look at a simplified version of the execution chain that caused this trap:
