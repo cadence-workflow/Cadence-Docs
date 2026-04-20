@@ -108,15 +108,14 @@ Manager:
 <LogTimeline data={leadershipLogs} />
 
 We see that the leader resigns then another instance becomes leader etc. However
-at 22:03 something interesting happens. `host-1` resigns as leader, but there is no new
-"Became leader" log. The next log message is `host-2` resigning as leader. That's
-strange, how can `host-2` resign when it didn't become leader?
+at 22:03 something interesting happens. `host-2` resigns as leader, but there is no new
+"Became leader" log. The next log message is `host-1` resigning as leader. That's
+strange, how can `host-1` resign when it didn't become leader?
 
-This thread of led to a lot of investigation, which ultimately led us to the
-conclusion;
-
-The `Became leader` log message were simply lost at some point, there was always
-a leader, it just wasn't logged.
+This thread led to a lot of investigation, which ultimately led us to the
+conclusion: the `Became leader` log was simply never delivered. Logging
+infrastructure in distributed systems is never 100% reliable.
+There was always a leader, it just wasn't logged.
 
 ### Back to the missing executors.
 
@@ -135,6 +134,11 @@ And even more interesting, right when the errors started the number of
 heartbeats dropped all the way to zero. And when the errors stopped happening
 the number of heartbeats went back up to 1.
 
+The brief spikes to 4+ req/s at 22:09 and 22:26 are caused by shards moving
+around — when an executor receives a request for a shard it doesn't recognize,
+it heartbeats out of schedule to check if the shard was assigned to it in the
+meantime.
+
 But we have 3 instances, so why did two of them suddenly stop heartbeating? And
 why did the third instance continue to heartbeat?
 
@@ -147,8 +151,12 @@ This is cool, we see that the CPU utilization was exactly the same for all three
 instances, then two stopped heartbeating, so Shard Manager moved all the shards
 to the last instance, and its CPU utilization went up. We also see that as soon
 as the replacement instances appeared the Shard Manager assigned all the shards to it.
-And then at around 22:50 there was a deploy of the Matching services, so all the
-instances got replaced and then they all started heartbeating again.
+
+The gaps between instances are the deployment system's load balancer deciding
+we didn't need three instances and removing one — then rolling back that decision
+when it realized it had removed the instance doing all the work. And then at
+around 22:50 there was a deploy of the Matching services, so all the instances
+got replaced and then they all started heartbeating again.
 
 ### The Deadlock
 
