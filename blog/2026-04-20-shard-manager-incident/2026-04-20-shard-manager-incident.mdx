@@ -38,15 +38,17 @@ import { cpuData } from './TimeSeriesChart/cpuData';
 
 ## How the new Cadence Shard Manager Found and Mitigated Two Latent Deadlocks
 
-A brief database hiccup in our staging environment revealed two deadlocks that had
-been hiding in the Cadence Matching service. Two engineers found and
-fixed them in a day — and the new Shard Manager automatically kept the
-system running while they did. Here's how we did it.
+We're rolling out a new Shard Manager service for Cadence that replaces the
+existing hash-ring based routing, and it's coming to
+the open-source release soon. The new architecture gives us load balancing,
+graceful shard handovers, and the debuggability and observability we've used to
+find the two deadlocks in this post. During the rollout, the Shard Manager
+exposed two latent deadlocks in the Cadence Matching service. It moved traffic
+to the healthy instance and kept the system running while two engineers fixed
+them in a day, with six lines of code total.
 
-Over the past year the Cadence team has been working on a new Shard Manager
-service. This service will eventually replace the existing hash-ring based routing
-mechanism with a centralized component. To understand the problem we solved,
-first we need to understand the new architecture.
+To understand how this happened, we first need to understand the new
+architecture.
 
 ### Shard Manager Architecture
 
