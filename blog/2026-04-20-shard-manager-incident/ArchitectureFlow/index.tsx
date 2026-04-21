@@ -1,12 +1,24 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 
-const STEP_LABELS: Record<number, string> = {
-  0: "1a. Matching instances send heartbeats to Shard Manager",
-  0.5: "1b. Shard Manager responds with shard assignments",
-  1: "2. Shard Manager pushes routing map to Frontend",
-  2: "3. Frontend receives client request",
-  3: "4. Frontend routes directly to Matching Instance 2 → TL3",
-};
+const STEPS = [
+  {
+    label: "1a",
+    description: "1a. Matching instances send heartbeats to Shard Manager",
+  },
+  {
+    label: "1b",
+    description: "1b. Shard Manager responds with shard assignments",
+  },
+  { label: "2", description: "2. Shard Manager pushes routing map to Frontend" },
+  { label: "3", description: "3. Frontend receives client request" },
+  {
+    label: "4",
+    description: "4. Frontend routes directly to Matching Instance 2 → TL3",
+  },
+];
+
+const STEP_PAUSE_MS = 600;
+const LOOP_PAUSE_MS = 1500;
 
 // Layout constants
 const W = 720;
@@ -36,9 +48,6 @@ const m3Hb = { x: M3.x + M3.w / 2, y: M3.y };
 
 // TL3 center inside M2
 const tl3Center = { x: M2.x + 45, y: M2.y + 45 };
-
-// Steps: 0=heartbeats, 1=push, 2=request, 3=route, then pause and loop
-const PAUSE_MS = 1200;
 
 function Box({
   x,
@@ -452,54 +461,122 @@ function HeartbeatDots({
   );
 }
 
+type StepButtonVariant = "primary" | "secondary" | "ghost";
+
+function StepButton({
+  onClick,
+  disabled = false,
+  variant,
+  children,
+}: {
+  onClick: () => void;
+  disabled?: boolean;
+  variant: StepButtonVariant;
+  children: React.ReactNode;
+}) {
+  const baseStyle: React.CSSProperties = {
+    padding: "6px 14px",
+    borderRadius: 6,
+    fontSize: 13,
+    fontWeight: 600,
+    fontFamily: "system-ui, sans-serif",
+    cursor: disabled ? "not-allowed" : "pointer",
+    minWidth: 36,
+    transition: "background 0.15s ease, color 0.15s ease",
+  };
+  const variantStyles: Record<StepButtonVariant, React.CSSProperties> = {
+    primary: {
+      background: disabled ? "#e2e8f0" : "#3b82f6",
+      color: disabled ? "#94a3b8" : "#fff",
+      border: "1px solid transparent",
+    },
+    secondary: {
+      background: "#fff",
+      color: "#334155",
+      border: "1px solid #cbd5e1",
+    },
+    ghost: {
+      background: "transparent",
+      color: disabled ? "#94a3b8" : "#475569",
+      border: "1px solid transparent",
+    },
+  };
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      style={{ ...baseStyle, ...variantStyles[variant] }}
+    >
+      {children}
+    </button>
+  );
+}
+
 export default function ArchitectureFlow() {
-  const [step, setStep] = useState(0);
-  const [looping, setLooping] = useState(true);
+  const [stepIdx, setStepIdx] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  // playToken is used as a React `key` on the animation components so that
+  // re-clicking the current step (or resuming auto-play) always re-mounts
+  // the animation and replays it from the start.
+  const [playToken, setPlayToken] = useState(0);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const advanceTo = useCallback((next: number) => {
-    setStep(next);
+  const clearTimer = useCallback(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
   }, []);
 
-  // Auto-start and loop
-  useEffect(() => {
-    if (!looping) return;
-    // Start at step 0
-    setStep(0);
-  }, [looping]);
+  useEffect(() => clearTimer, [clearTimer]);
 
-  // After step 3 animation completes, pause then loop back to 0
-  const handleStepDone = useCallback(
-    (completedStep: number) => {
-      if (!looping) return;
-      const nextSteps: Record<number, number> = {
-        0: 0.5,
-        0.5: 1,
-        1: 2,
-        2: 3,
-      };
-      const next = nextSteps[completedStep];
-      if (next !== undefined) {
-        advanceTo(next);
-      } else {
-        // completedStep === 3, pause then restart
-        timerRef.current = setTimeout(() => {
-          setStep(-1);
-          requestAnimationFrame(() => setStep(0));
-        }, PAUSE_MS);
-      }
+  const handleStepDone = useCallback(() => {
+    if (!isAutoPlaying) return;
+    const isLastStep = stepIdx === STEPS.length - 1;
+    const pauseMs = isLastStep ? LOOP_PAUSE_MS : STEP_PAUSE_MS;
+    timerRef.current = setTimeout(() => {
+      setStepIdx((idx) => (idx + 1) % STEPS.length);
+      setPlayToken((t) => t + 1);
+    }, pauseMs);
+  }, [isAutoPlaying, stepIdx]);
+
+  const goToStep = useCallback(
+    (idx: number) => {
+      clearTimer();
+      setIsAutoPlaying(false);
+      setStepIdx(idx);
+      setPlayToken((t) => t + 1);
     },
-    [looping, advanceTo]
+    [clearTimer]
   );
 
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-    };
-  }, []);
+  const handlePrev = useCallback(() => {
+    if (stepIdx > 0) goToStep(stepIdx - 1);
+  }, [stepIdx, goToStep]);
 
-  // Heartbeat connection lines (from matching instances toward SM)
-  const showHeartbeatLines = step === 0 || step === 0.5;
+  const handleNext = useCallback(() => {
+    goToStep((stepIdx + 1) % STEPS.length);
+  }, [stepIdx, goToStep]);
+
+  const handleToggleAutoPlay = useCallback(() => {
+    clearTimer();
+    setIsAutoPlaying((playing) => !playing);
+    // Always bump playToken so resuming replays the current step animation
+    // and the auto-play loop picks up immediately.
+    setPlayToken((t) => t + 1);
+  }, [clearTimer]);
+
+  // Derived rendering state
+  const isHeartbeatLinesShown = stepIdx === 0 || stepIdx === 1;
+  const isSMtoFEHighlighted = stepIdx === 2;
+  const isFEtoM2Highlighted = stepIdx === 4;
+  const isSMHighlighted = stepIdx <= 2;
+  const isFEHighlighted = stepIdx === 3;
+  const isM1Highlighted = stepIdx <= 1;
+  const isM2Highlighted = stepIdx <= 1 || stepIdx === 4;
+  const isM3Highlighted = stepIdx <= 1;
+  const isRoutingMapVisible = stepIdx >= 3;
+  const isTL3Highlighted = stepIdx === 4;
 
   return (
     <div
@@ -522,7 +599,7 @@ export default function ArchitectureFlow() {
           y1={smLeft.y}
           x2={feRight.x}
           y2={feRight.y}
-          highlight={step === 1}
+          highlight={isSMtoFEHighlighted}
         />
 
         {/* Connections: FE to matching instances */}
@@ -537,7 +614,7 @@ export default function ArchitectureFlow() {
           y1={feBot.y}
           x2={m2Top.x}
           y2={m2Top.y}
-          highlight={step === 3}
+          highlight={isFEtoM2Highlighted}
         />
         <DashedLine
           x1={feBot.x}
@@ -552,21 +629,21 @@ export default function ArchitectureFlow() {
           y1={m1Hb.y}
           x2={smBot.x}
           y2={smBot.y}
-          highlight={showHeartbeatLines}
+          highlight={isHeartbeatLinesShown}
         />
         <DashedLine
           x1={m2Hb.x}
           y1={m2Hb.y}
           x2={smBot.x}
           y2={smBot.y}
-          highlight={showHeartbeatLines}
+          highlight={isHeartbeatLinesShown}
         />
         <DashedLine
           x1={m3Hb.x}
           y1={m3Hb.y}
           x2={smBot.x}
           y2={smBot.y}
-          highlight={showHeartbeatLines}
+          highlight={isHeartbeatLinesShown}
         />
 
         {/* Shard Manager */}
@@ -578,7 +655,7 @@ export default function ArchitectureFlow() {
           label="Shard Manager"
           color="#dbeafe"
           stroke="#3b82f6"
-          highlight={step === 0 || step === 0.5 || step === 1}
+          highlight={isSMHighlighted}
         />
 
         {/* Frontend */}
@@ -588,9 +665,9 @@ export default function ArchitectureFlow() {
           w={FE.w}
           h={FE.h}
           label="Frontend Service"
-          highlight={step === 2}
+          highlight={isFEHighlighted}
         />
-        <RoutingMap visible={step >= 2} />
+        <RoutingMap visible={isRoutingMapVisible} />
 
         {/* Matching Instances */}
         <Box
@@ -599,7 +676,7 @@ export default function ArchitectureFlow() {
           w={M1.w}
           h={M1.h}
           label="Matching Instance 1"
-          highlight={step === 0 || step === 0.5}
+          highlight={isM1Highlighted}
         />
         <TaskListBoxes parent={M1} labels={["TL1", "TL2"]} />
 
@@ -609,12 +686,12 @@ export default function ArchitectureFlow() {
           w={M2.w}
           h={M2.h}
           label="Matching Instance 2"
-          highlight={step === 0 || step === 0.5 || step === 3}
+          highlight={isM2Highlighted}
         />
         <TaskListBoxes
           parent={M2}
           labels={["TL3", "TL4"]}
-          highlightIdx={step === 3 ? 0 : undefined}
+          highlightIdx={isTL3Highlighted ? 0 : undefined}
         />
 
         <Box
@@ -623,90 +700,109 @@ export default function ArchitectureFlow() {
           w={M3.w}
           h={M3.h}
           label="Matching Instance 3"
-          highlight={step === 0 || step === 0.5}
+          highlight={isM3Highlighted}
         />
         <TaskListBoxes parent={M3} labels={["TL5", "TL6"]} />
 
-        {/* Step 0: heartbeat dots from all matching instances to SM */}
-        {step === 0 && (
+        {/* Step 1a: heartbeat dots from all matching instances to SM */}
+        {stepIdx === 0 && (
           <HeartbeatDots
+            key={`hb-${playToken}`}
             duration={1200}
-            onDone={() => handleStepDone(0)}
+            onDone={handleStepDone}
           />
         )}
 
-        {/* Step 0.5: SM responds back to matching instances */}
-        {step === 0.5 && (
+        {/* Step 1b: SM responds back to matching instances */}
+        {stepIdx === 1 && (
           <HeartbeatDots
+            key={`hb-rev-${playToken}`}
             reverse
             duration={1800}
-            onDone={() => handleStepDone(0.5)}
+            onDone={handleStepDone}
           />
         )}
 
-        {/* Step 1: dot from SM to FE */}
-        {step === 1 && (
+        {/* Step 2: dot from SM to FE */}
+        {stepIdx === 2 && (
           <AnimatedDot
+            key={`sm-fe-${playToken}`}
             x1={smLeft.x}
             y1={smLeft.y}
             x2={feRight.x}
             y2={feRight.y}
             color="#3b82f6"
             duration={1200}
-            onDone={() => handleStepDone(1)}
+            onDone={handleStepDone}
           />
         )}
 
-        {/* Step 2: envelope enters from left to FE */}
-        {step === 2 && (
+        {/* Step 3: envelope enters from left to FE */}
+        {stepIdx === 3 && (
           <AnimatedEnvelope
+            key={`req-${playToken}`}
             x1={-20}
             y1={feLeft.y}
             x2={feLeft.x}
             y2={feLeft.y}
             duration={1000}
-            onDone={() => handleStepDone(2)}
+            onDone={handleStepDone}
           />
         )}
 
-        {/* Step 3: envelope from FE to M2/TL3 */}
-        {step === 3 && (
+        {/* Step 4: envelope from FE to M2/TL3 */}
+        {stepIdx === 4 && (
           <AnimatedEnvelope
+            key={`route-${playToken}`}
             x1={feBot.x}
             y1={feBot.y}
             x2={tl3Center.x}
             y2={tl3Center.y}
             duration={1200}
-            onDone={() => handleStepDone(3)}
+            onDone={handleStepDone}
           />
         )}
       </svg>
 
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 12,
-          marginTop: 12,
-        }}
-      >
-        <button
-          onClick={() => setLooping((v) => !v)}
+      <div style={{ marginTop: 12 }}>
+        <div
           style={{
-            padding: "8px 20px",
-            background: looping ? "#64748b" : "#3b82f6",
-            color: "#fff",
-            border: "none",
-            borderRadius: 6,
-            cursor: "pointer",
-            fontSize: 14,
-            fontWeight: 600,
-            fontFamily: "system-ui, sans-serif",
+            display: "flex",
+            gap: 6,
+            flexWrap: "wrap",
+            alignItems: "center",
+            marginBottom: 8,
           }}
         >
-          {looping ? "Pause" : "Play"}
-        </button>
-        <span
+          <StepButton
+            onClick={handlePrev}
+            disabled={stepIdx === 0}
+            variant="ghost"
+          >
+            Prev
+          </StepButton>
+          {STEPS.map((s, i) => (
+            <StepButton
+              key={s.label}
+              onClick={() => goToStep(i)}
+              variant={i === stepIdx ? "primary" : "secondary"}
+            >
+              {s.label}
+            </StepButton>
+          ))}
+          <StepButton onClick={handleNext} variant="primary">
+            Next
+          </StepButton>
+          <div style={{ marginLeft: "auto" }}>
+            <StepButton
+              onClick={handleToggleAutoPlay}
+              variant={isAutoPlaying ? "primary" : "secondary"}
+            >
+              {isAutoPlaying ? "⏸ Pause" : "▶ Auto-play"}
+            </StepButton>
+          </div>
+        </div>
+        <div
           style={{
             fontSize: 13,
             color: "#475569",
@@ -714,8 +810,8 @@ export default function ArchitectureFlow() {
             minHeight: 20,
           }}
         >
-          {step >= 0 ? STEP_LABELS[step] ?? "" : ""}
-        </span>
+          {STEPS[stepIdx].description}
+        </div>
       </div>
     </div>
   );
