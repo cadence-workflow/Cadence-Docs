@@ -2,18 +2,18 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 
 const STEPS = [
   {
-    label: "1a",
-    description: "1a. Matching instances send heartbeats to Shard Manager",
+    label: "1",
+    description: "1. Matching instances send heartbeats to Shard Manager",
   },
   {
-    label: "1b",
-    description: "1b. Shard Manager responds with shard assignments",
+    label: "2",
+    description: "2. Shard Manager responds with shard assignments",
   },
-  { label: "2", description: "2. Shard Manager pushes routing map to Frontend" },
-  { label: "3", description: "3. Frontend receives client request" },
+  { label: "3", description: "3. Shard Manager pushes routing map to Frontend" },
+  { label: "4", description: "4. Frontend receives client request" },
   {
-    label: "4",
-    description: "4. Frontend routes directly to Matching Instance 2 → TL3",
+    label: "5",
+    description: "5. Frontend routes directly to Matching Instance 2 → TL3",
   },
 ];
 

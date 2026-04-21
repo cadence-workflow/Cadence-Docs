@@ -57,13 +57,16 @@ The shard manager architecture looks like this.
 
 <ArchitectureFlow />
 
-The Matching instances heartbeat periodically to the Shard Manager, the Shard Manager keeps
-track of the live instances. It assigns the shards to the instances, and in the
-heartbeat responses it sends the shards currently assigned to the instances.
-On every change to the shard assignments it pushes the new assignments to the
-Frontend services, so the services have a full routing map. When the Frontend
-service receives a request it can route it directly to the instance owning the task
-list.
+1. The Matching instances heartbeat periodically to the Shard Manager,
+   so the Shard Manager always knows which instances are alive.
+2. The Shard Manager assigns shards to the instances and returns the
+   current assignments in the heartbeat responses.
+3. On every change to the shard assignments, the Shard Manager pushes
+   the new routing map to the Frontend services, so they always have a
+   full view of which instance owns which task list.
+4. A client request arrives at a Frontend service.
+5. The Frontend looks up the owning instance in its routing map and
+   forwards the request directly to it.
 
 ### The Incident
 
