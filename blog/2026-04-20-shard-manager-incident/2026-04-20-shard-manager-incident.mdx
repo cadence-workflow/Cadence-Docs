@@ -29,7 +29,7 @@ fixed them in a day — and the new Shard Manager automatically kept the
 system running while they did. Here's how we did it.
 
 Over the past year the Cadence team has been working on a new Shard Manager
-service. This service will eventually replace the existing hash ring based routing
+service. This service will eventually replace the existing hash-ring based routing
 mechanism with a centralized component. To understand the problem we solved,
 first we need to understand the new architecture.
 
@@ -46,14 +46,14 @@ The new architecture with the Shard Manager has several benefits:
 
 1. It's easier to reason about which instance of Cadence Matching owns a
    task list.
-2. Observability of the system is easier. With the HashRing based routing the
+2. Observability of the system is easier. With the hash-ring based routing the
 state of the system is spread across all instances of all the Cadence services.
 Meaning even subtle issues are very hard to debug and reason about.
 3. A centralized component makes it possible to manage shards intelligently. For
 example, we can now move shards between instances to balance the load. We can
 isolate bad shards, and we can drain bad hosts.
 
-The shard manager architecture looks like this.
+The Shard Manager architecture looks like this.
 
 <ArchitectureFlow />
 
@@ -86,7 +86,7 @@ what the logs are, let's group them by message and error:
 <LogTable data={logTableData} />
 
 So first we get a lot of updates in the system, so many that the instances cannot keep
-up, then we start getting errors saying there are no active executors (matching
+up, then we start getting errors saying there are no active executors (Matching
 instances). Let's check the deployment system and see if there were instances.
 
 Number of instances according to the deployment system:
@@ -121,7 +121,7 @@ conclusion: the `Became leader` log was simply never delivered. Logging
 infrastructure in distributed systems is never 100% reliable.
 There was always a leader, it just wasn't logged.
 
-### Back to the missing executors.
+### Back to the missing executors
 
 We now found what would turn out to be the right question; are the
 executors (Matching instances) heartbeating? If not the Shard Manager server is
@@ -164,11 +164,11 @@ got replaced and then they all started heartbeating again.
 
 ### The Deadlock
 
-So, two out of three matching instances stopped heartbeating. And as soon as
+So, two out of three Matching instances stopped heartbeating. And as soon as
 the instances were replaced all instances started heartbeating again. This is
 the telltale sign of a deadlock.
 
-We checked logs of the locked matching instances, and we saw that every second when
+We checked logs of the locked Matching instances, and we saw that every second when
 they should have heartbeated they emitted a log; `still doing assignment,
 skipping heartbeat`.
 
@@ -178,15 +178,15 @@ owns and starts any newly assigned ones. During this reconciliation the executor
 skips heartbeating. Normally this completes in milliseconds, but in this case
 the reconciliation deadlocked, so the executor never heartbeated again.
 
-It turns out that the Cadence Matching service was hiding not just one, but *two* latent deadlocks. 
-While they had completely different scopes and triggers, they both resulted 
-in the exact same catastrophic behavior for the shard manager: blocking the 
-shard distributor heartbeat loop and failing liveness checks.
+It turns out that the Cadence Matching service was hiding not just one, but *two* latent deadlocks.
+While they had completely different scopes and triggers, they both resulted
+in the exact same catastrophic behavior for the Shard Manager: blocking the
+Shard Manager heartbeat loop and failing liveness checks.
 
 ### Finding the first deadlock: The Database Unavailability
 
-So, we know that two instances of the matching service deadlocked at around
-20:40, let's check the logs for the matching service around that time.
+So, we know that two instances of the Matching service deadlocked at around
+20:40, let's check the logs for the Matching service around that time.
 
 <LogHistogram data={matchingLogHistData} />
 
@@ -222,7 +222,7 @@ And here we see the issue.
   goroutines to finish before proceeding. Here, `stopWG` is used during
   shutdown — the task list manager won't fully stop until every goroutine
   registered with `stopWG` has completed.
-- Then in the go routine we call the `notifyPartitionConfig` method, *and here
+- Then in the goroutine we call the `notifyPartitionConfig` method, *and here
   the problem is!*. We are calling `notifyPartitionConfig` with
   `context.Background()`. The background context is a context that is never
   cancelled, and which never times out.
@@ -231,7 +231,7 @@ And here we see the issue.
   we wait forever for the response.
 
 In the `Stop` method of the `TaskListManager` we then *wait* for the stopWG,
-however since the go routine with the `notifyPartitionConfig` call is blocked
+however since the goroutine with the `notifyPartitionConfig` call is blocked
 the stopWG never finishes.
 
 This means that when the Shard Manager does the reconciliation, it will try to
@@ -243,12 +243,12 @@ introduced in [this pull request](https://github.com/cadence-workflow/cadence/pu
 
 ### Finding the second deadlock: The Task Pump Self-Deadlock
 
-Over the weekend, while the fix for the first deadlock was rolling out, we observed 
-the exact same behavior again: missing executors and failing liveness checks. 
-However, this time there were absolutely zero database issues at play. 
-By profiling the live service, we uncovered a second, cascading self-deadlock within the Cadence Matching. 
+Over the weekend, while the fix for the first deadlock was rolling out, we observed
+the exact same behavior again: missing executors and failing liveness checks.
+However, this time there were absolutely zero database issues at play.
+By profiling the live service, we uncovered a second, cascading self-deadlock within the Cadence Matching.
 
-The root cause originates from a self-deadlock within the `getTasksPump` goroutine in Cadence Matching. 
+The root cause originates from a self-deadlock within the `getTasksPump` goroutine in Cadence Matching.
 Let's look at a simplified version of the execution chain that caused this trap:
 
 ```go showLineNumbers
@@ -284,17 +284,17 @@ And here is how the execution fatally loops back on itself:
 - The task list manager begins tearing down sub-components and eventually calls `taskReader.Stop()` to wait for background goroutines to finish gracefully.
 - Inside `taskReader.Stop()`, it cancels its context and then calls `tr.stopWg.Wait()` (line 22) to wait for the `getTasksPump` goroutine to finish.
 
-**The Trap:** Because `getTasksPump` is the very goroutine executing `Wait()`, it is effectively waiting for *itself* to finish. It is blocked mid-execution, 
+**The Trap:** Because `getTasksPump` is the very goroutine executing `Wait()`, it is effectively waiting for *itself* to finish. It is blocked mid-execution,
 meaning it can never return, and the deferred `tr.stopWg.Done()` will never be called!
 
-The result is a self-deadlock that can trap the goroutine for hours (we observed goroutines blocked for over 22 hours during the incident). 
+The result is a self-deadlock that can trap the goroutine for hours (we observed goroutines blocked for over 22 hours during the incident).
 Just like the first deadlock, this completely stalls the `Stop` execution, which in turn freezes the reconciliation and blocks heartbeating indefinitely.
 
 ### Architectural Flaws & Remediation
 
-It is crucial to note that the two deadlocks were independent of the new shard-manager integration itself; they were actually pre-existing issues deeply embedded in the Cadence Matching teardown logic. 
-However, the introduction of the Shard Manager acted as a catalyst, exposing these latent bugs. 
-Seeing how a localized teardown hang could freeze the entire node made us realize that decoupling liveness from teardown was a necessary architectural change to prevent node-wide failures. 
+It is crucial to note that the two deadlocks were independent of the new Shard Manager integration itself; they were actually pre-existing issues deeply embedded in the Cadence Matching teardown logic.
+However, the introduction of the Shard Manager acted as a catalyst, exposing these latent bugs.
+Seeing how a localized teardown hang could freeze the entire node made us realize that decoupling liveness from teardown was a necessary architectural change to prevent node-wide failures.
 This exposed two major design flaws in how we handled lifecycle management:
 
 * **Coupled Liveness and Teardown Latency:** The heartbeat is meant to be a lightweight RPC that fires on a strict interval to prove node liveness. By coupling this liveness signal to the synchronous teardown latency of potentially thousands of task list managers, a single stuck task list poisoned the entire executor's liveness signal.
@@ -308,7 +308,7 @@ We rolled out fixes to solve both deadlocks and harden the architecture:
 
 ### Conclusion
 
-The new Shard Manager made both of these deadlocks visible — under the old hash-ring routing, the same deadlocks would have caused silent degradation that would have been extremely difficult to diagnose.
+The new Shard Manager made both of these deadlocks visible — under the old hash-ring based routing, the same deadlocks would have caused silent degradation that would have been extremely difficult to diagnose.
 
 Instead, the Shard Manager detected the missing heartbeats, automatically moved
 all shards to the one healthy instance, and kept the system running while we
