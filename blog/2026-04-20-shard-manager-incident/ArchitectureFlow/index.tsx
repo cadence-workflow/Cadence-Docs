@@ -463,6 +463,23 @@ function HeartbeatDots({
 
 type StepButtonVariant = "primary" | "secondary" | "ghost";
 
+function PlayIcon() {
+  return (
+    <svg width={10} height={10} viewBox="0 0 10 10" aria-hidden="true">
+      <polygon points="2,1 9,5 2,9" fill="currentColor" />
+    </svg>
+  );
+}
+
+function PauseIcon() {
+  return (
+    <svg width={10} height={10} viewBox="0 0 10 10" aria-hidden="true">
+      <rect x={2} y={1} width={2} height={8} fill="currentColor" />
+      <rect x={6} y={1} width={2} height={8} fill="currentColor" />
+    </svg>
+  );
+}
+
 function StepButton({
   onClick,
   disabled = false,
@@ -798,7 +815,18 @@ export default function ArchitectureFlow() {
               onClick={handleToggleAutoPlay}
               variant={isAutoPlaying ? "primary" : "secondary"}
             >
-              {isAutoPlaying ? "⏸ Pause" : "▶ Auto-play"}
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                  width: 80,
+                  justifyContent: "center",
+                }}
+              >
+                {isAutoPlaying ? <PauseIcon /> : <PlayIcon />}
+                Auto-play
+              </span>
             </StepButton>
           </div>
         </div>
