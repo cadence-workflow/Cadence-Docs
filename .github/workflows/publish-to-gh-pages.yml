@@ -64,7 +64,7 @@ jobs:
 
       - name: Install and Build 🔧
         run: |
-          npm install
+          npm ci
           npm run build
 
       - name: Deploy 🚀
@@ -73,3 +73,16 @@ jobs:
           branch: gh-pages # The branch the action should deploy to.
           folder: build # The folder the action should deploy.
           clean: true # Automatically remove deleted files from the deploy branch
+
+      - name: Re-index Algolia search 🔍
+        env:
+          ALGOLIA_CRAWLER_ID: ${{ secrets.ALGOLIA_CRAWLER_ID }}
+          ALGOLIA_CRAWLER_API_KEY: ${{ secrets.ALGOLIA_CRAWLER_API_KEY }}
+        run: |
+          if [ -z "$ALGOLIA_CRAWLER_ID" ] || [ -z "$ALGOLIA_CRAWLER_API_KEY" ]; then
+            echo "ALGOLIA_CRAWLER_ID or ALGOLIA_CRAWLER_API_KEY secret not set, skipping re-indexing"
+            exit 0
+          fi
+          curl -X POST "https://crawler.algolia.com/api/1/crawlers/${ALGOLIA_CRAWLER_ID}/reindex" \
+            --user "${ALGOLIA_CRAWLER_API_KEY}:" \
+            --fail

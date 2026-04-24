@@ -1,12 +1,21 @@
 ---
 title: "Adaptive Tasklist Scaler"
-subtitle: test
+description: The Adaptive Tasklist Scaler is a new Cadence Matching service component that automatically adjusts tasklist partition counts based on live traffic, eliminating the need for manual configuration and reducing operational incidents.
+keywords:
+  - cadence adaptive tasklist scaler
+  - cadence tasklist partitions
+  - cadence matching service
+  - cadence scalable tasklist
+  - cadence auto scaling
+  - cadence operational overhead
+  - cadence partition configuration
 date: 2025-06-30
 authors: shaddoll
 tags:
   - deep-dive
   - cadence-operations
   - cadence-matching
+subtitle: test
 ---
 
 At Uber, we previously relied on a dynamic configuration service to manually control the number of partitions for scalable tasklists. This configuration approach introduced several operational challenges:
@@ -16,6 +25,8 @@ At Uber, we previously relied on a dynamic configuration service to manually con
 - **Irreversible:** Once increased, the number of partitions was rarely decreased due to the complexity of the two-phase process, especially when anticipating future traffic spikes.
 
 To address these issues, we introduced a new component in the Cadence Matching service: **Adaptive Tasklist Scaler**. This component dynamically monitors tasklist traffic and adjusts partition counts automatically. Since its rollout, we've seen a significant reduction in incidents and operational overhead caused by misconfigured tasklists.
+
+<!-- truncate -->
 
 ---
 

@@ -96,8 +96,8 @@ export default async function ChangelogPlugin(context, options) {
     ...options,
     path: generateDir,
     id: 'changelog',
-    blogListComponent: '@theme/ChangelogList',
-    blogPostComponent: '@theme/ChangelogPage',
+    blogListComponent: '@theme/BlogListPage',
+    blogPostComponent: '@theme/BlogPostPage',
   });
   const changelogPath = path.join(__dirname, '../../../CHANGELOG.md');
   return {

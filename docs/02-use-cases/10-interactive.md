@@ -1,6 +1,14 @@
 ---
 layout: default
 title: Interactive application
+description: This page explains how Cadence can power interactive applications by tracking UI session state and running background operations concurrently within a single workflow.
+keywords:
+  - cadence interactive application
+  - cadence ui session
+  - cadence use case
+  - interactive workflow
+  - cadence background task
+  - cadence session state
 permalink: /docs/use-cases/interactive
 ---
 

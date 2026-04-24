@@ -1,6 +1,16 @@
 ---
 title: Cadence Community Spotlight Update - October 2022
 
+description: Monthly Cadence community update for October 2022, covering the DoorDash technical showcase featuring Cadence, the iWF interpreter for workflow project built on Cadence, and upcoming events.
+keywords:
+  - cadence community spotlight
+  - cadence october 2022
+  - cadence community update
+  - cadence doordash
+  - iwf cadence
+  - interpreter for workflow
+  - cadence ecosystem
+  - cadence meetup
 date: 2022-10-31
 authors: sharanf
 tags:

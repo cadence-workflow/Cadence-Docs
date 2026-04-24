@@ -1,7 +1,17 @@
 ---
 title: Safe deployments of Versioned workflows
-authors: arzonus
+description: Learn how recent enhancements to the Cadence Versioning API enable safe rollouts and rollbacks of workflow code changes by separating code deployment from logic activation.
+keywords:
+  - cadence versioned workflows
+  - cadence safe deployment
+  - cadence workflow versioning
+  - cadence GetVersion
+  - cadence rollback
+  - cadence non-deterministic errors
+  - cadence workflow code change
+  - cadence forward compatibility
 date: 2025-07-10T16:00
+authors: arzonus
 tags:
   - deep-dive
   - announcement
@@ -10,6 +20,8 @@ tags:
 At Uber, we manage billions of workflows with lifetimes ranging from seconds to years. Over the course of their lifetime, workflow code logic often requires changes. To prevent non-deterministic errors that changes may cause, Cadence offers [a Versioning feature](https://cadenceworkflow.io/docs/go-client/workflow-versioning). However, the feature's usage is limited because changes are only backward-compatible, but not forward-compatible. This makes potential rollbacks or workflow execution rescheduling unsafe.
 
 To address these issues, we have made recent enhancements to [the Versioning API](https://cadenceworkflow.io/docs/go-client/workflow-versioning), enabling the safe deployment of versioned workflows by separating code changes from the activation of new logic.
+
+<!-- truncate -->
 
 ## What is a Versioned Workflow?
 

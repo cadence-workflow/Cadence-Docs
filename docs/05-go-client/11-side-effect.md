@@ -1,6 +1,15 @@
 ---
 layout: default
 title: Side effect
+description: This page explains how to use workflow.SideEffect in Cadence to safely execute nondeterministic code snippets like random value generation within a workflow, recording the result into history for replay.
+keywords:
+  - cadence side effect
+  - workflow.SideEffect
+  - nondeterministic code
+  - workflow determinism
+  - random value workflow
+  - go client side effect
+  - inline activity
 permalink: /docs/go-client/side-effect
 ---
 

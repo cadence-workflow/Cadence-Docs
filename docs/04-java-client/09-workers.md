@@ -1,6 +1,15 @@
 ---
 layout: default
 title: Worker service
+description: This page explains how to configure and start a Cadence worker service in Java using WorkerFactory, including registering workflow and activity implementations.
+keywords:
+  - cadence worker java
+  - cadence WorkerFactory java
+  - java worker service cadence
+  - cadence worker setup java
+  - register workflow java
+  - cadence task list java
+  - cadence worker configuration
 permalink: /docs/java-client/workers
 ---
 

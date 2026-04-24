@@ -1,6 +1,17 @@
 ---
 layout: default
 title: Sessions
+description: This page explains how to use the Cadence session framework to schedule multiple activities on the same worker, with support for concurrent session limits, worker failure detection, and session recreation.
+keywords:
+  - cadence sessions
+  - session framework
+  - CreateSession
+  - CompleteSession
+  - worker session
+  - activity affinity
+  - concurrent session limit
+  - file processing workflow
+  - go client sessions
 permalink: /docs/go-client/sessions
 ---
 

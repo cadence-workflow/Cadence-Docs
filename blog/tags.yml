@@ -42,3 +42,12 @@ events:
   label: Events
   permalink: /events
   description: Events tag description
+
+cadence-web:
+  label: Cadence Web
+  description: Posts about Cadence Web UI features
+
+cadence-matching:
+  label: Cadence Matching
+  permalink: /cadence-matching
+  description: Cadence Matching is one of the core components responsible for matching tasks to workers.

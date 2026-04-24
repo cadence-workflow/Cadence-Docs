@@ -1,6 +1,15 @@
 ---
 layout: default
 title: Storage scan
+description: This page explains how Cadence enables scalable and resilient full scans of large partitioned datasets or object storage using activities with heartbeating progress tracking.
+keywords:
+  - cadence storage scan
+  - cadence partitioned scan
+  - cadence S3 scan
+  - cadence large dataset
+  - cadence heartbeat progress
+  - cadence activity scan
+  - cadence use case
 permalink: /docs/use-cases/partitioned-scan
 ---
 

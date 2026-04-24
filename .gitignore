@@ -24,6 +24,10 @@ yarn-error.log
 # Production
 /build
 
+# Local GitHub Pages preview (scripts/preview-github-pages-build.sh)
+.preview-pages/
+.preview-gh-pages-root/
+
 # Generated files
 .docusaurus
 .cache-loader
