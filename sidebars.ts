@@ -170,7 +170,6 @@ const sidebars: SidebarsConfig = {
       label: 'About',
       type: 'category',
       items: [
-        { type: 'doc', 'id': 'about/index' },
         { type: 'doc', 'id': 'about/license' },
       ],
     },
