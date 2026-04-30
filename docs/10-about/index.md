@@ -1,11 +1,12 @@
 ---
 layout: default
 title: Contact us
-description: This page provides contact and community resources for Cadence, including links to Stack Overflow, Slack, and GitHub repositories for filing issues or feature requests.
+description: This page provides contact and community resources for Cadence, including links to Stack Overflow, Slack, Reddit, and GitHub repositories for filing issues or feature requests.
 keywords:
   - cadence contact
   - cadence community
   - cadence slack
+  - cadence reddit
   - cadence github
   - cadence support
   - cadence feature request
@@ -16,6 +17,8 @@ permalink: /docs/about
 If you have a question, check whether it is already answered at Stack Overflow under [cadence-workflow](https://stackoverflow.com/questions/tagged/cadence-workflow) tag.
 
 If you still need help, visit the [Cadence Community Slack](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ).
+
+If you'd like to discuss with the broader community, join us on [Reddit](https://www.reddit.com/r/cadenceworkflow/).
 
 If you have a feature request or a bug to report, file an issue against one of the Cadence GitHub repositories:
 

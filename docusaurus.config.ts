@@ -412,6 +412,10 @@ const config: Config = {
               label: 'LinkedIn',
               href: 'https://www.linkedin.com/company/cadenceworkflow/',
             },
+            {
+              label: 'Reddit',
+              href: 'https://www.reddit.com/r/cadenceworkflow/',
+            },
           ],
         },
         {
