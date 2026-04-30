@@ -190,6 +190,10 @@ const config: Config = {
             from: ['/docs/team', '/docs/next/team'],
             to: '/community/team',
           },
+          {
+            from: ['/docs/about', '/docs/next/about'],
+            to: '/community/contact-us',
+          },
         ],
       } satisfies ClientRedirectsOptions,
     ],
