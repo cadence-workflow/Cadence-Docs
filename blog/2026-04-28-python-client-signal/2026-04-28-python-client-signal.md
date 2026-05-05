@@ -18,7 +18,9 @@ tags:
   - deep-dive
 ---
 
-Signals are how the outside world communicates with a running Cadence workflow without interrupting it. Consider a document approval workflow that runs for days or weeks: at any moment, a manager clicks "Approve" on a dashboard and that signal needs to reach the workflow immediately — without restarting it or losing its place. Whether you're building human-in-the-loop approvals, broadcasting configuration changes to thousands of running workflows, coordinating multi-stage pipelines, or implementing liveness checks — signals are the right tool. We're excited to share that signal handling is now available in the newest release of **Cadence Python client**.
+Signals are how the outside world communicates with a running Cadence workflow without interrupting it. Consider a document approval workflow that runs for days or weeks: at any moment, a manager clicks "Approve" on a dashboard and that signal needs to reach the workflow immediately — without restarting it or losing its place. Whether you're building human-in-the-loop approvals, broadcasting configuration changes to thousands of running workflows, coordinating multi-stage pipelines, or implementing liveness checks — signals are the right tool.
+
+Signal handling feature in python client is now available in the latest **cadence-python-client** release, **v0.2.2** — see the [v0.2.2 release notes on GitHub](https://github.com/cadence-workflow/cadence-python-client/releases/tag/v0.2.2) and install from [PyPI](https://pypi.org/project/cadence-python-client/).
 
 <!-- truncate -->
 
