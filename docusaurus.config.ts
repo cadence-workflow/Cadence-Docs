@@ -190,6 +190,10 @@ const config: Config = {
             from: ['/docs/team', '/docs/next/team'],
             to: '/community/team',
           },
+          {
+            from: ['/docs/about', '/docs/next/about'],
+            to: '/community/contact-us',
+          },
         ],
       } satisfies ClientRedirectsOptions,
     ],
@@ -411,6 +415,10 @@ const config: Config = {
             {
               label: 'LinkedIn',
               href: 'https://www.linkedin.com/company/cadenceworkflow/',
+            },
+            {
+              label: 'Reddit',
+              href: 'https://www.reddit.com/r/cadenceworkflow/',
             },
           ],
         },
