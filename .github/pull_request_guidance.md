@@ -14,11 +14,25 @@ What was wrong or unclear before? Why this wording or structure? Why this fix?
 
 
 <!-- Include specific verification steps so a reviewer can reproduce. For docs we verify by building and checking the result.
-- Run local Docusaurus build and/or dev server, and which pages you checked
-- Example: "Ran `npm run build` and `npm run start`, then verified docs/concepts/search-workflows and operation-guide/troubleshooting render correctly"
+
+ALL changes:
+- Run `npm run build` and `npm run start`, and list which pages you checked
+
+REQUIRED for non-text changes (anything beyond prose edits in .md files — includes .mdx, docusaurus.config.*, sidebars.*, src/, static/ non-markdown, CSS/SCSS, scripts, package files):
+- Run the production preview: `npm run preview:github-pages -- --serve` and verify affected pages at http://localhost:4173/
+- Check both dark mode and light mode on affected pages
+- Include these checklist items in your description:
+  - [ ] Ran production preview (`npm run preview:github-pages -- --serve`)
+  - [ ] Checked dark mode and light mode on affected pages
+
 - If you used a link checker or lint, include the command
-- Good: Concrete commands and pages that reviewers can repeat
-- Bad: "Built locally" or "Looks good" -->
+
+- Good: "Ran `npm run preview:github-pages -- --serve`, verified /docs/concepts/search-workflows renders correctly in both dark and light mode"
+- Good: "Ran `npm run build` and `npm run start`, then verified docs/concepts/search-workflows and operation-guide/troubleshooting render correctly" (text-only .md change)
+- Bad: "Built locally" or "Looks good"
+- Bad: Only ran `npm run start` for a component/config/style change (must use production preview)
+
+Non-text changes missing production preview verification will be flagged. -->
 **How did you verify it?**
 
 
