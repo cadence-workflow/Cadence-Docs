@@ -1,6 +1,16 @@
 ---
 layout: default
 title: Testing
+description: This page explains how to write unit tests and functional tests for Cadence workflows using the Go test framework, including activity mocking, overriding, and testing signal handling.
+keywords:
+  - cadence workflow testing
+  - workflow unit test
+  - TestWorkflowEnvironment
+  - activity mocking
+  - workflow test framework
+  - go client testing
+  - cadence test suite
+  - mock activity
 permalink: /docs/go-client/workflow-testing
 ---
 

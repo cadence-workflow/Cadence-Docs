@@ -1,11 +1,21 @@
 ---
 layout: default
 title: Cluster Troubleshooting
+description: This page covers common Cadence cluster operation issues and their mitigations, including persistence QPS errors, shard locking problems, high API latency, and task dispatching slowness.
+keywords:
+  - cadence troubleshooting
+  - cadence cluster issues
+  - persistence QPS
+  - shard locking error
+  - high latency cadence
+  - tasklist overloaded
+  - cadence runbook
+  - cadence operation issues
 permalink: /docs/operation-guide/troubleshooting
 ---
 # Cluster Troubleshooting
 
-This section is to cover some common operation issues as a runbook. Feel free to add more, or raise issues to ask for more in [cadence-docs](https://github.com/cadence-workflow/Cadence-Docs/issues) project. Or talk to us in Slack support channel!
+This section is to cover some common operation issues as a runbook. Feel free to add more, or raise issues to ask for more in [cadence-docs](https://github.com/cadence-workflow/Cadence-Docs/issues) project. Or talk to us in our Slack support channel or on [Reddit](https://www.reddit.com/r/cadenceworkflow/)!
 
 We will keep adding more stuff. Any contribution is very welcome.
 

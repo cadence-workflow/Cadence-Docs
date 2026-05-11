@@ -120,7 +120,7 @@ adhityamamallan:
 
 arzonus:
   name: Seva Kaloshin
-  title: Software Engineer II @ Uber
+  title: Senior Software Engineer @ Uber
   url: https://www.linkedin.com/in/seva-kaloshin/
   image_url: https://github.com/arzonus.png
   page: true
@@ -147,3 +147,24 @@ assem-hafez:
   socials:
     linkedin: https://www.linkedin.com/in/assem-hafez-160553b7/
     github: Assem-Hafez
+
+eleonoradgr:
+  name: Eleonora Di Gregorio
+  title: Senior Software Engineer @ Uber
+  url: https://www.linkedin.com/in/eleonora-di-gregorio-244248167/
+  image_url: https://github.com/eleonoradgr.png
+  page: true
+  socials:
+    linkedin: https://www.linkedin.com/in/eleonora-di-gregorio-244248167/
+    github: eleonoradgr
+
+timl3136:
+  name: Jiahao Li
+  title: Software Engineer @ Uber
+  url: https://www.linkedin.com/in/timl3136
+  image_url: https://github.com/timl3136.png
+  page: true
+  socials:
+    linkedin: https://www.linkedin.com/in/timl3136
+    github: timl3136
+

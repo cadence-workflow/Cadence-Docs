@@ -98,7 +98,14 @@ export function MaintainersRow(): JSX.Element {
       <TeamProfileCardCol name="Andre Oliveira" githubUrl="https://github.com/uandreo"> </TeamProfileCardCol>
       <TeamProfileCardCol name="Assem Hafez" githubUrl="https://github.com/Assem-Uber"> </TeamProfileCardCol>
       <TeamProfileCardCol name="Bowen Xiao" githubUrl="https://github.com/bowenxia"> </TeamProfileCardCol>
-      <TeamProfileCardCol name="David Porter" githubUrl="https://github.com/davidporter-id-au"> </TeamProfileCardCol>
+      <TeamProfileCardCol
+        name="Diana Zawadzki"
+        githubUrl="https://github.com/zawadzkidiana"
+        linkedinUrl="https://www.linkedin.com/in/diana-laura-zawadzki-9b3607202/"
+      >
+        Diana grew up in Berlin and studied Computer Science at Stanford. She interned on the Java Monorepo and on the Michelangelo AI/ML platform team at Uber and joined Cadence as a SWE in 2025.<br />
+        Passionate about distributed systems, agentic workflow orchestration, and growing the open-source community. She leads Women @ Uber in San Francisco and focuses on outreach and developer advocacy.
+      </TeamProfileCardCol>
       <TeamProfileCardCol name="Felipe Imanishi" githubUrl="https://github.com/fimanishi" linkedinUrl="https://www.linkedin.com/in/fimanishi">
       Felipe is a Software Engineer contributing to Cadence from San Francisco. He found CS later in his career, and he is glad he did. Felipe is always looking to learn more and Cadence is provides an endless source of topics. Outside of work, Felipe is probably doing something with his two sons.
       </TeamProfileCardCol>
@@ -128,7 +135,9 @@ export function MaintainersRow(): JSX.Element {
       <TeamProfileCardCol name="Tim Li" githubUrl="https://github.com/timl3136"> </TeamProfileCardCol>
       <TeamProfileCardCol name="tubignat" githubUrl="https://github.com/tubignat"> </TeamProfileCardCol>
       <TeamProfileCardCol name="Vinay Kumar Yadav" githubUrl="https://github.com/vinay116"> </TeamProfileCardCol>
-      <TeamProfileCardCol name="Vsevolod Kaloshin" githubUrl="https://github.com/arzonus"> </TeamProfileCardCol>
+      <TeamProfileCardCol name="Seva Kaloshin" githubUrl="https://github.com/arzonus" linkedinUrl="https://www.linkedin.com/in/seva-kaloshin/">
+        Seva was born and grew up in Saint Petersburg, Russia, and studied Information Security at Saint Petersburg Electrotechnical University. Throughout his career he's worked across both DevOps and backend engineering — rarely one without the other. When he's not working on Cadence, he's spending time with his wife and two kids in Denmark.
+      </TeamProfileCardCol>
     </div>
   );
 }

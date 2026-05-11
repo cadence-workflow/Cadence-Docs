@@ -1,7 +1,16 @@
 ---
 layout: default
 title: Overview
-description: A large number of use cases span beyond a single request-reply, require tracking of a complex state, respond to asynchronous events, and communicate to external unreliable dependencies.
+description: This page introduces the Cadence fault-oblivious stateful programming model and explains how it simplifies building scalable distributed applications beyond simple request-reply patterns.
+keywords:
+  - cadence overview
+  - cadence introduction
+  - cadence getting started
+  - what is cadence
+  - cadence workflow platform
+  - distributed application cadence
+  - cadence programming model
+  - cadence vs queues
 permalink: /docs/get-started/
 ---
 
@@ -34,4 +43,4 @@ image for the Cadence server is available on Docker Hub at
 Let's try with some sample workflows.
 To start with, go to [server installation](/docs/get-started/server-installation) to install Cadence locally, and run a HelloWorld sample with [Java](/docs/get-started/java-hello-world) or [Golang](/docs/get-started/golang-hello-world).
 
-When you have any trouble with the instructions, you can watch the [video tutorials](/docs/get-started/video-tutorials), and reach out to us on our [Slack Channel](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ), or raise any question on [Stack Overflow](https://stackoverflow.com/questions/tagged/cadence-workflow) or open a [GitHub issue](https://github.com/cadence-workflow/cadence/issues/new/choose).
+When you have any trouble with the instructions, you can watch the [video tutorials](/docs/get-started/video-tutorials), and reach out to us on our [Slack Channel](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ) or [Reddit](https://www.reddit.com/r/cadenceworkflow/), raise any question on [Stack Overflow](https://stackoverflow.com/questions/tagged/cadence-workflow), or open a [GitHub issue](https://github.com/cadence-workflow/cadence/issues/new/choose).

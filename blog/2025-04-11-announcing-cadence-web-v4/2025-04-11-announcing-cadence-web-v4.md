@@ -1,11 +1,20 @@
 ---
 title: Introducing cadence-web v4.0.0
 
-description: We've released cadence-web v4.0.0, a complete rewrite of the Cadence Web UI with a modern UI and performance improvements! Learn more about the new features, technology stack, and how this update addresses past challenges for developers and users alike.
+description: cadence-web v4.0.0 is a complete rewrite of the Cadence Web UI using Next.js, TypeScript, and React, bringing multi-cluster support, a unified workflow history view, and significantly improved performance.
+keywords:
+  - cadence web v4
+  - cadence web rewrite
+  - cadence UI
+  - cadence web nextjs
+  - cadence web typescript
+  - cadence multi-cluster UI
+  - cadence workflow history view
+  - cadence web release
 
+date: 2025-04-11T16:00
 authors: adhityamamallan
 tags: [announcement]
-date: 2025-04-11T16:00
 ---
 
 We are excited to announce the release of **cadence-web v4.0.0**—a complete rewrite of the Cadence web app. Cadence has always been about empowering developers to manage complex workflows, and with this release, we not only modernize the web interface by embracing today’s cutting-edge technologies but also strengthen the open source community by aligning our tools with the broader trends seen across the industry.

@@ -32,7 +32,7 @@ This command generates static content into the `build` directory and can be serv
 
 ### Preview the production / GitHub Pages build
 
-Our [website](https://cadenceworkflow.io) is deployed by using GitHub pages, which are static HTML pages generated from the codebase. Before you land your changes you need to check how they are going to look like in the website. Here are the steps to perform that test:
+Our [website](https://cadenceworkflow.io) is deployed by using GitHub pages, which are static HTML pages generated from the codebase whereas `npm run start` runs Docusaurus in development mode, injecting styles and updates them with HMR. Before you land your changes you need to check how they are going to look like in the website. Here are the steps to perform that test:
 
 Run this once:
 

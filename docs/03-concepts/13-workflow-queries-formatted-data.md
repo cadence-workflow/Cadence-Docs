@@ -1,6 +1,15 @@
 ---
 layout: default
 title: Custom Workflow Controls
+description: This page explains how to expose workflow internal state and trigger signals directly from Cadence Web using formatted query responses rendered as interactive dashboards.
+keywords:
+  - cadence workflow queries
+  - cadence web dashboard
+  - workflow signals ui
+  - cadence formatted data
+  - cadence query formatted output
+  - cadence web custom controls
+  - workflow internal state
 permalink: /docs/concepts/workflow-queries-formatted-data
 ---
 

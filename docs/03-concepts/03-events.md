@@ -1,6 +1,16 @@
 ---
 layout: default
 title: Event handling
+description: This page explains how Cadence workflows handle external events using signals, covering event aggregation, human tasks, process alteration, and workflow synchronization patterns.
+keywords:
+  - cadence events
+  - cadence signals
+  - cadence signal workflow
+  - event handling cadence
+  - cadence event aggregation
+  - cadence human task
+  - cadence synchronization
+  - cadence signalWorkflowExecution
 permalink: /docs/concepts/events
 ---
 

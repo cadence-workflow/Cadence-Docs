@@ -1,6 +1,16 @@
 ---
 layout: default
 title: Cluster Maintenance
+description: This page covers how to maintain a Cadence cluster, including scaling up and down, using scalable tasklists, upgrading server versions, and optimizing SQL persistence.
+keywords:
+  - cadence cluster maintenance
+  - cadence scale up
+  - scalable tasklist
+  - cadence upgrade server
+  - cadence maintenance
+  - DB schema upgrade
+  - tasklist partitions
+  - cadence rolling restart
 permalink: /docs/operation-guide/maintain
 ---
 
