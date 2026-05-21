@@ -165,11 +165,11 @@ USAGE:
 You may want to signal workflows without running the command line.
 
 The
-[WorkflowClient](https://www.javadoc.io/doc/com.uber.cadence/cadence-client/latest/com/cadence-workflow/cadence/client/WorkflowClient.html) API allows you to send signal (or SignalWithStartWorkflow) from outside of the workflow
+[WorkflowClient](https://www.javadoc.io/doc/com.uber.cadence/cadence-client/latest/com/uber/cadence/client/WorkflowClient.html) API allows you to send signal (or SignalWithStartWorkflow) from outside of the workflow
 to send a :signal: to the current :workflow:.
 
 Note that when using `newWorkflowStub` to signal a workflow, you MUST NOT pass WorkflowOptions.
 
-The [WorkflowStub](https://www.javadoc.io/static/com.uber.cadence/cadence-client/2.7.9-alpha/com/cadence-workflow/cadence/client/WorkflowClient.html#newWorkflowStub-java.lang.Class-com.uber.cadence.client.WorkflowOptions-) with WorkflowOptions is only for starting workflows.
+The [WorkflowStub](https://www.javadoc.io/doc/com.uber.cadence/cadence-client/latest/com/uber/cadence/client/WorkflowClient.html#newWorkflowStub(java.lang.Class,com.uber.cadence.client.WorkflowOptions)) with WorkflowOptions is only for starting workflows.
 
-The [WorkflowStub](https://www.javadoc.io/static/com.uber.cadence/cadence-client/2.7.9-alpha/com/cadence-workflow/cadence/client/WorkflowClient.html#newWorkflowStub-java.lang.Class-java.lang.String-) without WorkflowOptions is for signal or [query](/docs/java-client/queries)
+The [WorkflowStub](https://www.javadoc.io/doc/com.uber.cadence/cadence-client/latest/com/uber/cadence/client/WorkflowClient.html#newWorkflowStub(java.lang.Class,java.lang.String)) without WorkflowOptions is for signal or [query](/docs/java-client/queries)

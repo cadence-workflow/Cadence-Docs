@@ -15,7 +15,7 @@ permalink: /docs/java-client/retries
 
 :activity:Activities: and :workflow:workflows: can fail due to various intermediate conditions. In those cases, we want
 to retry the failed :activity: or child :workflow: or even the parent :workflow:. This can be achieved
-by supplying an optional [retry options](https://www.javadoc.io/static/com.uber.cadence/cadence-client/2.7.9-alpha/com/cadence-workflow/cadence/common/RetryOptions.Builder.html#setInitialInterval-java.time.Duration-).
+by supplying an optional [retry options](https://www.javadoc.io/doc/com.uber.cadence/cadence-client/latest/com/uber/cadence/common/RetryOptions.Builder.html#setInitialInterval(java.time.Duration)).
 
 > Note that sometimes it's also referred as RetryPolicy
 

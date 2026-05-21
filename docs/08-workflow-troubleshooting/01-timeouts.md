@@ -23,7 +23,7 @@ Cadence workers are part of the service that hosts and executes the workflow. Th
 
 Mitigation: Make sure these workers are configured with the task lists that are used in the workflow and activities so the server can dispatch tasks to the cadence workers.
 
-[Worker setup example](https://github.com/cadence-workflow/cadence-samples/blob/master/cmd/samples/pageflow/main.go#L18)
+[Worker setup example](https://github.com/cadence-workflow/cadence-samples/blob/master/cmd/samples/recipes/helloworld/main.go)
 
 ## Tasklist backlog despite having pollers
 

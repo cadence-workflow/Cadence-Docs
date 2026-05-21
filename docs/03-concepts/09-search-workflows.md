@@ -18,7 +18,7 @@ permalink: /docs/concepts/search-workflows
 
 Cadence supports creating :workflow:workflows: with customized key-value pairs, updating the information within the :workflow: code, and then listing/searching :workflow:workflows: with a SQL-like :query:. For example, you can create :workflow:workflows: with keys `city` and `age`, then search all :workflow:workflows: with `city = seattle and age > 22`.
 
-Also note that normal :workflow: properties like start time and :workflow: type can be queried as well. For example, the following :query: could be specified when [listing workflows from the CLI](/docs/cli#list-closed-or-open-workflow-executions) or using the list APIs ([Go](https://godoc.org/go.uber.org/cadence/client#Client), [Java](https://static.javadoc.io/com.uber.cadence/cadence-client/2.6.0/com/cadence-workflow/cadence/WorkflowService.Iface.html#ListWorkflowExecutions-com.uber.cadence.ListWorkflowExecutionsRequest-)):
+Also note that normal :workflow: properties like start time and :workflow: type can be queried as well. For example, the following :query: could be specified when [listing workflows from the CLI](/docs/cli#list-closed-or-open-workflow-executions) or using the list APIs ([Go](https://godoc.org/go.uber.org/cadence/client#Client), [Java](https://www.javadoc.io/doc/com.uber.cadence/cadence-client/3.13.1/com/uber/cadence/WorkflowService.Iface.html#ListWorkflowExecutions(com.uber.cadence.ListWorkflowExecutionsRequest))):
 
 ```sql
 WorkflowType = "main.Workflow" AND CloseStatus != "completed" AND (StartTime >
@@ -48,7 +48,7 @@ type StartWorkflowOptions struct {
 }
 ```
 
-In the Java client, the *WorkflowOptions.Builder* has similar methods for [memo](https://static.javadoc.io/com.uber.cadence/cadence-client/2.6.0/com/cadence-workflow/cadence/client/WorkflowOptions.Builder.html#setMemo-java.util.Map-) and [search attributes](https://static.javadoc.io/com.uber.cadence/cadence-client/2.6.0/com/cadence-workflow/cadence/client/WorkflowOptions.Builder.html#setSearchAttributes-java.util.Map-).
+In the Java client, the *WorkflowOptions.Builder* has similar methods for [memo](https://www.javadoc.io/doc/com.uber.cadence/cadence-client/latest/com/uber/cadence/client/WorkflowOptions.Builder.html#setMemo(java.util.Map)) and [search attributes](https://www.javadoc.io/doc/com.uber.cadence/cadence-client/latest/com/uber/cadence/client/WorkflowOptions.Builder.html#setSearchAttributes(java.util.Map)).
 
 Some important distinctions between memo and search attributes:
 
@@ -195,7 +195,7 @@ When performing a [ContinueAsNew](/docs/go-client/continue-as-new/) or using [Cr
 
 ## Query Capabilities
 
-:query:Query: :workflow:workflows: by using a SQL-like where clause when [listing workflows from the CLI](/docs/cli#list-closed-or-open-workflow-executions) or using the list APIs ([Go](https://godoc.org/go.uber.org/cadence/client#Client), [Java](https://static.javadoc.io/com.uber.cadence/cadence-client/2.6.0/com/cadence-workflow/cadence/WorkflowService.Iface.html#ListWorkflowExecutions-com.uber.cadence.ListWorkflowExecutionsRequest-)).
+:query:Query: :workflow:workflows: by using a SQL-like where clause when [listing workflows from the CLI](/docs/cli#list-closed-or-open-workflow-executions) or using the list APIs ([Go](https://godoc.org/go.uber.org/cadence/client#Client), [Java](https://www.javadoc.io/doc/com.uber.cadence/cadence-client/3.13.1/com/uber/cadence/WorkflowService.Iface.html#ListWorkflowExecutions(com.uber.cadence.ListWorkflowExecutionsRequest))).
 
 Note that you will only see :workflow:workflows: from one domain when :query:querying:.
 

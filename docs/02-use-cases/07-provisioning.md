@@ -21,5 +21,5 @@ Cadence provides strong guarantees of uniqueness by business ID. This can be use
 
 Some real-world use cases:
 
- * [Using Cadence workflows to spin up Kubernetes, by Banzai Cloud](https://banzaicloud.com/blog/introduction-to-cadence/)
+ * [Using Cadence workflows to spin up Kubernetes, by Banzai Cloud](https://web.archive.org/web/20230930234856/https://banzaicloud.com/blog/introduction-to-cadence/) (archived; banzaicloud.com is no longer resolvable after the Cisco acquisition)
  * [Using Cadence to orchestrate cluster life cycle in HashiCorp Consul, by HashiCorp](https://www.youtube.com/watch?v=kDlrM6sgk2k&feature=youtu.be&t=1188)
