@@ -360,6 +360,6 @@ Similarly for Kafka.
 To add new search attributes:
 
 1. Add the key to ElasticSearch  `cadence --do domain adm cl asa --search_attr_key NewKey --search_attr_type 1`
-2. Update the [dynamic configuration](https://cadenceworkflow.io/docs/operation-guide/setup/#dynamic-configuration-overview) to allowlist the new attribute
+2. Update the [dynamic configuration](/docs/operation-guide/setup#dynamic-configuration) to allowlist the new attribute
 
 Note: starting a :workflow: with search attributes but without advanced visibility feature will succeed as normal, but will not be searchable and will not be shown in list results.
