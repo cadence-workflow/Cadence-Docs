@@ -113,8 +113,8 @@ For how to apply database schema, refer to this doc: [SQL tool README](https://g
 The tool makes use of a table called “schema_versions” to keep track of upgrading History. But there is no transaction guarantee for cross table operations. So in case of some error, you may need to fix or apply schema change manually.
 Also, the schema tool by default will upgrade schema to the latest, so no manual is required. ( you can also specify to let it upgrade to any place, like 0.14).
 
-Database schema changes are versioned in the folders: [Versioned Schema Changes](https://github.com/cadence-workflow/cadence/tree/master/schema/mysql/v57/cadence/versioned) for Default Store
-and [Versioned Schema Changes](https://github.com/cadence-workflow/cadence/tree/master/schema/mysql/v57/visibility/versioned) for Visibility Store if you use database for basic visibility instead of ElasticSearch.
+Database schema changes are versioned in the folders: [Versioned Schema Changes](https://github.com/cadence-workflow/cadence/tree/master/schema/mysql/v8/cadence/versioned) for Default Store
+and [Versioned Schema Changes](https://github.com/cadence-workflow/cadence/tree/master/schema/mysql/v8/visibility/versioned) for Visibility Store if you use database for basic visibility instead of ElasticSearch.
 
 If you use homebrew, the schema files are located at `/usr/local/etc/cadence/schema/`.
 

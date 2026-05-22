@@ -23,7 +23,7 @@ Cadence workers are part of the service that hosts and executes the workflow. Th
 
 Mitigation: Make sure these workers are configured with the task lists that are used in the workflow and activities so the server can dispatch tasks to the cadence workers.
 
-[Worker setup example](https://github.com/cadence-workflow/cadence-samples/blob/master/cmd/samples/pageflow/main.go#L18)
+[Worker setup example](https://github.com/cadence-workflow/cadence-samples/blob/master/cmd/samples/recipes/helloworld/main.go)
 
 ## Tasklist backlog despite having pollers
 
@@ -40,16 +40,16 @@ Optionally you can also increase the number of pollers per worker by providing t
 
 Activities time out StartToClose or ScheduleToClose if the activity took longer than the configured timeout.
 
-[Link to description of timeouts](https://cadenceworkflow.io/docs/concepts/activities/#timeouts)
+[Link to description of timeouts](/docs/concepts/activities#timeouts)
 
 For long running activities, while the activity is executing, the worker can die due to regular deployments or host restarts or failures. Cadence doesn't know about this and will wait for StartToClose or ScheduleToClose timeouts to kick in.
 
-[Read more about long running activities](https://cadenceworkflow.io/docs/concepts/activities/#long-running-activities)
+[Read more about long running activities](/docs/concepts/activities#long-running-activities)
 
 Mitigation: Consider configuring heartbeat timeout and a retry policy
 
 [Example](https://github.com/cadence-workflow/cadence-samples/blob/df6f7bdba978d6565ad78e9f86d9cd31dfac9f78/cmd/samples/expense/workflow.go#L23)
-[Check retry policy for activity](https://cadenceworkflow.io/docs/concepts/activities/#retries)
+[Check retry policy for activity](/docs/concepts/activities#retries)
 
 For short running activities, heart beating is not required but maybe consider increasing the timeout value to suit the actual activity execution time.
 
@@ -67,7 +67,7 @@ Heartbeat timeouts are used to detect when a worker died or restarted. With hear
 
 Mitigation: Consider adding retry policy to an activity
 
-[Check retry policy for activity](https://cadenceworkflow.io/docs/concepts/activities/#retries)
+[Check retry policy for activity](/docs/concepts/activities#retries)
 
 ## Heartbeat timeout seen after configuring heartbeat timeout
 

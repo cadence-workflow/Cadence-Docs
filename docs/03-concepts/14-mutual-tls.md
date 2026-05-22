@@ -109,7 +109,7 @@ To connect a Cadence client with mTLS, you need to configure TLS credentials and
 
 ## Complete Working Example
 
-The [helloworld_tls sample](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/client_samples/helloworld_tls) provides a complete, tested implementation of mTLS with Cadence, including:
+The [client_tls sample](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/client_tls) provides a complete, tested implementation of mTLS with Cadence, including:
 
 - Certificate generation scripts  
 - Complete client implementation with mTLS  

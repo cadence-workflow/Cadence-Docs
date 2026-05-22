@@ -24,5 +24,5 @@ for unlimited exponential :activity: retries and simplifies coding of the compen
 Following are some real-world examples of Cadence-based service orchestration scenarios:
 
  * [Using Cadence workflows to spin up Kubernetes (Banzai Cloud Fork)](https://github.com/edmondop/cadence-helm-chart)
- * [Improving the User Experience with Uber’s Customer Obsession Ticket Routing Workflow and Orchestration Engine](https://eng.uber.com/customer-obsession-ticket-routing-workflow-and-orchestration-engine/)
+ * [Improving the User Experience with Uber’s Customer Obsession Ticket Routing Workflow and Orchestration Engine](https://www.uber.com/blog/customer-obsession-ticket-routing-workflow-and-orchestration-engine/)
  * [Enabling Faster Financial Partnership Integrations Using Cadence](https://doordash.engineering/2022/05/18/enabling-faster-financial-partnership-integrations-using-cadence/)

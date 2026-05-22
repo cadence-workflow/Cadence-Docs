@@ -73,18 +73,18 @@ There are quite many configs in Cadence. Here are the most basic configuration t
 Starting from v0.21.0, all the static configuration are defined by GoDocs in details.
 |Version|GoDocs Link| Github Link |
 | --------- | --------- | --------- |
-| v0.21.0 | [Configuration Docs](https://pkg.go.dev/github.com/cadence-workflow/cadence@v0.21.0/common/config#Config) | [Configuration](https://github.com/cadence-workflow/cadence/blob/v0.21.0/common/config/config.go#L37)|
-| ...[other higher versions](https://pkg.go.dev/github.com/cadence-workflow/cadence@v0.21.0?tab=versions) | ...Replace the version in the URL of v0.21.0| ...Replace the version in the URL of v0.21.0|
+| v0.21.0 | [Configuration Docs](https://pkg.go.dev/github.com/uber/cadence@v0.21.0/common/config#Config) | [Configuration](https://github.com/cadence-workflow/cadence/blob/v0.21.0/common/config/config.go#L37)|
+| ...[other higher versions](https://pkg.go.dev/github.com/uber/cadence@v0.21.0?tab=versions) | ...Replace the version in the URL of v0.21.0| ...Replace the version in the URL of v0.21.0|
 
 
 For earlier versions, you can find all the configurations similarly:
 |Version|GoDocs Link| Github Link |
 | --------- | --------- | --------- |
-| v0.20.0 | [Configuration Docs](https://pkg.go.dev/github.com/cadence-workflow/cadence@v0.20.0/common/service/config#Config) | [Configuration](https://github.com/cadence-workflow/cadence/blob/v0.20.0/common/service/config/config.go#L37)|
-| v0.19.2 | [Configuration Docs](https://pkg.go.dev/github.com/cadence-workflow/cadence@v0.19.2/common/service/config#Config) | [Configuration](https://github.com/cadence-workflow/cadence/blob/v0.19.2/common/service/config/config.go#L37)|
-| v0.18.2 | [Configuration Docs](https://pkg.go.dev/github.com/cadence-workflow/cadence@v0.18.2/common/service/config#Config) | [Configuration](https://github.com/cadence-workflow/cadence/blob/v0.18.2/common/service/config/config.go#L37)|
-| v0.17.0 | [Configuration Docs](https://pkg.go.dev/github.com/cadence-workflow/cadence@v0.17.0/common/service/config#Config) | [Configuration](https://github.com/cadence-workflow/cadence/blob/v0.17.0/common/service/config/config.go#L37)|
-| ...[other lower versions](https://pkg.go.dev/github.com/cadence-workflow/cadence@v0.20.0?tab=versions) | ...Replace the version in the URL of v0.20.0| ...Replace the version in the URL of v0.20.0 |
+| v0.20.0 | [Configuration Docs](https://pkg.go.dev/github.com/uber/cadence@v0.20.0/common/service/config#Config) | [Configuration](https://github.com/cadence-workflow/cadence/blob/v0.20.0/common/service/config/config.go#L37)|
+| v0.19.2 | [Configuration Docs](https://pkg.go.dev/github.com/uber/cadence@v0.19.2/common/service/config#Config) | [Configuration](https://github.com/cadence-workflow/cadence/blob/v0.19.2/common/service/config/config.go#L37)|
+| v0.18.2 | [Configuration Docs](https://pkg.go.dev/github.com/uber/cadence@v0.18.2/common/service/config#Config) | [Configuration](https://github.com/cadence-workflow/cadence/blob/v0.18.2/common/service/config/config.go#L37)|
+| v0.17.0 | [Configuration Docs](https://pkg.go.dev/github.com/uber/cadence@v0.17.0/common/service/config#Config) | [Configuration](https://github.com/cadence-workflow/cadence/blob/v0.17.0/common/service/config/config.go#L37)|
+| ...[other lower versions](https://pkg.go.dev/github.com/uber/cadence@v0.20.0?tab=versions) | ...Replace the version in the URL of v0.20.0| ...Replace the version in the URL of v0.20.0 |
 
 ## Dynamic Configuration
 
@@ -95,20 +95,20 @@ There are a lot more dynamic configurations than static configurations. Most of 
 Starting from v0.21.0 with this [change](https://github.com/cadence-workflow/cadence/pull/4156/files), all the dynamic configuration are well defined by GoDocs.
 |Version|GoDocs Link| Github Link |
 | --------- | --------- | --------- |
-| v0.21.0 | [Dynamic Configuration Docs](https://pkg.go.dev/github.com/cadence-workflow/cadence@v0.21.0/common/dynamicconfig#Key) | [Dynamic Configuration](https://github.com/cadence-workflow/cadence/blob/v0.21.0/common/dynamicconfig/constants.go#L58)|
-| ...[other higher versions](https://pkg.go.dev/github.com/cadence-workflow/cadence@v0.21.0?tab=versions) | ...Replace the version in the URL of v0.21.0| ...Replace the version in the URL of v0.21.0|
+| v0.21.0 | [Dynamic Configuration Docs](https://pkg.go.dev/github.com/uber/cadence@v0.21.0/common/dynamicconfig#Key) | [Dynamic Configuration](https://github.com/cadence-workflow/cadence/blob/v0.21.0/common/dynamicconfig/constants.go#L58)|
+| ...[other higher versions](https://pkg.go.dev/github.com/uber/cadence@v0.21.0?tab=versions) | ...Replace the version in the URL of v0.21.0| ...Replace the version in the URL of v0.21.0|
 
 For earlier versions, you can find all the configurations similarly:
 |Version|GoDocs Link| Github Link |
 | --------- | --------- | --------- |
-| v0.20.0 | [Dynamic Configuration Docs](https://pkg.go.dev/github.com/cadence-workflow/cadence@v0.20.0/common/service/dynamicconfig#Key) | [Dynamic Configuration](https://github.com/cadence-workflow/cadence/blob/v0.20.0/common/service/dynamicconfig/constants.go#L53)|
-| v0.19.2 | [Dynamic Configuration Docs](https://pkg.go.dev/github.com/cadence-workflow/cadence@v0.19.2/common/service/dynamicconfig#Key) | [Dynamic Configuration](https://github.com/cadence-workflow/cadence/blob/v0.19.2/common/service/dynamicconfig/constants.go#L53)|
-| v0.18.2 | [Dynamic Configuration Docs](https://pkg.go.dev/github.com/cadence-workflow/cadence@v0.18.2/common/service/dynamicconfig#Key) | [Dynamic Configuration](https://github.com/cadence-workflow/cadence/blob/v0.18.2/common/service/dynamicconfig/constants.go#L53)|
-| v0.17.0 | [Dynamic Configuration Docs](https://pkg.go.dev/github.com/cadence-workflow/cadence@v0.17.0/common/service/dynamicconfig#Key) | [Dynamic Configuration](https://github.com/cadence-workflow/cadence/blob/v0.17.0/common/service/dynamicconfig/constants.go#L53)|
-| ...[other lower versions](https://pkg.go.dev/github.com/cadence-workflow/cadence@v0.20.0?tab=versions) | ...Replace the version in the URL of v0.20.0| ...Replace the version in the URL of v0.20.0 |
+| v0.20.0 | [Dynamic Configuration Docs](https://pkg.go.dev/github.com/uber/cadence@v0.20.0/common/service/dynamicconfig#Key) | [Dynamic Configuration](https://github.com/cadence-workflow/cadence/blob/v0.20.0/common/service/dynamicconfig/constants.go#L53)|
+| v0.19.2 | [Dynamic Configuration Docs](https://pkg.go.dev/github.com/uber/cadence@v0.19.2/common/service/dynamicconfig#Key) | [Dynamic Configuration](https://github.com/cadence-workflow/cadence/blob/v0.19.2/common/service/dynamicconfig/constants.go#L53)|
+| v0.18.2 | [Dynamic Configuration Docs](https://pkg.go.dev/github.com/uber/cadence@v0.18.2/common/service/dynamicconfig#Key) | [Dynamic Configuration](https://github.com/cadence-workflow/cadence/blob/v0.18.2/common/service/dynamicconfig/constants.go#L53)|
+| v0.17.0 | [Dynamic Configuration Docs](https://pkg.go.dev/github.com/uber/cadence@v0.17.0/common/service/dynamicconfig#Key) | [Dynamic Configuration](https://github.com/cadence-workflow/cadence/blob/v0.17.0/common/service/dynamicconfig/constants.go#L53)|
+| ...[other lower versions](https://pkg.go.dev/github.com/uber/cadence@v0.20.0?tab=versions) | ...Replace the version in the URL of v0.20.0| ...Replace the version in the URL of v0.20.0 |
 
 However, the GoDocs in earlier versions don't contain detailed information. You need to look it up the newer version of GoDocs.
-For example, search for "EnableGlobalDomain" in Dynamic Configuration [Comments in v0.21.0](https://github.com/cadence-workflow/cadence/blob/667b7c68e67682a8d23f4b8f93e91a791313d8d6/common/dynamicconfig/constants.go) or [Docs of v0.21.0](https://pkg.go.dev/github.com/cadence-workflow/cadence@v0.21.0/common/dynamicconfig#Key), as the usage of DynamicConfiguration never changes.
+For example, search for "EnableGlobalDomain" in Dynamic Configuration [Comments in v0.21.0](https://github.com/cadence-workflow/cadence/blob/667b7c68e67682a8d23f4b8f93e91a791313d8d6/common/dynamicconfig/constants.go) or [Docs (latest)](https://pkg.go.dev/github.com/uber/cadence/common/dynamicconfig#Key), as the usage of DynamicConfiguration never changes.
 
 
 * **KeyName** is the key that you will use in the dynamicconfig yaml content

@@ -179,12 +179,6 @@ const config: Config = {
       {
         // redirects here only work in production build, not development
         fromExtensions: ['html'],
-        createRedirects(routePath) {
-          if (routePath === '/docs' || routePath === '/docs/') {
-            return [`${routePath}/get-started`];
-          }
-          return [];
-        },
         redirects: [
           {
             from: ['/docs/team', '/docs/next/team'],
@@ -193,6 +187,25 @@ const config: Config = {
           {
             from: ['/docs/about', '/docs/next/about'],
             to: '/community/contact-us',
+          },
+          // Bare base paths returned 404s for inbound traffic (Google
+          // Search Console). The docs plugin (used by all three
+          // sections) does not auto-generate a listing page at
+          // routeBasePath, so /docs, /community, and /faq had no
+          // matching route. Redirect both the no-slash (canonical, per
+          // trailingSlash: false) and trailing-slash forms to a sane
+          // landing page that already exists in the navbar.
+          {
+            from: '/docs',
+            to: '/docs/get-started',
+          },
+          {
+            from: '/community',
+            to: '/community/contact-us',
+          },
+          {
+            from: '/faq',
+            to: '/faq/best-practices',
           },
         ],
       } satisfies ClientRedirectsOptions,

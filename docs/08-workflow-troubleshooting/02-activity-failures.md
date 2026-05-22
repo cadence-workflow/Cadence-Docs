@@ -26,17 +26,17 @@ Description: This is a customized error returned by the activity.
 
 Mitigation: This is a way of facilitating error handling done within the activity code. Check your activity code to find where it returns a NewCustomError with some information. This is ideally an expected error scenario and should be handled within the workflow that executed the activity.
 
-Read more about [error handling](https://cadenceworkflow.io/docs/go-client/error-handling/)
+Read more about [error handling](/docs/go-client/error-handling)
 
 ## Generic errors
 Description: This is an error returned by the activity.
 
 Mitigation: This error is caused by something unexpected within the activity code, typically due to a downstream service that your activity communicates with. Cadence does not know anything about it and just puts all unknown errors in this category. Check your activity code to find the potential error cases. This is ideally an unexpected error scenario and should be debugged further to fix the rootcause.
 
-Read more about [error handling](https://cadenceworkflow.io/docs/go-client/error-handling/)
+Read more about [error handling](/docs/go-client/error-handling)
 
 ## Blob Size limits
-Description: This is an error caused when a decision contains data that exceeds the configured limit. If an API call contains data that exceeds the limit, the API call will fail. These limits are dynamically configured per cadence domain [link to code](https://github.com/cadence-workflow/cadence/blob/master/common/dynamicconfig/constants.go#L2938).
+Description: This is an error caused when a decision contains data that exceeds the configured limit. If an API call contains data that exceeds the limit, the API call will fail. These limits are dynamically configured per cadence domain [link to code](https://github.com/cadence-workflow/cadence/blob/master/common/dynamicconfig/dynamicproperties/constants.go).
 
 Mitigation: It is recommended to store the data elsewhere in another storage technology and using its reference. The workflow can then take that reference and pass it around to other parts of the workflow to retrieve that data.
 

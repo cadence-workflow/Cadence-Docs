@@ -84,7 +84,7 @@ And server basic dashboard:
 
 ## DataDog dashboard templates
 
-This [package](https://github.com/cadence-workflow/Cadence-Docs/tree/master/src/datadog) contains examples of Cadence dashboards with DataDog.
+This [package](https://github.com/cadence-workflow/Cadence-Docs/tree/b792f3b0e80b103c67d228458026e4199989b031/src/datadog) contains examples of Cadence dashboards with DataDog. (Pinned to a pre-Docusaurus-3 revision; the dashboards are not present on master.)
 
 * `Cadence-Client` is the dashboard that includes all the metrics to help you understand Cadence client behavior. Most of these metrics are emitted by the client SDKs, with a few exceptions from server side (for example, workflow timeout).
 
@@ -98,7 +98,7 @@ NOTE2: the template contains templating variables `$App` and `$Availability_Zone
 
 ## Grafana+Prometheus dashboard templates
 
-This [package](https://github.com/cadence-workflow/Cadence-Docs/tree/master/src/grafana/prometheus) contains examples of Cadence dashboards with Prometheus.
+This [package](https://github.com/cadence-workflow/Cadence-Docs/tree/b792f3b0e80b103c67d228458026e4199989b031/src/grafana/prometheus) contains examples of Cadence dashboards with Prometheus. (Pinned to a pre-Docusaurus-3 revision; the dashboards are not present on master.)
 
 * `Cadence-Client` is the dashboard of client metrics, and a few server side metrics that belong to client side but have to be emitted by server(for example, workflow timeout).
 

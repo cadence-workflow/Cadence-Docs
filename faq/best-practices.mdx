@@ -46,13 +46,13 @@ Non-deterministic code results in a different workflow execution each time, ther
   * Python SDK: compatible with asyncio package to run workflow asynchronously. In the background, we implemented our own eventloop to achieve determinism.   
 * You should avoid using non-deterministic data types like hashmaps where the iteration order could be different each time.
 
-In some cases, users do need to use a non-deterministic structure or a function. [Cadence side effects](https://cadenceworkflow.io/docs/go-client/side-effect) allow them to be used in a deterministic way where the first response is saved for the later replays.
+In some cases, users do need to use a non-deterministic structure or a function. [Cadence side effects](/docs/go-client/side-effect) allow them to be used in a deterministic way where the first response is saved for the later replays.
 
 ## Backward Incompatible Deployments
 
 When you are deploying a new code, you need to make sure already working workflows will generate the same state machine. Otherwise, replays will fail with non-deterministic errors. 
 
-You need to avoid non-deterministic errors in case you need to rollback but this may not be possible every time since old code may not handle the workflows started with the new code. When you get non-deterministic errors due to rollbacks; you’d need to reset or terminate your workflows. You can use our [replayers and shadowers](https://cadenceworkflow.io/docs/codelabs/workflow-tests-go-replayer-shadower) to avoid backward-incompatibility.
+You need to avoid non-deterministic errors in case you need to rollback but this may not be possible every time since old code may not handle the workflows started with the new code. When you get non-deterministic errors due to rollbacks; you’d need to reset or terminate your workflows. You can use our [replayers and shadowers](/docs/codelabs/workflow-tests-go-replayer-shadower) to avoid backward-incompatibility.
 
 ## Idempotent Workflows and Activities
 
@@ -82,4 +82,4 @@ It's important to know that Cadence comes with two overheads:
 There are some cases that would simply not work well with these overheads. For example, building a multiplayer video game such as Counter-Strike with Cadence where every ms is important would not be the best choice.
 
 ## Unsure about your case?
-Please reach out to the Cadence maintainers through Github or Slack so we can help you. See [our support page](https://cadenceworkflow.io/community/support) for more information.
+Please reach out to the Cadence maintainers through Github or Slack so we can help you. See [our contact page](/community/contact-us) for more information.

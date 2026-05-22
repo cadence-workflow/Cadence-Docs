@@ -197,7 +197,7 @@ cadence --domain samples-domain domain register
 # OR using short alias
 cadence --do samples-domain d re
 ```
-If your Cadence cluster has enabled [global domain (XDC replication)](https://cadenceworkflow.io/docs/concepts/cross-dc-replication/), then you have to specify the replication settings when registering a domain:
+If your Cadence cluster has enabled [global domain (XDC replication)](/docs/concepts/cross-dc-replication), then you have to specify the replication settings when registering a domain:
 ```bash
 cadence --domains samples-domain domain register --active_cluster clusterNameA --clusters clusterNameA,clusterNameB
 ```

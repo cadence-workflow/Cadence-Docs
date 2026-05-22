@@ -39,5 +39,9 @@ echo "Static site (GitHub Pages–style output) copied to $ROOT/$PREVIEW_DIR/"
 
 if [[ "$SERVE" == true ]]; then
   echo "Serving http://localhost:$PORT/"
-  exec npx --yes serve -s "$PREVIEW_DIR" -l "$PORT"
+  # No -s/--single: GitHub Pages is not a SPA host, so SPA-fallback would
+  # mask redirect HTML files (e.g. /docs -> /docs/index.html) by rewriting
+  # to the root index.html. Default serve behavior matches Pages: it serves
+  # subdirectory index.html and falls back to 404.html.
+  exec npx --yes serve "$PREVIEW_DIR" -l "$PORT"
 fi

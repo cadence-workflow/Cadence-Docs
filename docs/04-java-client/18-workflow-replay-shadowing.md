@@ -52,7 +52,7 @@ If an exception is returned from the replay method, it means there's an incompat
 
 ### Sample Replay Test
 
-This sample is also available in our samples repo at [here](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/test/java/com/uber/cadence/samples/hello/HelloActivityReplayTest.java).
+A similar sample is available in our samples repo: [HelloWorkflowShadowingTest.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/test/java/com/uber/cadence/samples/hello/HelloWorkflowShadowingTest.java) (the dedicated `HelloActivityReplayTest.java` has been removed; the snippet below is preserved here as the canonical reference).
 
 ```java
 public class HelloActivityReplayTest {
