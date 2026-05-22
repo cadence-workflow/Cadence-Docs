@@ -1,15 +1,15 @@
 ---
 layout: default
-title: Data Converters
-description: Implement custom Cadence DataConverters to compress, encrypt, or offload workflow payloads using the Go and Java samples.
+title: Data Converters, Encryption, Compression, ...
+description: Implement custom Cadence DataConverters to compress, encrypt, serialize or offload workflow payloads using the Go and Java samples.
 keywords:
-  - cadence data converter
-  - cadence payload compression
-  - cadence payload encryption
-  - cadence claim check pattern
+  - data converter
+  - payload compression
+  - payload encryption
+  - claim check pattern
   - workflow serialization
   - custom data converter
-  - cadence history payload size
+  - history payload size
 permalink: /docs/concepts/data-converter
 ---
 
