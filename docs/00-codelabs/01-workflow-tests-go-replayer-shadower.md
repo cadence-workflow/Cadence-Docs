@@ -21,9 +21,9 @@ This Codelab is a step-by-step guide to help you create tests for your Cadence W
 
 We will cover two powerful testing tools and three key concepts in the Go client:
 
-* **[Workflow Replayer](https://cadenceworkflow.io/docs/go-client/workflow-replay-shadowing)**: A component for replaying a single, specific workflow history against your current code to check for non-deterministic changes.  
-* **[Workflow Shadower](https://cadenceworkflow.io/docs/go-client/workflow-replay-shadowing#workflow-shadower)**: A tool built on top of the replayer that can scan and test many live workflows, making it ideal for CI/CD integration.
-* **[Non-deterministic errors](https://cadenceworkflow.io/docs/go-client/workflow-non-deterministic-error)**: This occurs when a code change causes a workflow to make different decisions during a replay than it did originally.
+* **[Workflow Replayer](/docs/go-client/workflow-replay-shadowing)**: A component for replaying a single, specific workflow history against your current code to check for non-deterministic changes.  
+* **[Workflow Shadower](/docs/go-client/workflow-replay-shadowing#workflow-shadower)**: A tool built on top of the replayer that can scan and test many live workflows, making it ideal for CI/CD integration.
+* **[Non-deterministic errors](/docs/go-client/workflow-non-deterministic-error)**: This occurs when a code change causes a workflow to make different decisions during a replay than it did originally.
 ---
 
 ## **Setup: Preparing Your Environment**
@@ -34,7 +34,7 @@ Let's get your local environment ready. Before we can write tests, you need a ru
 
 For local development, the easiest way to run Cadence is with Docker.
 
-* First, clone the Cadence server repository and start the server using the provided `docker-compose-es.yml` file. Advanced Visibility included in the `docker-compose-es.yml` configuration powered by Elasticsearch, is required. The [scan filters](https://cadenceworkflow.io/docs/go-client/workflow-replay-shadowing#scan-filters) for Workflow Shadower will only work if Advanced Visibility is enabled. 
+* First, clone the Cadence server repository and start the server using the provided `docker-compose-es.yml` file. Advanced Visibility included in the `docker-compose-es.yml` configuration powered by Elasticsearch, is required. The [scan filters](/docs/go-client/workflow-replay-shadowing#scan-filters-advanced-query) for Workflow Shadower will only work if Advanced Visibility is enabled. 
 ```bash
   # Clone the repository  
   git clone https://github.com/cadence-workflow/cadence.git
@@ -46,14 +46,14 @@ For local development, the easiest way to run Cadence is with Docker.
 This will start the Cadence server, along with its dependencies. Keep this terminal window open to keep the server running.
 
 For more help getting started with the Cadence platform: 
-* [Cadence Server Installation](https://cadenceworkflow.io/docs/get-started/server-installation)
-* [Searching Workflows (Advanced Visibility)](https://cadenceworkflow.io/docs/concepts/search-workflows)
+* [Cadence Server Installation](/docs/get-started/server-installation)
+* [Searching Workflows (Advanced Visibility)](/docs/concepts/search-workflows)
 
 ### **2. Install Cadence CLI**
 
 The Cadence Command Line Interface (CLI) is your primary tool for interacting with the server.
 
-The simplest way to install the CLI is with Homebrew if you're on macOS or Linux. For other installation methods, including Docker and building from source, see the [official CLI documentation](https://cadenceworkflow.io/docs/cli/).  
+The simplest way to install the CLI is with Homebrew if you're on macOS or Linux. For other installation methods, including Docker and building from source, see the [official CLI documentation](/docs/cli).  
 ```bash
 brew install cadence-workflow
 ```
@@ -473,7 +473,7 @@ This successful test demonstrates that the shadower can scan multiple workflows 
 
 Now that we've established that our testing tools work correctly with our current code, let's see what happens when we introduce a breaking change.
 
-A [non-deterministic error](https://cadenceworkflow.io/docs/go-client/workflow-non-deterministic-error) occurs when a code change causes a workflow to make different decisions during a replay than it did originally.
+A [non-deterministic error](/docs/go-client/workflow-non-deterministic-error) occurs when a code change causes a workflow to make different decisions during a replay than it did originally.
 
 Let's introduce a **breaking change** to our ```workflow.go``` file. We will add a new activity call right after ```ActivityA```.
 

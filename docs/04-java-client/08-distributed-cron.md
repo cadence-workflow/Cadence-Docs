@@ -16,7 +16,7 @@ permalink: /docs/java-client/distributed-cron
 It is relatively straightforward to turn any Cadence :workflow: into a Cron :workflow:. All you need
 is to supply a cron schedule when starting the :workflow: using the CronSchedule
 parameter of
-[StartWorkflowOptions](https://static.javadoc.io/com.uber.cadence/cadence-client/2.5.1/com/cadence-workflow/cadence/client/WorkflowOptions.html).
+[StartWorkflowOptions](https://www.javadoc.io/doc/com.uber.cadence/cadence-client/latest/com/uber/cadence/client/WorkflowOptions.html).
 
 You can also start a :workflow: using the Cadence :CLI: with an optional cron schedule using the `--cron` argument.
 

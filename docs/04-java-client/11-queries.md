@@ -33,7 +33,7 @@ library. You can add custom :query: types to handle :query:queries: such as :que
 
 Cadence provides a :query: feature that supports synchronously returning any information from a :workflow: to an external caller.
 
-Interface [__QueryMethod__](https://www.javadoc.io/doc/com.uber.cadence/cadence-client/latest/com/cadence-workflow/cadence/workflow/QueryMethod.html) indicates that the method is a query method. Query method can be used to query a workflow state by external process at any time during its execution. This annotation applies only to workflow interface methods.
+Interface [__QueryMethod__](https://www.javadoc.io/doc/com.uber.cadence/cadence-client/latest/com/uber/cadence/workflow/QueryMethod.html) indicates that the method is a query method. Query method can be used to query a workflow state by external process at any time during its execution. This annotation applies only to workflow interface methods.
 
 
 See the [:workflow:](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloQuery.java) example code :
@@ -116,7 +116,7 @@ cadence: docker run --network=host --rm ubercadence/cli:master --do test-domain 
 The :query:Query: method can accept parameters. This might be useful if only part of the :workflow: state should be returned.
 
 ## Run Query from external application code
-The [WorkflowStub](https://www.javadoc.io/static/com.uber.cadence/cadence-client/2.7.9-alpha/com/cadence-workflow/cadence/client/WorkflowClient.html#newWorkflowStub-java.lang.Class-java.lang.String-) without WorkflowOptions is for signal or [query](/docs/java-client/queries)
+The [WorkflowStub](https://www.javadoc.io/doc/com.uber.cadence/cadence-client/latest/com/uber/cadence/client/WorkflowClient.html#newWorkflowStub(java.lang.Class,java.lang.String)) without WorkflowOptions is for signal or [query](/docs/java-client/queries)
 
 
 ## Consistent Query
@@ -141,6 +141,6 @@ In order to run consistent :query: through the :CLI: do the following:
 
 `cadence-cli --domain samples-domain workflow query -w my_workflow_id -r my_run_id -qt current_state --qcl strong`
 
-In order to run a :query: using application code, you need to use [service client](https://www.javadoc.io/doc/com.uber.cadence/cadence-client/latest/com/cadence-workflow/cadence/WorkflowService.Iface.html#SignalWorkflowExecution-com.uber.cadence.SignalWorkflowExecutionRequest-).
+In order to run a :query: using application code, you need to use [service client](https://www.javadoc.io/doc/com.uber.cadence/cadence-client/3.13.1/com/uber/cadence/WorkflowService.Iface.html#SignalWorkflowExecution(com.uber.cadence.SignalWorkflowExecutionRequest)).
 
 When using strongly consistent :query: you should expect higher latency than eventually consistent :query:.

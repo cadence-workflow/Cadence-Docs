@@ -457,7 +457,7 @@ helm status cadence-release -n cadence-postgres-os2
 
 - **[Cadence Helm Charts Repository](https://github.com/cadence-workflow/cadence-charts)** - Source repository for the Helm charts
 - **[Cadence Helm Chart README](https://github.com/cadence-workflow/cadence-charts/tree/main/charts/cadence)** - Detailed configuration options
-- **[Cadence CLI Documentation](https://cadenceworkflow.io/docs/cli/)** - CLI reference for managing domains and workflows
+- **[Cadence CLI Documentation](/docs/cli)** - CLI reference for managing domains and workflows
 
 #### Kubernetes and Helm
 

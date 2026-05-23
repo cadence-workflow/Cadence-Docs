@@ -22,5 +22,5 @@ Periodic execution is often part of other use cases. For example, once a month r
 
 There are many real-world examples of Cadence periodic executions. Such as the following:
 
- * An Uber backend service that recalculates various statistics for each [hex](https://eng.uber.com/h3/) in each city once a minute.
+ * An Uber backend service that recalculates various statistics for each [hex](https://www.uber.com/blog/h3/) in each city once a minute.
  * Monthly Uber for Business report generation.
