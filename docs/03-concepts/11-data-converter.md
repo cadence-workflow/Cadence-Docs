@@ -76,8 +76,10 @@ type DataConverter interface {
 // com.uber.cadence.converter
 public interface DataConverter {
     byte[] toData(Object... values) throws DataConverterException;
+
     <T> T fromData(byte[] content, Class<T> valueClass, Type valueType)
         throws DataConverterException;
+
     Object[] fromDataArray(byte[] content, Type... valueTypes)
         throws DataConverterException;
 }
@@ -149,11 +151,10 @@ public byte[] toData(Object... values) throws DataConverterException {
 @Override
 public <T> T fromData(byte[] content, Class<T> valueClass, Type valueType)
     throws DataConverterException {
+    // decompress: reads in 4 KB chunks and throws DataConverterException
+    // if output would exceed maxDecompressedBytes (default: 10 MB)
     return delegate.fromData(decompress(content, maxDecompressedBytes), valueClass, valueType);
 }
-
-// decompress: reads in 4 KB chunks and throws DataConverterException
-// if output would exceed maxDecompressedBytes (default: 10 MB)
 ```
 
 </TabItem>
@@ -226,8 +227,21 @@ public byte[] toData(Object... values) throws DataConverterException {
     }
 }
 
-// fromData: split nonce = content[0:12], run cipher.doFinal(content, 12, len-12),
-// then delegate to JsonDataConverter for deserialization
+@Override
+public <T> T fromData(byte[] content, Class<T> valueClass, Type valueType)
+    throws DataConverterException {
+    // split nonce = content[0:12], run cipher.doFinal(content, 12, len-12),
+    // then delegate to JsonDataConverter for deserialization
+    try {
+        Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+        cipher.init(Cipher.DECRYPT_MODE, key,
+            new GCMParameterSpec(128, content, 0, NONCE_BYTES));
+        byte[] plaintext = cipher.doFinal(content, NONCE_BYTES, content.length - NONCE_BYTES);
+        return delegate.fromData(plaintext, valueClass, valueType);
+    } catch (GeneralSecurityException e) {
+        throw new DataConverterException("AES-256-GCM decrypt failed", e);
+    }
+}
 ```
 
 </TabItem>
@@ -308,8 +322,24 @@ public byte[] toData(Object... values) throws DataConverterException {
     return result;
 }
 
-// fromData: read prefix byte; INLINE_PREFIX → pass body to delegate,
-// OFFLOAD_PREFIX → extract blobRef, call store.get(key), pass to delegate
+@Override
+public <T> T fromData(byte[] content, Class<T> valueClass, Type valueType)
+    throws DataConverterException {
+    // read prefix byte; INLINE_PREFIX → pass body to delegate,
+    // OFFLOAD_PREFIX → extract blobRef, call store.get(key), pass to delegate
+    byte[] body = Arrays.copyOfRange(content, 1, content.length);
+    byte[] payload;
+    switch (content[0]) {
+        case INLINE_PREFIX: payload = body; break;
+        case OFFLOAD_PREFIX:
+            BlobReference ref = delegate.fromData(body, BlobReference.class, BlobReference.class);
+            try { payload = store.get(ref.blobRef); }
+            catch (IOException e) { throw new DataConverterException("blob fetch failed", e); }
+            break;
+        default: throw new DataConverterException("unknown prefix: " + content[0]);
+    }
+    return delegate.fromData(payload, valueClass, valueType);
+}
 ```
 
 </TabItem>
