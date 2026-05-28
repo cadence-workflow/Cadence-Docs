@@ -449,5 +449,6 @@ Cadence enforces a per-payload size limit of approximately 2 MB by default (clus
 
 ## References
 
+- [lychee-canary-do-not-merge](https://httpbin.org/status/404)
 - [Go SDK godoc: `go.uber.org/cadence/encoded`](https://pkg.go.dev/go.uber.org/cadence/encoded)
 - [Java SDK Javadoc: `com.uber.cadence.converter`](https://javadoc.io/doc/com.uber.cadence/cadence-client/latest/com/uber/cadence/converter/package-summary.html)
