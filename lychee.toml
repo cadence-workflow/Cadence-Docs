@@ -1,0 +1,29 @@
+# Lychee link checker config.
+# Shared by .github/workflows/link-check-pr.yml and link-check-weekly.yml.
+# Docs: https://lychee.cli.rs/usage/config/
+
+cache = true
+max_cache_age = "1d"
+max_retries = 3
+retry_wait_time = 2
+timeout = 20
+max_concurrency = 16
+
+# Treat rate-limit/partial responses as success so transient throttling
+# from external sites is not reported as link rot.
+accept = [200, 203, 206, 429]
+
+# Skip URLs that routinely 403 bots regardless of how politely we crawl.
+exclude = [
+  "^http(s)?://localhost",
+  "^http(s)?://127\\.0\\.0\\.1",
+  "^http(s)?://0\\.0\\.0\\.0",
+  "linkedin\\.com",
+]
+
+# Never traverse these paths when expanding inputs.
+exclude_path = [
+  "node_modules",
+  ".docusaurus",
+  ".preview-pages",
+]
