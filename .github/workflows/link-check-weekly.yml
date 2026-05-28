@@ -62,7 +62,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create or update tracking issue
-        if: env.lychee_exit_code != '0'
+        # lychee-action@v2 exposes exit_code as a STEP OUTPUT, not an env var.
+        # Using env.lychee_exit_code here would always be empty, and
+        # '' != '0' evaluates to true in GitHub Actions expressions, so the
+        # issue would be created on every run.
+        if: steps.lychee.outputs.exit_code != '0'
         uses: peter-evans/create-issue-from-file@v5
         with:
           title: 'Link check report'
