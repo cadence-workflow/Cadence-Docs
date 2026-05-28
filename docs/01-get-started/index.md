@@ -1,46 +1,62 @@
 ---
 layout: default
-title: Overview
-description: This page introduces the Cadence fault-oblivious stateful programming model and explains how it simplifies building scalable distributed applications beyond simple request-reply patterns.
+title: Get Started with Cadence
+description: Get started with Cadence, the open-source workflow engine for fault-tolerant distributed applications. Run a local server in 5 minutes and build your first workflow in Go or Java.
 keywords:
-  - cadence overview
-  - cadence introduction
+  - cadence get started
+  - cadence tutorial
+  - cadence workflow tutorial
   - cadence getting started
   - what is cadence
+  - cadence workflow engine
   - cadence workflow platform
   - distributed application cadence
-  - cadence programming model
-  - cadence vs queues
+  - open source workflow engine tutorial
 permalink: /docs/get-started/
 ---
 
-A large number of use cases span beyond a single request-reply, require tracking
-of a complex state, respond to asynchronous :event:events:, and communicate to external unreliable dependencies.
-The usual approach to building such applications is a hodgepodge of stateless services,
-databases, cron jobs, and queuing systems. This negatively impacts the developer productivity as most of the code is
-dedicated to plumbing, obscuring the actual business logic behind a myriad of low-level details. Such systems frequently have availability problems as it is hard to keep all the components healthy.
+## 5-minute quickstart
 
-The Cadence solution is a [_fault-oblivious stateful_ programming model](/docs/concepts/workflows) that obscures most of the complexities of building scalable distributed applications. In essence, Cadence provides a durable virtual memory that is not
-linked to a specific process, and preserves the full application state, including function stacks, with local variables across all sorts of host and software failures.
-This allows you to write code using the full power of a programming language while Cadence takes care of durability, availability, and scalability of the application.
+No Docker required. The fastest way to run Cadence locally uses the embedded SQLite backend:
 
-Cadence consists of a programming framework (or client library) and a managed service (or backend).
-The framework enables developers to author and coordinate :task:tasks: in familiar languages
-([Go](https://github.com/cadence-workflow/cadence-go-client/) and [Java](https://github.com/cadence-workflow/cadence-java-client)
-are supported officially, and [Python](https://github.com/firdaus/cadence-python) and
-[Ruby](https://github.com/coinbase/cadence-ruby) by the community).
+```bash
+# Clone and build
+git clone https://github.com/cadence-workflow/cadence.git
+cd cadence
+make bins
 
-You can also use [iWF](https://github.com/indeedeng/iwf) as a DSL framework on top of Cadence.
+# Install the schema and start the server
+make install-schema-sqlite
+./cadence-server --zone sqlite start
+```
 
-The Cadence backend service is stateless and relies on a persistent store. Currently, Cassandra and MySQL/Postgres storages
-are supported. An adapter to any other database that provides multi-row single shard transactions
-can be added. There are different service deployment models. At Uber, our team operates multitenant clusters
-that are shared by hundreds of applications. See service [topology](/docs/concepts/topology) to understand the overall architecture. The GitHub repo for the Cadence server is [cadence-workflow/cadence](https://github.com/cadence-workflow/cadence). The docker
-image for the Cadence server is available on Docker Hub at
-[ubercadence/server](https://hub.docker.com/r/ubercadence/server).
+Open [http://localhost:8088](http://localhost:8088) for the Cadence Web UI. Then run your first workflow:
 
-## What's Next
-Let's try with some sample workflows.
-To start with, go to [server installation](/docs/get-started/server-installation) to install Cadence locally, and run a HelloWorld sample with [Java](/docs/get-started/java-hello-world) or [Golang](/docs/get-started/golang-hello-world).
+- [Golang Hello World](/docs/get-started/golang-hello-world)
+- [Java Hello World](/docs/get-started/java-hello-world)
 
-When you have any trouble with the instructions, you can watch the [video tutorials](/docs/get-started/video-tutorials), and reach out to us on our [Slack Channel](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ) or [Reddit](https://www.reddit.com/r/cadenceworkflow/), raise any question on [Stack Overflow](https://stackoverflow.com/questions/tagged/cadence-workflow), or open a [GitHub issue](https://github.com/cadence-workflow/cadence/issues/new/choose).
+---
+
+## What is Cadence?
+
+A large number of use cases span beyond a single request-reply, require tracking of complex state, respond to asynchronous :event:events:, and communicate with external unreliable dependencies. The usual approach — stateless services, databases, cron jobs, and queuing systems — means most of the code is dedicated to plumbing rather than business logic, and failures are hard to recover from cleanly.
+
+Cadence solves this with a [_fault-oblivious stateful_ programming model](/docs/concepts/workflows): a durable virtual memory that is not linked to a specific process, and preserves the full application state — including function stacks and local variables — across host and software failures. You write code using the full power of a programming language; Cadence handles durability, availability, and scalability.
+
+Cadence consists of a client SDK and a backend service. SDKs are available for [Go](https://github.com/cadence-workflow/cadence-go-client/) and [Java](https://github.com/cadence-workflow/cadence-java-client) (official), and [Python](https://github.com/firdaus/cadence-python) and [Ruby](https://github.com/coinbase/cadence-ruby) (community). You can also use [iWF](https://github.com/indeedeng/iwf) as a DSL framework on top of Cadence.
+
+The backend is stateless and stores workflow history in Cassandra, MySQL, or Postgres. See [topology](/docs/concepts/topology) for the full architecture. The server is open source at [cadence-workflow/cadence](https://github.com/cadence-workflow/cadence) and available on Docker Hub as [ubercadence/server](https://hub.docker.com/r/ubercadence/server).
+
+---
+
+## What's next?
+
+| I want to... | Go to |
+|---|---|
+| Run my first workflow | [Golang Hello World](/docs/get-started/golang-hello-world) · [Java Hello World](/docs/get-started/java-hello-world) |
+| Install with Docker or Kubernetes | [Server Installation](/docs/get-started/server-installation) |
+| Understand what a workflow engine is | [Workflow Engine and Orchestration](/docs/concepts/workflow-engine) |
+| Deploy Cadence in production | [Open Source Workflow Engine](/docs/concepts/open-source-workflow-engine) |
+| Learn core concepts | [Workflows](/docs/concepts/workflows) · [Activities](/docs/concepts/activities) · [Task Lists](/docs/concepts/task-lists) |
+| Watch video tutorials | [Video Tutorials](/docs/get-started/video-tutorials) |
+| Get help | [Slack](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ) · [Stack Overflow](https://stackoverflow.com/questions/tagged/cadence-workflow) · [GitHub Issues](https://github.com/cadence-workflow/cadence/issues/new/choose)
