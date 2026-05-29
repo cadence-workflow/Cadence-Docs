@@ -4,11 +4,11 @@ description: "Cadence writes every workflow input, activity parameter, signal, a
 keywords:
   - cadence data converter
   - workflow history payload
-  - cadence payload compression
-  - cadence payload encryption
-  - cadence claim check pattern
-  - cadence workflow history size
-  - cadence PII history
+  - payload compression
+  - payload encryption
+  - claim check pattern
+  - workflow history size
+  - PII history
 date: 2026-06-03T09:00
 authors: kevinb
 tags:
