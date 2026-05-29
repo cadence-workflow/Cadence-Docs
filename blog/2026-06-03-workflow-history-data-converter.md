@@ -22,13 +22,13 @@ This is not a bug. It is how Cadence works by design, and it is the right defaul
 
 <!-- truncate -->
 
-## Does this apply to you?
+## Are your workflows affected?
 
-| If you are seeing this... | The pattern to look at |
+| Symptom | Pattern |
 |---------------------------|------------------------|
-| Payloads rejected at the ~2 MB limit with no useful error message | **Claim-check** |
-| PII, PHI, credentials, or internal data visible in workflow history or the Cadence UI | **Encryption** |
-| Storage or bandwidth costs climbing as workflows handle large, repetitive JSON | **Compression** |
+| Payloads rejected at the ~2 MB limit with no useful error message | [**Claim-check**](/docs/concepts/data-converter#claim-check) |
+| PII, PHI, credentials, or internal data visible in workflow history or the Cadence UI | [**Encryption**](/docs/concepts/data-converter#encryption) |
+| Storage or bandwidth costs climbing as workflows handle large, repetitive JSON | [**Compression**](/docs/concepts/data-converter#compression) |
 
 If none of those rows match your situation, the default JSON converter is probably fine.
 
