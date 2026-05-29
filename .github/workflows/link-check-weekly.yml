@@ -1,0 +1,76 @@
+# Weekly site-wide link check.
+#
+# Builds the Docusaurus site and runs lychee against the rendered HTML
+# under build/docs, build/community, and build/faq (blog and changelog
+# are intentionally excluded). On failure, opens or updates a single
+# rolling GitHub issue labeled "link-rot" so findings are tracked over
+# time without spamming new issues each week.
+name: Link check (weekly)
+
+on:
+  schedule:
+    - cron: '0 12 * * 1'   # Mondays 12:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  lychee:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Use Node.js lts/jod (v22)
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/jod
+          cache: 'npm'
+
+      - name: Install and build
+        run: |
+          npm ci
+          npm run build
+
+      - name: Restore lychee cache
+        uses: actions/cache@v4
+        with:
+          path: .lycheecache
+          key: lychee-weekly-${{ github.run_id }}
+          restore-keys: lychee-weekly-
+
+      - name: Run lychee on built docs, community, and faq
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --config lychee.toml
+            --base ./build
+            './build/docs/**/*.html'
+            './build/community/**/*.html'
+            './build/faq/**/*.html'
+          # Do not fail the job so the next step can open/update the
+          # tracking issue with the report.
+          fail: false
+          output: ./lychee-report.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create or update tracking issue
+        # lychee-action@v2 exposes exit_code as a STEP OUTPUT, not an env var.
+        # Using env.lychee_exit_code here would always be empty, and
+        # '' != '0' evaluates to true in GitHub Actions expressions, so the
+        # issue would be created on every run.
+        if: steps.lychee.outputs.exit_code != '0'
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: 'Link check report'
+          content-filepath: ./lychee-report.md
+          labels: |
+            link-rot
+            automated

@@ -1,0 +1,60 @@
+# Pull-request link check.
+#
+# Scope: external HTTP(S) links in markdown files changed by the PR.
+# Internal/relative links are validated by Docusaurus during build.yml
+# (onBrokenLinks: 'throw', onBrokenMarkdownLinks: 'throw'); re-checking
+# them here would be redundant and prone to false positives because
+# lychee cannot replay Docusaurus's slug routing.
+name: Link check (PR)
+
+on:
+  pull_request:
+    paths:
+      - '**/*.md'
+      - '**/*.mdx'
+      - 'lychee.toml'
+      - '.github/workflows/link-check-pr.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  lychee:
+    runs-on: ubuntu-latest
+    # Non-blocking on day one. Once the check is stable for a couple of
+    # weeks, remove this line and mark "Link check (PR) / lychee" as a
+    # required status check in branch protection.
+    continue-on-error: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Detect changed markdown files
+        id: changed
+        uses: tj-actions/changed-files@v45
+        with:
+          files: |
+            **/*.md
+            **/*.mdx
+
+      - name: Restore lychee cache
+        if: steps.changed.outputs.any_changed == 'true'
+        uses: actions/cache@v4
+        with:
+          path: .lycheecache
+          key: lychee-pr-${{ github.run_id }}
+          restore-keys: lychee-pr-
+
+      - name: Run lychee on changed files
+        if: steps.changed.outputs.any_changed == 'true'
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # --scheme http --scheme https restricts lychee to absolute
+          # HTTP(S) URLs only (i.e., external links). See header comment.
+          args: --no-progress --scheme http --scheme https --config lychee.toml ${{ steps.changed.outputs.all_changed_files }}
+          fail: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
