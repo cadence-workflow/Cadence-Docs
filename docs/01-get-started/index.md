@@ -59,4 +59,4 @@ The backend is stateless and stores workflow history in Cassandra, MySQL, or Pos
 | Deploy Cadence in production | [Open Source Workflow Engine](/docs/concepts/open-source-workflow-engine) |
 | Learn core concepts | [Workflows](/docs/concepts/workflows) · [Activities](/docs/concepts/activities) · [Task Lists](/docs/concepts/task-lists) |
 | Watch video tutorials | [Video Tutorials](/docs/get-started/video-tutorials) |
-| Get help | [Slack](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ) · [Stack Overflow](https://stackoverflow.com/questions/tagged/cadence-workflow) · [GitHub Issues](https://github.com/cadence-workflow/cadence/issues/new/choose)
+| Get help | [Slack](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ) · [Stack Overflow](https://stackoverflow.com/questions/tagged/cadence-workflow) · [GitHub Issues](https://github.com/cadence-workflow/cadence/issues/new/choose) |
