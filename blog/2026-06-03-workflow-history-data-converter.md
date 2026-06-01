@@ -32,7 +32,7 @@ This is not a bug. It is how Cadence works by design, and it is the right defaul
 
 If none of those rows match, the default JSON converter is probably fine.
 
-All three work the same way: swap the `DataConverter` on both the `WorkflowClient` and every `Worker`, with no changes to workflow or activity code. The [concept doc](/docs/concepts/data-converter) covers wiring, interface signatures, and production considerations.
+Ready to implement? The [DataConverter Guide](/docs/concepts/data-converter) has wiring examples, interface signatures, and production considerations for all three patterns.
 
 ## What DataConverter does not see
 
