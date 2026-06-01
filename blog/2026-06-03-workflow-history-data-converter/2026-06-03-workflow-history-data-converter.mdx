@@ -16,21 +16,28 @@ tags:
   - deep-dive
 ---
 
-That customer order you passed into your fulfillment activity (the one with the email address, the shipping details, and the internal pricing fields) is sitting in your workflow history as plaintext JSON right now. Anyone with read access to Cadence history can see it. So can anyone with access to your history storage backend.
+import PatternCards from './PatternCards';
+import PayloadFlow from './PayloadFlow';
 
+
+
+That customer order you passed into your fulfillment activity (the one with the email address, the shipping details, and the internal pricing fields) is sitting in your workflow history as plaintext JSON right now. Anyone with read access to Cadence history can see it. So can anyone with access to your history storage backend.
+![Data pipeline: workflow history exposed vs. protected with DataConverter](./data-pipeline-exposed-vs-protected.png)
 This is not a bug. It is how Cadence works by design, and it is the right default for most workloads. But three problems follow from it in production, and most teams hit at least one of them before they know the solution exists.
 
 <!-- truncate -->
 
 ## Are your workflows affected?
 
-| Symptom | Pattern | What it does |
-|---------|---------|--------------|
-| Storage or bandwidth costs climbing on repetitive JSON | [**Compression**](/docs/concepts/data-converter#compression) | gzip after JSON encode, 60–80% reduction, no workflow code changes |
-| Payloads rejected at the ~2 MB limit with no useful error | [**Claim-check**](/docs/concepts/data-converter#claim-check) | Offloads payloads to external storage, keeps only a reference in history (full walkthrough in week 2) |
-| PII, PHI, or credentials visible in workflow history or the Cadence UI | [**Encryption**](/docs/concepts/data-converter#encryption) | AES-256-GCM makes history payloads opaque without your key (threat model in week 3) |
+<PatternCards />
 
-If none of those rows match, the default JSON converter is probably fine.
+If none of those apply, the default JSON converter is probably fine.
+
+## See it in action
+
+Select a pattern and send a payload through to see what lands in history.
+
+<PayloadFlow />
 
 Ready to implement? The **[DataConverter Guide](/docs/concepts/data-converter)** has wiring examples, interface signatures, and production considerations for all three patterns.
 
