@@ -1,0 +1,62 @@
+---
+title: "Your Workflow History Is Storing More Than You Think"
+description: "Cadence writes every workflow input, activity parameter, signal, and query response into history as JSON. Learn how a custom DataConverter adds compression, encryption, or claim-check offload without changing your workflow code."
+keywords:
+  - cadence data converter
+  - workflow history payload
+  - payload compression
+  - payload encryption
+  - claim check pattern
+  - workflow history size
+  - PII history
+date: 2026-06-03T09:00
+authors: kevinb
+tags:
+  - announcement
+  - deep-dive
+---
+
+That customer order you passed into your fulfillment activity (the one with the email address, the shipping details, and the internal pricing fields) is sitting in your workflow history as plaintext JSON right now. Anyone with read access to Cadence history can see it. So can anyone with access to your history storage backend.
+
+This is not a bug. It is how Cadence works by design, and it is the right default for most workloads. But three problems follow from it in production, and most teams hit at least one of them before they know the solution exists.
+
+<!-- truncate -->
+
+## Are your workflows affected?
+
+| Symptom | Pattern | What it does |
+|---------|---------|--------------|
+| Storage or bandwidth costs climbing on repetitive JSON | [**Compression**](/docs/concepts/data-converter#compression) | gzip after JSON encode, 60–80% reduction, no workflow code changes |
+| Payloads rejected at the ~2 MB limit with no useful error | [**Claim-check**](/docs/concepts/data-converter#claim-check) | Offloads payloads to external storage, keeps only a reference in history (full walkthrough in week 2) |
+| PII, PHI, or credentials visible in workflow history or the Cadence UI | [**Encryption**](/docs/concepts/data-converter#encryption) | AES-256-GCM makes history payloads opaque without your key (threat model in week 3) |
+
+If none of those rows match, the default JSON converter is probably fine.
+
+Ready to implement? The **[DataConverter Guide](/docs/concepts/data-converter)** has wiring examples, interface signatures, and production considerations for all three patterns.
+
+## What DataConverter does not see
+
+The converter intercepts payloads crossing the history boundary. It does not touch:
+
+- **Search attributes:** indexed and queryable, but outside the converter path
+- **Memo:** uses the default JSON converter unless you wrap that path separately
+- **Application logs and metrics:** separate disclosure surfaces entirely
+
+Encrypting your payloads does not encrypt these. If any of them carry sensitive data, that is a separate data-governance problem. Week 3 of this series maps out the full picture.
+
+## What's next in this series
+
+**Week 2: Bypass the 2 MB Limit Without Shrinking Your Workflow**
+
+A deep dive into the claim-check pattern: how to keep only a reference in history, why blob keys must be deterministic (SHA-256, not UUID), and how to run the Go and Java samples against a live cluster with local-FS, S3, GCS, or MinIO as the backing store.
+
+**Week 3: Encrypt Cadence History Payloads (And Know What You Didn't Encrypt)**
+
+Key management, the `CADENCE_ENCRYPTION_KEY` environment variable, and a practical map of what AES-256-GCM encryption protects in Cadence versus what it leaves exposed. If you handle regulated data, this is the post to bookmark.
+
+## Get started
+
+- [DataConverter Guide](/docs/concepts/data-converter)
+- [Go samples](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/data)
+- [Java samples](https://github.com/cadence-workflow/cadence-java-samples)
+- [Community and support](/community/contact-us)
