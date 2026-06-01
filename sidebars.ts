@@ -64,8 +64,6 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'concepts/http-api' },
         { type: 'doc', id: 'concepts/data-converter' },
         { type: 'doc', id: 'concepts/workflow-queries-formatted-data' },
-        { type: 'doc', id: 'concepts/workflow-engine' },
-        { type: 'doc', id: 'concepts/open-source-workflow-engine' },
       ],
     },
     {
