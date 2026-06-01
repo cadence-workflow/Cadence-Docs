@@ -92,7 +92,7 @@ The server image `ubercadence/server` is updated with every release. See [Docker
 |---|---|---|
 | Go | Official | [cadence-workflow/cadence-go-client](https://github.com/cadence-workflow/cadence-go-client) |
 | Java | Official | [cadence-workflow/cadence-java-client](https://github.com/cadence-workflow/cadence-java-client) |
-| Python | Community | [cadence-workflow/cadence-python](https://github.com/cadence-workflow/cadence-python) |
+| Python | Community | — |
 | Ruby | Community | [coinbase/cadence-ruby](https://github.com/coinbase/cadence-ruby) |
 | .NET | In development | — |
 
