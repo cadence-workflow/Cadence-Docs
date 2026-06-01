@@ -32,7 +32,7 @@ This is not a bug. It is how Cadence works by design, and it is the right defaul
 
 If none of those rows match, the default JSON converter is probably fine.
 
-Ready to implement? The [DataConverter Guide](/docs/concepts/data-converter) has wiring examples, interface signatures, and production considerations for all three patterns.
+Ready to implement? The **[DataConverter Guide](/docs/concepts/data-converter)** has wiring examples, interface signatures, and production considerations for all three patterns.
 
 ## What DataConverter does not see
 
@@ -56,6 +56,7 @@ Key management, the `CADENCE_ENCRYPTION_KEY` environment variable, and a practic
 
 ## Get started
 
-- **Read:** [Data Converters, Encryption, Compression, and Claim-Check](/docs/concepts/data-converter) (interface signatures, wiring examples, and production footguns for all three patterns)
-- **Go samples:** [cadence-samples / new_samples / data](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/data)
-- **Java samples:** [cadence-java-samples](https://github.com/cadence-workflow/cadence-java-samples) (compression, encryption, and claim-check packages)
+- [DataConverter Guide](/docs/concepts/data-converter)
+- [Go samples](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/data)
+- [Java samples](https://github.com/cadence-workflow/cadence-java-samples)
+- [Community and support](/community/contact-us)
