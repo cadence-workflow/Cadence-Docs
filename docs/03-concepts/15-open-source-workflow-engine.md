@@ -94,7 +94,7 @@ The server image `ubercadence/server` is updated with every release. See [Docker
 | Java | Official | [cadence-workflow/cadence-java-client](https://github.com/cadence-workflow/cadence-java-client) |
 | Python | Community | [cadence-workflow/cadence-python](https://github.com/cadence-workflow/cadence-python) |
 | Ruby | Community | [coinbase/cadence-ruby](https://github.com/coinbase/cadence-ruby) |
-| .NET | In development | [cadence-workflow/cadence-dotnet-client](https://github.com/cadence-workflow/cadence-dotnet-client) |
+| .NET | In development | — |
 
 You can also use [iWF](https://github.com/indeedeng/iwf) as a DSL framework that runs on top of Cadence if you prefer a state-machine abstraction over raw workflow code.
 
