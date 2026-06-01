@@ -24,27 +24,15 @@ This is not a bug. It is how Cadence works by design, and it is the right defaul
 
 ## Are your workflows affected?
 
-| Symptom | Pattern |
-|---------------------------|------------------------|
-| Payloads rejected at the ~2 MB limit with no useful error message | [**Claim-check**](/docs/concepts/data-converter#claim-check) |
-| PII, PHI, credentials, or internal data visible in workflow history or the Cadence UI | [**Encryption**](/docs/concepts/data-converter#encryption) |
-| Storage or bandwidth costs climbing as workflows handle large, repetitive JSON | [**Compression**](/docs/concepts/data-converter#compression) |
+| Symptom | Pattern | What it does |
+|---------|---------|--------------|
+| Storage or bandwidth costs climbing on repetitive JSON | [**Compression**](/docs/concepts/data-converter#compression) | gzip after JSON encode, 60–80% reduction, no workflow code changes |
+| Payloads rejected at the ~2 MB limit with no useful error | [**Claim-check**](/docs/concepts/data-converter#claim-check) | Offloads payloads to external storage, keeps only a reference in history (full walkthrough in week 2) |
+| PII, PHI, or credentials visible in workflow history or the Cadence UI | [**Encryption**](/docs/concepts/data-converter#encryption) | AES-256-GCM makes history payloads opaque without your key (threat model in week 3) |
 
-If none of those rows match your situation, the default JSON converter is probably fine.
+If none of those rows match, the default JSON converter is probably fine.
 
-## How the fix works
-
-Cadence serializes every workflow input, activity parameter, signal payload, and query response through a `DataConverter` before writing it to history. The default implementation is a plain JSON converter. Swapping it for a custom one lets you intercept every payload in both directions, with no changes to workflow or activity code required.
-
-Three patterns cover the three problems above.
-
-**Compression** runs gzip on the JSON output before it reaches history. For repetitive JSON payloads, the typical reduction is 60–80%. This lowers storage cost and bandwidth, and it buys headroom before you hit the size cap. It does not remove the cap entirely.
-
-**Encryption** wraps the JSON payload with AES-256-GCM before it is written to history. Without your key, every payload stored by the Cadence server is opaque bytes. Operators browsing workflow history see nothing readable. This covers workflow and activity data, but it does not cover everything (more on that in week 3 of this series).
-
-**Claim-check** offloads payloads above a configurable threshold to an external blob store. Only a small reference travels through Cadence history. This is the only pattern that fully removes the per-payload size constraint rather than just reducing or delaying it.
-
-All three patterns are wired in the same way: set the same converter on both the `WorkflowClient` and every `Worker` polling the same task list. The [concept doc](/docs/concepts/data-converter) covers the interface, the wiring, and the production considerations for each pattern.
+All three work the same way: swap the `DataConverter` on both the `WorkflowClient` and every `Worker`, with no changes to workflow or activity code. The [concept doc](/docs/concepts/data-converter) covers wiring, interface signatures, and production considerations.
 
 ## What DataConverter does not see
 
@@ -68,7 +56,6 @@ Key management, the `CADENCE_ENCRYPTION_KEY` environment variable, and a practic
 
 ## Get started
 
-- **Read the concept doc:** [Data Converters, Encryption, Compression, and Claim-Check](/docs/concepts/data-converter) (interface signatures, wiring examples, and production footguns for all three patterns)
+- **Read:** [Data Converters, Encryption, Compression, and Claim-Check](/docs/concepts/data-converter) (interface signatures, wiring examples, and production footguns for all three patterns)
 - **Go samples:** [cadence-samples / new_samples / data](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/data)
 - **Java samples:** [cadence-java-samples](https://github.com/cadence-workflow/cadence-java-samples) (compression, encryption, and claim-check packages)
-- **Community:** [#cadence](https://slack.cncf.io/) on CNCF Slack or [GitHub Discussions](https://github.com/cadence-workflow/cadence/discussions)
