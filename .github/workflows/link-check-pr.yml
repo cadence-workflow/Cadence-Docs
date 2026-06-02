@@ -55,14 +55,20 @@ jobs:
           # --scheme http --scheme https restricts lychee to absolute
           # HTTP(S) URLs only (i.e., external links). See header comment.
           #
-          # --base . is required so lychee can construct file:// URIs for
-          # root-relative paths like /docs/... or /img/... that are common
-          # in MDX (href="/docs/foo", src="/img/bar.svg"). Without --base,
-          # lychee errors at URI construction *before* the --scheme filter
-          # runs, causing false-positive failures on internal links. With
-          # --base set, those links become file:// URIs and are then
+          # --root-dir is required so lychee can resolve root-relative
+          # paths like /docs/... or /img/... that are common in MDX
+          # (href="/docs/foo", src="/img/bar.svg"). Without it, lychee
+          # errors at URI construction *before* the --scheme filter runs,
+          # causing false-positive failures on internal links. With
+          # --root-dir set, those links become file:// URIs and are then
           # correctly filtered out by --scheme http --scheme https.
-          args: --no-progress --scheme http --scheme https --base . --config lychee.toml ${{ steps.changed.outputs.all_changed_files }}
+          #
+          # Must be an absolute path; github.workspace resolves to the
+          # runner's absolute checkout dir (e.g. /home/runner/work/...).
+          # Do NOT swap in --base-url here — that would rewrite root-
+          # relative paths into http(s):// URIs and lychee would actually
+          # hit them over the network against the canonical site.
+          args: --no-progress --scheme http --scheme https --root-dir ${{ github.workspace }} --config lychee.toml ${{ steps.changed.outputs.all_changed_files }}
           fail: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
