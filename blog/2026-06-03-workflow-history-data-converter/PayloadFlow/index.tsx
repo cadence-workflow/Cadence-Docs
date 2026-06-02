@@ -40,6 +40,7 @@ export default function PayloadFlow() {
   const [phase, setPhase] = useState<AnimPhase>("idle");
   const [particleX, setParticleX] = useState(0);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const mountedRef = useRef(true);
 
   const pattern = PATTERNS[activeIdx];
 
@@ -51,9 +52,11 @@ export default function PayloadFlow() {
     clearTimer();
     setPhase("encoding");
     timerRef.current = setTimeout(() => {
+      if (!mountedRef.current) return;
       setPhase("traveling");
       let x = 0;
       const tick = () => {
+        if (!mountedRef.current) return;
         x += 2.5;
         setParticleX(x);
         if (x < 100) {
@@ -72,7 +75,12 @@ export default function PayloadFlow() {
     clearTimer();
   }, [activeIdx]);
 
-  useEffect(() => () => clearTimer(), []);
+  useEffect(() => {
+    return () => {
+      mountedRef.current = false;
+      clearTimer();
+    };
+  }, []);
 
   const isDone = phase === "done";
   const isEncoding = phase === "encoding";

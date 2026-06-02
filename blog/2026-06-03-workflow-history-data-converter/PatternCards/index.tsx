@@ -46,7 +46,16 @@ export default function PatternCards() {
         return (
           <div
             key={p.id}
+            role="button"
+            tabIndex={0}
             onClick={() => setOpenId(isOpen ? null : p.id)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setOpenId(isOpen ? null : p.id);
+              }
+            }}
+            aria-expanded={isOpen}
             style={{
               border: `2px solid ${isOpen ? p.color : "var(--ifm-color-emphasis-300)"}`,
               borderRadius: 10,
