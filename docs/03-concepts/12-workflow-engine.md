@@ -51,7 +51,7 @@ The subscription management example below illustrates the difference. The full b
 ```go
 func SubscriptionWorkflow(ctx workflow.Context, customerID string) error {
     ao := workflow.ActivityOptions{
-        ScheduleToCloseTimeout: time.Minute,
+        ScheduleToCloseTimeout: 3 * 24 * time.Hour,
         RetryPolicy: &cadence.RetryPolicy{
             InitialInterval:    time.Second,
             BackoffCoefficient: 2,
@@ -97,7 +97,7 @@ public class SubscriptionWorkflowImpl implements SubscriptionWorkflow {
     private final SubscriptionActivities activities =
         Workflow.newActivityStub(SubscriptionActivities.class,
             new ActivityOptions.Builder()
-                .setScheduleToCloseTimeout(Duration.ofMinutes(1))
+                .setScheduleToCloseTimeout(Duration.ofDays(3))
                 .setRetryOptions(new RetryOptions.Builder()
                     .setInitialInterval(Duration.ofSeconds(1))
                     .setBackoffCoefficient(2)
