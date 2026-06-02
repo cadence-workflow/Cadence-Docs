@@ -4,10 +4,54 @@
         <title>Cadence Blog</title>
         <link>https://cadenceworkflow.io/blog</link>
         <description>Cadence Blog</description>
-        <lastBuildDate>Tue, 28 Apr 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 03 Jun 2026 09:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Your Workflow History Is Storing More Than You Think]]></title>
+            <link>https://cadenceworkflow.io/blog/2026/06/03/2026-06-03-workflow-history-data-converter/workflow-history-data-converter</link>
+            <guid>https://cadenceworkflow.io/blog/2026/06/03/2026-06-03-workflow-history-data-converter/workflow-history-data-converter</guid>
+            <pubDate>Wed, 03 Jun 2026 09:00:00 GMT</pubDate>
+            <description><![CDATA[Cadence writes every workflow input, activity parameter, signal, and query response into history as JSON. Learn how a custom DataConverter adds compression, encryption, or claim-check offload without changing your workflow code.]]></description>
+            <content:encoded><![CDATA[<p>That customer order you passed into your fulfillment activity (the one with the email address, the shipping details, and the internal pricing fields) is sitting in your workflow history as plaintext JSON right now. Anyone with read access to Cadence history can see it. So can anyone with access to your history storage backend.
+<img decoding="async" loading="lazy" alt="Data pipeline: workflow history exposed vs. protected with DataConverter" src="https://cadenceworkflow.io/assets/images/data-pipeline-exposed-vs-protected-1ce18a0f3c288c845930d92d02f79e18.png" width="1536" height="1024" class="img_ev3q">
+This is not a bug. It is how Cadence works by design, and it is the right default for most workloads. But three problems follow from it in production, and most teams hit at least one of them before they know the solution exists.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="are-your-workflows-affected">Are your workflows affected?<a href="https://cadenceworkflow.io/blog/2026/06/03/2026-06-03-workflow-history-data-converter/workflow-history-data-converter#are-your-workflows-affected" class="hash-link" aria-label="Direct link to Are your workflows affected?" title="Direct link to Are your workflows affected?" translate="no">​</a></h2>
+<div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px"><div role="button" tabindex="0" aria-expanded="false" style="border:2px solid var(--ifm-color-emphasis-300);border-radius:10px;padding:14px 18px;cursor:pointer;background:var(--ifm-card-background-color, var(--ifm-background-surface-color));transition:all 0.2s;user-select:none"><div style="display:flex;align-items:center;gap:10px"><span style="font-size:22px">🗜️</span><a href="https://cadenceworkflow.io/docs/concepts/data-converter#compression" style="font-weight:700;font-size:15px;color:var(--ifm-color-content);transition:color 0.2s;text-decoration:none">Compression</a><span style="margin-left:auto;font-size:13px;color:var(--ifm-color-content);flex:1;text-align:right;padding-left:12px">Storage or bandwidth costs climbing on repetitive JSON</span><span style="margin-left:10px;color:var(--ifm-color-content-secondary);font-size:14px">▼</span></div></div><div role="button" tabindex="0" aria-expanded="false" style="border:2px solid var(--ifm-color-emphasis-300);border-radius:10px;padding:14px 18px;cursor:pointer;background:var(--ifm-card-background-color, var(--ifm-background-surface-color));transition:all 0.2s;user-select:none"><div style="display:flex;align-items:center;gap:10px"><span style="font-size:22px">🔗</span><a href="https://cadenceworkflow.io/docs/concepts/data-converter#claim-check" style="font-weight:700;font-size:15px;color:var(--ifm-color-content);transition:color 0.2s;text-decoration:none">Claim-check</a><span style="margin-left:auto;font-size:13px;color:var(--ifm-color-content);flex:1;text-align:right;padding-left:12px">Payloads rejected at the ~2 MB limit with no useful error</span><span style="margin-left:10px;color:var(--ifm-color-content-secondary);font-size:14px">▼</span></div></div><div role="button" tabindex="0" aria-expanded="false" style="border:2px solid var(--ifm-color-emphasis-300);border-radius:10px;padding:14px 18px;cursor:pointer;background:var(--ifm-card-background-color, var(--ifm-background-surface-color));transition:all 0.2s;user-select:none"><div style="display:flex;align-items:center;gap:10px"><span style="font-size:22px">🔐</span><a href="https://cadenceworkflow.io/docs/concepts/data-converter#encryption" style="font-weight:700;font-size:15px;color:var(--ifm-color-content);transition:color 0.2s;text-decoration:none">Encryption</a><span style="margin-left:auto;font-size:13px;color:var(--ifm-color-content);flex:1;text-align:right;padding-left:12px">PII, PHI, or credentials visible in workflow history or the Cadence UI</span><span style="margin-left:10px;color:var(--ifm-color-content-secondary);font-size:14px">▼</span></div></div></div>
+<p>If none of those apply, the default JSON converter is probably fine.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="see-it-in-action">See it in action<a href="https://cadenceworkflow.io/blog/2026/06/03/2026-06-03-workflow-history-data-converter/workflow-history-data-converter#see-it-in-action" class="hash-link" aria-label="Direct link to See it in action" title="Direct link to See it in action" translate="no">​</a></h2>
+<p>Select a pattern and send a payload through to see what lands in history.</p>
+<div style="border:1px solid var(--ifm-color-emphasis-300);border-radius:12px;padding:24px;margin-bottom:24px;background:var(--ifm-background-surface-color)"><div style="display:flex;gap:8px;margin-bottom:20px"><button style="padding:6px 14px;border-radius:6px;border:2px solid;border-color:#2563eb;background:#2563eb;color:white;font-weight:600;font-size:13px;cursor:pointer;transition:all 0.15s">Compression</button><button style="padding:6px 14px;border-radius:6px;border:2px solid;border-color:var(--ifm-color-emphasis-300);background:var(--ifm-background-color);color:var(--ifm-color-content);font-weight:600;font-size:13px;cursor:pointer;transition:all 0.15s">Claim-check</button><button style="padding:6px 14px;border-radius:6px;border:2px solid;border-color:var(--ifm-color-emphasis-300);background:var(--ifm-background-color);color:var(--ifm-color-content);font-weight:600;font-size:13px;cursor:pointer;transition:all 0.15s">Encryption</button></div><div style="display:flex;align-items:stretch;gap:0"><div style="flex:1;min-width:0"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;color:var(--ifm-color-content-secondary)">Your workflow code</div><div style="border-radius:8px;padding:12px 16px;font-family:monospace;font-size:13px;line-height:1.5;white-space:pre;background:var(--ifm-code-background);color:var(--ifm-color-content-secondary);border:1px solid var(--ifm-color-emphasis-200)"><span style="opacity:0.6">// <!-- -->JSON payload<!-- -->
+</span><span style="color:#2563eb">{
+  "email": "alice@example.com",
+  "order": 149.99
+}</span></div></div><div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 8px;gap:4px;flex-shrink:0"><div style="font-size:10px;font-weight:700;color:var(--ifm-color-content-secondary);text-align:center;transition:color 0.3s;max-width:72px">DataConverter</div><div style="position:relative;width:72px;height:20px"><div style="position:absolute;top:50%;left:0;right:0;height:4px;background:var(--ifm-color-emphasis-300);transform:translateY(-50%)"></div><div style="position:absolute;right:0;top:50%;transform:translateY(-50%);border-left:12px solid var(--ifm-color-emphasis-400);border-top:8px solid transparent;border-bottom:8px solid transparent;transition:border-color 0.3s"></div></div><div style="font-size:10px;color:var(--ifm-color-content-secondary);text-align:center;max-width:72px">encode</div></div><div style="flex:1;min-width:0"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;color:var(--ifm-color-content-secondary)">Cadence history</div><div style="border-radius:8px;padding:12px 16px;font-family:monospace;font-size:13px;line-height:1.5;white-space:pre;background:var(--ifm-color-emphasis-100);color:var(--ifm-color-emphasis-400);border:1px solid var(--ifm-color-emphasis-200);transition:all 0.3s"><span style="opacity:0.6">// <!-- -->waiting...<!-- -->
+</span>···</div></div></div><div style="margin-top:16px;display:flex;justify-content:center"><button style="padding:8px 20px;border-radius:6px;border:none;background:#2563eb;color:white;font-weight:600;font-size:13px;cursor:pointer;opacity:1;transition:opacity 0.2s">▶ Send payload</button></div></div>
+<p>Ready to implement? The <strong><a class="" href="https://cadenceworkflow.io/docs/concepts/data-converter">DataConverter Guide</a></strong> has wiring examples, interface signatures, and production considerations for all three patterns.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-dataconverter-does-not-see">What DataConverter does not see<a href="https://cadenceworkflow.io/blog/2026/06/03/2026-06-03-workflow-history-data-converter/workflow-history-data-converter#what-dataconverter-does-not-see" class="hash-link" aria-label="Direct link to What DataConverter does not see" title="Direct link to What DataConverter does not see" translate="no">​</a></h2>
+<p>The converter intercepts payloads crossing the history boundary. It does not touch:</p>
+<ul>
+<li class=""><strong>Search attributes:</strong> indexed and queryable, but outside the converter path</li>
+<li class=""><strong>Memo:</strong> uses the default JSON converter unless you wrap that path separately</li>
+<li class=""><strong>Application logs and metrics:</strong> separate disclosure surfaces entirely</li>
+</ul>
+<p>Encrypting your payloads does not encrypt these. If any of them carry sensitive data, that is a separate data-governance problem. Week 3 of this series maps out the full picture.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="whats-next-in-this-series">What's next in this series<a href="https://cadenceworkflow.io/blog/2026/06/03/2026-06-03-workflow-history-data-converter/workflow-history-data-converter#whats-next-in-this-series" class="hash-link" aria-label="Direct link to What's next in this series" title="Direct link to What's next in this series" translate="no">​</a></h2>
+<p><strong>Week 2: Bypass the 2 MB Limit Without Shrinking Your Workflow</strong></p>
+<p>A deep dive into the claim-check pattern: how to keep only a reference in history, why blob keys must be deterministic (SHA-256, not UUID), and how to run the Go and Java samples against a live cluster with local-FS, S3, GCS, or MinIO as the backing store.</p>
+<p><strong>Week 3: Encrypt Cadence History Payloads (And Know What You Didn't Encrypt)</strong></p>
+<p>Key management, the <code>CADENCE_ENCRYPTION_KEY</code> environment variable, and a practical map of what AES-256-GCM encryption protects in Cadence versus what it leaves exposed. If you handle regulated data, this is the post to bookmark.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="get-started">Get started<a href="https://cadenceworkflow.io/blog/2026/06/03/2026-06-03-workflow-history-data-converter/workflow-history-data-converter#get-started" class="hash-link" aria-label="Direct link to Get started" title="Direct link to Get started" translate="no">​</a></h2>
+<ul>
+<li class=""><a class="" href="https://cadenceworkflow.io/docs/concepts/data-converter">DataConverter Guide</a></li>
+<li class=""><a href="https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/data" target="_blank" rel="noopener noreferrer" class="">Go samples</a></li>
+<li class=""><a href="https://github.com/cadence-workflow/cadence-java-samples" target="_blank" rel="noopener noreferrer" class="">Java samples</a></li>
+<li class=""><a class="" href="https://cadenceworkflow.io/community/contact-us">Community and support</a></li>
+</ul>]]></content:encoded>
+            <category>Announcement</category>
+            <category>Deep Dives</category>
+        </item>
         <item>
             <title><![CDATA[Signal Handling in the Cadence Python Client]]></title>
             <link>https://cadenceworkflow.io/blog/2026/04/28/2026-04-28-python-client-signal/python-client-signal</link>
@@ -261,8 +305,8 @@ investigated. When new healthy instances appeared it immediately rebalanced
 the load across them.</p>
 <p>Found in a day, by two engineers, thanks to the
 observability the Shard Manager provides.</p>]]></content:encoded>
-            <category>shard-manager</category>
-            <category>matching</category>
+            <category>Shard Manager</category>
+            <category>Cadence Matching</category>
         </item>
         <item>
             <title><![CDATA[Custom Workflow Controls: Turn Queries Into Dashboards]]></title>
@@ -1341,78 +1385,6 @@ trigger non-deterministic errors.</p>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="does-changes-to-local-activities-definition-trigger-non-deterministic-errors">Does changes to local activities' definition trigger non-deterministic errors?<a href="https://cadenceworkflow.io/blog/2024/02/15/cadence-non-deterministic-common-qa#does-changes-to-local-activities-definition-trigger-non-deterministic-errors" class="hash-link" aria-label="Direct link to Does changes to local activities' definition trigger non-deterministic errors?" title="Direct link to Does changes to local activities' definition trigger non-deterministic errors?" translate="no">​</a></h3>
 <p>Yes. Local activities are recorded and therefore replayed by Cadence. Incompatible changes on local activity definitions will yield non-deterministic errors.</p>]]></content:encoded>
             <category>Deep Dives</category>
-        </item>
-        <item>
-            <title><![CDATA[Cadence Community Spotlight Update - November 2023]]></title>
-            <link>https://cadenceworkflow.io/blog/2023/11/30/community-spotlight-update-november-2023</link>
-            <guid>https://cadenceworkflow.io/blog/2023/11/30/community-spotlight-update-november-2023</guid>
-            <pubDate>Thu, 30 Nov 2023 00:00:00 GMT</pubDate>
-            <description><![CDATA[The November 2023 Cadence community spotlight covering native authentication proposals, iWF updates, new Go v2 samples, and a year-end retrospective on the project.]]></description>
-            <content:encoded><![CDATA[<p>Welcome to the latest of our regular monthly Community Spotlight updates that gives you news from in and around the Cadence community!</p>
-<p>It's been a couple of months since our last update so we have a lot of updates to share with you.</p>
-<p>Please see below for a roundup of the highlights:</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="proposal-for-cadence-native-authentication">Proposal for Cadence Native Authentication<a href="https://cadenceworkflow.io/blog/2023/11/30/community-spotlight-update-november-2023#proposal-for-cadence-native-authentication" class="hash-link" aria-label="Direct link to Proposal for Cadence Native Authentication" title="Direct link to Proposal for Cadence Native Authentication" translate="no">​</a></h2>
-<p>Community member <a href="https://lt.linkedin.com/in/mantassidlauskas" target="_blank" rel="noopener noreferrer" class="">Mantas Sidlauskas</a> has drafted a proposal around Cadence native authentication and is asking for community feedback. If you are interested in reviewing the current proposal and providing comments or feedback then please find the proposal details at the link below:</p>
-<ul>
-<li class=""><a href="https://docs.google.com/document/d/13GxRBZfQkLyhDCrpFaZmRcw7DJJG-zdy0_mPXy3CcWw/edit#heading=h.c8u99ansg7ma" target="_blank" rel="noopener noreferrer" class="">Cadence Native Authentication Proposal</a></li>
-</ul>
-<p>This is a great example of how we can focus on collaborating together to find a collective solution. A big thank you to Mantas for initiating this work and we hope to see the results of the community input soon!</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="iwf-deep-dive-and-more">iWF Deep Dive and More!<a href="https://cadenceworkflow.io/blog/2023/11/30/community-spotlight-update-november-2023#iwf-deep-dive-and-more" class="hash-link" aria-label="Direct link to iWF Deep Dive and More!" title="Direct link to iWF Deep Dive and More!" translate="no">​</a></h2>
-<p>During the last few months community member <a href="https://www.linkedin.com/in/prclqz/" target="_blank" rel="noopener noreferrer" class="">Quanzheng Long</a> has continued to share his thoughts about <a href="https://github.com/indeedeng/iwf" target="_blank" rel="noopener noreferrer" class="">iWF</a>, a layer implemented on top of Cadence. Since our last update iWF now has a<a href="https://github.com/indeedeng/iwf-python-sdk" target="_blank" rel="noopener noreferrer" class="">Python SDK</a>. Long has been busy writing articles to share iWF tips and tricks as well as some general ideas about workflows and processes.  Links to Long's articles can be found below:</p>
-<ul>
-<li class="">
-<p><a href="https://medium.com/@qlong/iwf-deep-dive-workflowstate-durable-timer-1-0bb89e6d6fd4" target="_blank" rel="noopener noreferrer" class="">iWF Deep Dive: workflowState+Durable Timer#1</a></p>
-</li>
-<li class="">
-<p><a href="https://medium.com/@qlong/gotchas-about-signalwithstart-in-cadence-temporal-c3783fe1cc2e" target="_blank" rel="noopener noreferrer" class="">Gotchas About SignalWithStart in Cadence/Temporal</a></p>
-</li>
-<li class="">
-<p><a href="https://medium.com/@qlong/workflow-could-be-process-in-workflowascode-frameworks-63dcb632c248" target="_blank" rel="noopener noreferrer" class="">"Workflow" could be "Process" in WorkflowAsCode frameworks</a></p>
-</li>
-</ul>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="new-go-samples-for-cadence">New Go Samples for Cadence<a href="https://cadenceworkflow.io/blog/2023/11/30/community-spotlight-update-november-2023#new-go-samples-for-cadence" class="hash-link" aria-label="Direct link to New Go Samples for Cadence" title="Direct link to New Go Samples for Cadence" translate="no">​</a></h2>
-<p>The Cadence core team is deprecating the old samples for Go and replacing them with new version 2 (V2) samples. They have received a lot of feedback from the community that people are having trouble with old samples, so are in the process of publishing a completely new set of samples for Go.</p>
-<p>Here are some major changes to the new samples:</p>
-<ul>
-<li class="">Easy to use the read - the new samples will be completely based on CLIs instead of running a binary. (This is consistent with current Cadence use experience)</li>
-<li class="">Simple and transparent worker configuration - the old samples did not provide user a clear demonstration about the relationship between the worker and workflow themselves</li>
-<li class="">The new samples will help you bootstrap your Cadence workflow faster and easier.</li>
-<li class="">More vivid and self-explanatory - instead of the traditional "HelloWorld"  type of samples, we want to make it more interesting and engaging. (Each sample will try to simulate a real-life use case to make them more understandable and fun to learn!)</li>
-</ul>
-<p>We hope the community will enjoy these changes. If you have any questions or have new an idea for a new sample then please reach out to <a href="https://www.linkedin.com/in/chrisqin0610" target="_blank" rel="noopener noreferrer" class="">Chris Qin</a>.</p>
-<p>The new Go samples can be found at:</p>
-<ul>
-<li class=""><a href="https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples" target="_blank" rel="noopener noreferrer" class="">https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples</a>.</li>
-</ul>
-<p>Note that the old samples will be removed once the new samples are fully refreshed.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="cadence-retrospective">Cadence Retrospective<a href="https://cadenceworkflow.io/blog/2023/11/30/community-spotlight-update-november-2023#cadence-retrospective" class="hash-link" aria-label="Direct link to Cadence Retrospective" title="Direct link to Cadence Retrospective" translate="no">​</a></h2>
-<p>We are nearly at the end of another year and yes it has gone so fast! Over this year Cadence and the community have evolved and grown. This is a good time to reflect about all the things that have happened in the project over the year and think about a possible roadmap for the future.</p>
-<p>If you have any feedback, or comments about the project or ideas about what features you'd like to see in the roadmap then please feel free to begin a discussion in the #community <a href="https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ" target="_blank" rel="noopener noreferrer" class="">Slack</a>  channel.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="cadence-in-the-news">Cadence in the News!<a href="https://cadenceworkflow.io/blog/2023/11/30/community-spotlight-update-november-2023#cadence-in-the-news" class="hash-link" aria-label="Direct link to Cadence in the News!" title="Direct link to Cadence in the News!" translate="no">​</a></h2>
-<p>Below are a selection of Cadence related articles, blogs and whitepapers.
-Please take a look and feel free to share via your own social media channels.</p>
-<ul>
-<li class="">
-<p><a href="https://www.instaclustr.com/blog/how-to-throttle-cadence/" target="_blank" rel="noopener noreferrer" class="">How to Throttle Cadence</a></p>
-</li>
-<li class="">
-<p><a href="https://medium.com/@qlong/iwf-deep-dive-workflowstate-durable-timer-1-0bb89e6d6fd4" target="_blank" rel="noopener noreferrer" class="">iWF Deep Dive: workflowState+Durable Timer#1</a></p>
-</li>
-<li class="">
-<p><a href="https://medium.com/@qlong/gotchas-about-signalwithstart-in-cadence-temporal-c3783fe1cc2e" target="_blank" rel="noopener noreferrer" class="">Gotchas About SignalWithStart in Cadence/Temporal</a></p>
-</li>
-<li class="">
-<p><a href="https://medium.com/@qlong/workflow-could-be-process-in-workflowascode-frameworks-63dcb632c248" target="_blank" rel="noopener noreferrer" class="">"Workflow" could be "Process" in WorkflowAsCode frameworks</a></p>
-</li>
-</ul>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="upcoming-events">Upcoming Events<a href="https://cadenceworkflow.io/blog/2023/11/30/community-spotlight-update-november-2023#upcoming-events" class="hash-link" aria-label="Direct link to Upcoming Events" title="Direct link to Upcoming Events" translate="no">​</a></h2>
-<ul>
-<li class=""><a href="https://netapp.zoom.us/webinar/register/WN_jT5fxSldRhuzV0NSllBd7g#/registration" target="_blank" rel="noopener noreferrer" class="">On Demand Webinar: Building With Cadence<!-- -->:Quantifiable<!-- --> Efficiency</a></li>
-</ul>
-<p>If you have any news or topics you'd like us to include in our next update then please join our <a href="https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ" target="_blank" rel="noopener noreferrer" class="">Slack</a> #community channel.</p>
-<p>Please remember that this update is for you - so if you have any comments or feedback that could help us improve it then please share it with us in the #community <a href="https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ" target="_blank" rel="noopener noreferrer" class="">Slack</a> channel.</p>]]></content:encoded>
-            <category>Community Spotlight</category>
-            <category>Announcement</category>
         </item>
     </channel>
 </rss>
