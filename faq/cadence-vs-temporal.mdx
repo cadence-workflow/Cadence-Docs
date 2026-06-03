@@ -1,24 +1,28 @@
 ---
 layout: default
-title: Cadence vs Temporal
-description: This page explains the differences between Cadence and Temporal and helps you decide which one to use.
+title: "Cadence vs Temporal: Comparison, Alternatives & Migration Guide"
+description: Side-by-side comparison of Cadence and Temporal workflow engines — features, pricing, governance, and SDK support. Also covers alternatives to Temporal for open-source workflow orchestration.
 keywords:
   - cadence vs temporal
-  - cadence
-  - temporal
-  - comparison
-  - features
-  - differences
-  - advantages
-  - disadvantages
-  - benefits
-  - drawbacks
-  - pros and cons
-  - matrix
-  - table
-  - chart
+  - temporal vs cadence
+  - cadence workflow vs temporal
+  - uber cadence vs temporal
+  - cadence workflow alternatives
+  - alternatives to temporal
+  - temporal alternatives open source
+  - cadence vs temporal comparison
+  - workflow orchestration alternatives
+  - open source temporal alternative
+  - cadence temporal differences
+  - workflow engine comparison
 permalink: /faq/cadence-vs-temporal
 ---
+
+# Cadence vs Temporal: Comparison & Alternatives
+
+Cadence and Temporal share the same architectural roots — Temporal is a 2019 fork of the original Cadence project. Both are open-source workflow engines that solve the same core problem: running long-running, fault-tolerant distributed processes as durable code. Since the fork, the two projects have diverged to serve different priorities, and the right choice depends on your scale requirements, governance preferences, and pricing model.
+
+If you're looking for **open-source alternatives to Temporal**, Cadence is the most direct one: it predates Temporal, is CNCF-hosted under Apache 2.0, and has a larger production footprint (billions of workflows/month at Uber alone).
 
 ## Feature Comparison
 
@@ -82,6 +86,17 @@ permalink: /faq/cadence-vs-temporal
 Since the separation of Cadence and Temporal, the two projects have focused on distinct operation goals. Temporal prioritized expanding its ecosystem and broadening its user base. In contrast, Cadence focused on deep investments in reliability, scalability, and cost-efficiency to keep pace with exponential growth within massive production environments.
 
 The impact of this focus is best illustrated by the project’s evolution at Uber. At the time these projects diverged, Uber managed fewer than 100 domains; today, that figure has grown to over 4,000. Currently, a single Cadence environment can host more than 2,000 domains with total isolation, ensuring zero “noisy neighbor” issues even at this extreme scale.
+
+## Cadence as an Alternative to Temporal
+
+If you're evaluating Temporal and looking for alternatives, Cadence is the natural first comparison:
+
+- **Same programming model** — Cadence and Temporal use the same durable execution model, and Go/Java code written for one requires only minor API changes to run on the other. Migration is tractable.
+- **CNCF governance** — Cadence joined the CNCF in 2025 under the Linux Foundation. Temporal Technologies is a VC-backed company. If vendor independence matters to your evaluation, this is the most significant differentiator.
+- **Pricing** — Managed Cadence (via Instaclustr) is [approximately 78% cheaper](https://www.instaclustr.com/blog/cadence-vs-temporal-understanding-workflow-orchestration-and-temporal-cloud-pricing/) than Temporal Cloud for comparable workloads. Cadence pricing is resource-based (CPU/memory/disk); Temporal Cloud charges per state transition.
+- **Scale** — Cadence supports active-active multi-region, adaptive tasklist partitioning, and per-workflow rate limiting. Temporal's multi-region model is active-passive. At very high throughput (10,000+ workflows/sec), these differences are significant.
+
+Other open-source workflow orchestration options include [Apache Airflow](https://airflow.apache.org/) (DAG-based, strong data pipeline use case), [Prefect](https://www.prefect.io/), and [Conductor](https://conductor.netflix.com/) (Netflix, JSON-based workflow definitions). None of these share Cadence's durable-execution programming model — they are task schedulers, not workflow engines in the Cadence/Temporal sense.
 
 ## Background
 

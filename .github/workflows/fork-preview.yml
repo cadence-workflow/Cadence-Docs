@@ -1,0 +1,48 @@
+name: Fork Preview (gh-pages)
+
+# Deploys a personal GitHub Pages preview of the fork.
+# Runs on the fork only — the upstream repo uses publish-to-gh-pages.yml instead.
+# Preview URL: https://zawadzkidiana.github.io/Cadence-Docs/
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    # No "environment: production" needed — uses fork defaults only.
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Use Node.js lts/jod (v22)
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/jod
+          cache: "npm"
+
+      - name: Install and Build
+        env:
+          # Derive BASE_URL from the repository slug (e.g. /Cadence-Docs/).
+          # Override by setting the BASE_URL repository variable if needed.
+          BASE_URL: /${{ github.event.repository.name }}/
+        run: |
+          npm ci
+          npm run build
+
+      - name: Deploy to gh-pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: build
+          clean: true
