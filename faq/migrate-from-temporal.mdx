@@ -1,0 +1,171 @@
+---
+layout: default
+title: Migrating from Temporal to Cadence
+description: Practical guide for migrating Go or Java applications from Temporal to Cadence — SDK package mapping, concept renames, and client setup differences.
+keywords:
+  - migrate from temporal to cadence
+  - temporal to cadence migration
+  - temporal cadence sdk differences
+  - cadence temporal sdk comparison
+  - temporal namespace cadence domain
+  - temporal taskqueue cadence tasklist
+  - cadence go sdk migration
+  - cadence java sdk migration
+permalink: /faq/migrate-from-temporal
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Migrating from Temporal to Cadence
+
+Cadence and Temporal share the same durable execution model — Temporal is a 2019 fork of Cadence. Core concepts map directly, but the two projects have diverged in naming conventions, SDK packages, and client setup. This page covers what needs to change when moving a Go or Java application from Temporal to Cadence.
+
+## Concept mapping
+
+| Temporal | Cadence | Notes |
+|---|---|---|
+| Namespace | Domain | Top-level isolation boundary for workflows |
+| TaskQueue | TaskList | Routes work to the right workers |
+| Worker | Worker | Same concept, different SDK packages |
+| Workflow | Workflow | Same concept |
+| Activity | Activity | Same concept |
+| Signal | Signal | Same concept |
+| Query | Query | Same concept |
+| Schedule | CronSchedule / DistributedCron | Cadence uses `CronSchedule` on workflow options or the [distributed cron pattern](/docs/go-client/distributed-cron) |
+| `workflow.GetLogger` | `workflow.GetLogger` | Same API |
+| `temporal.io/sdk` | `go.uber.org/cadence` | Go package root |
+| `io.temporal` | `com.uber.cadence` | Java package root |
+
+## Go SDK
+
+### Package imports
+
+```go
+// Temporal
+import (
+    "go.temporal.io/sdk/client"
+    "go.temporal.io/sdk/worker"
+    "go.temporal.io/sdk/workflow"
+    "go.temporal.io/sdk/activity"
+)
+
+// Cadence
+import (
+    "go.uber.org/cadence/client"
+    "go.uber.org/cadence/worker"
+    "go.uber.org/cadence/workflow"
+    "go.uber.org/cadence/activity"
+)
+```
+
+### Client setup
+
+Cadence uses [YARPC](https://github.com/yarpc/yarpc-go) for transport rather than gRPC. The client setup is different:
+
+```go
+// Cadence
+import (
+    "go.uber.org/cadence/.gen/go/cadence/workflowserviceclient"
+    "go.uber.org/yarpc"
+    "go.uber.org/yarpc/transport/tchannel"
+)
+
+ch, _ := tchannel.NewChannelTransport(tchannel.ServiceName("cadence-client"))
+dispatcher := yarpc.NewDispatcher(yarpc.Config{
+    Name: "cadence-client",
+    Outbounds: yarpc.Outbounds{
+        "cadence-frontend": {Unary: ch.NewSingleOutbound("127.0.0.1:7933")},
+    },
+})
+dispatcher.Start()
+
+cadenceClient := workflowserviceclient.New(dispatcher.ClientConfig("cadence-frontend"))
+c, _ := client.NewClient(cadenceClient, "your-domain", &client.Options{})
+```
+
+### Starting a workflow
+
+```go
+// Temporal
+options := client.StartWorkflowOptions{
+    TaskQueue: "my-task-queue",
+}
+
+// Cadence
+options := client.StartWorkflowOptions{
+    TaskList: "my-task-list",
+}
+```
+
+### Worker registration
+
+```go
+// Temporal
+w := worker.New(c, "my-task-queue", worker.Options{})
+
+// Cadence
+w := worker.New(cadenceClient, "your-domain", "my-task-list", worker.Options{})
+```
+
+Note that the Cadence worker constructor takes the domain name as an explicit argument.
+
+## Java SDK
+
+### Package imports
+
+```java
+// Temporal
+import io.temporal.client.WorkflowClient;
+import io.temporal.client.WorkflowOptions;
+import io.temporal.serviceclient.WorkflowServiceStubs;
+import io.temporal.worker.Worker;
+import io.temporal.worker.WorkerFactory;
+import io.temporal.workflow.Workflow;
+import io.temporal.activity.Activity;
+
+// Cadence
+import com.uber.cadence.client.WorkflowClient;
+import com.uber.cadence.client.WorkflowClientOptions;
+import com.uber.cadence.client.WorkflowOptions;
+import com.uber.cadence.serviceclient.ClientOptions;
+import com.uber.cadence.serviceclient.IWorkflowService;
+import com.uber.cadence.serviceclient.WorkflowServiceTChannel;
+import com.uber.cadence.worker.Worker;
+import com.uber.cadence.worker.WorkerFactory;
+import com.uber.cadence.workflow.Workflow;
+import com.uber.cadence.activity.Activity;
+```
+
+### Client setup
+
+```java
+// Cadence
+IWorkflowService service = new WorkflowServiceTChannel(ClientOptions.defaultInstance());
+WorkflowClient client = WorkflowClient.newInstance(service,
+    WorkflowClientOptions.newBuilder().setDomain("your-domain").build());
+```
+
+### Starting a workflow
+
+```java
+// Temporal
+WorkflowOptions options = WorkflowOptions.newBuilder()
+    .setTaskQueue("my-task-queue")
+    .build();
+
+// Cadence
+WorkflowOptions options = new WorkflowOptions.Builder()
+    .setTaskList("my-task-list")
+    .build();
+```
+
+## What stays the same
+
+Workflow and activity implementation code is nearly identical between the two SDKs — the programming model, determinism constraints, signal/query patterns, child workflows, and retry policies all work the same way. Most of the migration work is in the client/worker setup and the namespace→domain and task-queue→task-list renames.
+
+## Further reading
+
+- [Cadence vs Temporal comparison](/faq/cadence-vs-temporal) — feature-by-feature comparison
+- [Go client workers](/docs/go-client/workers) — full worker setup guide
+- [Java client overview](/docs/java-client/client-overview) — Java client reference

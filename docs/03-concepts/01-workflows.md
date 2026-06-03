@@ -1,22 +1,26 @@
 ---
 layout: default
 title: Workflows
-description: This page explains the Cadence workflow abstraction, a fault-oblivious stateful function that encapsulates state, timers, and event handlers across failures and restarts.
+description: Cadence workflows are durable execution functions — code that runs as ordinary application logic but survives process restarts, failures, and long pauses without any extra infrastructure.
 keywords:
   - cadence workflow
   - cadence workflow concept
+  - durable execution
+  - durable execution model
   - fault-oblivious workflow
   - stateful workflow
   - cadence durable function
   - cadence workflow definition
   - cadence workflow example
+  - durable workflow
 permalink: /docs/concepts/workflows
 ---
 
-## Overview
+# Workflows
 
-Cadence core abstraction is a **fault-oblivious stateful :workflow:**. The state of the :workflow: code, including local variables and threads it creates, is immune to process and Cadence service failures.
-This is a very powerful concept as it encapsulates state, processing threads, durable timers and :event: handlers.
+The central abstraction in Cadence is a **durable execution function** — ordinary application code that continues running correctly across process restarts, infrastructure failures, and arbitrary pauses. You write it as a plain function; Cadence handles making it durable.
+
+More precisely, Cadence calls this a **fault-oblivious stateful :workflow:**. The state of the :workflow: code, including local variables and threads it creates, is immune to process and Cadence service failures. This is a very powerful concept as it encapsulates state, processing threads, durable timers and :event: handlers.
 
 ## Example
 
