@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Workflow Engine and Workflow Orchestration
-description: Cadence is an open-source, fault-tolerant workflow engine for orchestrating long-running distributed applications. Learn how it compares to queues, databases, and other orchestration platforms.
+description: Cadence is an open-source workflow engine for Go, Java, and Python — fault-tolerant, stateful, and built for long-running distributed applications. Learn how it compares to queues, cron jobs, and state machines.
 keywords:
   - workflow engine
   - workflow orchestration
@@ -10,6 +10,13 @@ keywords:
   - open source orchestration
   - cadence workflow
   - fault tolerant workflow
+  - go workflow engine
+  - golang workflow engine
+  - workflow engine golang
+  - go workflow orchestration
+  - golang workflow orchestration
+  - embeddable workflow engine
+  - embedded workflow engine
 ---
 
 import Tabs from '@theme/Tabs';
@@ -230,6 +237,27 @@ Cadence is a general-purpose workflow engine that fits a wide range of distribut
 - **Long-running business processes** — subscriptions, multi-day approvals, infrastructure provisioning. [Operational management →](/docs/use-cases/operational-management)
 
 ---
+
+## Using Cadence as your Go or Java workflow engine
+
+Cadence has first-class SDKs for Go and Java, with Python and TypeScript clients in active development.
+
+The Go SDK (`go.uber.org/cadence`) is the most widely used in production. A Cadence worker is an ordinary Go binary that calls `worker.New()` and registers your workflow and activity functions. There is no special runtime, no sidecar, and no DSL — workflows are plain Go functions that happen to be durable.
+
+```go
+// A minimal Go worker registering one workflow and one activity.
+w := worker.New(service, domain, taskList, worker.Options{})
+w.RegisterWorkflow(SubscriptionWorkflow)
+w.RegisterActivity(ChargeCustomer)
+w.Start()
+```
+
+Workers can be embedded in existing Go services or run as standalone binaries. The Cadence server is the only external dependency — all workflow state is stored server-side.
+
+For language-specific guides:
+- [Go SDK — Workers](/docs/go-client/workers)
+- [Go SDK — Creating Workflows](/docs/go-client/create-workflows)
+- [Java SDK — Workflows](/docs/java-client/workflow-interface)
 
 ## References
 
