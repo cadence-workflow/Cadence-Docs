@@ -10,6 +10,10 @@ keywords:
   - cadence tchannel worker
   - go cadence worker example
   - cadence worker setup go
+  - go workflow engine
+  - golang workflow engine
+  - workflow engine go
+  - embedded workflow engine go
 permalink: /docs/go-client/workers
 ---
 
