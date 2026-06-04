@@ -19,6 +19,7 @@ exclude = [
   "^http(s)?://127\\.0\\.0\\.1",
   "^http(s)?://0\\.0\\.0\\.0",
   "linkedin\\.com",
+  "slack\\.com",
 ]
 
 # Never traverse these paths when expanding inputs.
