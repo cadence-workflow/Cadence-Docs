@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Icon } from '@iconify/react';
+import Link from '@docusaurus/Link';
 import styles from './CommunityWidget.module.css';
 
 const ACTIONS = [
@@ -40,11 +41,45 @@ const ACTIONS = [
 
 export default function CommunityWidget() {
   const [open, setOpen] = useState(false);
+  const panelRef = useRef(null);
+  const fabRef = useRef(null);
+
+  useEffect(() => {
+    if (!open) return;
+
+    function handleKeyDown(e) {
+      if (e.key === 'Escape') setOpen(false);
+    }
+
+    function handleClickOutside(e) {
+      if (
+        panelRef.current &&
+        !panelRef.current.contains(e.target) &&
+        fabRef.current &&
+        !fabRef.current.contains(e.target)
+      ) {
+        setOpen(false);
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [open]);
 
   return (
     <div className={styles.widget} aria-label="Community actions">
       {open && (
-        <div className={styles.panel} role="dialog" aria-label="Community actions menu">
+        <div
+          ref={panelRef}
+          className={styles.panel}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Community actions menu"
+        >
           <div className={styles.panelHeader}>
             <span className={styles.panelTitle}>Join the Cadence community</span>
             <button
@@ -56,24 +91,33 @@ export default function CommunityWidget() {
             </button>
           </div>
           <ul className={styles.actionList}>
-            {ACTIONS.map((action) => (
-              <li key={action.id}>
-                <a
-                  href={action.href}
-                  className={styles.actionItem}
-                  target={action.external ? '_blank' : undefined}
-                  rel={action.external ? 'noopener noreferrer' : undefined}
-                  onClick={() => setOpen(false)}
-                >
-                  <Icon icon={action.icon} className={styles.actionIcon} width={20} />
-                  <span>{action.label}</span>
-                </a>
-              </li>
-            ))}
+            {ACTIONS.map((action) =>
+              action.external ? (
+                <li key={action.id}>
+                  <a
+                    href={action.href}
+                    className={styles.actionItem}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Icon icon={action.icon} className={styles.actionIcon} width={20} />
+                    <span>{action.label}</span>
+                  </a>
+                </li>
+              ) : (
+                <li key={action.id}>
+                  <Link to={action.href} className={styles.actionItem} onClick={() => setOpen(false)}>
+                    <Icon icon={action.icon} className={styles.actionIcon} width={20} />
+                    <span>{action.label}</span>
+                  </Link>
+                </li>
+              )
+            )}
           </ul>
         </div>
       )}
       <button
+        ref={fabRef}
         className={`${styles.fab} ${open ? styles.fabOpen : ''}`}
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? 'Close community menu' : 'Open community actions'}
