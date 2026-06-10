@@ -184,6 +184,7 @@ Contributions to the server, SDKs, docs, and samples are welcome. See [CONTRIBUT
 ## References
 
 - [Workflow Engine and Orchestration](/docs/concepts/workflow-engine) — how Cadence works as a workflow engine
+- [Cadence Cost Calculator](/faq/cadence-vs-temporal-cost) — estimate savings vs Temporal for comparable workflow orchestration workloads
 - [Get Started](/docs/get-started) — server installation, HelloWorld samples, Video Tutorials
 - [Deployment Topology](/docs/concepts/topology) — Frontend, Matching, History, Worker services
 - GitHub org: [github.com/cadence-workflow](https://github.com/cadence-workflow)
