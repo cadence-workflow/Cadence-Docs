@@ -18,6 +18,11 @@ function formatNumber(value: number): string {
   return value.toLocaleString('en-US');
 }
 
+function sanitizeDecimal(raw: string): string {
+  // Strip non-numeric characters, then remove any extra decimal points beyond the first
+  return raw.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+}
+
 function parsePositive(raw: string): number {
   return Math.max(0, parseFloat(raw.replace(/[^0-9.]/g, '')) || 0);
 }
@@ -79,7 +84,7 @@ export default function CadenceCostCalculator(): React.ReactElement {
                 inputMode="decimal"
                 className={styles.input}
                 value={temporalRaw}
-                onChange={e => setTemporalRaw(e.target.value.replace(/[^0-9.]/g, ''))}
+                onChange={e => setTemporalRaw(sanitizeDecimal(e.target.value))}
                 placeholder="10000"
                 aria-label="Current or estimated Temporal monthly cost in USD"
               />
