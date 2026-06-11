@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './styles.module.css';
 
 const CADENCE_COST_MULTIPLIER = 0.10;
-const SAVINGS_PERCENTAGE = 90;
+const SAVINGS_LABEL = '10x';
 const DEFAULT_TEMPORAL_COST = 10000;
 const DEFAULT_REQUESTS = 100_000_000; // 100M requests/month
 // $1 per 1,000,000 requests
@@ -110,7 +110,7 @@ export default function CadenceCostCalculator(): React.ReactElement {
               </div>
               <div className={styles.resultCard}>
                 <div className={styles.resultLabel}>Savings percentage</div>
-                <div className={styles.resultValueLarge}>{SAVINGS_PERCENTAGE}%</div>
+                <div className={styles.resultValueLarge}>{SAVINGS_LABEL}</div>
                 <div className={styles.resultSubtext}>cheaper than Temporal</div>
               </div>
             </div>
