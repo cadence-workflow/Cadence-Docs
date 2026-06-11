@@ -177,8 +177,8 @@ scope.cancel();
 | `setWorkflowId` | No | Stable ID for the child execution. Generated automatically if omitted. |
 | `setDomain` | No | Run the child in a different domain than the parent. |
 | `setTaskList` | No | Route the child to a specific worker pool. Inherits the parent's task list if omitted. |
-| `setExecutionStartToCloseTimeout` | No | Maximum total runtime for the child execution. |
-| `setTaskStartToCloseTimeout` | No | Maximum time for a single decision task. |
+| `setExecutionStartToCloseTimeout` | Conditional | Maximum total runtime for the child execution. A value is required, but it can instead be declared with `executionStartToCloseTimeoutSeconds` on the child's `@WorkflowMethod`. |
+| `setTaskStartToCloseTimeout` | No | Maximum time for a single decision task. Defaults to 10 seconds. |
 | `setWorkflowIdReusePolicy` | No | Whether a completed `WorkflowId` may be reused. |
 | `setRetryOptions` | No | Exponential retry policy applied to the child execution. |
 | `setParentClosePolicy` | No | What happens to the child when the parent closes. See [When the parent closes](#when-the-parent-closes). |

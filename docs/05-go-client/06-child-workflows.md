@@ -117,8 +117,9 @@ Use **abandon** for children that are meant to outlive their parent. For example
 import "go.uber.org/cadence/client"
 
 cwo := workflow.ChildWorkflowOptions{
-    WorkflowID:        "detached-child",
-    ParentClosePolicy: client.ParentClosePolicyAbandon,
+    WorkflowID:                   "detached-child",
+    ExecutionStartToCloseTimeout: time.Minute * 30,
+    ParentClosePolicy:            client.ParentClosePolicyAbandon,
 }
 ctx = workflow.WithChildOptions(ctx, cwo)
 
@@ -146,8 +147,9 @@ Closing is not the only way a child ends early. A child is also canceled when th
 
 ```go
 cwo := workflow.ChildWorkflowOptions{
-    WorkflowID:          "cancellable-child",
-    WaitForCancellation: true,
+    WorkflowID:                   "cancellable-child",
+    ExecutionStartToCloseTimeout: time.Minute * 30,
+    WaitForCancellation:          true,
 }
 ctx = workflow.WithChildOptions(ctx, cwo)
 
