@@ -1,0 +1,65 @@
+---
+layout: default
+title: Cadence FAQ
+description: Answers to common questions about Cadence — what it is, how workflows and activities differ, how failures are handled, and when to use it instead of a message queue.
+keywords:
+  - cadence faq
+  - cadence questions
+  - workflow vs activity
+  - cadence vs message queue
+  - cadence vs kafka
+  - cadence vs sqs
+  - how does cadence handle failures
+  - cadence durable execution
+  - what is cadence workflow
+  - when to use cadence
+permalink: /faq/cadence-faq
+---
+
+# Cadence FAQ
+
+## What is Cadence?
+
+Cadence is a durable execution engine. You write business logic as ordinary code — functions that call services, sleep for days, retry on failure — and Cadence makes that code survive process crashes, restarts, and infrastructure outages without you adding any extra state management.
+
+Think of it as a runtime that keeps your code running reliably across failures, not a framework that requires you to restructure your logic around queues, state machines, or cron jobs.
+
+## What's the difference between a workflow and an activity?
+
+A **workflow** is the durable orchestration function. It defines the sequence and control flow of your business process. Workflow code must be deterministic — it cannot make network calls, read from the filesystem, or use real-world time directly, because Cadence may replay it to reconstruct state after a failure.
+
+An **activity** is where the actual work happens — API calls, database writes, sending emails. Activities run in your application code, are retried automatically on failure, and can be as long-running as needed. They are not subject to the determinism constraint.
+
+A simple rule of thumb: if it touches the outside world, it's an activity. If it decides what to do next, it's in the workflow.
+
+## When should I use Cadence instead of a message queue (Kafka, SQS, RabbitMQ)?
+
+Message queues are great for point-to-point async delivery. They become painful when your process:
+
+- Spans multiple steps with dependencies between them
+- Needs to retry individual steps with backoff and a deadline
+- Has to wait minutes, hours, or days between steps
+- Must track overall progress or handle partial failures across steps
+- Requires exactly-once semantics across service boundaries
+
+In those cases you end up writing a lot of glue code on top of the queue — polling tables for status, building state machines, writing retry logic. Cadence replaces that glue code with a plain function.
+
+For simple fire-and-forget fanout or high-throughput streaming, a queue is usually the right tool.
+
+## How does Cadence handle failures?
+
+At the workflow level, Cadence automatically resumes execution from where it left off after any infrastructure failure — worker crash, server restart, network partition. Your workflow code sees none of it; execution continues as if nothing happened.
+
+At the activity level, Cadence retries failed activities according to the retry policy you configure (initial interval, backoff coefficient, max attempts, expiration). If an activity exceeds its retry budget, the error is surfaced to the workflow where your code can handle or escalate it.
+
+The only failure that actually terminates a workflow is an unhandled error thrown by your own business logic.
+
+## Can a workflow run for a very long time?
+
+Yes. Cadence workflows can run for years. The state is persisted to the database at every step, so the workflow can be paused (e.g. waiting on a timer or a signal) without consuming any compute resources, and resume exactly where it left off.
+
+If the event history grows very large over time, use [Continue-as-New](/docs/go-client/continue-as-new) to checkpoint and restart the workflow with a clean history.
+
+## What's the difference between Cadence and Temporal?
+
+Temporal is a 2019 fork of Cadence. They share the same core execution model but have diverged since. See the [Cadence vs Temporal](/faq/cadence-vs-temporal) page for a detailed comparison.
