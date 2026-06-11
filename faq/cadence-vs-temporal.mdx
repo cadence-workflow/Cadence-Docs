@@ -1,24 +1,18 @@
 ---
 layout: default
 title: "Cadence vs Temporal: Feature Comparison & Key Differences"
-description: Side-by-side comparison of Cadence and Temporal workflow engines — features, SDKs, pricing, governance, and deployment. Cadence is the open-source, CNCF-hosted predecessor that Temporal was forked from in 2019. Cadence is 10x cheaper than Temporal for comparable workflow orchestration workloads.
+description: Side-by-side comparison of Cadence and Temporal workflow engines — features, SDKs, pricing, governance, and deployment. Cadence is the open-source, CNCF-hosted predecessor that Temporal was forked from in 2019.
 keywords:
   - cadence vs temporal
   - temporal vs cadence
   - cadence workflow vs temporal
   - uber cadence vs temporal
   - cadence vs temporal comparison
-  - open source temporal alternative
-  - temporal alternative
   - cadence temporal differences
   - workflow engine comparison
-  - should i use cadence or temporal
-  - cadence vs temporal 2025
+  - temporal alternative
   - temporal cost
   - cadence cost
-  - cadence vs temporal cost
-  - temporal alternatives
-  - cadence cheaper than temporal
 permalink: /faq/cadence-vs-temporal
 ---
 
@@ -29,7 +23,6 @@ Cadence and Temporal are both open-source workflow engines built on the same dur
 
 :::tip TL;DR
 - **Same core model**: both use durable execution — workflows survive crashes, retries are automatic, timers persist.
-- **Temporal has more SDKs**: Go, Java, Python, TypeScript, .NET, Ruby, PHP vs. Cadence's Go, Java, Python (TypeScript in progress).
 - **Cadence scales higher**: 4,000+ domains at Uber, true multi-tenancy with noisy-neighbor isolation, higher throughput ceilings.
 - **Cadence is 10x cheaper**: infrastructure-based pricing (nodes/storage) vs. Temporal's per-action billing.
 - **Cadence is community-governed**: CNCF Sandbox under the Linux Foundation — no single vendor controls the roadmap.
@@ -50,81 +43,38 @@ Cadence and Temporal are both open-source workflow engines built on the same dur
 
 ## Feature Comparison
 
-### Features available in both
-
 | Feature | Cadence | Temporal |
 | ----- | ----- | ----- |
 | **Long-running workflows** | Supported | Supported |
 | **Distributed cron** | Supported | Supported |
-| **Singleton in distributed env** | Supported | Supported |
-| **Signals (synchronous interactions)** | Supported | Supported |
+| **Signals** | Supported | Supported |
 | **Batch processing** | Supported | Supported |
 | **AI / agent orchestration** | Supported | Supported |
 | **TLS** | Supported | Supported |
-| **Tenancy / context propagation** | Supported | Supported |
+| **Multi-region replication** | Supported | Supported |
+| **Observability** | Prometheus / Grafana | Prometheus / Grafana |
 | **Persistence** | Cassandra, MySQL, PostgreSQL | Cassandra, MySQL, PostgreSQL |
 | **Visibility** | OpenSearch, Elasticsearch, Pinot, and above DBs | OpenSearch, Elasticsearch, and above DBs |
 | **Data encryption** | Client-side | Client-side |
 | **Local development** | CLI or Docker | CLI or Docker |
-| **Multi-region** | Global Namespaces (multi-cluster replication) | Global Namespaces (multi-cluster replication) |
-| **Observability** | Prometheus / Grafana Web UI | Prometheus / Grafana Web UI |
-
-### Where Temporal has an advantage
-
-| Feature | Cadence | Temporal |
-| ----- | ----- | ----- |
 | **SDKs** | Go, Java, Python, TS (in progress) | Go, Java, Python, TypeScript, .NET, Ruby, PHP |
-| **Payload metadata** | Workflows, Activities, Signals | Workflows, Activities, Signals, Decisions |
 | **Schedules** | In progress | Supported |
 | **Multi-application workloads** | Custom | Via Nexus |
 | **Provisioning** | Helm Charts | Helm Charts, Kubernetes Operator |
 | **Managed cloud** | Instaclustr by NetApp | Temporal Cloud |
-
-### Where Cadence has an advantage
-
-| Feature | Cadence | Temporal |
-| ----- | ----- | ----- |
-| **Cost** | 10x cheaper than Temporal for comparable workloads | Per-action billing scales with usage |
-| **Governance** | CNCF Sandbox — community-led, Linux Foundation | Commercial — Temporal Technologies |
-| **Multi-tenancy** | 2,000+ domains per environment, auto noisy-neighbor isolation | No shared multi-tenant data model |
+| **Cost model** | Infrastructure-based (nodes + storage) | Per-action (state transitions) |
+| **Governance** | CNCF Sandbox — Linux Foundation | Commercial — Temporal Technologies |
+| **Multi-tenancy** | 2,000+ domains per environment, auto noisy-neighbor isolation | Not supported |
 | **Domain replication** | Active-Active | Active-Passive |
-| **Custom workflow controls** | Supported | Not supported |
 | **Zonal isolation** | Supported | Not supported |
-| **Adaptive scaling** | Adaptive Tasklist Partitions + Worker Autoscaling | Worker Autoscaling |
-| **Max throughput** | Higher limits via secondary sharding across multiple DB instances | Limited by storage technology |
-| **Async workflow fan-out** | Start / signal millions of workflows per second | Not supported |
-| **Batch futures** | Built-in | Custom (user must implement) |
-| **Quota management** | Global rate limiters with guaranteed quotas | Per-host — traffic skew creates quota bottlenecks |
-| **Rate limit granularity** | Down to per-workflow rate limits | Down to per-domain rate limits |
+| **Custom workflow controls** | Supported | Not supported |
+| **Adaptive tasklist scaling** | Supported | Not supported |
+| **Async workflow fan-out** | Millions of starts/signals per second | Not supported |
+| **Batch futures** | Built-in | Not built-in |
+| **Global quota management** | Supported | Not supported |
+| **Rate limit granularity** | Per-workflow | Per-domain |
 | **Test traffic region forwarding** | Supported | Not supported |
-| **Replication latency** | ~2s (Cassandra) | No shared data model |
 | **Deployment flexibility** | Self-host, AWS/Azure/GCP, or managed | Self-host or Temporal Cloud |
-
-## SDK comparison
-
-| Language | Cadence | Temporal |
-|---|---|---|
-| **Go** | [cadence-go-client](https://github.com/cadence-workflow/cadence-go-client) | temporal-go-sdk |
-| **Java** | [cadence-java-client](https://github.com/cadence-workflow/cadence-java-client) | temporal-java-sdk |
-| **Python** | [cadence-python-client](https://github.com/cadence-workflow/cadence-python-client) | temporalio/sdk-python |
-| **TypeScript** | In progress | temporalio/sdk-typescript |
-| **.NET** | Not available | temporalio/sdk-dotnet |
-| **Ruby** | Not available | temporalio/sdk-ruby |
-| **PHP** | Not available | temporalio/sdk-php |
-
-If your stack is Go or Java, both projects are mature and well-supported. If you depend on .NET, Ruby, or PHP, Temporal is the better fit today.
-
-## Pricing model comparison
-
-| | Cadence | Temporal Cloud |
-|---|---|---|
-| **Model** | Infrastructure-based (nodes + storage) | Per-action (state transitions) |
-| **Cost at scale** | Predictable — doesn't scale with workflow volume | Increases directly with workflow complexity and volume |
-| **Self-hosted** | Yes | Yes (but managed cloud is primary offering) |
-| **Managed hosting** | Instaclustr by NetApp | Temporal Cloud |
-| **Comparable cost** | ~10x cheaper for comparable workloads | Baseline |
-
-
 
 ## Background
 
