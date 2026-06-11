@@ -6,6 +6,7 @@ export default {
     //   dirName: '.',
     // },
     { type: 'doc', id: 'contact-us' },
+    { type: 'doc', id: 'meetup' },
     {
       type: 'category',
       label: 'How to Contribute',
