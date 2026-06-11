@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Cadence vs Temporal: Feature Comparison & Key Differences"
-description: Side-by-side comparison of Cadence and Temporal workflow engines — features, SDKs, pricing, governance, and deployment. Cadence is the open-source, CNCF-hosted predecessor that Temporal was forked from in 2019.
+description: Side-by-side comparison of Cadence and Temporal workflow engines — features, SDKs, pricing, governance, and deployment. Cadence is the open-source, CNCF-hosted predecessor that Temporal was forked from in 2019. Cadence is 10x cheaper than Temporal for comparable workflow orchestration workloads.
 keywords:
   - cadence vs temporal
   - temporal vs cadence
@@ -9,15 +9,19 @@ keywords:
   - uber cadence vs temporal
   - cadence vs temporal comparison
   - open source temporal alternative
+  - temporal alternative
   - cadence temporal differences
   - workflow engine comparison
   - should i use cadence or temporal
   - cadence vs temporal 2025
+  - temporal cost
+  - cadence cost
+  - cadence vs temporal cost
+  - temporal alternatives
+  - cadence cheaper than temporal
 permalink: /faq/cadence-vs-temporal
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 # Cadence vs Temporal: Key Differences
 
@@ -80,7 +84,7 @@ Cadence and Temporal are both open-source workflow engines built on the same dur
 
 | Feature | Cadence | Temporal |
 | ----- | ----- | ----- |
-| **Cost** | [10x cheaper](/faq/cadence-vs-temporal-cost) than Temporal for comparable workloads | Per-action billing scales with usage |
+| **Cost** | 10x cheaper than Temporal for comparable workloads | Per-action billing scales with usage |
 | **Governance** | CNCF Sandbox — community-led, Linux Foundation | Commercial — Temporal Technologies |
 | **Multi-tenancy** | 2,000+ domains per environment, auto noisy-neighbor isolation | No shared multi-tenant data model |
 | **Domain replication** | Active-Active | Active-Passive |
@@ -102,7 +106,7 @@ Cadence and Temporal are both open-source workflow engines built on the same dur
 |---|---|---|
 | **Go** | [cadence-go-client](https://github.com/cadence-workflow/cadence-go-client) | temporal-go-sdk |
 | **Java** | [cadence-java-client](https://github.com/cadence-workflow/cadence-java-client) | temporal-java-sdk |
-| **Python** | [cadence-python](https://github.com/cadence-workflow/cadence-python) | temporalio/sdk-python |
+| **Python** | [cadence-python-client](https://github.com/cadence-workflow/cadence-python-client) | temporalio/sdk-python |
 | **TypeScript** | In progress | temporalio/sdk-typescript |
 | **.NET** | Not available | temporalio/sdk-dotnet |
 | **Ruby** | Not available | temporalio/sdk-ruby |
@@ -118,9 +122,9 @@ If your stack is Go or Java, both projects are mature and well-supported. If you
 | **Cost at scale** | Predictable — doesn't scale with workflow volume | Increases directly with workflow complexity and volume |
 | **Self-hosted** | Yes | Yes (but managed cloud is primary offering) |
 | **Managed hosting** | Instaclustr by NetApp | Temporal Cloud |
-| **Comparable cost** | [~10x cheaper](/faq/cadence-vs-temporal-cost) for comparable workloads | Baseline |
+| **Comparable cost** | ~10x cheaper for comparable workloads | Baseline |
 
-Use the [Cadence Cost Calculator](/faq/cadence-vs-temporal-cost) to estimate your monthly and annual savings.
+
 
 ## Background
 
