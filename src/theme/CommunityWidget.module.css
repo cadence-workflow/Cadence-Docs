@@ -1,0 +1,123 @@
+.widget {
+  position: fixed;
+  bottom: 1.75rem;
+  right: 1.75rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.fab {
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: 50%;
+  border: none;
+  background: #2563EB;
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  flex-shrink: 0;
+}
+
+.fab:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 24px rgba(37, 99, 235, 0.55);
+  background: #1D4ED8;
+}
+
+.fabOpen {
+  background: #1e3a5f;
+  box-shadow: 0 4px 20px rgba(30, 58, 95, 0.4);
+}
+
+.panel {
+  background: var(--ifm-card-background-color, #ffffff);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 1rem;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
+  min-width: 260px;
+  overflow: hidden;
+}
+
+html[data-theme='dark'] .panel {
+  background: #1e2a3a;
+  border-color: rgba(255,255,255,0.1);
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1rem 0.7rem;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+html[data-theme='dark'] .panelHeader {
+  border-bottom-color: rgba(255,255,255,0.08);
+}
+
+.panelTitle {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--ifm-font-color-base);
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--ifm-color-emphasis-500);
+  display: flex;
+  align-items: center;
+  padding: 0.2rem;
+  border-radius: 0.25rem;
+  transition: background 0.15s;
+}
+
+.closeButton:hover {
+  background: var(--ifm-color-emphasis-200);
+}
+
+.actionList {
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem 0;
+}
+
+.actionItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 1rem;
+  color: var(--ifm-font-color-base);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+
+.actionItem:hover {
+  background: #EFF6FF;
+  color: #1D4ED8;
+  text-decoration: none;
+}
+
+html[data-theme='dark'] .actionItem:hover {
+  background: rgba(37, 99, 235, 0.15);
+  color: #93C5FD;
+}
+
+.actionIcon {
+  color: #2563EB;
+  flex-shrink: 0;
+}
+
+html[data-theme='dark'] .actionIcon {
+  color: #93C5FD;
+}

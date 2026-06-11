@@ -20,6 +20,7 @@ exclude = [
   "^http(s)?://0\\.0\\.0\\.0",
   "linkedin\\.com",
   "slack\\.com",
+  "reddit\\.com",
 ]
 
 # Never traverse these paths when expanding inputs.
