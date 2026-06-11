@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Introduction
-description: This page introduces the range of use cases where Cadence excels, from orchestration and periodic execution to event-driven systems and ML pipelines.
+description: Cadence is a durable execution engine that replaces ad-hoc combinations of queues, cron jobs, and databases. Explore the use cases where it fits best.
 keywords:
   - cadence use cases
   - cadence applications
@@ -10,8 +10,15 @@ keywords:
   - cadence distributed application
   - cadence durable function
   - cadence orchestration
+  - durable execution use cases
+  - workflow engine use cases
+  - when to use a workflow engine
 permalink: /docs/use-cases/
 ---
+
+# Use Cases
+
+Cadence shines anywhere your business logic spans more than a single request-response cycle — long-running processes, multi-step orchestration, retry-heavy integrations, or anything that today lives in a fragile combination of cron jobs, queues, and database polling. The durable execution model replaces that infrastructure with plain application code that Cadence keeps running reliably.
 
 As Cadence developers, we face a difficult non-technical problem: How to position and describe the Cadence platform.
 
