@@ -1,0 +1,81 @@
+---
+title: "Bypass the 2 MB Limit Without Shrinking Your Workflow"
+description: "The claim-check pattern offloads large Cadence payloads to an external blob store so only a tiny reference travels through workflow history. Learn the replay-safety requirements, blob key rules, and how to run the Go and Java samples."
+keywords:
+  - cadence claim check pattern
+  - cadence payload size limit
+  - cadence dataconverter blob store
+  - cadence workflow history size
+  - cadence s3 dataconverter
+  - cadence replay safety
+  - deterministic blob keys
+date: 2026-06-10T09:00
+authors: kevinb
+tags:
+  - announcement
+  - deep-dive
+---
+
+import PayloadFlowDemo from './PayloadFlowDemo';
+import SizeChart from './SizeChart';
+import FootgunCards from './FootgunCards';
+import BlobStoreTabs from './BlobStoreTabs';
+
+The 2 MB per-payload limit in Cadence does not come with a helpful error. Your workflow does not receive a graceful degradation notice. It just fails. And if you have never hit the limit before, the stack trace is not obvious about what happened.
+
+The claim-check pattern solves this completely. Instead of compressing a large payload and hoping it fits, you offload it to an external blob store and write only a small reference into Cadence history. The limit no longer applies to your payload; only to the reference, which is always tiny.
+
+<!-- truncate -->
+
+## How it works
+
+The `DataConverter` intercepts every payload before it reaches Cadence history. With claim-check, it makes a size decision on each one:
+
+- **At or below the threshold (4 KB in the demo):** payload is stored inline in history, prefixed with `0x00`.
+- **Above the threshold:** payload is written to an external blob store. Only a small JSON reference (the blob key) is stored in history, prefixed with `0x01`.
+
+On the decode side, the worker reads the prefix byte and either uses the inline payload directly or fetches it from the blob store.
+
+<PayloadFlowDemo />
+
+## Threshold tuning
+
+The default threshold in the samples is 4 KB. In production, profile your actual payload sizes first:
+
+- **Too low:** nearly everything gets offloaded, meaning more blob store API calls and more latency per payload.
+- **Too high:** large payloads still slip into Cadence history and approach the 2 MB cap.
+
+A reasonable starting point for most teams is 64 KB–256 KB, then adjust based on observed payload distribution.
+
+<SizeChart />
+
+## Blob store options
+
+<BlobStoreTabs />
+
+## The one rule you cannot skip
+
+Blob keys must be **deterministic**.
+
+Cadence can replay a workflow from the beginning at any time (to recover from a crash, to apply a code change, or during normal task processing). When it does, `ToData` is called again with the same payload.
+
+If your key is a UUID, every replay writes a new blob and orphans the old one. After enough replays, you have a storage bill full of blobs no one can find.
+
+The fix is a single line: use SHA-256 of the serialized payload as the key. The same payload always produces the same key. The `Put` on replay is a no-op.
+
+## Common production pitfalls
+
+<FootgunCards />
+
+## What's next in this series
+
+**Week 3: Encrypt Cadence History Payloads (And Know What You Didn't Encrypt)**
+
+Key management, the `CADENCE_ENCRYPTION_KEY` environment variable, and a practical map of what AES-256-GCM encryption protects in Cadence versus what it leaves exposed. If you handle regulated data, this is the post to bookmark.
+
+## Get started
+
+- [DataConverter Guide](/docs/concepts/data-converter)
+- [Go samples](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/data)
+- [Java samples](https://github.com/cadence-workflow/cadence-java-samples)
+- [Community and support](/community/contact-us)
