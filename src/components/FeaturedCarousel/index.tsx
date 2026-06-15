@@ -20,7 +20,9 @@ const AUTOPLAY_MS = 5000;
 export default function FeaturedCarousel(): JSX.Element {
   const trackRef = useRef<HTMLUListElement>(null);
   const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [manualPaused, setManualPaused] = useState(false);
+  const autoplayPaused = hovered || manualPaused;
 
   const scrollToIndex = useCallback((index: number) => {
     const track = trackRef.current;
@@ -34,10 +36,10 @@ export default function FeaturedCarousel(): JSX.Element {
   }, []);
 
   useEffect(() => {
-    if (paused || items.length <= 1) return undefined;
+    if (autoplayPaused || items.length <= 1) return undefined;
     const id = window.setInterval(() => scrollToIndex(active + 1), AUTOPLAY_MS);
     return () => window.clearInterval(id);
-  }, [active, paused, scrollToIndex]);
+  }, [active, autoplayPaused, scrollToIndex]);
 
   // Keep the active dot in sync when the user scrolls/swipes manually.
   useEffect(() => {
@@ -75,16 +77,24 @@ export default function FeaturedCarousel(): JSX.Element {
       className={styles.carousel}
       aria-roledescription="carousel"
       aria-label="Featured articles"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocusCapture={() => setPaused(true)}
-      onBlurCapture={() => setPaused(false)}>
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onFocusCapture={() => setHovered(true)}
+      onBlurCapture={() => setHovered(false)}>
       <div className="container">
         <div className={styles.header}>
           <Heading as="h2" className={styles.title}>
             Featured reading
           </Heading>
           <div className={styles.controls}>
+            <button
+              type="button"
+              className={styles.arrow}
+              aria-label={manualPaused ? 'Resume autoplay' : 'Pause autoplay'}
+              aria-pressed={manualPaused}
+              onClick={() => setManualPaused((p) => !p)}>
+              {manualPaused ? '▶' : '⏸'}
+            </button>
             <button
               type="button"
               className={styles.arrow}
