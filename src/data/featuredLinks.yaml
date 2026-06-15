@@ -7,44 +7,44 @@
 #   tag:         Small pill label (Blog, FAQ, Guide, Release, ...)
 #   cta:         Call-to-action label (optional, defaults to "Read more")
 
-- title: "Cadence vs Temporal: Key Differences"
-  description: A side-by-side comparison of features, architecture, and tradeoffs to help you choose the right workflow engine.
-  href: /faq/cadence-vs-temporal
-  image: /img/arrow_divert_filled.svg
-  tag: FAQ
-  cta: Compare
-
-- title: Workflow Diagnostics for Faster Debugging
-  description: How Cadence surfaces the root cause of stuck or failing workflows so you can resolve incidents in minutes, not hours.
-  href: /blog/2025/08/06/workflow-diagnostics
-  image: /img/chart_bar_ascending_filled.svg
-  tag: Blog
-  cta: Read the recap
-
-- title: Introducing Batch Future with Concurrency Control
-  description: Run many activities or child workflows in parallel with a configurable concurrency limit to prevent hot shards.
-  href: /blog/2025/09/25/introducing-batch-future-faster-activity-execution
-  image: /img/gears_blue.svg
+- title: "Bypass the 2 MB Limit Without Shrinking Your Workflow"
+  description: The claim-check pattern offloads large Cadence payloads to an external blob store so only a tiny reference travels through workflow history.
+  href: /blog/2026/06/10/2026-06-10-claim-check-pattern/claim-check-pattern
+  image: /img/docusaurus/undraw_docusaurus_react.svg
   tag: Blog
   cta: Read post
 
-- title: Bad Patterns & Best Practice Alternatives
-  description: Common Cadence anti-patterns and the idiomatic alternatives that keep your workflows correct and replay-safe.
-  href: /faq/best-practices
-  image: /img/red-herring.svg
-  tag: FAQ
+- title: Open Source Workflow Engine
+  description: Cadence is an open-source, self-hostable workflow engine for durable, fault-tolerant distributed applications — deploy on SQLite, Docker, or Kubernetes.
+  href: /docs/concepts/open-source-workflow-engine
+  image: /img/docusaurus/undraw_docusaurus_mountain.svg
+  tag: Concepts
   cta: Learn more
 
-- title: Get Started with Cadence in 5 Minutes
-  description: Spin up Cadence locally and run your first workflow with a guided, hands-on walkthrough.
-  href: /docs/get-started
+- title: "Data Converters: Encryption & Compression"
+  description: Implement custom Cadence DataConverters to compress, encrypt, serialize, or offload workflow payloads using the Go and Java samples.
+  href: /docs/concepts/data-converter
   image: /img/docusaurus/undraw_docusaurus_react.svg
-  tag: Guide
-  cta: Start building
+  tag: Concepts
+  cta: Learn more
 
-- title: Explore the Cadence Blog
-  description: Deep dives, release notes, and community spotlights from the team building Cadence.
-  href: /blog
+- title: Community Meetups
+  description: Join the recurring Cadence community meetup to share demos, ask questions, and connect with maintainers.
+  href: /community/meetup
   image: /img/docusaurus/undraw_docusaurus_mountain.svg
-  tag: Blog
-  cta: Browse posts
+  tag: Community
+  cta: Join us
+
+- title: Deploy Cadence with Helm on GKE (PostgreSQL + OpenSearch)
+  description: A codelab for deploying Cadence on Google Kubernetes Engine using Helm with PostgreSQL, Kafka, and OpenSearch for advanced visibility.
+  href: /docs/codelabs/helm-deploy-postgres-opensearch
+  image: /img/docusaurus/undraw_docusaurus_react.svg
+  tag: Codelab
+  cta: Start codelab
+
+- title: How To Write Tests With Workflow Replayer and Shadower
+  description: A codelab on writing Go tests for Cadence workflows using the Workflow Replayer and Shadower to catch non-deterministic changes.
+  href: /docs/codelabs/workflow-tests-go-replayer-shadower
+  image: /img/docusaurus/undraw_docusaurus_mountain.svg
+  tag: Codelab
+  cta: Start codelab
