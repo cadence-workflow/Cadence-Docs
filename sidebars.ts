@@ -147,6 +147,7 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'operation-guide/monitoring' },
         { type: 'doc', id: 'operation-guide/troubleshooting' },
         { type: 'doc', id: 'operation-guide/migration' },
+        { type: 'doc', id: 'operation-guide/capacity-estimation' },
       ],
     },
     {
