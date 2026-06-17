@@ -266,6 +266,5 @@ For language-specific guides:
 - [Deployment Topology](/docs/concepts/topology) — how Frontend, Matching, History, and Workers interact
 - [Get Started](/docs/get-started) — server installation and HelloWorld samples in Go and Java
 - [Open Source Workflow Engine](/docs/concepts/open-source-workflow-engine) — self-hosting, deployment options, community
-- [Cadence Cost Calculator](/faq/cadence-vs-temporal-cost) — comparing Temporal cost? Estimate Cadence savings for comparable workloads
 - Go SDK: [go.uber.org/cadence](https://pkg.go.dev/go.uber.org/cadence)
 - Java SDK: [com.uber.cadence](https://javadoc.io/doc/com.uber.cadence/cadence-client)
