@@ -3,20 +3,19 @@ import React, { useState } from 'react';
 type HistoryEvent = {
   id: number;
   label: string;
-  keyVersion: 1 | 2;
   eventTime: number; // 0..1 relative position on timeline
 };
 
 const EVENTS: HistoryEvent[] = [
-  { id: 1, label: 'WorkflowStarted',      keyVersion: 1, eventTime: 0.04 },
-  { id: 2, label: 'ActivityScheduled',    keyVersion: 1, eventTime: 0.15 },
-  { id: 3, label: 'ActivityCompleted',    keyVersion: 1, eventTime: 0.27 },
-  { id: 4, label: 'SignalReceived',       keyVersion: 1, eventTime: 0.38 },
-  { id: 5, label: 'ActivityScheduled',    keyVersion: 1, eventTime: 0.50 },
-  { id: 6, label: 'ActivityCompleted',    keyVersion: 2, eventTime: 0.62 },
-  { id: 7, label: 'ChildWorkflowStarted', keyVersion: 2, eventTime: 0.73 },
-  { id: 8, label: 'TimerFired',           keyVersion: 2, eventTime: 0.84 },
-  { id: 9, label: 'WorkflowCompleted',    keyVersion: 2, eventTime: 0.95 },
+  { id: 1, label: 'WorkflowStarted',       eventTime: 0.04 },
+  { id: 2, label: 'ActivityScheduled',     eventTime: 0.15 },
+  { id: 3, label: 'ActivityCompleted',     eventTime: 0.27 },
+  { id: 4, label: 'SignalReceived',        eventTime: 0.38 },
+  { id: 5, label: 'ActivityScheduled',     eventTime: 0.50 },
+  { id: 6, label: 'ActivityCompleted',     eventTime: 0.62 },
+  { id: 7, label: 'ChildWorkflowStarted',  eventTime: 0.73 },
+  { id: 8, label: 'TimerFired',            eventTime: 0.84 },
+  { id: 9, label: 'WorkflowCompleted',     eventTime: 0.95 },
 ];
 
 // Default rotation at event 5/6 boundary
@@ -27,9 +26,10 @@ export default function KeyRotationTimeline() {
   const [keyAvailable, setKeyAvailable] = useState<'both' | 'v1-only' | 'v2-only'>('both');
 
   function eventStatus(ev: HistoryEvent): 'ok' | 'error' {
+    const usesV1 = ev.eventTime < rotation;
     if (keyAvailable === 'both') return 'ok';
-    if (keyAvailable === 'v1-only' && ev.keyVersion === 2) return 'error';
-    if (keyAvailable === 'v2-only' && ev.keyVersion === 1) return 'error';
+    if (keyAvailable === 'v1-only' && !usesV1) return 'error';
+    if (keyAvailable === 'v2-only' && usesV1) return 'error';
     return 'ok';
   }
 

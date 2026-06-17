@@ -42,7 +42,8 @@ tag:f0e1d2c3b4a59687",
 type View = 'plain' | 'encrypted';
 
 // Highlight lines that contain sensitive data in the plaintext view
-const SENSITIVE_LINES = new Set([4, 5, 6, 7, 8, 9, 10, 11, 12, 13]);
+// customerId, email, cardLastFour, orderTotal, shippingAddress block (including closing brace)
+const SENSITIVE_LINES = new Set([8, 9, 10, 11, 12, 13, 14, 15, 16]);
 
 function ColoredCode({ text, view }: { text: string; view: View }) {
   const lines = text.split('\n');
@@ -61,7 +62,7 @@ function ColoredCode({ text, view }: { text: string; view: View }) {
       {lines.map((line, i) => {
         const lineNum = i + 1;
         const isSensitive = view === 'plain' && SENSITIVE_LINES.has(lineNum);
-        const isEncBlob = view === 'encrypted' && (lineNum >= 8 && lineNum <= 13);
+        const isEncBlob = view === 'encrypted' && (lineNum >= 7 && lineNum <= 12);
         return (
           <span
             key={i}
