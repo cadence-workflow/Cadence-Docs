@@ -7,6 +7,7 @@
 #   tag:         Small pill label (Blog, FAQ, Guide, Release, ...)
 #   cta:         Call-to-action label (optional, defaults to "Read more")
 
+#
 - title: "Bypass the 2 MB Limit Without Shrinking Your Workflow"
   description: The claim-check pattern offloads large Cadence payloads to an external blob store so only a tiny reference travels through workflow history.
   href: /blog/2026/06/10/2026-06-10-claim-check-pattern/claim-check-pattern
