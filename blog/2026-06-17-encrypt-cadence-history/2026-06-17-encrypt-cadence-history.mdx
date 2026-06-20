@@ -1,0 +1,118 @@
+---
+title: "Encrypt Cadence History Payloads (And Know What You Didn't Encrypt)"
+description: "AES-256-GCM encryption makes Cadence history payloads opaque. But the DataConverter only covers part of the data surface. This post maps what is protected, what is not, and how to manage keys safely in production."
+keywords:
+  - cadence encryption
+  - cadence dataconverter encryption
+  - cadence AES-256-GCM
+  - cadence history payload encryption
+  - cadence key management
+  - cadence key rotation
+  - cadence HIPAA
+  - cadence PII
+date: 2026-06-17
+authors: kevinb
+tags:
+  - announcement
+  - deep-dive
+---
+
+import EncryptionFlowDemo from './EncryptionFlowDemo';
+import HistoryViewer from './HistoryViewer';
+import CoverageMap from './CoverageMap';
+import KeyRotationTimeline from './KeyRotationTimeline';
+import ExposureCards from './ExposureCards';
+
+You encrypted the payloads. Here is what you did not encrypt.
+
+The AES-256-GCM DataConverter makes every workflow input, activity result, signal payload, and query response opaque to anyone without your key. That is the good part. The less obvious part: several Cadence data surfaces sit entirely outside the DataConverter path, and they are still plaintext regardless of what your converter does.
+
+<!-- truncate -->
+
+## How it works
+
+The encryption DataConverter wraps the JSON-serialized payload before writing it to Cadence history. The output layout for each call is:
+
+```
+nonce (12 bytes) | ciphertext | GCM authentication tag (16 bytes)
+```
+
+A fresh 12-byte random nonce is generated per call. This preserves semantic security: two identical payloads produce different ciphertext in history. The 16-byte tag detects any tampering at decode time.
+
+On the decode side, the worker reads the encrypted blob, derives the same key, and verifies the tag before returning plaintext to workflow or activity code.
+
+<EncryptionFlowDemo />
+
+Toggle to "Missing key" to see what happens when a worker starts without the AES key: `FromData` returns an error on every decode attempt and the task retries indefinitely.
+
+## See what changes in history
+
+Toggle between plaintext and encrypted to see exactly which field in a history event becomes opaque. Structural metadata (event type, task list, timeouts) stays visible.
+
+<HistoryViewer />
+
+## What the DataConverter covers
+
+Not every Cadence data surface passes through the DataConverter. The coverage is precise: payloads crossing the history boundary are intercepted; everything else is not.
+
+<CoverageMap />
+
+## Key management
+
+The encryption sample reads the key from an environment variable:
+
+```bash
+export CADENCE_ENCRYPTION_KEY=<base64-encoded-32-byte-key>
+```
+
+This is the simplest wiring and works well for development. Production deployments should prefer a secrets manager (AWS Secrets Manager, HashiCorp Vault, GCP Secret Manager) and inject the key at process startup rather than baking it into environment configuration.
+
+Two failure modes to plan for:
+
+**Missing key at decode:** if the worker starts without a key, `FromData` returns an error on every decode attempt. The task retries indefinitely until the key is available. This is recoverable, but plan for it in your runbook.
+
+**Wrong key at decode:** the GCM authentication tag mismatch is detected immediately and returns a hard error. No silent data corruption.
+
+## Key rotation
+
+The hardest operational question with payload encryption is key rotation: how do you replace a key without breaking workflows that are already in flight?
+
+The core constraint is that Cadence history is immutable. Events written with key v1 stay encoded with key v1 forever. If you remove v1 before all workflows using it have completed, those workflows fail to decode when they resume after the rotation.
+
+<KeyRotationTimeline />
+
+Drag the rotation slider to move the key boundary. Switch the "Available key" toggle to "v1 only" or "v2 only" to see which events fail. The safe approach is to keep both keys available in the decoder until all workflows that predate the rotation have completed.
+
+The safe rotation procedure:
+
+1. Generate key v2.
+2. Update your converter to accept both v1 and v2 at decode time (try v2 first, fall back to v1).
+3. Update your converter to always encrypt with v2 from this point forward.
+4. Deploy the updated converter to all clients and workers.
+5. Wait for all workflows that started before step 4 to complete.
+6. Remove v1 from the converter.
+
+:::caution
+The gap in step 5 can be days or weeks depending on your longest-running workflows. Build multi-key support into your converter from the start; retrofitting it during an incident is painful.
+:::
+
+## Compliance reality check
+
+If your workloads are subject to HIPAA, PCI-DSS, or similar regulations, encrypting the DataConverter-covered payloads is necessary but not sufficient. The surfaces below are all outside the converter path and require separate controls.
+
+<ExposureCards />
+
+## The complete series
+
+This is the final post in the DataConverter series. The three patterns are now covered end to end:
+
+- **Week 1:** [Your Workflow History Is Storing More Than You Think](/blog/2026/06/03/2026-06-03-workflow-history-data-converter/workflow-history-data-converter): the DataConverter mental model and which problem each pattern solves
+- **Week 2:** [Bypass the 2 MB Limit Without Shrinking Your Workflow](/blog/2026/06/10/2026-06-10-claim-check-pattern/claim-check-pattern): claim-check deep dive with deterministic blob keys, threshold tuning, and blob store options
+- **Week 3 (this post):** encryption mechanics, coverage map, key management, and the compliance gap
+
+## Get started
+
+- [DataConverter Guide](/docs/concepts/data-converter)
+- [Go samples](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/data)
+- [Java samples](https://github.com/cadence-workflow/cadence-java-samples)
+- [Community and support](/community/contact-us)
