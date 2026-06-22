@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Blog">
+  <!-- RSS / feed waves (transparent; .media supplies the themed background) -->
+  <g fill="none" stroke-linecap="round" stroke-width="56">
+    <path d="M685,415 A150,150 0 0 1 835,565" stroke="#276EF1"/>
+    <path d="M685,275 A290,290 0 0 1 975,565" stroke="#1B54C0"/>
+  </g>
+  <circle cx="685" cy="565" r="70" fill="#276EF1"/>
+</svg>

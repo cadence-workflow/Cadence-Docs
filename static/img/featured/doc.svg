@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Doc">
+  <!-- back sheet -->
+  <rect x="700" y="320" width="340" height="380" rx="22" fill="#9DBEF5"/>
+  <!-- front sheet -->
+  <rect x="600" y="250" width="340" height="400" rx="22" fill="#276EF1"/>
+  <!-- folded corner -->
+  <path d="M880,250 L940,250 L940,310 Z" fill="#1B54C0"/>
+  <!-- text lines -->
+  <g fill="#FFFFFF">
+    <rect x="650" y="380" width="240" height="28" rx="14"/>
+    <rect x="650" y="450" width="240" height="28" rx="14"/>
+    <rect x="650" y="520" width="150" height="28" rx="14"/>
+  </g>
+</svg>

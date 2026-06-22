@@ -43,3 +43,15 @@
   href: /docs/codelabs/workflow-tests-go-replayer-shadower
   tag: Doc
   cta: Start codelab
+
+- title: Cadence Best Practices
+  description: Answers to common questions and recommended patterns for building reliable, maintainable Cadence workflows and activities.
+  href: /faq/best-practices
+  tag: FAQ
+  cta: Read FAQ
+
+- title: Cadence in Action (Video)
+  description: Watch a walkthrough of Cadence concepts and workflows on the Cadence YouTube channel.
+  href: https://www.youtube.com/watch?v=SLlOk_BbtKo
+  tag: Video
+  cta: Watch video

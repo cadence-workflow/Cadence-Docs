@@ -1,13 +1,12 @@
 export const FEATURED_TAGS = ['Blog', 'Doc', 'Community', 'FAQ', 'Video'] as const;
 export type FeaturedTag = (typeof FEATURED_TAGS)[number];
 
-// TEMP placeholders — replace with themed art once designed.
 export const TAG_DEFAULT_IMAGE: Record<FeaturedTag, string> = {
-  Blog: '/img/docusaurus/undraw_docusaurus_react.svg',
-  Doc: '/img/docusaurus/undraw_docusaurus_mountain.svg',
-  Community: '/img/docusaurus/undraw_docusaurus_tree.svg',
-  FAQ: '/img/gears_blue.svg',
-  Video: '/img/arrow_divert_filled.svg',
+  Blog: '/img/featured/blog.svg',
+  Doc: '/img/featured/doc.svg',
+  Community: '/img/featured/community.svg',
+  FAQ: '/img/featured/faq.svg',
+  Video: '/img/featured/video.svg',
 };
 
-export const FALLBACK_IMAGE = '/img/red-herring.svg';
+export const FALLBACK_IMAGE = '/img/featured/default.svg';

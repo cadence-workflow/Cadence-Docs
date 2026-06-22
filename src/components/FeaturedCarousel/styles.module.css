@@ -98,24 +98,26 @@
 .media {
   position: relative;
   aspect-ratio: 16 / 9;
-  background: var(--ifm-color-emphasis-100);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
+  background: #e9f1fe;
+  overflow: hidden;
+}
+
+:global(html[data-theme='dark']) .media {
+  background: #1c2430;
 }
 
 .media img {
-  max-height: 100%;
-  max-width: 80%;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .tag {
   position: absolute;
   top: 0.75rem;
   left: 0.75rem;
-  background: var(--ifm-color-primary);
+  background: #5b4636;
   color: #fff;
   font-size: 0.7rem;
   font-weight: 600;

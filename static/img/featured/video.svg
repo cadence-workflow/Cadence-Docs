@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Video">
+  <!-- play button (triangle shifted left for optical centering) -->
+  <circle cx="800" cy="450" r="205" fill="none" stroke="#276EF1" stroke-width="50"/>
+  <path d="M705,350 L705,550 L915,450 Z" fill="#276EF1" stroke="#276EF1" stroke-width="36" stroke-linejoin="round"/>
+</svg>
