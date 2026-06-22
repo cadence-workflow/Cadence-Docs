@@ -111,21 +111,33 @@ export default function FeaturedCarousel(): JSX.Element {
               aria-label={manualPaused ? 'Resume autoplay' : 'Pause autoplay'}
               aria-pressed={manualPaused}
               onClick={() => setManualPaused((p) => !p)}>
-              {manualPaused ? '▶' : '⏸'}
+              {manualPaused ? (
+                <svg width={15} height={15} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              ) : (
+                <svg width={15} height={15} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M7 5h3v14H7zM14 5h3v14h-3z" />
+                </svg>
+              )}
             </button>
             <button
               type="button"
               className={styles.arrow}
               aria-label="Previous"
               onClick={() => scrollToIndex(active - 1)}>
-              ‹
+              <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M15 5l-7 7 7 7" />
+              </svg>
             </button>
             <button
               type="button"
               className={styles.arrow}
               aria-label="Next"
               onClick={() => scrollToIndex(active + 1)}>
-              ›
+              <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M9 5l7 7-7 7" />
+              </svg>
             </button>
           </div>
         </div>
