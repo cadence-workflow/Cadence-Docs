@@ -3,49 +3,43 @@
 #   title:       Card headline
 #   description: One or two short sentences
 #   href:        Internal route (/docs/...) or full external URL
-#   image:       Path under static/ (e.g. /img/foo.svg) or full URL
-#   tag:         Small pill label (Blog, FAQ, Guide, Release, ...)
+#   tag:         REQUIRED. One of: Blog, Doc, Community, FAQ, Video
+#   image:       OPTIONAL. Overrides the tag's default image. Path under static/ (e.g. /img/foo.svg) or full URL.
 #   cta:         Call-to-action label (optional, defaults to "Read more")
 
 #
 - title: "Bypass the 2 MB Limit Without Shrinking Your Workflow"
   description: The claim-check pattern offloads large Cadence payloads to an external blob store so only a tiny reference travels through workflow history.
   href: /blog/2026/06/10/2026-06-10-claim-check-pattern/claim-check-pattern
-  image: /img/docusaurus/undraw_docusaurus_react.svg
   tag: Blog
   cta: Read post
 
 - title: Open Source Workflow Engine
   description: Cadence is an open-source, self-hostable workflow engine for durable, fault-tolerant distributed applications — deploy on SQLite, Docker, or Kubernetes.
   href: /docs/concepts/open-source-workflow-engine
-  image: /img/docusaurus/undraw_docusaurus_mountain.svg
-  tag: Concepts
+  tag: Doc
   cta: Learn more
 
 - title: "Data Converters: Encryption & Compression"
   description: Implement custom Cadence DataConverters to compress, encrypt, serialize, or offload workflow payloads using the Go and Java samples.
   href: /docs/concepts/data-converter
-  image: /img/docusaurus/undraw_docusaurus_react.svg
-  tag: Concepts
+  tag: Doc
   cta: Learn more
 
 - title: Community Meetups
   description: Join the recurring Cadence community meetup to share demos, ask questions, and connect with maintainers.
   href: /community/meetup
-  image: /img/docusaurus/undraw_docusaurus_mountain.svg
   tag: Community
   cta: Join us
 
 - title: Deploy Cadence with Helm on GKE (PostgreSQL + OpenSearch)
   description: A codelab for deploying Cadence on Google Kubernetes Engine using Helm with PostgreSQL, Kafka, and OpenSearch for advanced visibility.
   href: /docs/codelabs/helm-deploy-postgres-opensearch
-  image: /img/docusaurus/undraw_docusaurus_react.svg
-  tag: Codelab
+  tag: Doc
   cta: Start codelab
 
 - title: How To Write Tests With Workflow Replayer and Shadower
   description: A codelab on writing Go tests for Cadence workflows using the Workflow Replayer and Shadower to catch non-deterministic changes.
   href: /docs/codelabs/workflow-tests-go-replayer-shadower
-  image: /img/docusaurus/undraw_docusaurus_mountain.svg
-  tag: Codelab
+  tag: Doc
   cta: Start codelab

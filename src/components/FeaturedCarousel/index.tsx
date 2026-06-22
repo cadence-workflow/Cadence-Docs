@@ -3,19 +3,37 @@ import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
 import featuredLinks from '@site/src/data/featuredLinks.yaml';
+import {
+  FEATURED_TAGS,
+  TAG_DEFAULT_IMAGE,
+  FALLBACK_IMAGE,
+  type FeaturedTag,
+} from '@site/src/data/featuredTags';
 import styles from './styles.module.css';
 
 type FeaturedItem = {
   title: string;
   description: string;
   href: string;
-  image: string;
-  tag?: string;
+  image?: string;
+  tag: FeaturedTag;
   cta?: string;
 };
 
 const items = featuredLinks as FeaturedItem[];
 const AUTOPLAY_MS = 5000;
+
+items.forEach((item, i) => {
+  if (!FEATURED_TAGS.includes(item.tag as FeaturedTag)) {
+    throw new Error(
+      `featuredLinks.yaml item ${i + 1} ("${item.title}") has invalid tag "${item.tag}". ` +
+        `Allowed tags: ${FEATURED_TAGS.join(', ')}.`,
+    );
+  }
+});
+
+const resolveImage = (item: FeaturedItem) =>
+  item.image ?? TAG_DEFAULT_IMAGE[item.tag] ?? FALLBACK_IMAGE;
 
 export default function FeaturedCarousel(): JSX.Element {
   const trackRef = useRef<HTMLUListElement>(null);
@@ -121,7 +139,7 @@ export default function FeaturedCarousel(): JSX.Element {
               aria-label={`${i + 1} of ${items.length}`}>
               <Link className={clsx('card', styles.card)} to={item.href}>
                 <div className={styles.media}>
-                  <img src={item.image} alt="" loading="lazy" />
+                  <img src={resolveImage(item)} alt="" loading="lazy" />
                   {item.tag && <span className={styles.tag}>{item.tag}</span>}
                 </div>
                 <div className={styles.body}>
