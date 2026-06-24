@@ -104,7 +104,15 @@ Both Schedules and the legacy `CronSchedule` field run a workflow on a recurring
 | History and observability | Yes, last N runs visible via describe | No |
 | Update without restart | Yes | No |
 
-For new use cases, prefer Schedules. `CronSchedule` remains available for backwards compatibility.
+### Which one to use
+
+The key question is whether each scheduled time window matters independently.
+
+**Use Schedules** when every execution has its own semantic meaning. A data pipeline that processes the previous hour's events is a good example: if three runs are missed during an outage, you need to backfill and process each of those three specific time windows. Missing one means missing that window's data permanently.
+
+**Use `CronSchedule`** when only the most recent execution matters. Syncing a restaurant's current hours or menu is a good example: if three syncs are missed, running once now gives you the current state. There is nothing useful to backfill; the past windows have no independent value.
+
+`CronSchedule` remains available for backwards compatibility and for simple set-and-forget jobs where the historical record of runs is irrelevant.
 
 ## Observability
 
