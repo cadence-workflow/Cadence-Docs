@@ -67,9 +67,15 @@ The overlap policy can be changed on a live schedule via `UpdateSchedule`. The c
 
 ### Pause and unpause
 
-A schedule can be paused with an optional human-readable note, useful for referencing an incident ticket or change-freeze period. While paused, no new fires are dispatched. Unpausing resumes from the current time.
+A schedule can be paused with an optional human-readable note, useful for referencing an incident ticket or change-freeze period. While paused, no new fires are dispatched.
 
-Missed fires during a pause window are not replayed automatically. Use [backfill](#backfill) if you need them.
+When unpausing, you can control catch-up behavior with `--catch_up_policy`:
+
+| Policy | Behavior |
+|---|---|
+| `Skip` (default) | Resume from now; all missed fires are dropped. |
+| `One` | Dispatch at most one missed fire, then resume from now. |
+| `All` | Dispatch all missed fires within the catch-up window, then resume from now. |
 
 ### Catch-up window
 
@@ -85,7 +91,26 @@ Backfill lets you manually request fires for a specific time range in the past. 
 - You created a schedule today but want runs retroactively from an earlier date.
 - You are replaying historical data through your workflow.
 
-Each backfill request takes a start time, end time, and an optional backfill ID. Workflows started via backfill are tagged with search attributes so you can distinguish them from normal scheduled runs.
+Each backfill request takes a start time, end time, and an optional backfill ID. Backfill fires are subject to the configured overlap policy, so with `SkipNew` only the first backfill fire will run; use `Concurrent` or `CancelPrevious` when backfilling a large time range.
+
+### Search attributes on scheduled workflows
+
+Every workflow started by a schedule receives the following search attributes automatically:
+
+| Attribute | Type | Description |
+|---|---|---|
+| `CadenceScheduleID` | string | The schedule ID that triggered this run. |
+| `CadenceScheduleTime` | time | The scheduled fire time (not the actual start time). |
+| `CadenceScheduleIsBackfill` | bool | `true` if this run was started by a backfill request. |
+| `CadenceScheduleBackfillID` | string | The backfill ID, if one was provided. Only set when `CadenceScheduleIsBackfill` is `true`. |
+
+These attributes are queryable via the Cadence visibility API. For example, to find all backfill runs for a given schedule:
+
+```
+CadenceScheduleID = "my-schedule" AND CadenceScheduleIsBackfill = true
+```
+
+The `CadenceScheduleTime` attribute reflects the nominal fire time, not when the workflow actually started. This is useful in data pipelines where the workflow needs to know which time window it owns regardless of how late it started.
 
 ### Jitter
 
@@ -123,6 +148,15 @@ The `DescribeSchedule` API (and CLI command) returns:
 - Recent run history (last started and last completed times)
 - The next scheduled fire time
 
+## Limitations
+
+- **`Buffer` holds one pending fire.** If a fire arrives while one is already buffered, the newer fire is dropped. Use `Concurrent` if you need more than one pending run.
+- **Overlap policy changes are not retroactive.** Changing the policy on a live schedule does not affect runs that are already active or buffered. Only future fires use the new policy.
+- **Catch-up is bounded by the catch-up window.** The default window is one year. If the server is down for longer than the configured window, fires older than the window are silently dropped with no way to recover them automatically. Use backfill to recover those manually.
+- **Backfill fires respect the overlap policy.** Backfilling a large range with `SkipNew` will run only one workflow. Use `Concurrent` or set `--overlap_policy` on the backfill command when you need all fires to run.
+- **Jitter is not reproducible.** The random offset applied to each fire is not seeded from the schedule state. If the scheduler workflow restarts, a fire may get a different jitter offset than it would have had otherwise.
+- **The scheduler workflow counts against domain limits.** Each schedule consumes one workflow execution slot in the domain. In domains with very tight workflow count limits this is worth accounting for.
+
 ## CLI quick reference
 
 ```bash
@@ -147,10 +181,16 @@ cadence schedule create \
 # Describe
 cadence schedule describe --schedule_id my-schedule
 
+# List all schedules in the domain
+cadence schedule list
+
 # Pause
 cadence schedule pause --schedule_id my-schedule --reason "planned maintenance"
 
-# Unpause
+# Unpause (catch up on all missed fires)
+cadence schedule unpause --schedule_id my-schedule --catch_up_policy all
+
+# Unpause (skip missed fires, resume from now)
 cadence schedule unpause --schedule_id my-schedule
 
 # Backfill
