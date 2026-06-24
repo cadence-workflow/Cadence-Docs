@@ -139,7 +139,7 @@ For new use cases, prefer Schedules. `CronSchedule` remains available for backwa
 ```bash
 cadence schedule create \
   --schedule_id daily-etl \
-  --cron "0 2 * * *" \
+  --cron_expression "0 2 * * *" \
   --workflow_type RunETL \
   --tasklist etl-workers \
   --execution_timeout 7200

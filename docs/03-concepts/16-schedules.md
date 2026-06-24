@@ -121,7 +121,7 @@ The `DescribeSchedule` API (and CLI command) returns:
 # Create
 cadence schedule create \
   --schedule_id my-schedule \
-  --cron "0 9 * * *" \
+  --cron_expression "0 9 * * *" \
   --workflow_type MyWorkflow \
   --tasklist my-tasklist \
   --execution_timeout 3600
@@ -129,7 +129,7 @@ cadence schedule create \
 # Create with bounded concurrency (max 3 simultaneous runs)
 cadence schedule create \
   --schedule_id my-schedule \
-  --cron "*/5 * * * *" \
+  --cron_expression "*/5 * * * *" \
   --workflow_type MyWorkflow \
   --tasklist my-tasklist \
   --overlap_policy concurrent \
