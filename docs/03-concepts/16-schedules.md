@@ -18,11 +18,11 @@ permalink: /docs/concepts/schedules
 
 # Schedules
 
-Cadence Schedules let you run a workflow on a recurring cadence. Unlike the older `CronSchedule` option on `StartWorkflowOptions`, Schedules are first-class server-side objects: you can inspect them, pause them, update them, backfill missed runs, and observe their history — all without touching your workflow code.
+Cadence Schedules let you run a workflow on a recurring cadence. Unlike the older `CronSchedule` option on `StartWorkflowOptions`, Schedules are first-class server-side objects: you can inspect them, pause them, update them, backfill missed runs, and observe their history without touching your workflow code.
 
 ## How it works
 
-When you create a schedule, the Cadence server runs an internal durable scheduler workflow in the background. On each tick it evaluates the cron expression, applies the overlap policy, and starts your target workflow. The scheduler workflow is fault-tolerant — it survives server restarts and failures just like any other Cadence workflow.
+When you create a schedule, the Cadence server runs an internal durable scheduler workflow in the background. On each tick it evaluates the cron expression, applies the overlap policy, and starts your target workflow. The scheduler workflow is fault-tolerant and survives server restarts and failures just like any other Cadence workflow.
 
 Your target workflow does not need to know it is being run by a schedule. It is a plain workflow started with normal arguments.
 
@@ -59,27 +59,27 @@ The overlap policy controls what happens when a scheduled fire arrives while a p
 | `CancelPrevious` | Request cancellation of the current run, then start the new one. |
 | `TerminatePrevious` | Terminate the current run immediately, then start the new one. |
 
-**`CancelPrevious` vs `TerminatePrevious`:** Cancellation is cooperative — the running workflow receives the signal and may continue for some time while it cleans up. Termination is immediate and unconditional. Use `TerminatePrevious` only when you need a hard guarantee that no two runs overlap even briefly.
+**`CancelPrevious` vs `TerminatePrevious`:** Cancellation is cooperative. The running workflow receives the signal and may continue for some time while it cleans up. Termination is immediate and unconditional. Use `TerminatePrevious` only when you need a hard guarantee that no two runs overlap even briefly.
 
-**Bounded concurrency:** `Concurrent` with `--concurrency_limit N` lets you cap how many runs are active at once — for example, "fire freely but never exceed 5 simultaneous runs." Set `--concurrency_limit 0` for unlimited.
+**Bounded concurrency:** `Concurrent` with `--concurrency_limit N` caps how many runs are active at once. For example, set `--concurrency_limit 5` to allow free firing but never more than 5 simultaneous runs. Set `--concurrency_limit 0` for unlimited.
 
 The overlap policy can be changed on a live schedule via `UpdateSchedule`. The change applies to future fires only; in-flight runs continue under the policy that was active when they started.
 
 ### Pause and unpause
 
-A schedule can be paused with an optional human-readable note — useful for referencing an incident ticket or change-freeze period. While paused, no new fires are dispatched. Unpausing resumes from the current time.
+A schedule can be paused with an optional human-readable note, useful for referencing an incident ticket or change-freeze period. While paused, no new fires are dispatched. Unpausing resumes from the current time.
 
 Missed fires during a pause window are not replayed automatically. Use [backfill](#backfill) if you need them.
 
 ### Catch-up window
 
-If the Cadence server is unavailable and fires are missed, the scheduler catches up when it recovers — dispatching missed fires within a configurable window (default: one year). Fires older than the window are dropped silently. Fires within the window are dispatched according to the overlap policy.
+If the Cadence server is unavailable and fires are missed, the scheduler catches up when it recovers by dispatching missed fires within a configurable window (default: one year). Fires older than the window are dropped silently. Fires within the window are dispatched according to the overlap policy.
 
 The scheduler uses the schedule's creation time as the earliest possible catch-up point. A brand-new schedule that is immediately paused and then unpaused will not dispatch ancient phantom fires.
 
 ### Backfill
 
-Backfill lets you manually request fires for a specific time range in the past. This is useful when:
+Backfill lets you manually request fires for a specific time range in the past. Common cases:
 
 - A schedule was paused during an outage and you need to process the missed period.
 - You created a schedule today but want runs retroactively from an earlier date.
@@ -97,11 +97,11 @@ Both Schedules and the legacy `CronSchedule` field run a workflow on a recurring
 
 | | Schedules | `CronSchedule` field |
 |---|---|---|
-| Server-side object | Yes — inspect, update, delete via API | No — embedded in workflow options at start |
+| Server-side object | Yes, inspect/update/delete via API | No, embedded in workflow options at start |
 | Overlap policy | Configurable per schedule | Fixed: always skip if previous run is active |
 | Pause/unpause | Yes, with notes | No |
 | Backfill | Yes | No |
-| History and observability | Yes — last N runs visible via describe | No |
+| History and observability | Yes, last N runs visible via describe | No |
 | Update without restart | Yes | No |
 
 For new use cases, prefer Schedules. `CronSchedule` remains available for backwards compatibility.
@@ -163,8 +163,4 @@ cadence schedule delete --schedule_id my-schedule
 
 ## SDK usage
 
-SDK-specific guides for creating and managing schedules in code will be added here as each client ships support:
-
-- Go SDK — coming soon
-- Java SDK — coming soon
-- Python SDK — coming soon
+Go, Java, and Python SDK guides will be added here as each client ships support.

@@ -32,7 +32,7 @@ A Schedule is a first-class server-side object that manages recurring workflow e
 
 Your target workflow does not need to know it is being scheduled. It is a plain workflow. The scheduler handles the timing, overlap logic, and observability.
 
-This is a meaningful shift from `CronSchedule`. With `CronSchedule`, the schedule is baked into the workflow at start time -- opaque to the server, invisible to operators, impossible to modify without a restart. A Schedule is something you can observe, pause, update, and backfill without touching workflow code.
+With `CronSchedule`, the schedule is baked into the workflow at start time -- opaque to the server, invisible to operators, impossible to modify without a restart. A Schedule lives on the server. You can observe it, pause it, update it, and backfill it without touching workflow code.
 
 ## Overlap policies
 
@@ -145,6 +145,6 @@ cadence schedule create \
   --execution_timeout 7200
 ```
 
-The full API surface is available through the CLI. SDK support for Go, Java, and Python is on the way -- each will get its own guide as it ships.
+The full API surface is available through the CLI. Go, Java, and Python SDK guides are coming as each client ships support.
 
 See the [Schedules concept page](/docs/concepts/schedules) for the full reference including overlap policy details, jitter, and CLI commands.
