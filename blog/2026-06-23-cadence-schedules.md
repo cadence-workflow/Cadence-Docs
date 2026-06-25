@@ -41,31 +41,31 @@ Back to the ETL example. You have five reasonable answers depending on what the 
 **Skip the new fire.** The current run is more important. Let it finish; drop the one that arrived early.
 
 ```
---overlap_policy skipnew
+--overlap_policy SkipNew
 ```
 
 **Buffer it.** The new fire matters, but it can wait. Start it the moment the current run finishes.
 
 ```
---overlap_policy buffer
+--overlap_policy Buffer
 ```
 
 **Cancel the current run and start fresh.** The new data has made the current run stale. Request cancellation and proceed.
 
 ```
---overlap_policy cancelprevious
+--overlap_policy CancelPrevious
 ```
 
 **Terminate immediately.** No time for cleanup. Stop the current run hard and start the new one now.
 
 ```
---overlap_policy terminateprevious
+--overlap_policy TerminatePrevious
 ```
 
 **Run them all -- up to a limit.** The job is embarrassingly parallel and you want throughput, but not unbounded throughput. Cap the concurrency at a safe level.
 
 ```
---overlap_policy concurrent --concurrency_limit 5
+--overlap_policy Concurrent --concurrency_limit 5
 ```
 
 That last one is worth pausing on. Most scheduling systems treat concurrent execution as binary: either one at a time, or fully unlimited. With Cadence Schedules, bounded concurrency is a first-class policy. You set the cap; the scheduler enforces it. Fires that arrive when the cap is full are counted as skipped. Set `--concurrency_limit 0` if you want truly unlimited concurrency.

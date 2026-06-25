@@ -59,6 +59,8 @@ The overlap policy controls what happens when a scheduled fire arrives while a p
 | `CancelPrevious` | Request cancellation of the current run, then start the new one. |
 | `TerminatePrevious` | Terminate the current run immediately, then start the new one. |
 
+Policy values are case-insensitive when passed to the CLI (`SkipNew`, `skipnew`, and `skip_new` all work).
+
 **`CancelPrevious` vs `TerminatePrevious`:** Cancellation is cooperative. The running workflow receives the signal and may continue for some time while it cleans up. Termination is immediate and unconditional. Use `TerminatePrevious` only when you need a hard guarantee that no two runs overlap even briefly.
 
 **Bounded concurrency:** `Concurrent` with `--concurrency_limit N` caps how many runs are active at once. For example, set `--concurrency_limit 5` to allow free firing but never more than 5 simultaneous runs. Set `--concurrency_limit 0` for unlimited.
@@ -76,6 +78,8 @@ When unpausing, you can control catch-up behavior with `--catch_up_policy`:
 | `Skip` (default) | Resume from now; all missed fires are dropped. |
 | `One` | Dispatch at most one missed fire, then resume from now. |
 | `All` | Dispatch all missed fires within the catch-up window, then resume from now. |
+
+Policy values are case-insensitive when passed to the CLI.
 
 ### Catch-up window
 
@@ -174,7 +178,7 @@ cadence schedule create \
   --cron_expression "*/5 * * * *" \
   --workflow_type MyWorkflow \
   --tasklist my-tasklist \
-  --overlap_policy concurrent \
+  --overlap_policy Concurrent \
   --concurrency_limit 3 \
   --execution_timeout 3600
 
@@ -188,7 +192,7 @@ cadence schedule list
 cadence schedule pause --schedule_id my-schedule --reason "planned maintenance"
 
 # Unpause (catch up on all missed fires)
-cadence schedule unpause --schedule_id my-schedule --catch_up_policy all
+cadence schedule unpause --schedule_id my-schedule --catch_up_policy All
 
 # Unpause (skip missed fires, resume from now)
 cadence schedule unpause --schedule_id my-schedule
@@ -203,7 +207,7 @@ cadence schedule backfill \
 # Update overlap policy
 cadence schedule update \
   --schedule_id my-schedule \
-  --overlap_policy skipnew
+  --overlap_policy SkipNew
 
 # Delete
 cadence schedule delete --schedule_id my-schedule
