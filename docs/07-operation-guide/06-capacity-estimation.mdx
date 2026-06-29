@@ -67,6 +67,14 @@ The formula below is a simple extrapolation based on production environments we 
 
 **`workflowsAtPeak`** and **`workflowsPerDay`** are independent inputs: peak counts concurrent open workflows, while per-day counts throughput. For a 2-hour workflow processing 10,000 orders/day, peak concurrency ≈ `10,000 × (2 / 24) ≈ 833`. Click **Load order-processing example** to see this pre-filled (833 concurrent workflows, 10K/day, 2-hr runtime, 7-day retention → ~4.2 updates/sec, ~169 GB retained).
 
+All time and size fields accept free-form values with units. Type whatever is natural for your workload:
+
+| Field type | Accepted formats | Examples |
+|---|---|---|
+| Time (runtime, retention) | `s`, `m`, `h`, `d`, `w` or plain number (hours) | `2h`, `30m`, `90 mins`, `1d`, `3600s`, `24` |
+| Size in MB (payload fields) | `B`, `KB`, `MB`, `GB` or plain number (MB) | `500 KB`, `1 MB`, `0.5`, `2 GB` |
+| Size in KB (signal, heartbeat, response) | `B`, `KB`, `MB`, `GB` or plain number (KB) | `1 KB`, `500 B`, `2 MB`, `1` |
+
 ### Example: order-processing workflow
 
 To make the estimator inputs concrete, here is a simple order-processing workflow from the [cadence-samples](https://github.com/cadence-workflow/cadence-samples) repository. It runs 3 activities (charge, update inventory, send confirmation), handles a signal (order-update), and fires one timer (follow-up reminder):
