@@ -29,6 +29,10 @@ sc := cadenceClient.ScheduleClient()
 ## Creating a schedule
 
 ```go
+import "encoding/json"
+
+input, _ := json.Marshal(MyWorkflowInput{Date: "2026-06-01"})
+
 scheduleID, err := sc.Create(ctx, &client.CreateScheduleRequest{
     ScheduleID: "daily-etl",
     Spec: &client.ScheduleSpec{
@@ -38,6 +42,7 @@ scheduleID, err := sc.Create(ctx, &client.CreateScheduleRequest{
         StartWorkflow: &client.ScheduleStartWorkflowAction{
             WorkflowType:                 "RunETL",
             TaskList:                     "etl-workers",
+            Input:                        input,
             ExecutionStartToCloseTimeout: 2 * time.Hour,
         },
     },
@@ -46,6 +51,8 @@ scheduleID, err := sc.Create(ctx, &client.CreateScheduleRequest{
     },
 })
 ```
+
+`Input` is a pre-encoded byte slice. Encode it with `json.Marshal` for simple types, or use your configured `DataConverter` for custom types. The same bytes are passed to every triggered workflow run.
 
 `Create` is not idempotent. If the request succeeds on the server but you lose the response (e.g. a network timeout), call `Describe` to check whether the schedule was actually created before retrying.
 
@@ -68,6 +75,17 @@ Policies: &client.SchedulePolicies{
 },
 ```
 
+### Auto-pause on failure
+
+```go
+Policies: &client.SchedulePolicies{
+    OverlapPolicy:  client.ScheduleOverlapPolicySkipNew,
+    PauseOnFailure: true, // pause the schedule if a triggered run fails
+},
+```
+
+When `PauseOnFailure` is set, the schedule pauses automatically the first time a triggered workflow run fails. Unpause it with `sc.Unpause(...)` once the issue is resolved.
+
 ### Jitter
 
 ```go
@@ -76,6 +94,20 @@ Spec: &client.ScheduleSpec{
     Jitter:         10 * time.Minute, // random delay up to 10 minutes after midnight
 },
 ```
+
+### Bounded schedule window
+
+Use `StartTime` and `EndTime` to restrict when the schedule is active:
+
+```go
+Spec: &client.ScheduleSpec{
+    CronExpression: "0 9 * * 1-5", // weekdays at 9 AM
+    StartTime:      time.Date(2026, 7, 1, 0, 0, 0, 0, time.UTC),
+    EndTime:        time.Date(2026, 12, 31, 0, 0, 0, 0, time.UTC),
+},
+```
+
+The schedule fires only within the `[StartTime, EndTime]` window. Zero values mean no bound.
 
 ## Describing a schedule
 
@@ -169,15 +201,15 @@ err = sc.Delete(ctx, "daily-etl")
 
 Deleting a schedule does not cancel or terminate any workflows it already started.
 
-## Reading schedule attributes from inside a workflow
+## Schedule search attributes
 
-Every workflow started by a schedule receives search attributes automatically. These are accessible through the Cadence visibility API and can also be read at start time if needed:
+Every workflow run triggered by a schedule is automatically tagged with the following search attributes, which you can use to filter runs via the Cadence visibility API (e.g. `ListWorkflowExecutions`):
 
 | Attribute | Type | Value |
 |---|---|---|
 | `CadenceScheduleID` | string | The schedule ID |
-| `CadenceScheduleTime` | time | The nominal scheduled fire time (not actual start time) |
+| `CadenceScheduleTime` | datetime | The nominal scheduled fire time (not actual start time) |
 | `CadenceScheduleIsBackfill` | bool | `true` if started by a backfill request |
 | `CadenceScheduleBackfillID` | string | The backfill ID, if provided |
 
-The workflow itself receives no special input beyond what you configured in `ScheduleStartWorkflowAction.Input`. Use search attributes or the nominal fire time embedded in `CadenceScheduleTime` to determine which time window to process.
+`CadenceScheduleTime` is the time the schedule intended to fire, not when the workflow actually started. Use it to determine which time window a triggered run should process.
