@@ -66,6 +66,7 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'concepts/workflow-queries-formatted-data' },
         { type: 'doc', id: 'concepts/workflow-engine' },
         { type: 'doc', id: 'concepts/open-source-workflow-engine' },
+        { type: 'doc', id: 'concepts/schedules' },
       ],
     },
     {
