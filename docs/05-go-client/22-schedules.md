@@ -29,7 +29,11 @@ sc := cadenceClient.ScheduleClient()
 ## Creating a schedule
 
 ```go
-import "encoding/json"
+import (
+    "encoding/json"
+    "go.uber.org/cadence"
+    "go.uber.org/cadence/client"
+)
 
 input, _ := json.Marshal(MyWorkflowInput{Date: "2026-06-01"})
 
@@ -44,6 +48,9 @@ scheduleID, err := sc.Create(ctx, &client.CreateScheduleRequest{
             TaskList:                     "etl-workers",
             Input:                        input,
             ExecutionStartToCloseTimeout: 2 * time.Hour,
+            RetryPolicy: &cadence.RetryPolicy{
+                MaximumAttempts: 3,
+            },
         },
     },
     Policies: &client.SchedulePolicies{
@@ -63,7 +70,7 @@ scheduleID, err := sc.Create(ctx, &client.CreateScheduleRequest{
 | `client.ScheduleOverlapPolicySkipNew` (default) | Skip the new fire if a previous run is still active. |
 | `client.ScheduleOverlapPolicyBuffer` | Queue new fires and run them sequentially; depth limited by `BufferLimit`. |
 | `client.ScheduleOverlapPolicyConcurrent` | Start every fire; use `ConcurrencyLimit` to cap simultaneous runs. |
-| `client.ScheduleOverlapPolicyCancelPrevious` | Cancel the active run, then start the new one. |
+| `client.ScheduleOverlapPolicyCancelPrevious` | Cancel the active run gracefully, then start the new one. |
 | `client.ScheduleOverlapPolicyTerminatePrevious` | Terminate the active run immediately, then start the new one. |
 
 ### Bounded concurrency
@@ -75,12 +82,39 @@ Policies: &client.SchedulePolicies{
 },
 ```
 
+### Buffer depth
+
+```go
+Policies: &client.SchedulePolicies{
+    OverlapPolicy: client.ScheduleOverlapPolicyBuffer,
+    BufferLimit:   10, // queue up to 10 pending fires; 0 = server default cap
+},
+```
+
+### Catch-up policy and window
+
+`CatchUpPolicy` sets the default behavior when the schedule resumes from pause. `CatchUpWindow` limits how far back the server looks for missed fires.
+
+```go
+Policies: &client.SchedulePolicies{
+    OverlapPolicy:  client.ScheduleOverlapPolicySkipNew,
+    CatchUpPolicy:  client.ScheduleCatchUpPolicyOne,
+    CatchUpWindow:  2 * time.Hour, // look back at most 2 hours for missed fires on resume
+},
+```
+
+| Constant | Behavior |
+|---|---|
+| `client.ScheduleCatchUpPolicySkip` (default) | Resume from now; all missed fires are dropped. |
+| `client.ScheduleCatchUpPolicyOne` | Dispatch at most one missed fire, then resume from now. |
+| `client.ScheduleCatchUpPolicyAll` | Dispatch all missed fires within the catch-up window. |
+
 ### Auto-pause on failure
 
 ```go
 Policies: &client.SchedulePolicies{
     OverlapPolicy:  client.ScheduleOverlapPolicySkipNew,
-    PauseOnFailure: true, // pause the schedule if a triggered run fails
+    PauseOnFailure: true,
 },
 ```
 
@@ -135,13 +169,7 @@ err = sc.Unpause(ctx, "daily-etl", "maintenance complete", client.ScheduleCatchU
 err = sc.Unpause(ctx, "daily-etl", "maintenance complete", client.ScheduleCatchUpPolicyAll)
 ```
 
-Catch-up policies:
-
-| Constant | Behavior |
-|---|---|
-| `client.ScheduleCatchUpPolicySkip` (default) | Resume from now; all missed fires are dropped. |
-| `client.ScheduleCatchUpPolicyOne` | Dispatch at most one missed fire, then resume from now. |
-| `client.ScheduleCatchUpPolicyAll` | Dispatch all missed fires within the catch-up window. |
+The catch-up policy passed to `Unpause` overrides the default set in `SchedulePolicies.CatchUpPolicy` for that single resume event.
 
 ## Updating a schedule
 
@@ -155,23 +183,27 @@ err = sc.Update(ctx, "daily-etl", func(u *client.ScheduleUpdate) error {
     // Change the overlap policy
     u.Policies.OverlapPolicy = client.ScheduleOverlapPolicyBuffer
 
+    // Change the workflow type
+    u.Action.StartWorkflow.WorkflowType = "RunETLV2"
+
     return nil
 })
 ```
 
-Changes apply to future fires only. In-flight runs are not affected.
+`ScheduleUpdate` exposes `Spec`, `Action`, and `Policies`. Mutate only the fields you want to change; the rest are left untouched. Changes apply to future fires only. In-flight runs are not affected.
 
 ## Backfill
 
 ```go
 err = sc.Backfill(ctx, "daily-etl", &client.BackfillRequest{
-    BackfillID: "backfill-june-gap",
-    StartTime:  time.Date(2026, 6, 20, 0, 0, 0, 0, time.UTC),
-    EndTime:    time.Date(2026, 6, 23, 0, 0, 0, 0, time.UTC),
+    BackfillID:    "backfill-june-gap",
+    StartTime:     time.Date(2026, 6, 20, 0, 0, 0, 0, time.UTC),
+    EndTime:       time.Date(2026, 6, 23, 0, 0, 0, 0, time.UTC),
+    OverlapPolicy: client.ScheduleOverlapPolicyConcurrent, // optional: override for this backfill only
 })
 ```
 
-Backfill fires are tagged with `CadenceScheduleIsBackfill=true` and `CadenceScheduleBackfillID` search attributes. They respect the schedule's configured overlap policy.
+`OverlapPolicy` is optional. If unset, the backfill uses the schedule's configured overlap policy. Backfill fires are tagged with `CadenceScheduleIsBackfill=true` and `CadenceScheduleBackfillID` search attributes.
 
 ## Listing schedules
 
