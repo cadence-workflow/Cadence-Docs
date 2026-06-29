@@ -22,7 +22,6 @@ The Go client exposes schedule management through `ScheduleClient`, obtained fro
 ```go
 import (
     "go.uber.org/cadence/client"
-    "go.uber.org/cadence/internal"
 )
 
 cadenceClient, err := client.NewClient(client.Options{...})
@@ -36,20 +35,20 @@ sc := cadenceClient.ScheduleClient()
 ## Creating a schedule
 
 ```go
-scheduleID, err := sc.Create(ctx, &internal.CreateScheduleRequest{
+scheduleID, err := sc.Create(ctx, &client.CreateScheduleRequest{
     ScheduleID: "daily-etl",
-    Spec: &internal.ScheduleSpec{
+    Spec: &client.ScheduleSpec{
         CronExpression: "0 2 * * *", // Every day at 2 AM UTC
     },
-    Action: &internal.ScheduleAction{
-        StartWorkflow: &internal.ScheduleStartWorkflowAction{
+    Action: &client.ScheduleAction{
+        StartWorkflow: &client.ScheduleStartWorkflowAction{
             WorkflowType:                 "RunETL",
             TaskList:                     "etl-workers",
             ExecutionStartToCloseTimeout: 2 * time.Hour,
         },
     },
-    Policies: &internal.SchedulePolicies{
-        OverlapPolicy: internal.ScheduleOverlapPolicySkipNew,
+    Policies: &client.SchedulePolicies{
+        OverlapPolicy: client.ScheduleOverlapPolicySkipNew,
     },
 })
 ```
@@ -60,17 +59,17 @@ scheduleID, err := sc.Create(ctx, &internal.CreateScheduleRequest{
 
 | Constant | Behavior |
 |---|---|
-| `ScheduleOverlapPolicySkipNew` (default) | Skip the new fire if a previous run is still active. |
-| `ScheduleOverlapPolicyBuffer` | Buffer one pending fire; start it immediately when the previous run finishes. |
-| `ScheduleOverlapPolicyConcurrent` | Start every fire; use `ConcurrencyLimit` to cap simultaneous runs. |
-| `ScheduleOverlapPolicyCancelPrevious` | Cancel the active run, then start the new one. |
-| `ScheduleOverlapPolicyTerminatePrevious` | Terminate the active run immediately, then start the new one. |
+| `client.ScheduleOverlapPolicySkipNew` (default) | Skip the new fire if a previous run is still active. |
+| `client.ScheduleOverlapPolicyBuffer` | Buffer one pending fire; start it immediately when the previous run finishes. |
+| `client.ScheduleOverlapPolicyConcurrent` | Start every fire; use `ConcurrencyLimit` to cap simultaneous runs. |
+| `client.ScheduleOverlapPolicyCancelPrevious` | Cancel the active run, then start the new one. |
+| `client.ScheduleOverlapPolicyTerminatePrevious` | Terminate the active run immediately, then start the new one. |
 
 ### Bounded concurrency
 
 ```go
-Policies: &internal.SchedulePolicies{
-    OverlapPolicy:    internal.ScheduleOverlapPolicyConcurrent,
+Policies: &client.SchedulePolicies{
+    OverlapPolicy:    client.ScheduleOverlapPolicyConcurrent,
     ConcurrencyLimit: 5, // at most 5 simultaneous runs; 0 = unlimited
 },
 ```
@@ -78,7 +77,7 @@ Policies: &internal.SchedulePolicies{
 ### Jitter
 
 ```go
-Spec: &internal.ScheduleSpec{
+Spec: &client.ScheduleSpec{
     CronExpression: "0 0 * * *",
     Jitter:         10 * time.Minute, // random delay up to 10 minutes after midnight
 },
@@ -104,31 +103,31 @@ fmt.Printf("Last run: %v\n", resp.Info.LastRunTime)
 err = sc.Pause(ctx, "daily-etl", "INFRA-4421: cluster maintenance")
 
 // Unpause - resume from now, skip missed fires
-err = sc.Unpause(ctx, "daily-etl", "maintenance complete", internal.ScheduleCatchUpPolicySkip)
+err = sc.Unpause(ctx, "daily-etl", "maintenance complete", client.ScheduleCatchUpPolicySkip)
 
 // Unpause - catch up on all missed fires within the catch-up window
-err = sc.Unpause(ctx, "daily-etl", "maintenance complete", internal.ScheduleCatchUpPolicyAll)
+err = sc.Unpause(ctx, "daily-etl", "maintenance complete", client.ScheduleCatchUpPolicyAll)
 ```
 
 Catch-up policies:
 
 | Constant | Behavior |
 |---|---|
-| `ScheduleCatchUpPolicySkip` (default) | Resume from now; all missed fires are dropped. |
-| `ScheduleCatchUpPolicyOne` | Dispatch at most one missed fire, then resume from now. |
-| `ScheduleCatchUpPolicyAll` | Dispatch all missed fires within the catch-up window. |
+| `client.ScheduleCatchUpPolicySkip` (default) | Resume from now; all missed fires are dropped. |
+| `client.ScheduleCatchUpPolicyOne` | Dispatch at most one missed fire, then resume from now. |
+| `client.ScheduleCatchUpPolicyAll` | Dispatch all missed fires within the catch-up window. |
 
 ## Updating a schedule
 
-`Update` follows a read-modify-write pattern. The SDK fetches the current state, passes it to your callback as a `*ScheduleUpdate`, and sends only the fields you mutate:
+`Update` follows a read-modify-write pattern. The SDK fetches the current state, passes it to your callback as a `*client.ScheduleUpdate`, and sends only the fields you mutate:
 
 ```go
-err = sc.Update(ctx, "daily-etl", func(u *internal.ScheduleUpdate) error {
+err = sc.Update(ctx, "daily-etl", func(u *client.ScheduleUpdate) error {
     // Change the cron expression
     u.Spec.CronExpression = "0 3 * * *" // move to 3 AM
 
     // Change the overlap policy
-    u.Policies.OverlapPolicy = internal.ScheduleOverlapPolicyBuffer
+    u.Policies.OverlapPolicy = client.ScheduleOverlapPolicyBuffer
 
     return nil
 })
@@ -139,7 +138,7 @@ Changes apply to future fires only. In-flight runs are not affected.
 ## Backfill
 
 ```go
-err = sc.Backfill(ctx, "daily-etl", &internal.BackfillRequest{
+err = sc.Backfill(ctx, "daily-etl", &client.BackfillRequest{
     BackfillID: "backfill-june-gap",
     StartTime:  time.Date(2026, 6, 20, 0, 0, 0, 0, time.UTC),
     EndTime:    time.Date(2026, 6, 23, 0, 0, 0, 0, time.UTC),
