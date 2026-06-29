@@ -72,6 +72,26 @@ function parseTimeHours(val: string | number): number {
   return n;
 }
 
+// Parse a time string into days.
+// Plain numbers default to days ("7" → 7 days, "30" → 30 days).
+// Same suffixes as parseTimeHours; used for the retention field.
+// Examples: "7", "30d", "2w", "48h"
+function parseTimeDays(val: string | number): number {
+  if (typeof val === 'number') return isNaN(val) || val < 0 ? 0 : val;
+  const s = val.trim().toLowerCase();
+  const match = s.match(/^(\d+(?:\.\d+)?)\s*(w(?:eeks?)?|d(?:ays?)?|h(?:ours?|rs?)?|m(?:in(?:utes?|s)?)?|s(?:ec(?:onds?|s)?)?)?$/);
+  if (!match) return 0;
+  const n = parseFloat(match[1]);
+  if (isNaN(n) || n < 0) return 0;
+  const u = match[2] ?? '';
+  if (u.startsWith('w')) return n * 7;
+  if (u.startsWith('h')) return n / 24;
+  if (u.startsWith('m')) return n / (60 * 24);
+  if (u.startsWith('s')) return n / (3600 * 24);
+  // 'd' prefix or no unit → days
+  return n;
+}
+
 // Parse a size string into MB.
 // Plain numbers default to MB (the field's native unit).
 // Examples: "2 MB", "500KB", "1GB", "2mb", "500 b"
@@ -199,7 +219,7 @@ export default function CapacityEstimator() {
   const wfPerDay = num(v.workflowsPerDay);
   // avgWorkflowRuntime is in hours; plain numbers = hours.
   const runtimeHours = parseTimeHours(v.avgWorkflowRuntime);
-  const retentionDays = num(v.retentionDaysAfterCompletion);
+  const retentionDays = parseTimeDays(v.retentionDaysAfterCompletion);
   const activities = num(v.activitiesPerWorkflow);
   const signals = num(v.signalsPerWorkflow);
   const timers = num(v.timersPerWorkflow);
@@ -305,7 +325,7 @@ export default function CapacityEstimator() {
             <NumberField label="Workflows at peak" value={v.workflowsAtPeak} onChange={set('workflowsAtPeak')} />
             <NumberField label="Workflows per day" value={v.workflowsPerDay} onChange={set('workflowsPerDay')} />
             <NumberField label="Avg runtime" unit="hr" type="text" placeholder="e.g. 2h, 30m, 1d" value={v.avgWorkflowRuntime} onChange={set('avgWorkflowRuntime')} />
-            <NumberField label="Retention after completion" unit="days" value={v.retentionDaysAfterCompletion} onChange={set('retentionDaysAfterCompletion')} warning={retentionWarn(num(v.retentionDaysAfterCompletion))} />
+            <NumberField label="Retention after completion" unit="days" type="text" placeholder="e.g. 7, 30d, 2w" value={v.retentionDaysAfterCompletion} onChange={set('retentionDaysAfterCompletion')} warning={retentionWarn(retentionDays)} />
           </div>
 
           <div className={styles.section}>
