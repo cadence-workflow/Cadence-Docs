@@ -41,6 +41,10 @@ export default function FeaturedCarousel(): JSX.Element {
   const [hovered, setHovered] = useState(false);
   const [manualPaused, setManualPaused] = useState(false);
   const autoplayPaused = hovered || manualPaused;
+  // While a button-driven scroll animates, ignore the scroll listener so it
+  // can't overwrite `active` with an intermediate/snapped index.
+  const programmaticScroll = useRef(false);
+  const programmaticTimer = useRef(0);
 
   const scrollToIndex = useCallback((index: number) => {
     const track = trackRef.current;
@@ -48,7 +52,17 @@ export default function FeaturedCarousel(): JSX.Element {
     const clamped = (index + items.length) % items.length;
     const card = track.children[clamped] as HTMLElement | undefined;
     if (card) {
-      track.scrollTo({left: card.offsetLeft - track.offsetLeft, behavior: 'smooth'});
+      // Center the card to match the CSS `scroll-snap-align: center` snap point.
+      const target =
+        card.offsetLeft -
+        track.offsetLeft -
+        (track.clientWidth - card.clientWidth) / 2;
+      programmaticScroll.current = true;
+      window.clearTimeout(programmaticTimer.current);
+      programmaticTimer.current = window.setTimeout(() => {
+        programmaticScroll.current = false;
+      }, 600);
+      track.scrollTo({left: target, behavior: 'smooth'});
     }
     setActive(clamped);
   }, []);
@@ -65,6 +79,7 @@ export default function FeaturedCarousel(): JSX.Element {
     if (!track) return undefined;
     let frame = 0;
     const onScroll = () => {
+      if (programmaticScroll.current) return;
       window.cancelAnimationFrame(frame);
       frame = window.requestAnimationFrame(() => {
         const children = Array.from(track.children) as HTMLElement[];
@@ -87,6 +102,7 @@ export default function FeaturedCarousel(): JSX.Element {
     return () => {
       track.removeEventListener('scroll', onScroll);
       window.cancelAnimationFrame(frame);
+      window.clearTimeout(programmaticTimer.current);
     };
   }, []);
 
@@ -152,7 +168,7 @@ export default function FeaturedCarousel(): JSX.Element {
               <Link className={clsx('card', styles.card)} to={item.href}>
                 <div className={styles.media}>
                   <img src={resolveImage(item)} alt="" loading="lazy" />
-                  {item.tag && <span className={styles.tag}>{item.tag}</span>}
+                  {item.tag && <span className={styles.tag} data-tag={item.tag}>{item.tag}</span>}
                 </div>
                 <div className={styles.body}>
                   <Heading as="h3" className={styles.cardTitle}>
