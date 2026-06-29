@@ -1,314 +1,205 @@
 ---
 layout: default
-title: Sizing a Cluster for Your Workflow
-description: Step-by-step walkthroughs showing how to translate workflow code into Cadence capacity estimates, with full compute and storage breakdowns for three real examples from cadence-samples.
+title: Capacity by Example
+description: Three worked examples translating real Cadence workflow code into storage and compute estimates.
 keywords:
-  - cadence capacity planning walkthrough
+  - cadence capacity planning
   - cadence workflow sizing
   - cadence cluster sizing
-  - cadence workflow capacity
-  - cadence updates per second
   - cadence compute estimation
 permalink: /docs/operation-guide/capacity-walkthrough
 ---
 
 import CapacityEstimator from '@site/src/components/CapacityEstimator';
 
-This page answers: given workflow code, what does a Cadence cluster need to run it?
-
-The [Capacity Estimation](/docs/operation-guide/capacity-estimation) page explains the formulas in detail. This page applies them to three real workflows from [cadence-samples](https://github.com/cadence-workflow/cadence-samples), each covering a different traffic and runtime pattern.
-
-Each example follows the same steps:
-
-1. Read the workflow code and count event types.
-2. Derive traffic: workflows per day and average runtime determine peak concurrency and throughput.
-3. Plug the inputs into the estimator and read the full resource breakdown.
+Three real workflows from [cadence-samples](https://github.com/cadence-workflow/cadence-samples), each translated into a resource estimate. For the formulas behind these numbers, see [Capacity Estimation](/docs/operation-guide/capacity-estimation).
 
 ## Example 1: Hello World
 
-The [Hello World workflow](https://github.com/cadence-workflow/cadence-samples/blob/master/new_samples/hello_world/workflow.go) is the simplest possible case: start, run one activity, finish.
+[Source](https://github.com/cadence-workflow/cadence-samples/blob/master/new_samples/hello_world/workflow.go) — start, run one activity, finish.
 
 ```go
 func HelloWorldWorkflow(ctx workflow.Context, input sampleInput) (string, error) {
-    ao := workflow.ActivityOptions{
+    ctx = workflow.WithActivityOptions(ctx, workflow.ActivityOptions{
         ScheduleToStartTimeout: time.Minute,
         StartToCloseTimeout:    time.Minute,
-    }
-    ctx = workflow.WithActivityOptions(ctx, ao)
-
-    var greetingMsg string
-    err := workflow.ExecuteActivity(ctx, HelloWorldActivity, input).Get(ctx, &greetingMsg)
-    if err != nil {
-        return "", err
-    }
-    return greetingMsg, nil
+    })
+    var result string
+    return result, workflow.ExecuteActivity(ctx, HelloWorldActivity, input).Get(ctx, &result)
 }
 ```
 
-### Counting database writes
+**Event count:**
 
-| What happens | Event type | Write cost |
+| Event | Cost |
+|---|---|
+| Workflow start/close | 5 |
+| `HelloWorldActivity` (schedule + start + complete) | 6 |
+| **Total** | **11** |
+
+**Inputs** — 1,000 workflows/day, ~1 min each:
+
+| Field | Value |
+|---|---|
+| Workflows at peak | 1 |
+| Workflows per day | 1,000 |
+| Avg runtime | `1m` |
+| Activities per workflow | 1 |
+
+**Estimate:**
+
+| | |
+|---|---|
+| Peak throughput | 0.18 updates/sec |
+| Total retained | ~0.8 MB |
+
+| Service | Cores | Memory |
 |---|---|---|
-| Workflow starts and closes | Workflow start/close | 5 |
-| `HelloWorldActivity` schedules, starts, completes | Activity | 6 |
-| **Total** | | **11** |
+| History | 1 | ~0.04 GiB |
+| Frontend | 1 | ~0.01 GiB |
+| Matching | 1 | ~0.01 GiB |
+| Workers | 1 | — |
+| Cassandra | 3 nodes (RF=3 minimum) | ~0.001 TiB |
+| **Total Cadence cores** | **3** | |
 
-### Estimator inputs
-
-Scenario: 1,000 Hello World workflows per day, each completing in about 1 minute.
-
-| Input | Value | How to derive it |
-|---|---|---|
-| Workflows at peak | 1 | `1,000/day × (1min / 1440min)` — rarely more than 1 in flight at once |
-| Workflows per day | 1,000 | Target throughput |
-| Avg runtime | `1m` | Each workflow completes in about a minute |
-| Activities per workflow | 1 | One `HelloWorldActivity` |
-| Signals, timers, child workflows | 0 | None |
-
-### Outputs
-
-```
-totalActions    = 11
-actionsPerSec   = 1 × 11 / (0.017 × 3600) ≈ 0.18 updates/sec
-totalRetained   ≈ 0.8 MB  (7-day retention, 1,000 workflows/day)
-```
-
-### Resource breakdown
-
-All services sit at their production minimums. At 0.18 updates/sec the linear scaling model yields fractions of a core; the floor of one instance per service applies.
-
-| Service | Allocated cores | Memory | Notes |
-|---|---|---|---|
-| History | 1 | ~0.04 GiB | Minimum; throughput is far below the linear model's range |
-| Frontend | 1 | ~0.01 GiB | Minimum |
-| Matching | 1 | ~0.01 GiB | Minimum |
-| Workers | 1 | — | 1 concurrent activity at peak; 1 instance is sufficient |
-| Cassandra | 3 nodes | ~0.001 TiB | Production minimum (RF=3); actual memory usage is negligible |
-| **Total Cadence cores** | **3** | | |
-
-:::note
-At throughput below 100 updates/sec the linear scaling coefficients underestimate fixed overhead. Plan for at least one instance of each service regardless of computed values.
-:::
+At this scale every service sits at its production minimum. The linear model only becomes meaningful above ~100 updates/sec.
 
 ---
 
 ## Example 2: Expense Approval
 
-The [expense workflow](https://github.com/cadence-workflow/cadence-samples/blob/master/cmd/samples/expense/workflow.go) models a human-in-the-loop approval process: create a report, wait for a manager to approve, process payment. It has three activities and a long average runtime because the workflow idles while a human reviews the request.
+[Source](https://github.com/cadence-workflow/cadence-samples/blob/master/cmd/samples/expense/workflow.go) — create a report, wait for human approval, process payment.
 
 ```go
 func sampleExpenseWorkflow(ctx workflow.Context, expenseID string) (string, error) {
-    // Activity 1: create the expense report
-    err = workflow.ExecuteActivity(ctx1, createExpenseActivity, expenseID).Get(ctx1, nil)
-    if err != nil {
-        return "", err
-    }
+    // Activity 1: create report
+    workflow.ExecuteActivity(ctx1, createExpenseActivity, expenseID).Get(ctx1, nil)
 
-    // Activity 2: block until a human approves or rejects (could take hours or days)
+    // Activity 2: poll until a human approves or rejects — can take hours or days
     var status string
-    err = workflow.ExecuteActivity(ctx2, waitForDecisionActivity, expenseID).Get(ctx2, &status)
-    if err != nil {
-        return "", err
-    }
+    workflow.ExecuteActivity(ctx2, waitForDecisionActivity, expenseID).Get(ctx2, &status)
 
     if status != "APPROVED" {
         return "", nil
     }
 
-    // Activity 3: process payment
-    err = workflow.ExecuteActivity(ctx2, paymentActivity, expenseID).Get(ctx2, nil)
+    // Activity 3: pay
+    workflow.ExecuteActivity(ctx2, paymentActivity, expenseID).Get(ctx2, nil)
     return "COMPLETED", nil
 }
 ```
 
-### Counting database writes
+**Event count:**
 
-| What happens | Event type | Write cost |
+| Event | Cost |
+|---|---|
+| Workflow start/close | 5 |
+| `createExpenseActivity` | 6 |
+| `waitForDecisionActivity` | 6 |
+| `paymentActivity` | 6 |
+| **Total** | **23** |
+
+**Inputs** — 500 reports/day, 2-day average approval time:
+
+| Field | Value | Note |
 |---|---|---|
-| Workflow starts and closes | Workflow start/close | 5 |
-| `createExpenseActivity` | Activity | 6 |
-| `waitForDecisionActivity` | Activity | 6 |
-| `paymentActivity` | Activity | 6 |
-| **Total** | | **23** |
+| Workflows at peak | 1,000 | `500/day × (48h / 24h)` |
+| Workflows per day | 500 | |
+| Avg runtime | `2d` | |
+| Retention | `7` | |
+| Activities per workflow | 3 | |
 
-### Estimator inputs
+**Estimate:**
 
-Scenario: 500 expense reports per day, 2-day average approval time.
+| | |
+|---|---|
+| Peak throughput | 0.13 updates/sec |
+| Total retained | ~9 GB |
 
-Peak concurrency is `500/day × (48hr / 24hr) = 1,000` open workflows — each report waits in memory for two days while Cassandra holds its state.
-
-| Input | Value | How to derive it |
+| Service | Cores | Memory |
 |---|---|---|
-| Workflows at peak | 1,000 | `500/day × (48hr / 24hr)` |
-| Workflows per day | 500 | Target throughput |
-| Avg runtime | `2d` | Typical time from submission to approval |
-| Retention after completion | `7` | 7 days post-close |
-| Activities per workflow | 3 | create, waitForDecision, payment |
+| History | 1 | ~0.03 GiB |
+| Frontend | 1 | ~0.01 GiB |
+| Matching | 1 | ~0.01 GiB |
+| Workers | ~20 | — |
+| Cassandra | 3 nodes | ~0.001 TiB |
+| **Total Cadence cores** | **3** | |
 
-### Outputs
-
-```
-totalActions    = 23
-actionsPerSec   = 1,000 × 23 / (48 × 3600) ≈ 0.13 updates/sec
-totalRetained   ≈ 9 GB  (2-day runtime + 7-day retention × 500 workflows/day)
-```
-
-Despite low throughput, 9 GB of retained data accumulates because each workflow sits in Cassandra for 9 days total.
-
-### Resource breakdown
-
-| Service | Allocated cores | Memory | Notes |
-|---|---|---|---|
-| History | 1 | ~0.03 GiB | Minimum |
-| Frontend | 1 | ~0.01 GiB | Minimum |
-| Matching | 1 | ~0.01 GiB | Minimum |
-| Workers | ~20 | — | 1,000 concurrent workflows × 1 active activity ÷ 50 (I/O-bound: mostly waiting on human input) |
-| Cassandra | 3 nodes | ~0.001 TiB | Minimum; storage is ~9 GB, well within 3-node capacity |
-| **Total Cadence cores** | **3** | | |
-
-Long-running workflows are cheap on compute and expensive on storage. Size Cassandra for the retention window, not the throughput number.
+Low throughput, high storage — the 9-day total window (2 running + 7 retention) accumulates ~9 GB even though the cluster is nearly idle on compute.
 
 ---
 
 ## Example 3: Order Processing
 
-This is the scenario pre-loaded in the estimator. It covers a typical e-commerce fulfillment flow: validate an order, fulfill it, send a confirmation — with a cancellation signal, a fulfillment timeout, and a search attribute update for order tracking.
+A fulfillment workflow with three activities, a cancellation signal, a timeout timer, and a search attribute update for order tracking.
 
 ```go
 func OrderProcessingWorkflow(ctx workflow.Context, order OrderInput) error {
-    // Mark order as in-progress in the visibility index
     _ = workflow.UpsertSearchAttributes(ctx, map[string]interface{}{
         "OrderStatus": "processing",
     })
 
-    // Timer: escalate if not fulfilled within 30 minutes
     timerCtx, cancelTimer := workflow.WithCancel(ctx)
     _ = workflow.NewTimer(timerCtx, 30*time.Minute)
 
-    // Signal: listen for customer cancellation
     cancelCh := workflow.GetSignalChannel(ctx, "cancel-order")
     _ = cancelCh
 
-    ao := workflow.ActivityOptions{StartToCloseTimeout: 10 * time.Minute}
-    actCtx := workflow.WithActivityOptions(ctx, ao)
+    actCtx := workflow.WithActivityOptions(ctx, workflow.ActivityOptions{
+        StartToCloseTimeout: 10 * time.Minute,
+    })
 
-    // Activity 1: validate
-    if err := workflow.ExecuteActivity(actCtx, ValidateOrder, order).Get(actCtx, nil); err != nil {
-        return err
-    }
-
-    // Activity 2: pick, pack, ship
-    if err := workflow.ExecuteActivity(actCtx, FulfillOrder, order).Get(actCtx, nil); err != nil {
-        return err
-    }
-
+    workflow.ExecuteActivity(actCtx, ValidateOrder, order).Get(actCtx, nil)
+    workflow.ExecuteActivity(actCtx, FulfillOrder, order).Get(actCtx, nil)
     cancelTimer()
-
-    // Activity 3: send confirmation email
-    if err := workflow.ExecuteActivity(actCtx, SendConfirmation, order).Get(actCtx, nil); err != nil {
-        return err
-    }
-
+    workflow.ExecuteActivity(actCtx, SendConfirmation, order).Get(actCtx, nil)
     return nil
 }
 ```
 
-### Counting database writes
+**Event count:**
 
-| What happens | Event type | Write cost |
+| Event | Cost |
+|---|---|
+| Workflow start/close | 5 |
+| 3 activities (validate, fulfill, confirm) | 18 |
+| `cancel-order` signal | 4 |
+| Fulfillment timeout timer | 5 |
+| `UpsertSearchAttributes` | 4 |
+| **Total** | **36** |
+
+**Inputs** — 10,000 orders/day, 2-hour average fulfillment:
+
+| Field | Value | Note |
 |---|---|---|
-| Workflow starts and closes | Workflow start/close | 5 |
-| `ValidateOrder`, `FulfillOrder`, `SendConfirmation` | Activity × 3 | 18 |
-| `cancel-order` signal | Signal | 4 |
-| Fulfillment timeout timer | Timer | 5 |
-| `UpsertSearchAttributes` | Search attribute upsert | 4 |
-| **Total** | | **36** |
-
-### Estimator inputs
-
-Scenario: 10,000 orders per day, 2-hour average fulfillment time.
-
-| Input | Value | How to derive it |
-|---|---|---|
-| Workflows at peak | 833 | `10,000/day × (2hr / 24hr)` |
-| Workflows per day | 10,000 | Target throughput |
-| Avg runtime | `2h` | Average time from order to shipped |
-| Retention after completion | `7` | 7 days post-close |
-| Activities per workflow | 3 | validate, fulfill, confirm |
-| Signals per workflow | 1 | cancellation channel |
-| Timers per workflow | 1 | fulfillment escalation |
+| Workflows at peak | 833 | `10,000/day × (2h / 24h)` |
+| Workflows per day | 10,000 | |
+| Avg runtime | `2h` | |
+| Retention | `7` | |
+| Activities per workflow | 3 | |
+| Signals per workflow | 1 | cancellation |
+| Timers per workflow | 1 | escalation |
 | Search attribute upserts | 1 | order status |
-| Avg workflow input | `500 KB` | Order payload (Uber limit: 500 KB) |
-| Avg activity input | `500 KB` | Fulfillment payload |
+| Avg workflow input | `500 KB` | |
+| Avg activity input | `500 KB` | |
 
-### Outputs
+**Estimate:**
 
-```
-totalActions    = 36
-actionsPerSec   = 833 × 36 / (2 × 3600) ≈ 4.2 updates/sec
-totalRetained   ≈ 169 GB  (7-day retention, 10,000 workflows/day)
-```
+| | |
+|---|---|
+| Peak throughput | 4.2 updates/sec |
+| Total retained | ~169 GB |
 
-### Resource breakdown
+| Service | Cores | Memory |
+|---|---|---|
+| History | 1 | ~0.93 GiB |
+| Frontend | 1 | ~0.28 GiB |
+| Matching | 1 | ~0.14 GiB |
+| Workers | ~100 | — |
+| Cassandra | 3 nodes | ~0.008 TiB |
+| **Total Cadence cores** | **3** | |
 
-| Service | Allocated cores | Memory | Notes |
-|---|---|---|---|
-| History | 1 | ~0.93 GiB | Minimum; 4.2 updates/sec is still below the linear model's useful range |
-| Frontend | 1 | ~0.28 GiB | Minimum |
-| Matching | 1 | ~0.14 GiB | Minimum |
-| Workers | ~100 | — | 833 concurrent workflows × 3 activities ÷ 25 (mixed I/O + CPU) |
-| Cassandra | 3 nodes | ~0.008 TiB | Minimum; 169 GB storage requires approximately 2 nodes at typical replication but 3 is the RF=3 floor |
-| **Total Cadence cores** | **3** | | |
-
-Try it live — click **Load order-processing example** in the estimator below, then adjust payload sizes or retention to see how the outputs shift.
+This is the pre-loaded example in the estimator. Click **Load order-processing example** below and adjust retention or payload size to see how the outputs shift.
 
 <CapacityEstimator />
 
----
-
-## Cassandra utilization
-
-The resource estimates above show allocated capacity. Utilization is how much of that allocation the cluster is actually consuming at peak.
-
-| Metric | Healthy range | Action if outside range |
-|---|---|---|
-| CPU utilization per node | 20–70% | Below 10%: overprovisioned; above 80%: add nodes or reduce compaction pressure |
-| Memory utilization | 60–80% of node RAM | Cassandra uses memory for read/write caches and heap; above 85% risks GC pauses |
-| Disk utilization | Below 60% | Cassandra needs headroom for compaction; above 70% risks write stalls |
-
-At the throughput levels in examples 1 and 2 (under 1 update/sec), utilization will appear artificially low because you are running the 3-node production minimum with near-zero traffic. That is expected: the minimum exists for fault tolerance (RF=3), not throughput. Utilization numbers become meaningful above roughly 100 updates/sec where load drives resource consumption rather than fixed minimums.
-
-**Usage vs. allocation.** When comparing environments, use the ratio of actual CPU consumed (from Grafana) to allocated CPU (replicas x cores/pod). A ratio below 15% on History or Cassandra with healthy traffic suggests the cluster was provisioned for a peak that never materialized. The reference cluster spreadsheet uses this ratio to flag overprovisioned environments.
-
----
-
-## Worker sizing
-
-The estimator does not size workers because worker resource requirements depend on what your activities do, not on Cadence server throughput. Two steps:
-
-**Step 1: count concurrent activities at peak.**
-
-```
-concurrentActivities = workflowsAtPeak x activitiesPerWorkflow
-```
-
-**Step 2: apply a core-per-activity ratio based on your activity profile.**
-
-| Activity profile | Starting ratio | Example |
-|---|---|---|
-| I/O-bound (network calls, DB queries, waiting on humans) | 1 core per 50 concurrent | expense `waitForDecision` |
-| Mixed (I/O + moderate CPU) | 1 core per 25 concurrent | order processing |
-| CPU-bound (encoding, ML inference, hashing) | 1 core per 10 concurrent | image processing, compression |
-
-Validate by watching worker CPU utilization in Grafana after launch. If sustained above 80%, add instances. If below 20%, reduce. See the [worker configuration guide](/docs/go-client/workers) for polling concurrency tuning.
-
----
-
-## Reading the outputs
-
-A few checks before treating the estimates as final:
-
-- **`actionsPerSec` below 100:** fixed service minimums dominate. Plan for at least one instance of each service regardless of the linear model output.
-- **`totalRetained` larger than expected:** review retention settings. At Uber, production domains typically use 7–30 days. For workflows older than 30 days, enable archival to move closed history to blob storage.
-- **`totalActions` higher than expected:** check heartbeat frequency. Each heartbeat writes one record. An activity heartbeating every 5 seconds on a 1-hour task adds 720 records; that may be intentional (progress tracking) or accidental (too-frequent polling).
-- **Storage growing faster than the formula predicts:** payload sizes in production are often larger than estimated. Use p95 or p99 sizes from your serialized workflow inputs in Grafana rather than the average.

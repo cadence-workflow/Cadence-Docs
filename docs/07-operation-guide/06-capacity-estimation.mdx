@@ -14,19 +14,11 @@ permalink: /docs/operation-guide/capacity-estimation
 ---
 
 import CapacityEstimator from '@site/src/components/CapacityEstimator';
+import ComputeEstimator from '@site/src/components/ComputeEstimator';
 
 Cadence records every workflow step by calling `UpdateWorkflowExecution` internally. The estimator below counts how many times that happens for your workload and translates it into storage and compute requirements. Fill in your workflow shape and the outputs update in real time. All numbers are planning estimates; actual usage depends on deployment topology, traffic patterns, and configuration.
 
 <CapacityEstimator />
-
-All fields accept free-form values with units:
-
-| Field type | Accepted formats | Examples |
-|---|---|---|
-| Time — avg runtime | `s`, `m`, `h`, `d`, `w` or plain number (hours) | `2h`, `30m`, `90 mins`, `1d`, `3600s`, `24` |
-| Time — retention | `d`, `w`, `h` or plain number (days) | `7`, `30d`, `2w`, `48h` |
-| Size in MB (payload fields) | `B`, `KB`, `MB`, `GB` or plain number (MB) | `500 KB`, `1 MB`, `0.5`, `2 GB` |
-| Size in KB (signal, heartbeat, response) | `B`, `KB`, `MB`, `GB` or plain number (KB) | `1 KB`, `500 B`, `2 MB`, `1` |
 
 ## Database (Cassandra)
 
@@ -215,6 +207,10 @@ The estimator scales resource requirements from a reference Cadence cluster runn
 **Workers** run your code. Resource requirements depend on what your activities do, not Cadence server throughput, so the estimator does not size them. A practical starting point: count concurrent activities at peak (`workflowsAtPeak × activitiesPerWorkflow`) and plan for 1 worker core per 10-50 concurrent activities, then scale based on observed CPU and latency. See the [worker configuration guide](/docs/go-client/workers) for polling and concurrency tuning.
 
 **Cassandra** stores all history and execution state. Memory-heavy: it caches active workflows to avoid disk reads on every request. Production clusters require a minimum of **3 nodes** (replication factor 3) for fault tolerance; the estimator enforces this floor in its node count output.
+
+Enter your peak throughput — from Step 3 above or pasted directly from Grafana — to see the per-service resource breakdown:
+
+<ComputeEstimator />
 
 ### Reference clusters and scaling coefficients
 

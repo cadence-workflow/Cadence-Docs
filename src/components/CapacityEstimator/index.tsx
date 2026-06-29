@@ -354,6 +354,13 @@ export default function CapacityEstimator() {
         </div>
       </div>
 
+      <div className={styles.unitsRef}>
+        <span className={styles.unitsRefRow}><span className={styles.unitsRefLabel}>Time (runtime):</span> <code>2h</code> · <code>30m</code> · <code>1d</code> · <code>24</code> = 24 hr</span>
+        <span className={styles.unitsRefRow}><span className={styles.unitsRefLabel}>Time (retention):</span> <code>7</code> = 7 days · <code>2w</code> · <code>48h</code></span>
+        <span className={styles.unitsRefRow}><span className={styles.unitsRefLabel}>Size (MB fields):</span> <code>500 KB</code> · <code>1 MB</code> · <code>2 GB</code> · <code>0.5</code> = 0.5 MB</span>
+        <span className={styles.unitsRefRow}><span className={styles.unitsRefLabel}>Size (KB fields):</span> <code>1 KB</code> · <code>500 B</code> · <code>2 MB</code> · <code>1</code> = 1 KB</span>
+      </div>
+
       <div className={styles.results}>
         <p className={styles.resultsTitle}>Estimated outputs</p>
         <div className={styles.resultGrid}>
