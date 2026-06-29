@@ -54,7 +54,7 @@ The overlap policy controls what happens when a scheduled fire arrives while a p
 | Policy | Behavior |
 |---|---|
 | `SkipNew` (default) | Skip the new fire; the current run continues uninterrupted. |
-| `Buffer` | Hold one pending fire. Once the current run finishes, the buffered fire starts immediately. |
+| `Buffer` | Queue new fires and execute them sequentially. Depth is configurable via `BufferLimit`; the server enforces a ceiling of 1000. Fires beyond the limit are dropped. |
 | `Concurrent` | Start each fire regardless of how many runs are already active. Add `--concurrency_limit N` to cap the maximum number of simultaneous runs. |
 | `CancelPrevious` | Request cancellation of the current run, then start the new one. |
 | `TerminatePrevious` | Terminate the current run immediately, then start the new one. |
@@ -103,10 +103,10 @@ Every workflow started by a schedule receives the following search attributes au
 
 | Attribute | Type | Description |
 |---|---|---|
-| `CadenceScheduleID` | string | The schedule ID that triggered this run. |
-| `CadenceScheduleTime` | time | The scheduled fire time (not the actual start time). |
-| `CadenceScheduleIsBackfill` | bool | `true` if this run was started by a backfill request. |
-| `CadenceScheduleBackfillID` | string | The backfill ID, if one was provided. Only set when `CadenceScheduleIsBackfill` is `true`. |
+| `CadenceScheduleID` | Keyword | The schedule ID that triggered this run. |
+| `CadenceScheduleTime` | Datetime | The scheduled fire time (not the actual start time). |
+| `CadenceScheduleIsBackfill` | Bool | `true` if this run was started by a backfill request. |
+| `CadenceScheduleBackfillID` | Keyword | The backfill ID, if one was provided. Only set when `CadenceScheduleIsBackfill` is `true`. |
 
 These attributes are queryable via the Cadence visibility API. For example, to find all backfill runs for a given schedule:
 
@@ -115,6 +115,14 @@ CadenceScheduleID = "my-schedule" AND CadenceScheduleIsBackfill = true
 ```
 
 The `CadenceScheduleTime` attribute reflects the nominal fire time, not when the workflow actually started. This is useful in data pipelines where the workflow needs to know which time window it owns regardless of how late it started.
+
+The following attributes are set on the internal scheduler workflow itself (not on triggered runs). They allow `ListSchedules` to surface schedule state without querying each scheduler workflow individually:
+
+| Attribute | Type | Description |
+|---|---|---|
+| `CadenceScheduleState` | Keyword | `"active"` or `"paused"`. |
+| `CadenceScheduleCron` | Keyword | The current cron expression. |
+| `CadenceScheduleWorkflowType` | Keyword | The target workflow type name. |
 
 ### Jitter
 
@@ -154,7 +162,7 @@ The `DescribeSchedule` API (and CLI command) returns:
 
 ## Limitations
 
-- **`Buffer` holds one pending fire.** If a fire arrives while one is already buffered, the newer fire is dropped. Use `Concurrent` if you need more than one pending run.
+- **`Buffer` queue depth is bounded.** The server enforces a ceiling of 1000 queued fires. Fires that arrive when the queue is full are dropped. Set `BufferLimit` via the SDK to apply a lower cap.
 - **Overlap policy changes are not retroactive.** Changing the policy on a live schedule does not affect runs that are already active or buffered. Only future fires use the new policy.
 - **Catch-up is bounded by the catch-up window.** The default window is one year. If the server is down for longer than the configured window, fires older than the window are silently dropped with no way to recover them automatically. Use backfill to recover those manually.
 - **Backfill fires respect the overlap policy.** Backfilling a large range with `SkipNew` will run only one workflow. Use `Concurrent` or set `--overlap_policy` on the backfill command when you need all fires to run.
@@ -180,6 +188,15 @@ cadence schedule create \
   --tasklist my-tasklist \
   --overlap_policy Concurrent \
   --concurrency_limit 3 \
+  --execution_timeout 3600
+
+# Create with jitter (random delay up to 60 seconds after each tick)
+cadence schedule create \
+  --schedule_id my-schedule \
+  --cron_expression "0 9 * * *" \
+  --workflow_type MyWorkflow \
+  --tasklist my-tasklist \
+  --jitter_start_seconds 60 \
   --execution_timeout 3600
 
 # Describe
