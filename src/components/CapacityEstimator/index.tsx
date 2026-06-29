@@ -173,7 +173,7 @@ function NumberField({
         value={value}
         onChange={(e) => onChange(e.target.value)}
       />
-      <span className={styles.unit}>{unit ?? ''}</span>
+      {type !== 'text' && <span className={styles.unit}>{unit ?? ''}</span>}
       {warning && <span className={styles.warning}>{warning}</span>}
     </div>
   );
