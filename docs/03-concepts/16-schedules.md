@@ -215,4 +215,6 @@ cadence schedule delete --schedule_id my-schedule
 
 ## SDK usage
 
-Go, Java, and Python SDK guides will be added here as each client ships support.
+- [Go SDK](/docs/go-client/schedules) -- `ScheduleClient` with full Create, Describe, Update, Pause, Unpause, Backfill, and List support.
+- Python SDK -- see the [cadence-python-client repository](https://github.com/cadence-workflow/cadence-python-client) for `create_schedule`, `describe_schedule`, `pause_schedule`, `unpause_schedule`, `update_schedule`, `backfill_schedule`, and `list_schedules` on the client. A dedicated docs page is coming.
+- Java SDK -- coming soon.
