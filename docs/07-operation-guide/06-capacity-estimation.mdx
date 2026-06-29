@@ -1,0 +1,264 @@
+---
+layout: default
+title: Capacity Estimation
+description: Estimate workflow action/update volume and data footprint for Cadence capacity planning. Covers workflow shape, activities, signals, timers, child workflows, payload sizes, and retention.
+keywords:
+  - cadence capacity planning
+  - cadence capacity estimation
+  - cadence data footprint
+  - cadence workflow history size
+  - cadence persistence sizing
+  - cadence operational footprint
+  - cadence workflow volume
+permalink: /docs/operation-guide/capacity-estimation
+---
+
+import CapacityEstimator from '@site/src/components/CapacityEstimator';
+
+This page estimates the database storage and compute a Cadence deployment needs for a given workload. Fill in your workflow shape in the estimator; the formula reference below explains how each number is calculated. All outputs are rough estimates: actual usage depends on deployment topology, traffic patterns, and configuration.
+
+<CapacityEstimator />
+
+## Database (Cassandra)
+
+As a good starting point for estimation, we use `UpdateWorkflowExecution`, the internal API called after every workflow update (explained below). You can calculate how many times this API would be called in your case to determine DB capacity.
+
+### Workflow shape
+
+| Input | Description |
+|---|---|
+| `workflowsAtPeak` | Peak concurrent workflows define the DB throughput needed. DB capacity is harder to scale on the fly than compute, so size for peak. |
+| `workflowsPerDay` | Total workflows started each day. Used to calculate total disk capacity needed. |
+| `avgWorkflowRuntime` | How long a workflow runs on average. During this time it occupies hot storage in Cassandra. |
+| `retentionDaysAfterCompletion` | How long Cadence keeps closed workflow history before deleting it from the key-value store. |
+
+### Workflow behavior
+
+Each event type has a different write cost:
+
+| Input | Description |
+|---|---|
+| `activitiesPerWorkflow` | Steps delegated to a worker process |
+| `signalsPerWorkflow` | External messages sent into a running workflow |
+| `timersPerWorkflow` | Built-in delays or scheduled checks |
+| `childWorkflowsPerWorkflow` | Sub-workflows launched from this workflow |
+| `searchAttributeUpsertsPerWorkflow` | Times the workflow updates its searchable metadata |
+| `heartbeatsPerWorkflow` | Checkpoints from long-running activities |
+
+### Payload sizes
+
+All application data is stored in workflow history. Enter average sizes:
+
+| Input | Description |
+|---|---|
+| `avgWorkflowPayloadSizeMB` | Input data passed when starting a workflow |
+| `avgWorkflowResponseSizeKB` | Result data returned when a workflow completes |
+| `avgActivityPayloadSizeMB` | Input data passed to each activity |
+| `avgActivityResponseSizeKB` | Result data returned by each activity |
+| `avgChildWorkflowPayloadSizeMB` | Input data passed to each child workflow |
+| `avgSignalInputSizeKB` | Data carried in each signal |
+| `avgHeartbeatPayloadSizeKB` | Data recorded with each activity heartbeat checkpoint |
+
+## Estimator
+
+### How does this estimator work
+
+The formula below is a simple extrapolation based on production environments we have. When your numbers are significantly smaller or larger, the estimates may differ. If that's the case, feel free to reach out to us on our Slack channels. We will also leave the full capacity and utilization numbers for reference for some of those environments.
+
+**`workflowsAtPeak`** and **`workflowsPerDay`** are independent inputs: peak counts concurrent open workflows, while per-day counts throughput. For a 2-hour workflow processing 10,000 orders/day, peak concurrency ≈ `10,000 × (2 / 24) ≈ 833`. Click **Load order-processing example** to see this pre-filled (833 concurrent workflows, 10K/day, 2-hr runtime, 7-day retention → ~4.2 updates/sec, ~169 GB retained).
+
+### Example: order-processing workflow
+
+To make the estimator inputs concrete, here is a simple order-processing workflow from the [cadence-samples](https://github.com/cadence-workflow/cadence-samples) repository. It runs 3 activities (charge, update inventory, send confirmation), handles a signal (order-update), and fires one timer (follow-up reminder):
+
+```go
+func OrderWorkflow(ctx workflow.Context, order OrderInput) error {
+    ao := workflow.ActivityOptions{
+        ScheduleToStartTimeout: time.Minute,
+        StartToCloseTimeout:    2 * time.Minute,
+    }
+    ctx = workflow.WithActivityOptions(ctx, ao)
+
+    // Activity 1: charge customer
+    if err := workflow.ExecuteActivity(ctx, ChargeActivity, order).Get(ctx, nil); err != nil {
+        return err
+    }
+
+    // Activity 2: update inventory
+    if err := workflow.ExecuteActivity(ctx, UpdateInventoryActivity, order).Get(ctx, nil); err != nil {
+        return err
+    }
+
+    // Timer: follow-up reminder after 1 hour
+    if err := workflow.Sleep(ctx, time.Hour); err != nil {
+        return err
+    }
+
+    // Signal: listen for an order-update event (e.g. address change)
+    ch := workflow.GetSignalChannel(ctx, "order-update")
+    var update OrderUpdate
+    ch.Receive(ctx, &update)
+
+    // Activity 3: send confirmation email
+    return workflow.ExecuteActivity(ctx, SendConfirmationActivity, order, update).Get(ctx, nil)
+}
+```
+
+For this workflow, the estimator inputs would be:
+- `activitiesPerWorkflow = 3` (ChargeActivity, UpdateInventoryActivity, SendConfirmationActivity)
+- `timersPerWorkflow = 1` (1-hour follow-up sleep)
+- `signalsPerWorkflow = 1` (order-update channel)
+- `avgActivityPayloadSizeMB` = size of your `OrderInput` struct (serialized as JSON by Cadence)
+
+## Formula reference
+
+### Step 1: Count your workflow's database writes
+
+Add up the write cost for each event type. The fixed `5` is what every workflow pays: start record, initial decision, close record.
+
+```
+totalActions =
+    5                                       (workflow start + close, always)
+  + activitiesPerWorkflow * 6
+  + signalsPerWorkflow * 4
+  + timersPerWorkflow * 5
+  + childWorkflowsPerWorkflow * 6
+  + searchAttributeUpsertsPerWorkflow * 4
+  + heartbeatsPerWorkflow
+```
+
+With all behavior inputs at their defaults of 1: `totalActions = 31`
+
+Each `UpdateWorkflowExecution` also writes task records not shown in the table; that's why the event record counts don't add up to the per-event cost.
+
+| Event type | Cost | Key event records written |
+|---|---|---|
+| Workflow start/close | 5 | StartRecord, Decision, CloseRecord |
+| Activity (schedule + start + complete) | 6 | Scheduled, Started, Completed, Decision |
+| Signal | 4 | SignalReceiveRecord, Decision |
+| Timer (fire + cancel) | 5 | Started, Fired, Decision |
+| Child workflow | 6 | Initiated, Started, Completed, Decision |
+| Search attribute upsert | 4 | Upserted, Decision |
+| Heartbeat | 1 | RecordHeartbeat |
+
+### Step 2: Calculate storage
+
+Storage splits into two separate measurements.
+
+**Payload data size** is your application data only: inputs, outputs, signal bodies. Cadence's own metadata is excluded.
+
+```
+payloadDataSizeMB =
+    avgWorkflowPayloadSizeMB
+  + avgWorkflowResponseSizeKB / 1024
+  + activitiesPerWorkflow * (avgActivityPayloadSizeMB + avgActivityResponseSizeKB / 1024)
+  + childWorkflowsPerWorkflow * avgChildWorkflowPayloadSizeMB
+  + signalsPerWorkflow * avgSignalInputSizeKB / 1024
+  + heartbeatsPerWorkflow * avgHeartbeatPayloadSizeKB / 1024
+```
+
+The `/1024` conversions bring KB inputs into MB so all units match. With defaults: `payloadDataSizeMB = 3.00 MB`
+
+**Unit data size** is what Cassandra stores for one complete workflow instance: payload plus Cadence's own record overhead across both tables.
+
+```
+unitDataSizeMB =
+    historyNodeAvgRowSizeMB * (activitiesPerWorkflow + 1)
+  + totalActions / 1024
+  + executionsAvgRowSizeKB * 2 / 1024
+```
+
+Breaking down with defaults:
+- `0.6 * (1 + 1) = 1.200 MB` for history nodes. The `(activities + 1)` term models activity payload nodes (dominant by size) plus one node for the workflow start and close events. Signals, timers, and decisions also write history nodes, but their entries are small and are captured by the `totalActions / 1024` overhead term below.
+- `31 / 1024 = 0.030 MB` for action records at 1 KB each.
+- `7 * 2 / 1024 = 0.014 MB` for two executions rows (one for the execution record, one for timer and transfer tasks).
+
+With defaults: `unitDataSizeMB = 1.24 MB`
+
+**Total retained data size** is the total Cassandra footprint at any given moment. Each workflow occupies storage while running, then stays in the database through the retention window after it closes.
+
+```
+totalRetainedDataSize =
+  unitDataSizeMB * workflowsPerDay * (avgWorkflowRuntime/24 + retentionDaysAfterCompletion)
+```
+
+The `(avgWorkflowRuntime/24 + retentionDays)` sum is the total days each workflow sits in Cassandra. The default `retentionDaysAfterCompletion = 7` is a common starting point; at Uber, production domains typically use 7–30 days depending on the workflow type.
+
+With defaults: `totalRetainedDataSize = 1.24 * 1 * (1 + 7) = 9.92 MB`
+
+### Step 3: Compute peak throughput
+
+Peak throughput is the key number for resource sizing: how many `UpdateWorkflowExecution` calls per second at peak?
+
+The formula comes from Little's Law. Think of it like traffic: 100 cars always on a highway, each taking 1 hour to cross, means 100 cars per hour pass through. Here `workflowsAtPeak` is the car count and `avgWorkflowRuntime * 3600` converts hours to seconds.
+
+```
+actionsPerSec = workflowsAtPeak * totalActions / (avgWorkflowRuntime * 3600)
+```
+
+With defaults: `1 * 31 / (24 * 3600) = 0.00036 updates/sec` (barely any load with a single workflow running all day).
+
+A more realistic example: 10,000 concurrent workflows each running 30 minutes (0.5 hr), 31 actions each:
+`actionsPerSec = 10,000 * 31 / (0.5 * 3600) = 172 updates/sec`
+
+`workflowsAtPeak / workflowsPerDay` also defines the utilization of your environment. If your utilization is low, reach out to us on Slack and we can help flatten it.
+
+:::note
+Longer `avgWorkflowRuntime` lowers `actionsPerSec` even with many concurrent workflows, because each workflow's actions are spread over more time. Shorter runtimes drive the rate up sharply. `workflowsAtPeak` does not affect storage; it only feeds into throughput and resource estimates.
+:::
+
+## Compute
+
+The estimator scales resource requirements from a reference Cadence cluster Uber ran at **11,444 `UpdateWorkflowExecution` calls/sec**. The numbers come from Uber prod11 Grafana data.
+
+### Services and their roles
+
+**History** executes every `UpdateWorkflowExecution`: reads state from Cassandra, validates the event, writes history and task records, releases the shard lock. CPU scales directly with throughput; it drives your core count more than any other service.
+
+**Frontend** receives all requests from your workers, validates them, and routes to the right History shard. No state management means much lower CPU than History.
+
+**Matching** dispatches scheduled tasks to workers. CPU-light relative to History.
+
+**Workers** run your code. Resource requirements depend on what your activities do, not Cadence server throughput, so the estimator doesn't size them. A practical starting point: count concurrent activities at peak (`workflowsAtPeak × activitiesPerWorkflow`) and plan for 1 worker core per 10-50 concurrent activities, then scale based on observed CPU and latency. See the [worker configuration guide](/docs/go-client/workers) for polling and concurrency tuning.
+
+**Cassandra** stores all history and execution state. Memory-heavy: it caches active workflows to avoid disk reads on every request. Production clusters require a minimum of **3 nodes** (replication factor 3) for fault tolerance; the estimator enforces this floor in its node count output.
+
+### Reference clusters and scaling coefficients
+
+Each coefficient is `(resource at reference) / 11444`. Multiply by your `actionsPerSec` to get your estimate.
+
+| Service | Reference config | Reference total | Coefficient |
+|---|---|---|---|
+| History | 106 instances x 4 cores, 24 GiB each | 424 cores, 2,544 GiB RAM | 424 / 11444 cores per update/sec |
+| Frontend | 63 instances x 2 cores, 12 GiB each | 126 cores, 756 GiB RAM | 126 / 11444 cores per update/sec |
+| Matching | 12 instances x 6 cores, 32 GiB each | 72 cores, 384 GiB RAM | 72 / 11444 cores per update/sec |
+| Cassandra | 144 nodes | 21.167 TiB RAM | 144 / 11444 nodes per update/sec |
+
+Values round up with `Math.ceil`. For small workloads, plan for at least one instance per service; there's fixed overhead the linear model doesn't capture.
+
+### Reference cluster examples
+
+These are real Cadence clusters at different scales. Use them to sanity-check your estimates.
+
+| Cluster | Size | Peak throughput | History cores | Cassandra nodes | Notes |
+|---|---|---|---|---|---|
+| prod11 | Large | ~11,444 updates/sec | 424 | 144 | Uber production reference; basis for all scaling coefficients |
+
+*Additional reference clusters (medium, small) will be added here.*
+
+## Retention and archival notes
+
+- `retentionDaysAfterCompletion` controls how long closed workflow history stays in the primary persistence store. The total time closed workflows remain in the database is `retentionDaysAfterCompletion` plus the DB grace period for deleted records (default 2 days for Cassandra).
+- When archival is on, workflows that exceed the retention window are archived to a blob store (S3, GCS, etc.) for long-term storage. You will incur storage costs based on per-workflow size multiplied by the archival retention period. Archival storage is not calculated here.
+- Actual behavior depends on the server-level `archival` config, domain settings, and blob store backend. See the [cluster configuration guide](/docs/operation-guide/setup) for details.
+
+## Operational caveats
+
+- This is a server-side estimation only. Your worker capacity depends on your workflow code. Worker autoscaling, tasklist partitioning, and visibility index writes are not modeled here. See [tasklist configuration](/docs/concepts/task-lists) for partitioning guidance.
+- The estimates assume mostly uniform payload and history sizes. Real workloads may vary; use p95 or p99 sizes from production metrics when available.
+- Cassandra and SQL backends have different data models and behave differently for the same workload. The estimates above are for Cassandra only.
+- For multi-cluster or global domain setups, multiply the numbers by the number of regions.
+
+:::note Cassandra cost and payload size
+Cassandra stores each history node row as a separate SSTable entry. Larger payloads mean larger rows, which increases both disk usage and the memory Cassandra needs to cache active workflows. The estimator uses a fixed `historyNodeAvgRowSizeMB` of 0.6 MB (the Uber production average); observed production maximums reach 15 MB per history node row when activities carry large payloads.
+:::
