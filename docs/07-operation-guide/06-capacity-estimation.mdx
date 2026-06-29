@@ -194,7 +194,7 @@ A more realistic example: 10,000 concurrent workflows each running 30 minutes (0
 actionsPerSec = 10,000 * 31 / (0.5 * 3600) = 172 updates/sec
 ```
 
-`workflowsAtPeak / workflowsPerDay` gives your environment's utilization ratio. A low ratio means most of your capacity sits idle; reach out on the [community Slack](https://cadenceworkflow.io/slack) for help improving it.
+`workflowsAtPeak / workflowsPerDay` gives your environment's utilization ratio. A low ratio means most of your capacity sits idle; reach out on the [community Slack](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ) for help improving it.
 
 :::note
 Longer `avgWorkflowRuntime` lowers `actionsPerSec` even with many concurrent workflows, because each workflow's actions are spread over more time. Shorter runtimes drive the rate up sharply. `workflowsAtPeak` does not affect storage; it only feeds into throughput and resource estimates.

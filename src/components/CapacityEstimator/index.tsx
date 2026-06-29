@@ -74,20 +74,20 @@ function parseTimeHours(val: string | number): number {
 
 // Parse a time string into days.
 // Plain numbers default to days ("7" → 7 days, "30" → 30 days).
-// Same suffixes as parseTimeHours; used for the retention field.
+// Accepted suffixes: d/day(s), w/week(s), h/hr/hrs/hour(s).
+// Minutes and seconds are intentionally not supported — they are not meaningful
+// for retention-after-completion and "3m" would be misread as "3 months".
 // Examples: "7", "30d", "2w", "48h"
 function parseTimeDays(val: string | number): number {
   if (typeof val === 'number') return isNaN(val) || val < 0 ? 0 : val;
   const s = val.trim().toLowerCase();
-  const match = s.match(/^(\d+(?:\.\d+)?)\s*(w(?:eeks?)?|d(?:ays?)?|h(?:ours?|rs?)?|m(?:in(?:utes?|s)?)?|s(?:ec(?:onds?|s)?)?)?$/);
+  const match = s.match(/^(\d+(?:\.\d+)?)\s*(w(?:eeks?)?|d(?:ays?)?|h(?:ours?|rs?)?)?$/);
   if (!match) return 0;
   const n = parseFloat(match[1]);
   if (isNaN(n) || n < 0) return 0;
   const u = match[2] ?? '';
   if (u.startsWith('w')) return n * 7;
   if (u.startsWith('h')) return n / 24;
-  if (u.startsWith('m')) return n / (60 * 24);
-  if (u.startsWith('s')) return n / (3600 * 24);
   // 'd' prefix or no unit → days
   return n;
 }
