@@ -359,7 +359,7 @@ export default function CapacityEstimator() {
           </div>
         </div>
         <p className={styles.caveat}>
-          Planning estimate only. Actual footprint depends on deployment topology, persistence backend, worker behavior, archival, and visibility configuration. Default retention of 2 days includes the Cassandra GC grace period. Use p95 or p99 payload sizes from production metrics when available.
+          Planning estimate only. Actual footprint depends on deployment topology, persistence backend, worker behavior, archival, and visibility configuration. Default retention of 7 days reflects typical Uber production usage; adjust for your domain. Use p95 or p99 payload sizes from production metrics when available.
         </p>
         <div className={styles.btnGroup}>
           <button className={styles.exampleBtn} onClick={loadExample}>Load order-processing example</button>

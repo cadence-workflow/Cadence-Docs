@@ -157,7 +157,7 @@ payloadDataSizeMB =
   + heartbeatsPerWorkflow * avgHeartbeatPayloadSizeKB / 1024
 ```
 
-The `/1024` conversions bring KB inputs into MB so all units match. With defaults: `payloadDataSizeMB = 3.00 MB`
+The `/1024` conversions bring KB inputs into MB so all units match. With defaults (500 KB payloads): `payloadDataSizeMB = 1.47 MB`
 
 **Unit data size** is what Cassandra stores for one complete workflow instance: payload plus Cadence's own record overhead across both tables.
 
