@@ -145,6 +145,6 @@ cadence schedule create \
   --execution_timeout 7200
 ```
 
-The full API surface is available through the CLI and the Go SDK (see the Schedules page under Go Client in the sidebar). Java and Python SDK guides are coming as each client ships support.
+The full API surface is available through the CLI, the Go SDK (see the Schedules page under Go Client in the sidebar), and the [Python SDK](https://github.com/cadence-workflow/cadence-python-client). Java SDK support is coming.
 
 See the [Schedules concept page](/docs/concepts/schedules) for the full reference including overlap policy details, jitter, and CLI commands.
