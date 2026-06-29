@@ -19,6 +19,14 @@ Cadence records every workflow step by calling `UpdateWorkflowExecution` interna
 
 <CapacityEstimator />
 
+All fields accept free-form values with units:
+
+| Field type | Accepted formats | Examples |
+|---|---|---|
+| Time (runtime, retention) | `s`, `m`, `h`, `d`, `w` or plain number (hours) | `2h`, `30m`, `90 mins`, `1d`, `3600s`, `24` |
+| Size in MB (payload fields) | `B`, `KB`, `MB`, `GB` or plain number (MB) | `500 KB`, `1 MB`, `0.5`, `2 GB` |
+| Size in KB (signal, heartbeat, response) | `B`, `KB`, `MB`, `GB` or plain number (KB) | `1 KB`, `500 B`, `2 MB`, `1` |
+
 ## Database (Cassandra)
 
 ### Workflow shape
@@ -32,7 +40,7 @@ Four inputs define workflow volume and lifetime:
 | `avgWorkflowRuntime` | How long a workflow runs on average. During this time it occupies hot storage in Cassandra. |
 | `retentionDaysAfterCompletion` | How long Cadence keeps closed workflow history before deleting it. |
 
-`workflowsAtPeak` and `workflowsPerDay` are independent. For a 2-hour workflow processing 10,000 orders/day, peak concurrency is `10,000 × (2 / 24) ≈ 833` — not 10,000.
+`workflowsAtPeak` and `workflowsPerDay` are independent. For a 2-hour workflow processing 10,000 orders/day, peak concurrency is `10,000 × (2 / 24) ≈ 833`, not 10,000.
 
 ### Workflow behavior
 
@@ -51,9 +59,9 @@ Each event type has a different write cost:
 
 Cadence serializes every workflow input, output, activity parameter, signal payload, and query response through a [DataConverter](/docs/concepts/data-converter) before writing it to workflow history. The default JSON converter works for most cases; the sizes you enter here should reflect what actually lands in history after serialization.
 
-Two things affect the number to enter:
-- If you use compression (gzip typically achieves 60–80% reduction on repetitive JSON), enter the compressed size.
-- If you use the claim-check pattern, activity payloads in history are tiny references regardless of the original size.
+Two things affect what size to enter:
+- Compression (gzip typically achieves 60–80% reduction on repetitive JSON): enter the compressed size.
+- The [claim-check pattern](/docs/concepts/data-converter#claim-check): activity payloads in history become tiny references regardless of original size.
 
 | Input | Description |
 |---|---|
@@ -64,14 +72,6 @@ Two things affect the number to enter:
 | `avgChildWorkflowPayloadSizeMB` | Input data passed to each child workflow |
 | `avgSignalInputSizeKB` | Data carried in each signal |
 | `avgHeartbeatPayloadSizeKB` | Data recorded with each activity heartbeat checkpoint |
-
-All fields accept free-form values with units. Type whatever is natural for your workload:
-
-| Field type | Accepted formats | Examples |
-|---|---|---|
-| Time (runtime, retention) | `s`, `m`, `h`, `d`, `w` or plain number (hours) | `2h`, `30m`, `90 mins`, `1d`, `3600s`, `24` |
-| Size in MB (payload fields) | `B`, `KB`, `MB`, `GB` or plain number (MB) | `500 KB`, `1 MB`, `0.5`, `2 GB` |
-| Size in KB (signal, heartbeat, response) | `B`, `KB`, `MB`, `GB` or plain number (KB) | `1 KB`, `500 B`, `2 MB`, `1` |
 
 ## Formula reference
 
@@ -101,9 +101,9 @@ func HelloWorldWorkflow(ctx workflow.Context, input sampleInput) (string, error)
 For this workflow:
 - `activitiesPerWorkflow = 1` (one `HelloWorldActivity`)
 - `signalsPerWorkflow = 0`, `timersPerWorkflow = 0`, `childWorkflowsPerWorkflow = 0`
-- `totalActions = 5 + 1×6 = 11`
+- `totalActions = 5 + 1*6 = 11`
 
-For a more complex workflow, add up the write cost for each event type. The fixed `5` is what every workflow pays: start record, initial decision, close record.
+The fixed `5` is what every workflow pays: start record, initial decision, close record.
 
 ```
 totalActions =
@@ -118,7 +118,7 @@ totalActions =
 
 With all behavior inputs at their defaults of 1: `totalActions = 31`
 
-Each `UpdateWorkflowExecution` also writes task records not shown in the table; that is why the event record counts do not add up to the per-event cost.
+Each `UpdateWorkflowExecution` also writes task records not shown in the table, which is why the event record counts do not add up to the per-event cost.
 
 | Event type | Cost | Key event records written |
 |---|---|---|
@@ -157,7 +157,7 @@ unitDataSizeMB =
   + executionsAvgRowSizeKB * 2 / 1024
 ```
 
-Breaking down with defaults:
+With defaults:
 - `0.6 * (1 + 1) = 1.200 MB` for history nodes. The `(activities + 1)` term models activity payload nodes (dominant by size) plus one node for workflow start and close events. Signals, timers, and decisions also write history nodes, but their entries are small and are captured by the `totalActions / 1024` term below.
 - `31 / 1024 = 0.030 MB` for action records at 1 KB each.
 - `7 * 2 / 1024 = 0.014 MB` for two executions rows (one for the execution record, one for timer and transfer tasks).
@@ -171,13 +171,13 @@ totalRetainedDataSize =
   unitDataSizeMB * workflowsPerDay * (avgWorkflowRuntime/24 + retentionDaysAfterCompletion)
 ```
 
-The `(avgWorkflowRuntime/24 + retentionDays)` sum is the total days each workflow sits in Cassandra. At Uber, production domains typically use 7–30 days depending on the workflow type.
+The `(avgWorkflowRuntime/24 + retentionDays)` term is the total number of days each workflow sits in Cassandra. At Uber, production domains typically use 7–30 days depending on the workflow type.
 
 With defaults: `totalRetainedDataSize = 1.24 * 1 * (1 + 7) = 9.92 MB`
 
 ### Step 3: Compute peak throughput
 
-Peak throughput tells you how many `UpdateWorkflowExecution` calls per second your cluster must handle at peak. This is the number that drives compute sizing.
+Peak throughput tells you how many `UpdateWorkflowExecution` calls per second your cluster must handle at peak — the number that drives compute sizing.
 
 The formula applies Little's Law: if `workflowsAtPeak` workflows are always in flight and each takes `avgWorkflowRuntime` hours, then the call rate is:
 
@@ -188,9 +188,12 @@ actionsPerSec = workflowsAtPeak * totalActions / (avgWorkflowRuntime * 3600)
 With defaults: `1 * 31 / (24 * 3600) = 0.00036 updates/sec` (near-zero load with a single workflow running all day).
 
 A more realistic example: 10,000 concurrent workflows each running 30 minutes (0.5 hr), 31 actions each:
-`actionsPerSec = 10,000 * 31 / (0.5 * 3600) = 172 updates/sec`
 
-`workflowsAtPeak / workflowsPerDay` gives your environment's utilization ratio. A low ratio means most of your capacity sits idle; reach out on Slack if you want help improving it.
+```
+actionsPerSec = 10,000 * 31 / (0.5 * 3600) = 172 updates/sec
+```
+
+`workflowsAtPeak / workflowsPerDay` gives your environment's utilization ratio. A low ratio means most of your capacity sits idle; reach out on the [community Slack](https://cadenceworkflow.io/slack) for help improving it.
 
 :::note
 Longer `avgWorkflowRuntime` lowers `actionsPerSec` even with many concurrent workflows, because each workflow's actions are spread over more time. Shorter runtimes drive the rate up sharply. `workflowsAtPeak` does not affect storage; it only feeds into throughput and resource estimates.
@@ -198,7 +201,7 @@ Longer `avgWorkflowRuntime` lowers `actionsPerSec` even with many concurrent wor
 
 ## Compute
 
-The estimator scales resource requirements from a reference Cadence cluster running at **11,444 `UpdateWorkflowExecution` calls/sec**. The numbers come from Uber prod11 Grafana data.
+The estimator scales resource requirements from a reference Cadence cluster running at **11,444** `UpdateWorkflowExecution` calls/sec. The numbers come from Uber prod11 Grafana data.
 
 ### Services and their roles
 
@@ -223,7 +226,7 @@ Each coefficient is `(resource at reference) / 11444`. Multiply by your `actions
 | Matching | 12 instances x 6 cores, 32 GiB each | 72 cores, 384 GiB RAM | 72 / 11444 cores per update/sec |
 | Cassandra | 144 nodes | 21.167 TiB RAM | 144 / 11444 nodes per update/sec |
 
-Values round up with `Math.ceil`. For small workloads, plan for at least one instance per service; there is fixed overhead the linear model does not capture.
+All values round up to the next whole number. For small workloads, plan for at least one instance per service; there is fixed overhead the linear model does not capture.
 
 ### Reference cluster examples
 
