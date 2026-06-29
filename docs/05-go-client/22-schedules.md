@@ -19,16 +19,10 @@ The Go client exposes schedule management through `ScheduleClient`, obtained fro
 
 ## Getting the client
 
+`ScheduleClient` is obtained from an already-initialized `client.Client`. For the full client setup (service transport, domain, yarpc dispatcher), see the [Workers](/docs/go-client/workers) page.
+
 ```go
-import (
-    "go.uber.org/cadence/client"
-)
-
-cadenceClient, err := client.NewClient(client.Options{...})
-if err != nil {
-    log.Fatal(err)
-}
-
+// cadenceClient is a client.Client initialized for your domain
 sc := cadenceClient.ScheduleClient()
 ```
 
@@ -60,7 +54,7 @@ scheduleID, err := sc.Create(ctx, &client.CreateScheduleRequest{
 | Constant | Behavior |
 |---|---|
 | `client.ScheduleOverlapPolicySkipNew` (default) | Skip the new fire if a previous run is still active. |
-| `client.ScheduleOverlapPolicyBuffer` | Buffer one pending fire; start it immediately when the previous run finishes. |
+| `client.ScheduleOverlapPolicyBuffer` | Queue new fires and run them sequentially; depth limited by `BufferLimit`. |
 | `client.ScheduleOverlapPolicyConcurrent` | Start every fire; use `ConcurrencyLimit` to cap simultaneous runs. |
 | `client.ScheduleOverlapPolicyCancelPrevious` | Cancel the active run, then start the new one. |
 | `client.ScheduleOverlapPolicyTerminatePrevious` | Terminate the active run immediately, then start the new one. |
@@ -157,8 +151,8 @@ for {
         return err
     }
     for _, entry := range resp.Schedules {
-        fmt.Printf("%s: paused=%v next=%v\n",
-            entry.ScheduleID, entry.State.Paused, entry.Info.NextRunTime)
+        fmt.Printf("%s: paused=%v cron=%s\n",
+            entry.ScheduleID, entry.State.Paused, entry.CronExpression)
     }
     if len(resp.NextPageToken) == 0 {
         break
