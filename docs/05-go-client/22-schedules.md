@@ -203,13 +203,25 @@ Deleting a schedule does not cancel or terminate any workflows it already starte
 
 ## Schedule search attributes
 
-Every workflow run triggered by a schedule is automatically tagged with the following search attributes, which you can use to filter runs via the Cadence visibility API (e.g. `ListWorkflowExecutions`):
+Cadence sets search attributes on two different workflow types. Use them to filter and query via the visibility API.
+
+### On each triggered workflow run
 
 | Attribute | Type | Value |
 |---|---|---|
-| `CadenceScheduleID` | string | The schedule ID |
-| `CadenceScheduleTime` | datetime | The nominal scheduled fire time (not actual start time) |
-| `CadenceScheduleIsBackfill` | bool | `true` if started by a backfill request |
-| `CadenceScheduleBackfillID` | string | The backfill ID, if provided |
+| `CadenceScheduleID` | Keyword | The schedule ID |
+| `CadenceScheduleTime` | Datetime | The nominal scheduled fire time (not actual start time) |
+| `CadenceScheduleIsBackfill` | Bool | `true` if started by a backfill request |
+| `CadenceScheduleBackfillID` | Keyword | The backfill ID, if provided; absent on normal fires |
 
 `CadenceScheduleTime` is the time the schedule intended to fire, not when the workflow actually started. Use it to determine which time window a triggered run should process.
+
+### On the scheduler workflow itself
+
+These are set on the internal scheduler workflow (not on triggered runs) so that `ListSchedules` can surface schedule state without querying each scheduler workflow individually.
+
+| Attribute | Type | Value |
+|---|---|---|
+| `CadenceScheduleState` | Keyword | `"active"` or `"paused"` |
+| `CadenceScheduleCron` | Keyword | The current cron expression |
+| `CadenceScheduleWorkflowType` | Keyword | The target workflow type name |
