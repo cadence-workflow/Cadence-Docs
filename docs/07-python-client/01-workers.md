@@ -72,7 +72,7 @@ from cadence.worker import Worker
 
 async with Client(domain="my-domain", target="localhost:7833") as client:
     async with Worker(client, "my-task-list", registry):
-        # Worker is polling — keep alive until interrupted
+        # Worker is polling; keep alive until interrupted
         await asyncio.Event().wait()
 ```
 
@@ -103,7 +103,7 @@ class GreetingWorkflow:
 
 async def main():
     async with Client(domain="my-domain", target="localhost:7833") as client:
-        print("Worker running — Ctrl-C to stop")
+        print("Worker running, press Ctrl-C to stop")
         async with Worker(client, "my-task-list", registry):
             await asyncio.Event().wait()
 
