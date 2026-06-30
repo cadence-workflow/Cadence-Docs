@@ -133,6 +133,26 @@ const sidebars: SidebarsConfig = {
       ],
     },
     {
+      label: 'Python Client',
+      type: 'category',
+      items: [
+        { type: 'doc', id: 'python-client/index' },
+        { type: 'doc', id: 'python-client/workers' },
+        { type: 'doc', id: 'python-client/workflows' },
+        { type: 'doc', id: 'python-client/starting-workflows' },
+        { type: 'doc', id: 'python-client/activities' },
+        { type: 'doc', id: 'python-client/child-workflows' },
+        { type: 'doc', id: 'python-client/signals' },
+        { type: 'doc', id: 'python-client/queries' },
+        { type: 'doc', id: 'python-client/retries' },
+        { type: 'doc', id: 'python-client/error-handling' },
+        { type: 'doc', id: 'python-client/continue-as-new' },
+        { type: 'doc', id: 'python-client/distributed-cron' },
+        { type: 'doc', id: 'python-client/schedules' },
+        { type: 'doc', id: 'python-client/testing' },
+      ],
+    },
+    {
       label: 'Command Line Interface',
       type: 'category',
       items: [
