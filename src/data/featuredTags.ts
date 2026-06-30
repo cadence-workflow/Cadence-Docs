@@ -32,7 +32,3 @@ export const TAG_DEFAULT_IMAGE: Record<FeaturedTag, string> = {
 
 // default.png only exists in the root set, so always fall back to it.
 export const FALLBACK_IMAGE = '/img/featured/default.png';
-
-// When true, Video cards render a click-to-play YouTube facade (poster +
-// play button that loads the player on click) instead of linking out.
-export const VIDEO_EMBED = true;
