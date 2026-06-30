@@ -7,6 +7,7 @@ import {
   FEATURED_TAGS,
   TAG_DEFAULT_IMAGE,
   FALLBACK_IMAGE,
+  VIDEO_EMBED,
   type FeaturedTag,
 } from '@site/src/data/featuredTags';
 import styles from './styles.module.css';
@@ -34,6 +35,51 @@ items.forEach((item, i) => {
 
 const resolveImage = (item: FeaturedItem) =>
   item.image ?? TAG_DEFAULT_IMAGE[item.tag] ?? FALLBACK_IMAGE;
+
+const getYouTubeId = (url: string): string | null => {
+  const m = url.match(
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([\w-]{11})/,
+  );
+  return m ? m[1] : null;
+};
+
+function VideoFacade({videoId, title}: {videoId: string; title: string}) {
+  const [playing, setPlaying] = useState(false);
+
+  if (playing) {
+    return (
+      <iframe
+        className={styles.video}
+        src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`}
+        title={title}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+      />
+    );
+  }
+
+  return (
+    <button
+      type="button"
+      className={styles.videoFacade}
+      aria-label={`Play: ${title}`}
+      onClick={() => setPlaying(true)}>
+      <img
+        src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+        alt=""
+        loading="lazy"
+        onError={(e) => {
+          e.currentTarget.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+        }}
+      />
+      <span className={styles.playButton} aria-hidden="true">
+        <svg viewBox="0 0 24 24" width={28} height={28} fill="currentColor">
+          <path d="M8 5v14l11-7z" />
+        </svg>
+      </span>
+    </button>
+  );
+}
 
 export default function FeaturedCarousel(): JSX.Element {
   const trackRef = useRef<HTMLUListElement>(null);
@@ -159,27 +205,52 @@ export default function FeaturedCarousel(): JSX.Element {
         </div>
 
         <ul className={styles.track} ref={trackRef}>
-          {items.map((item, i) => (
-            <li
-              className={styles.slide}
-              key={item.href + i}
-              aria-roledescription="slide"
-              aria-label={`${i + 1} of ${items.length}`}>
-              <Link className={clsx('card', styles.card)} to={item.href}>
-                <div className={styles.media}>
-                  <img src={resolveImage(item)} alt="" loading="lazy" />
-                  {item.tag && <span className={styles.tag} data-tag={item.tag}>{item.tag}</span>}
-                </div>
-                <div className={styles.body}>
-                  <Heading as="h3" className={styles.cardTitle}>
-                    {item.title}
-                  </Heading>
-                  <p className={styles.desc}>{item.description}</p>
-                  <span className={styles.cta}>{item.cta ?? 'Read more'} →</span>
-                </div>
-              </Link>
-            </li>
-          ))}
+          {items.map((item, i) => {
+            const videoId =
+              VIDEO_EMBED && item.tag === 'Video' ? getYouTubeId(item.href) : null;
+
+            return (
+              <li
+                className={styles.slide}
+                key={item.href + i}
+                aria-roledescription="slide"
+                aria-label={`${i + 1} of ${items.length}`}>
+                {videoId ? (
+                  <div className={clsx('card', styles.card)}>
+                    <div className={styles.media}>
+                      <VideoFacade videoId={videoId} title={item.title} />
+                      {item.tag && <span className={styles.tag} data-tag={item.tag}>{item.tag}</span>}
+                    </div>
+                    <div className={styles.body}>
+                      <Heading as="h3" className={styles.cardTitle}>
+                        <Link className={styles.titleLink} to={item.href}>
+                          {item.title}
+                        </Link>
+                      </Heading>
+                      <p className={styles.desc}>{item.description}</p>
+                      <Link className={styles.cta} to={item.href}>
+                        {item.cta ?? 'Watch video'} →
+                      </Link>
+                    </div>
+                  </div>
+                ) : (
+                  <Link className={clsx('card', styles.card)} to={item.href}>
+                    <div className={styles.media}>
+                      <img src={resolveImage(item)} alt="" loading="lazy" />
+                      {item.tag && <span className={styles.tag} data-tag={item.tag}>{item.tag}</span>}
+                    </div>
+                    <div className={styles.body}>
+                      <Heading as="h3" className={styles.cardTitle}>
+                        {item.title}
+                      </Heading>
+                      <p className={styles.desc}>{item.description}</p>
+                      <span className={styles.cta}>{item.cta ?? 'Read more'} →</span>
+                    </div>
+                  </Link>
+                )}
+              </li>
+            );
+          })}
         </ul>
 
         <div className={styles.dots} role="tablist" aria-label="Choose slide">

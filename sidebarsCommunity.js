@@ -34,5 +34,10 @@ export default {
       label: 'Code of Conduct',
       href: 'https://github.com/uber/.github/blob/dcd96c52f2d1d839208315a2572cf37f48e52e96/CODE_OF_CONDUCT.md',
     },
+    {
+      type: 'link',
+      label: 'Adopters',
+      href: 'https://github.com/cadence-workflow/cadence/blob/master/ADOPTERS.md',
+    },
   ],
 };

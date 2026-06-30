@@ -20,17 +20,24 @@
   tag: Doc
   cta: Learn more
 
-- title: "Data Converters: Encryption & Compression"
-  description: Implement custom Cadence DataConverters to compress, encrypt, serialize, or offload workflow payloads using the Go and Java samples.
-  href: /docs/concepts/data-converter
-  tag: Doc
-  cta: Learn more
+- title: Cadence Best Practices
+  description: Answers to common questions and recommended patterns for building reliable, maintainable Cadence workflows and activities.
+  href: /faq/best-practices
+  tag: FAQ
+  cta: Read FAQ
 
 - title: Community Meetups
   description: Join the recurring Cadence community meetup to share demos, ask questions, and connect with maintainers.
   href: /community/meetup
   tag: Community
   cta: Join us
+
+
+- title: Cadence in Action (Video)
+  description: Watch a walkthrough of Cadence concepts and workflows on the Cadence YouTube channel.
+  href: https://www.youtube.com/watch?v=SLlOk_BbtKo
+  tag: Video
+  cta: Watch video
 
 - title: Deploy Cadence with Helm on GKE (PostgreSQL + OpenSearch)
   description: A codelab for deploying Cadence on Google Kubernetes Engine using Helm with PostgreSQL, Kafka, and OpenSearch for advanced visibility.
@@ -44,14 +51,11 @@
   tag: Doc
   cta: Start codelab
 
-- title: Cadence Best Practices
-  description: Answers to common questions and recommended patterns for building reliable, maintainable Cadence workflows and activities.
-  href: /faq/best-practices
-  tag: FAQ
-  cta: Read FAQ
+- title: "Data Converters: Encryption & Compression"
+  description: Implement custom Cadence DataConverters to compress, encrypt, serialize, or offload workflow payloads using the Go and Java samples.
+  href: /docs/concepts/data-converter
+  tag: Doc
+  cta: Learn more
 
-- title: Cadence in Action (Video)
-  description: Watch a walkthrough of Cadence concepts and workflows on the Cadence YouTube channel.
-  href: https://www.youtube.com/watch?v=SLlOk_BbtKo
-  tag: Video
-  cta: Watch video
+
+
