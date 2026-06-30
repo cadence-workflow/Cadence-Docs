@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Python Client
+title: Introduction
 description: Overview of the Cadence Python client SDK, an async Python library for building workflows and activities.
 keywords:
   - cadence python client
