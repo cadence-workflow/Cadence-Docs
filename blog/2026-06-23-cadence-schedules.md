@@ -74,7 +74,7 @@ The overlap policy can be changed on a live schedule at any time. The change app
 
 ## Pause and unpause with context
 
-Pausing a schedule is one operation. Adding context to it is another. With Cadence Schedules they happen together:
+Pausing a schedule and adding context are usually separate operations. With Cadence Schedules they happen together:
 
 ```bash
 cadence schedule pause \
@@ -92,7 +92,7 @@ Unpausing resumes from the current time by default. If you need to replay fires 
 
 ## Backfill missed runs
 
-If fires were missed during a pause or an outage, backfill lets you request them explicitly for any historical time range:
+If fires are missed during a pause or an outage, backfill lets you request them explicitly for any historical time range:
 
 ```bash
 cadence schedule backfill \
