@@ -66,6 +66,7 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'concepts/workflow-queries-formatted-data' },
         { type: 'doc', id: 'concepts/workflow-engine' },
         { type: 'doc', id: 'concepts/open-source-workflow-engine' },
+        { type: 'doc', id: 'concepts/schedules' },
       ],
     },
     {
@@ -124,6 +125,7 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'go-client/workflow-versioning' },
         { type: 'doc', id: 'go-client/sessions' },
         { type: 'doc', id: 'go-client/distributed-cron' },
+        { type: 'doc', id: 'go-client/schedules' },
         { type: 'doc', id: 'go-client/tracing' },
         { type: 'doc', id: 'go-client/workflow-replay-shadowing' },
         { type: 'doc', id: 'go-client/workflow-non-deterministic-error' },
