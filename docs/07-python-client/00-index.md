@@ -10,7 +10,7 @@ keywords:
 permalink: /docs/python-client
 ---
 
-# Python Client
+# Introduction
 
 The Cadence Python client is an async Python SDK for building workflows and activities, connecting to the Cadence server over gRPC.
 
