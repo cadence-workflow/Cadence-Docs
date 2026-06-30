@@ -24,9 +24,11 @@ registry = Registry()
 class OrderWorkflow:
     def __init__(self):
         self._status = "pending"
+        self._order_id = ""
 
     @workflow.run
     async def run(self, order_id: str) -> str:
+        self._order_id = order_id
         self._status = "processing"
         result = await execute_activity(...)
         self._status = "completed"

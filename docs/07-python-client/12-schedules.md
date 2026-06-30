@@ -31,8 +31,13 @@ async with Client(domain="my-domain", target="localhost:7833") as client:
 
 ```python
 from datetime import timedelta
-from google.protobuf.duration import from_timedelta
+from google.protobuf.duration_pb2 import Duration
 from cadence.api.v1 import common_pb2, schedule_pb2, tasklist_pb2
+
+def _dur(td: timedelta) -> Duration:
+    d = Duration()
+    d.FromTimedelta(td)
+    return d
 
 await client.create_schedule(
     "daily-etl",
@@ -44,8 +49,8 @@ await client.create_schedule(
             workflow_type=common_pb2.WorkflowType(name="RunETL"),
             task_list=tasklist_pb2.TaskList(name="etl-workers"),
             workflow_id_prefix="daily-etl-",
-            execution_start_to_close_timeout=from_timedelta(timedelta(hours=2)),
-            task_start_to_close_timeout=from_timedelta(timedelta(seconds=10)),
+            execution_start_to_close_timeout=_dur(timedelta(hours=2)),
+            task_start_to_close_timeout=_dur(timedelta(seconds=10)),
         )
     ),
     policies=schedule_pb2.SchedulePolicies(
@@ -71,7 +76,7 @@ await client.create_schedule(
 ```python
 spec=schedule_pb2.ScheduleSpec(
     cron_expression="0 0 * * *",
-    jitter=from_timedelta(timedelta(minutes=10)),  # random delay up to 10 minutes
+    jitter=_dur(timedelta(minutes=10)),  # random delay up to 10 minutes
 )
 ```
 
