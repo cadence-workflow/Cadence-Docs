@@ -74,7 +74,7 @@ The overlap policy can be changed on a live schedule at any time. The change app
 
 ## Pause and unpause with context
 
-Pausing a schedule is one operation. Adding context to it is another. With Cadence Schedules they happen together:
+Pausing a schedule and adding context are usually separate operations. With Cadence Schedules they happen together:
 
 ```bash
 cadence schedule pause \
@@ -88,11 +88,11 @@ When someone runs `describe` a week later, they see exactly why the schedule is 
 cadence schedule unpause --schedule_id daily-etl
 ```
 
-Unpausing resumes from the current time. Fires missed during the pause window are not replayed automatically.
+Unpausing resumes from the current time by default. If you need to replay fires missed during the pause, pass `--catch_up_policy All` (or `One` for just the most recent missed fire).
 
 ## Backfill missed runs
 
-If fires were missed during a pause or an outage, backfill lets you request them explicitly for any historical time range:
+If fires are missed during a pause or an outage, backfill lets you request them explicitly for any historical time range:
 
 ```bash
 cadence schedule backfill \
@@ -145,6 +145,6 @@ cadence schedule create \
   --execution_timeout 7200
 ```
 
-The full API surface is available through the CLI. Go, Java, and Python SDK guides are coming as each client ships support.
+The full API surface is available through the CLI, the Go SDK (see the Schedules page under Go Client in the sidebar), and the [Python SDK](https://github.com/cadence-workflow/cadence-python-client). Java SDK support is coming.
 
 See the [Schedules concept page](/docs/concepts/schedules) for the full reference including overlap policy details, jitter, and CLI commands.
