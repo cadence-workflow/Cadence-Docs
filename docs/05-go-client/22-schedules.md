@@ -15,7 +15,7 @@ permalink: /docs/go-client/schedules
 
 # Schedules
 
-The Go client exposes schedule management through `ScheduleClient`, obtained from any `cadence.Client` instance. For a full explanation of overlap policies, backfill, catch-up, and when to use Schedules over `CronSchedule`, see the Schedules concept page under Concepts in the sidebar.
+The Go client exposes schedule management through `ScheduleClient`, obtained from any `cadence.Client` instance. For a full explanation of overlap policies, backfill, catch-up, and when to use Schedules over `CronSchedule`, see the [Schedules concept page](/docs/concepts/schedules).
 
 ## Getting the client
 
@@ -68,7 +68,7 @@ scheduleID, err := sc.Create(ctx, &client.CreateScheduleRequest{
 | Constant | Behavior |
 |---|---|
 | `client.ScheduleOverlapPolicySkipNew` (default) | Skip the new fire if a previous run is still active. |
-| `client.ScheduleOverlapPolicyBuffer` | Queue new fires and run them sequentially; depth limited by `BufferLimit`. |
+| `client.ScheduleOverlapPolicyBuffer` | Queue new fires and run them sequentially; depth-limited by `BufferLimit`. |
 | `client.ScheduleOverlapPolicyConcurrent` | Start every fire; use `ConcurrencyLimit` to cap simultaneous runs. |
 | `client.ScheduleOverlapPolicyCancelPrevious` | Cancel the active run gracefully, then start the new one. |
 | `client.ScheduleOverlapPolicyTerminatePrevious` | Terminate the active run immediately, then start the new one. |
