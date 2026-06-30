@@ -15,7 +15,7 @@ Cadence retries activities and workflows automatically on failure. You control t
 
 ## RetryPolicy
 
-`RetryPolicy` is a `TypedDict` defined in `cadence.workflow`. All fields are optional.
+`RetryPolicy` is a `TypedDict` defined in `cadence.workflow`. All fields are optional in the TypedDict definition, but `initial_interval` is required by the server, and at least one of `maximum_attempts` or `expiration_interval` must be non-zero.
 
 ```python
 from datetime import timedelta
@@ -25,20 +25,22 @@ policy = RetryPolicy(
     initial_interval=timedelta(seconds=1),     # delay before first retry
     backoff_coefficient=2.0,                   # multiply delay by this each attempt
     maximum_interval=timedelta(minutes=5),     # cap the delay
-    maximum_attempts=5,                        # 0 = unlimited
+    maximum_attempts=5,                        # stop after 5 total attempts
     non_retryable_error_reasons=["InvalidInput"],
-    expiration_interval=timedelta(hours=1),    # stop retrying after this wall-clock time
+    expiration_interval=timedelta(hours=1),    # stop retrying after 1 hour
 )
 ```
 
-| Field | Default | Description |
-|---|---|---|
-| `initial_interval` | 1 s | Delay before the first retry |
-| `backoff_coefficient` | 2.0 | Multiplier applied to delay on each attempt |
-| `maximum_interval` | 100x initial | Cap on retry delay |
-| `maximum_attempts` | Unlimited | Stop after this many total attempts (0 = unlimited) |
-| `non_retryable_error_reasons` | None | Error reason strings that bypass retries entirely |
-| `expiration_interval` | None | Stop retrying after this wall-clock duration |
+| Field | Description |
+|---|---|
+| `initial_interval` | Delay before the first retry. Required; must be greater than zero. |
+| `backoff_coefficient` | Multiplier applied to delay on each attempt. Must be >= 1.0. Server default when unset: 2.0. |
+| `maximum_interval` | Cap on retry delay. Must be >= `initial_interval`. If unset, no cap is applied. |
+| `maximum_attempts` | Stop after this many total attempts. 0 means unlimited; requires `expiration_interval` to be set. |
+| `non_retryable_error_reasons` | Error reason strings that bypass retries immediately. |
+| `expiration_interval` | Stop retrying after this wall-clock duration. |
+
+`initial_interval` is required. At least one of `maximum_attempts` or `expiration_interval` must be specified; the server rejects a policy where both are zero.
 
 ## Applying to an activity
 
@@ -53,6 +55,7 @@ result = await execute_activity(
     order_id,
     start_to_close_timeout=timedelta(minutes=5),
     retry_policy=RetryPolicy(
+        initial_interval=timedelta(seconds=1),
         maximum_attempts=3,
         non_retryable_error_reasons=["OrderNotFound"],
     ),
@@ -71,6 +74,7 @@ result = await execute_child_workflow(
     task_list="order-workers",
     execution_start_to_close_timeout=timedelta(hours=1),
     retry_policy=RetryPolicy(
+        initial_interval=timedelta(seconds=1),
         maximum_attempts=2,
     ),
 )
@@ -82,6 +86,7 @@ Set `non_retryable_error_reasons` to a list of error reason strings. When an act
 
 ```python
 retry_policy=RetryPolicy(
+    initial_interval=timedelta(seconds=1),
     maximum_attempts=10,
     non_retryable_error_reasons=["InvalidInput", "Unauthorized"],
 )

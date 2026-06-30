@@ -20,7 +20,9 @@ All workflow lifecycle operations go through the `Client`.
 from datetime import timedelta
 from cadence.client import Client
 
-async with Client(domain="my-domain", target="localhost:7833") as client:
+CADENCE_TARGET = "localhost:7833"  # replace with your Cadence frontend address
+
+async with Client(domain="my-domain", target=CADENCE_TARGET) as client:
     execution = await client.start_workflow(
         "OrderWorkflow",           # workflow type name
         "order-123",               # argument passed to workflow.run

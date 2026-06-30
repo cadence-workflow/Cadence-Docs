@@ -21,7 +21,9 @@ A worker connects to the Cadence server, polls a task list for workflow and acti
 ```python
 from cadence.client import Client
 
-async with Client(domain="my-domain", target="localhost:7833") as client:
+CADENCE_TARGET = "localhost:7833"  # replace with your Cadence frontend address
+
+async with Client(domain="my-domain", target=CADENCE_TARGET) as client:
     # client is ready here
     ...
 ```
@@ -70,7 +72,7 @@ registry.register_activity(my_activity)
 ```python
 from cadence.worker import Worker
 
-async with Client(domain="my-domain", target="localhost:7833") as client:
+async with Client(domain="my-domain", target=CADENCE_TARGET) as client:
     async with Worker(client, "my-task-list", registry):
         # Worker is polling; keep alive until interrupted
         await asyncio.Event().wait()
@@ -93,6 +95,8 @@ from cadence.client import Client
 from cadence.worker import Worker, Registry
 from cadence import workflow
 
+CADENCE_TARGET = "localhost:7833"  # replace with your Cadence frontend address
+
 registry = Registry()
 
 @registry.workflow()
@@ -102,7 +106,7 @@ class GreetingWorkflow:
         return f"Hello, {name}!"
 
 async def main():
-    async with Client(domain="my-domain", target="localhost:7833") as client:
+    async with Client(domain="my-domain", target=CADENCE_TARGET) as client:
         print("Worker running, press Ctrl-C to stop")
         async with Worker(client, "my-task-list", registry):
             await asyncio.Event().wait()

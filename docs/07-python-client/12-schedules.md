@@ -22,7 +22,9 @@ Schedule operations use protobuf types from `cadence.api.v1.schedule_pb2`.
 ```python
 from cadence.client import Client
 
-async with Client(domain="my-domain", target="localhost:7833") as client:
+CADENCE_TARGET = "localhost:7833"  # replace with your Cadence frontend address
+
+async with Client(domain="my-domain", target=CADENCE_TARGET) as client:
     # call client.create_schedule(...), client.describe_schedule(...), etc.
     ...
 ```

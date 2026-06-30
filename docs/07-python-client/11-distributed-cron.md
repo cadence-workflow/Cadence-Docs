@@ -19,7 +19,9 @@ The `cron_schedule` field on `start_workflow` runs a workflow on a recurring cad
 from datetime import timedelta
 from cadence.client import Client
 
-async with Client(domain="my-domain", target="localhost:7833") as client:
+CADENCE_TARGET = "localhost:7833"  # replace with your Cadence frontend address
+
+async with Client(domain="my-domain", target=CADENCE_TARGET) as client:
     execution = await client.start_workflow(
         "DailyReportWorkflow",
         workflow_id="daily-report",
