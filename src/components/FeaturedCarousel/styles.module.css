@@ -132,8 +132,8 @@
 .tag { color: #fff; }
 .tag[data-tag='Blog']      { background: #E0902B; }
 .tag[data-tag='Doc']       { background: #276EF1; }
-.tag[data-tag='Community'] { background: #0a521fda; }
-.tag[data-tag='FAQ']       { background: #7A3FD6; }
+.tag[data-tag='Community'] { background: #7A3FD6; }
+.tag[data-tag='FAQ']       { background: #0a521fda; } 
 .tag[data-tag='Video']     { background: #D43A3A; }
 
 .body {
