@@ -1,0 +1,221 @@
+.container {
+  font-family: var(--ifm-font-family-base);
+  margin: 1.5rem 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 2rem;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.section {
+  margin-bottom: 1.5rem;
+}
+
+.sectionTitle {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ifm-color-emphasis-600);
+  margin: 0 0 0.75rem 0;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.label {
+  font-size: 0.85rem;
+  color: var(--ifm-font-color-base);
+  flex: 1;
+  min-width: 0;
+}
+
+.input {
+  width: 90px;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.85rem;
+  font-family: var(--ifm-font-family-monospace);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  background: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--ifm-color-primary);
+}
+
+.unit {
+  font-size: 0.75rem;
+  color: var(--ifm-color-emphasis-600);
+  width: 28px;
+  flex-shrink: 0;
+}
+
+.warning {
+  font-size: 0.7rem;
+  color: var(--ifm-color-warning-dark, #b45309);
+  flex-basis: 100%;
+  margin-top: 2px;
+  padding-left: calc(180px + 0.5rem);
+}
+
+.results {
+  background: var(--ifm-color-emphasis-100);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.resultsTitle {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ifm-color-emphasis-600);
+  margin: 0 0 1rem 0;
+}
+
+.resultGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem 2rem;
+}
+
+@media (max-width: 600px) {
+  .resultGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.resultItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.resultLabel {
+  font-size: 0.78rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.resultValue {
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-family: var(--ifm-font-family-monospace);
+  color: var(--ifm-color-primary-dark);
+}
+
+.caveat {
+  font-size: 0.78rem;
+  color: var(--ifm-color-emphasis-600);
+  margin-top: 1rem;
+  line-height: 1.5;
+}
+
+.btnGroup {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.resetBtn {
+  padding: 0.35rem 0.9rem;
+  font-size: 0.8rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--ifm-font-color-base);
+  cursor: pointer;
+}
+
+.resetBtn:hover {
+  background: var(--ifm-color-emphasis-200);
+}
+
+.exampleBtn {
+  padding: 0.35rem 0.9rem;
+  font-size: 0.8rem;
+  border: 1px solid var(--ifm-color-primary);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--ifm-color-primary);
+  cursor: pointer;
+}
+
+.exampleBtn:hover {
+  background: var(--ifm-color-primary-lightest);
+}
+
+.resourceTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.resourceTable th {
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ifm-color-emphasis-600);
+  padding: 0.4rem 0.75rem 0.4rem 0;
+  border-bottom: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.resourceTable td {
+  padding: 0.45rem 0.75rem 0.45rem 0;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+  color: var(--ifm-font-color-base);
+  vertical-align: top;
+}
+
+.resourceTable td:nth-child(2),
+.resourceTable td:nth-child(3) {
+  font-family: var(--ifm-font-family-monospace);
+  font-weight: 600;
+}
+
+.unitsRef {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--ifm-color-emphasis-100);
+  border-radius: 4px;
+  border: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.unitsRefRow {
+  font-size: 0.75rem;
+  color: var(--ifm-color-emphasis-700);
+  white-space: nowrap;
+}
+
+.unitsRefLabel {
+  font-weight: 600;
+  margin-right: 0.35rem;
+}

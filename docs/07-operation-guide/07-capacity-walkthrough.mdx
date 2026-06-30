@@ -1,0 +1,205 @@
+---
+layout: default
+title: Capacity by Example
+description: Three worked examples translating real Cadence workflow code into storage and compute estimates.
+keywords:
+  - cadence capacity planning
+  - cadence workflow sizing
+  - cadence cluster sizing
+  - cadence compute estimation
+permalink: /docs/operation-guide/capacity-walkthrough
+---
+
+import CapacityEstimator from '@site/src/components/CapacityEstimator';
+
+Three real workflows from [cadence-samples](https://github.com/cadence-workflow/cadence-samples), each translated into a resource estimate. For the formulas behind these numbers, see [Capacity Estimation](/docs/operation-guide/capacity-estimation).
+
+## Example 1: Hello World
+
+[Source](https://github.com/cadence-workflow/cadence-samples/blob/master/new_samples/hello_world/workflow.go) — start, run one activity, finish.
+
+```go
+func HelloWorldWorkflow(ctx workflow.Context, input sampleInput) (string, error) {
+    ctx = workflow.WithActivityOptions(ctx, workflow.ActivityOptions{
+        ScheduleToStartTimeout: time.Minute,
+        StartToCloseTimeout:    time.Minute,
+    })
+    var result string
+    return result, workflow.ExecuteActivity(ctx, HelloWorldActivity, input).Get(ctx, &result)
+}
+```
+
+**Event count:**
+
+| Event | Cost |
+|---|---|
+| Workflow start/close | 5 |
+| `HelloWorldActivity` (schedule + start + complete) | 6 |
+| **Total** | **11** |
+
+**Inputs** — 1,000 workflows/day, ~1 min each:
+
+| Field | Value |
+|---|---|
+| Workflows at peak | 1 |
+| Workflows per day | 1,000 |
+| Avg runtime | `1m` |
+| Activities per workflow | 1 |
+
+**Estimate:**
+
+| | |
+|---|---|
+| Peak throughput | 0.18 updates/sec |
+| Total retained | ~0.8 MB |
+
+| Service | Cores | Memory |
+|---|---|---|
+| History | 1 | ~0.04 GiB |
+| Frontend | 1 | ~0.01 GiB |
+| Matching | 1 | ~0.01 GiB |
+| Workers | 1 | — |
+| Cassandra | 3 nodes (RF=3 minimum) | ~0.001 TiB |
+| **Total Cadence cores** | **3** | |
+
+At this scale every service sits at its production minimum. The linear model only becomes meaningful above ~100 updates/sec.
+
+---
+
+## Example 2: Expense Approval
+
+[Source](https://github.com/cadence-workflow/cadence-samples/blob/master/cmd/samples/expense/workflow.go) — create a report, wait for human approval, process payment.
+
+```go
+func sampleExpenseWorkflow(ctx workflow.Context, expenseID string) (string, error) {
+    // Activity 1: create report
+    workflow.ExecuteActivity(ctx1, createExpenseActivity, expenseID).Get(ctx1, nil)
+
+    // Activity 2: poll until a human approves or rejects — can take hours or days
+    var status string
+    workflow.ExecuteActivity(ctx2, waitForDecisionActivity, expenseID).Get(ctx2, &status)
+
+    if status != "APPROVED" {
+        return "", nil
+    }
+
+    // Activity 3: pay
+    workflow.ExecuteActivity(ctx2, paymentActivity, expenseID).Get(ctx2, nil)
+    return "COMPLETED", nil
+}
+```
+
+**Event count:**
+
+| Event | Cost |
+|---|---|
+| Workflow start/close | 5 |
+| `createExpenseActivity` | 6 |
+| `waitForDecisionActivity` | 6 |
+| `paymentActivity` | 6 |
+| **Total** | **23** |
+
+**Inputs** — 500 reports/day, 2-day average approval time:
+
+| Field | Value | Note |
+|---|---|---|
+| Workflows at peak | 1,000 | `500/day × (48h / 24h)` |
+| Workflows per day | 500 | |
+| Avg runtime | `2d` | |
+| Retention | `7` | |
+| Activities per workflow | 3 | |
+
+**Estimate:**
+
+| | |
+|---|---|
+| Peak throughput | 0.13 updates/sec |
+| Total retained | ~9 GB |
+
+| Service | Cores | Memory |
+|---|---|---|
+| History | 1 | ~0.03 GiB |
+| Frontend | 1 | ~0.01 GiB |
+| Matching | 1 | ~0.01 GiB |
+| Workers | ~20 | — |
+| Cassandra | 3 nodes | ~0.001 TiB |
+| **Total Cadence cores** | **3** | |
+
+Low throughput, high storage — the 9-day total window (2 running + 7 retention) accumulates ~9 GB even though the cluster is nearly idle on compute.
+
+---
+
+## Example 3: Order Processing
+
+A fulfillment workflow with three activities, a cancellation signal, a timeout timer, and a search attribute update for order tracking.
+
+```go
+func OrderProcessingWorkflow(ctx workflow.Context, order OrderInput) error {
+    _ = workflow.UpsertSearchAttributes(ctx, map[string]interface{}{
+        "OrderStatus": "processing",
+    })
+
+    timerCtx, cancelTimer := workflow.WithCancel(ctx)
+    _ = workflow.NewTimer(timerCtx, 30*time.Minute)
+
+    cancelCh := workflow.GetSignalChannel(ctx, "cancel-order")
+    _ = cancelCh
+
+    actCtx := workflow.WithActivityOptions(ctx, workflow.ActivityOptions{
+        StartToCloseTimeout: 10 * time.Minute,
+    })
+
+    workflow.ExecuteActivity(actCtx, ValidateOrder, order).Get(actCtx, nil)
+    workflow.ExecuteActivity(actCtx, FulfillOrder, order).Get(actCtx, nil)
+    cancelTimer()
+    workflow.ExecuteActivity(actCtx, SendConfirmation, order).Get(actCtx, nil)
+    return nil
+}
+```
+
+**Event count:**
+
+| Event | Cost |
+|---|---|
+| Workflow start/close | 5 |
+| 3 activities (validate, fulfill, confirm) | 18 |
+| `cancel-order` signal | 4 |
+| Fulfillment timeout timer | 5 |
+| `UpsertSearchAttributes` | 4 |
+| **Total** | **36** |
+
+**Inputs** — 10,000 orders/day, 2-hour average fulfillment:
+
+| Field | Value | Note |
+|---|---|---|
+| Workflows at peak | 833 | `10,000/day × (2h / 24h)` |
+| Workflows per day | 10,000 | |
+| Avg runtime | `2h` | |
+| Retention | `7` | |
+| Activities per workflow | 3 | |
+| Signals per workflow | 1 | cancellation |
+| Timers per workflow | 1 | escalation |
+| Search attribute upserts | 1 | order status |
+| Avg workflow input | `500 KB` | |
+| Avg activity input | `500 KB` | |
+
+**Estimate:**
+
+| | |
+|---|---|
+| Peak throughput | 4.2 updates/sec |
+| Total retained | ~169 GB |
+
+| Service | Cores | Memory |
+|---|---|---|
+| History | 1 | ~0.93 GiB |
+| Frontend | 1 | ~0.28 GiB |
+| Matching | 1 | ~0.14 GiB |
+| Workers | ~100 | — |
+| Cassandra | 3 nodes | ~0.008 TiB |
+| **Total Cadence cores** | **3** | |
+
+This is the pre-loaded example in the estimator. Click **Load order-processing example** below and adjust retention or payload size to see how the outputs shift.
+
+<CapacityEstimator />
+

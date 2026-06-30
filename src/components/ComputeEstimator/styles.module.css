@@ -1,0 +1,211 @@
+.container {
+  font-family: var(--ifm-font-family-base);
+  margin: 1.5rem 0;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+@media (max-width: 768px) {
+  .inputs { grid-template-columns: 1fr; }
+}
+
+.inputGroup {
+  padding: 1.25rem 1.5rem;
+}
+
+.inputGroup + .inputGroup {
+  border-left: 1px solid var(--ifm-color-emphasis-200);
+}
+
+@media (max-width: 768px) {
+  .inputGroup + .inputGroup {
+    border-left: none;
+    border-top: 1px solid var(--ifm-color-emphasis-200);
+  }
+}
+
+.groupLabel {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ifm-color-emphasis-600);
+  margin-bottom: 0.75rem;
+}
+
+.optional {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ifm-color-emphasis-500);
+}
+
+.sourceToggle {
+  display: flex;
+  gap: 0;
+  margin-bottom: 0.75rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  overflow: hidden;
+  width: fit-content;
+}
+
+.toggle {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.78rem;
+  background: transparent;
+  border: none;
+  color: var(--ifm-color-emphasis-600);
+  cursor: pointer;
+}
+
+.toggle:hover {
+  background: var(--ifm-color-emphasis-100);
+}
+
+.toggleActive {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.78rem;
+  background: var(--ifm-color-primary);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.fieldRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.fieldLabel {
+  font-size: 0.82rem;
+  color: var(--ifm-font-color-base);
+  flex: 1;
+}
+
+.input {
+  width: 110px;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.85rem;
+  font-family: var(--ifm-font-family-monospace);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  background: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--ifm-color-primary);
+}
+
+.select {
+  flex: 1;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.82rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  background: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+}
+
+.unit {
+  font-size: 0.75rem;
+  color: var(--ifm-color-emphasis-600);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.grafanaHint {
+  margin-top: 0.25rem;
+}
+
+.hintText {
+  font-size: 0.78rem;
+  color: var(--ifm-color-emphasis-700);
+  margin: 0.4rem 0 0.25rem 0;
+}
+
+.hintCode {
+  display: block;
+  font-size: 0.72rem;
+  background: var(--ifm-color-emphasis-100);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  white-space: pre;
+  color: var(--ifm-font-color-base);
+  margin-bottom: 0.5rem;
+}
+
+.results {
+  padding: 1.25rem 1.5rem;
+  background: var(--ifm-color-emphasis-100);
+}
+
+.floorNote {
+  font-size: 0.78rem;
+  color: var(--ifm-color-warning-dark, #b45309);
+  margin: 0 0 0.75rem 0;
+  padding: 0.4rem 0.75rem;
+  background: var(--ifm-color-warning-contrast-background, #fffbeb);
+  border-left: 3px solid var(--ifm-color-warning, #f59e0b);
+  border-radius: 0 4px 4px 0;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.table th {
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ifm-color-emphasis-600);
+  padding: 0.4rem 0.75rem 0.4rem 0;
+  border-bottom: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.table td {
+  padding: 0.45rem 0.75rem 0.45rem 0;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+  color: var(--ifm-font-color-base);
+  vertical-align: top;
+}
+
+.table td:nth-child(2),
+.table td:nth-child(3) {
+  font-family: var(--ifm-font-family-monospace);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.totalRow td {
+  font-weight: 700;
+  border-top: 2px solid var(--ifm-color-emphasis-300);
+  border-bottom: none;
+}
+
+.caveat {
+  font-size: 0.75rem;
+  color: var(--ifm-color-emphasis-600);
+  margin: 0.5rem 0 0 0;
+}
