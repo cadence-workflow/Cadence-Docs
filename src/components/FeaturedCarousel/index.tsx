@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
+import {useBaseUrlUtils} from '@docusaurus/useBaseUrl';
 import Heading from '@theme/Heading';
 import featuredLinks from '@site/src/data/featuredLinks.yaml';
 import {
@@ -50,6 +51,7 @@ const getPerView = (): number => {
 };
 
 export default function FeaturedCarousel(): JSX.Element {
+  const {withBaseUrl} = useBaseUrlUtils();
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLUListElement>(null);
   const touchX = useRef(0);
@@ -158,9 +160,13 @@ export default function FeaturedCarousel(): JSX.Element {
           <ul className={styles.track} ref={trackRef}>
             {items.map((item, i) => {
               const videoId = item.tag === 'Video' ? getYouTubeId(item.href) : null;
-              const imgSrc = videoId
-                ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
-                : resolveImage(item);
+              // withBaseUrl no-ops on URLs that already have a protocol (e.g. the
+              // YouTube thumbnail), so it's safe to apply to every image here.
+              const imgSrc = withBaseUrl(
+                videoId
+                  ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
+                  : resolveImage(item),
+              );
               const hidden = i < startIndex || i > endIndex;
 
               return (
@@ -185,7 +191,7 @@ export default function FeaturedCarousel(): JSX.Element {
                                 const img = e.currentTarget;
                                 if (!img.dataset.fallback) {
                                   img.dataset.fallback = '1';
-                                  img.src = resolveImage(item);
+                                  img.src = withBaseUrl(resolveImage(item));
                                 }
                               }
                             : undefined
