@@ -46,8 +46,9 @@ export default function FeaturedCarousel(): JSX.Element {
   const trackRef = useRef<HTMLUListElement>(null);
   const [active, setActive] = useState(0);
   const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
   const [manualPaused, setManualPaused] = useState(false);
-  const autoplayPaused = hovered || manualPaused;
+  const autoplayPaused = hovered || focused || manualPaused;
   // While a button-driven scroll animates, ignore the scroll listener so it
   // can't overwrite `active` with an intermediate/snapped index.
   const programmaticScroll = useRef(false);
@@ -117,11 +118,7 @@ export default function FeaturedCarousel(): JSX.Element {
     <section
       className={styles.carousel}
       aria-roledescription="carousel"
-      aria-label="Featured articles"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onFocusCapture={() => setHovered(true)}
-      onBlurCapture={() => setHovered(false)}>
+      aria-label="Featured articles">
       <div className="container">
         <div className={styles.header}>
           <Heading as="h2" className={styles.title}>
@@ -165,7 +162,13 @@ export default function FeaturedCarousel(): JSX.Element {
           </div>
         </div>
 
-        <ul className={styles.track} ref={trackRef}>
+        <ul
+          className={styles.track}
+          ref={trackRef}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+          onFocusCapture={() => setFocused(true)}
+          onBlurCapture={() => setFocused(false)}>
           {items.map((item, i) => {
             const videoId = item.tag === 'Video' ? getYouTubeId(item.href) : null;
             const imgSrc = videoId
