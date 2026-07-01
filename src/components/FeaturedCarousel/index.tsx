@@ -80,16 +80,24 @@ export default function FeaturedCarousel(): JSX.Element {
   }, [pageCount]);
 
   // Translate the track from the measured item stride, clamped to the end.
+  // Runs on page/breakpoint changes and on every resize, since the
+  // percentage-based slide width (and thus the stride) changes with viewport
+  // width even when perView stays the same.
   useEffect(() => {
-    const track = trackRef.current;
-    const viewport = viewportRef.current;
-    if (!track || !viewport) return;
-    const a = track.children[0] as HTMLElement | undefined;
-    const b = track.children[1] as HTMLElement | undefined;
-    const stride = a && b ? b.offsetLeft - a.offsetLeft : 0;
-    const maxOffset = Math.max(0, track.scrollWidth - viewport.clientWidth);
-    const offset = Math.min(startIndex * stride, maxOffset);
-    track.style.transform = `translate3d(${-offset}px, 0, 0)`;
+    const reposition = () => {
+      const track = trackRef.current;
+      const viewport = viewportRef.current;
+      if (!track || !viewport) return;
+      const a = track.children[0] as HTMLElement | undefined;
+      const b = track.children[1] as HTMLElement | undefined;
+      const stride = a && b ? b.offsetLeft - a.offsetLeft : 0;
+      const maxOffset = Math.max(0, track.scrollWidth - viewport.clientWidth);
+      const offset = Math.min(startIndex * stride, maxOffset);
+      track.style.transform = `translate3d(${-offset}px, 0, 0)`;
+    };
+    reposition();
+    window.addEventListener('resize', reposition);
+    return () => window.removeEventListener('resize', reposition);
   }, [startIndex, perView]);
 
   return (
