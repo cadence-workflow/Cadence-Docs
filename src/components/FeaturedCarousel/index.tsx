@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
@@ -21,7 +21,6 @@ type FeaturedItem = {
 };
 
 const items = featuredLinks as FeaturedItem[];
-const AUTOPLAY_MS = 5000;
 
 items.forEach((item, i) => {
   if (!FEATURED_TAGS.includes(item.tag as FeaturedTag)) {
@@ -42,83 +41,59 @@ const getYouTubeId = (url: string): string | null => {
   return m ? m[1] : null;
 };
 
+// Fully visible items per page, matched to the CSS breakpoints below.
+const getPerView = (): number => {
+  if (typeof window === 'undefined') return 3;
+  if (window.matchMedia('(max-width: 700px)').matches) return 1;
+  if (window.matchMedia('(max-width: 996px)').matches) return 2;
+  return 3;
+};
+
 export default function FeaturedCarousel(): JSX.Element {
+  const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLUListElement>(null);
-  const [active, setActive] = useState(0);
-  const [hovered, setHovered] = useState(false);
-  const [focused, setFocused] = useState(false);
-  const [manualPaused, setManualPaused] = useState(false);
-  const autoplayPaused = hovered || focused || manualPaused;
-  // While a button-driven scroll animates, ignore the scroll listener so it
-  // can't overwrite `active` with an intermediate/snapped index.
-  const programmaticScroll = useRef(false);
-  const programmaticTimer = useRef(0);
+  const touchX = useRef(0);
+  const [perView, setPerView] = useState(3);
+  const [page, setPage] = useState(0);
 
-  const scrollToIndex = useCallback((index: number) => {
-    const track = trackRef.current;
-    if (!track) return;
-    const clamped = (index + items.length) % items.length;
-    const card = track.children[clamped] as HTMLElement | undefined;
-    if (card) {
-      // Center the card to match the CSS `scroll-snap-align: center` snap point.
-      const target =
-        card.offsetLeft -
-        track.offsetLeft -
-        (track.clientWidth - card.clientWidth) / 2;
-      programmaticScroll.current = true;
-      window.clearTimeout(programmaticTimer.current);
-      programmaticTimer.current = window.setTimeout(() => {
-        programmaticScroll.current = false;
-      }, 600);
-      track.scrollTo({left: target, behavior: 'smooth'});
-    }
-    setActive(clamped);
+  const step = Math.max(1, perView - 1);
+  const pageCount = Math.max(1, Math.ceil((items.length - perView) / step) + 1);
+  const startIndex = Math.min(page * step, Math.max(0, items.length - perView));
+  const endIndex = startIndex + perView - 1;
+  const atStart = page === 0;
+  const atEnd = page >= pageCount - 1;
+
+  const goPrev = () => setPage((p) => Math.max(0, p - 1));
+  const goNext = () => setPage((p) => Math.min(pageCount - 1, p + 1));
+
+  // Keep perView in sync with the viewport width (matches the CSS breakpoints).
+  useEffect(() => {
+    const onResize = () => setPerView(getPerView());
+    onResize();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
   }, []);
 
+  // Clamp the page if the page count shrinks (e.g. resize to fewer pages).
   useEffect(() => {
-    if (autoplayPaused || items.length <= 1) return undefined;
-    const id = window.setInterval(() => scrollToIndex(active + 1), AUTOPLAY_MS);
-    return () => window.clearInterval(id);
-  }, [active, autoplayPaused, scrollToIndex]);
+    setPage((p) => Math.min(p, pageCount - 1));
+  }, [pageCount]);
 
-  // Keep the active dot in sync when the user scrolls/swipes manually.
+  // Translate the track from the measured item stride, clamped to the end.
   useEffect(() => {
     const track = trackRef.current;
-    if (!track) return undefined;
-    let frame = 0;
-    const onScroll = () => {
-      if (programmaticScroll.current) return;
-      window.cancelAnimationFrame(frame);
-      frame = window.requestAnimationFrame(() => {
-        const children = Array.from(track.children) as HTMLElement[];
-        const center = track.scrollLeft + track.clientWidth / 2;
-        let nearest = 0;
-        let best = Infinity;
-        children.forEach((child, i) => {
-          const cardCenter =
-            child.offsetLeft - track.offsetLeft + child.clientWidth / 2;
-          const dist = Math.abs(cardCenter - center);
-          if (dist < best) {
-            best = dist;
-            nearest = i;
-          }
-        });
-        setActive(nearest);
-      });
-    };
-    track.addEventListener('scroll', onScroll, {passive: true});
-    return () => {
-      track.removeEventListener('scroll', onScroll);
-      window.cancelAnimationFrame(frame);
-      window.clearTimeout(programmaticTimer.current);
-    };
-  }, []);
+    const viewport = viewportRef.current;
+    if (!track || !viewport) return;
+    const a = track.children[0] as HTMLElement | undefined;
+    const b = track.children[1] as HTMLElement | undefined;
+    const stride = a && b ? b.offsetLeft - a.offsetLeft : 0;
+    const maxOffset = Math.max(0, track.scrollWidth - viewport.clientWidth);
+    const offset = Math.min(startIndex * stride, maxOffset);
+    track.style.transform = `translate3d(${-offset}px, 0, 0)`;
+  }, [startIndex, perView]);
 
   return (
-    <section
-      className={styles.carousel}
-      aria-roledescription="carousel"
-      aria-label="Featured articles">
+    <section className={styles.carousel}>
       <div className="container">
         <div className={styles.header}>
           <Heading as="h2" className={styles.title}>
@@ -128,24 +103,9 @@ export default function FeaturedCarousel(): JSX.Element {
             <button
               type="button"
               className={styles.arrow}
-              aria-label={manualPaused ? 'Resume autoplay' : 'Pause autoplay'}
-              aria-pressed={manualPaused}
-              onClick={() => setManualPaused((p) => !p)}>
-              {manualPaused ? (
-                <svg width={15} height={15} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              ) : (
-                <svg width={15} height={15} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M7 5h3v14H7zM14 5h3v14h-3z" />
-                </svg>
-              )}
-            </button>
-            <button
-              type="button"
-              className={styles.arrow}
-              aria-label="Previous"
-              onClick={() => scrollToIndex(active - 1)}>
+              aria-label="Previous page"
+              onClick={goPrev}
+              disabled={atStart}>
               <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M15 5l-7 7 7 7" />
               </svg>
@@ -153,8 +113,9 @@ export default function FeaturedCarousel(): JSX.Element {
             <button
               type="button"
               className={styles.arrow}
-              aria-label="Next"
-              onClick={() => scrollToIndex(active + 1)}>
+              aria-label="Next page"
+              onClick={goNext}
+              disabled={atEnd}>
               <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M9 5l7 7-7 7" />
               </svg>
@@ -162,68 +123,92 @@ export default function FeaturedCarousel(): JSX.Element {
           </div>
         </div>
 
-        <ul
-          className={styles.track}
-          ref={trackRef}
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-          onFocusCapture={() => setFocused(true)}
-          onBlurCapture={() => setFocused(false)}>
-          {items.map((item, i) => {
-            const videoId = item.tag === 'Video' ? getYouTubeId(item.href) : null;
-            const imgSrc = videoId
-              ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
-              : resolveImage(item);
+        <div
+          className={styles.viewport}
+          ref={viewportRef}
+          role="group"
+          aria-roledescription="carousel"
+          aria-label="Featured articles"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'ArrowRight') {
+              e.preventDefault();
+              goNext();
+            } else if (e.key === 'ArrowLeft') {
+              e.preventDefault();
+              goPrev();
+            }
+          }}
+          onTouchStart={(e) => {
+            touchX.current = e.touches[0].clientX;
+          }}
+          onTouchEnd={(e) => {
+            const dx = e.changedTouches[0].clientX - touchX.current;
+            if (dx < -40) goNext();
+            else if (dx > 40) goPrev();
+          }}>
+          <ul className={styles.track} ref={trackRef}>
+            {items.map((item, i) => {
+              const videoId = item.tag === 'Video' ? getYouTubeId(item.href) : null;
+              const imgSrc = videoId
+                ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
+                : resolveImage(item);
+              const hidden = i < startIndex || i > endIndex;
 
-            return (
-              <li
-                className={styles.slide}
-                key={item.href + i}
-                aria-roledescription="slide"
-                aria-label={`${i + 1} of ${items.length}`}>
-                <Link className={clsx('card', styles.card)} to={item.href}>
-                  <div className={styles.media}>
-                    <img
-                      src={imgSrc}
-                      alt=""
-                      loading="lazy"
-                      onError={
-                        videoId
-                          ? (e) => {
-                              const img = e.currentTarget;
-                              if (!img.dataset.fallback) {
-                                img.dataset.fallback = '1';
-                                img.src = resolveImage(item);
+              return (
+                <li
+                  className={styles.slide}
+                  key={item.href + i}
+                  aria-hidden={hidden || undefined}
+                  aria-roledescription="slide"
+                  aria-label={`${i + 1} of ${items.length}`}>
+                  <Link
+                    className={clsx('card', styles.card)}
+                    to={item.href}
+                    tabIndex={hidden ? -1 : undefined}>
+                    <div className={styles.media}>
+                      <img
+                        src={imgSrc}
+                        alt=""
+                        loading="lazy"
+                        onError={
+                          videoId
+                            ? (e) => {
+                                const img = e.currentTarget;
+                                if (!img.dataset.fallback) {
+                                  img.dataset.fallback = '1';
+                                  img.src = resolveImage(item);
+                                }
                               }
-                            }
-                          : undefined
-                      }
-                    />
-                    {item.tag && <span className={styles.tag} data-tag={item.tag}>{item.tag}</span>}
-                  </div>
-                  <div className={styles.body}>
-                    <Heading as="h3" className={styles.cardTitle}>
-                      {item.title}
-                    </Heading>
-                    <p className={styles.desc}>{item.description}</p>
-                    <span className={styles.cta}>{item.cta ?? 'Read more'} →</span>
-                  </div>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+                            : undefined
+                        }
+                      />
+                      {item.tag && <span className={styles.tag} data-tag={item.tag}>{item.tag}</span>}
+                    </div>
+                    <div className={styles.body}>
+                      <Heading as="h3" className={styles.cardTitle}>
+                        {item.title}
+                      </Heading>
+                      <p className={styles.desc}>{item.description}</p>
+                      <span className={styles.cta}>{item.cta ?? 'Read more'} →</span>
+                    </div>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
 
-        <div className={styles.dots} role="tablist" aria-label="Choose slide">
-          {items.map((item, i) => (
+        <div className={styles.dots} role="tablist" aria-label="Choose page">
+          {Array.from({length: pageCount}).map((_, p) => (
             <button
-              key={item.href + i}
+              key={p}
               type="button"
               role="tab"
-              aria-selected={i === active}
-              aria-label={`Go to slide ${i + 1}`}
-              className={clsx(styles.dot, i === active && styles.dotActive)}
-              onClick={() => scrollToIndex(i)}
+              aria-selected={p === page}
+              aria-label={`Go to page ${p + 1} of ${pageCount}`}
+              className={clsx(styles.dot, p === page && styles.dotActive)}
+              onClick={() => setPage(p)}
             />
           ))}
         </div>

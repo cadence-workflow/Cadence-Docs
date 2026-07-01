@@ -47,37 +47,60 @@
   color: var(--ifm-color-primary-darkest);
 }
 
+.arrow:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.arrow:disabled:hover {
+  background: var(--ifm-background-surface-color);
+  color: var(--ifm-font-color-base);
+  border-color: var(--ifm-color-emphasis-300);
+  transform: none;
+}
+
+.viewport {
+  --gap: 1.25rem;
+  --per-view: 3;
+  --peek: 0.28;
+  overflow: hidden;
+}
+
+@media (max-width: 996px) {
+  .viewport {
+    --per-view: 2;
+  }
+}
+
+@media (max-width: 700px) {
+  .viewport {
+    --per-view: 1;
+    --peek: 0.15;
+  }
+}
+
 .track {
   list-style: none;
   margin: 0;
   padding: 0.5rem 0.25rem 1rem;
   display: flex;
-  gap: 1.25rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
+  gap: var(--gap);
+  transform: translate3d(0, 0, 0);
+  transition: transform 350ms cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
 }
 
-.track::-webkit-scrollbar {
-  display: none;
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    transition: none;
+  }
 }
 
+/* N full items + a partial "peek" of the next:
+   iw = (100% - perView*gap) / (perView + peek) */
 .slide {
-  scroll-snap-align: center;
-  flex: 0 0 calc((100% - 2.5rem) / 3);
-}
-
-@media (max-width: 996px) {
-  .slide {
-    flex-basis: calc((100% - 1.25rem) / 2);
-  }
-}
-
-@media (max-width: 700px) {
-  .slide {
-    flex-basis: 88%;
-  }
+  flex: 0 0
+    calc((100% - var(--per-view) * var(--gap)) / (var(--per-view) + var(--peek)));
 }
 
 .card {
