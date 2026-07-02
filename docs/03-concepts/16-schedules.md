@@ -155,10 +155,14 @@ The key question is whether each scheduled time window matters independently.
 
 The `DescribeSchedule` API (and CLI command) returns:
 
-- The current schedule spec (cron expression, overlap policy, jitter)
+- The current schedule spec (cron expression, start/end bounds, jitter, overlap policy)
 - Whether the schedule is paused and the pause note
-- Recent run history (last started and last completed times)
-- The next scheduled fire time
+- Recent run history (last started and last completed times) and the next scheduled fire time
+- Lifetime counters: `total_runs`, `missed_runs` (dropped by catch-up), `skipped_runs` (dropped by overlap policy)
+- Queue state for concurrent and buffered policies:
+  - `buffered_fire_count` — number of fires currently queued in the buffer (`Buffer` overlap policy)
+  - `running_workflow_count` — number of target workflows currently executing (`Concurrent` overlap policy)
+- Active backfill progress
 
 ## Limitations
 
