@@ -1,0 +1,112 @@
+# Featured links shown in the homepage carousel.
+# Edit this list to change what is featured — no code changes needed.
+#   title:       Card headline
+#   description: One or two short sentences
+#   href:        Internal route (/docs/...) or full external URL
+#   tag:         REQUIRED. One of: Blog, Doc, Community, FAQ, Video
+#   image:       OPTIONAL. Overrides the tag's default image. Path under static/ (e.g. /img/foo.svg) or full URL.
+#   cta:         Call-to-action label (optional, defaults to "Read more")
+
+#
+
+- title: "Introducing Cadence Schedules"
+  description: Cadence Schedules bring first-class recurring workflow execution to the platform with overlap policies, backfill, pause/unpause, and full observability, all without touching your workflow code.
+  href: /blog/2026/06/23/cadence-schedules
+  tag: Blog
+  cta: Read post
+
+- title: Schedules
+  description: Cadence Schedules let you run workflows on a recurring cadence with overlap policies, backfill, pause/unpause, and catch-up, without writing any scheduling glue code in your workflow.
+  href: /docs/concepts/schedules
+  tag: Doc
+  cta: Learn more
+
+- title: Custom Workflow Controls in Cadence Web
+  description: What if your workflow could tell operators exactly what's happening, and let them take action, right from the Cadence Web UI?
+  href: https://www.youtube.com/watch?v=SLlOk_BbtKo
+  tag: Video
+  cta: Watch video
+
+- title: "Encrypt Cadence History Payloads (And Know What You Didn't Encrypt)"
+  description: AES-256-GCM encryption makes Cadence history payloads opaque, but the DataConverter only covers part of the data surface.
+  href: /blog/2026/06/17/2026-06-17-encrypt-cadence-history/encrypt-cadence-history
+  tag: Blog
+  cta: Read post
+
+- title: Cadence FAQ
+  description: Answers to common questions about Cadence — what it is, how workflows and activities differ, how failures are handled, and when to use it instead of a message queue.
+  href: /faq/cadence-faq
+  tag: FAQ
+  cta: Read FAQ
+
+- title: Migrating from Temporal to Cadence
+  description: Practical guide for migrating Go or Java applications from Temporal to Cadence — SDK package mapping, concept renames, and client setup differences.
+  href: /faq/migrate-from-temporal
+  tag: FAQ
+  cta: Read FAQ
+
+- title: Community Meetups
+  description: Join the recurring Cadence community meetup to share demos, ask questions, and connect with maintainers.
+  href: /community/meetup
+  tag: Community
+  cta: Join us
+
+- title: "Bypass the 2 MB Limit Without Shrinking Your Workflow"
+  description: The claim-check pattern offloads large Cadence payloads to an external blob store so only a tiny reference travels through workflow history.
+  href: /blog/2026/06/10/2026-06-10-claim-check-pattern/claim-check-pattern
+  tag: Blog
+  cta: Read post
+
+- title: "Your Workflow History Is Storing More Than You Think"
+  description: Cadence writes every workflow input, activity parameter, signal, and query response into history as JSON — a custom DataConverter can add compression, encryption, or claim-check offload without changing workflow code.
+  href: /blog/2026/06/03/2026-06-03-workflow-history-data-converter/workflow-history-data-converter
+  tag: Blog
+  cta: Read post
+
+- title: Workflow Engine and Workflow Orchestration
+  description: Cadence is an open-source workflow engine for Go, Java, and Python — fault-tolerant, stateful, and built for long-running distributed applications.
+  href: /docs/concepts/workflow-engine
+  tag: Doc
+  cta: Learn more
+
+- title: Open Source Workflow Engine
+  description: Cadence is an open-source, self-hostable workflow engine for durable, fault-tolerant distributed applications — deploy on SQLite, Docker, or Kubernetes.
+  href: /docs/concepts/open-source-workflow-engine
+  tag: Doc
+  cta: Learn more
+
+- title: "Signal Handling in the Cadence Python Client"
+  description: Learn how to register a workflow signal handler and send signals to a running workflow using the Cadence Python client.
+  href: /blog/2026/04/28/2026-04-28-python-client-signal/python-client-signal
+  tag: Blog
+  cta: Read post
+
+- title: "Two Hidden Deadlocks in Cadence Matching: 1 Day, 2 Engineers, 6 Lines of Code"
+  description: How the new Cadence Shard Manager found and mitigated two latent deadlocks in the Matching service in a single day.
+  href: /blog/2026/04/20/2026-04-20-shard-manager-incident/shard-manager-incident
+  tag: Blog
+  cta: Read post
+
+- title: Cadence Best Practices
+  description: Answers to common questions and recommended patterns for building reliable, maintainable Cadence workflows and activities.
+  href: /faq/best-practices
+  tag: FAQ
+  cta: Read FAQ
+
+- title: Deploy Cadence with Helm on GKE (PostgreSQL + OpenSearch)
+  description: A codelab for deploying Cadence on Google Kubernetes Engine using Helm with PostgreSQL, Kafka, and OpenSearch for advanced visibility.
+  href: /docs/codelabs/helm-deploy-postgres-opensearch
+  tag: Doc
+  cta: Start codelab
+
+- title: "Data Converters: Encryption & Compression"
+  description: Implement custom Cadence DataConverters to compress, encrypt, serialize, or offload workflow payloads using the Go and Java samples.
+  href: /docs/concepts/data-converter
+  tag: Doc
+  cta: Learn more
+
+- title: How To Write Tests With Workflow Replayer and Shadower
+  description: A codelab on writing Go tests for Cadence workflows using the Workflow Replayer and Shadower to catch non-deterministic changes.
+  href: /docs/codelabs/workflow-tests-go-replayer-shadower
+  tag: Doc
+  cta: Start codelab

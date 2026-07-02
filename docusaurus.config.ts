@@ -124,6 +124,7 @@ const config: Config = {
   ],
 
   plugins: [
+    './src/plugins/yaml-loader',
     [
       './src/plugins/changelog/index.js',
       {
