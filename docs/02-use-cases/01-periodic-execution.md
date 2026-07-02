@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Periodic execution
-description: This page describes how Cadence supports periodic execution use cases — recurring workflows at massive scale with guaranteed execution, retries, and full visibility.
+description: This page describes how Cadence supports periodic execution use cases, including distributed cron jobs at massive scale with guaranteed execution, retries, and full visibility.
 keywords:
   - cadence periodic execution
   - cadence cron job
@@ -12,7 +12,7 @@ keywords:
 permalink: /docs/use-cases/periodic-execution
 ---
 
-Periodic execution is when you execute business logic on a recurring schedule. The advantage of Cadence for these scenarios is that it guarantees execution, sophisticated error handling, retry policies, and visibility into execution history.
+Periodic execution, frequently referred to as distributed cron, is when you execute business logic periodically. The advantage of Cadence for these scenarios is that it guarantees execution, sophisticated error handling, retry policies, and visibility into execution history.
 
 Another important dimension is scale. Some use cases require periodic execution for a large number of entities.
 At Uber, there are applications that create periodic :workflow:workflows: per customer.
