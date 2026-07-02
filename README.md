@@ -130,4 +130,4 @@ This will ensure the dependencies are pulled from the correct source and to prev
 
 The source code in this repository is licensed under the Apache 2.0 License.
 The documentation in this repository is licensed under the Creative Commons Attribution 4.0 International License.
-See [LICENSE](https://github.com/cadence-workflow/Cadence-Docs/blob/master/LICENSE) for details.
+See [LICENSE](https://github.com/cadence-workflow/Cadence-Docs/blob/master/LICENSE.md) for details.
