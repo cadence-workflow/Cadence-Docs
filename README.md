@@ -98,6 +98,29 @@ Automatic updates to release data are performed by a GitHub Action `fetch-releas
 
 Manual approval is required before merging and continuing to deployment.
 
+### Updating the Featured Reading Carousel
+
+The homepage "Featured reading" carousel is driven entirely by [`src/data/featuredLinks.yaml`](src/data/featuredLinks.yaml) — no code changes are needed to add, remove, or reorder items. Items are rendered in the order they appear in the file, so add a new entry wherever it should show up in the carousel.
+
+Each entry supports:
+
+- `title` (required): Card headline.
+- `description` (required): One or two short sentences.
+- `href` (required): Internal route (e.g. `/docs/...`) or a full external URL.
+- `tag` (required): One of `Blog`, `Doc`, `Community`, `FAQ`, `Video` (defined in `src/data/featuredTags.ts`). An unrecognized tag fails the build with a clear error.
+- `image` (optional): Overrides the tag's default image. A path under `static/` (e.g. `/img/foo.png`) or a full URL.
+- `cta` (optional): Call-to-action label; defaults to "Read more".
+
+```yaml
+- title: "Introducing Cadence Schedules"
+  description: Cadence Schedules bring first-class recurring workflow execution to the platform.
+  href: /blog/2026/06/23/cadence-schedules
+  tag: Blog
+  cta: Read post
+```
+
+For `Video` items linking to YouTube, the carousel automatically pulls the video's thumbnail as the card image, falling back to the tag's default image if the thumbnail fails to load.
+
 # NPM Registry
 
 Ensure you have a `.npmrc` [file](https://docs.npmjs.com/cli/v9/configuring-npm/npmrc/) configured with `registry=https://registry.npmjs.org/`.
