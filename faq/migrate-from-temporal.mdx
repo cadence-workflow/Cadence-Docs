@@ -32,7 +32,7 @@ Cadence and Temporal share the same durable execution model — Temporal is a 20
 | Activity | Activity | Same concept |
 | Signal | Signal | Same concept |
 | Query | Query | Same concept |
-| Schedule | CronSchedule / DistributedCron | Cadence uses `CronSchedule` on workflow options or the [distributed cron pattern](/docs/go-client/distributed-cron) |
+| Schedule | Schedule / CronSchedule | Cadence has a first-class [Schedules API](/docs/concepts/schedules); `CronSchedule` on `StartWorkflowOptions` is also still supported |
 | `workflow.GetLogger` | `workflow.GetLogger` | Same API |
 | `temporal.io/sdk` | `go.uber.org/cadence` | Go package root |
 | `io.temporal` | `com.uber.cadence` | Java package root |
