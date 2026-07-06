@@ -44,6 +44,13 @@ If a run is still executing when the next fire time arrives, the new fire is ski
 Each execution of the workflow function is independent. To carry state from one run to the next, use the workflow result: the next execution receives the previous run's result as its first argument.
 
 ```python
+from datetime import timedelta
+from cadence import workflow
+from cadence.worker import Registry
+from cadence.workflow import execute_activity
+
+registry = Registry()
+
 @registry.workflow()
 class DailyReportWorkflow:
     @workflow.run

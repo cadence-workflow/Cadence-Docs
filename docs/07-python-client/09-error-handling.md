@@ -19,6 +19,7 @@ The Python SDK converts server-side failures into Python exceptions that you cat
 When an activity raises an exception (after all retries are exhausted), the workflow receives an `ActivityFailure`. Wrap the `execute_activity` call to handle it:
 
 ```python
+from datetime import timedelta
 from cadence.error import ActivityFailure
 from cadence.workflow import execute_activity
 

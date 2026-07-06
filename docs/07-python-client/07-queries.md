@@ -17,6 +17,7 @@ Queries let external code read the current state of a running workflow without a
 
 ```python
 from cadence import Registry, workflow
+from cadence.workflow import execute_activity
 
 registry = Registry()
 

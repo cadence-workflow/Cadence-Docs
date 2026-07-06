@@ -18,7 +18,9 @@ Workflow history grows unbounded as the workflow executes. When history becomes 
 ## Basic usage
 
 ```python
+from datetime import timedelta
 from cadence import workflow, Registry
+from cadence.workflow import execute_activity
 
 registry = Registry()
 
@@ -39,6 +41,8 @@ The argument to `continue_as_new` is passed to the next execution's `run` method
 ## Overriding workflow parameters
 
 ```python
+from datetime import timedelta
+
 workflow.continue_as_new(
     processed_count,
     workflow_type="ProcessorWorkflowV2",    # switch to a different workflow type

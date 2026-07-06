@@ -95,8 +95,8 @@ from cadence.workflow import WorkflowContext
 ctx = WorkflowContext.get()
 print(ctx.info.workflow_id)
 print(ctx.info.workflow_run_id)
-print(ctx.info.domain)
-print(ctx.info.task_list)
+print(ctx.info.workflow_domain)
+print(ctx.info.workflow_task_list)
 ```
 
 ## Initialization
@@ -104,6 +104,8 @@ print(ctx.info.task_list)
 The `__init__` method runs before `run` and is a good place to initialize instance state that signal handlers read and write.
 
 ```python
+from datetime import timedelta
+
 @registry.workflow()
 class CounterWorkflow:
     def __init__(self):
