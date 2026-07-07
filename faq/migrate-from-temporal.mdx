@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Migrating from Temporal to Cadence
-description: Practical guide for migrating Go or Java applications from Temporal to Cadence — SDK package mapping, concept renames, and client setup differences.
+description: Practical guide for migrating Go or Java applications from Temporal to Cadence, covering SDK package mapping, concept renames, and client setup differences.
 keywords:
   - migrate from temporal to cadence
   - temporal to cadence migration
@@ -19,7 +19,7 @@ import TabItem from '@theme/TabItem';
 
 # Migrating from Temporal to Cadence
 
-Cadence and Temporal share the same durable execution model — Temporal is a 2019 fork of Cadence. Core concepts map directly, but the two projects have diverged in naming conventions, SDK packages, and client setup. This page covers what needs to change when moving a Go or Java application from Temporal to Cadence.
+Cadence and Temporal share the same durable execution model; Temporal is a 2019 fork of Cadence. Core concepts map directly, but the two projects have diverged in naming conventions, SDK packages, and client setup. This page covers what needs to change when moving a Go or Java application from Temporal to Cadence.
 
 ## Concept mapping
 
@@ -162,10 +162,10 @@ WorkflowOptions options = new WorkflowOptions.Builder()
 
 ## What stays the same
 
-Workflow and activity implementation code is nearly identical between the two SDKs — the programming model, determinism constraints, signal/query patterns, child workflows, and retry policies all work the same way. Most of the migration work is in the client/worker setup and the namespace→domain and task-queue→task-list renames.
+Workflow and activity implementation code is nearly identical between the two SDKs. The programming model, determinism constraints, signal/query patterns, child workflows, and retry policies all work the same way. Most of the migration work is in the client/worker setup and the namespace→domain and task-queue→task-list renames.
 
 ## Further reading
 
-- [Cadence vs Temporal comparison](/faq/cadence-vs-temporal) — feature-by-feature comparison
-- [Go client workers](/docs/go-client/workers) — full worker setup guide
-- [Java client overview](/docs/java-client/client-overview) — Java client reference
+- [Cadence vs Temporal comparison](/faq/cadence-vs-temporal): feature-by-feature comparison
+- [Go client workers](/docs/go-client/workers): full worker setup guide
+- [Java client overview](/docs/java-client/client-overview): Java client reference
