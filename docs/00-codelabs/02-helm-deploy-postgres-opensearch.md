@@ -202,7 +202,7 @@ cat charts/cadence/examples/values.postgres-os2.yaml
 The values file is well-commented and describes each configuration option. Key points:
 
 - **OpenSearch** uses the official OpenSearch Helm chart (not Bitnami)
-- **Security is disabled** for demo purposes—enable for production
+- **Security is disabled** for demo purposes; enable for production
 - **Kafka topic provisioning** is enabled to avoid race conditions
 - **GKE Autopilot compatible** with appropriate security contexts
 

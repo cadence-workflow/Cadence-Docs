@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Cadence vs Temporal: Feature Comparison & Key Differences"
-description: Side-by-side comparison of Cadence and Temporal workflow engines — features, SDKs, pricing, governance, and deployment. Cadence is the open-source, CNCF-hosted predecessor that Temporal was forked from in 2019.
+description: Side-by-side comparison of Cadence and Temporal workflow engines, covering features, SDKs, pricing, governance, and deployment. Cadence is the open-source, CNCF-hosted predecessor that Temporal was forked from in 2019.
 keywords:
   - cadence vs temporal
   - temporal vs cadence
@@ -19,13 +19,13 @@ permalink: /faq/cadence-vs-temporal
 
 # Cadence vs Temporal: Key Differences
 
-Cadence and Temporal are both open-source workflow engines built on the same durable execution model — Temporal is a 2019 fork of Cadence. Since the fork they've diverged: Temporal prioritized ecosystem breadth and commercial distribution; Cadence focused on reliability, multi-tenancy, and cost-efficiency at very high scale.
+Cadence and Temporal are both open-source workflow engines built on the same durable execution model; Temporal is a 2019 fork of Cadence. Since the fork they've diverged: Temporal prioritized ecosystem breadth and commercial distribution; Cadence focused on reliability, multi-tenancy, and cost-efficiency at very high scale.
 
 :::tip TL;DR
-- **Same core model**: both use durable execution — workflows survive crashes, retries are automatic, timers persist.
+- **Same core model**: both use durable execution: workflows survive crashes, retries are automatic, timers persist.
 - **Cadence scales higher**: 4,000+ domains at Uber, true multi-tenancy with noisy-neighbor isolation, higher throughput ceilings.
 - **Cadence is 10x cheaper**: infrastructure-based pricing (nodes/storage) vs. Temporal's per-action billing.
-- **Cadence is community-governed**: CNCF Sandbox under the Linux Foundation — no single vendor controls the roadmap.
+- **Cadence is community-governed**: CNCF Sandbox under the Linux Foundation, with no single vendor controlling the roadmap.
 :::
 
 ## Which should you choose?
@@ -39,7 +39,7 @@ Cadence and Temporal are both open-source workflow engines built on the same dur
 | Want open-source with no vendor lock-in and community governance (CNCF) | **Cadence** |
 | Are migrating from an existing Temporal deployment | [See migration guide](/faq/migrate-from-temporal) |
 | Need Nexus for multi-application workloads today | **Temporal** |
-| Run Go or Java workflows at scale | Either — see full comparison below |
+| Run Go or Java workflows at scale | Either (see full comparison below) |
 
 ## Feature Comparison
 
@@ -63,7 +63,7 @@ Cadence and Temporal are both open-source workflow engines built on the same dur
 | **Provisioning** | Helm Charts | Helm Charts, Kubernetes Operator |
 | **Managed cloud** | Instaclustr by NetApp | Temporal Cloud |
 | **Cost model** | Infrastructure-based (nodes + storage) | Per-action (state transitions) |
-| **Governance** | CNCF Sandbox — Linux Foundation | Commercial — Temporal Technologies |
+| **Governance** | CNCF Sandbox (Linux Foundation) | Commercial (Temporal Technologies) |
 | **Multi-tenancy** | 2,000+ domains per environment, auto noisy-neighbor isolation | Not supported |
 | **Domain replication** | Active-Active | Active-Passive |
 | **Zonal isolation** | Supported | Not supported |
@@ -78,7 +78,7 @@ Cadence and Temporal are both open-source workflow engines built on the same dur
 
 ## Background
 
-Temporal is a fork of Cadence created in 2019 as an independent GitHub repository. Both projects trace their lineage to Amazon SWF ([2012](https://aws.amazon.com/about-aws/whats-new/2012/02/21/aws-announces-swf/)) and Azure Durable Functions ([2017](https://arxiv.org/abs/1807.11248)) — you can read the [history of this architecture](https://temporal.io/blog/building-resilient-workflows-from-azure-to-cadence-to-temporal) or view the [licensing documentation](https://github.com/cadence-workflow/cadence-java-client/blob/master/LICENSE.txt).
+Temporal is a fork of Cadence created in 2019 as an independent GitHub repository. Both projects trace their lineage to Amazon SWF ([2012](https://aws.amazon.com/about-aws/whats-new/2012/02/21/aws-announces-swf/)) and Azure Durable Functions ([2017](https://arxiv.org/abs/1807.11248)); you can read the [history of this architecture](https://temporal.io/blog/building-resilient-workflows-from-azure-to-cadence-to-temporal) or view the [licensing documentation](https://github.com/cadence-workflow/cadence-java-client/blob/master/LICENSE.txt).
 
 Since 2019, Temporal focused on SDK breadth and commercial distribution. Cadence focused on reliability, scalability, and multi-tenancy at extreme scale. At Uber, Cadence has grown from fewer than 100 domains at fork time to over 4,000 today, facilitating billions of workflows and hundreds of billions of updates every month.
 
@@ -88,11 +88,11 @@ This is the most significant structural difference between the two projects. Tem
 
 Cadence is a [CNCF Sandbox project](https://www.cncf.io/projects/cadence-workflow/) under the Linux Foundation with an [open governance structure](/community/governance). Any company or individual can contribute and rise to the Technical Steering Committee. No single vendor controls the roadmap.
 
-For technologies like these — where SDKs are deeply integrated into your codebase — the cost of migration is exceptionally high. Choosing a community-governed project reduces long-term pricing, roadmap, and vendor lock-in risk.
+For technologies like these, where SDKs are deeply integrated into your codebase, the cost of migration is exceptionally high. Choosing a community-governed project reduces long-term pricing, roadmap, and vendor lock-in risk.
 
 ## Open source & open governance
 
-[Cadence](https://www.cncf.io/projects/cadence-workflow/) operates under an open governance model with an ecosystem of ~150 companies and an [Excellent Health Score](https://insights.linuxfoundation.org/project/cadence) from the Linux Foundation. Because over 90% of Cadence maintainers are also active users, the project is user-first — not profit-first.
+[Cadence](https://www.cncf.io/projects/cadence-workflow/) operates under an open governance model with an ecosystem of ~150 companies and an [Excellent Health Score](https://insights.linuxfoundation.org/project/cadence) from the Linux Foundation. Because over 90% of Cadence maintainers are also active users, the project is user-first, not profit-first.
 
 Recent examples of this focus: the [worker autoscaler](/blog/2026/01/13/2026-01-13-cadence-in-2025/cadence-in-2025#cadence-worker-auto-scaler), which optimizes workers running outside of Cadence, and [noisy neighbor isolation](/blog/2026/01/13/2026-01-13-cadence-in-2025/cadence-in-2025#history-queues-v2), which allows thousands of domains to share an environment with zero disruption.
 

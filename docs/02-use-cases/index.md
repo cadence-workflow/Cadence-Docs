@@ -18,7 +18,7 @@ permalink: /docs/use-cases/
 
 # Use Cases
 
-Cadence shines anywhere your business logic spans more than a single request-response cycle — long-running processes, multi-step orchestration, retry-heavy integrations, or anything that today lives in a fragile combination of cron jobs, queues, and database polling. The durable execution model replaces that infrastructure with plain application code that Cadence keeps running reliably.
+Cadence shines anywhere your business logic spans more than a single request-response cycle, including long-running processes, multi-step orchestration, retry-heavy integrations, or anything that today lives in a fragile combination of cron jobs, queues, and database polling. The durable execution model replaces that infrastructure with plain application code that Cadence keeps running reliably.
 
 As Cadence developers, we face a difficult non-technical problem: How to position and describe the Cadence platform.
 

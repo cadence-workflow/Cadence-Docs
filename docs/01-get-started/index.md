@@ -39,9 +39,9 @@ Open [http://localhost:8088](http://localhost:8088) for the Cadence Web UI. Then
 
 ## What is Cadence?
 
-A large number of use cases span beyond a single request-reply, require tracking of complex state, respond to asynchronous :event:events:, and communicate with external unreliable dependencies. The usual approach — stateless services, databases, cron jobs, and queuing systems — means most of the code is dedicated to plumbing rather than business logic, and failures are hard to recover from cleanly.
+A large number of use cases span beyond a single request-reply, require tracking of complex state, respond to asynchronous :event:events:, and communicate with external unreliable dependencies. The usual approach (stateless services, databases, cron jobs, and queuing systems) means most of the code is dedicated to plumbing rather than business logic, and failures are hard to recover from cleanly.
 
-Cadence solves this with a [_fault-oblivious stateful_ programming model](/docs/concepts/workflows): a durable virtual memory that is not linked to a specific process, and preserves the full application state — including function stacks and local variables — across host and software failures. You write code using the full power of a programming language; Cadence handles durability, availability, and scalability.
+Cadence solves this with a [_fault-oblivious stateful_ programming model](/docs/concepts/workflows): a durable virtual memory that is not linked to a specific process, and preserves the full application state, including function stacks and local variables, across host and software failures. You write code using the full power of a programming language; Cadence handles durability, availability, and scalability.
 
 Cadence consists of a client SDK and a backend service. SDKs are available for [Go](https://github.com/cadence-workflow/cadence-go-client/) and [Java](https://github.com/cadence-workflow/cadence-java-client) (official), and [Python](https://github.com/firdaus/cadence-python) and [Ruby](https://github.com/coinbase/cadence-ruby) (community). You can also use [iWF](https://github.com/indeedeng/iwf) as a DSL framework on top of Cadence.
 

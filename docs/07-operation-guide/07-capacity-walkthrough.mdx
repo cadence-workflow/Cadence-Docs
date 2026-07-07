@@ -16,7 +16,7 @@ Three real workflows from [cadence-samples](https://github.com/cadence-workflow/
 
 ## Example 1: Hello World
 
-[Source](https://github.com/cadence-workflow/cadence-samples/blob/master/new_samples/hello_world/workflow.go) — start, run one activity, finish.
+[Source](https://github.com/cadence-workflow/cadence-samples/blob/master/new_samples/hello_world/workflow.go): start, run one activity, finish.
 
 ```go
 func HelloWorldWorkflow(ctx workflow.Context, input sampleInput) (string, error) {
@@ -37,7 +37,7 @@ func HelloWorldWorkflow(ctx workflow.Context, input sampleInput) (string, error)
 | `HelloWorldActivity` (schedule + start + complete) | 6 |
 | **Total** | **11** |
 
-**Inputs** — 1,000 workflows/day, ~1 min each:
+**Inputs**: 1,000 workflows/day, ~1 min each:
 
 | Field | Value |
 |---|---|
@@ -58,7 +58,7 @@ func HelloWorldWorkflow(ctx workflow.Context, input sampleInput) (string, error)
 | History | 1 | ~0.04 GiB |
 | Frontend | 1 | ~0.01 GiB |
 | Matching | 1 | ~0.01 GiB |
-| Workers | 1 | — |
+| Workers | 1 | N/A |
 | Cassandra | 3 nodes (RF=3 minimum) | ~0.001 TiB |
 | **Total Cadence cores** | **3** | |
 
@@ -68,14 +68,14 @@ At this scale every service sits at its production minimum. The linear model onl
 
 ## Example 2: Expense Approval
 
-[Source](https://github.com/cadence-workflow/cadence-samples/blob/master/cmd/samples/expense/workflow.go) — create a report, wait for human approval, process payment.
+[Source](https://github.com/cadence-workflow/cadence-samples/blob/master/cmd/samples/expense/workflow.go): create a report, wait for human approval, process payment.
 
 ```go
 func sampleExpenseWorkflow(ctx workflow.Context, expenseID string) (string, error) {
     // Activity 1: create report
     workflow.ExecuteActivity(ctx1, createExpenseActivity, expenseID).Get(ctx1, nil)
 
-    // Activity 2: poll until a human approves or rejects — can take hours or days
+    // Activity 2: poll until a human approves or rejects; can take hours or days
     var status string
     workflow.ExecuteActivity(ctx2, waitForDecisionActivity, expenseID).Get(ctx2, &status)
 
@@ -99,7 +99,7 @@ func sampleExpenseWorkflow(ctx workflow.Context, expenseID string) (string, erro
 | `paymentActivity` | 6 |
 | **Total** | **23** |
 
-**Inputs** — 500 reports/day, 2-day average approval time:
+**Inputs**: 500 reports/day, 2-day average approval time:
 
 | Field | Value | Note |
 |---|---|---|
@@ -121,11 +121,11 @@ func sampleExpenseWorkflow(ctx workflow.Context, expenseID string) (string, erro
 | History | 1 | ~0.03 GiB |
 | Frontend | 1 | ~0.01 GiB |
 | Matching | 1 | ~0.01 GiB |
-| Workers | ~20 | — |
+| Workers | ~20 | N/A |
 | Cassandra | 3 nodes | ~0.001 TiB |
 | **Total Cadence cores** | **3** | |
 
-Low throughput, high storage — the 9-day total window (2 running + 7 retention) accumulates ~9 GB even though the cluster is nearly idle on compute.
+Low throughput, high storage: the 9-day total window (2 running + 7 retention) accumulates ~9 GB even though the cluster is nearly idle on compute.
 
 ---
 
@@ -168,7 +168,7 @@ func OrderProcessingWorkflow(ctx workflow.Context, order OrderInput) error {
 | `UpsertSearchAttributes` | 4 |
 | **Total** | **36** |
 
-**Inputs** — 10,000 orders/day, 2-hour average fulfillment:
+**Inputs**: 10,000 orders/day, 2-hour average fulfillment:
 
 | Field | Value | Note |
 |---|---|---|
@@ -195,7 +195,7 @@ func OrderProcessingWorkflow(ctx workflow.Context, order OrderInput) error {
 | History | 1 | ~0.93 GiB |
 | Frontend | 1 | ~0.28 GiB |
 | Matching | 1 | ~0.14 GiB |
-| Workers | ~100 | — |
+| Workers | ~100 | N/A |
 | Cassandra | 3 nodes | ~0.008 TiB |
 | **Total Cadence cores** | **3** | |
 
