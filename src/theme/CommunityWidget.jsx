@@ -18,31 +18,28 @@ const ACTIONS = [
     icon: 'mdi:email-newsletter',
   },
   {
-    id: 'slack',
-    label: 'Join us on Slack (CNCF)',
-    href: 'https://communityinviter.com/apps/cloud-native/cncf',
-    icon: 'mdi:slack',
-    external: true,
-  },
-  {
     id: 'discord',
-    label: 'Join us on Discord',
+    label: 'Discord',
     href: 'https://discord.gg/ynvjm2Et5',
     icon: 'mdi:discord',
     external: true,
+    secondary: true,
+  },
+  {
+    id: 'slack',
+    label: 'Slack',
+    href: 'https://communityinviter.com/apps/cloud-native/cncf',
+    icon: 'mdi:slack',
+    external: true,
+    secondary: true,
   },
   {
     id: 'github',
-    label: 'Discuss on GitHub',
+    label: 'GitHub',
     href: 'https://github.com/cadence-workflow/cadence/discussions',
     icon: 'mdi:github',
     external: true,
-  },
-  {
-    id: 'contact',
-    label: 'Contact the team',
-    href: '/community/contact-us',
-    icon: 'mdi:email-outline',
+    secondary: true,
   },
 ];
 
@@ -184,8 +181,8 @@ export default function CommunityWidget() {
 
               return action.external ? (
                 <li key={action.id}>
-                  <a href={action.href} className={itemClass} target="_blank" rel="noopener noreferrer">
-                    <Icon icon={action.icon} className={styles.actionIcon} width={20} />
+                  <a href={action.href} className={`${itemClass} ${action.secondary ? styles.actionItemSecondary : ''}`} target="_blank" rel="noopener noreferrer">
+                    <Icon icon={action.icon} className={styles.actionIcon} width={action.secondary ? 18 : 20} />
                     <span>{action.label}</span>
                   </a>
                 </li>

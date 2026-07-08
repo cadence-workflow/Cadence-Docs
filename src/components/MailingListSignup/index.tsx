@@ -21,9 +21,12 @@ export default function MailingListSignup({
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const t = setTimeout(() => inputRef.current?.focus(), 400);
-    return () => clearTimeout(t);
-  }, []);
+    // Only auto-focus when the user arrives directly via the anchor link
+    if (id && typeof window !== 'undefined' && window.location.hash === `#${id}`) {
+      const t = setTimeout(() => inputRef.current?.focus(), 400);
+      return () => clearTimeout(t);
+    }
+  }, [id]);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
