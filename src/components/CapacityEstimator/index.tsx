@@ -143,6 +143,13 @@ function retentionWarn(days: number): string | null {
   return days > 30 ? '⚠ High retention — consider archival' : null;
 }
 
+function runtimeWarn(raw: string | number, parsed: number): string | null {
+  if (typeof raw === 'string' && raw.trim() !== '' && parsed === 0) {
+    return '⚠ Unrecognized format — try e.g. 2h, 30m, 1d';
+  }
+  return null;
+}
+
 function fmtGiB(v: number): string {
   if (v <= 0) return '—';
   if (v < 0.01) return '< 0.01 GiB';
@@ -287,7 +294,7 @@ export default function CapacityEstimator() {
   // Layer 3: Peak throughput via Little's Law
   // Little's Law: throughput = concurrency / avg_time_in_system.
   // workflowsAtPeak is how many workflows are always in flight (concurrency).
-  // runtimeDays * 86400 converts the average workflow lifetime to seconds.
+  // runtimeHours * 3600 converts the average workflow lifetime to seconds.
   // Multiplying by totalActions gives UpdateWorkflowExecution calls per second.
   // This single number drives all resource estimates below.
   const actionsPerSec = runtimeHours > 0 ? (totalActions * wfPeak) / (runtimeHours * 3600) : 0;
@@ -324,7 +331,7 @@ export default function CapacityEstimator() {
             <p className={styles.sectionTitle}>Workflow shape</p>
             <NumberField label="Workflows at peak" value={v.workflowsAtPeak} onChange={set('workflowsAtPeak')} />
             <NumberField label="Workflows per day" value={v.workflowsPerDay} onChange={set('workflowsPerDay')} />
-            <NumberField label="Avg runtime" unit="hr" type="text" placeholder="e.g. 2h, 30m, 1d" value={v.avgWorkflowRuntime} onChange={set('avgWorkflowRuntime')} />
+            <NumberField label="Avg runtime" unit="hr" type="text" placeholder="e.g. 2h, 30m, 1d" value={v.avgWorkflowRuntime} onChange={set('avgWorkflowRuntime')} warning={runtimeWarn(v.avgWorkflowRuntime, runtimeHours)} />
             <NumberField label="Retention after completion" unit="days" type="text" placeholder="e.g. 7, 30d, 2w" value={v.retentionDaysAfterCompletion} onChange={set('retentionDaysAfterCompletion')} warning={retentionWarn(retentionDays)} />
           </div>
 
