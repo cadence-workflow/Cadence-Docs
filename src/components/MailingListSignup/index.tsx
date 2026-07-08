@@ -3,7 +3,7 @@ import styles from './styles.module.css';
 
 const JOIN_BASE = 'https://lists.cncf.io/g/cncf-cadence-community/join';
 
-type State = 'idle' | 'opened';
+type State = 'idle' | 'opened' | 'blocked';
 
 interface Props {
   id?: string;
@@ -29,8 +29,41 @@ export default function MailingListSignup({
     e.preventDefault();
     if (!email) return;
     const url = `${JOIN_BASE}?email=${encodeURIComponent(email)}`;
-    window.open(url, '_blank', 'noopener,noreferrer');
-    setState('opened');
+    const win = window.open(url, '_blank', 'noopener,noreferrer');
+    if (win) {
+      setState('opened');
+    } else {
+      // Popup was blocked — show a direct link instead of the confirmation view
+      setState('blocked');
+    }
+  }
+
+  if (state === 'blocked') {
+    const url = `${JOIN_BASE}?email=${encodeURIComponent(email)}`;
+    return (
+      <div className={styles.banner} id={id}>
+        <div className={styles.inner}>
+          <div className={styles.successIcon} aria-hidden="true">🚫</div>
+          <p className={styles.successHeadline}>Popup blocked</p>
+          <p className={styles.successBody}>
+            Your browser blocked the new tab. Click the link below to open the groups.io page
+            {email ? <> with <strong className={styles.emailHighlight}>{email}</strong> pre-filled</> : ''}.
+          </p>
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.button}
+            style={{ display: 'inline-flex', textDecoration: 'none', marginTop: '0.75rem' }}
+          >
+            Open groups.io ↗
+          </a>
+          <button className={styles.buttonSecondary} onClick={() => setState('idle')}>
+            Back
+          </button>
+        </div>
+      </div>
+    );
   }
 
   if (state === 'opened') {
