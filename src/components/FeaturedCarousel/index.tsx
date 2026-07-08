@@ -32,6 +32,10 @@ items.forEach((item, i) => {
   }
 });
 
+// Toggle to preview click-only nav vs. the new hover-hotspot nav for demos,
+// then delete the unused branch (and its styles) once a decision is made.
+const NAV_MODE: 'click' | 'hover' = 'hover';
+
 const resolveImage = (item: FeaturedItem) =>
   item.image ?? TAG_DEFAULT_IMAGE[item.tag] ?? FALLBACK_IMAGE;
 
@@ -211,6 +215,21 @@ export default function FeaturedCarousel(): JSX.Element {
               );
             })}
           </ul>
+
+          {NAV_MODE === 'hover' && (
+            <>
+              <div
+                className={clsx(styles.hotspot, styles.hotspotLeft, atStart && styles.hotspotDisabled)}
+                aria-hidden="true"
+                onMouseEnter={() => !atStart && goPrev()}
+              />
+              <div
+                className={clsx(styles.hotspot, styles.hotspotRight, atEnd && styles.hotspotDisabled)}
+                aria-hidden="true"
+                onMouseEnter={() => !atEnd && goNext()}
+              />
+            </>
+          )}
         </div>
 
         <div className={styles.dots} role="tablist" aria-label="Choose page">
