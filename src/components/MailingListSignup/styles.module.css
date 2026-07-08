@@ -1,11 +1,46 @@
 /* Banner wrapper */
 .banner {
-  background: linear-gradient(135deg, #1a2b4a 0%, #2563eb 60%, #1e3a5f 100%);
+  background: linear-gradient(135deg, #1a2b4a 0%, #2563eb 55%, #1e40af 100%);
   border-radius: 1rem;
   padding: 2.5rem 1.5rem;
   margin: 2rem 0;
   text-align: center;
-  box-shadow: 0 8px 32px rgba(37, 99, 235, 0.25);
+  box-shadow: 0 8px 32px rgba(37, 99, 235, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Dot-grid texture */
+.banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,0.12) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+}
+
+/* Shimmer sweep on load */
+.banner::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.07) 50%,
+    transparent 100%
+  );
+  animation: bannerShimmer 3s ease-in-out 0.4s 1 both;
+  pointer-events: none;
+}
+
+@keyframes bannerShimmer {
+  from { left: -60%; }
+  to   { left: 120%; }
 }
 
 .inner {
@@ -121,18 +156,11 @@
   text-align: left;
 }
 
-/* Privacy note */
-.privacyNote {
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 0.8rem;
-  margin: 0.75rem 0 0;
-}
-
 /* Success state */
 .successIcon {
   width: 3rem;
   height: 3rem;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -141,6 +169,12 @@
   margin: 0 auto 1rem;
   color: #ffffff;
   line-height: 3rem;
+  animation: successPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes successPop {
+  from { transform: scale(0.4); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
 }
 
 .successHeadline {
@@ -148,6 +182,7 @@
   font-size: 1.4rem;
   font-weight: 800;
   margin: 0 0 0.5rem;
+  animation: successFadeUp 0.35s ease-out 0.1s both;
 }
 
 .successBody {
@@ -155,6 +190,28 @@
   font-size: 1rem;
   margin: 0;
   line-height: 1.6;
+  animation: successFadeUp 0.35s ease-out 0.2s both;
+}
+
+@keyframes successFadeUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Privacy note */
+.privacyNote {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.8rem;
+  margin: 0.75rem 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+.privacyNote::before {
+  content: '🔒';
+  font-size: 0.7rem;
 }
 
 /* Accessibility */

@@ -49,6 +49,7 @@ export default function CommunityWidget() {
   const [open, setOpen] = useState(false);
   const panelRef = useRef(null);
   const fabRef = useRef(null);
+  const wrapperRef = useRef(null);
 
   useEffect(() => {
     if (!open) return;
@@ -61,8 +62,8 @@ export default function CommunityWidget() {
       if (
         panelRef.current &&
         !panelRef.current.contains(e.target) &&
-        fabRef.current &&
-        !fabRef.current.contains(e.target)
+        wrapperRef.current &&
+        !wrapperRef.current.contains(e.target)
       ) {
         setOpen(false);
       }
@@ -97,12 +98,14 @@ export default function CommunityWidget() {
             </button>
           </div>
           <ul className={styles.actionList}>
-            {ACTIONS.map((action) =>
-              action.external ? (
+            {ACTIONS.map((action) => {
+              const isNewsletter = action.id === 'newsletter';
+              const itemClass = isNewsletter ? styles.actionItemNewsletter : styles.actionItem;
+              return action.external ? (
                 <li key={action.id}>
                   <a
                     href={action.href}
-                    className={styles.actionItem}
+                    className={itemClass}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -112,25 +115,28 @@ export default function CommunityWidget() {
                 </li>
               ) : (
                 <li key={action.id}>
-                  <Link to={action.href} className={styles.actionItem} onClick={() => setOpen(false)}>
+                  <Link to={action.href} className={itemClass} onClick={() => setOpen(false)}>
                     <Icon icon={action.icon} className={styles.actionIcon} width={20} />
                     <span>{action.label}</span>
+                    {isNewsletter && <span className={styles.newsletterBadge}>New</span>}
                   </Link>
                 </li>
-              )
-            )}
+              );
+            })}
           </ul>
         </div>
       )}
-      <button
-        ref={fabRef}
-        className={`${styles.fab} ${open ? styles.fabOpen : ''}`}
-        onClick={() => setOpen((v) => !v)}
-        aria-label={open ? 'Close community menu' : 'Open community actions'}
-        aria-expanded={open}
-      >
-        <Icon icon={open ? 'mdi:close' : 'mdi:account-group'} width={26} />
-      </button>
+      <div ref={wrapperRef} className={`${styles.fabWrapper} ${open ? styles.fabWrapperOpen : ''}`}>
+        <button
+          ref={fabRef}
+          className={`${styles.fab} ${open ? styles.fabOpen : ''}`}
+          onClick={() => setOpen((v) => !v)}
+          aria-label={open ? 'Close community menu' : 'Open community actions'}
+          aria-expanded={open}
+        >
+          <Icon icon={open ? 'mdi:close' : 'mdi:account-group'} width={26} />
+        </button>
+      </div>
     </div>
   );
 }
