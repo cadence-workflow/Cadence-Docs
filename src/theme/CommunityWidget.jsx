@@ -13,9 +13,8 @@ const ACTIONS = [
   {
     id: 'newsletter',
     label: 'Subscribe to updates',
-    href: 'https://lists.cncf.io/g/cncf-cadence-community/join',
+    href: '/community/meetup#stay-updated-on-cadence',
     icon: 'mdi:email-newsletter',
-    external: true,
   },
   {
     id: 'slack',
