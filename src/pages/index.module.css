@@ -39,7 +39,16 @@
 
 .heroCompactSubtitle {
   font-size: 0.95rem;
-  margin-bottom: 0.9rem;
+  margin-bottom: 0.6rem;
+}
+
+/* ~2x button--sm's font-size, with a tight line-height and only a slight
+   padding bump so the CTA doesn't grow much taller than button--sm despite
+   the much bigger text. */
+.heroCompactCta {
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 0.35rem 1.0rem;
 }
 
 @media screen and (max-width: 996px) {
