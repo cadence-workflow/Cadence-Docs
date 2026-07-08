@@ -2,10 +2,10 @@
 .banner {
   background: linear-gradient(135deg, #1a2b4a 0%, #2563eb 55%, #1e40af 100%);
   border-radius: 1rem;
-  padding: 2.5rem 1.5rem;
+  padding: 2.75rem 1.75rem;
   margin: 2rem 0;
   text-align: center;
-  box-shadow: 0 8px 32px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 8px 48px rgba(37, 99, 235, 0.45), 0 0 0 1px rgba(255,255,255,0.08);
   position: relative;
   overflow: hidden;
 }
@@ -48,10 +48,30 @@
   margin: 0 auto;
 }
 
+/* Event badge pill */
+.badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  margin-bottom: 0.85rem;
+  animation: badgeFadeIn 0.4s ease-out both;
+}
+
+@keyframes badgeFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 /* Headline + tagline */
 .headline {
   color: #ffffff;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 800;
   margin: 0 0 0.5rem;
   letter-spacing: -0.02em;
@@ -132,6 +152,16 @@
 .button:disabled {
   opacity: 0.55;
   cursor: not-allowed;
+}
+
+/* Pulse the button once an email is typed */
+.buttonReady {
+  animation: buttonPulse 1.4s ease-in-out 0.3s 2 both;
+}
+
+@keyframes buttonPulse {
+  0%, 100% { box-shadow: none; }
+  50%       { box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.35); }
 }
 
 .buttonSecondary {

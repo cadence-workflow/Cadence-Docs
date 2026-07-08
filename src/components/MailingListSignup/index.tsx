@@ -9,12 +9,14 @@ interface Props {
   id?: string;
   headline?: string;
   tagline?: string;
+  badge?: string;
 }
 
 export default function MailingListSignup({
   id,
   headline = 'Stay in the loop',
   tagline = 'Get meetup announcements, release notes, and community updates delivered to your inbox.',
+  badge,
 }: Props) {
   const [email, setEmail] = useState('');
   const [state, setState] = useState<State>('idle');
@@ -102,8 +104,8 @@ export default function MailingListSignup({
   return (
     <div className={styles.banner} id={id}>
       <div className={styles.inner}>
-        <h2 className={styles.headline}>{headline}</h2>
-        <p className={styles.tagline}>{tagline}</p>
+        {badge && <div className={styles.badge}>{badge}</div>}
+        <h2 className={styles.headline}>{headline}</h2>        <p className={styles.tagline}>{tagline}</p>
 
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.inputRow}>
@@ -120,7 +122,7 @@ export default function MailingListSignup({
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <button type="submit" className={styles.button} disabled={!email}>
+            <button type="submit" className={`${styles.button} ${email ? styles.buttonReady : ''}`} disabled={!email}>
               Subscribe →
             </button>
           </div>
