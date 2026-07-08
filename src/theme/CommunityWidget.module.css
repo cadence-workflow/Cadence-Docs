@@ -166,6 +166,93 @@ html[data-theme='dark'] .actionIcon {
   color: #93C5FD;
 }
 
+/* Floating tooltip label above the FAB */
+.tooltip {
+  position: absolute;
+  right: calc(100% + 0.75rem);
+  top: 50%;
+  transform: translateY(-50%);
+  background: #1e2a3a;
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.4rem 0.75rem;
+  border-radius: 0.5rem;
+  white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  animation: tooltipIn 0.25s ease-out both, tooltipOut 0.3s ease-in 3.7s both;
+  pointer-events: none;
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 6px solid transparent;
+  border-left-color: #1e2a3a;
+}
+
+@keyframes tooltipIn {
+  from { opacity: 0; transform: translateY(-50%) translateX(8px); }
+  to   { opacity: 1; transform: translateY(-50%) translateX(0); }
+}
+
+@keyframes tooltipOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+/* Meetup CTA row - top priority action */
+.actionItemMeetup {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.8rem 1rem;
+  color: #1D4ED8;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #EFF6FF 0%, #DBEAFE 100%);
+  border-bottom: 2px solid #BFDBFE;
+  transition: background 0.15s;
+}
+
+.actionItemMeetup:hover {
+  background: #DBEAFE;
+  color: #1D4ED8;
+  text-decoration: none;
+}
+
+html[data-theme='dark'] .actionItemMeetup {
+  background: linear-gradient(90deg, rgba(37,99,235,0.2) 0%, rgba(37,99,235,0.12) 100%);
+  border-bottom-color: rgba(37, 99, 235, 0.3);
+  color: #93C5FD;
+}
+
+html[data-theme='dark'] .actionItemMeetup:hover {
+  background: rgba(37, 99, 235, 0.3);
+  color: #BFDBFE;
+}
+
+.meetupBadge {
+  margin-left: auto;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: #2563EB;
+  color: #ffffff;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+html[data-theme='dark'] .meetupBadge {
+  background: #3B82F6;
+}
+
 /* Newsletter CTA row - visually elevated as the primary action */
 .actionItemNewsletter {
   display: flex;

@@ -65,14 +65,50 @@
 }
 
 /* Form / CTA row */
-.ctaRow {
+.form {
   display: flex;
-  justify-content: center;
-  margin-bottom: 0.25rem;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.inputRow {
+  display: flex;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+
+.input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  min-width: 0;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  animation: inputGlow 2s ease-in-out 0.6s 3 both;
+}
+
+.input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
+  animation: none;
+}
+
+@keyframes inputGlow {
+  0%,  100% { border-color: rgba(255, 255, 255, 0.3); box-shadow: none; }
+  50%        { border-color: rgba(255, 255, 255, 0.75); box-shadow: 0 0 12px rgba(255,255,255,0.2); }
 }
 
 .button {
-  padding: 0.75rem 2rem;
+  padding: 0.75rem 1.5rem;
   font-size: 1rem;
   font-weight: 700;
   border: none;
@@ -84,12 +120,18 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  flex-shrink: 0;
   transition: background 0.2s, transform 0.15s;
 }
 
-.button:hover {
+.button:hover:not(:disabled) {
   background: #e0eaff;
   transform: translateY(-1px);
+}
+
+.button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
 }
 
 .buttonSecondary {
@@ -168,6 +210,12 @@
   font-size: 0.7rem;
 }
 
+/* Confirmed email highlight in success state */
+.emailHighlight {
+  color: #ffffff;
+  font-style: normal;
+}
+
 /* Accessibility */
 .srOnly {
   position: absolute;
@@ -181,8 +229,12 @@
   border: 0;
 }
 
-/* Responsive: full-width button on narrow screens */
+/* Responsive: stack on narrow screens */
 @media (max-width: 480px) {
+  .inputRow {
+    flex-direction: column;
+  }
+
   .button {
     width: 100%;
     justify-content: center;
