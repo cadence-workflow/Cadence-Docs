@@ -268,7 +268,15 @@ html[data-theme='dark'] .meetupBadge {
   transition: background 0.15s;
 }
 
-.actionItemNewsletter:hover {
+.actionItemNewsletterBtn {
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.actionItemNewsletter:hover,
+.actionItemNewsletterBtn:hover {
   background: #DBEAFE;
   color: #1D4ED8;
   text-decoration: none;
@@ -280,9 +288,102 @@ html[data-theme='dark'] .actionItemNewsletter {
   color: #93C5FD;
 }
 
+html[data-theme='dark'] .actionItemNewsletterBtn:hover,
 html[data-theme='dark'] .actionItemNewsletter:hover {
   background: rgba(37, 99, 235, 0.25);
   color: #BFDBFE;
+}
+
+/* Inline email drawer */
+.emailDrawer {
+  background: #F0F7FF;
+  border-bottom: 1px solid #DBEAFE;
+  padding: 0.6rem 1rem;
+  animation: drawerSlide 0.15s ease-out both;
+}
+
+@keyframes drawerSlide {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+html[data-theme='dark'] .emailDrawer {
+  background: rgba(37, 99, 235, 0.08);
+  border-bottom-color: rgba(37, 99, 235, 0.2);
+}
+
+.emailForm {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.emailInput {
+  flex: 1;
+  padding: 0.45rem 0.65rem;
+  font-size: 0.85rem;
+  border: 1px solid #BFDBFE;
+  border-radius: 0.4rem;
+  background: #ffffff;
+  color: #1e2a3a;
+  min-width: 0;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.emailInput:focus {
+  border-color: #2563EB;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+.emailInput::placeholder {
+  color: #94a3b8;
+}
+
+html[data-theme='dark'] .emailInput {
+  background: #1e2a3a;
+  border-color: rgba(37, 99, 235, 0.4);
+  color: #e2e8f0;
+}
+
+html[data-theme='dark'] .emailInput::placeholder {
+  color: #64748b;
+}
+
+.emailSubmit {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  border-radius: 0.4rem;
+  background: #2563EB;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.emailSubmit:hover:not(:disabled) {
+  background: #1D4ED8;
+  transform: scale(1.05);
+}
+
+.emailSubmit:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.emailConfirm {
+  font-size: 0.8rem;
+  color: #1D4ED8;
+  margin: 0;
+  line-height: 1.4;
+}
+
+html[data-theme='dark'] .emailConfirm {
+  color: #93C5FD;
 }
 
 .newsletterBadge {

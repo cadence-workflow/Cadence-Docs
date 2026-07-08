@@ -3,6 +3,8 @@ import { Icon } from '@iconify/react';
 import Link from '@docusaurus/Link';
 import styles from './CommunityWidget.module.css';
 
+const JOIN_URL = 'https://lists.cncf.io/g/cncf-cadence-community/join';
+
 const ACTIONS = [
   {
     id: 'meetup',
@@ -13,7 +15,6 @@ const ACTIONS = [
   {
     id: 'newsletter',
     label: 'Subscribe to updates',
-    href: '/community/meetup#stay-updated-on-cadence',
     icon: 'mdi:email-newsletter',
   },
   {
@@ -48,15 +49,32 @@ const ACTIONS = [
 export default function CommunityWidget() {
   const [open, setOpen] = useState(false);
   const [showTooltip, setShowTooltip] = useState(true);
+  const [emailOpen, setEmailOpen] = useState(false);
+  const [email, setEmail] = useState('');
+  const [submitted, setSubmitted] = useState(false);
   const panelRef = useRef(null);
   const fabRef = useRef(null);
   const wrapperRef = useRef(null);
+  const emailInputRef = useRef(null);
 
-  // Auto-hide tooltip after 4 s
   useEffect(() => {
     const t = setTimeout(() => setShowTooltip(false), 4000);
     return () => clearTimeout(t);
   }, []);
+
+  useEffect(() => {
+    if (emailOpen) {
+      setTimeout(() => emailInputRef.current?.focus(), 50);
+    }
+  }, [emailOpen]);
+
+  useEffect(() => {
+    if (!open) {
+      setEmailOpen(false);
+      setSubmitted(false);
+      setEmail('');
+    }
+  }, [open]);
 
   useEffect(() => {
     if (!open) return;
@@ -84,6 +102,13 @@ export default function CommunityWidget() {
     };
   }, [open]);
 
+  function handleEmailSubmit(e) {
+    e.preventDefault();
+    if (!email) return;
+    window.open(`${JOIN_URL}?email=${encodeURIComponent(email)}`, '_blank', 'noopener,noreferrer');
+    setSubmitted(true);
+  }
+
   return (
     <div className={styles.widget} aria-label="Community actions">
       {open && (
@@ -108,15 +133,58 @@ export default function CommunityWidget() {
             {ACTIONS.map((action) => {
               const isMeetup = action.id === 'meetup';
               const isNewsletter = action.id === 'newsletter';
-              const itemClass = isMeetup ? styles.actionItemMeetup : isNewsletter ? styles.actionItemNewsletter : styles.actionItem;
+
+              if (isNewsletter) {
+                return (
+                  <li key={action.id}>
+                    <button
+                      className={`${styles.actionItemNewsletter} ${styles.actionItemNewsletterBtn}`}
+                      onClick={() => { setEmailOpen((v) => !v); setSubmitted(false); }}
+                      aria-expanded={emailOpen}
+                    >
+                      <Icon icon={action.icon} className={styles.actionIcon} width={20} />
+                      <span>{action.label}</span>
+                      <span className={styles.newsletterBadge}>New</span>
+                    </button>
+                    {emailOpen && (
+                      <div className={styles.emailDrawer}>
+                        {submitted ? (
+                          <p className={styles.emailConfirm}>
+                            ✅ Tab opened — click <strong>Confirm Email Address</strong> to finish.
+                          </p>
+                        ) : (
+                          <form onSubmit={handleEmailSubmit} className={styles.emailForm}>
+                            <input
+                              ref={emailInputRef}
+                              type="email"
+                              required
+                              placeholder="you@example.com"
+                              value={email}
+                              onChange={(e) => setEmail(e.target.value)}
+                              className={styles.emailInput}
+                              aria-label="Email address"
+                            />
+                            <button
+                              type="submit"
+                              className={styles.emailSubmit}
+                              disabled={!email}
+                              aria-label="Subscribe"
+                            >
+                              <Icon icon="mdi:arrow-right" width={18} />
+                            </button>
+                          </form>
+                        )}
+                      </div>
+                    )}
+                  </li>
+                );
+              }
+
+              const itemClass = isMeetup ? styles.actionItemMeetup : styles.actionItem;
+
               return action.external ? (
                 <li key={action.id}>
-                  <a
-                    href={action.href}
-                    className={itemClass}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                  <a href={action.href} className={itemClass} target="_blank" rel="noopener noreferrer">
                     <Icon icon={action.icon} className={styles.actionIcon} width={20} />
                     <span>{action.label}</span>
                   </a>
@@ -127,7 +195,6 @@ export default function CommunityWidget() {
                     <Icon icon={action.icon} className={styles.actionIcon} width={20} />
                     <span>{action.label}</span>
                     {isMeetup && <span className={styles.meetupBadge}>Join</span>}
-                    {isNewsletter && <span className={styles.newsletterBadge}>New</span>}
                   </Link>
                 </li>
               );
