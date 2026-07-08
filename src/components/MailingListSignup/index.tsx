@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './styles.module.css';
 
-const SUBSCRIBE_EMAIL = 'cncf-cadence-community+subscribe@lists.cncf.io';
+const JOIN_BASE = 'https://lists.cncf.io/g/cncf-cadence-community/join';
 
 type State = 'idle' | 'opened';
 
@@ -28,7 +28,8 @@ export default function MailingListSignup({
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!email) return;
-    window.open(`mailto:${SUBSCRIBE_EMAIL}`, '_blank');
+    const url = `${JOIN_BASE}?email=${encodeURIComponent(email)}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
     setState('opened');
   }
 
@@ -36,14 +37,24 @@ export default function MailingListSignup({
     return (
       <div className={styles.banner} id={id}>
         <div className={styles.inner}>
-          <div className={styles.successIcon} aria-hidden="true">✉</div>
-          <p className={styles.successHeadline}>Check your email client</p>
+          <div className={styles.successIcon} aria-hidden="true">✅</div>
+          <p className={styles.successHeadline}>One more click</p>
           <p className={styles.successBody}>
-            Send the pre-addressed email that just opened
-            {email ? <> from <strong className={styles.emailHighlight}>{email}</strong></> : ''}.
-            Groups.io will send a confirmation link — click it to complete your subscription.
+            The CNCF groups.io page just opened with{' '}
+            {email ? <strong className={styles.emailHighlight}>{email}</strong> : 'your email'}{' '}
+            pre-filled. Click <strong>"Confirm Email Address"</strong> there and you're done —
+            groups.io will send you a confirmation.
           </p>
-          <button className={styles.buttonSecondary} onClick={() => setState('idle')}>
+          <a
+            href={`${JOIN_BASE}?email=${encodeURIComponent(email)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.button}
+            style={{ display: 'inline-flex', textDecoration: 'none', marginTop: '0.75rem' }}
+          >
+            Open again ↗
+          </a>
+          <button className={styles.buttonSecondary} onClick={() => { setEmail(''); setState('idle'); }}>
             Back
           </button>
         </div>
@@ -73,7 +84,7 @@ export default function MailingListSignup({
               required
             />
             <button type="submit" className={styles.button} disabled={!email}>
-              Subscribe
+              Subscribe →
             </button>
           </div>
         </form>
