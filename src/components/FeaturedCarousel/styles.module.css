@@ -60,6 +60,7 @@
 }
 
 .filterBar {
+  --filter-accent: #276ef1; /* Uber Safety Blue, matches the hero banner */
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -84,13 +85,10 @@
 }
 
 .filterPillActive {
-  background: var(--ifm-color-primary);
-  border-color: var(--ifm-color-primary);
-  color: #fff;
-}
-
-:global(html[data-theme='dark']) .filterPillActive {
-  color: var(--ifm-color-primary-darkest);
+  background: color-mix(in srgb, var(--filter-accent) 18%, var(--ifm-background-surface-color));
+  border-color: var(--filter-accent);
+  color: var(--filter-accent);
+  font-weight: 700;
 }
 
 .segmented {
@@ -117,12 +115,9 @@
 }
 
 .segmentActive {
-  background: var(--ifm-color-primary);
-  color: #fff;
-}
-
-:global(html[data-theme='dark']) .segmentActive {
-  color: var(--ifm-color-primary-darkest);
+  background: color-mix(in srgb, var(--filter-accent) 18%, var(--ifm-background-surface-color));
+  color: var(--filter-accent);
+  font-weight: 700;
 }
 
 .filterDropdown {
