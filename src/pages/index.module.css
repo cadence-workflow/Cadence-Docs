@@ -13,7 +13,14 @@
   background-color: black;
 }
 
-/* Original: full-size hero, matches pre-refactor sizing */
+/* Original: full-size hero, matches pre-refactor sizing.
+   Desktop padding is spelled out explicitly (matching Infima's .hero
+   default) rather than left implicit, so this class doesn't silently
+   depend on the theme's default padding never changing. */
+.heroOriginal {
+  padding: 4rem 2rem;
+}
+
 @media screen and (max-width: 996px) {
   .heroOriginal {
     padding: 2rem;
