@@ -29,8 +29,9 @@ export default function MailingListSignup({
     e.preventDefault();
     if (!email) return;
     const url = `${JOIN_BASE}?email=${encodeURIComponent(email)}`;
-    const win = window.open(url, '_blank', 'noopener,noreferrer');
+    const win = window.open(url, '_blank');
     if (win) {
+      win.opener = null; // retain noopener protection while keeping the reference
       setState('opened');
     } else {
       // Popup was blocked — show a direct link instead of the confirmation view
