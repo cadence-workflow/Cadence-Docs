@@ -12,6 +12,8 @@ const FORMSPREE_FORM_ID = 'YOUR_FORM_ID';
 type State = 'idle' | 'submitting' | 'success' | 'error';
 
 interface Props {
+  /** HTML id placed on the banner wrapper, enabling deep-link anchors. */
+  id?: string;
   /** Headline shown above the input row. */
   headline?: string;
   /** Supporting copy shown below the headline. */
@@ -19,6 +21,7 @@ interface Props {
 }
 
 export default function MailingListSignup({
+  id,
   headline = 'Stay in the loop',
   tagline = 'Get meetup announcements, release notes, and community updates delivered to your inbox.',
 }: Props) {
@@ -26,9 +29,14 @@ export default function MailingListSignup({
   const [state, setState] = useState<State>('idle');
   const [errorMsg, setErrorMsg] = useState('');
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!email) return;
+    if (!e.currentTarget.checkValidity()) {
+      setErrorMsg('Please enter a valid email address.');
+      setState('error');
+      return;
+    }
 
     setState('submitting');
     setErrorMsg('');
@@ -59,7 +67,7 @@ export default function MailingListSignup({
 
   if (state === 'success') {
     return (
-      <div className={styles.banner}>
+      <div className={styles.banner} id={id}>
         <div className={styles.inner}>
           <div className={styles.successIcon} aria-hidden="true">✓</div>
           <p className={styles.successHeadline}>You&apos;re on the list!</p>
@@ -73,12 +81,12 @@ export default function MailingListSignup({
   }
 
   return (
-    <div className={styles.banner}>
+    <div className={styles.banner} id={id}>
       <div className={styles.inner}>
         <h2 className={styles.headline}>{headline}</h2>
         <p className={styles.tagline}>{tagline}</p>
 
-        <form className={styles.form} onSubmit={handleSubmit} noValidate>
+        <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.inputRow}>
             <label htmlFor="mailing-list-email" className={styles.srOnly}>
               Email address
