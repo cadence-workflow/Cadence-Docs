@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Workflow Engine and Workflow Orchestration
-description: Cadence is an open-source workflow engine for Go, Java, and Python — fault-tolerant, stateful, and built for long-running distributed applications. Learn how it compares to queues, cron jobs, and state machines.
+description: Cadence is an open-source workflow engine for Go, Java, and Python. It is fault-tolerant, stateful, and built for long-running distributed applications. Learn how it compares to queues, cron jobs, and state machines.
 keywords:
   - workflow engine
   - workflow orchestration
@@ -22,9 +22,9 @@ keywords:
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Cadence is a fault-tolerant, stateful workflow engine for orchestrating long-running distributed applications. It replaces the patchwork of databases, queues, cron jobs, and microservice glue code that most teams use today to coordinate multi-step business processes — replacing it with plain code.
+Cadence is a fault-tolerant, stateful workflow engine for orchestrating long-running distributed applications. It replaces the patchwork of databases, queues, cron jobs, and microservice glue code that most teams use today to coordinate multi-step business processes, replacing it with plain code.
 
-A workflow in Cadence is a durable function. It can run for seconds or years, survive server restarts, retry failed downstream calls automatically, and receive external events — all without the developer managing any of that infrastructure. Cadence handles durability, retries, timeouts, and state recovery transparently, so the business logic stays in one place.
+A workflow in Cadence is a durable function. It can run for seconds or years, survive server restarts, retry failed downstream calls automatically, and receive external events, all without the developer managing any of that infrastructure. Cadence handles durability, retries, timeouts, and state recovery transparently, so the business logic stays in one place.
 
 ---
 
@@ -34,10 +34,10 @@ A workflow engine moves a process through a defined sequence of steps while guar
 
 | Capability | Ad hoc queue + DB approach | Cadence workflow engine |
 |---|---|---|
-| Durable state across steps | Rows in a database, updated by each worker | Implicit — Cadence replays event history automatically |
+| Durable state across steps | Rows in a database, updated by each worker | Implicit: Cadence replays event history automatically |
 | Retry on failure | Custom retry logic per task, often inconsistent | Built-in exponential retry with configurable policy per activity |
-| Long-running timers | External timer service or cron + DB polling | `workflow.Sleep()` — sleeps for minutes or years, no polling |
-| Event-driven branching | Pull from queue, check DB state, route | `workflow.GetSignalChannel()` — receive signals directly in workflow code |
+| Long-running timers | External timer service or cron + DB polling | `workflow.Sleep()`: sleeps for minutes or years, no polling |
+| Event-driven branching | Pull from queue, check DB state, route | `workflow.GetSignalChannel()`: receive signals directly in workflow code |
 | Visibility into running processes | Query multiple tables and join | Query workflow state directly via the Cadence UI or API |
 | Compensation (saga rollback) | Hand-rolled, easy to get wrong | Activities are cancellable; saga pattern is a few lines of Go or Java |
 | Scalability | Each component scales independently; coordination is the bottleneck | Horizontal workers; Cadence cluster handles millions of open workflows |
@@ -48,9 +48,9 @@ A workflow engine moves a process through a defined sequence of steps while guar
 
 The standard alternative to a workflow engine is to center coordination around a database and a message queue. A worker polls a queue, executes an action, updates a row, and pushes downstream messages. This works for simple flows, but it fractures state across tables, makes the execution history invisible, and turns every failure scenario into a bespoke retry loop.
 
-Cadence takes a different approach. The entire process — its state, timer, retries, and event handling — lives in a single durable function called a workflow. The Cadence server persists a log of every event the workflow produces. When a worker dies and restarts, the server replays that log to reconstruct the exact in-memory state of the workflow. The developer never writes checkpoint or recovery code.
+Cadence takes a different approach. The entire process, including its state, timer, retries, and event handling, lives in a single durable function called a workflow. The Cadence server persists a log of every event the workflow produces. When a worker dies and restarts, the server replays that log to reconstruct the exact in-memory state of the workflow. The developer never writes checkpoint or recovery code.
 
-The subscription management example below illustrates the difference. The full business logic — charge a customer monthly, handle cancellation, send emails — fits in a single function. If the billing service goes down for two days, the workflow simply waits. When the service recovers, execution resumes exactly where it stopped.
+The subscription management example below illustrates the difference. The full business logic (charge a customer monthly, handle cancellation, send emails) fits in a single function. If the billing service goes down for two days, the workflow simply waits. When the service recovers, execution resumes exactly where it stopped.
 
 <Tabs groupId="lang">
 <TabItem value="go" label="Go">
@@ -156,7 +156,7 @@ Cadence is built on four primitives that compose cleanly with each other.
 The Cadence server itself is stateless. All durable state is stored in the configured persistence layer (Cassandra, MySQL, or Postgres).
 
 :::caution Workflows must be deterministic
-Workflow code is replayed from its event history every time a worker picks it up. Any non-deterministic call — random numbers, `time.Now()`, direct HTTP requests, file reads — will produce a different result on replay and corrupt the workflow state. Put all side effects in activities. Use `workflow.Now()` and `workflow.Sleep()` instead of the standard library equivalents.
+Workflow code is replayed from its event history every time a worker picks it up. Any non-deterministic call (random numbers, `time.Now()`, direct HTTP requests, file reads) will produce a different result on replay and corrupt the workflow state. Put all side effects in activities. Use `workflow.Now()` and `workflow.Sleep()` instead of the standard library equivalents.
 :::
 
 ---
@@ -206,7 +206,7 @@ SubscriptionWorkflow workflow = client.newWorkflowStub(
     SubscriptionWorkflow.class, options
 );
 
-// Non-blocking start — returns immediately.
+// Non-blocking start: returns immediately.
 WorkflowClient.start(workflow::manageSubscription, customerId);
 ```
 
@@ -219,7 +219,7 @@ WorkflowClient.start(workflow::manageSubscription, customerId);
 
 A Cadence cluster has four services: **Frontend** (API gateway), **History** (per-workflow state machine), **Matching** (task list routing), and **Worker** (your application code). The first three are operated by the platform team; you only run the Worker.
 
-For deployment options — SQLite for local dev, Docker Compose, Kubernetes Helm chart, or managed cluster — see the [Server Installation guide](/docs/get-started/server-installation).
+For deployment options (SQLite for local dev, Docker Compose, Kubernetes Helm chart, or managed cluster), see the [Server Installation guide](/docs/get-started/server-installation).
 
 :::note Cadence has no hard limit on open workflow instances
 The Cadence server is designed for millions of concurrently open workflows. Scalability is a function of your persistence tier and worker count, not the engine itself.
@@ -231,10 +231,10 @@ The Cadence server is designed for millions of concurrently open workflows. Scal
 
 Cadence is a general-purpose workflow engine that fits a wide range of distributed application patterns:
 
-- **Service orchestration** — chain microservice calls with automatic retries and saga rollback. [Orchestration →](/docs/use-cases/orchestration)
-- **Periodic execution** — replace cron + DB with a durable timer inside a workflow. [Periodic execution →](/docs/use-cases/periodic-execution)
-- **Event-driven applications** — receive signals from external systems and branch on them inside the workflow. [Event-driven →](/docs/use-cases/event-driven)
-- **Long-running business processes** — subscriptions, multi-day approvals, infrastructure provisioning. [Operational management →](/docs/use-cases/operational-management)
+- **Service orchestration**: chain microservice calls with automatic retries and saga rollback. [Orchestration →](/docs/use-cases/orchestration)
+- **Periodic execution**: replace cron + DB with a durable timer inside a workflow. [Periodic execution →](/docs/use-cases/periodic-execution)
+- **Event-driven applications**: receive signals from external systems and branch on them inside the workflow. [Event-driven →](/docs/use-cases/event-driven)
+- **Long-running business processes**: subscriptions, multi-day approvals, infrastructure provisioning. [Operational management →](/docs/use-cases/operational-management)
 
 ---
 
@@ -242,7 +242,7 @@ Cadence is a general-purpose workflow engine that fits a wide range of distribut
 
 Cadence has first-class SDKs for Go and Java, with Python and TypeScript clients in active development.
 
-The Go SDK (`go.uber.org/cadence`) is the most widely used in production. A Cadence worker is an ordinary Go binary that calls `worker.New()` and registers your workflow and activity functions. There is no special runtime, no sidecar, and no DSL — workflows are plain Go functions that happen to be durable.
+The Go SDK (`go.uber.org/cadence`) is the most widely used in production. A Cadence worker is an ordinary Go binary that calls `worker.New()` and registers your workflow and activity functions. There is no special runtime, no sidecar, and no DSL; workflows are plain Go functions that happen to be durable.
 
 ```go
 // A minimal Go worker registering one workflow and one activity.
@@ -252,19 +252,19 @@ w.RegisterActivity(ChargeCustomer)
 w.Start()
 ```
 
-Workers can be embedded in existing Go services or run as standalone binaries. The Cadence server is the only external dependency — all workflow state is stored server-side.
+Workers can be embedded in existing Go services or run as standalone binaries. The Cadence server is the only external dependency; all workflow state is stored server-side.
 
 For language-specific guides:
-- [Go SDK — Workers](/docs/go-client/workers)
-- [Go SDK — Creating Workflows](/docs/go-client/create-workflows)
-- [Java SDK — Workflows](/docs/java-client/workflow-interface)
+- [Go SDK: Workers](/docs/go-client/workers)
+- [Go SDK: Creating Workflows](/docs/go-client/create-workflows)
+- [Java SDK: Workflows](/docs/java-client/workflow-interface)
 
 ## References
 
-- [Workflows](/docs/concepts/workflows) — full reference for workflow semantics, IDs, retries, child workflows
-- [Activities](/docs/concepts/activities) — timeouts, retry policies, heartbeating
-- [Deployment Topology](/docs/concepts/topology) — how Frontend, Matching, History, and Workers interact
-- [Get Started](/docs/get-started) — server installation and HelloWorld samples in Go and Java
-- [Open Source Workflow Engine](/docs/concepts/open-source-workflow-engine) — self-hosting, deployment options, community
+- [Workflows](/docs/concepts/workflows): full reference for workflow semantics, IDs, retries, child workflows
+- [Activities](/docs/concepts/activities): timeouts, retry policies, heartbeating
+- [Deployment Topology](/docs/concepts/topology): how Frontend, Matching, History, and Workers interact
+- [Get Started](/docs/get-started): server installation and HelloWorld samples in Go and Java
+- [Open Source Workflow Engine](/docs/concepts/open-source-workflow-engine): self-hosting, deployment options, community
 - Go SDK: [go.uber.org/cadence](https://pkg.go.dev/go.uber.org/cadence)
 - Java SDK: [com.uber.cadence](https://javadoc.io/doc/com.uber.cadence/cadence-client)
