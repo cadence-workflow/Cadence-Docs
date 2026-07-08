@@ -5,6 +5,12 @@ import styles from './CommunityWidget.module.css';
 
 const ACTIONS = [
   {
+    id: 'newsletter',
+    label: 'Subscribe to updates',
+    href: '/community/meetup#stay-updated-on-cadence',
+    icon: 'mdi:email-newsletter',
+  },
+  {
     id: 'meetup',
     label: 'Join the community meetup',
     href: '/community/meetup',
