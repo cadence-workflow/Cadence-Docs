@@ -191,7 +191,7 @@ export default function CommunityWidget() {
                   <Link to={action.href} className={itemClass} onClick={() => setOpen(false)}>
                     <Icon icon={action.icon} className={styles.actionIcon} width={20} />
                     <span>{action.label}</span>
-                    {isMeetup && <span className={styles.meetupBadge}>Join</span>}
+                    {isMeetup && <span className={styles.meetupBadge}>New</span>}
                   </Link>
                 </li>
               );
