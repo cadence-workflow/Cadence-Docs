@@ -103,7 +103,7 @@ in none of them, then they have to share the ID.
 
 ## Controlled Version Selection with GetVersionOptions
 
-By default, `Workflow.getVersion` records `maxSupported` as the version when it is called for the first time on a given changeID (i.e., no version is cached yet). `GetVersionOptions` lets you override this behavior, giving operators fine-grained control over which version is recorded on first-write — without deploying new code.
+By default, `Workflow.getVersion` records `maxSupported` as the version when it is called for the first time on a given changeID (i.e., no version is cached yet). `GetVersionOptions` lets you override this behavior, giving operators fine-grained control over which version is recorded on first-write, without deploying new code.
 
 If a version is already cached for the changeID, options are ignored and the cached version is returned.
 
@@ -169,4 +169,4 @@ Without deploying new code, flip the feature flag (e.g., `shouldEnableNewFeature
 
 **Step 3: Retire the old code.**
 
-Once all old :workflow: executions are complete and the new version is fully rolled out, remove the old branch — just as with standard `getVersion` usage.
+Once all old :workflow: executions are complete and the new version is fully rolled out, remove the old branch, just as with standard `getVersion` usage.

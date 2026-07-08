@@ -16,7 +16,7 @@ import TabItem from '@theme/TabItem';
 
 Cadence is an open-source workflow engine for building fault-tolerant, stateful distributed applications. It is released under the [Apache 2.0 license](https://github.com/cadence-workflow/cadence/blob/master/LICENSE), hosted by the [Linux Foundation](https://lfprojects.org/policies/), and actively maintained by contributors from Uber and the broader open-source community.
 
-The full source — server, Go client, Java client, web UI, and Helm charts — is on [GitHub](https://github.com/cadence-workflow). You can run Cadence on your laptop in under five minutes with a single SQLite binary, or deploy it to Kubernetes with a Helm chart. No license key, no usage limits, no vendor dependency.
+The full source (server, Go client, Java client, web UI, and Helm charts) is on [GitHub](https://github.com/cadence-workflow). You can run Cadence on your laptop in under five minutes with a single SQLite binary, or deploy it to Kubernetes with a Helm chart. No license key, no usage limits, no vendor dependency.
 
 ---
 
@@ -27,10 +27,10 @@ A workflow engine sits at the center of your most critical business processes. O
 | Concern | Proprietary / hosted-only engine | Cadence (open source) |
 |---|---|---|
 | Vendor lock-in | Workflows are tied to a provider's API and pricing | Run anywhere; migrate to your own cluster at any time |
-| Auditability | Black box — you cannot inspect how state is stored or replayed | Full source available; persistence schema is documented and versioned |
+| Auditability | Black box: you cannot inspect how state is stored or replayed | Full source available; persistence schema is documented and versioned |
 | Data residency | Payloads stored on provider infrastructure | Your workflows stay in your VPC, your region, your storage tier |
 | Customization | Blocked by the provider's feature roadmap | Fork, extend, or contribute upstream |
-| Cost at scale | Per-workflow or per-execution pricing adds up | Operational cost only — no per-execution fee |
+| Cost at scale | Per-workflow or per-execution pricing adds up | Operational cost only; no per-execution fee |
 | Community support | Vendor-controlled SLAs | Stack Overflow, CNCF Slack, GitHub Issues, community contributors |
 
 ---
@@ -41,7 +41,7 @@ Cadence supports four deployment modes. Start with the simplest one that fits yo
 
 | Mode | Backend | When to use |
 |---|---|---|
-| **SQLite** | Embedded SQLite | Local development, demos, CI — no Docker required |
+| **SQLite** | Embedded SQLite | Local development, demos, CI (no Docker required) |
 | **Docker Compose** | Cassandra or MySQL in containers | Team dev environment, local integration tests |
 | **Kubernetes (Helm)** | Cassandra, MySQL, or Postgres | Staging and production |
 | **Managed (Uber)** | Uber-operated multi-tenant cluster | Uber internal teams |
@@ -92,9 +92,9 @@ The server image `ubercadence/server` is updated with every release. See [Docker
 |---|---|---|
 | Go | Official | [cadence-workflow/cadence-go-client](https://github.com/cadence-workflow/cadence-go-client) |
 | Java | Official | [cadence-workflow/cadence-java-client](https://github.com/cadence-workflow/cadence-java-client) |
-| Python | Community | — |
+| Python | Community | |
 | Ruby | Community | [coinbase/cadence-ruby](https://github.com/coinbase/cadence-ruby) |
-| .NET | In development | — |
+| .NET | In development | |
 
 You can also use [iWF](https://github.com/indeedeng/iwf) as a DSL framework that runs on top of Cadence if you prefer a state-machine abstraction over raw workflow code.
 
@@ -183,9 +183,9 @@ Contributions to the server, SDKs, docs, and samples are welcome. See [CONTRIBUT
 
 ## References
 
-- [Workflow Engine and Orchestration](/docs/concepts/workflow-engine) — how Cadence works as a workflow engine
-- [Get Started](/docs/get-started) — server installation, HelloWorld samples, Video Tutorials
-- [Deployment Topology](/docs/concepts/topology) — Frontend, Matching, History, Worker services
+- [Workflow Engine and Orchestration](/docs/concepts/workflow-engine): how Cadence works as a workflow engine
+- [Get Started](/docs/get-started): server installation, HelloWorld samples, Video Tutorials
+- [Deployment Topology](/docs/concepts/topology): Frontend, Matching, History, Worker services
 - GitHub org: [github.com/cadence-workflow](https://github.com/cadence-workflow)
 - Docker Hub: [ubercadence/server](https://hub.docker.com/r/ubercadence/server)
 - Helm charts: [cadence-workflow/cadence-charts](https://github.com/cadence-workflow/cadence-charts)
