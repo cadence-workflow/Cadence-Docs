@@ -64,48 +64,15 @@
   line-height: 1.6;
 }
 
-/* Form */
-.form {
+/* Form / CTA row */
+.ctaRow {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.inputRow {
-  display: flex;
-  gap: 0.5rem;
-  align-items: stretch;
-}
-
-.input {
-  flex: 1;
-  padding: 0.75rem 1rem;
-  font-size: 1rem;
-  border: 2px solid rgba(255, 255, 255, 0.25);
-  border-radius: 0.5rem;
-  background: rgba(255, 255, 255, 0.12);
-  color: #ffffff;
-  transition: border-color 0.2s, background 0.2s;
-  min-width: 0;
-}
-
-.input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.input:focus {
-  outline: none;
-  border-color: rgba(255, 255, 255, 0.7);
-  background: rgba(255, 255, 255, 0.18);
-}
-
-.input:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+  justify-content: center;
+  margin-bottom: 0.25rem;
 }
 
 .button {
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 2rem;
   font-size: 1rem;
   font-weight: 700;
   border: none;
@@ -114,46 +81,33 @@
   color: #1a2b4a;
   cursor: pointer;
   white-space: nowrap;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  transition: background 0.2s, transform 0.15s, opacity 0.2s;
-  flex-shrink: 0;
+  transition: background 0.2s, transform 0.15s;
 }
 
-.button:hover:not(:disabled) {
+.button:hover {
   background: #e0eaff;
   transform: translateY(-1px);
 }
 
-.button:disabled {
-  opacity: 0.65;
-  cursor: not-allowed;
-  transform: none;
-}
-
-/* Spinner */
-.spinner {
-  display: inline-block;
-  width: 1rem;
-  height: 1rem;
-  border: 2px solid rgba(26, 43, 74, 0.3);
-  border-top-color: #1a2b4a;
-  border-radius: 50%;
-  animation: spin 0.7s linear infinite;
-  flex-shrink: 0;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* Error */
-.errorMsg {
-  color: #fca5a5;
+.buttonSecondary {
+  margin-top: 1rem;
+  padding: 0.5rem 1.25rem;
   font-size: 0.875rem;
-  margin: 0;
-  text-align: left;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 0.5rem;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.buttonSecondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
 }
 
 /* Success state */
@@ -227,12 +181,8 @@
   border: 0;
 }
 
-/* Responsive: stack on narrow screens */
+/* Responsive: full-width button on narrow screens */
 @media (max-width: 480px) {
-  .inputRow {
-    flex-direction: column;
-  }
-
   .button {
     width: 100%;
     justify-content: center;
