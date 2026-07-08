@@ -36,6 +36,14 @@ items.forEach((item, i) => {
 // then delete the unused branch (and its styles) once a decision is made.
 const NAV_MODE: 'click' | 'hover' = 'hover';
 
+// Toggle the content-type filter on/off for demos.
+const FILTER_MODE: 'off' | 'on' = 'on';
+
+// Toggle which filter control style renders when FILTER_MODE is 'on'.
+const FILTER_STYLE: 'pills' | 'dropdown' | 'segmented' = 'segmented';
+
+const FILTER_OPTIONS: Array<'All' | FeaturedTag> = ['All', ...FEATURED_TAGS];
+
 const resolveImage = (item: FeaturedItem) =>
   item.image ?? TAG_DEFAULT_IMAGE[item.tag] ?? FALLBACK_IMAGE;
 
@@ -61,16 +69,27 @@ export default function FeaturedCarousel(): JSX.Element {
   const touchX = useRef(0);
   const [perView, setPerView] = useState(3);
   const [page, setPage] = useState(0);
+  const [activeTag, setActiveTag] = useState<'All' | FeaturedTag>('All');
+
+  const visibleItems =
+    FILTER_MODE === 'on' && activeTag !== 'All'
+      ? items.filter((item) => item.tag === activeTag)
+      : items;
 
   const step = Math.max(1, perView - 1);
-  const pageCount = Math.max(1, Math.ceil((items.length - perView) / step) + 1);
-  const startIndex = Math.min(page * step, Math.max(0, items.length - perView));
+  const pageCount = Math.max(1, Math.ceil((visibleItems.length - perView) / step) + 1);
+  const startIndex = Math.min(page * step, Math.max(0, visibleItems.length - perView));
   const endIndex = startIndex + perView - 1;
   const atStart = page === 0;
   const atEnd = page >= pageCount - 1;
 
   const goPrev = () => setPage((p) => Math.max(0, p - 1));
   const goNext = () => setPage((p) => Math.min(pageCount - 1, p + 1));
+
+  const selectTag = (tag: 'All' | FeaturedTag) => {
+    setActiveTag(tag);
+    setPage(0);
+  };
 
   // Keep perView in sync with the viewport width (matches the CSS breakpoints).
   useEffect(() => {
@@ -104,7 +123,7 @@ export default function FeaturedCarousel(): JSX.Element {
     reposition();
     window.addEventListener('resize', reposition);
     return () => window.removeEventListener('resize', reposition);
-  }, [startIndex, perView]);
+  }, [startIndex, perView, visibleItems.length]);
 
   return (
     <section className={styles.carousel}>
@@ -137,6 +156,49 @@ export default function FeaturedCarousel(): JSX.Element {
           </div>
         </div>
 
+        {FILTER_MODE === 'on' && (
+          <div className={styles.filterBar} role="group" aria-label="Filter by content type">
+            {FILTER_STYLE === 'pills' &&
+              FILTER_OPTIONS.map((tag) => (
+                <button
+                  key={tag}
+                  type="button"
+                  className={clsx(styles.filterPill, activeTag === tag && styles.filterPillActive)}
+                  aria-pressed={activeTag === tag}
+                  onClick={() => selectTag(tag)}>
+                  {tag}
+                </button>
+              ))}
+            {FILTER_STYLE === 'segmented' && (
+              <div className={styles.segmented}>
+                {FILTER_OPTIONS.map((tag) => (
+                  <button
+                    key={tag}
+                    type="button"
+                    className={clsx(styles.segment, activeTag === tag && styles.segmentActive)}
+                    aria-pressed={activeTag === tag}
+                    onClick={() => selectTag(tag)}>
+                    {tag}
+                  </button>
+                ))}
+              </div>
+            )}
+            {FILTER_STYLE === 'dropdown' && (
+              <select
+                className={styles.filterDropdown}
+                aria-label="Filter by content type"
+                value={activeTag}
+                onChange={(e) => selectTag(e.target.value as 'All' | FeaturedTag)}>
+                {FILTER_OPTIONS.map((tag) => (
+                  <option key={tag} value={tag}>
+                    {tag}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
+        )}
+
         <div
           className={styles.viewport}
           ref={viewportRef}
@@ -162,7 +224,7 @@ export default function FeaturedCarousel(): JSX.Element {
             else if (dx > 40) goPrev();
           }}>
           <ul className={styles.track} ref={trackRef}>
-            {items.map((item, i) => {
+            {visibleItems.map((item, i) => {
               const videoId = item.tag === 'Video' ? getYouTubeId(item.href) : null;
               // withBaseUrl no-ops on URLs that already have a protocol (e.g. the
               // YouTube thumbnail), so it's safe to apply to every image here.
@@ -179,7 +241,7 @@ export default function FeaturedCarousel(): JSX.Element {
                   key={item.href + i}
                   aria-hidden={hidden || undefined}
                   aria-roledescription="slide"
-                  aria-label={`${i + 1} of ${items.length}`}>
+                  aria-label={`${i + 1} of ${visibleItems.length}`}>
                   <Link
                     className={clsx('card', styles.card)}
                     to={item.href}
