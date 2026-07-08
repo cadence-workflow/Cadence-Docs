@@ -7,24 +7,39 @@ import Heading from '@theme/Heading';
 
 import styles from './index.module.css';
 
+// Toggle to preview each hero design locally, then delete the unused
+// branch (and its styles) once a variant is chosen.
+const HERO_VARIANT: 'original' | 'compact' = 'compact';
+
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
+
+  if (HERO_VARIANT === 'original') {
+    return (
+      <header className={clsx('hero hero--primary', styles.heroBanner, styles.heroOriginal)}>
+        <div className="container">
+          <Heading as="h1" className="hero__title">
+            {siteConfig.title}
+          </Heading>
+          <p className="hero__subtitle">{siteConfig.tagline}</p>
+          <Link href="/docs/get-started" className="button button--secondary button--lg">
+            🔬 Get Started
+          </Link>
+        </div>
+      </header>
+    );
+  }
+
   return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
+    <header className={clsx('hero hero--primary', styles.heroBanner, styles.heroCompact)}>
       <div className="container">
-        <Heading as="h1" className="hero__title">
+        <Heading as="h1" className={clsx('hero__title', styles.heroCompactTitle)}>
           {siteConfig.title}
         </Heading>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
-        <div className={styles.buttons}>
-          {/* <Link className="button button--secondary button--lg" to="docs/get-started">
-            Get Started - 5min ⏱️
-          </Link> */}
-
-          <Link href="/docs/get-started" className="button button--secondary  button--lg">🔬 Get Started</Link>
-          &nbsp;&nbsp;
-          {/* <Link href="/docs" className="button button--secondary button--lg">📚 Documentation</Link> */}
-        </div>
+        <p className={clsx('hero__subtitle', styles.heroCompactSubtitle)}>{siteConfig.tagline}</p>
+        <Link href="/faq/cadence-faq" className="button button--secondary button--sm">
+          What is Cadence?
+        </Link>
       </div>
     </header>
   );
@@ -36,6 +51,7 @@ export default function Home(): JSX.Element {
     <Layout
       title={`${siteConfig.title}`}
       description="Cadence is an open-source workflow orchestration engine that simplifies building scalable, reliable, and resilient distributed applications. Explore our platform for advanced workflow management, comprehensive documentation, and community-driven support.">
+      <HomepageHeader />
       <main>
         <FeaturedCarousel />
       </main>
