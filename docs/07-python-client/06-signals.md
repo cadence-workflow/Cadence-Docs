@@ -12,7 +12,7 @@ permalink: /docs/python-client/signals
 
 # Signals
 
-Signals are one-way messages sent to a running workflow. They can carry arguments and can mutate workflow state.
+Signals are one-way messages sent to a running workflow. They can carry arguments and can mutate workflow state. For a deeper overview, see the [Signal Handling in the Cadence Python Client](https://cadenceworkflow.io/blog/2026/04/28/2026-04-28-python-client-signal/python-client-signal) blog post.
 
 ## Defining a signal handler
 
