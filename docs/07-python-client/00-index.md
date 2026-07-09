@@ -20,7 +20,7 @@ The Cadence Python client is an async Python SDK for building workflows and acti
 ## Installation
 
 ```bash
-pip install cadence-client
+pip install cadence-python-client
 ```
 
 ## Packages

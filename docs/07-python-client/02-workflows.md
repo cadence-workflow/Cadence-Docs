@@ -87,16 +87,16 @@ class StatusWorkflow:
 
 ## Workflow info
 
-Inside a workflow, use `workflow.WorkflowContext.get().info` to access the current workflow's metadata:
+Inside a workflow, use `workflow.WorkflowContext.get().info()` to access the current workflow's metadata:
 
 ```python
 from cadence.workflow import WorkflowContext
 
 ctx = WorkflowContext.get()
-print(ctx.info.workflow_id)
-print(ctx.info.workflow_run_id)
-print(ctx.info.workflow_domain)
-print(ctx.info.workflow_task_list)
+print(ctx.info().workflow_id)
+print(ctx.info().workflow_run_id)
+print(ctx.info().workflow_domain)
+print(ctx.info().workflow_task_list)
 ```
 
 ## Initialization
