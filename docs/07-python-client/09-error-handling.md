@@ -79,7 +79,7 @@ except ChildWorkflowExecutionTerminated:
     ...
 ```
 
-All five are subclasses of `ChildWorkflowError` -- catch that base class if you want a single handler for any child workflow lifecycle error.
+All five are subclasses of `ChildWorkflowError`, so you can catch that base class if you want a single handler for any child workflow lifecycle error.
 
 ## Signal failures
 
@@ -126,7 +126,7 @@ class LongWorkflow:
 | `ChildWorkflowError` | Base class for all five child workflow lifecycle errors above |
 | `SignalExternalWorkflowFailed` | Signal delivery to an external workflow failed |
 | `SignalFailure` | Internal signal routing failure |
-| `ContinueAsNewError` | Raised internally by `workflow.continue_as_new()` -- do not catch |
+| `ContinueAsNewError` | Raised internally by `workflow.continue_as_new()`. Do not catch. |
 | `CadenceRpcError` | gRPC-level error from the Cadence server (client-side code) |
 
 Import from `cadence.error`:
