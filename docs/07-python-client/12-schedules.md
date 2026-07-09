@@ -15,13 +15,18 @@ permalink: /docs/python-client/schedules
 
 The Python client exposes schedule management through methods on `Client`. For a full explanation of overlap policies, backfill, catch-up, and when to use Schedules over `cron_schedule`, see the [Schedules concept page](/docs/concepts/schedules).
 
-Schedule operations use protobuf types from `cadence.api.v1.schedule_pb2`. Duration fields require a protobuf `Duration` object and timestamp fields require a protobuf `Timestamp` object -- use the converters below:
+Schedule operations use protobuf types from `cadence.api.v1.schedule_pb2`. Duration and Timestamp fields require protobuf message objects -- use these helpers throughout your code:
 
 ```python
 from datetime import timedelta
 import datetime
-from google.protobuf.duration import from_timedelta
+from google.protobuf.duration_pb2 import Duration
 from google.protobuf.timestamp_pb2 import Timestamp
+
+def _dur(td: timedelta) -> Duration:
+    d = Duration()
+    d.FromTimedelta(td)
+    return d
 
 def _ts(dt: datetime.datetime) -> Timestamp:
     t = Timestamp()
@@ -56,8 +61,8 @@ await client.create_schedule(
             workflow_type=common_pb2.WorkflowType(name="RunETL"),
             task_list=tasklist_pb2.TaskList(name="etl-workers"),
             workflow_id_prefix="daily-etl-",
-            execution_start_to_close_timeout=from_timedelta(timedelta(hours=2)),
-            task_start_to_close_timeout=from_timedelta(timedelta(seconds=10)),
+            execution_start_to_close_timeout=_dur(timedelta(hours=2)),
+            task_start_to_close_timeout=_dur(timedelta(seconds=10)),
         )
     ),
     policies=schedule_pb2.SchedulePolicies(
@@ -92,7 +97,7 @@ await client.create_schedule(
 ```python
 spec=schedule_pb2.ScheduleSpec(
     cron_expression="0 0 * * *",
-    jitter=from_timedelta(timedelta(minutes=10)),  # random delay up to 10 minutes
+    jitter=_dur(timedelta(minutes=10)),  # random delay up to 10 minutes
 )
 ```
 
