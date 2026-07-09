@@ -15,7 +15,24 @@ permalink: /docs/python-client/schedules
 
 The Python client exposes schedule management through methods on `Client`. For a full explanation of overlap policies, backfill, catch-up, and when to use Schedules over `cron_schedule`, see the [Schedules concept page](/docs/concepts/schedules).
 
-Schedule operations use protobuf types from `cadence.api.v1.schedule_pb2`.
+Schedule operations use protobuf types from `cadence.api.v1.schedule_pb2`. Duration fields require a `google.protobuf.Duration` object; timestamp fields require a `google.protobuf.Timestamp` object. Use the helpers below throughout your code:
+
+```python
+from datetime import timedelta
+import datetime
+from google.protobuf.duration_pb2 import Duration
+from google.protobuf.timestamp_pb2 import Timestamp
+
+def _dur(td: timedelta) -> Duration:
+    d = Duration()
+    d.FromTimedelta(td)
+    return d
+
+def _ts(dt: datetime.datetime) -> Timestamp:
+    t = Timestamp()
+    t.FromDatetime(dt)
+    return t
+```
 
 ## Getting the client
 
@@ -32,7 +49,6 @@ async with Client(domain="my-domain", target=CADENCE_TARGET) as client:
 ## Creating a schedule
 
 ```python
-from datetime import timedelta
 from cadence.api.v1 import common_pb2, schedule_pb2, tasklist_pb2
 
 await client.create_schedule(
@@ -45,14 +61,13 @@ await client.create_schedule(
             workflow_type=common_pb2.WorkflowType(name="RunETL"),
             task_list=tasklist_pb2.TaskList(name="etl-workers"),
             workflow_id_prefix="daily-etl-",
-            execution_start_to_close_timeout=timedelta(hours=2),
-            task_start_to_close_timeout=timedelta(seconds=10),
+            execution_start_to_close_timeout=_dur(timedelta(hours=2)),
+            task_start_to_close_timeout=_dur(timedelta(seconds=10)),
         )
     ),
     policies=schedule_pb2.SchedulePolicies(
         overlap_policy=schedule_pb2.SCHEDULE_OVERLAP_POLICY_SKIP_NEW,
         catch_up_policy=schedule_pb2.SCHEDULE_CATCH_UP_POLICY_SKIP,
-        pause_on_failure=True,
     ),
 )
 ```
@@ -63,28 +78,36 @@ await client.create_schedule(
 |---|---|
 | `SCHEDULE_OVERLAP_POLICY_SKIP_NEW` (default) | Skip the new fire if a previous run is still active. |
 | `SCHEDULE_OVERLAP_POLICY_BUFFER` | Queue new fires and run them sequentially. |
-| `SCHEDULE_OVERLAP_POLICY_CONCURRENT` | Start every fire. |
+| `SCHEDULE_OVERLAP_POLICY_CONCURRENT` | Start every fire up to `concurrency_limit` concurrent runs (0 = unlimited). |
 | `SCHEDULE_OVERLAP_POLICY_CANCEL_PREVIOUS` | Cancel the active run, then start the new one. |
 | `SCHEDULE_OVERLAP_POLICY_TERMINATE_PREVIOUS` | Terminate the active run immediately, then start the new one. |
+
+### SchedulePolicies fields
+
+| Field | Description |
+|---|---|
+| `overlap_policy` | How to handle a new fire when the previous run is still active. |
+| `catch_up_policy` | What to do with missed fires when the schedule resumes after downtime or unpause. |
+| `catch_up_window` | How far back to look for missed fires. |
+| `buffer_limit` | Max number of fires to queue when using `BUFFER` overlap policy. |
+| `concurrency_limit` | Max concurrent runs when using `CONCURRENT` overlap policy (0 = unlimited). |
 
 ### Jitter
 
 ```python
 spec=schedule_pb2.ScheduleSpec(
     cron_expression="0 0 * * *",
-    jitter=timedelta(minutes=10),  # random delay up to 10 minutes
+    jitter=_dur(timedelta(minutes=10)),  # random delay up to 10 minutes
 )
 ```
 
 ### Bounded schedule window
 
 ```python
-import datetime
-
 spec=schedule_pb2.ScheduleSpec(
     cron_expression="0 9 * * 1-5",
-    start_time=datetime.datetime(2026, 7, 1, tzinfo=datetime.timezone.utc),
-    end_time=datetime.datetime(2026, 12, 31, tzinfo=datetime.timezone.utc),
+    start_time=_ts(datetime.datetime(2026, 7, 1, tzinfo=datetime.timezone.utc)),
+    end_time=_ts(datetime.datetime(2026, 12, 31, tzinfo=datetime.timezone.utc)),
 )
 ```
 
@@ -141,19 +164,21 @@ The callback receives the full describe response. Mutate any fields you want to 
 
 ## Backfill
 
+`backfill_schedule` takes Python `datetime` objects directly for `start_time` and `end_time`:
+
 ```python
 import datetime
 
 await client.backfill_schedule(
     "daily-etl",
-    start_time=datetime.datetime(2026, 6, 20, tzinfo=datetime.timezone.utc),
-    end_time=datetime.datetime(2026, 6, 23, tzinfo=datetime.timezone.utc),
+    datetime.datetime(2026, 6, 20, tzinfo=datetime.timezone.utc),
+    datetime.datetime(2026, 6, 23, tzinfo=datetime.timezone.utc),
     backfill_id="backfill-june-gap",
     overlap_policy=schedule_pb2.SCHEDULE_OVERLAP_POLICY_CONCURRENT,
 )
 ```
 
-`overlap_policy` is optional. If omitted, the backfill uses the schedule's configured overlap policy.
+`overlap_policy` is optional. If omitted, the backfill uses the schedule's configured overlap policy. `backfill_id` is optional; if omitted the server generates one.
 
 ## Listing schedules
 
