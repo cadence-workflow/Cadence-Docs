@@ -48,10 +48,16 @@ class OrderWorkflow:
 
 ## Child workflow failures
 
-A failed child workflow raises `ChildWorkflowExecutionFailed`:
+Child workflows raise different exceptions depending on how they ended:
 
 ```python
-from cadence.error import ChildWorkflowExecutionFailed, StartChildWorkflowExecutionFailed
+from cadence.error import (
+    StartChildWorkflowExecutionFailed,
+    ChildWorkflowExecutionFailed,
+    ChildWorkflowExecutionCanceled,
+    ChildWorkflowExecutionTimedOut,
+    ChildWorkflowExecutionTerminated,
+)
 
 try:
     result = await execute_child_workflow("ProcessWorkflow", str, ...)
@@ -61,7 +67,19 @@ except StartChildWorkflowExecutionFailed as e:
 except ChildWorkflowExecutionFailed as e:
     # Child started but failed during execution
     ...
+except ChildWorkflowExecutionCanceled as e:
+    # Child was cancelled (e.g. parent requested cancellation)
+    ...
+except ChildWorkflowExecutionTimedOut as e:
+    # Child exceeded its execution timeout
+    # e.timeout_type indicates which timeout fired
+    ...
+except ChildWorkflowExecutionTerminated:
+    # Child was forcibly terminated
+    ...
 ```
+
+All five are subclasses of `ChildWorkflowError` -- catch that base class if you want a single handler for any child workflow lifecycle error.
 
 ## Signal failures
 
@@ -102,6 +120,10 @@ class LongWorkflow:
 | `WorkflowFailure` | A workflow execution failed |
 | `StartChildWorkflowExecutionFailed` | Child workflow could not be started |
 | `ChildWorkflowExecutionFailed` | Child workflow started but failed |
+| `ChildWorkflowExecutionCanceled` | Child workflow was cancelled |
+| `ChildWorkflowExecutionTimedOut` | Child workflow exceeded its execution timeout |
+| `ChildWorkflowExecutionTerminated` | Child workflow was forcibly terminated |
+| `ChildWorkflowError` | Base class for all five child workflow lifecycle errors above |
 | `SignalExternalWorkflowFailed` | Signal delivery to an external workflow failed |
 | `SignalFailure` | Internal signal routing failure |
 | `ContinueAsNewError` | Raised internally by `workflow.continue_as_new()` -- do not catch |
