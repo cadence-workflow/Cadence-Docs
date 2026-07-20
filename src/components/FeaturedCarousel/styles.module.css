@@ -153,27 +153,6 @@
   border-radius: var(--ifm-card-border-radius, 12px);
 }
 
-.hotspot {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 12%;
-  z-index: 1;
-}
-
-.hotspotLeft { left: 0; }
-.hotspotRight { right: 0; }
-
-.hotspotDisabled {
-  pointer-events: none;
-}
-
-@media (hover: none) {
-  .hotspot {
-    display: none;
-  }
-}
-
 @media (max-width: 996px) {
   .viewport {
     --per-view: 2;
