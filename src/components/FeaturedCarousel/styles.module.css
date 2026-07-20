@@ -139,6 +139,15 @@
   overflow: hidden;
 }
 
+.emptyState {
+  margin: 0;
+  padding: 2.5rem 1rem;
+  text-align: center;
+  color: var(--ifm-color-emphasis-700);
+  border: 1px dashed var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-card-border-radius, 12px);
+}
+
 .hotspot {
   position: absolute;
   top: 0;

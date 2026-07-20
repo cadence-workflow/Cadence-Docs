@@ -42,7 +42,12 @@ const FILTER_MODE: 'off' | 'on' = 'on';
 // Toggle which filter control style renders when FILTER_MODE is 'on'.
 const FILTER_STYLE: 'pills' | 'dropdown' | 'segmented' = 'segmented';
 
-const FILTER_OPTIONS: Array<'All' | FeaturedTag> = ['All', ...FEATURED_TAGS];
+// Only offer tags that at least one item actually uses, so a filter button
+// never leads to an empty carousel.
+const FILTER_OPTIONS: Array<'All' | FeaturedTag> = [
+  'All',
+  ...FEATURED_TAGS.filter((tag) => items.some((item) => item.tag === tag)),
+];
 
 const resolveImage = (item: FeaturedItem) =>
   item.image ?? TAG_DEFAULT_IMAGE[item.tag] ?? FALLBACK_IMAGE;
@@ -199,6 +204,9 @@ export default function FeaturedCarousel(): JSX.Element {
           </div>
         )}
 
+        {visibleItems.length === 0 ? (
+          <p className={styles.emptyState}>No featured items match this filter yet.</p>
+        ) : (
         <div
           className={styles.viewport}
           ref={viewportRef}
@@ -293,20 +301,23 @@ export default function FeaturedCarousel(): JSX.Element {
             </>
           )}
         </div>
+        )}
 
-        <div className={styles.dots} role="tablist" aria-label="Choose page">
-          {Array.from({length: pageCount}).map((_, p) => (
-            <button
-              key={p}
-              type="button"
-              role="tab"
-              aria-selected={p === page}
-              aria-label={`Go to page ${p + 1} of ${pageCount}`}
-              className={clsx(styles.dot, p === page && styles.dotActive)}
-              onClick={() => setPage(p)}
-            />
-          ))}
-        </div>
+        {visibleItems.length > 0 && (
+          <div className={styles.dots} role="tablist" aria-label="Choose page">
+            {Array.from({length: pageCount}).map((_, p) => (
+              <button
+                key={p}
+                type="button"
+                role="tab"
+                aria-selected={p === page}
+                aria-label={`Go to page ${p + 1} of ${pageCount}`}
+                className={clsx(styles.dot, p === page && styles.dotActive)}
+                onClick={() => setPage(p)}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
