@@ -7,28 +7,8 @@ import Heading from '@theme/Heading';
 
 import styles from './index.module.css';
 
-// Toggle to preview each hero design locally, then delete the unused
-// branch (and its styles) once a variant is chosen.
-const HERO_VARIANT: 'original' | 'compact' = 'compact';
-
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
-
-  if (HERO_VARIANT === 'original') {
-    return (
-      <header className={clsx('hero hero--primary', styles.heroBanner, styles.heroOriginal)}>
-        <div className="container">
-          <Heading as="h1" className="hero__title">
-            {siteConfig.title}
-          </Heading>
-          <p className="hero__subtitle">{siteConfig.tagline}</p>
-          <Link href="/docs/get-started" className="button button--secondary button--lg">
-            🔬 Get Started
-          </Link>
-        </div>
-      </header>
-    );
-  }
 
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner, styles.heroCompact)}>
@@ -38,7 +18,7 @@ function HomepageHeader() {
         </Heading>
         <p className={clsx('hero__subtitle', styles.heroCompactSubtitle)}>{siteConfig.tagline}</p>
         <Link href="/faq/cadence-faq" className={clsx('button button--secondary button--sm', styles.heroCompactCta)}>
-         🔬 What is Cadence?
+         🔬 Learn more about Cadence
         </Link>
       </div>
     </header>

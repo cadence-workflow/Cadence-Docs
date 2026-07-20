@@ -8,26 +8,10 @@
   background: linear-gradient(90deg, #276ef1 05%, #FFF8E7 100%);
 }
 
-.hero.heroBanner .button--secondary.button--lg,
 .hero.heroBanner .button--secondary.button--sm {
   background-color: black;
 }
 
-/* Original: full-size hero, matches pre-refactor sizing.
-   Desktop padding is spelled out explicitly (matching Infima's .hero
-   default) rather than left implicit, so this class doesn't silently
-   depend on the theme's default padding never changing. */
-.heroOriginal {
-  padding: 4rem 2rem;
-}
-
-@media screen and (max-width: 996px) {
-  .heroOriginal {
-    padding: 2rem;
-  }
-}
-
-/* Compact: shrunken stacked hero, ~1/3 the height of the original */
 .heroCompact {
   padding: 1.25rem 1rem;
 }
