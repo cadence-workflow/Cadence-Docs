@@ -18,7 +18,7 @@ function HomepageHeader() {
         </Heading>
         <p className={clsx('hero__subtitle', styles.heroCompactSubtitle)}>{siteConfig.tagline}</p>
         <Link href="/faq/cadence-faq" className={clsx('button button--secondary button--sm', styles.heroCompactCta)}>
-         🔬 Learn more about Cadence
+         🔬 What is Cadence?
         </Link>
       </div>
     </header>
