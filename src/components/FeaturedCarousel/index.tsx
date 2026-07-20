@@ -44,6 +44,17 @@ const FILTER_MODE: 'off' | 'on' = 'on';
 // resting time per page after the previous slide settles.
 const HOVER_PAGE_INTERVAL_MS = 1500;
 
+// Trackpad two-finger horizontal swipes arrive as a burst of `wheel` events
+// with small deltaX values, not a single gesture event. These tune the
+// "snap one page per swipe" feel (rather than continuous scroll-following):
+// accumulate deltaX until it crosses WHEEL_PAGE_THRESHOLD, then pause for
+// WHEEL_COOLDOWN_MS so the rest of the same physical swipe doesn't trigger
+// another page. WHEEL_GESTURE_RESET_MS treats a pause in wheel events as the
+// gesture ending, so the next swipe starts its accumulator from zero.
+const WHEEL_PAGE_THRESHOLD = 60;
+const WHEEL_GESTURE_RESET_MS = 150;
+const WHEEL_COOLDOWN_MS = 400;
+
 // Toggle which filter control style renders when FILTER_MODE is 'on'.
 const FILTER_STYLE: 'pills' | 'dropdown' | 'segmented' = 'segmented';
 
@@ -136,6 +147,62 @@ export default function FeaturedCarousel(): JSX.Element {
     setActiveTag(tag);
     setPage(0);
   };
+
+  // "Latest ref" pattern so the native wheel listener below (attached via
+  // effect, not JSX) always calls the current goPrev/goNext -- which close
+  // over the current pageCount -- without needing to re-attach the listener
+  // on every page or filter change.
+  const goPrevRef = useRef(goPrev);
+  const goNextRef = useRef(goNext);
+  goPrevRef.current = goPrev;
+  goNextRef.current = goNext;
+
+  // Two-finger trackpad swipes are delivered as `wheel` events (not touch
+  // events), so they need their own handler alongside the touch-swipe one
+  // below. Attached as a native, non-passive listener (rather than JSX
+  // onWheel) so preventDefault() reliably suppresses the browser's own
+  // horizontal page scroll / back-forward navigation gesture.
+  useEffect(() => {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+
+    let deltaAcc = 0;
+    let cooldown = false;
+    let resetTimer: number | null = null;
+    let cooldownTimer: number | null = null;
+
+    const onWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+      e.preventDefault();
+      if (cooldown) return;
+
+      if (resetTimer !== null) window.clearTimeout(resetTimer);
+      resetTimer = window.setTimeout(() => {
+        deltaAcc = 0;
+      }, WHEEL_GESTURE_RESET_MS);
+
+      deltaAcc += e.deltaX;
+      if (Math.abs(deltaAcc) >= WHEEL_PAGE_THRESHOLD) {
+        if (deltaAcc > 0) goNextRef.current();
+        else goPrevRef.current();
+        deltaAcc = 0;
+        cooldown = true;
+        cooldownTimer = window.setTimeout(() => {
+          cooldown = false;
+        }, WHEEL_COOLDOWN_MS);
+      }
+    };
+
+    viewport.addEventListener('wheel', onWheel, {passive: false});
+    return () => {
+      viewport.removeEventListener('wheel', onWheel);
+      if (resetTimer !== null) window.clearTimeout(resetTimer);
+      if (cooldownTimer !== null) window.clearTimeout(cooldownTimer);
+    };
+    // visibleItems.length === 0 toggles the viewport's own conditional
+    // rendering (see the ternary below), which unmounts/remounts this ref's
+    // DOM node -- re-run the effect then to reattach to the new element.
+  }, [visibleItems.length === 0]);
 
   // Keep perView in sync with the viewport width (matches the CSS breakpoints).
   useEffect(() => {

@@ -137,6 +137,11 @@
   --peek: 0.28;
   position: relative;
   overflow: hidden;
+  /* Complements the wheel handler's preventDefault(): discourage the browser
+     from treating a two-finger horizontal swipe here as page scroll or
+     back/forward navigation, while still allowing normal vertical scroll. */
+  touch-action: pan-y;
+  overscroll-behavior-x: contain;
 }
 
 .emptyState {
