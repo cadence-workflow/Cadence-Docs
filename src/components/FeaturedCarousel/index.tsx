@@ -39,6 +39,11 @@ const NAV_MODE: 'click' | 'hover' = 'hover';
 // Toggle the content-type filter on/off for demos.
 const FILTER_MODE: 'off' | 'on' = 'on';
 
+// How often the hover hotspots advance a page while the pointer rests on
+// them. The .track slide transition takes 350ms, so this leaves ~1150ms of
+// resting time per page after the previous slide settles.
+const HOVER_PAGE_INTERVAL_MS = 1500;
+
 // Toggle which filter control style renders when FILTER_MODE is 'on'.
 const FILTER_STYLE: 'pills' | 'dropdown' | 'segmented' = 'segmented';
 
@@ -90,6 +95,42 @@ export default function FeaturedCarousel(): JSX.Element {
 
   const goPrev = () => setPage((p) => Math.max(0, p - 1));
   const goNext = () => setPage((p) => Math.min(pageCount - 1, p + 1));
+
+  // Hover hotspots page continuously while the pointer rests over them, so
+  // resting on the edge pages through the whole carousel instead of stopping
+  // after a single step. Refs (rather than state) track the latest
+  // atStart/atEnd so the running interval's tick can see up-to-date bounds
+  // without restarting the interval on every page change.
+  const hoverIntervalRef = useRef<number | null>(null);
+  const atStartRef = useRef(atStart);
+  const atEndRef = useRef(atEnd);
+  useEffect(() => {
+    atStartRef.current = atStart;
+    atEndRef.current = atEnd;
+  }, [atStart, atEnd]);
+
+  const stopHoverPaging = () => {
+    if (hoverIntervalRef.current !== null) {
+      window.clearInterval(hoverIntervalRef.current);
+      hoverIntervalRef.current = null;
+    }
+  };
+  useEffect(() => stopHoverPaging, []);
+
+  const startHoverPaging = (direction: 'prev' | 'next') => {
+    stopHoverPaging();
+    const step = direction === 'prev' ? goPrev : goNext;
+    const blocked = () => (direction === 'prev' ? atStartRef.current : atEndRef.current);
+    if (blocked()) return;
+    step();
+    hoverIntervalRef.current = window.setInterval(() => {
+      if (blocked()) {
+        stopHoverPaging();
+        return;
+      }
+      step();
+    }, HOVER_PAGE_INTERVAL_MS);
+  };
 
   const selectTag = (tag: 'All' | FeaturedTag) => {
     setActiveTag(tag);
@@ -291,12 +332,14 @@ export default function FeaturedCarousel(): JSX.Element {
               <div
                 className={clsx(styles.hotspot, styles.hotspotLeft, atStart && styles.hotspotDisabled)}
                 aria-hidden="true"
-                onMouseEnter={() => !atStart && goPrev()}
+                onMouseEnter={() => startHoverPaging('prev')}
+                onMouseLeave={stopHoverPaging}
               />
               <div
                 className={clsx(styles.hotspot, styles.hotspotRight, atEnd && styles.hotspotDisabled)}
                 aria-hidden="true"
-                onMouseEnter={() => !atEnd && goNext()}
+                onMouseEnter={() => startHoverPaging('next')}
+                onMouseLeave={stopHoverPaging}
               />
             </>
           )}
