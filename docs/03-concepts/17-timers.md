@@ -14,7 +14,7 @@ permalink: /docs/concepts/timers
 
 Cadence timers allow :workflow:workflows: to wait without holding a :worker:worker: thread or process. The wait is durable: after the timer is created, a worker can restart or be removed from cache, and Cadence resumes the workflow when the timer fires.
 
-Timers are useful for delays, reminders, deadlines, and waiting for a :signal:signal: or timeout.
+Timers are useful for delays, reminders, deadlines, and waiting for a signal or timeout.
 
 ## Timer tasks
 
