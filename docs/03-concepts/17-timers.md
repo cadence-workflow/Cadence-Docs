@@ -29,11 +29,19 @@ When workflow code starts a timer:
 
 Timer tasks are also used for workflow, decision, and activity timeouts; activity retries; and workflow backoff. These service-managed timer tasks do not appear as `TimerStarted` and `TimerFired` events in workflow history.
 
-Canceling a pending timer records `TimerCanceled`. If cancellation races with firing, the history determines the result.
+## Cancel a timer
+
+A user timer can be canceled while it is pending. The workflow issues a `CancelTimer` decision for the timer ID used to start it. Cadence records `TimerCanceled` when the cancellation succeeds. If the timer has already fired or is no longer pending, Cadence records `CancelTimerFailed` instead.
+
+Cancellation and expiry can race. The event history determines which outcome won: a `TimerFired` event means the timer fired; a `TimerCanceled` event means it was canceled. Write workflow code to handle either outcome.
 
 ## Use timers in workflow code
 
-Use the Cadence workflow API instead of the language runtime's sleep or clock APIs. Native sleeps are not durable or replay-safe.
+Use the Cadence workflow API instead of the language runtime's sleep or clock APIs. Native sleeps run only in the worker process; Cadence does not record them in workflow history. If the worker fails, is evicted from cache, or the workflow is replayed on another worker, Cadence cannot resume the original sleep.
+
+Native sleeps can also cause nondeterminism when workflow logic depends on whether the sleep finishes before a signal, cancellation, or another event. That race can resolve differently during replay and cause the workflow to make decisions that do not match its history.
+
+Cadence timer APIs record the timer outcome in history. On replay, Cadence uses that recorded outcome rather than the new worker's clock, making the wait durable and replay-safe.
 
 | Client | Simple wait | Timer for composition | Avoid in workflow code |
 | --- | --- | --- | --- |
