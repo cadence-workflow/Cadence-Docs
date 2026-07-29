@@ -31,9 +31,22 @@ Timer tasks are also used for workflow, decision, and activity timeouts; activit
 
 ## Cancel a timer
 
-A user timer can be canceled while it is pending. The workflow issues a `CancelTimer` decision for the timer ID used to start it. Cadence records `TimerCanceled` when the cancellation succeeds. If the timer has already fired or is no longer pending, Cadence records `CancelTimerFailed` instead.
+To cancel a pending timer, create it in a cancellable workflow context, then cancel that context. Cadence records a `CancelTimer` decision and, when the cancellation succeeds, a `TimerCanceled` event.
 
-Cancellation and expiry can race. The event history determines which outcome won: a `TimerFired` event means the timer fired; a `TimerCanceled` event means it was canceled. Write workflow code to handle either outcome.
+For example, in Go:
+
+```go
+timerCtx, cancelTimer := workflow.WithCancel(ctx)
+timer := workflow.NewTimer(timerCtx, time.Hour)
+
+// Cancel the pending timer.
+cancelTimer()
+
+// The timer future now completes with a cancellation error.
+err := timer.Get(ctx, nil)
+```
+
+If the timer has already fired or is no longer pending, Cadence records `CancelTimerFailed` instead. Cancellation and expiry can race: a `TimerFired` event means the timer fired, while a `TimerCanceled` event means it was canceled. Write workflow code to handle either outcome.
 
 ## Use timers in workflow code
 
