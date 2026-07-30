@@ -263,15 +263,6 @@ const config: Config = {
     },
   ],
   themeConfig: {
-    announcementBar: {
-      id: 'survey_2025',
-      content:
-        'We are looking to hear your feedback, please fill out the <a target="_blank" rel="noopener noreferrer" href="https://uber.surveymonkey.com/r/CY7FTZ2">Cadence 2025 OSS community survey</a>',
-      backgroundColor: '#fafbfc',
-      textColor: '#091E42',
-      isCloseable: true,
-    },
-
     // Site-wide <meta> only. Do not set description / og:title / og:description / og:url / twitter:*
     // here — they duplicate every page and often win over DocItem Layout PageMetadata in crawlers.
     // Per-page: docs/blog frontmatter `description` + `keywords`; homepage uses Layout `description` in index.tsx.
