@@ -9,6 +9,12 @@
 
 #
 
+- title: "Batch Actions UI: Manage Thousands of Workflows at Once"
+  description: Cadence Web now supports Batch Actions, letting operators terminate, signal, or cancel entire groups of workflows directly from the browser.
+  href: /blog/2026/07/07/2026-07-07-batch-actions-ui/batch-actions-ui
+  tag: Blog
+  cta: Read post
+
 - title: "Introducing Cadence Schedules"
   description: Cadence Schedules bring first-class recurring workflow execution to the platform with overlap policies, backfill, pause/unpause, and full observability, all without touching your workflow code.
   href: /blog/2026/06/23/cadence-schedules
