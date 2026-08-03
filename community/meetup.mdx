@@ -13,41 +13,110 @@ keywords:
 permalink: /community/meetup
 ---
 
+import MailingListSignup from '@site/src/components/MailingListSignup';
+
 # Community Meetups
 
-The Cadence community meetup is a recurring gathering for users, contributors, and maintainers. Each session includes demos, open Q&A, and updates from the core team.
+The Cadence community meetup is a live, recurring session where users, contributors, and maintainers come together to share what they're building, ask hard questions, and hear directly from the core team. Every session includes demos, open Q&A, and maintainer updates.
 
-Whether you are evaluating Cadence, running it in production, or contributing to the project, the meetup is the fastest way to get answers, see what others are building, and connect directly with maintainers.
+Whether you're evaluating Cadence, running it in production, or ready to contribute, the meetup is the fastest path to real answers and real people.
 
-## Upcoming meetup
+## Next session
 
-Details for the next session will be posted here. To get notified:
+:::info Restarting Cadence developer meetups
+We're bringing back regular Cadence developer meetups, starting in the **Bay Area** in **August**. Subscribe below to get the date, location, and agenda when they're confirmed. Past recordings are on [YouTube](https://www.youtube.com/@cadenceworkflow) while you wait.
+:::
 
-- Join the [**#cadence-users** channel on CNCF Slack](https://communityinviter.com/apps/cloud-native/cncf); meetup announcements are posted there first
-- Watch the [cadence-workflow GitHub org](https://github.com/cadence-workflow) for event announcements
+<MailingListSignup
+  id="stay-updated-on-cadence"
+  badge="🗓 August 2026 · Bay Area"
+  headline="Get notified for the next meetup"
+  tagline="Subscribe to the CNCF Cadence Community list and be the first to hear when the date drops."
+/>
 
 ## What to expect
 
-- **Demos**: community members and maintainers share new features, integrations, and real-world use cases
-- **Open Q&A**: bring your questions about Cadence architecture, operations, SDKs, or migration
-- **Maintainer updates**: what the core team is working on and what is coming next
-- **New contributor onboarding**: not sure how to start contributing? The meetup is a good first step
+| Session segment | What happens |
+|---|---|
+| **Demos** | Community members and maintainers show new features, integrations, and real-world use cases |
+| **Open Q&A** | Bring your questions about Cadence architecture, operations, SDKs, or migration |
+| **Maintainer updates** | What the core team is shipping next |
+| **New contributor onboarding** | Not sure how to start contributing? The meetup is a good first step |
+
+## Stay notified
+
+<div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(210px, 1fr))', gap:'1rem', margin:'1.5rem 0 2rem'}}>
+
+  <div className="card" style={{padding:'1.25rem'}}>
+    <div style={{fontSize:'1.5rem', marginBottom:'0.5rem'}}>📧</div>
+    <strong>Email</strong>
+    <p style={{fontSize:'0.875rem', color:'var(--ifm-color-emphasis-700)', margin:'0.4rem 0 0.8rem', lineHeight:1.5}}>
+      Get meetup announcements in your inbox via the CNCF Cadence Community mailing list.
+    </p>
+    <a href="#stay-updated-on-cadence" className="button button--primary button--sm">Subscribe above ↑</a>
+  </div>
+
+  <div className="card" style={{padding:'1.25rem'}}>
+    <div style={{fontSize:'1.5rem', marginBottom:'0.5rem'}}>💬</div>
+    <strong>Slack</strong>
+    <p style={{fontSize:'0.875rem', color:'var(--ifm-color-emphasis-700)', margin:'0.4rem 0 0.8rem', lineHeight:1.5}}>
+      Join <strong>#cadence-users</strong> on CNCF Slack — announcements land here first.
+    </p>
+    <a href="https://communityinviter.com/apps/cloud-native/cncf" target="_blank" rel="noopener noreferrer" className="button button--secondary button--sm">Join Slack ↗</a>
+  </div>
+
+  <div className="card" style={{padding:'1.25rem'}}>
+    <div style={{fontSize:'1.5rem', marginBottom:'0.5rem'}}>🐙</div>
+    <strong>GitHub</strong>
+    <p style={{fontSize:'0.875rem', color:'var(--ifm-color-emphasis-700)', margin:'0.4rem 0 0.8rem', lineHeight:1.5}}>
+      Watch the cadence-workflow GitHub org for event and release announcements.
+    </p>
+    <a href="https://github.com/cadence-workflow" target="_blank" rel="noopener noreferrer" className="button button--secondary button--sm">Watch on GitHub ↗</a>
+  </div>
+
+</div>
 
 ## Past sessions
 
-Past meetup recordings are published on the [Cadence YouTube channel](https://www.youtube.com/@cadenceworkflow). A few recent highlights:
+Recordings are published on the [Cadence YouTube channel](https://www.youtube.com/@cadenceworkflow) after each session. Recent highlights:
 
 - [Cadence in 2025: Year in Review](https://www.youtube.com/watch?v=UmCFfEpAqNg)
 - [Cadence at Uber: Scale Overview](https://www.youtube.com/watch?v=-qj_Lb_basY)
 
 ## Get involved
 
-| Channel | Link |
-|---|---|
-| CNCF Slack `#cadence-users` | [Join](https://communityinviter.com/apps/cloud-native/cncf) |
-| Discord | [discord.gg/ynvjm2Et5](https://discord.gg/ynvjm2Et5) |
-| GitHub Discussions | [cadence-workflow/cadence/discussions](https://github.com/cadence-workflow/cadence/discussions) |
-| Stack Overflow | [`cadence-workflow` tag](https://stackoverflow.com/questions/tagged/cadence-workflow) |
-| Reddit | [r/cadenceworkflow](https://www.reddit.com/r/cadenceworkflow/) |
+<div style={{display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(185px, 1fr))', gap:'1rem', margin:'1.5rem 0'}}>
+
+  <a href="https://discord.gg/ynvjm2Et5" target="_blank" rel="noopener noreferrer" className="card" style={{padding:'1rem', textDecoration:'none', color:'inherit', display:'block'}}>
+    <div style={{fontSize:'1.25rem', marginBottom:'0.35rem'}}>🎮</div>
+    <strong style={{display:'block', marginBottom:'0.2rem'}}>Discord</strong>
+    <span style={{fontSize:'0.8rem', color:'var(--ifm-color-emphasis-600)'}}>discord.gg/ynvjm2Et5</span>
+  </a>
+
+  <a href="https://github.com/cadence-workflow/cadence/discussions" target="_blank" rel="noopener noreferrer" className="card" style={{padding:'1rem', textDecoration:'none', color:'inherit', display:'block'}}>
+    <div style={{fontSize:'1.25rem', marginBottom:'0.35rem'}}>🐙</div>
+    <strong style={{display:'block', marginBottom:'0.2rem'}}>GitHub Discussions</strong>
+    <span style={{fontSize:'0.8rem', color:'var(--ifm-color-emphasis-600)'}}>cadence-workflow/cadence</span>
+  </a>
+
+  <a href="https://stackoverflow.com/questions/tagged/cadence-workflow" target="_blank" rel="noopener noreferrer" className="card" style={{padding:'1rem', textDecoration:'none', color:'inherit', display:'block'}}>
+    <div style={{fontSize:'1.25rem', marginBottom:'0.35rem'}}>📚</div>
+    <strong style={{display:'block', marginBottom:'0.2rem'}}>Stack Overflow</strong>
+    <span style={{fontSize:'0.8rem', color:'var(--ifm-color-emphasis-600)'}}>cadence-workflow tag</span>
+  </a>
+
+  <a href="https://www.reddit.com/r/cadenceworkflow/" target="_blank" rel="noopener noreferrer" className="card" style={{padding:'1rem', textDecoration:'none', color:'inherit', display:'block'}}>
+    <div style={{fontSize:'1.25rem', marginBottom:'0.35rem'}}>🔗</div>
+    <strong style={{display:'block', marginBottom:'0.2rem'}}>Reddit</strong>
+    <span style={{fontSize:'0.8rem', color:'var(--ifm-color-emphasis-600)'}}>r/cadenceworkflow</span>
+  </a>
+
+  <a href="https://www.linkedin.com/company/cadenceworkflow" target="_blank" rel="noopener noreferrer" className="card" style={{padding:'1rem', textDecoration:'none', color:'inherit', display:'block'}}>
+    <div style={{fontSize:'1.25rem', marginBottom:'0.35rem'}}>💼</div>
+    <strong style={{display:'block', marginBottom:'0.2rem'}}>LinkedIn</strong>
+    <span style={{fontSize:'0.8rem', color:'var(--ifm-color-emphasis-600)'}}>/cadenceworkflow</span>
+  </a>
+
+</div>
 
 Want to present at a future meetup or propose a topic? Reach out in the `#cadence-users` Slack channel or open a [GitHub Discussion](https://github.com/cadence-workflow/cadence/discussions).
