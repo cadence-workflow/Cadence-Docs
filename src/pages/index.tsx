@@ -23,7 +23,8 @@ function HomepageHeader() {
           Orchestrate with Confidence
         </Heading>
         <p className={clsx('hero__subtitle', styles.heroCompactSubtitle)}>
-          The open-source workflow engine for durable, reliable applications. Built for tomorrow.
+          The open-source workflow engine for durable,<br />
+          reliable, and massively scalable applications built for tomorrow.
         </p>
         <div className={styles.heroCtas}>
           <Link href="/docs/get-started" className={clsx('button button--sm', styles.heroCtaPrimary)}>

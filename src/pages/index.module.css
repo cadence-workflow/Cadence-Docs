@@ -39,7 +39,7 @@
 .heroCompactSubtitle {
   font-size: 1.1rem;
   line-height: 1.4;
-  max-width: 44ch;
+  max-width: 62ch;
   margin-bottom: 1.1rem;
   opacity: 0.95;
 }
@@ -115,7 +115,9 @@
   color: #fff;
   text-decoration: underline;
   text-underline-offset: 3px;
-  margin-left: 0.25rem;
+  /* Extra separation so this quiet link reads as its own thing, set apart
+     from the two primary/secondary buttons rather than crowding them. */
+  margin-left: 1.25rem;
 }
 .heroCtaTertiary:hover {
   color: #f0f0f0;
