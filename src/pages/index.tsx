@@ -3,6 +3,7 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import Layout from '@theme/Layout';
+import Adopters from '@site/src/components/Adopters';
 import FeaturedCarousel from '@site/src/components/FeaturedCarousel';
 import Heading from '@theme/Heading';
 
@@ -24,7 +25,7 @@ function HomepageHeader() {
         </Heading>
         <p className={clsx('hero__subtitle', styles.heroCompactSubtitle)}>
           The open-source workflow engine for durable,<br />
-          reliable, and massively scalable applications built for tomorrow.
+          reliable, and massively scalable applications.
         </p>
         <div className={styles.heroCtas}>
           <Link href="/docs/get-started" className={clsx('button button--sm', styles.heroCtaPrimary)}>
@@ -50,6 +51,7 @@ export default function Home(): JSX.Element {
       description="Cadence is an open-source workflow orchestration engine that simplifies building scalable, reliable, and resilient distributed applications. Explore our platform for advanced workflow management, comprehensive documentation, and community-driven support.">
       <HomepageHeader />
       <main>
+        <Adopters />
         <FeaturedCarousel />
       </main>
     </Layout>
