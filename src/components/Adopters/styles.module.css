@@ -1,0 +1,205 @@
+/* Social-proof band under the hero. Transparent background so it flows into
+   the page and the following carousel without a hard section seam. */
+.adopters {
+  background: transparent;
+  padding: 2.75rem 0 1.5rem;
+  text-align: center;
+}
+
+/* Short history/positioning block, shown under the CNCF badge. Kept quiet so it
+   reads as supporting context that flows with the page, not a second hero. */
+.intro {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.75rem 1.25rem 2.25rem;
+  text-align: left;
+}
+.introTitle {
+  font-size: 1.45rem;
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 0 0 0.6rem;
+  text-wrap: balance;
+}
+.introBody {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+  color: var(--ifm-color-emphasis-700);
+  text-wrap: pretty;
+}
+
+@media screen and (max-width: 640px) {
+  .introTitle {
+    font-size: 1.3rem;
+  }
+  .introBody {
+    font-size: 0.95rem;
+  }
+}
+
+/* CNCF status is the headline credibility signal, so it reads as a distinct
+   pill. The pill stays light in both themes so the CNCF lockup (which carries
+   its own dark type) is always legible and pops against a dark section. */
+.cncfBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+  padding: 0.6rem 1.15rem;
+  border: 1px solid #e3e6eb;
+  border-radius: 999px;
+  background: #f4f7fb;
+  color: #1b1b1d;
+  text-decoration: none;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+.cncfBadge:hover {
+  text-decoration: none;
+  box-shadow: 0 6px 20px rgba(39, 110, 241, 0.15);
+  transform: translateY(-1px);
+}
+.cncfMark {
+  height: 38px;
+  width: auto;
+}
+.cncfText {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  line-height: 1.25;
+}
+.cncfText strong {
+  font-size: 1rem;
+  color: #1b1b1d;
+}
+.cncfSub {
+  font-size: 0.82rem;
+  color: #55585e;
+}
+
+.eyebrow {
+  margin: 1.75rem 0 1.1rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  opacity: 0.55;
+}
+
+/* Auto-scrolling marquee. Two identical groups inside the track let it loop
+   seamlessly by translating exactly one group width (-50%). Edge masks fade
+   the logos in and out so there is no hard cut at the viewport edges. */
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 12%,
+    #000 88%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 12%,
+    #000 88%,
+    transparent
+  );
+}
+.track {
+  display: flex;
+  width: max-content;
+  animation: adopters-scroll 32s linear infinite;
+}
+/* Pause on hover so a viewer can settle on a logo. */
+.marquee:hover .track {
+  animation-play-state: paused;
+}
+.group {
+  display: flex;
+  align-items: center;
+  gap: 4.5rem;
+  padding-right: 4.5rem;
+  margin: 0;
+  list-style: none;
+}
+.group li {
+  display: flex;
+  align-items: center;
+}
+/* Uniform height keeps the row visually even; monochrome silhouettes flip from
+   dark to light between themes so mixed-color source logos read as one set. */
+.group img {
+  height: 28px;
+  width: auto;
+  filter: grayscale(1) brightness(0);
+  opacity: 0.5;
+  transition: opacity 0.15s ease;
+}
+.group img:hover {
+  opacity: 0.8;
+}
+
+[data-theme='dark'] .group img {
+  filter: grayscale(1) brightness(0) invert(1);
+  opacity: 0.62;
+}
+[data-theme='dark'] .group img:hover {
+  opacity: 0.95;
+}
+
+@keyframes adopters-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Respect reduced-motion: stop the scroll and lay the single set out static. */
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+    width: auto;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .group {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2.5rem;
+    padding-right: 0;
+  }
+  .group[aria-hidden='true'] {
+    display: none;
+  }
+}
+
+.slack {
+  margin: 1.6rem 0 0;
+  font-size: 0.92rem;
+}
+.slack a {
+  font-weight: 600;
+}
+
+@media screen and (max-width: 640px) {
+  .cncfMark {
+    height: 32px;
+  }
+  .cncfText strong {
+    font-size: 0.92rem;
+  }
+  .cncfSub {
+    font-size: 0.76rem;
+  }
+  .group {
+    gap: 3rem;
+    padding-right: 3rem;
+  }
+  .group img {
+    height: 22px;
+  }
+}

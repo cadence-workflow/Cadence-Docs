@@ -6,6 +6,9 @@
 .heroBanner {
   /* Uber Safety Blue to Cosmic Latte */
   background: linear-gradient(90deg, #276ef1 05%, #FFF8E7 100%);
+  /* positioning context for the gear watermark; clip it to the banner */
+  position: relative;
+  overflow: hidden;
 }
 
 .hero.heroBanner .button--secondary.button--sm {
@@ -13,34 +16,129 @@
 }
 
 .heroCompact {
-  padding: 1.25rem 1rem;
+  padding: 2.25rem 1rem 2.5rem;
+}
+
+/* Keep hero content above the watermark and hold the copy to a readable
+   measure so the headline and subtitle wrap on the blue side of the gradient. */
+.heroInner {
+  position: relative;
+  z-index: 1;
 }
 
 .heroCompactTitle {
-  font-size: 1.75rem;
-  margin-bottom: 0.35rem;
+  font-size: 2.75rem;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  max-width: 15ch;
+  text-wrap: balance;
 }
 
 .heroCompactSubtitle {
-  font-size: 0.95rem;
-  margin-bottom: 0.6rem;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  max-width: 62ch;
+  margin-bottom: 1.1rem;
+  opacity: 0.95;
 }
 
-/* ~2x button--sm's font-size, with a tight line-height and only a slight
-   padding bump so the CTA doesn't grow much taller than button--sm despite
-   the much bigger text. */
-.heroCompactCta {
+/* Faint brand gear filling the otherwise-empty cream side of the gradient.
+   Decorative only (empty alt + aria-hidden); hidden on narrow screens where
+   the hero copy needs the full width. */
+.heroMark {
+  position: absolute;
+  top: 50%;
+  right: -1.5rem;
+  transform: translateY(-50%);
+  width: 320px;
+  height: auto;
+  opacity: 0.12;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* CTA row: a primary action, a comparison secondary, and a tertiary text link.
+   Left-aligned so the buttons sit over the blue side of the hero gradient,
+   where white type/borders stay high-contrast. */
+.heroCtas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.15rem;
+}
+
+/* Shared CTA sizing: ~2x button--sm text with a tight line-height so the
+   buttons don't grow much taller than button--sm despite the bigger label. */
+.heroCtaPrimary,
+.heroCtaSecondary {
   font-size: 1.1rem;
   line-height: 1;
-  padding: 0.50rem 1.0rem;
+  padding: 0.6rem 1.15rem;
+  font-weight: 600;
+  border: 2px solid transparent;
+}
+
+/* Primary: solid black reads as the single most important action and stands
+   apart from the white hero type around it. */
+.heroCtaPrimary {
+  background-color: #000;
+  border-color: #000;
+  color: #fff;
+}
+.heroCtaPrimary:hover {
+  background-color: #1a1a1a;
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Secondary: white outline for the comparison shoppers, quieter than primary
+   but still a clear button on the blue gradient. */
+.heroCtaSecondary {
+  background-color: transparent;
+  border-color: #fff;
+  color: #fff;
+}
+.heroCtaSecondary:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Tertiary: the old "What is Cadence?" definition link, demoted to a text
+   link so it no longer competes with the actions that move people forward. */
+.heroCtaTertiary {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  /* Extra separation so this quiet link reads as its own thing, set apart
+     from the two primary/secondary buttons rather than crowding them. */
+  margin-left: 1.25rem;
+}
+.heroCtaTertiary:hover {
+  color: #f0f0f0;
 }
 
 @media screen and (max-width: 996px) {
   .heroCompact {
-    padding: 1rem;
+    padding: 1.75rem 1rem 2rem;
   }
 
   .heroCompactTitle {
-    font-size: 1.5rem;
+    font-size: 2.1rem;
+    max-width: 100%;
+  }
+
+  .heroCompactSubtitle {
+    font-size: 1rem;
+  }
+
+  /* Reclaim full width for the copy on phones/tablets. */
+  .heroMark {
+    display: none;
   }
 }
