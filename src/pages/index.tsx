@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import Layout from '@theme/Layout';
 import FeaturedCarousel from '@site/src/components/FeaturedCarousel';
 import Heading from '@theme/Heading';
@@ -8,15 +9,22 @@ import Heading from '@theme/Heading';
 import styles from './index.module.css';
 
 function HomepageHeader() {
-  const { siteConfig } = useDocusaurusContext();
+  // Brand gear used as a faint watermark on the cream side of the gradient.
+  // useBaseUrl keeps the path correct under a project baseUrl (e.g. /Cadence-Docs/).
+  const gearMark = useBaseUrl('/img/logo/icon/color/cadence-icon-color.svg');
 
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner, styles.heroCompact)}>
-      <div className="container">
+      <img src={gearMark} alt="" aria-hidden="true" className={styles.heroMark} />
+      <div className={clsx('container', styles.heroInner)}>
+        {/* The navbar already carries the Cadence wordmark, so the hero leads
+            with the value proposition instead of repeating the brand name. */}
         <Heading as="h1" className={clsx('hero__title', styles.heroCompactTitle)}>
-          {siteConfig.title}
+          Orchestrate with Confidence
         </Heading>
-        <p className={clsx('hero__subtitle', styles.heroCompactSubtitle)}>{siteConfig.tagline}</p>
+        <p className={clsx('hero__subtitle', styles.heroCompactSubtitle)}>
+          The open-source workflow engine for durable, reliable applications. Built for tomorrow.
+        </p>
         <div className={styles.heroCtas}>
           <Link href="/docs/get-started" className={clsx('button button--sm', styles.heroCtaPrimary)}>
             Get started in 5 min
