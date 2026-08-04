@@ -26,13 +26,66 @@
   margin-bottom: 0.6rem;
 }
 
-/* ~2x button--sm's font-size, with a tight line-height and only a slight
-   padding bump so the CTA doesn't grow much taller than button--sm despite
-   the much bigger text. */
-.heroCompactCta {
+/* CTA row: a primary action, a comparison secondary, and a tertiary text link.
+   Left-aligned so the buttons sit over the blue side of the hero gradient,
+   where white type/borders stay high-contrast. */
+.heroCtas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.15rem;
+}
+
+/* Shared CTA sizing — ~2x button--sm text with a tight line-height so the
+   buttons don't grow much taller than button--sm despite the bigger label. */
+.heroCtaPrimary,
+.heroCtaSecondary {
   font-size: 1.1rem;
   line-height: 1;
-  padding: 0.50rem 1.0rem;
+  padding: 0.6rem 1.15rem;
+  font-weight: 600;
+  border: 2px solid transparent;
+}
+
+/* Primary: solid black reads as the single most important action and stands
+   apart from the white hero type around it. */
+.heroCtaPrimary {
+  background-color: #000;
+  border-color: #000;
+  color: #fff;
+}
+.heroCtaPrimary:hover {
+  background-color: #1a1a1a;
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Secondary: white outline for the comparison shoppers, quieter than primary
+   but still a clear button on the blue gradient. */
+.heroCtaSecondary {
+  background-color: transparent;
+  border-color: #fff;
+  color: #fff;
+}
+.heroCtaSecondary:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Tertiary: the old "What is Cadence?" definition link, demoted to a text
+   link so it no longer competes with the actions that move people forward. */
+.heroCtaTertiary {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  margin-left: 0.25rem;
+}
+.heroCtaTertiary:hover {
+  color: #f0f0f0;
 }
 
 @media screen and (max-width: 996px) {

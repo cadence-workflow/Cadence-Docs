@@ -17,9 +17,17 @@ function HomepageHeader() {
           {siteConfig.title}
         </Heading>
         <p className={clsx('hero__subtitle', styles.heroCompactSubtitle)}>{siteConfig.tagline}</p>
-        <Link href="/faq/cadence-faq" className={clsx('button button--secondary button--sm', styles.heroCompactCta)}>
-         🔬 What is Cadence?
-        </Link>
+        <div className={styles.heroCtas}>
+          <Link href="/docs/get-started" className={clsx('button button--sm', styles.heroCtaPrimary)}>
+            Get started in 5 min
+          </Link>
+          <Link href="/faq/cadence-vs-temporal" className={clsx('button button--sm', styles.heroCtaSecondary)}>
+            Cadence vs Temporal
+          </Link>
+          <Link href="/faq/cadence-faq" className={styles.heroCtaTertiary}>
+            What is Cadence? →
+          </Link>
+        </div>
       </div>
     </header>
   );
