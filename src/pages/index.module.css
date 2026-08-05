@@ -6,24 +6,37 @@
 .heroBanner {
   /* Uber Safety Blue to Cosmic Latte */
   background: linear-gradient(90deg, #276ef1 05%, #FFF8E7 100%);
-  /* positioning context for the gear watermark; clip it to the banner */
+  /* positioning context for .heroInner; clip any code panel overflow */
   position: relative;
   overflow: hidden;
-}
-
-.hero.heroBanner .button--secondary.button--sm {
-  background-color: black;
 }
 
 .heroCompact {
   padding: 2.25rem 1rem 2.5rem;
 }
 
-/* Keep hero content above the watermark and hold the copy to a readable
-   measure so the headline and subtitle wrap on the blue side of the gradient. */
+/* Two columns on desktop: copy over the blue end of the gradient where white
+   type stays high-contrast, code panel over the cream end. min-width: 0 lets
+   the panel scroll internally instead of stretching the row. */
 .heroInner {
   position: relative;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.heroCopy,
+.heroCode {
+  flex: 1 1 50%;
+  min-width: 0;
+}
+
+/* The gradient is hardcoded identically in both color modes, so pin the copy to
+   white. Inheriting Infima's --ifm-hero-text-color would turn it black in dark
+   mode, leaving the title and subtitle dark on the blue end of the gradient. */
+.heroCopy {
+  color: #fff;
 }
 
 .heroCompactTitle {
@@ -36,6 +49,8 @@
   text-wrap: balance;
 }
 
+/* The 62ch cap only binds once the layout stacks; on desktop the column itself
+   is the narrower constraint. */
 .heroCompactSubtitle {
   font-size: 1.1rem;
   line-height: 1.4;
@@ -44,22 +59,80 @@
   opacity: 0.95;
 }
 
-/* Faint brand gear filling the otherwise-empty cream side of the gradient.
-   Decorative only (empty alt + aria-hidden); hidden on narrow screens where
-   the hero copy needs the full width. */
-.heroMark {
-  position: absolute;
-  top: 50%;
-  right: -1.5rem;
-  transform: translateY(-50%);
-  width: 320px;
-  height: auto;
-  opacity: 0.12;
-  pointer-events: none;
-  user-select: none;
+/* Social proof eyebrow above the headline, shaped like the FeaturedCarousel
+   .tag so it reads as native UI. Translucent fill keeps it quieter than the
+   CTAs below it. */
+.heroEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-bottom: 0.85rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
 }
 
-/* CTA row: a primary action, a comparison secondary, and a tertiary text link.
+/* Smaller than .heroCtaIcon to match the pill's smaller type. */
+.heroEyebrowIcon {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+}
+
+.heroEyebrowSep {
+  margin: 0 0.15rem;
+  opacity: 0.55;
+}
+
+/* Only this segment is interactive: the star count next to it is static text,
+   so the link affordance sits on the words rather than on the whole pill. */
+.heroEyebrowLink {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.5);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+.heroEyebrowLink:hover {
+  color: inherit;
+  text-decoration-color: currentColor;
+}
+.heroEyebrowLink:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Dark panel for the workflow snippet. The shadow separates it from the cream
+   end of the gradient; the hairline border reads as an inner highlight. */
+.heroCode {
+  padding: 1rem 1.15rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background-color: #0B0F19;
+  box-shadow: 0 12px 30px rgba(11, 15, 25, 0.28);
+  overflow: auto;
+}
+
+.heroCodePre {
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  text-align: left;
+  /* The snippet is tab-indented Go; the 8-column default would eat the column. */
+  tab-size: 2;
+}
+
+.heroCodeLine {
+  display: block;
+}
+
+/* CTA row: one primary action and one outlined GitHub action.
    Left-aligned so the buttons sit over the blue side of the hero gradient,
    where white type/borders stay high-contrast. */
 .heroCtas {
@@ -71,9 +144,13 @@
 }
 
 /* Shared CTA sizing: ~2x button--sm text with a tight line-height so the
-   buttons don't grow much taller than button--sm despite the bigger label. */
+   buttons don't grow much taller than button--sm despite the bigger label.
+   inline-flex centers the GitHub glyph against its label. */
 .heroCtaPrimary,
 .heroCtaSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   font-size: 1.1rem;
   line-height: 1;
   padding: 0.6rem 1.15rem;
@@ -81,20 +158,28 @@
   border: 2px solid transparent;
 }
 
-/* Primary: solid black reads as the single most important action and stands
-   apart from the white hero type around it. */
+.heroCtaIcon {
+  width: 1.15em;
+  height: 1.15em;
+  flex-shrink: 0;
+}
+
+/* Primary: the same dark slate as the code panel, which ties the two hero
+   columns together and reads softer than plain black while holding more
+   contrast against the blue gradient than a white fill would. */
 .heroCtaPrimary {
-  background-color: #000;
-  border-color: #000;
+  background-color: #0B0F19;
+  border-color: #0B0F19;
   color: #fff;
 }
 .heroCtaPrimary:hover {
-  background-color: #1a1a1a;
+  background-color: #1b2437;
+  border-color: #1b2437;
   color: #fff;
   text-decoration: none;
 }
 
-/* Secondary: white outline for the comparison shoppers, quieter than primary
+/* Secondary: white outline for the GitHub action, quieter than primary
    but still a clear button on the blue gradient. */
 .heroCtaSecondary {
   background-color: transparent;
@@ -107,25 +192,28 @@
   text-decoration: none;
 }
 
-/* Tertiary: the old "What is Cadence?" definition link, demoted to a text
-   link so it no longer competes with the actions that move people forward. */
-.heroCtaTertiary {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #fff;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  /* Extra separation so this quiet link reads as its own thing, set apart
-     from the two primary/secondary buttons rather than crowding them. */
-  margin-left: 1.25rem;
-}
-.heroCtaTertiary:hover {
-  color: #f0f0f0;
+.heroCtaPrimary:focus-visible,
+.heroCtaSecondary:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
 }
 
 @media screen and (max-width: 996px) {
   .heroCompact {
     padding: 1.75rem 1rem 2rem;
+  }
+
+  /* Stack the code panel under the copy. flex-basis has to drop to auto here:
+     a 50% basis would resolve against the column's height. */
+  .heroInner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+  }
+
+  .heroCopy,
+  .heroCode {
+    flex: 0 0 auto;
   }
 
   .heroCompactTitle {
@@ -137,8 +225,19 @@
     font-size: 1rem;
   }
 
-  /* Reclaim full width for the copy on phones/tablets. */
-  .heroMark {
-    display: none;
+  .heroCodePre {
+    font-size: 0.75rem;
+  }
+
+  /* Stack the CTAs full width so each is an easy tap target. */
+  .heroCtas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .heroCtaPrimary,
+  .heroCtaSecondary {
+    width: 100%;
+    justify-content: center;
   }
 }
