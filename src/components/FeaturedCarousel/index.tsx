@@ -198,7 +198,7 @@ export default function FeaturedCarousel(): JSX.Element {
       <div className="container">
         <div className={styles.header}>
           <Heading as="h2" className={styles.title}>
-            Featured reading
+            What's new?
           </Heading>
           <div className={styles.controls}>
             <button
