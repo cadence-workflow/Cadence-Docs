@@ -1,7 +1,9 @@
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import Layout from '@theme/Layout';
+import CncfBanner from '@site/src/components/CncfBanner';
 import FeaturedCarousel from '@site/src/components/FeaturedCarousel';
 import Heading from '@theme/Heading';
 import { Highlight, themes } from 'prism-react-renderer';
@@ -69,8 +71,13 @@ function HeroCodePreview() {
 }
 
 function HomepageHeader() {
+  // Brand gear used as a faint watermark spanning the whole hero. useBaseUrl
+  // keeps the path correct under a project baseUrl (e.g. /Cadence-Docs/).
+  const gearMark = useBaseUrl('/img/logo/icon/color/cadence-icon-color.svg');
+
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner, styles.heroCompact)}>
+      <img src={gearMark} alt="" aria-hidden="true" className={styles.heroMark} />
       <div className={clsx('container', styles.heroInner)}>
         <div className={styles.heroCopy}>
           <span className={styles.heroEyebrow}>
@@ -124,6 +131,7 @@ export default function Home(): JSX.Element {
       description="Cadence is an open-source workflow orchestration engine that simplifies building scalable, reliable, and resilient distributed applications. Explore our platform for advanced workflow management, comprehensive documentation, and community-driven support.">
       <HomepageHeader />
       <main>
+        <CncfBanner />
         <FeaturedCarousel />
       </main>
     </Layout>
