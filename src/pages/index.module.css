@@ -15,18 +15,16 @@
   padding: 2.25rem 1rem 2.5rem;
 }
 
-/* Faint brand gear spanning the whole hero as a background watermark. Centered
-   and held to a low opacity so it reads as texture behind both columns without
-   competing with the dark code panel that sits over the cream end of the
-   gradient. Decorative only (empty alt + aria-hidden); z-index 0 keeps it under
-   .heroInner (z-index 1). Hidden on narrow screens where the copy needs the
-   full width. */
+/* Faint brand gear on the left side as a background watermark. Held to low
+   opacity so it reads as texture behind the copy without competing with the
+   code panel. Decorative only (empty alt + aria-hidden); z-index 0 keeps it
+   under .heroInner (z-index 1). Hidden on narrow screens. */
 .heroMark {
   position: absolute;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: min(620px, 75%);
+  left: 1.5rem;
+  transform: translateY(-50%);
+  width: min(380px, 40%);
   height: auto;
   opacity: 0.08;
   pointer-events: none;

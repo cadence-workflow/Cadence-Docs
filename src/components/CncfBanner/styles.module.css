@@ -1,9 +1,11 @@
-/* Slim CNCF credibility band under the hero. Transparent background so it flows
-   into the page and the following carousel without a hard section seam. */
+/* CNCF credibility badge integrated into the hero section. Sits at the bottom
+   of the hero with a semi-transparent overlay background so it reads clearly
+   over both gradient zones. */
 .cncfBand {
-  background: transparent;
-  padding: 1.75rem 0 0.5rem;
+  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.08) 100%);
+  padding: 1.25rem 0;
   text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.1);
 }
 
 /* CNCF status reads as a distinct pill. The pill stays light in both themes so
