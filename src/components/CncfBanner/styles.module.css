@@ -1,60 +1,60 @@
-/* CNCF credibility badge integrated into the hero section. Sits at the bottom
-   of the hero with a semi-transparent overlay background so it reads clearly
-   over both gradient zones. */
+/* Full-width CNCF credibility headline banner at the top. Subtle gradient
+   background with a border bottom to separate from hero. Sits above the hero
+   and integrates as a unified trust signal. */
 .cncfBand {
-  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.08) 100%);
-  padding: 1.25rem 0;
+  background: linear-gradient(180deg, #f8f9fb 0%, #f4f7fb 100%);
+  padding: 0.9rem 0;
   text-align: center;
-  border-top: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid #e3e6eb;
 }
 
-/* CNCF status reads as a distinct pill. The pill stays light in both themes so
-   the CNCF lockup (which carries its own dark type) is always legible and pops
-   against the page in either color mode. */
+/* CNCF status as a full-width headline. Flex row centered, larger than a pill. */
 .cncfBadge {
   display: inline-flex;
   align-items: center;
-  gap: 0.85rem;
-  padding: 0.6rem 1.15rem;
-  border: 1px solid #e3e6eb;
-  border-radius: 999px;
-  background: #f4f7fb;
+  gap: 0.75rem;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
   color: #1b1b1d;
   text-decoration: none;
-  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  transition: none;
 }
 .cncfBadge:hover {
   text-decoration: none;
-  box-shadow: 0 6px 20px rgba(39, 110, 241, 0.15);
-  transform: translateY(-1px);
+  box-shadow: none;
+  transform: none;
 }
 .cncfMark {
-  height: 38px;
+  height: 44px;
   width: auto;
+  flex-shrink: 0;
 }
 .cncfText {
   display: flex;
   flex-direction: column;
   text-align: left;
-  line-height: 1.25;
+  line-height: 1.3;
 }
 .cncfText strong {
-  font-size: 1rem;
+  font-size: 1.05rem;
+  font-weight: 600;
   color: #1b1b1d;
 }
 .cncfSub {
-  font-size: 0.82rem;
-  color: #55585e;
+  font-size: 0.85rem;
+  color: #666;
 }
 
 @media screen and (max-width: 640px) {
   .cncfMark {
-    height: 32px;
+    height: 36px;
   }
   .cncfText strong {
-    font-size: 0.92rem;
+    font-size: 0.95rem;
   }
   .cncfSub {
-    font-size: 0.76rem;
+    font-size: 0.78rem;
   }
 }
