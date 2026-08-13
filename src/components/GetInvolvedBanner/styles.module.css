@@ -300,65 +300,29 @@
   }
 }
 
-/* Community CTA Widget */
-.communityCtaWrapper {
-  margin-top: 2.5rem;
+/* Compact community links below cards */
+.communityLinks {
+  margin-top: 1.75rem;
   display: flex;
   justify-content: center;
-}
-
-.communityCtaBox {
-  background: white;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  padding: 1.75rem 2rem;
-  max-width: 450px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.communityCtaTitle {
-  font-size: 1rem;
-  font-weight: 600;
-  text-align: center;
-  margin: 0 0 1.25rem;
-  color: #1b1b1d;
-}
-
-.communityLinks {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  align-items: center;
+  gap: 1.5rem;
+  font-size: 0.85rem;
 }
 
 .communityLink {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  color: #1b1b1d;
+  color: #276ef1;
   text-decoration: none;
-  transition: all 0.2s ease;
-  background: #f5f7fb;
-  font-size: 0.9rem;
   font-weight: 500;
+  transition: opacity 0.2s ease;
 }
 
 .communityLink:hover {
-  background: #eef2f8;
+  opacity: 0.7;
   text-decoration: underline;
 }
 
-.communityLinkPrimary {
-  background: #e3f2fd;
-  border-left: 3px solid #276ef1;
-}
-
-.communityLinkPrimary:hover {
-  background: #d4e9f7;
-}
-
-.communityLinkIcon {
-  font-size: 1.2rem;
-  flex-shrink: 0;
+.communityLinkSeparator {
+  color: #ccc;
+  font-weight: 300;
 }
