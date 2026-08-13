@@ -42,19 +42,41 @@ const ACTIONS = [
 export default function CommunityWidget() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [anchorPos, setAnchorPos] = useState(null);
   const panelRef = useRef(null);
   const fabRef = useRef(null);
 
-  // Start the widget higher up on page load, then drop it to the standard
-  // bottom-right corner once the user scrolls past a small threshold — this
-  // keeps it from overlapping the Get Involved cards on the initial viewport.
+  // Anchor the widget to the "See Examples" column of the Get Involved header
+  // on page load, then transition to the standard bottom-right corner once the
+  // user scrolls. Measure the anchor's viewport position rather than relying on
+  // a fixed offset — the hero height and any layout tweaks stay decoupled from
+  // the widget's initial home.
   useEffect(() => {
+    function measureAnchor() {
+      const el = typeof document !== 'undefined'
+        ? document.getElementById('community-widget-anchor')
+        : null;
+      if (!el) {
+        setAnchorPos(null);
+        return;
+      }
+      const rect = el.getBoundingClientRect();
+      setAnchorPos({
+        top: rect.top + rect.height / 2,
+        right: window.innerWidth - rect.right,
+      });
+    }
     function handleScroll() {
       setScrolled(window.scrollY > 120);
     }
+    measureAnchor();
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('resize', measureAnchor);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', measureAnchor);
+    };
   }, []);
 
   useEffect(() => {
@@ -84,7 +106,19 @@ export default function CommunityWidget() {
   }, [open]);
 
   return (
-    <div className={`${styles.widget} ${scrolled ? styles.widgetScrolled : ''}`} aria-label="Community actions">
+    <div
+      className={`${styles.widget} ${scrolled || !anchorPos ? styles.widgetScrolled : ''}`}
+      style={
+        !scrolled && anchorPos
+          ? {
+              top: `${anchorPos.top}px`,
+              right: `${anchorPos.right}px`,
+              bottom: 'auto',
+              transform: 'translateY(-50%)',
+            }
+          : undefined
+      }
+      aria-label="Community actions">
       {open && (
         <div
           ref={panelRef}

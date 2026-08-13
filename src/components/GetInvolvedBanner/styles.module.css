@@ -5,14 +5,35 @@
   background: linear-gradient(135deg, #f5f7fb 0%, #eef2f8 50%, #f5f7fb 100%);
 }
 
+/* Grid mirrors the .cardsWrapper 4-column grid below so the header text can
+   align with specific card edges. "Get involved!" spans the left half; the
+   "Join our open-source community" starts at the third card's left edge; the
+   fourth column reserves space for the floating community widget on load. */
 .bannerHeader {
-  text-align: center;
-  margin: 0 0 1rem;
+  margin: 0 0 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 1.25rem;
+  align-items: center;
+  min-height: 3.75rem;
+}
+
+.bannerTitleWrap {
+  grid-column: 1 / span 2;
   display: flex;
   align-items: baseline;
-  justify-content: center;
-  gap: 0.6rem;
-  flex-wrap: wrap;
+  padding-left: 0.25rem;
+}
+
+.bannerSubtitleWrap {
+  grid-column: 3 / span 1;
+  padding-left: 0.25rem;
+}
+
+.widgetAnchor {
+  grid-column: 4 / span 1;
+  height: 3.75rem;
+  position: relative;
 }
 
 .bannerTitle {
@@ -28,12 +49,6 @@
   font-weight: 400;
   margin: 0;
   color: #666666;
-}
-
-.bannerSubtitle::before {
-  content: "·";
-  margin-right: 0.6rem;
-  color: #bbb;
 }
 
 /* Single horizontal line of 4 cards - full width, no wrapping */
