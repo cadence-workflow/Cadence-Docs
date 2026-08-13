@@ -12,7 +12,24 @@
 }
 
 .heroCompact {
-  padding: 2.25rem 1rem 2.5rem;
+  padding: 2.25rem 1rem 1.5rem;
+}
+
+/* Faint brand gear on the left side as a background watermark. Held to low
+   opacity so it reads as texture behind the copy without competing with the
+   code panel. Decorative only (empty alt + aria-hidden); z-index 0 keeps it
+   under .heroInner (z-index 1). Hidden on narrow screens. */
+.heroMark {
+  position: absolute;
+  top: 50%;
+  left: 1.5rem;
+  transform: translateY(-50%);
+  width: min(380px, 40%);
+  height: auto;
+  opacity: 0.08;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
 }
 
 /* Two columns on desktop: copy over the blue end of the gradient where white
@@ -201,6 +218,11 @@
 @media screen and (max-width: 996px) {
   .heroCompact {
     padding: 1.75rem 1rem 2rem;
+  }
+
+  /* Reclaim full width for the copy on phones/tablets. */
+  .heroMark {
+    display: none;
   }
 
   /* Stack the code panel under the copy. flex-basis has to drop to auto here:
