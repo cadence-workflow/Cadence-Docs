@@ -3,7 +3,6 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import Layout from '@theme/Layout';
-import CncfBanner from '@site/src/components/CncfBanner';
 import GetInvolvedBanner from '@site/src/components/GetInvolvedBanner';
 import FeaturedCarousel from '@site/src/components/FeaturedCarousel';
 import Heading from '@theme/Heading';
@@ -131,7 +130,6 @@ export default function Home(): JSX.Element {
       title={`${siteConfig.title}`}
       description="Cadence is an open-source workflow orchestration engine that simplifies building scalable, reliable, and resilient distributed applications. Explore our platform for advanced workflow management, comprehensive documentation, and community-driven support.">
       <HomepageHeader />
-      <CncfBanner />
       <GetInvolvedBanner />
       <main>
         <FeaturedCarousel />

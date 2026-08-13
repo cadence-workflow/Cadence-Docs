@@ -27,6 +27,20 @@
   color: #666666;
 }
 
+/* CNCF Pill container */
+.cncfPill {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0 1.5rem;
+}
+
+.cncfPill :global(section) {
+  width: auto;
+  padding: 0;
+  background: transparent;
+  margin: 0;
+}
+
 /* Single horizontal line of 4 cards - full width, no wrapping */
 .cardsWrapper {
   display: flex;

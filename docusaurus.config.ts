@@ -16,8 +16,6 @@ import { envReplace } from '@pnpm/config.env-replace';
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 const defaultLocale = 'en';
 
-const projName = envReplace('${PROJECT_NAME:-Cadence-Docs}', process.env);
-
 // Hardcode baseUrl for GitHub Pages deployment
 // This repo is deployed to cadence-workflow/Cadence-Docs which requires /Cadence-Docs/
 const baseUrl = '/Cadence-Docs/';
@@ -42,10 +40,10 @@ const config: Config = {
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: orgName,
+  organizationName: 'cadence-workflow',
 
   // Usually your repo name.
-  projectName: projName,
+  projectName: 'Cadence-Docs',
 
   trailingSlash: false,
 
