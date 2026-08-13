@@ -1,6 +1,6 @@
 .widget {
   position: fixed;
-  bottom: 40vh;
+  bottom: calc(100vh - 55vh - 4.5rem);
   right: 1.75rem;
   z-index: 9999;
   display: flex;

@@ -170,8 +170,8 @@
 .heroCncf {
   display: flex;
   justify-content: flex-start;
-  margin-top: 1.25rem;
-  margin-bottom: 1.75rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1.25rem;
 }
 
 .heroCncf :global(section) {

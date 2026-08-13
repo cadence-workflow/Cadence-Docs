@@ -95,6 +95,9 @@ function HomepageHeader() {
               See Adopters
             </Link>
           </span>
+          <div className={styles.heroCncf}>
+            <CncfBanner />
+          </div>
           {/* The navbar already carries the Cadence wordmark, so the hero leads
               with the value proposition instead of repeating the brand name. */}
           <Heading as="h1" className={clsx('hero__title', styles.heroCompactTitle)}>
@@ -104,9 +107,6 @@ function HomepageHeader() {
             Write fault-tolerant, stateful background workflows as code in Go, Java and Python
             without worrying about retries, queues, or state persistence.
           </p>
-          <div className={styles.heroCncf}>
-            <CncfBanner />
-          </div>
           <div className={styles.heroCtas}>
             <Link to="/docs/get-started" className={clsx('button button--sm', styles.heroCtaPrimary)}>
               Get Started in 5 min
