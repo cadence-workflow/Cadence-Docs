@@ -130,8 +130,8 @@ export default function Home(): JSX.Element {
     <Layout
       title={`${siteConfig.title}`}
       description="Cadence is an open-source workflow orchestration engine that simplifies building scalable, reliable, and resilient distributed applications. Explore our platform for advanced workflow management, comprehensive documentation, and community-driven support.">
-      <CncfBanner />
       <HomepageHeader />
+      <CncfBanner />
       <GetInvolvedBanner />
       <main>
         <FeaturedCarousel />
