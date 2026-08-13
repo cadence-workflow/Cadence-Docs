@@ -1,26 +1,26 @@
 /* Full-width banner section with gradient background */
 .bannerOuter {
   width: 100%;
-  padding: 1.75rem 2rem;
+  padding: 1.25rem 2rem;
   background: linear-gradient(135deg, #f5f7fb 0%, #eef2f8 50%, #f5f7fb 100%);
 }
 
 .bannerHeader {
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .bannerTitle {
-  font-size: 1.5rem;
+  font-size: 1.35rem;
   font-weight: 700;
   text-align: center;
-  margin: 0 0 0.25rem;
+  margin: 0 0 0.15rem;
   color: #1b1b1d;
   letter-spacing: -0.5px;
 }
 
 .bannerSubtitle {
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   font-weight: 400;
   text-align: center;
   margin: 0;
@@ -30,7 +30,7 @@
 /* Single horizontal line of 4 cards - full width, no wrapping */
 .cardsWrapper {
   display: flex;
-  gap: 1.25rem;
+  gap: 1rem;
   width: 100%;
   justify-content: space-between;
   flex-wrap: nowrap;
@@ -44,8 +44,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 0.5rem;
-  padding: 1.5rem 1.25rem;
+  gap: 0.4rem;
+  padding: 1.25rem 1rem;
   background: white;
   border: 1px solid #e0e0e0;
   border-top: 4px solid #276ef1;
@@ -65,12 +65,12 @@
 /* Badge styling */
 .badge {
   display: inline-block;
-  padding: 0.4rem 0.8rem;
+  padding: 0.3rem 0.6rem;
   border-radius: 20px;
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
 }
 
 /* Colored badge variants */
@@ -129,8 +129,8 @@
 
 /* Icon styling */
 .icon {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -155,7 +155,7 @@
 
 /* Card title */
 .cardTitle {
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 600;
   text-align: center;
   margin: 0;
@@ -164,11 +164,11 @@
 
 /* Card description */
 .cardDesc {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   text-align: center;
   margin: 0;
   color: #666666;
-  line-height: 1.4;
+  line-height: 1.3;
   flex-grow: 1;
 }
 
