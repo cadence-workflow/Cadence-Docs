@@ -171,9 +171,9 @@
 .heroCncf :global(section) {
   width: auto;
   padding: 0;
-  background: rgba(255, 255, 255, 0.15);
+  background: transparent;
   margin: 0;
-  border-radius: 20px;
+  border-radius: 0;
 }
 
 /* Shared CTA sizing: ~2x button--sm text with a tight line-height so the
