@@ -5,35 +5,46 @@
   background: linear-gradient(135deg, #f5f7fb 0%, #eef2f8 50%, #f5f7fb 100%);
 }
 
-/* Grid mirrors the .cardsWrapper 4-column grid below so the header text can
-   align with specific card edges. "Get involved!" spans the left half; the
-   "Join our open-source community" starts at the third card's left edge; the
-   fourth column reserves space for the floating community widget on load. */
+/* Centered header row: title + subtitle sit inline together, with the widget
+   anchor a comfortable gap to the right so the community bubble reads as
+   part of the same group without crowding the text. */
 .bannerHeader {
   margin: 0 0 1.25rem;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  column-gap: 1.25rem;
+  display: flex;
   align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
   min-height: 3.75rem;
 }
 
 .bannerTitleWrap {
-  grid-column: 1 / span 2;
-  display: flex;
+  display: inline-flex;
   align-items: baseline;
-  padding-left: 0.25rem;
 }
 
 .bannerSubtitleWrap {
-  grid-column: 3 / span 1;
-  padding-left: 0.25rem;
+  display: inline-flex;
+  align-items: baseline;
 }
 
+.bannerSubtitleWrap::before {
+  content: "·";
+  margin-right: 0.6rem;
+  color: #bbb;
+  font-weight: 400;
+}
+
+/* Reserves room to the right of the centered header text for the floating
+   community bubble on page load. Width matches the widget's diameter plus a
+   little breathing room; on scroll the widget slides off to the right and
+   this space stays empty (harmless — the row is still centered as a whole). */
 .widgetAnchor {
-  grid-column: 4 / span 1;
+  width: 3.75rem;
   height: 3.75rem;
+  margin-left: 1.5rem;
   position: relative;
+  flex-shrink: 0;
 }
 
 .bannerTitle {
