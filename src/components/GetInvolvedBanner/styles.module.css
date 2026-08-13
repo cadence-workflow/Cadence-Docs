@@ -3,6 +3,9 @@
   width: 100%;
   padding: 1.25rem 2rem;
   background: linear-gradient(135deg, #f5f7fb 0%, #eef2f8 50%, #f5f7fb 100%);
+  position: relative;
+  z-index: 10;
+  margin-top: -80px;
 }
 
 .bannerHeader {
@@ -27,11 +30,12 @@
   color: #666666;
 }
 
-/* CNCF Pill container */
+/* CNCF Pill container - at top of section */
 .cncfPill {
   display: flex;
   justify-content: center;
-  margin: 1rem 0 1.5rem;
+  margin: 0 0 1.5rem;
+  order: -1;
 }
 
 .cncfPill :global(section) {

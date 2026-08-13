@@ -9,10 +9,13 @@
   /* positioning context for .heroInner; clip any code panel overflow */
   position: relative;
   overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .heroCompact {
-  padding: 1.5rem 1rem 1rem;
+  padding: 2rem 1rem 1.5rem;
 }
 
 /* Faint brand gear on the left side as a background watermark. Held to low
@@ -41,6 +44,8 @@
   display: flex;
   align-items: center;
   gap: 1.75rem;
+  flex: 1;
+  justify-content: center;
 }
 
 .heroCopy,
