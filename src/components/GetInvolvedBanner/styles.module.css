@@ -1,7 +1,7 @@
 /* Full-width banner section with gradient background */
 .bannerOuter {
   width: 100%;
-  padding: 2rem 2rem 2.5rem;
+  padding: 4rem 2rem 4.5rem;
   background: linear-gradient(135deg, #f5f7fb 0%, #eef2f8 50%, #f5f7fb 100%);
 }
 
