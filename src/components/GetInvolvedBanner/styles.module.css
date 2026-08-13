@@ -1,274 +1,120 @@
 .bannerOuter {
   width: 100%;
+  background: linear-gradient(135deg, #f0f4f9 0%, #e8ecf1 100%);
   padding: 3rem 1rem;
-  background: linear-gradient(135deg, #f5f7fb 0%, #eef2f8 50%, #f5f7fb 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.bannerContent {
+.bannerContainer {
   max-width: 1200px;
-  margin: 0 auto;
   width: 100%;
-}
-
-.headerSection {
-  text-align: center;
-  margin-bottom: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(209, 213, 219, 0.3);
+  border-radius: 16px;
+  box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.5),
+              0 4px 12px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(8px);
 }
 
 .bannerTitle {
-  font-size: 2rem;
-  font-weight: 700;
-  text-align: center;
-  margin: 0 0 0.5rem;
-  color: #1b1b1d;
-}
-
-.bannerSubtitle {
-  font-size: 1rem;
-  font-weight: 400;
-  text-align: center;
-  margin: 0;
-  color: #666666;
-}
-
-.gridLinks {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
-}
-
-.gridCard {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 1rem;
-  padding: 2rem 1.5rem;
-  background: white;
-  border: 1px solid #e0e0e0;
-  border-top: 4px solid #276ef1;
-  border-radius: 12px;
-  text-decoration: none;
-  color: #1b1b1d;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  position: relative;
-}
-
-.gridCard:hover {
-  border-color: #276ef1;
-  transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(39, 110, 241, 0.15);
-}
-
-.cardBadge {
-  display: inline-block;
-  padding: 0.4rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.75rem;
+  font-size: 1.2rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 0.5rem;
-}
-
-.badgediscussion {
-  background-color: #e3f2fd;
-  color: #1565c0;
-}
-
-.badgecontribute {
-  background-color: #f3e5f5;
-  color: #6a1b9a;
-}
-
-.badgeissues {
-  background-color: #fff3e0;
-  color: #e65100;
-}
-
-.badgeexamples {
-  background-color: #e8f5e9;
-  color: #2e7d32;
-}
-
-.carddiscussion {
-  border-top-color: #1565c0;
-}
-
-.carddiscussion:hover {
-  box-shadow: 0 8px 16px rgba(21, 101, 192, 0.15);
-}
-
-.cardcontribute {
-  border-top-color: #6a1b9a;
-}
-
-.cardcontribute:hover {
-  box-shadow: 0 8px 16px rgba(106, 27, 154, 0.15);
-}
-
-.cardissues {
-  border-top-color: #e65100;
-}
-
-.cardissues:hover {
-  box-shadow: 0 8px 16px rgba(230, 81, 0, 0.15);
-}
-
-.cardexamples {
-  border-top-color: #2e7d32;
-}
-
-.cardexamples:hover {
-  box-shadow: 0 8px 16px rgba(46, 125, 50, 0.15);
-}
-
-.cardIcon {
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #276ef1;
+  color: #1b1b1d;
+  margin: 0;
+  white-space: nowrap;
   flex-shrink: 0;
 }
 
-.carddiscussion .cardIcon {
-  color: #1565c0;
+.buttonsWrapper {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
 }
 
-.cardcontribute .cardIcon {
-  color: #6a1b9a;
-}
-
-.cardissues .cardIcon {
-  color: #e65100;
-}
-
-.cardexamples .cardIcon {
-  color: #2e7d32;
-}
-
-.cardTitle {
-  font-size: 1.1rem;
-  font-weight: 600;
-  text-align: center;
-  margin: 0;
+.pillButton {
+  display: inline-flex;
+  padding: 0.5rem 1.25rem;
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  font-weight: 500;
   color: #1b1b1d;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
-.cardDescription {
-  font-size: 0.875rem;
-  text-align: center;
-  margin: 0;
-  color: #666666;
-  line-height: 1.5;
-  flex-grow: 1;
-}
-
-.cardArrow {
-  font-size: 1.5rem;
+.pillButton:hover {
+  background: #f0f2f5;
+  border-color: #276ef1;
   color: #276ef1;
-  transition: all 0.3s ease;
-  opacity: 0;
-  transform: translateX(-4px);
-  position: absolute;
-  bottom: 1.5rem;
-  right: 1.5rem;
+  box-shadow: 0 4px 8px rgba(39, 110, 241, 0.15);
+  transform: translateY(-1px);
 }
 
-.gridCard:hover .cardArrow {
-  opacity: 1;
-  transform: translateX(4px);
+.pillButton:active {
+  transform: translateY(0);
 }
 
-.carddiscussion:hover .cardArrow {
-  color: #1565c0;
-}
-
-.cardcontribute:hover .cardArrow {
-  color: #6a1b9a;
-}
-
-.cardissues:hover .cardArrow {
-  color: #e65100;
-}
-
-.cardexamples:hover .cardArrow {
-  color: #2e7d32;
-}
-
-@media screen and (max-width: 1024px) {
-  .bannerOuter {
-    padding: 2.5rem 1rem;
-  }
-
-  .bannerTitle {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .headerSection {
-    margin-bottom: 2.5rem;
-  }
-
-  .gridLinks {
-    grid-template-columns: repeat(2, 1fr);
+/* Mobile responsive: stack vertically */
+@media screen and (max-width: 768px) {
+  .bannerContainer {
+    flex-direction: column;
     gap: 1.5rem;
-  }
-
-  .gridCard {
-    padding: 1.5rem 1rem;
-  }
-
-  .cardArrow {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@media screen and (max-width: 640px) {
-  .bannerOuter {
-    padding: 2rem 1rem;
+    padding: 1.5rem;
+    text-align: center;
   }
 
   .bannerTitle {
-    font-size: 1.25rem;
-    margin-bottom: 0.25rem;
+    width: 100%;
+    white-space: normal;
   }
 
-  .bannerSubtitle {
+  .buttonsWrapper {
+    width: 100%;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .pillButton {
+    padding: 0.475rem 1rem;
     font-size: 0.9rem;
   }
+}
 
-  .headerSection {
-    margin-bottom: 1.5rem;
+@media screen and (max-width: 480px) {
+  .bannerOuter {
+    padding: 2rem 0.5rem;
   }
 
-  .gridLinks {
-    grid-template-columns: 1fr;
+  .bannerContainer {
+    padding: 1.25rem;
     gap: 1rem;
   }
 
-  .gridCard {
-    padding: 1.25rem;
+  .bannerTitle {
+    font-size: 1.05rem;
   }
 
-  .cardTitle {
-    font-size: 1rem;
+  .buttonsWrapper {
+    gap: 0.375rem;
   }
 
-  .cardDescription {
-    font-size: 0.8125rem;
-  }
-
-  .cardBadge {
-    padding: 0.3rem 0.6rem;
-    font-size: 0.7rem;
-  }
-
-  .cardArrow {
-    font-size: 1.25rem;
+  .pillButton {
+    padding: 0.425rem 0.875rem;
+    font-size: 0.85rem;
+    flex: 1 1 calc(50% - 0.2rem);
   }
 }
