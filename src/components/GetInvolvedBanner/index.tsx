@@ -100,6 +100,15 @@ export default function GetInvolvedBanner(): JSX.Element {
         <h3 className={styles.bannerTitle}>Get involved!</h3>
         <p className={styles.bannerSubtitle}>Join our open-source community</p>
       </div>
+      <div className={styles.communityLinks}>
+        <Link href="https://communityinviter.com/apps/cloud-native/cncf" target="_blank" rel="noopener noreferrer" className={styles.communityLink}>
+          Join us on Slack
+        </Link>
+        <span className={styles.communityLinkSeparator}>•</span>
+        <Link href="https://github.com/cadence-workflow/cadence/discussions" target="_blank" rel="noopener noreferrer" className={styles.communityLink}>
+          Next community meetup
+        </Link>
+      </div>
       <div className={styles.cardsWrapper}>
         {cards.map((card) => (
           <Link
@@ -115,15 +124,6 @@ export default function GetInvolvedBanner(): JSX.Element {
             <div className={styles.arrow}>→</div>
           </Link>
         ))}
-      </div>
-      <div className={styles.communityLinks}>
-        <Link href="https://communityinviter.com/apps/cloud-native/cncf" target="_blank" rel="noopener noreferrer" className={styles.communityLink}>
-          Join us on Slack
-        </Link>
-        <span className={styles.communityLinkSeparator}>•</span>
-        <Link href="https://github.com/cadence-workflow/cadence/discussions" target="_blank" rel="noopener noreferrer" className={styles.communityLink}>
-          Next community meetup
-        </Link>
       </div>
     </section>
   );

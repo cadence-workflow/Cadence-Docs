@@ -41,8 +41,21 @@ const ACTIONS = [
 
 export default function CommunityWidget() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const panelRef = useRef(null);
   const fabRef = useRef(null);
+
+  // Start the widget higher up on page load, then drop it to the standard
+  // bottom-right corner once the user scrolls past a small threshold — this
+  // keeps it from overlapping the Get Involved cards on the initial viewport.
+  useEffect(() => {
+    function handleScroll() {
+      setScrolled(window.scrollY > 120);
+    }
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -71,7 +84,7 @@ export default function CommunityWidget() {
   }, [open]);
 
   return (
-    <div className={styles.widget} aria-label="Community actions">
+    <div className={`${styles.widget} ${scrolled ? styles.widgetScrolled : ''}`} aria-label="Community actions">
       {open && (
         <div
           ref={panelRef}

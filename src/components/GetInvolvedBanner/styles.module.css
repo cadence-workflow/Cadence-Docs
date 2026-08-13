@@ -7,24 +7,33 @@
 
 .bannerHeader {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
 }
 
 .bannerTitle {
   font-size: 1.35rem;
   font-weight: 700;
-  text-align: center;
-  margin: 0 0 0.4rem;
+  margin: 0;
   color: #1b1b1d;
   letter-spacing: -0.5px;
 }
 
 .bannerSubtitle {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 400;
-  text-align: center;
   margin: 0;
   color: #666666;
+}
+
+.bannerSubtitle::before {
+  content: "·";
+  margin-right: 0.6rem;
+  color: #bbb;
 }
 
 /* Single horizontal line of 4 cards - full width, no wrapping */
@@ -286,14 +295,14 @@
   }
 }
 
-/* Compact community links below cards */
+/* Compact community links above cards */
 .communityLinks {
-  margin-top: 1.5rem;
+  margin: 0 0 1.75rem;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1.5rem;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
 }
 
 .communityLink {
