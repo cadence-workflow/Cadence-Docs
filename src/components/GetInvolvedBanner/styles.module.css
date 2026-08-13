@@ -14,7 +14,7 @@
   font-size: 1.35rem;
   font-weight: 700;
   text-align: center;
-  margin: 0;
+  margin: 0 0 0.4rem;
   color: #1b1b1d;
   letter-spacing: -0.5px;
 }
@@ -44,7 +44,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 0.8rem;
+  gap: 1rem;
   padding: 2.5rem 2rem;
   background: white;
   border: 1px solid #e0e0e0;

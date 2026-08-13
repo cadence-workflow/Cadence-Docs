@@ -98,6 +98,7 @@ export default function GetInvolvedBanner(): JSX.Element {
     <section className={styles.bannerOuter}>
       <div className={styles.bannerHeader}>
         <h3 className={styles.bannerTitle}>Get involved!</h3>
+        <p className={styles.bannerSubtitle}>Join our open-source community</p>
       </div>
       <div className={styles.cardsWrapper}>
         {cards.map((card) => (
@@ -108,7 +109,6 @@ export default function GetInvolvedBanner(): JSX.Element {
             rel="noopener noreferrer"
             className={`${styles.card} ${styles[`card--${card.badgeType}`]}`}
           >
-            <div className={styles.badge}>{card.badge}</div>
             <div className={styles.icon}>{getIcon(card.icon)}</div>
             <h4 className={styles.cardTitle}>{card.title}</h4>
             <p className={styles.cardDesc}>{card.description}</p>
