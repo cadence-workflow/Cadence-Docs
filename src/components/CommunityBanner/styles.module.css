@@ -1,0 +1,118 @@
+/* Full-width community banner with dark, rich gradient. Sits between hero
+   and carousel. Dark background with high-contrast white text for clear messaging
+   about OSS contribution and learning opportunities. */
+.communityBand {
+  background: linear-gradient(135deg, #1e5ba8 0%, #5a3fa8 50%, #a85a3a 100%);
+  padding: 2.5rem 1rem;
+  text-align: center;
+}
+
+.communityContent {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 0 1rem;
+}
+
+.communityIcon {
+  font-size: 56px;
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.communityText {
+  flex: 1;
+  text-align: left;
+}
+
+.communityTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: white;
+  margin: 0 0 0.75rem;
+  line-height: 1.2;
+}
+
+.communitySubtitle {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0 0 1.5rem;
+  line-height: 1.6;
+}
+
+.communityCtas {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.ctaPrimary,
+.ctaSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ctaPrimary {
+  background: white;
+  color: #1e5ba8;
+}
+
+.ctaPrimary:hover {
+  background: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+
+.ctaSecondary {
+  background: transparent;
+  color: white;
+  border: 1.5px solid white;
+}
+
+.ctaSecondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+
+@media screen and (max-width: 640px) {
+  .communityContent {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+    padding: 0;
+  }
+
+  .communityIcon {
+    width: 64px;
+    height: 64px;
+    font-size: 48px;
+  }
+
+  .communityTitle {
+    font-size: 22px;
+  }
+
+  .communityText {
+    text-align: center;
+  }
+
+  .communityCtas {
+    justify-content: center;
+  }
+}

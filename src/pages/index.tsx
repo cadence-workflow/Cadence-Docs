@@ -4,6 +4,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import Layout from '@theme/Layout';
 import CncfBanner from '@site/src/components/CncfBanner';
+import CommunityBanner from '@site/src/components/CommunityBanner';
 import FeaturedCarousel from '@site/src/components/FeaturedCarousel';
 import Heading from '@theme/Heading';
 import { Highlight, themes } from 'prism-react-renderer';
@@ -131,6 +132,7 @@ export default function Home(): JSX.Element {
       description="Cadence is an open-source workflow orchestration engine that simplifies building scalable, reliable, and resilient distributed applications. Explore our platform for advanced workflow management, comprehensive documentation, and community-driven support.">
       <CncfBanner />
       <HomepageHeader />
+      <CommunityBanner />
       <main>
         <FeaturedCarousel />
       </main>
