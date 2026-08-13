@@ -1,0 +1,67 @@
+.bannerOuter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem 1rem;
+  background: transparent;
+}
+
+.bannerContainer {
+  background: linear-gradient(180deg, #fafbfc 0%, #f6f8fa 100%);
+  border: 1px solid #dde2e9;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 700px;
+  width: 100%;
+}
+
+.bannerTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  margin: 0 0 1.5rem;
+  color: #1b1b1d;
+}
+
+.gridLinks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.gridCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 1rem;
+  background: white;
+  border: 0.5px solid #dde2e9;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #1b1b1d;
+  transition: all 0.15s ease;
+}
+
+.gridCard:hover {
+  background: #f0f2f5;
+  border-color: #276ef1;
+  transform: translateY(-2px);
+}
+
+.gridLabel {
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+}
+
+@media screen and (max-width: 640px) {
+  .bannerContainer {
+    padding: 1.5rem;
+  }
+
+  .gridLinks {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
