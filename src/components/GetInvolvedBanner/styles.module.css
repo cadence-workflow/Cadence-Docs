@@ -1,24 +1,17 @@
 /* Full-width banner section with gradient background */
 .bannerOuter {
   width: 100%;
-  padding: 3rem 1rem;
+  padding: 2.5rem 2rem;
   background: linear-gradient(135deg, #f5f7fb 0%, #eef2f8 50%, #f5f7fb 100%);
 }
 
-.bannerContent {
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-}
-
-/* Centered header section */
-.headerSection {
+.bannerHeader {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .bannerTitle {
-  font-size: 2rem;
+  font-size: 1.75rem;
   font-weight: 700;
   text-align: center;
   margin: 0 0 0.5rem;
@@ -27,27 +20,31 @@
 }
 
 .bannerSubtitle {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 400;
   text-align: center;
   margin: 0;
   color: #666666;
 }
 
-/* Responsive grid layout: 4 cols on desktop, 2 on tablet, 1 on mobile */
-.gridLinks {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
+/* Single horizontal line of 4 cards - full width, no wrapping */
+.cardsWrapper {
+  display: flex;
+  gap: 1.5rem;
+  width: 100%;
+  justify-content: space-between;
+  flex-wrap: nowrap;
 }
 
-/* Card base styling with top border and shadow */
-.gridCard {
+/* Card base styling */
+.card {
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 1rem;
+  gap: 0.75rem;
   padding: 2rem 1.5rem;
   background: white;
   border: 1px solid #e0e0e0;
@@ -60,13 +57,13 @@
   position: relative;
 }
 
-.gridCard:hover {
+.card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 16px rgba(39, 110, 241, 0.15);
 }
 
-/* Colored badge styling */
-.cardBadge {
+/* Badge styling */
+.badge {
   display: inline-block;
   padding: 0.4rem 0.8rem;
   border-radius: 20px;
@@ -74,91 +71,89 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: 0.5rem;
-  align-self: flex-start;
 }
 
-.badgediscussion {
+/* Colored badge variants */
+.card--discussion .badge {
   background-color: #e3f2fd;
   color: #1565c0;
 }
 
-.badgecontribute {
+.card--contribute .badge {
   background-color: #f3e5f5;
   color: #6a1b9a;
 }
 
-.badgeissues {
+.card--issues .badge {
   background-color: #fff3e0;
   color: #e65100;
 }
 
-.badgeexamples {
+.card--examples .badge {
   background-color: #e8f5e9;
   color: #2e7d32;
 }
 
-/* Card type styling - colored top borders and hover effects */
-.carddiscussion {
+/* Card type styling - colored top borders */
+.card--discussion {
   border-top-color: #1565c0;
 }
 
-.carddiscussion:hover {
+.card--discussion:hover {
   box-shadow: 0 8px 16px rgba(21, 101, 192, 0.15);
 }
 
-.cardcontribute {
+.card--contribute {
   border-top-color: #6a1b9a;
 }
 
-.cardcontribute:hover {
+.card--contribute:hover {
   box-shadow: 0 8px 16px rgba(106, 27, 154, 0.15);
 }
 
-.cardissues {
+.card--issues {
   border-top-color: #e65100;
 }
 
-.cardissues:hover {
+.card--issues:hover {
   box-shadow: 0 8px 16px rgba(230, 81, 0, 0.15);
 }
 
-.cardexamples {
+.card--examples {
   border-top-color: #2e7d32;
 }
 
-.cardexamples:hover {
+.card--examples:hover {
   box-shadow: 0 8px 16px rgba(46, 125, 50, 0.15);
 }
 
-/* Card icon styling */
-.cardIcon {
+/* Icon styling */
+.icon {
   width: 48px;
   height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #276ef1;
   flex-shrink: 0;
 }
 
-.carddiscussion .cardIcon {
+.card--discussion .icon {
   color: #1565c0;
 }
 
-.cardcontribute .cardIcon {
+.card--contribute .icon {
   color: #6a1b9a;
 }
 
-.cardissues .cardIcon {
+.card--issues .icon {
   color: #e65100;
 }
 
-.cardexamples .cardIcon {
+.card--examples .icon {
   color: #2e7d32;
 }
 
-/* Card title styling */
+/* Card title */
 .cardTitle {
   font-size: 1.1rem;
   font-weight: 600;
@@ -167,8 +162,8 @@
   color: #1b1b1d;
 }
 
-/* Card description - explains community benefit */
-.cardDescription {
+/* Card description */
+.cardDesc {
   font-size: 0.875rem;
   text-align: center;
   margin: 0;
@@ -177,111 +172,116 @@
   flex-grow: 1;
 }
 
-/* Arrow indicator that appears on hover */
-.cardArrow {
+/* Arrow indicator appears on hover */
+.arrow {
   font-size: 1.5rem;
-  color: #276ef1;
-  transition: all 0.3s ease;
   opacity: 0;
   transform: translateX(-4px);
+  transition: all 0.3s ease;
   position: absolute;
   bottom: 1.5rem;
   right: 1.5rem;
 }
 
-.gridCard:hover .cardArrow {
+.card:hover .arrow {
   opacity: 1;
   transform: translateX(4px);
 }
 
-.carddiscussion:hover .cardArrow {
+.card--discussion:hover .arrow {
   color: #1565c0;
 }
 
-.cardcontribute:hover .cardArrow {
+.card--contribute:hover .arrow {
   color: #6a1b9a;
 }
 
-.cardissues:hover .cardArrow {
+.card--issues:hover .arrow {
   color: #e65100;
 }
 
-.cardexamples:hover .cardArrow {
+.card--examples:hover .arrow {
   color: #2e7d32;
 }
 
-/* Tablet: 2 columns */
+/* Tablet: Keep horizontal, reduce padding */
 @media screen and (max-width: 1024px) {
-  .bannerOuter {
-    padding: 2.5rem 1rem;
-  }
-
-  .bannerTitle {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .headerSection {
-    margin-bottom: 2.5rem;
-  }
-
-  .gridLinks {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
-
-  .gridCard {
-    padding: 1.5rem 1rem;
-  }
-
-  .cardArrow {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-/* Mobile: 1 column, stacked layout */
-@media screen and (max-width: 640px) {
   .bannerOuter {
     padding: 2rem 1rem;
   }
 
   .bannerTitle {
-    font-size: 1.25rem;
-    margin-bottom: 0.25rem;
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
   }
 
-  .bannerSubtitle {
-    font-size: 0.9rem;
-  }
-
-  .headerSection {
-    margin-bottom: 1.5rem;
-  }
-
-  .gridLinks {
-    grid-template-columns: 1fr;
+  .cardsWrapper {
     gap: 1rem;
   }
 
-  .gridCard {
-    padding: 1.25rem;
+  .card {
+    padding: 1.5rem 1.25rem;
   }
 
   .cardTitle {
     font-size: 1rem;
   }
 
-  .cardDescription {
+  .cardDesc {
     font-size: 0.8125rem;
   }
+}
 
-  .cardBadge {
-    padding: 0.3rem 0.6rem;
-    font-size: 0.7rem;
+/* Mobile: Stack vertically */
+@media screen and (max-width: 640px) {
+  .bannerOuter {
+    padding: 1.5rem 1rem;
   }
 
-  .cardArrow {
+  .bannerTitle {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .bannerSubtitle {
+    font-size: 0.85rem;
+  }
+
+  .bannerHeader {
+    margin-bottom: 1.5rem;
+  }
+
+  .cardsWrapper {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .card {
+    flex: 1 1 calc(50% - 0.5rem);
+    padding: 1.25rem 1rem;
+  }
+
+  .cardTitle {
+    font-size: 0.95rem;
+  }
+
+  .cardDesc {
+    font-size: 0.75rem;
+  }
+
+  .badge {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.65rem;
+  }
+
+  .icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .arrow {
+    bottom: 1rem;
+    right: 1rem;
     font-size: 1.25rem;
   }
 }
