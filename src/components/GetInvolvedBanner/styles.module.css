@@ -1,11 +1,8 @@
 /* Full-width banner section with gradient background */
 .bannerOuter {
   width: 100%;
-  padding: 1.25rem 2rem;
+  padding: 0.85rem 2rem 1rem;
   background: linear-gradient(135deg, #f5f7fb 0%, #eef2f8 50%, #f5f7fb 100%);
-  position: relative;
-  z-index: 10;
-  margin-top: -80px;
 }
 
 .bannerHeader {
@@ -35,7 +32,6 @@
   display: flex;
   justify-content: center;
   margin: 0 0 1.5rem;
-  order: -1;
 }
 
 .cncfPill :global(section) {
