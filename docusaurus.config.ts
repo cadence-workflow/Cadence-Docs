@@ -20,12 +20,9 @@ const orgName = envReplace('${ORGANIZATION_NAME:-cadence-workflow}', process.env
 const projName = envReplace('${PROJECT_NAME:-Cadence-Docs}', process.env);
 
 // Determine baseUrl based on organization and project
-let baseUrl = envReplace('${BASE_URL:-}', process.env);
-if (!baseUrl) {
-  // If deploying to the org repo (cadence-workflow/Cadence-Docs), use /Cadence-Docs/
-  // If deploying to a fork (other-user/Cadence-Docs), use /
-  baseUrl = orgName === 'cadence-workflow' ? '/Cadence-Docs/' : '/';
-}
+// If deploying to the org repo (cadence-workflow/Cadence-Docs), use /Cadence-Docs/
+// If deploying to a fork (other-user/Cadence-Docs), use /
+const baseUrl = orgName === 'cadence-workflow' ? '/Cadence-Docs/' : '/';
 
 const config: Config = {
   title: 'Cadence',
