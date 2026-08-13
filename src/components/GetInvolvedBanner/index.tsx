@@ -98,7 +98,7 @@ export default function GetInvolvedBanner(): JSX.Element {
   return (
     <section className={styles.bannerOuter}>
       <div className={styles.bannerHeader}>
-        <h3 className={styles.bannerTitle}>Get involved</h3>
+        <h3 className={styles.bannerTitle}>Get involved!</h3>
         <p className={styles.bannerSubtitle}>Join our open-source community</p>
       </div>
       <div className={styles.cncfPill}>
@@ -120,6 +120,25 @@ export default function GetInvolvedBanner(): JSX.Element {
             <div className={styles.arrow}>→</div>
           </Link>
         ))}
+      </div>
+      <div className={styles.communityCtaWrapper}>
+        <div className={styles.communityCtaBox}>
+          <h4 className={styles.communityCtaTitle}>Join the Cadence community</h4>
+          <div className={styles.communityLinks}>
+            <Link href="https://communityinviter.com/apps/cloud-native/cncf" target="_blank" rel="noopener noreferrer" className={`${styles.communityLink} ${styles.communityLinkPrimary}`}>
+              <span className={styles.communityLinkIcon}>💬</span>
+              Join us on Slack (CNCF)
+            </Link>
+            <Link href="https://github.com/cadence-workflow/cadence/discussions" target="_blank" rel="noopener noreferrer" className={`${styles.communityLink} ${styles.communityLinkPrimary}`}>
+              <span className={styles.communityLinkIcon}>📅</span>
+              Get on the list for our next community meetup
+            </Link>
+            <Link href="https://www.linkedin.com/company/cadenceworkflow/" target="_blank" rel="noopener noreferrer" className={styles.communityLink}>
+              <span className={styles.communityLinkIcon}>🔗</span>
+              Follow on LinkedIn
+            </Link>
+          </div>
+        </div>
       </div>
     </section>
   );
