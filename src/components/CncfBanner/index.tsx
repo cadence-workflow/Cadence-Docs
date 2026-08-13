@@ -10,24 +10,22 @@ export default function CncfBanner(): JSX.Element {
   const cncfMark = useBaseUrl('/img/cncf/cncf.png');
 
   return (
-    <section className={styles.cncfBand}>
-      <div className="container">
-        <Link
-          className={styles.cncfBadge}
-          href="https://www.cncf.io/projects/cadence-workflow/">
-          <img
-            src={cncfMark}
-            alt="Cloud Native Computing Foundation"
-            className={styles.cncfMark}
-          />
-          <span className={styles.cncfText}>
-            <strong>Cadence is a CNCF Sandbox project</strong>
-            <span className={styles.cncfSub}>
-              Open governance under the Cloud Native Computing Foundation
-            </span>
+    <section className={styles.cncfOuter}>
+      <Link
+        className={styles.cncfBadge}
+        href="https://www.cncf.io/projects/cadence-workflow/">
+        <img
+          src={cncfMark}
+          alt="Cloud Native Computing Foundation"
+          className={styles.cncfMark}
+        />
+        <span className={styles.cncfText}>
+          <strong>Cadence is a CNCF Sandbox project</strong>
+          <span className={styles.cncfSub}>
+            Open governance under the Cloud Native Computing Foundation
           </span>
-        </Link>
-      </div>
+        </span>
+      </Link>
     </section>
   );
 }
