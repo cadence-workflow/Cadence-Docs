@@ -81,6 +81,9 @@ function HomepageHeader() {
       <img src={gearMark} alt="" aria-hidden="true" className={styles.heroMark} />
       <div className={clsx('container', styles.heroInner)}>
         <div className={styles.heroCopy}>
+          <div className={styles.heroCncf}>
+            <CncfBanner />
+          </div>
           <span className={styles.heroEyebrow}>
             <GitHubMark className={styles.heroEyebrowIcon} />
             9k+ Stars on GitHub
@@ -95,9 +98,6 @@ function HomepageHeader() {
               See Adopters
             </Link>
           </span>
-          <div className={styles.heroCncf}>
-            <CncfBanner />
-          </div>
           {/* The navbar already carries the Cadence wordmark, so the hero leads
               with the value proposition instead of repeating the brand name. */}
           <Heading as="h1" className={clsx('hero__title', styles.heroCompactTitle)}>
