@@ -4,6 +4,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import Layout from '@theme/Layout';
 import GetInvolvedBanner from '@site/src/components/GetInvolvedBanner';
+import CncfBanner from '@site/src/components/CncfBanner';
 import FeaturedCarousel from '@site/src/components/FeaturedCarousel';
 import Heading from '@theme/Heading';
 import { Highlight, themes } from 'prism-react-renderer';
@@ -115,6 +116,9 @@ function HomepageHeader() {
               <GitHubMark className={styles.heroCtaIcon} />
               View on GitHub
             </Link>
+          </div>
+          <div className={styles.heroCncf}>
+            <CncfBanner />
           </div>
         </div>
         <HeroCodePreview />

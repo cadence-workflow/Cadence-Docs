@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from '@docusaurus/Link';
-import CncfBanner from '@site/src/components/CncfBanner';
 import styles from './styles.module.css';
 
 interface CardItem {
@@ -99,10 +98,6 @@ export default function GetInvolvedBanner(): JSX.Element {
     <section className={styles.bannerOuter}>
       <div className={styles.bannerHeader}>
         <h3 className={styles.bannerTitle}>Get involved!</h3>
-        <p className={styles.bannerSubtitle}>Join our open-source community</p>
-      </div>
-      <div className={styles.cncfPill}>
-        <CncfBanner />
       </div>
       <div className={styles.cardsWrapper}>
         {cards.map((card) => (

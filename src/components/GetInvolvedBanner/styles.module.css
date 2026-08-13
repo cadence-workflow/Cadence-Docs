@@ -7,14 +7,14 @@
 
 .bannerHeader {
   text-align: center;
-  margin-bottom: 0.8rem;
+  margin-bottom: 2rem;
 }
 
 .bannerTitle {
   font-size: 1.35rem;
   font-weight: 700;
   text-align: center;
-  margin: 0 0 0.15rem;
+  margin: 0;
   color: #1b1b1d;
   letter-spacing: -0.5px;
 }
@@ -25,20 +25,6 @@
   text-align: center;
   margin: 0;
   color: #666666;
-}
-
-/* CNCF Pill container - between heading and cards */
-.cncfPill {
-  display: flex;
-  justify-content: center;
-  margin: 0.6rem 0 1.8rem;
-}
-
-.cncfPill :global(section) {
-  width: auto;
-  padding: 0;
-  background: transparent;
-  margin: 0;
 }
 
 /* Single horizontal line of 4 cards - full width, no wrapping */
@@ -302,7 +288,7 @@
 
 /* Compact community links below cards */
 .communityLinks {
-  margin-top: 1.75rem;
+  margin-top: 1.5rem;
   display: flex;
   justify-content: center;
   align-items: center;

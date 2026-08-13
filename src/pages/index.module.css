@@ -12,7 +12,7 @@
 }
 
 .heroCompact {
-  padding: 2.25rem 1rem 2rem;
+  padding: 3rem 1rem 2.75rem;
 }
 
 /* Faint brand gear on the left side as a background watermark. Held to low
@@ -159,6 +159,19 @@
   align-items: center;
   gap: 0.6rem;
   margin-top: 0.15rem;
+  margin-bottom: 1.5rem;
+}
+
+.heroCncf {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.heroCncf :global(section) {
+  width: auto;
+  padding: 0;
+  background: transparent;
+  margin: 0;
 }
 
 /* Shared CTA sizing: ~2x button--sm text with a tight line-height so the
