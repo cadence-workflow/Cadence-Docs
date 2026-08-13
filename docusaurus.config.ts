@@ -16,6 +16,17 @@ import { envReplace } from '@pnpm/config.env-replace';
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 const defaultLocale = 'en';
 
+const orgName = envReplace('${ORGANIZATION_NAME:-cadence-workflow}', process.env);
+const projName = envReplace('${PROJECT_NAME:-Cadence-Docs}', process.env);
+
+// Determine baseUrl based on organization and project
+let baseUrl = envReplace('${BASE_URL:-}', process.env);
+if (!baseUrl) {
+  // If deploying to the org repo (cadence-workflow/Cadence-Docs), use /Cadence-Docs/
+  // If deploying to a fork (other-user/Cadence-Docs), use /
+  baseUrl = orgName === 'cadence-workflow' ? '/Cadence-Docs/' : '/';
+}
+
 const config: Config = {
   title: 'Cadence',
   tagline: 'Orchestrate with Confidence: The Open-Source Workflow Engine for Tomorrow',
@@ -32,14 +43,14 @@ const config: Config = {
 
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: envReplace('${BASE_URL:-/}', process.env),
+  baseUrl,
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: envReplace('${ORGANIZATION_NAME:-cadence-workflow}', process.env),
+  organizationName: orgName,
 
   // Usually your repo name.
-  projectName: envReplace('${PROJECT_NAME:-Cadence-Docs}', process.env),
+  projectName: projName,
 
   trailingSlash: false,
 
