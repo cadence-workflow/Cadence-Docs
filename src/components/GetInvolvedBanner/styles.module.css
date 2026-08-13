@@ -1,7 +1,7 @@
 /* Full-width banner section with gradient background */
 .bannerOuter {
   width: 100%;
-  padding: 1.5rem 2rem 2rem;
+  padding: 1.25rem 2rem 1.75rem;
   background: linear-gradient(135deg, #f5f7fb 0%, #eef2f8 50%, #f5f7fb 100%);
 }
 
@@ -58,8 +58,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 0.6rem;
-  padding: 2rem 1.5rem;
+  gap: 0.8rem;
+  padding: 2.5rem 2rem;
   background: white;
   border: 1px solid #e0e0e0;
   border-top: 4px solid #276ef1;
@@ -143,8 +143,8 @@
 
 /* Icon styling */
 .icon {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
