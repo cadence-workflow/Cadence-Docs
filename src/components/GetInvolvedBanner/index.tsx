@@ -96,6 +96,10 @@ export default function GetInvolvedBanner(): JSX.Element {
 
   return (
     <section className={styles.bannerOuter}>
+      <div className={styles.bannerHeader}>
+        <h3 className={styles.bannerTitle}>Get involved!</h3>
+        <p className={styles.bannerSubtitle}>Join our open-source community</p>
+      </div>
       <div className={styles.cardsWrapper}>
         {cards.map((card) => (
           <Link

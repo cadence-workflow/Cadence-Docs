@@ -12,7 +12,7 @@
 }
 
 .heroCompact {
-  padding: 6rem 1rem 5rem;
+  padding: 3.5rem 1rem 3.5rem;
 }
 
 /* Faint brand gear on the left side as a background watermark. Held to low
@@ -39,7 +39,7 @@
   position: relative;
   z-index: 1;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   gap: 1.75rem;
 }
 
@@ -127,21 +127,23 @@
 /* Dark panel for the workflow snippet. The shadow separates it from the cream
    end of the gradient; the hairline border reads as an inner highlight. */
 .heroCode {
-  padding: 0.85rem 1rem;
+  padding: 1.25rem 1.5rem;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 12px;
   background-color: #0B0F19;
   box-shadow: 0 12px 30px rgba(11, 15, 25, 0.28);
   overflow: auto;
-  max-height: 320px;
+  display: flex;
+  align-items: center;
 }
 
 .heroCodePre {
   margin: 0;
   padding: 0;
-  font-size: 0.7rem;
-  line-height: 1.5;
+  font-size: 0.9rem;
+  line-height: 1.6;
   text-align: left;
+  width: 100%;
   /* The snippet is tab-indented Go; the 8-column default would eat the column. */
   tab-size: 2;
 }
