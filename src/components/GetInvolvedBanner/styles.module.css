@@ -1,120 +1,287 @@
+/* Full-width banner section with gradient background */
 .bannerOuter {
   width: 100%;
-  background: linear-gradient(135deg, #f0f4f9 0%, #e8ecf1 100%);
   padding: 3rem 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background: linear-gradient(135deg, #f5f7fb 0%, #eef2f8 50%, #f5f7fb 100%);
 }
 
-.bannerContainer {
+.bannerContent {
   max-width: 1200px;
+  margin: 0 auto;
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 2rem;
-  padding: 2rem;
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(209, 213, 219, 0.3);
-  border-radius: 16px;
-  box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.5),
-              0 4px 12px rgba(0, 0, 0, 0.05);
-  backdrop-filter: blur(8px);
+}
+
+/* Centered header section */
+.headerSection {
+  text-align: center;
+  margin-bottom: 3rem;
 }
 
 .bannerTitle {
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 0 0 0.5rem;
   color: #1b1b1d;
+  letter-spacing: -0.5px;
+}
+
+.bannerSubtitle {
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
   margin: 0;
-  white-space: nowrap;
+  color: #666666;
+}
+
+/* Responsive grid layout: 4 cols on desktop, 2 on tablet, 1 on mobile */
+.gridLinks {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+/* Card base styling with top border and shadow */
+.gridCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  padding: 2rem 1.5rem;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-top: 4px solid #276ef1;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #1b1b1d;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.gridCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(39, 110, 241, 0.15);
+}
+
+/* Colored badge styling */
+.cardBadge {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+  align-self: flex-start;
+}
+
+.badgediscussion {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.badgecontribute {
+  background-color: #f3e5f5;
+  color: #6a1b9a;
+}
+
+.badgeissues {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.badgeexamples {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+/* Card type styling - colored top borders and hover effects */
+.carddiscussion {
+  border-top-color: #1565c0;
+}
+
+.carddiscussion:hover {
+  box-shadow: 0 8px 16px rgba(21, 101, 192, 0.15);
+}
+
+.cardcontribute {
+  border-top-color: #6a1b9a;
+}
+
+.cardcontribute:hover {
+  box-shadow: 0 8px 16px rgba(106, 27, 154, 0.15);
+}
+
+.cardissues {
+  border-top-color: #e65100;
+}
+
+.cardissues:hover {
+  box-shadow: 0 8px 16px rgba(230, 81, 0, 0.15);
+}
+
+.cardexamples {
+  border-top-color: #2e7d32;
+}
+
+.cardexamples:hover {
+  box-shadow: 0 8px 16px rgba(46, 125, 50, 0.15);
+}
+
+/* Card icon styling */
+.cardIcon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #276ef1;
   flex-shrink: 0;
 }
 
-.buttonsWrapper {
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  align-items: center;
+.carddiscussion .cardIcon {
+  color: #1565c0;
 }
 
-.pillButton {
-  display: inline-flex;
-  padding: 0.5rem 1.25rem;
-  background: white;
-  border: 1px solid #d1d5db;
-  border-radius: 20px;
-  font-size: 0.95rem;
-  font-weight: 500;
+.cardcontribute .cardIcon {
+  color: #6a1b9a;
+}
+
+.cardissues .cardIcon {
+  color: #e65100;
+}
+
+.cardexamples .cardIcon {
+  color: #2e7d32;
+}
+
+/* Card title styling */
+.cardTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  margin: 0;
   color: #1b1b1d;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  white-space: nowrap;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
-.pillButton:hover {
-  background: #f0f2f5;
-  border-color: #276ef1;
+/* Card description - explains community benefit */
+.cardDescription {
+  font-size: 0.875rem;
+  text-align: center;
+  margin: 0;
+  color: #666666;
+  line-height: 1.5;
+  flex-grow: 1;
+}
+
+/* Arrow indicator that appears on hover */
+.cardArrow {
+  font-size: 1.5rem;
   color: #276ef1;
-  box-shadow: 0 4px 8px rgba(39, 110, 241, 0.15);
-  transform: translateY(-1px);
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateX(-4px);
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
 }
 
-.pillButton:active {
-  transform: translateY(0);
+.gridCard:hover .cardArrow {
+  opacity: 1;
+  transform: translateX(4px);
 }
 
-/* Mobile responsive: stack vertically */
-@media screen and (max-width: 768px) {
-  .bannerContainer {
-    flex-direction: column;
-    gap: 1.5rem;
-    padding: 1.5rem;
-    text-align: center;
+.carddiscussion:hover .cardArrow {
+  color: #1565c0;
+}
+
+.cardcontribute:hover .cardArrow {
+  color: #6a1b9a;
+}
+
+.cardissues:hover .cardArrow {
+  color: #e65100;
+}
+
+.cardexamples:hover .cardArrow {
+  color: #2e7d32;
+}
+
+/* Tablet: 2 columns */
+@media screen and (max-width: 1024px) {
+  .bannerOuter {
+    padding: 2.5rem 1rem;
   }
 
   .bannerTitle {
-    width: 100%;
-    white-space: normal;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
   }
 
-  .buttonsWrapper {
-    width: 100%;
-    justify-content: center;
-    gap: 0.5rem;
+  .headerSection {
+    margin-bottom: 2.5rem;
   }
 
-  .pillButton {
-    padding: 0.475rem 1rem;
-    font-size: 0.9rem;
+  .gridLinks {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .gridCard {
+    padding: 1.5rem 1rem;
+  }
+
+  .cardArrow {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
-@media screen and (max-width: 480px) {
+/* Mobile: 1 column, stacked layout */
+@media screen and (max-width: 640px) {
   .bannerOuter {
-    padding: 2rem 0.5rem;
+    padding: 2rem 1rem;
   }
 
-  .bannerContainer {
-    padding: 1.25rem;
+  .bannerTitle {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .bannerSubtitle {
+    font-size: 0.9rem;
+  }
+
+  .headerSection {
+    margin-bottom: 1.5rem;
+  }
+
+  .gridLinks {
+    grid-template-columns: 1fr;
     gap: 1rem;
   }
 
-  .bannerTitle {
-    font-size: 1.05rem;
+  .gridCard {
+    padding: 1.25rem;
   }
 
-  .buttonsWrapper {
-    gap: 0.375rem;
+  .cardTitle {
+    font-size: 1rem;
   }
 
-  .pillButton {
-    padding: 0.425rem 0.875rem;
-    font-size: 0.85rem;
-    flex: 1 1 calc(50% - 0.2rem);
+  .cardDescription {
+    font-size: 0.8125rem;
+  }
+
+  .cardBadge {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.7rem;
+  }
+
+  .cardArrow {
+    font-size: 1.25rem;
   }
 }
