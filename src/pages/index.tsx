@@ -104,6 +104,9 @@ function HomepageHeader() {
             Write fault-tolerant, stateful background workflows as code in Go, Java and Python
             without worrying about retries, queues, or state persistence.
           </p>
+          <div className={styles.heroCncf}>
+            <CncfBanner />
+          </div>
           <div className={styles.heroCtas}>
             <Link to="/docs/get-started" className={clsx('button button--sm', styles.heroCtaPrimary)}>
               Get Started in 5 min
@@ -116,9 +119,6 @@ function HomepageHeader() {
               <GitHubMark className={styles.heroCtaIcon} />
               View on GitHub
             </Link>
-          </div>
-          <div className={styles.heroCncf}>
-            <CncfBanner />
           </div>
         </div>
         <HeroCodePreview />
