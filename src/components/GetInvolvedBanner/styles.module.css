@@ -1,7 +1,7 @@
 /* Full-width banner section with gradient background */
 .bannerOuter {
   width: 100%;
-  padding: 0.85rem 2rem 1rem;
+  padding: 2rem 2rem 2.5rem;
   background: linear-gradient(135deg, #f5f7fb 0%, #eef2f8 50%, #f5f7fb 100%);
 }
 
@@ -27,11 +27,11 @@
   color: #666666;
 }
 
-/* CNCF Pill container - at top of section */
+/* CNCF Pill container - between heading and cards */
 .cncfPill {
   display: flex;
   justify-content: center;
-  margin: 0 0 1.5rem;
+  margin: 1.5rem 0 1.5rem;
 }
 
 .cncfPill :global(section) {
