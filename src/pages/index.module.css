@@ -67,8 +67,10 @@
   margin-top: auto;
 }
 
+/* Fluid type: scales continuously with the viewport between the clamp bounds
+   so the headline never jumps at a single breakpoint. */
 .heroCompactTitle {
-  font-size: 2.4rem;
+  font-size: clamp(1.9rem, 1.15rem + 2.6vw, 2.6rem);
   line-height: 1.05;
   letter-spacing: -0.02em;
   font-weight: 800;
@@ -80,7 +82,7 @@
 /* The 62ch cap only binds once the layout stacks; on desktop the column itself
    is the narrower constraint. */
 .heroCompactSubtitle {
-  font-size: 0.95rem;
+  font-size: clamp(0.9rem, 0.82rem + 0.35vw, 1.05rem);
   line-height: 1.4;
   max-width: 62ch;
   margin-bottom: 0.85rem;
@@ -268,13 +270,9 @@
     flex: 0 0 auto;
   }
 
+  /* Let the headline use the full stacked-column width; size stays fluid. */
   .heroCompactTitle {
-    font-size: 2.1rem;
     max-width: 100%;
-  }
-
-  .heroCompactSubtitle {
-    font-size: 1rem;
   }
 
   .heroCodePre {

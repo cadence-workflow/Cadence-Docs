@@ -49,18 +49,18 @@
   font-weight: 400;
 }
 
-/* Single horizontal line of 4 cards - full width, no wrapping */
+/* Fluid grid: 4 cards on wide screens, reflowing to 3 / 2 / 1 as the viewport
+   narrows. auto-fit + minmax lets the row rebalance at every width instead of
+   staying jammed in a single nowrap line that gets cramped between breakpoints. */
 .cardsWrapper {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1.25rem;
   width: 100%;
-  justify-content: space-between;
-  flex-wrap: nowrap;
 }
 
 /* Card base styling */
 .card {
-  flex: 1;
   min-width: 0;
   display: flex;
   flex-direction: column;
@@ -274,12 +274,11 @@
   }
 
   .cardsWrapper {
-    flex-wrap: wrap;
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
   }
 
   .card {
-    flex: 1 1 calc(50% - 0.5rem);
     padding: 1.25rem 1rem;
   }
 
