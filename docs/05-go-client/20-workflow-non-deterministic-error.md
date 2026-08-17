@@ -28,6 +28,15 @@ Workflow A then will be picked up by Host B and continues its execution. This pr
 
 In general, any errors that occur during the replay process are called <b>non-deterministic errors</b>. We will explore different types of non-deterministic errors in sections below but first let's try to understand how Cadence is able to perform the replay of workflow in case of failure.
 
+## Samples
+
+Samples for preventing and detecting non-deterministic errors:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Workflow versioning** | Prevents non-deterministic errors when changing workflow code with `workflow.GetVersion` | [versioning](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/versioning) |
+| **Replay test** | Detects non-deterministic changes by replaying recorded history | [replay_test.go](https://github.com/cadence-workflow/cadence-samples/blob/master/cmd/samples/recipes/helloworld/replay_test.go) |
+
 ## Decision tasks of workflow
 
 In the previous section, we learned that Cadence is able to replay workflow histories in case of failure. We will learn exactly how Cadence keeps track of histories and how they get replayed when necessary.

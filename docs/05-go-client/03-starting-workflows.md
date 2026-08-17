@@ -22,6 +22,16 @@ workflow code, or by referring to the registered name of the function. In
 [Workflow Registration](/docs/go-client/create-workflows/#registration) we show
 how to register the workflows.
 
+## Samples
+
+Runnable samples for starting workflows:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Basic starter** | Starter program that launches the hello world workflow | [main.go](https://github.com/cadence-workflow/cadence-samples/blob/master/new_samples/hello_world/main.go) |
+| **Delayed start** | Starts a workflow after a configured delay | [delaystart](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/delaystart) |
+| **Cancel and terminate** | Cancels or terminates a started workflow | [operations](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/operations) |
+
 ## Starting a workflow
 
 After [creating a workflow](/docs/go-client/create-workflows) we can start it.

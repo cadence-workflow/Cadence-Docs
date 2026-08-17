@@ -27,6 +27,15 @@ the managed service impose some requirements and restrictions on the implementat
 coordination logic. The details of these requirements and restrictions are described in the
 **Implementation** section below.
 
+## Samples
+
+Runnable workflow samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Hello world** | Complete workflow, worker, and starter with a detailed README | [hello_world](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/hello_world) |
+| **Sequential activities** | Workflow chaining several activities and passing results between them | [greetings](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/greetings) |
+
 ## Overview
 
 The sample code below shows a simple implementation of a :workflow: that executes one :activity:. The

@@ -33,7 +33,14 @@ The following Grafana dashboards demonstrate the CPU utilization issue that Auto
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/CUivn-eZTco?si=VOWdEjPso9G5xo92" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
->📚 **Interactive Learning Sample**: Try our [AutoScaler sample implementation](https://github.com/cadence-workflow/cadence-samples/tree/master/cmd/samples/advanced/autoscaling-monitoring) with built-in load generation, real-time metrics collection, and monitoring dashboards. Perfect for understanding how AutoScaler responds to different workload patterns and visualizing poller state changes in real-time.
+### Samples
+
+Runnable AutoScaler sample:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **AutoScaler demo** | AutoScaler with built-in load generation, real-time metrics collection, and monitoring dashboards | [autoscaling-monitoring](https://github.com/cadence-workflow/cadence-samples/tree/master/cmd/samples/advanced/autoscaling-monitoring) |
+
 ## Overview
 
 ### What AutoScaler does
@@ -62,8 +69,6 @@ worker.Options{
     }
 }
 ```
-
->📚 **Interactive Learning Sample**: Try our [AutoScaler sample implementation](https://github.com/cadence-workflow/cadence-samples/tree/master/cmd/samples/advanced/autoscaling-monitoring) with built-in load generation, real-time metrics collection, and monitoring dashboards. Perfect for understanding how AutoScaler responds to different workload patterns and visualizing poller state changes in real-time.
 
 >⚠️ **Note:** If enabled, the AutoScaler will ignore these options:
 ```go

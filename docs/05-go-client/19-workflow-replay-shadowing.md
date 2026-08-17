@@ -23,6 +23,16 @@ In the Versioning section, we mentioned that incompatible changes to workflow de
 **You'll learn:** Replayer setup • Shadower integration • Breaking change detection<br/>
 **Time commitment:** 30-45 minutes 
 
+## Samples
+
+Replay and shadowing test samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Replay test** | Replays a recorded hello world history against the workflow definition | [replay_test.go](https://github.com/cadence-workflow/cadence-samples/blob/master/cmd/samples/recipes/helloworld/replay_test.go) |
+| **Shadowing test** | Local shadowing test for the hello world workflow | [shadow_test.go](https://github.com/cadence-workflow/cadence-samples/blob/master/cmd/samples/recipes/helloworld/shadow_test.go) |
+| **Shadowing worker** | Worker configured to run in shadow mode | [main.go](https://github.com/cadence-workflow/cadence-samples/blob/master/cmd/samples/recipes/helloworld/main.go) |
+
 ## Workflow Replayer
 
 Workflow Replayer is a testing component for replaying existing workflow histories against a workflow definition. The replaying logic is the same as the one used for processing workflow tasks, so if there are any incompatible changes in the workflow definition, the replay test will fail.
@@ -66,7 +76,7 @@ cadence --do <domain> workflow show --wid <workflowID> --rid <runID> --of <outpu
 ```
 ### Sample Unit Test
 
-This sample is also available in our samples repo [here](https://github.com/cadence-workflow/cadence-samples/blob/6350c61d16487d3a6cf9b31e3fac6967170c71ba/cmd/samples/recipes/helloworld/replay_test.go#L18).
+This sample is also available in our samples repo [here](https://github.com/cadence-workflow/cadence-samples/blob/master/cmd/samples/recipes/helloworld/replay_test.go).
 
 ```go
 func TestReplayWorkflowHistoryFromFile(t *testing.T) {
@@ -117,7 +127,7 @@ Complete documentation on shadow options which includes default values, accepted
 
 Local shadowing with the Workflow Shadower is similar to the replay test. First create a workflow shadower with optional shadow and replay options, then register the workflow that needs to be shadowed. Finally, call the `Run` method to start the shadowing. The method will return if shadowing has finished or any non-deterministic error is found.
 
-Here's a simple example. The example is also available [here](https://github.com/cadence-workflow/cadence-samples/blob/6350c61d16487d3a6cf9b31e3fac6967170c71ba/cmd/samples/recipes/helloworld/shadow_test.go#L21).
+Here's a simple example. The example is also available [here](https://github.com/cadence-workflow/cadence-samples/blob/master/cmd/samples/recipes/helloworld/shadow_test.go).
 
 ```go
 func TestShadowWorkflow(t *testing.T) {
@@ -158,5 +168,5 @@ To enable the shadow mode, the only change needed is setting the `EnableShadowWo
 Registered workflows will be forwarded to the underlying WorkflowReplayer. DataConverter, WorkflowInterceptorChainFactories, ContextPropagators, and Tracer specified in the `worker.Options` will also be used as ReplayOptions. Since all shadow workflows are running in one system domain, to avoid conflict, **the actual task list name used will be `domain-tasklist`.**
 
 ### How to Set Up
-A sample of this setup can be found [here](https://github.com/cadence-workflow/cadence-samples/blob/6350c61d16487d3a6cf9b31e3fac6967170c71ba/cmd/samples/recipes/helloworld/main.go#L77).
+A sample of this setup can be found [here](https://github.com/cadence-workflow/cadence-samples/blob/master/cmd/samples/recipes/helloworld/main.go).
 

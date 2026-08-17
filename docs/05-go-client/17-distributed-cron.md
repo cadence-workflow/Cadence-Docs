@@ -22,6 +22,17 @@ parameter of
 
 You can also start a :workflow: using the Cadence :CLI: with an optional cron schedule using the `--cron` argument.
 
+## Samples
+
+Runnable cron samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Distributed cron** | Recurring workflow driven by the CronSchedule start option | [cron](https://github.com/cadence-workflow/cadence-samples/tree/master/cmd/samples/cron) |
+| **Schedules** | Schedule operations, the recommended successor to cron for new use cases | [schedule](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/schedule) |
+
+---
+
 For :workflow:workflows: with CronSchedule:
 
 * Cron schedule is based on UTC time. For example cron schedule "15 8 \* \* \*"

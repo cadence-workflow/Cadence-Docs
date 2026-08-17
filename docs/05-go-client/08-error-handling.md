@@ -20,7 +20,24 @@ error cases. If the :activity: returns an error as `errors.New()` or `fmt.Errorf
 be converted to `workflow.GenericError`. If the :activity: returns an error as
 `cadence.NewCustomError(“err-reason”, details)`, that error will be converted to `*cadence.CustomError`.
 There are other types of errors such as `workflow.TimeoutError`, `workflow.CanceledError` and
-`workflow.PanicError`. Following is an example of what your error code might look like:
+`workflow.PanicError`.
+
+## Samples
+
+Samples that show pieces of error handling:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Activity cancellation** | Cancels a running activity and handles the cancellation | [cancelactivity](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/cancelactivity) |
+| **Retry on failure** | Activity failure handled through automatic retries | [retryactivity](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/retryactivity) |
+
+:::note
+No sample is dedicated to error handling with `cadence.NewCustomError`, error details, or the error type switch shown below; these samples cover related pieces only.
+:::
+
+---
+
+Following is an example of what your error code might look like:
 
 ```go
 err := workflow.ExecuteActivity(ctx, YourActivityFunc).Get(ctx, nil)

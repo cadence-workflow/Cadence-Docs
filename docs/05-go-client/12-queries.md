@@ -26,6 +26,19 @@ library. You can add custom :query: types to handle :query:queries: such as :que
 :workflow:, or :query:querying: how many :activity:activities: the :workflow: has completed. To do this, you need to set
 up a :query: handler using `workflow.SetQueryHandler`.
 
+## Samples
+
+Runnable query samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Query workflow state** | Custom query handlers exposing workflow state, including formatted responses | [query](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/query) |
+| **Consistent query** | Strongly consistent query against a signal-driven workflow | [consistentquery](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/consistentquery) |
+
+For queries that return formatted markdown rendered by Cadence Web, see [Custom Workflow Controls](/docs/concepts/workflow-queries-formatted-data).
+
+---
+
 The handler must be a function that returns two values:
 1. A serializable result
 2. An error

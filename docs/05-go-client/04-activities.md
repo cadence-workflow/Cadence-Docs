@@ -30,6 +30,15 @@ history can thus adversely impact the performance of your :workflow:. Therefore,
 of data you transfer via :activity: invocation parameters or return values. Otherwise, no additional
 limitations exist on :activity: implementations.
 
+## Samples
+
+Runnable activity samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Basic activities** | Activity implementations invoked from a workflow | [activities](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/activities) |
+| **Local activity** | Short activity executed directly on the workflow worker | [localactivity](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/localactivity) |
+
 ## Overview
 
 The following example demonstrates a simple :activity: that accepts a string parameter, appends a word

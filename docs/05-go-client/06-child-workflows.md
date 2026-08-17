@@ -18,6 +18,15 @@ permalink: /docs/go-client/child-workflows
 
 Child workflows run independently of that relationship in every other respect: each has its own event history, its own timeouts and retry policy, and can run on a different task list and worker pool than the parent. This page follows a child from start to finish.
 
+## Samples
+
+Runnable child-workflow samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Child workflow** | Parent starts a child, waits for its result | [Go source](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/childworkflow) |
+| **Child cancellation** | Parent cancels a running child | [Recipe](https://github.com/cadence-workflow/cadence-samples/tree/master/cmd/samples/recipes/childworkflow) |
+
 ---
 
 ## When to use a child workflow
@@ -178,17 +187,6 @@ _ = future.Get(ctx, nil)
 | `RetryPolicy` | No | Exponential retry policy applied to the child execution. |
 | `WaitForCancellation` | No | If `true`, the parent waits for the child to finish reacting to a cancellation. See [Cancelling a child](#cancelling-a-child). |
 | `ParentClosePolicy` | No | What happens to the child when the parent closes. See [When the parent closes](#when-the-parent-closes). |
-
----
-
-## Samples
-
-Runnable child-workflow samples:
-
-| Sample | Description | Code |
-|--------|-------------|------|
-| **Child workflow** | Parent starts a child, waits for its result | [Go source](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/childworkflow) |
-| **Child cancellation** | Parent cancels a running child | [Recipe](https://github.com/cadence-workflow/cadence-samples/tree/master/cmd/samples/recipes/childworkflow) |
 
 ---
 

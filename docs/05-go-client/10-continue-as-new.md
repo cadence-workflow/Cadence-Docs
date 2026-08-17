@@ -30,3 +30,16 @@ func SimpleWorkflow(workflow.Context ctx, value string) error {
     return workflow.NewContinueAsNewError(ctx, SimpleWorkflow, value)
 }
 ```
+
+## Samples
+
+Samples that use continue-as-new:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Child workflow loop** | Child workflow that runs its iterations through continue-as-new | [childworkflow](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/childworkflow) |
+| **Long optimization loop** | Particle swarm optimization that resets history between iterations | [pso](https://github.com/cadence-workflow/cadence-samples/tree/master/cmd/samples/pso) |
+
+:::note
+No sample is dedicated to continue-as-new; both samples use the pattern as part of a larger example.
+:::

@@ -34,6 +34,19 @@ if err := future.Get(ctx, &result); err != nil {
     return err
 }
 ```
+
+## Samples
+
+Runnable samples for executing activities:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Basic execution** | Executes activities and collects their results | [activities](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/activities) |
+| **Parallel fan-out** | Runs multiple activities in parallel and waits for all of them | [branch](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/branch) |
+| **Pick first** | Races parallel activities and cancels the losers after the first completes | [pickfirst](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/pickfirst) |
+
+---
+
 Let's take a look at each component of this call.
 
 ## Activity options

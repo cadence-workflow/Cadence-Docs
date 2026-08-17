@@ -20,6 +20,14 @@ to reconstruct the :workflow: state by replaying the saved history :event: data 
 definition code. This means that any incompatible update to the :workflow: definition code could cause
 a non-deterministic issue if not handled correctly.
 
+## Samples
+
+Runnable versioning sample:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Workflow versioning** | Workflow evolved safely across versions with `workflow.GetVersion` | [versioning](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/versioning) |
+
 ## workflow.GetVersion()
 
 Consider the following :workflow: definition:
