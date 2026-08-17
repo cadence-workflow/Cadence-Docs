@@ -181,7 +181,12 @@
   display: flex;
   justify-content: flex-start;
   margin-top: 0;
-  margin-bottom: 0;
+  /* Explicit, always-present gap below the CNCF pill. margin-top:auto on
+     .heroCopyMain only opens a gap when the code panel is the taller column;
+     when the copy is taller (the common case) that auto-margin collapses to
+     zero and the pill would smash against the star eyebrow. This guarantees
+     separation at every width and viewport height. */
+  margin-bottom: clamp(1.75rem, 5vh, 3.5rem);
 }
 
 .heroCncf :global(section) {
