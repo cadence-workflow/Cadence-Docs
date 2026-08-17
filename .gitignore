@@ -32,10 +32,6 @@ yarn-error.log
 .docusaurus
 .cache-loader
 
-# Temporary samples rollout tracker. Remove this rule and delete the file
-# before opening the samples documentation PR.
-/SAMPLES-MATRIX.md
-
 # Misc
 .envrc.local
 .env.local
