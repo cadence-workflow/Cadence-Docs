@@ -15,6 +15,16 @@ permalink: /docs/java-client/workflow-replay-shadowing
 
 In the Versioning section, we mentioned that incompatible changes to workflow definition code could cause non-deterministic issues when processing workflow tasks if versioning is not done correctly. However, it may be hard for you to tell if a particular change is incompatible or not and whether versioning logic is needed. To help you identify incompatible changes and catch them before production traffic is impacted, we implemented Workflow Replayer and Workflow Shadower.
 
+## Samples
+
+Runnable replay and shadowing samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Replay tests** | Replay tests against recorded workflow histories | [replaytests](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/test/java/com/uber/cadence/samples/replaytests) |
+| **Shadowing test** | Local shadowing test using `WorkflowShadower` | [HelloWorkflowShadowingTest.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/test/java/com/uber/cadence/samples/hello/HelloWorkflowShadowingTest.java) |
+| **Shadowing worker** | Worker running in shadow mode to replay production workflows | [ShadowTraffic.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/shadowing/ShadowTraffic.java) |
+
 ## Workflow Replayer
 
 Workflow Replayer is a testing component for replaying existing workflow histories against a workflow definition. The replaying logic is the same as the one used for processing workflow tasks, so if there's any incompatible changes in the workflow definition, the replay test will fail.
@@ -52,7 +62,7 @@ If an exception is returned from the replay method, it means there's an incompat
 
 ### Sample Replay Test
 
-A similar sample is available in our samples repo: [HelloWorkflowShadowingTest.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/test/java/com/uber/cadence/samples/hello/HelloWorkflowShadowingTest.java) (the dedicated `HelloActivityReplayTest.java` has been removed; the snippet below is preserved here as the canonical reference).
+Replay test samples are available under [replaytests](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/test/java/com/uber/cadence/samples/replaytests) in the samples repo, including [HelloActivityReplayTest.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/test/java/com/uber/cadence/samples/replaytests/HelloActivityReplayTest.java):
 
 ```java
 public class HelloActivityReplayTest {

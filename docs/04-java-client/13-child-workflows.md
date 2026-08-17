@@ -18,6 +18,15 @@ Besides activities, a workflow can also orchestrate other workflows. The orchest
 
 Child workflows run independently of that relationship in every other respect: each has its own event history, its own timeouts and retry policy, and can run on a different task list and worker pool than the parent. This page follows a child from start to finish.
 
+## Samples
+
+Runnable child-workflow samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Child workflow** | Parent starts a child, waits for its result | [HelloChild.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloChild.java) |
+| **Child cancellation** | Parent cancels a running child | [HelloCancelChild.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloCancelChild.java) |
+
 ---
 
 ## When to use a child workflow
@@ -182,17 +191,6 @@ scope.cancel();
 | `setWorkflowIdReusePolicy` | No | Whether a completed `WorkflowId` may be reused. |
 | `setRetryOptions` | No | Exponential retry policy applied to the child execution. |
 | `setParentClosePolicy` | No | What happens to the child when the parent closes. See [When the parent closes](#when-the-parent-closes). |
-
----
-
-## Samples
-
-Runnable child-workflow samples:
-
-| Sample | Description | Code |
-|--------|-------------|------|
-| **Child workflow** | Parent starts a child, waits for its result | [HelloChild.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloChild.java) |
-| **Child cancellation** | Parent cancels a running child | [HelloCancelChild.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloCancelChild.java) |
 
 ---
 

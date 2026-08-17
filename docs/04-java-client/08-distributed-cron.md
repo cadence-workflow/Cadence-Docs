@@ -20,6 +20,17 @@ parameter of
 
 You can also start a :workflow: using the Cadence :CLI: with an optional cron schedule using the `--cron` argument.
 
+## Samples
+
+Runnable periodic workflow samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Cron workflow** | Recurring workflow driven by the `CronSchedule` start option | [HelloCron.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloCron.java) |
+| **Periodic loop** | Periodic execution implemented with `continueAsNew` instead of cron | [HelloPeriodic.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloPeriodic.java) |
+
+---
+
 For :workflow:workflows: with CronSchedule:
 
 * CronSchedule is based on UTC time. For example cron schedule "15 8 \* \* \*"

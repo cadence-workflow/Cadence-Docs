@@ -33,6 +33,16 @@ and the payload in the :workflow: history. The :workflow: can then process the :
 afterwards without the risk of losing the information. The :workflow: also has the option to stop
 execution by blocking on a :signal: channel.
 
+## Samples
+
+Runnable signal samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Signal handler** | Workflow with a signal method that updates its state | [HelloSignal.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloSignal.java) |
+| **Signal and response** | Sends a signal to a workflow and reads back its response | [HelloSignalAndResponse.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloSignalAndResponse.java) |
+| **Signal from client** | Starts a workflow and signals it from client code | [SignalSample.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/clientsamples/SignalSample.java) |
+
 ## Implement Signal Handler in Workflow
 
 See the below example from [sample](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloSignal.java).

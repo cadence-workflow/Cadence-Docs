@@ -21,6 +21,18 @@ The only requirement is that :activity: method arguments and return values are s
 [DataConverter](https://www.javadoc.io/doc/com.uber.cadence/cadence-client/latest/com/uber/cadence/converter/DataConverter.html)
 interface. The default implementation uses a JSON serializer, but an alternative implementation can be easily configured.
 
+## Samples
+
+Runnable activity interface samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Single-method interface** | Minimal activity interface with one method | [HelloActivity.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloActivity.java) |
+| **Multi-method interface** | Several activity methods with `@ActivityMethod` options | [StoreActivities.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/fileprocessing/StoreActivities.java) |
+| **Interface in its own file** | Activity interface kept separate from its implementation | [Activities.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/calculation/Activities.java) |
+
+---
+
 Following is an example of an interface that defines four activities:
 
 ```java

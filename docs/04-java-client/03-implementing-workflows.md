@@ -20,6 +20,16 @@ returns, the :workflow_execution: is closed. While :workflow_execution: is open,
 No additional calls to :workflow: methods are allowed. The :workflow: object is stateful, so :query: and :signal: methods
 can communicate with the other parts of the :workflow: through :workflow: object fields.
 
+## Samples
+
+Runnable workflow implementation samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Basic workflow** | Workflow implementation that calls a single activity | [HelloActivity.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloActivity.java) |
+| **Async activity calls** | Calls activities asynchronously with `Async.function` and `Promise` | [HelloAsync.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloAsync.java) |
+| **Async lambda** | Runs part of the workflow logic asynchronously in a lambda | [HelloAsyncLambda.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloAsyncLambda.java) |
+
 ## Calling Activities
 
 `Workflow.newActivityStub` returns a client-side stub that implements an :activity: interface.

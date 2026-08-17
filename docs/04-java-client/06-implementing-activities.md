@@ -20,6 +20,18 @@ The values passed to :activity:activities: through invocation parameters or retu
 The entire execution history is transferred from the Cadence service to :workflow_worker:workflow_workers: when a :workflow: state needs to recover.
 A large execution history can thus adversely impact the performance of your :workflow:. Therefore, be mindful of the amount of data you transfer via :activity: invocation parameters or return values. Otherwise, no additional limitations exist on :activity: implementations.
 
+## Samples
+
+Runnable activity implementation samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Synchronous activity** | Regular activity implementation returning a result | [HelloActivity.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloActivity.java) |
+| **Async completion** | Activity completed later from a different process | [HelloAsyncActivityCompletion.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloAsyncActivityCompletion.java) |
+| **Local activity** | Short activity executed directly on the workflow worker | [HelloLocalActivity.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloLocalActivity.java) |
+
+---
+
 ```java
 public class FileProcessingActivitiesImpl implements FileProcessingActivities {
 

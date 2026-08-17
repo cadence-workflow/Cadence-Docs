@@ -17,6 +17,16 @@ The Query feature exposes workflow internal state to the external world. Cadence
 
 :query:Query: callbacks must be read-only not mutating the :workflow: state in any way. The other limitation is that the :query: callback cannot contain any blocking code. Both above limitations rule out ability to invoke :activity:activities: from the :query: handlers.
 
+## Samples
+
+Runnable query samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Query method** | Workflow exposing its state through a query method | [HelloQuery.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloQuery.java) |
+| **Consistent query** | Strongly consistent reads of workflow state | [HelloConsistentQuery.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloConsistentQuery.java) |
+| **Formatted query responses** | Queries returning markdown that Cadence Web renders as a dashboard | [query](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/query) |
+
 ## Built-in Query: Stack Trace
 
 If a :workflow_execution: has been stuck at a state for longer than an expected period of time, you

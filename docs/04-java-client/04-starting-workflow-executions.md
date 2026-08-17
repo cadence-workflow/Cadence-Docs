@@ -18,6 +18,18 @@ permalink: /docs/java-client/starting-workflow-executions
 A :workflow: interface that executes a :workflow: requires initializing a `WorkflowClient` instance, creating
 a client side stub to the :workflow:, and then calling a method annotated with @WorkflowMethod.
 
+## Samples
+
+Runnable samples for starting workflows from client code:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Start a workflow** | Creates a `WorkflowClient` and starts a workflow execution | [HelloWorldSample.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/clientsamples/HelloWorldSample.java) |
+| **Start and signal** | Starts a workflow and sends it a signal from the client | [SignalSample.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/clientsamples/SignalSample.java) |
+| **Standalone starter** | Separate starter program for the calculation workflow | [WorkflowStarter.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/calculation/WorkflowStarter.java) |
+
+---
+
 A simple `WorkflowClient` instance that utilizes the :tchannel: communication protocol can be initialized as follows:
 
 ```java

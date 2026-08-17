@@ -40,6 +40,16 @@ permalink: /docs/java-client/testing
 
 ```
 
+## Samples
+
+Runnable test samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Hello sample tests** | Unit tests for the Hello samples using the test environments | [hello tests](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/test/java/com/uber/cadence/samples/hello) |
+| **Activity test** | Activity unit test with `TestActivityEnvironment` | [HelloActivityTest.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/test/java/com/uber/cadence/samples/hello/HelloActivityTest.java) |
+| **Saga workflow test** | Workflow test that covers compensation logic | [TripBookingWorkflowTest.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/test/java/com/uber/cadence/samples/bookingsaga/TripBookingWorkflowTest.java) |
+
 ## Workflow Test Environment
 TestWorkflowEnvironment provides workflow unit testing capabilities.
 

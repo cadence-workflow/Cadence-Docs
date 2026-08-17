@@ -32,3 +32,11 @@ public void greet(String name) {
 }
 
 ```
+
+## Samples
+
+Runnable continue-as-new sample:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Periodic loop** | Periodic workflow that restarts itself with `continueAsNew` | [HelloPeriodic.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloPeriodic.java) |

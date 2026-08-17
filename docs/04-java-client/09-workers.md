@@ -17,6 +17,17 @@ A :worker: or *:worker: service* is a service that hosts the :workflow: and :act
 
 You can run a Cadence :worker: in a new or an existing service. Use the framework APIs to start the Cadence :worker: and link in all :activity: and :workflow: implementations that you require the service to execute.
 
+## Samples
+
+Runnable worker samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Worker setup** | Creates a worker, registers implementations, and starts polling | [HelloWorkerSetup.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloWorkerSetup.java) |
+| **Spring Boot worker** | Spring Boot application that wires up Cadence workers | [CadenceSamplesApplication.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/spring/CadenceSamplesApplication.java) |
+
+---
+
 ```java
   WorkerFactory factory = WorkerFactory.newInstance(workflowClient,
           WorkerFactoryOptions.newBuilder()
