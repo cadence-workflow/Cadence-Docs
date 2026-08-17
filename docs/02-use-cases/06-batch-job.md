@@ -17,6 +17,18 @@ permalink: /docs/use-cases/batch-job
 A lot of batch jobs are not pure data manipulation programs. For those, the existing big data frameworks are the best fit. Cadence is a more general orchestration mechanism and doesn't provide native SQL or worker data shuffle functionality out of the box, engineers wishing to rely on these would need to implement this functionality themselves.
 But if processing a record requires external API calls that might fail and potentially take a long time, Cadence might be preferable.
 
+## Samples
+
+Runnable samples covering the batch patterns on this page:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Bounded concurrency** | Processes a batch of items with a fixed number of parallel workers | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/concurrency) |
+| **Split and merge** | Partitions a batch across parallel activities and merges the results | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/splitmerge) |
+| **Heartbeat progress and resume** | Long-running activity that heartbeats and resumes from recorded progress, the runnable equivalent of the example below | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/retryactivity) |
+
+---
+
 #### Use Case:
 
 One of our internal Uber customers use Cadence for end of month statement generation. Each statement requires calls to multiple microservices and some statements can be really large. Cadence was chosen because it provides hard guarantees around durability of the financial data and seamlessly deals with long running operations, retries, and intermittent failures.

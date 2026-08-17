@@ -19,6 +19,17 @@ a lot of possibilities for intermittent failures. The scale is also a concern wh
 A lot of operations require some sort of locking to ensure that no more than one mutation is executed on a resource at a time.
 Cadence provides strong guarantees of uniqueness by business ID. This can be used to implement such locking behavior in a fault tolerant and scalable manner.
 
+## Samples
+
+These samples demonstrate the two techniques described above rather than a complete provisioning system:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Locking by business ID** | Mutex workflow that serializes mutations on a shared resource | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/cmd/samples/recipes/mutex) |
+| **Host-specific task routing** | Routes activities to a specific host through a host task list | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/cmd/samples/fileprocessing) · [Java](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/fileprocessing) |
+
+---
+
 Some real-world use cases:
 
  * [Using Cadence workflows to spin up Kubernetes, by Banzai Cloud](https://web.archive.org/web/20230930234856/https://banzaicloud.com/blog/introduction-to-cadence/) (archived; banzaicloud.com is no longer resolvable after the Cisco acquisition)

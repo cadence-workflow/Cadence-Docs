@@ -13,6 +13,9 @@ keywords:
 permalink: /docs/java-client/workflow-interface
 ---
 
+:workflow:Workflow: encapsulates the orchestration of :activity:activities: and child :workflow:workflows:.
+It can also answer synchronous :query:queries: and receive external :event:events: (also known as :signal:signals:).
+
 ## Samples
 
 Runnable workflow-interface samples:
@@ -24,9 +27,6 @@ Runnable workflow-interface samples:
 | **Separate interface and implementation** | Workflow interface and implementation in separate files | [calculation](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/calculation) |
 
 ---
-
-:workflow:Workflow: encapsulates the orchestration of :activity:activities: and child :workflow:workflows:.
-It can also answer synchronous :query:queries: and receive external :event:events: (also known as :signal:signals:).
 
 A :workflow: must define an interface class. All of its methods must have one of the following annotations:
 
