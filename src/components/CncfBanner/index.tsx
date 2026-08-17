@@ -13,7 +13,9 @@ export default function CncfBanner(): JSX.Element {
     <section className={styles.cncfOuter}>
       <Link
         className={styles.cncfBadge}
-        href="https://www.cncf.io/projects/cadence-workflow/">
+        href="https://www.cncf.io/projects/cadence-workflow/"
+        target="_blank"
+        rel="noopener noreferrer">
         <img
           src={cncfMark}
           alt="Cloud Native Computing Foundation"
