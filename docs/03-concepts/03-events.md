@@ -16,6 +16,19 @@ permalink: /docs/concepts/events
 
 Fault-oblivious stateful :workflow:workflows: can be :signal:signalled: about an external :event:. A :signal: is always point to point destined to a specific :workflow: instance. :signal:Signals: are always processed in the order in which they are received.
 
+## Samples
+
+Runnable signal samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Signal handling** | Workflow that waits for and reacts to external signals | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/signal) · [Java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloSignal.java) |
+| **Event accumulation** | Counter workflow that accumulates signal events | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/signalcounter) |
+| **Signal and response** | Sends a signal to a workflow and reads back its response | [Java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloSignalAndResponse.java) |
+| **Human task approval** | Agent workflow paused until a human approves or rejects it by signal, requires an OpenAI API key | [Python](https://github.com/cadence-workflow/cadence-samples/tree/master/python_sdk_samples/openai_samples/human_in_the_loop) |
+
+---
+
 There are multiple scenarios for which :signal:signals: are useful.
 
 ## Event Aggregation and Correlation

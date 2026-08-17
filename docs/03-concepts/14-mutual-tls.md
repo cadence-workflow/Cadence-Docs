@@ -15,6 +15,18 @@ permalink: /docs/concepts/mutual-tls
 
 This guide explains how to implement Mutual TLS (mTLS) authentication in Cadence to secure communication between clients and servers. mTLS provides bidirectional authentication, ensuring that both the client and server verify each other's identities before exchanging data.
 
+## Samples
+
+Runnable mTLS sample:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **mTLS client** | Complete client setup with certificate generation scripts and a step-by-step guide | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/client_tls) |
+
+:::note
+There is no Java or Python mTLS sample yet.
+:::
+
 ---
 
 ## Overview

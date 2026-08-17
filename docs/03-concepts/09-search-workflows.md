@@ -28,6 +28,14 @@ WorkflowType = "main.Workflow" AND CloseStatus != "completed" AND (StartTime >
 
 In other places, this is also called as `advanced visibility`. While `basic visibility` is referred to basic listing without being able to search.
 
+## Samples
+
+Runnable search attribute samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Search attributes** | Starting a workflow with search attributes and upserting them from workflow code | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/cmd/samples/recipes/searchattributes) · [Java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloSearchAttributes.java) |
+
 ## Memo vs Search Attributes
 
 Cadence offers two methods for creating :workflow:workflows: with key-value pairs: memo and search attributes. Memo can only be provided on :workflow: start. Also, memo data are not indexed, and are therefore not searchable. Memo data are visible when listing :workflow:workflows: using the list APIs. Search attributes data are indexed so you can search :workflow:workflows: by :query:querying: on these attributes. However, search attributes require the use of Elasticsearch.

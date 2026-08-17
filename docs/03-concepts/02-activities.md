@@ -19,6 +19,17 @@ Cadence does not recover :activity: state in case of failures. Therefore an :act
 
 :activity:Activities: are invoked asynchronously through :task_list:task_lists:. A :task_list: is essentially a queue used to store an :activity_task: until it is picked up by an available :worker:. The :worker: processes an :activity: by invoking its implementation function. When the function returns, the :worker: reports the result back to the Cadence service which in turn notifies the :workflow: about completion. It is possible to implement an :activity: fully asynchronously by completing it from a different process.
 
+## Samples
+
+Runnable activity samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Basic activity** | Workflow invoking a regular activity | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/activities) · [Java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloActivity.java) |
+| **Local activity** | Short activity executed directly on the workflow worker without a task list round trip | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/localactivity) · [Java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloLocalActivity.java) |
+| **Retry with heartbeat** | Long-running activity that heartbeats progress and retries on failure | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/retryactivity) |
+| **Async completion** | Activity completed later from a different process | [Java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloAsyncActivityCompletion.java) |
+
 ## Timeouts
 
 Cadence does not impose any system limit on :activity: duration. It is up to the application to choose the timeouts for its execution. These are the configurable :activity: timeouts:

@@ -75,6 +75,22 @@ Cadence Web renders **markdown** returned by workflow queries. Add three Markdoc
 
 ---
 
+## Samples
+
+Full working examples in both Go and Java:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **MarkdownQueryWorkflow** | Signals, start buttons, images | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/query/markdown_query.go) · [Java](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/query/MarkdownQueryWorkflow.java) |
+| **LunchVoteWorkflow** | Interactive voting with live results | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/query/lunch_vote_workflow.go) · [Java](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/query/LunchVoteWorkflow.java) |
+| **OrderFulfillmentWorkflow** | Full ops dashboard with state machine | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/query/order_fulfillment_workflow.go) · [Java](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/query/OrderFulfillmentWorkflow.java) |
+
+:::note
+Requires **Cadence Web v4.0.14+** for MarkDoc rendering support.
+:::
+
+---
+
 ## How It Works
 
 ```mermaid
@@ -369,19 +385,3 @@ Renders an image with optional size control. Standard markdown images (`![alt](u
 | `alt` | Yes | Alt text |
 | `width` | No | Width in pixels |
 | `height` | No | Height in pixels |
-
----
-
-## Sample Code
-
-Full working examples in both Go and Java:
-
-| Sample | Description | Go | Java |
-|--------|-------------|----|------|
-| **MarkdownQueryWorkflow** | Signals, start buttons, images | [Go source](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/query/markdown_query.go) | [Java source](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/query/MarkdownQueryWorkflow.java) |
-| **LunchVoteWorkflow** | Interactive voting with live results | [Go source](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/query/lunch_vote_workflow.go) | [Java source](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/query/LunchVoteWorkflow.java) |
-| **OrderFulfillmentWorkflow** | Full ops dashboard with state machine | [Go source](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/query/order_fulfillment_workflow.go) | [Java source](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/query/OrderFulfillmentWorkflow.java) |
-
-:::note
-Requires **Cadence Web v4.0.14+** for MarkDoc rendering support.
-:::

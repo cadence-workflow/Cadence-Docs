@@ -20,6 +20,18 @@ permalink: /docs/concepts/schedules
 
 Cadence Schedules let you run a workflow on a recurring cadence. Unlike the older `CronSchedule` option on `StartWorkflowOptions`, Schedules are first-class server-side objects: you can inspect them, pause them, update them, backfill missed runs, and observe their history without touching your workflow code.
 
+## Samples
+
+Runnable schedule samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Schedule operations** | One script per operation: create, update, pause, unpause, backfill, describe, list, and delete | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/schedule) · [Python](https://github.com/cadence-workflow/cadence-samples/tree/master/python_sdk_samples/schedule_samples) |
+
+:::note
+The Java client does not support Schedules yet.
+:::
+
 ## How it works
 
 When you create a schedule, the Cadence server runs an internal durable scheduler workflow in the background. On each tick it evaluates the cron expression, applies the overlap policy, and starts your target workflow. The scheduler workflow is fault-tolerant and survives server restarts and failures just like any other Cadence workflow.

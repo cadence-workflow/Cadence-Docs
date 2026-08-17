@@ -21,6 +21,18 @@ To execute a :query: an external client calls a synchronous Cadence API providin
 
 Cadence team is currently working on implementing _update_ feature that would be similar to :query: in the way it is invoked, but would support :workflow: state mutation and :local_activity: invocations. From user's point of view, _update_ is similar to signal + strong consistent query, but implemented in a much less expensive way in Cadence.
 
+## Samples
+
+Runnable query samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Query workflow state** | Exposes in-progress workflow state to synchronous queries | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/query) · [Java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloQuery.java) |
+| **Consistent query** | Strongly consistent reads of workflow state | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/consistentquery) · [Java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloConsistentQuery.java) |
+| **Query an agent workflow** | Query that lists pending interruptions in a human-in-the-loop agent, requires an OpenAI API key | [Python](https://github.com/cadence-workflow/cadence-samples/tree/master/python_sdk_samples/openai_samples/human_in_the_loop) |
+
+Queries can also return formatted markdown that Cadence Web renders as an interactive dashboard. See [Custom Workflow Controls](/docs/concepts/workflow-queries-formatted-data) for details and samples.
+
 ## Stack Trace Query
 
 The Cadence client libraries expose some predefined :query:queries: out of the box. Currently the only supported built-in :query: is _stack_trace_. This :query: returns stacks of all :workflow: owned threads. This is a great way to troubleshoot any :workflow: in production.
