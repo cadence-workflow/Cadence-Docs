@@ -15,6 +15,14 @@ permalink: /docs/python-client/schedules
 
 The Python client exposes schedule management through methods on `Client`. For a full explanation of overlap policies, backfill, catch-up, and when to use Schedules over `cron_schedule`, see the [Schedules concept page](/docs/concepts/schedules).
 
+## Samples
+
+Runnable schedule sample:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Schedule operations** | One script per operation: create, update, pause, unpause, backfill, describe, list, and delete | [schedule_samples](https://github.com/cadence-workflow/cadence-samples/tree/master/python_sdk_samples/schedule_samples) |
+
 Schedule operations use protobuf types from `cadence.api.v1.schedule_pb2`. Duration fields use `from_timedelta` from `google.protobuf.duration`; Timestamp fields need a small helper since no equivalent `from_datetime` exists:
 
 ```python

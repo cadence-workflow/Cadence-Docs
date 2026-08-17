@@ -13,6 +13,18 @@ permalink: /docs/python-client/distributed-cron
 
 The `cron_schedule` field on `start_workflow` runs a workflow on a recurring cadence. This is the legacy approach; for new use cases consider [Schedules](/docs/python-client/schedules), which add pause/unpause, backfill, overlap control, and visibility.
 
+## Samples
+
+Related sample:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Schedule operations** | Schedules, the recommended alternative to `cron_schedule` | [schedule_samples](https://github.com/cadence-workflow/cadence-samples/tree/master/python_sdk_samples/schedule_samples) |
+
+:::note
+No Python sample uses `cron_schedule` directly yet.
+:::
+
 ## Starting a cron workflow
 
 ```python

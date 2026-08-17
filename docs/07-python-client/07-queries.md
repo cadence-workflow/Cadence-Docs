@@ -13,6 +13,18 @@ permalink: /docs/python-client/queries
 
 Queries let external code read the current state of a running workflow without affecting it. Query handlers must be synchronous and must not modify workflow state.
 
+## Samples
+
+Runnable query sample:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Human in the loop** | Agent workflow exposing a `get_interruptions` query, viewable in Cadence Web | [human_in_the_loop](https://github.com/cadence-workflow/cadence-samples/tree/master/python_sdk_samples/openai_samples/human_in_the_loop) |
+
+:::note
+This sample requires an OpenAI API key to run.
+:::
+
 ## Defining a query handler
 
 ```python
