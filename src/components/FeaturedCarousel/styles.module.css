@@ -1,5 +1,22 @@
 .carousel {
-  padding: 3rem 0;
+  padding: 3rem 0 4rem 0;
+}
+
+/* The section wraps its content in Docusaurus's global .container, which caps
+   the width (~1140px) and centers it -- leaving the carousel visibly narrower
+   than the full-bleed Get Involved banner directly above. Drop the cap and
+   match the banner's 2rem side gutters so both bands share the same edges. */
+.carousel :global(.container) {
+  max-width: none;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+@media (max-width: 640px) {
+  .carousel :global(.container) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 
 .header {
