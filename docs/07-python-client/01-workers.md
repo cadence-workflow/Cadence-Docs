@@ -12,6 +12,17 @@ permalink: /docs/python-client/workers
 
 # Workers
 
+## Samples
+
+Runnable worker samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Minimal worker** | Creates a client and starts a worker with a workflow registry | [run_worker.py](https://github.com/cadence-workflow/cadence-samples/blob/master/python_sdk_samples/schedule_samples/run_worker.py) |
+| **Agent workflow worker** | Hosts human-in-the-loop agent workflows | [main.py](https://github.com/cadence-workflow/cadence-samples/blob/master/python_sdk_samples/openai_samples/human_in_the_loop/main.py) |
+
+---
+
 A worker connects to the Cadence server, polls a task list for workflow and activity tasks, and executes them. Three objects work together: `Client`, `Registry`, and `Worker`.
 
 ## Client

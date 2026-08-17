@@ -18,6 +18,21 @@ permalink: /docs/concepts/workflows
 
 # Workflows
 
+## Samples
+
+Runnable workflow samples:
+
+| Sample | Description | Go | Java | Python |
+|--------|-------------|----|------|--------|
+| **Hello World** | One workflow invoking a single activity | [Go source](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/hello_world) | [Java source](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloActivity.java) | — |
+| **Sequential activities** | Several activities chained, passing results between them | [Go source](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/greetings) | [Java source](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/calculation) | — |
+
+:::note
+The Python SDK has no standalone hello-world workflow yet. The closest example is [workflow.py](https://github.com/cadence-workflow/cadence-samples/blob/master/python_sdk_samples/schedule_samples/workflow.py) in the schedule samples.
+:::
+
+---
+
 The central abstraction in Cadence is a **durable execution function**: ordinary application code that continues running correctly across process restarts, infrastructure failures, and arbitrary pauses. You write it as a plain function; Cadence handles making it durable.
 
 More precisely, Cadence calls this a **fault-oblivious stateful :workflow:**. The state of the :workflow: code, including local variables and threads it creates, is immune to process and Cadence service failures. This is a very powerful concept as it encapsulates state, processing threads, durable timers and :event: handlers.

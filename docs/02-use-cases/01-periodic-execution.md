@@ -12,6 +12,17 @@ keywords:
 permalink: /docs/use-cases/periodic-execution
 ---
 
+## Samples
+
+Runnable periodic-execution samples:
+
+| Sample | Description | Go | Java | Python |
+|--------|-------------|----|------|--------|
+| **Schedules** | Create, pause, update, and backfill a schedule as a server-side object, independent of the workflow | [Go source](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/schedule) | — | [Python source](https://github.com/cadence-workflow/cadence-samples/tree/master/python_sdk_samples/schedule_samples) |
+| **Distributed Cron** | Recurring workflow driven by a `CronSchedule` cron expression on the start options | [Go source](https://github.com/cadence-workflow/cadence-samples/tree/master/cmd/samples/cron) | [Java source](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloCron.java) | — |
+
+---
+
 Periodic execution, frequently referred to as distributed cron, is when you execute business logic periodically. The advantage of Cadence for these scenarios is that it guarantees execution, sophisticated error handling, retry policies, and visibility into execution history.
 
 Another important dimension is scale. Some use cases require periodic execution for a large number of entities.
