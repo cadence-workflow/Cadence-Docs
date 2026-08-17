@@ -57,6 +57,14 @@
    mode, leaving the title and subtitle dark on the blue end of the gradient. */
 .heroCopy {
   color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Pushed to the bottom of the column so the CTA row aligns with the bottom of
+   the code panel, leaving a clear gap after the CNCF pill above it. */
+.heroCopyMain {
+  margin-top: auto;
 }
 
 .heroCompactTitle {
@@ -164,14 +172,14 @@
   align-items: center;
   gap: 0.6rem;
   margin-top: 0.15rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0;
 }
 
 .heroCncf {
   display: flex;
   justify-content: flex-start;
   margin-top: 0;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0;
 }
 
 .heroCncf :global(section) {

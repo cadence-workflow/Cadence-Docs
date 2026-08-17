@@ -5,46 +5,25 @@
   background: linear-gradient(135deg, #f5f7fb 0%, #eef2f8 50%, #f5f7fb 100%);
 }
 
-/* Centered header row: title + subtitle sit inline together, with the widget
-   anchor a comfortable gap to the right so the community bubble reads as
-   part of the same group without crowding the text. */
+/* Header row spans the full card width: the title + subtitle group sits on the
+   left (aligned to the first card's left edge), the community links pill on the
+   right (aligned to the last card's right edge). space-between distributes the
+   gap between them so the three text elements read as one balanced bar. */
 .bannerHeader {
-  margin: 0 0 1.25rem;
+  margin: 0 0 1.5rem;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
+  justify-content: space-between;
+  gap: 1rem;
   flex-wrap: wrap;
-  min-height: 3.75rem;
 }
 
+/* Title + subtitle sit inline, separated by a dot. */
 .bannerTitleWrap {
   display: inline-flex;
   align-items: baseline;
-}
-
-.bannerSubtitleWrap {
-  display: inline-flex;
-  align-items: baseline;
-}
-
-.bannerSubtitleWrap::before {
-  content: "·";
-  margin-right: 0.6rem;
-  color: #bbb;
-  font-weight: 400;
-}
-
-/* Reserves room to the right of the centered header text for the floating
-   community bubble on page load. Width matches the widget's diameter plus a
-   little breathing room; on scroll the widget slides off to the right and
-   this space stays empty (harmless — the row is still centered as a whole). */
-.widgetAnchor {
-  width: 3.75rem;
-  height: 3.75rem;
-  margin-left: 1.5rem;
-  position: relative;
-  flex-shrink: 0;
+  gap: 0.6rem;
+  flex-wrap: wrap;
 }
 
 .bannerTitle {
@@ -60,6 +39,14 @@
   font-weight: 400;
   margin: 0;
   color: #666666;
+  position: relative;
+}
+
+.bannerSubtitle::before {
+  content: "·";
+  margin-right: 0.6rem;
+  color: #bbb;
+  font-weight: 400;
 }
 
 /* Single horizontal line of 4 cards - full width, no wrapping */
@@ -321,15 +308,8 @@
   }
 }
 
-/* Compact community links pill, sits below the cards */
-.communityLinks {
-  margin: 1.75rem 0 0;
-  display: flex;
-  justify-content: center;
-}
-
-/* Translucent pill wrapper, styled like the hero eyebrow but using neutral
-   colors that read on the light gradient background. */
+/* Translucent pill wrapper in the header, styled like the hero eyebrow but
+   using neutral colors that read on the light gradient background. */
 .communityLinksPill {
   display: inline-flex;
   align-items: center;
@@ -339,6 +319,7 @@
   border-radius: 999px;
   background-color: rgba(39, 110, 241, 0.06);
   font-size: 0.9rem;
+  flex-shrink: 0;
 }
 
 .communityLink {
@@ -358,4 +339,49 @@
   font-weight: 400;
   font-size: 1rem;
   line-height: 1;
+}
+
+/* ------------------------------------------------------------------ */
+/* Dark mode. The section otherwise hardcodes a light gradient, white  */
+/* cards, and dark text, which reads as a jarring light band on a dark */
+/* page. These overrides swap in dark surfaces and light type.         */
+/* ------------------------------------------------------------------ */
+html[data-theme='dark'] .bannerOuter {
+  background: linear-gradient(135deg, #1a1d24 0%, #15171d 50%, #1a1d24 100%);
+}
+
+html[data-theme='dark'] .bannerTitle {
+  color: #f5f6f7;
+}
+
+html[data-theme='dark'] .bannerSubtitle {
+  color: #a0a4ab;
+}
+
+html[data-theme='dark'] .card {
+  background: #1e2129;
+  border-color: #2c303a;
+  color: #e6e7e9;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+html[data-theme='dark'] .cardTitle {
+  color: #f5f6f7;
+}
+
+html[data-theme='dark'] .cardDesc {
+  color: #a0a4ab;
+}
+
+html[data-theme='dark'] .communityLinksPill {
+  border-color: rgba(120, 165, 245, 0.3);
+  background-color: rgba(120, 165, 245, 0.12);
+}
+
+html[data-theme='dark'] .communityLink {
+  color: #78a5f5;
+}
+
+html[data-theme='dark'] .communityLinkSeparator {
+  color: #666;
 }
