@@ -316,6 +316,7 @@ export default function FeaturedCarousel(): JSX.Element {
                   <Link
                     className={clsx('card', styles.card)}
                     to={item.href}
+                    data-tag={item.tag}
                     tabIndex={hidden ? -1 : undefined}>
                     <div className={styles.media}>
                       <img
@@ -335,11 +336,12 @@ export default function FeaturedCarousel(): JSX.Element {
                         }
                       />
                       {item.tag && <span className={styles.tag} data-tag={item.tag}>{item.tag}</span>}
-                    </div>
-                    <div className={styles.body}>
+                      <div className={styles.mediaShade} aria-hidden="true" />
                       <Heading as="h3" className={styles.cardTitle}>
                         {item.title}
                       </Heading>
+                    </div>
+                    <div className={styles.body}>
                       <p className={styles.desc}>{item.description}</p>
                       <span className={styles.cta}>{item.cta ?? 'Read more'} →</span>
                     </div>

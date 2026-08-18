@@ -208,16 +208,31 @@
 }
 
 .card {
+  --card-accent: #276ef1;
   display: flex;
   flex-direction: column;
   height: 100%;
   overflow: hidden;
   text-decoration: none;
   color: inherit;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-top: 3px solid var(--card-accent);
   border-radius: var(--ifm-card-border-radius, 12px);
   box-shadow: var(--ifm-global-shadow-lw);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
+.card[data-tag='Blog']      { --card-accent: #c87216; }
+.card[data-tag='Doc']       { --card-accent: #276ef1; }
+.card[data-tag='Community'] { --card-accent: #5b4bc4; }
+.card[data-tag='FAQ']       { --card-accent: #16743a; }
+.card[data-tag='Video']     { --card-accent: #c93636; }
+
+:global(html[data-theme='dark']) .card[data-tag='Blog']      { --card-accent: #f0a34a; }
+:global(html[data-theme='dark']) .card[data-tag='Doc']       { --card-accent: #72a7ff; }
+:global(html[data-theme='dark']) .card[data-tag='Community'] { --card-accent: #a99cff; }
+:global(html[data-theme='dark']) .card[data-tag='FAQ']       { --card-accent: #69c987; }
+:global(html[data-theme='dark']) .card[data-tag='Video']     { --card-accent: #ff8585; }
 
 .card:hover {
   transform: translateY(-4px);
@@ -228,26 +243,54 @@
 
 .media {
   position: relative;
-  aspect-ratio: 16 / 9;
-  background: #fdfdfd;
+  aspect-ratio: 16 / 10;
+  display: flex;
+  align-items: flex-end;
+  background: color-mix(in srgb, var(--card-accent) 14%, #f8fafc);
   overflow: hidden;
 }
 
 :global(html[data-theme='dark']) .media {
-  background: #1c2430;
+  background: color-mix(in srgb, var(--card-accent) 22%, #151a23);
 }
 
 .media img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
   display: block;
+  opacity: 0.34;
+  transform: scale(1.04);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.card:hover .media img {
+  opacity: 0.45;
+  transform: scale(1.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .media img {
+    transition: none;
+  }
+}
+
+.mediaShade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(8, 15, 30, 0.05) 20%, rgba(8, 15, 30, 0.82) 100%),
+    linear-gradient(135deg, color-mix(in srgb, var(--card-accent) 18%, transparent), transparent 62%);
+  pointer-events: none;
 }
 
 .tag {
   position: absolute;
   top: 0.75rem;
   left: 0.75rem;
+  z-index: 2;
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -270,26 +313,33 @@
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
   flex: 1;
 }
 
 .cardTitle {
+  position: relative;
+  z-index: 2;
   margin: 0;
-  font-size: 1.15rem;
-  line-height: 1.3;
+  padding: 3.25rem 1.25rem 1.15rem;
+  color: #fff;
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  line-height: 1.25;
+  text-wrap: balance;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
 }
 
 .desc {
   margin: 0;
   font-size: 0.9rem;
+  line-height: 1.55;
   color: var(--ifm-color-emphasis-700);
   flex: 1;
 }
 
 .cta {
   font-weight: 600;
-  color: var(--ifm-color-primary);
+  color: var(--card-accent);
   font-size: 0.9rem;
 }
 
