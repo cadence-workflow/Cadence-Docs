@@ -16,6 +16,10 @@ import { envReplace } from '@pnpm/config.env-replace';
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 const defaultLocale = 'en';
 
+// Hardcode baseUrl for GitHub Pages deployment
+// This repo is deployed to cadence-workflow/Cadence-Docs which requires /Cadence-Docs/
+const baseUrl = '/Cadence-Docs/';
+
 const config: Config = {
   title: 'Cadence',
   tagline: 'Orchestrate with Confidence: The Open-Source Workflow Engine for Tomorrow',
@@ -32,14 +36,14 @@ const config: Config = {
 
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: envReplace('${BASE_URL:-/}', process.env),
+  baseUrl,
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: envReplace('${ORGANIZATION_NAME:-cadence-workflow}', process.env),
+  organizationName: 'cadence-workflow',
 
   // Usually your repo name.
-  projectName: envReplace('${PROJECT_NAME:-Cadence-Docs}', process.env),
+  projectName: 'Cadence-Docs',
 
   trailingSlash: false,
 
