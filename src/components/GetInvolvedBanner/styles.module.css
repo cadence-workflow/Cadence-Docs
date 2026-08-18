@@ -357,12 +357,46 @@ html[data-theme='dark'] .bannerSubtitle {
   color: #a0a4ab;
 }
 
+/* Only override the side/bottom borders and leave border-top-color untouched
+   so the per-variant colored accent (.card--discussion, .card--contribute,
+   etc.) still reads at the top of each card in dark mode. */
 html[data-theme='dark'] .card {
   background: #1e2129;
-  border-color: #2c303a;
+  border-right-color: #2c303a;
+  border-bottom-color: #2c303a;
+  border-left-color: #2c303a;
   color: #e6e7e9;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
+
+/* Lighten the badge fills for dark mode: the pale pastel variants used on the
+   light banner (e.g. #e3f2fd) sit as bright blocks on the dark card. Use a
+   translucent tint of the accent color so the badge reads as a subtle chip
+   while keeping the colored text legible. */
+html[data-theme='dark'] .card--discussion .badge {
+  background-color: rgba(21, 101, 192, 0.18);
+  color: #7ab8ff;
+}
+html[data-theme='dark'] .card--contribute .badge {
+  background-color: rgba(156, 122, 218, 0.20);
+  color: #cdb1ff;
+}
+html[data-theme='dark'] .card--issues .badge {
+  background-color: rgba(230, 130, 30, 0.18);
+  color: #ffb266;
+}
+html[data-theme='dark'] .card--examples .badge {
+  background-color: rgba(46, 125, 50, 0.20);
+  color: #7bd68a;
+}
+
+/* Match the icon color to the brighter dark-mode accent used above so the
+   glyph and the badge feel like part of the same accent, not two different
+   greens/blues at different brightness. */
+html[data-theme='dark'] .card--discussion .icon { color: #7ab8ff; }
+html[data-theme='dark'] .card--contribute .icon { color: #cdb1ff; }
+html[data-theme='dark'] .card--issues     .icon { color: #ffb266; }
+html[data-theme='dark'] .card--examples   .icon { color: #7bd68a; }
 
 html[data-theme='dark'] .cardTitle {
   color: #f5f6f7;

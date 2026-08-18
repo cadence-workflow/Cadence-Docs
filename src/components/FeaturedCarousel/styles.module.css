@@ -259,7 +259,10 @@
 .tag { color: #fff; }
 .tag[data-tag='Blog']      { background: #E0902B; }
 .tag[data-tag='Doc']       { background: #276EF1; }
-.tag[data-tag='Community'] { background: #7A3FD6; }
+/* Deeper indigo-purple. The previous #7A3FD6 sat too close to the royal
+   purple used for the "Contribute" card in Get Involved; this shade reads
+   as a distinct, more sophisticated purple and holds white text well. */
+.tag[data-tag='Community'] { background: #5B4BC4; }
 .tag[data-tag='FAQ']       { background: #0a521fda; } 
 .tag[data-tag='Video']     { background: #D43A3A; }
 
