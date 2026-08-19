@@ -26,9 +26,11 @@
   margin-bottom: 1.25rem;
 }
 
+/* Typography (font-size/weight/color) comes from the shared
+   .homepage-section-heading class; margin stays 0 here since .header already
+   manages spacing below the title via its own flex layout. */
 .title {
   margin: 0;
-  font-size: 1.75rem;
 }
 
 .controls {

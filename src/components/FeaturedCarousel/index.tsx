@@ -197,7 +197,7 @@ export default function FeaturedCarousel(): JSX.Element {
     <section className={styles.carousel}>
       <div className="container">
         <div className={styles.header}>
-          <Heading as="h2" className={styles.title}>
+          <Heading as="h2" className={clsx('homepage-section-heading', styles.title)}>
             What's new?
           </Heading>
           <div className={styles.controls}>

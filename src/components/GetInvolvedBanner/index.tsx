@@ -1,5 +1,7 @@
 import React from 'react';
+import clsx from 'clsx';
 import Link from '@docusaurus/Link';
+import Heading from '@theme/Heading';
 import styles from './styles.module.css';
 
 interface CardItem {
@@ -98,7 +100,9 @@ export default function GetInvolvedBanner(): JSX.Element {
     <section className={styles.bannerOuter}>
       <div className={styles.bannerHeader}>
         <div className={styles.bannerTitleWrap}>
-          <h3 className={styles.bannerTitle}>Get involved!</h3>
+          <Heading as="h2" className={clsx('homepage-section-heading', styles.bannerTitle)}>
+            Get involved!
+          </Heading>
           <p className={styles.bannerSubtitle}>Join our open-source community</p>
         </div>
         <span className={styles.communityLinksPill}>
@@ -117,7 +121,9 @@ export default function GetInvolvedBanner(): JSX.Element {
             className={`${styles.card} ${styles[`card--${card.badgeType}`]}`}
           >
             <div className={styles.icon}>{getIcon(card.icon)}</div>
-            <h4 className={styles.cardTitle}>{card.title}</h4>
+            <Heading as="h3" className={styles.cardTitle}>
+              {card.title}
+            </Heading>
             <p className={styles.cardDesc}>{card.description}</p>
             <div className={styles.arrow}>→</div>
           </Link>
