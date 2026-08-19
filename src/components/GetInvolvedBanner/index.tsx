@@ -72,7 +72,7 @@ export default function GetInvolvedBanner(): JSX.Element {
       label: 'Examples',
       title: 'See Examples',
       description: 'Explore real-world examples and learn best practices',
-      href: 'https://github.com/cadence-workflow/cadence/tree/master/samples',
+      href: 'https://github.com/cadence-workflow/cadence-samples',
       icon: 'folder',
       badge: 'Learn',
       badgeType: 'examples',
@@ -104,10 +104,6 @@ export default function GetInvolvedBanner(): JSX.Element {
         <span className={styles.communityLinksPill}>
           <Link href="https://communityinviter.com/apps/cloud-native/cncf" target="_blank" rel="noopener noreferrer" className={styles.communityLink}>
             Join us on Slack
-          </Link>
-          <span aria-hidden="true" className={styles.communityLinkSeparator}>·</span>
-          <Link href="https://github.com/cadence-workflow/cadence/discussions" target="_blank" rel="noopener noreferrer" className={styles.communityLink}>
-            Next community meetup
           </Link>
         </span>
       </div>

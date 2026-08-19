@@ -333,13 +333,6 @@
   text-decoration: underline;
 }
 
-.communityLinkSeparator {
-  color: #bbb;
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 1;
-}
-
 /* ------------------------------------------------------------------ */
 /* Dark mode. The section otherwise hardcodes a light gradient, white  */
 /* cards, and dark text, which reads as a jarring light band on a dark */
@@ -415,6 +408,3 @@ html[data-theme='dark'] .communityLink {
   color: #78a5f5;
 }
 
-html[data-theme='dark'] .communityLinkSeparator {
-  color: #666;
-}
