@@ -12,11 +12,13 @@ type FeatureItem = {
 
 // Inlined line icons (matching GetInvolvedBanner's icon style) instead of the
 // old 200px illustration SVGs, to keep this section compact and high-density.
-const HistoryIcon: React.FC = () => (
+const StateMachineIcon: React.FC = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M3 3v5h5" />
-    <path d="M3.05 13a9 9 0 1 0 2.13-6.36L3 8" />
-    <path d="M12 7v5l4 2" />
+    <circle cx="5" cy="12" r="3" />
+    <circle cx="19" cy="6" r="3" />
+    <circle cx="19" cy="18" r="3" />
+    <path d="M7.8 10.7l8.4-3.4" />
+    <path d="M7.8 13.3l8.4 3.4" />
   </svg>
 );
 
@@ -40,7 +42,7 @@ const FEATURES: FeatureItem[] = [
   {
     title: 'Event-Sourced State',
     description: 'Workflows resume seamlessly from exact points of failure using execution history logs.',
-    Icon: HistoryIcon,
+    Icon: StateMachineIcon,
   },
   {
     title: 'No External Message Queues',
@@ -82,7 +84,7 @@ export default function HomepageFeatures(): JSX.Element {
       </p>
 
       <Link to="/docs/concepts" className={styles.cta}>
-        Explore Cadence Architecture →
+        Explore Cadence Architecture & Core Concepts →
       </Link>
     </section>
   );
