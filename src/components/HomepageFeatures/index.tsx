@@ -46,7 +46,7 @@ const FEATURES: FeatureItem[] = [
   },
   {
     title: 'No External Message Queues',
-    description: 'Eliminate SQS/RabbitMQ management—Cadence handles task matching and queuing natively.',
+    description: 'Eliminate SQS/RabbitMQ management: Cadence handles task matching and queuing natively.',
     Icon: QueueIcon,
   },
   {
