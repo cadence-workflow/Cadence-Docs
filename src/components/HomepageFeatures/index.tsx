@@ -38,19 +38,19 @@ const QueueIcon: React.FC = () => (
 
 const FEATURES: FeatureItem[] = [
   {
-    title: 'Event-Sourced Execution',
-    description: 'State is automatically preserved via execution history.',
+    title: 'Event-Sourced State',
+    description: 'Workflows resume seamlessly from exact points of failure using execution history logs.',
     Icon: HistoryIcon,
   },
   {
-    title: 'Pluggable Persistence',
-    description: 'Support for Cassandra, PostgreSQL, MySQL, and OpenSearch.',
-    Icon: DatabaseIcon,
+    title: 'No External Message Queues',
+    description: 'Eliminate SQS/RabbitMQ management—Cadence handles task matching and queuing natively.',
+    Icon: QueueIcon,
   },
   {
-    title: 'Built-in Queues',
-    description: 'Fault-tolerant background execution without configuring external RabbitMQ/SQS.',
-    Icon: QueueIcon,
+    title: 'Pluggable Persistence',
+    description: 'Scalable storage backend support for Cassandra, PostgreSQL, MySQL, and OpenSearch.',
+    Icon: DatabaseIcon,
   },
 ];
 

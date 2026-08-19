@@ -4,7 +4,7 @@
    same left/right edges. Kept compact so the "What's new?" carousel's top
    edge stays near the fold. */
 .features {
-  padding: 2rem 2rem 1.75rem;
+  padding: 2rem 2rem;
 }
 
 .heading {
@@ -23,6 +23,9 @@
   align-items: flex-start;
   gap: 0.9rem;
   min-width: 0;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 10px;
 }
 
 .iconWrap {
