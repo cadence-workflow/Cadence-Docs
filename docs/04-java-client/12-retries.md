@@ -28,10 +28,6 @@ Runnable retry samples:
 | **Activity retry** | Activity retried automatically with `RetryOptions` | [HelloActivityRetry.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloActivityRetry.java) |
 | **Retries with compensation** | Saga that combines activity retries with compensation on failure | [bookingsaga](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/bookingsaga) |
 
-:::note
-No Java sample demonstrates a workflow-level retry policy yet; both samples cover activity retries.
-:::
-
 ## RetryOptions
 A RetryOptions includes the following.
 

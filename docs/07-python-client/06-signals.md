@@ -22,10 +22,6 @@ Runnable signal sample:
 |--------|-------------|------|
 | **Human in the loop** | Agent workflow whose approve/reject step is driven by signals | [human_in_the_loop](https://github.com/cadence-workflow/cadence-samples/tree/master/python_sdk_samples/openai_samples/human_in_the_loop) |
 
-:::note
-This sample requires an OpenAI API key to run. No lightweight signal-only Python sample exists yet.
-:::
-
 ## Defining a signal handler
 
 Add `@workflow.signal` to a method on your workflow class. The handler can be sync or async.

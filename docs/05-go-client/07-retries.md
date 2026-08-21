@@ -27,10 +27,6 @@ Runnable retry sample:
 |--------|-------------|------|
 | **Activity retry with heartbeat** | Activity retried automatically, resuming from its last heartbeat progress | [retryactivity](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/retryactivity) |
 
-:::note
-No Go sample demonstrates a workflow-level retry policy yet; the sample covers activity retries.
-:::
-
 ---
 
 A retry policy looks like the following:

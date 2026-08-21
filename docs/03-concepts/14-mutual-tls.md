@@ -23,10 +23,6 @@ Runnable mTLS sample:
 |--------|-------------|------|
 | **mTLS client** | Complete client setup with certificate generation scripts and a step-by-step guide | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/client_tls) |
 
-:::note
-There is no Java or Python mTLS sample yet.
-:::
-
 ---
 
 ## Overview

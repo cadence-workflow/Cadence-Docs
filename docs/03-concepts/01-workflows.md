@@ -31,10 +31,6 @@ Runnable workflow samples:
 | **Hello World** | One workflow invoking a single activity | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/hello_world) · [Java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloActivity.java) |
 | **Sequential activities** | Several activities chained, passing results between them | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/greetings) · [Java](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/calculation) |
 
-:::note
-The Python SDK has no standalone hello-world workflow yet. The closest example is [workflow.py](https://github.com/cadence-workflow/cadence-samples/blob/master/python_sdk_samples/schedule_samples/workflow.py) in the schedule samples.
-:::
-
 ## Example
 
 Let's look at a use case. A customer signs up for an application with a trial period. After the period, if the customer has not cancelled, he should be charged once a month for the renewal. The customer has to be notified by email about the charges and should be able to cancel the subscription at any time.

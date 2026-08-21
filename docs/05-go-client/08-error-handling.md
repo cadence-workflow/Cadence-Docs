@@ -31,10 +31,6 @@ Samples that show pieces of error handling:
 | **Activity cancellation** | Cancels a running activity and handles the cancellation | [cancelactivity](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/cancelactivity) |
 | **Retry on failure** | Activity failure handled through automatic retries | [retryactivity](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/retryactivity) |
 
-:::note
-No sample is dedicated to error handling with `cadence.NewCustomError`, error details, or the error type switch shown below; these samples cover related pieces only.
-:::
-
 ---
 
 Following is an example of what your error code might look like:

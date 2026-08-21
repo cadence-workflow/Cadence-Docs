@@ -85,10 +85,6 @@ Full working examples in both Go and Java:
 | **LunchVoteWorkflow** | Interactive voting with live results | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/query/lunch_vote_workflow.go) · [Java](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/query/LunchVoteWorkflow.java) |
 | **OrderFulfillmentWorkflow** | Full ops dashboard with state machine | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/query/order_fulfillment_workflow.go) · [Java](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/query/OrderFulfillmentWorkflow.java) |
 
-:::note
-Requires **Cadence Web v4.0.14+** for MarkDoc rendering support.
-:::
-
 ---
 
 ## How It Works

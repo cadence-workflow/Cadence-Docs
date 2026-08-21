@@ -21,10 +21,6 @@ Related sample:
 |--------|-------------|------|
 | **Schedule operations** | Schedules, the recommended alternative to `cron_schedule` | [schedule_samples](https://github.com/cadence-workflow/cadence-samples/tree/master/python_sdk_samples/schedule_samples) |
 
-:::note
-No Python sample uses `cron_schedule` directly yet.
-:::
-
 ## Starting a cron workflow
 
 ```python

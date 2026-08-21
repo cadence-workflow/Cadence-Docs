@@ -32,10 +32,6 @@ Runnable orchestration samples:
 | **Sequential microservice calls** | Chains activities, passing each result to the next step | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/greetings) |
 | **Human-approval orchestration** | Expense report workflow that waits on an external approval service | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/cmd/samples/expense) |
 
-:::note
-The Saga pattern samples are Java-only today; no dedicated Go or Python Saga sample exists yet.
-:::
-
 ---
 
 Following are some real-world examples of Cadence-based service orchestration scenarios:

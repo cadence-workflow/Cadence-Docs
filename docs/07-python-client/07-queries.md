@@ -21,10 +21,6 @@ Runnable query sample:
 |--------|-------------|------|
 | **Human in the loop** | Agent workflow exposing a `get_interruptions` query, viewable in Cadence Web | [human_in_the_loop](https://github.com/cadence-workflow/cadence-samples/tree/master/python_sdk_samples/openai_samples/human_in_the_loop) |
 
-:::note
-This sample requires an OpenAI API key to run.
-:::
-
 ## Defining a query handler
 
 ```python

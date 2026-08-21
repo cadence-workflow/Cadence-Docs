@@ -25,10 +25,6 @@ Runnable samples covering the building blocks of polling:
 | **Activity retry with heartbeat** | Long-running activity that heartbeats progress and retries without limit | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/retryactivity) · [Java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloActivityRetry.java) |
 | **Durable timer** | Fires a durable timer to take action when an operation runs too long | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/timer) |
 
-:::note
-No sample implements a complete polling loop end to end; these cover the building blocks the pattern relies on. For a full walkthrough, see the Instaclustr polling cookbook linked below.
-:::
-
 ---
 
 Some real-world use cases:
