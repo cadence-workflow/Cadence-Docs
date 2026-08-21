@@ -1,8 +1,12 @@
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import Layout from '@theme/Layout';
+import GetInvolvedBanner from '@site/src/components/GetInvolvedBanner';
+import CncfBanner from '@site/src/components/CncfBanner';
 import FeaturedCarousel from '@site/src/components/FeaturedCarousel';
+import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import Heading from '@theme/Heading';
 import { Highlight, themes } from 'prism-react-renderer';
 
@@ -69,45 +73,60 @@ function HeroCodePreview() {
 }
 
 function HomepageHeader() {
+  // Brand gear used as a faint watermark spanning the whole hero. useBaseUrl
+  // keeps the path correct under a project baseUrl (e.g. /Cadence-Docs/).
+  const gearMark = useBaseUrl('/img/logo/icon/color/cadence-icon-color.svg');
+
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner, styles.heroCompact)}>
+      <img src={gearMark} alt="" aria-hidden="true" className={styles.heroMark} />
       <div className={clsx('container', styles.heroInner)}>
         <div className={styles.heroCopy}>
-          <span className={styles.heroEyebrow}>
-            <GitHubMark className={styles.heroEyebrowIcon} />
-            9k+ Stars on GitHub
-            <span aria-hidden="true" className={styles.heroEyebrowSep}>
-              •
+          {/* CNCF credibility pill anchored to the top of the column. */}
+          <div className={styles.heroCncf}>
+            <CncfBanner />
+          </div>
+          {/* Everything from the star count down is pushed to the bottom of the
+              column (margin-top: auto) so the CTA row's baseline aligns with the
+              bottom of the code panel on the right, and a generous gap opens up
+              between the CNCF pill and this block. */}
+          <div className={styles.heroCopyMain}>
+            <span className={styles.heroEyebrow}>
+              <GitHubMark className={styles.heroEyebrowIcon} />
+              9k+ Stars on GitHub
+              <span aria-hidden="true" className={styles.heroEyebrowSep}>
+                •
+              </span>
+              <Link
+                href={ADOPTERS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.heroEyebrowLink}>
+                See Adopters
+              </Link>
             </span>
-            <Link
-              href={ADOPTERS_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.heroEyebrowLink}>
-              See Adopters
-            </Link>
-          </span>
-          {/* The navbar already carries the Cadence wordmark, so the hero leads
-              with the value proposition instead of repeating the brand name. */}
-          <Heading as="h1" className={clsx('hero__title', styles.heroCompactTitle)}>
-            Orchestrate with Confidence
-          </Heading>
-          <p className={clsx('hero__subtitle', styles.heroCompactSubtitle)}>
-            Write fault-tolerant, stateful background workflows as code in Go, Java and Python
-            without worrying about retries, queues, or state persistence.
-          </p>
-          <div className={styles.heroCtas}>
-            <Link to="/docs/get-started" className={clsx('button button--sm', styles.heroCtaPrimary)}>
-              Get Started in 5 min
-            </Link>
-            <Link
-              href={GITHUB_REPO_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={clsx('button button--sm', styles.heroCtaSecondary)}>
-              <GitHubMark className={styles.heroCtaIcon} />
-              View on GitHub
-            </Link>
+            {/* The navbar already carries the Cadence wordmark, so the hero leads
+                with the value proposition instead of repeating the brand name. */}
+            <Heading as="h1" className={clsx('hero__title', styles.heroCompactTitle)}>
+              Orchestrate with Confidence
+            </Heading>
+            <p className={clsx('hero__subtitle', styles.heroCompactSubtitle)}>
+              Write fault-tolerant, stateful background workflows as code in Go, Java and Python
+              without worrying about retries, queues, or state persistence.
+            </p>
+            <div className={styles.heroCtas}>
+              <Link to="/docs/get-started" className={clsx('button button--sm', styles.heroCtaPrimary)}>
+                Get Started in 5 min
+              </Link>
+              <Link
+                href={GITHUB_REPO_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={clsx('button button--sm', styles.heroCtaSecondary)}>
+                <GitHubMark className={styles.heroCtaIcon} />
+                View on GitHub
+              </Link>
+            </div>
           </div>
         </div>
         <HeroCodePreview />
@@ -124,7 +143,9 @@ export default function Home(): JSX.Element {
       description="Cadence is an open-source workflow orchestration engine that simplifies building scalable, reliable, and resilient distributed applications. Explore our platform for advanced workflow management, comprehensive documentation, and community-driven support.">
       <HomepageHeader />
       <main>
+        <HomepageFeatures />
         <FeaturedCarousel />
+        <GetInvolvedBanner />
       </main>
     </Layout>
   );

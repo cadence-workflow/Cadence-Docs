@@ -9,10 +9,34 @@
   /* positioning context for .heroInner; clip any code panel overflow */
   position: relative;
   overflow: hidden;
+  /* Subtle seam between the Hero and the section below it. Hardcoded like
+     .heroCode's border, since the gradient above is pinned identically in
+     both color modes. */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .heroCompact {
-  padding: 2.25rem 1rem 2.5rem;
+  padding: 2rem 1rem 2.5rem;
+  min-height: 55vh;
+  display: flex;
+  align-items: center;
+}
+
+/* Faint brand gear on the left side as a background watermark. Held to low
+   opacity so it reads as texture behind the copy without competing with the
+   code panel. Decorative only (empty alt + aria-hidden); z-index 0 keeps it
+   under .heroInner (z-index 1). Hidden on narrow screens. */
+.heroMark {
+  position: absolute;
+  top: 50%;
+  left: 1.5rem;
+  transform: translateY(-50%);
+  width: min(380px, 40%);
+  height: auto;
+  opacity: 0.08;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
 }
 
 /* Two columns on desktop: copy over the blue end of the gradient where white
@@ -22,8 +46,8 @@
   position: relative;
   z-index: 1;
   display: flex;
-  align-items: center;
-  gap: 2.5rem;
+  align-items: stretch;
+  gap: 1.75rem;
 }
 
 .heroCopy,
@@ -37,14 +61,24 @@
    mode, leaving the title and subtitle dark on the blue end of the gradient. */
 .heroCopy {
   color: #fff;
+  display: flex;
+  flex-direction: column;
 }
 
+/* Pushed to the bottom of the column so the CTA row aligns with the bottom of
+   the code panel, leaving a clear gap after the CNCF pill above it. */
+.heroCopyMain {
+  margin-top: auto;
+}
+
+/* Fluid type: scales continuously with the viewport between the clamp bounds
+   so the headline never jumps at a single breakpoint. */
 .heroCompactTitle {
-  font-size: 2.75rem;
+  font-size: clamp(1.9rem, 1.15rem + 2.6vw, 2.6rem);
   line-height: 1.05;
   letter-spacing: -0.02em;
   font-weight: 800;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.35rem;
   max-width: 15ch;
   text-wrap: balance;
 }
@@ -52,10 +86,10 @@
 /* The 62ch cap only binds once the layout stacks; on desktop the column itself
    is the narrower constraint. */
 .heroCompactSubtitle {
-  font-size: 1.1rem;
+  font-size: clamp(0.9rem, 0.82rem + 0.35vw, 1.05rem);
   line-height: 1.4;
   max-width: 62ch;
-  margin-bottom: 1.1rem;
+  margin-bottom: 0.85rem;
   opacity: 0.95;
 }
 
@@ -66,13 +100,13 @@
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.6rem;
   padding: 0.3rem 0.7rem;
   border: 1px solid rgba(255, 255, 255, 0.35);
   border-radius: 999px;
   background-color: rgba(255, 255, 255, 0.12);
   color: #fff;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 600;
 }
 
@@ -110,20 +144,23 @@
 /* Dark panel for the workflow snippet. The shadow separates it from the cream
    end of the gradient; the hairline border reads as an inner highlight. */
 .heroCode {
-  padding: 1rem 1.15rem;
+  padding: 1.25rem 1.5rem;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 12px;
   background-color: #0B0F19;
   box-shadow: 0 12px 30px rgba(11, 15, 25, 0.28);
   overflow: auto;
+  display: flex;
+  align-items: center;
 }
 
 .heroCodePre {
   margin: 0;
   padding: 0;
-  font-size: 0.8rem;
-  line-height: 1.55;
+  font-size: 0.9rem;
+  line-height: 1.6;
   text-align: left;
+  width: 100%;
   /* The snippet is tab-indented Go; the 8-column default would eat the column. */
   tab-size: 2;
 }
@@ -139,8 +176,29 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.6rem;
   margin-top: 0.15rem;
+  margin-bottom: 0;
+}
+
+.heroCncf {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 0;
+  /* Explicit, always-present gap below the CNCF pill. margin-top:auto on
+     .heroCopyMain only opens a gap when the code panel is the taller column;
+     when the copy is taller (the common case) that auto-margin collapses to
+     zero and the pill would smash against the star eyebrow. This guarantees
+     separation at every width and viewport height. */
+  margin-bottom: clamp(1.75rem, 5vh, 3.5rem);
+}
+
+.heroCncf :global(section) {
+  width: auto;
+  padding: 0;
+  background: transparent;
+  margin: 0;
+  border-radius: 0;
 }
 
 /* Shared CTA sizing: ~2x button--sm text with a tight line-height so the
@@ -203,6 +261,11 @@
     padding: 1.75rem 1rem 2rem;
   }
 
+  /* Reclaim full width for the copy on phones/tablets. */
+  .heroMark {
+    display: none;
+  }
+
   /* Stack the code panel under the copy. flex-basis has to drop to auto here:
      a 50% basis would resolve against the column's height. */
   .heroInner {
@@ -216,13 +279,9 @@
     flex: 0 0 auto;
   }
 
+  /* Let the headline use the full stacked-column width; size stays fluid. */
   .heroCompactTitle {
-    font-size: 2.1rem;
     max-width: 100%;
-  }
-
-  .heroCompactSubtitle {
-    font-size: 1rem;
   }
 
   .heroCodePre {

@@ -1,3 +1,4 @@
+/* Standard floating action button, pinned to the bottom-right corner. */
 .widget {
   position: fixed;
   bottom: 1.75rem;
