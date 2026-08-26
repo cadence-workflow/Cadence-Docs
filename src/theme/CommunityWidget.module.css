@@ -10,9 +10,47 @@
   gap: 0.75rem;
 }
 
-.fab {
+/* FAB wrapper isolates the pulse rings from the button itself */
+.fabWrapper {
+  position: relative;
   width: 3.75rem;
   height: 3.75rem;
+  flex-shrink: 0;
+}
+
+.fabWrapper::before,
+.fabWrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(37, 99, 235, 0.35);
+  animation: fabPulse 2.6s ease-out infinite;
+  pointer-events: none;
+}
+
+.fabWrapper::after {
+  animation-delay: 1.3s;
+}
+
+/* Stop pulsing once the panel is open */
+.fabWrapperOpen::before,
+.fabWrapperOpen::after {
+  animation: none;
+  opacity: 0;
+}
+
+@keyframes fabPulse {
+  0%   { transform: scale(1);    opacity: 0.7; }
+  70%  { transform: scale(1.85); opacity: 0; }
+  100% { transform: scale(1.85); opacity: 0; }
+}
+
+.fab {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   border: none;
   background: #2563EB;
@@ -23,7 +61,6 @@
   align-items: center;
   justify-content: center;
   transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
-  flex-shrink: 0;
 }
 
 .fab:hover {
@@ -44,6 +81,13 @@
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
   min-width: 260px;
   overflow: hidden;
+  animation: panelSlideIn 0.18s ease-out both;
+  transform-origin: bottom right;
+}
+
+@keyframes panelSlideIn {
+  from { opacity: 0; transform: scale(0.92) translateY(8px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0); }
 }
 
 html[data-theme='dark'] .panel {
@@ -121,4 +165,241 @@ html[data-theme='dark'] .actionItem:hover {
 
 html[data-theme='dark'] .actionIcon {
   color: #93C5FD;
+}
+
+/* Floating tooltip label above the FAB */
+.tooltip {
+  position: absolute;
+  right: calc(100% + 0.75rem);
+  top: 50%;
+  transform: translateY(-50%);
+  background: #1e2a3a;
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.4rem 0.75rem;
+  border-radius: 0.5rem;
+  white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  animation: tooltipIn 0.25s ease-out both, tooltipOut 0.3s ease-in 3.7s both;
+  pointer-events: none;
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 6px solid transparent;
+  border-left-color: #1e2a3a;
+}
+
+@keyframes tooltipIn {
+  from { opacity: 0; transform: translateY(-50%) translateX(8px); }
+  to   { opacity: 1; transform: translateY(-50%) translateX(0); }
+}
+
+@keyframes tooltipOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+/* Meetup CTA row - top priority action */
+.actionItemMeetup {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.8rem 1rem;
+  color: #1D4ED8;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #EFF6FF 0%, #DBEAFE 100%);
+  border-bottom: 2px solid #BFDBFE;
+  transition: background 0.15s;
+}
+
+.actionItemMeetup:hover {
+  background: #DBEAFE;
+  color: #1D4ED8;
+  text-decoration: none;
+}
+
+html[data-theme='dark'] .actionItemMeetup {
+  background: linear-gradient(90deg, rgba(37,99,235,0.2) 0%, rgba(37,99,235,0.12) 100%);
+  border-bottom-color: rgba(37, 99, 235, 0.3);
+  color: #93C5FD;
+}
+
+html[data-theme='dark'] .actionItemMeetup:hover {
+  background: rgba(37, 99, 235, 0.3);
+  color: #BFDBFE;
+}
+
+.meetupBadge {
+  margin-left: auto;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: #2563EB;
+  color: #ffffff;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+html[data-theme='dark'] .meetupBadge {
+  background: #3B82F6;
+}
+
+/* Newsletter CTA row - visually elevated as the primary action */
+.actionItemNewsletter {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: #1D4ED8;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 700;
+  background: #EFF6FF;
+  border-bottom: 1px solid #DBEAFE;
+  transition: background 0.15s;
+}
+
+.actionItemNewsletterBtn {
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.actionItemNewsletter:hover,
+.actionItemNewsletterBtn:hover {
+  background: #DBEAFE;
+  color: #1D4ED8;
+  text-decoration: none;
+}
+
+html[data-theme='dark'] .actionItemNewsletter {
+  background: rgba(37, 99, 235, 0.15);
+  border-bottom-color: rgba(37, 99, 235, 0.2);
+  color: #93C5FD;
+}
+
+html[data-theme='dark'] .actionItemNewsletterBtn:hover,
+html[data-theme='dark'] .actionItemNewsletter:hover {
+  background: rgba(37, 99, 235, 0.25);
+  color: #BFDBFE;
+}
+
+/* Inline email drawer */
+.emailDrawer {
+  background: #F0F7FF;
+  border-bottom: 1px solid #DBEAFE;
+  padding: 0.6rem 1rem;
+  animation: drawerSlide 0.15s ease-out both;
+}
+
+@keyframes drawerSlide {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+html[data-theme='dark'] .emailDrawer {
+  background: rgba(37, 99, 235, 0.08);
+  border-bottom-color: rgba(37, 99, 235, 0.2);
+}
+
+.emailForm {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.emailInput {
+  flex: 1;
+  padding: 0.45rem 0.65rem;
+  font-size: 0.85rem;
+  border: 1px solid #BFDBFE;
+  border-radius: 0.4rem;
+  background: #ffffff;
+  color: #1e2a3a;
+  min-width: 0;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.emailInput:focus {
+  border-color: #2563EB;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+.emailInput::placeholder {
+  color: #94a3b8;
+}
+
+html[data-theme='dark'] .emailInput {
+  background: #1e2a3a;
+  border-color: rgba(37, 99, 235, 0.4);
+  color: #e2e8f0;
+}
+
+html[data-theme='dark'] .emailInput::placeholder {
+  color: #64748b;
+}
+
+.emailSubmit {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  border-radius: 0.4rem;
+  background: #2563EB;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.emailSubmit:hover:not(:disabled) {
+  background: #1D4ED8;
+  transform: scale(1.05);
+}
+
+.emailSubmit:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.emailConfirm {
+  font-size: 0.8rem;
+  color: #1D4ED8;
+  margin: 0;
+  line-height: 1.4;
+}
+
+html[data-theme='dark'] .emailConfirm {
+  color: #93C5FD;
+}
+
+.newsletterBadge {
+  margin-left: auto;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: #2563EB;
+  color: #ffffff;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+html[data-theme='dark'] .newsletterBadge {
+  background: #3B82F6;
 }

@@ -13,7 +13,7 @@ max_concurrency = 16
 # from external sites is not reported as link rot.
 accept = [200, 203, 206, 429]
 
-# Skip URLs that routinely 403 bots regardless of how politely we crawl.
+# Skip URLs that routinely 403/406 bots regardless of how politely we crawl.
 exclude = [
   "^http(s)?://localhost",
   "^http(s)?://127\\.0\\.0\\.1",
@@ -22,6 +22,7 @@ exclude = [
   "slack\\.com",
   "reddit\\.com",
   "lf\\.biz",
+  "uber\\.com",
 ]
 
 # Never traverse these paths when expanding inputs.

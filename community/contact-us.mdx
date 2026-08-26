@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Contact Us
-description: This page provides all the ways to contact the Cadence community, including Slack channels, social media, Reddit, GitHub Discussions, and Stack Overflow.
+description: "Connect with the Cadence community: subscribe to updates, join Slack and Discord, follow us on GitHub, LinkedIn, and Reddit, or reach the maintainers directly."
 keywords:
   - cadence contact
   - cadence slack
@@ -16,45 +16,52 @@ keywords:
 permalink: /community/contact-us
 ---
 
-Looking for help with Cadence or a managed solution? Are you interested in contributing to Cadence? Anything else? Here are some ways to get in touch with the Cadence community.
+import MailingListSignup from '@site/src/components/MailingListSignup';
 
-## Mailing List
-- [cncf-cadence-maintainers on CNCF Groups](https://lists.cncf.io/g/cncf-cadence-maintainers): reach the Cadence maintainers directly via email
+**Cadence is an open-source project built by and for its community.** Whether you need help with your deployment, want to contribute, or just want to stay informed; there is a channel for you below.
 
-## Slack
-- [Cadence Community on CNCF Slack](https://communityinviter.com/apps/cloud-native/cncf) (primary medium of contact for users)
-  - Join the **#cadence-users** channel to ask questions and get help
-  - Join the **#cadence-contributors** channel for help contributing to Cadence
-  - Join the **#cadence-maintainers** channel to reach the Cadence maintainers
+<MailingListSignup
+  headline="Join the Cadence community"
+  tagline="Subscribe for meetup announcements, release notes, and community news."
+/>
 
-Alternatively:
-- [Join our Slack workspace](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ)
+## Real-time chat
 
-## Social Media
-- [/cadenceworkflow on LinkedIn](https://www.linkedin.com/company/cadenceworkflow/) (primary channel for updates and announcements)
-- [@cadence-workflow on YouTube](https://www.youtube.com/@cadence-workflow)
-- [@cadenceworkflow on X](https://x.com/cadenceworkflow) (occasional updates)
-- [r/cadenceworkflow on Reddit](https://www.reddit.com/r/cadenceworkflow/)
+The fastest way to get help or connect with contributors:
 
-## News
-- [Cadence Workflow Blog](/blog)
+- **CNCF Slack**: [communityinviter.com/apps/cloud-native/cncf](https://communityinviter.com/apps/cloud-native/cncf) (primary contact channel)
+  - `#cadence-users`: questions, production help, general discussion
+  - `#cadence-contributors`: help contributing code or docs
+  - `#cadence-maintainers`: reach the core team directly
+- **Discord**: [discord.gg/ynvjm2Et5](https://discord.gg/ynvjm2Et5) (alternative real-time chat)
+- **Uber Cadence Slack**: [join workspace](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ) (legacy workspace, still monitored)
 
 ## GitHub
-- [Cadence Community on GitHub Discussions](https://github.com/cadence-workflow/cadence/discussions)
 
-If you have a feature request or a bug to report, file an issue in the appropriate Cadence GitHub repository:
+- **Discussions**: [cadence-workflow/cadence/discussions](https://github.com/cadence-workflow/cadence/discussions): longer-form questions, proposals, and announcements
+- **Issues**: file bugs and feature requests in the relevant repository:
+  - [Cadence Server](https://github.com/cadence-workflow/cadence)
+  - [Go SDK](https://github.com/cadence-workflow/cadence-go-client) / [Go Samples](https://github.com/cadence-workflow/cadence-samples)
+  - [Java SDK](https://github.com/cadence-workflow/cadence-java-client) / [Java Samples](https://github.com/cadence-workflow/cadence-java-samples)
+  - [Python SDK](https://github.com/cadence-workflow/cadence-python-client)
+  - [Helm Charts](https://github.com/cadence-workflow/cadence-charts)
+  - [Web UI](https://github.com/cadence-workflow/cadence-web)
+  - [Full GitHub org](https://github.com/cadence-workflow)
 
-* [Cadence Server](https://github.com/cadence-workflow/cadence)
-* [Cadence Go SDK](https://github.com/cadence-workflow/cadence-go-client)
-* [Cadence Go Samples](https://github.com/cadence-workflow/cadence-samples)
-* [Cadence Java SDK](https://github.com/cadence-workflow/cadence-java-client)
-* [Cadence Java Samples](https://github.com/cadence-workflow/cadence-java-samples)
-* [Cadence Helm Charts](https://github.com/cadence-workflow/cadence-charts)
-* [Cadence Python SDK](https://github.com/cadence-workflow/cadence-python-client)
-* [Cadence Web UI](https://github.com/cadence-workflow/cadence-web)
+## Maintainer mailing list
 
-There are more repositories in the [Cadence GitHub organization](https://github.com/cadence-workflow). Please choose the repository that best matches your issue.
+To reach the Cadence maintainers directly via email: [cncf-cadence-maintainers on CNCF Groups](https://lists.cncf.io/g/cncf-cadence-maintainers).
+
+For general community updates and meetup announcements, use the subscribe form above.
+
+## Social and news
+
+- **LinkedIn**: [@cadenceworkflow](https://www.linkedin.com/company/cadenceworkflow/) (primary channel for project news and announcements)
+- **YouTube**: [@cadence-workflow](https://www.youtube.com/@cadence-workflow) (meetup recordings, demos, and talks)
+- **Reddit**: [r/cadenceworkflow](https://www.reddit.com/r/cadenceworkflow/)
+- **X**: [@cadenceworkflow](https://x.com/cadenceworkflow) (occasional updates)
+- **Blog**: [cadenceworkflow.io/blog](/blog)
 
 ## Stack Overflow
 
-We only monitor Stack Overflow occasionally. You can still try the [cadence-workflow](https://stackoverflow.com/questions/tagged/cadence-workflow) tag. For a faster response, use the channels above.
+The [`cadence-workflow`](https://stackoverflow.com/questions/tagged/cadence-workflow) tag is monitored occasionally. For a faster response, Slack is preferred.
