@@ -1,0 +1,70 @@
+/* Page-level wrapper for the oval CNCF badge. Flex center for horizontal
+   centering with breathing room above and below. */
+.cncfOuter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.25rem 1rem;
+  background: transparent;
+}
+
+/* Oval CNCF credibility badge. Subtle gradient background with fine border
+   frame and fully rounded edges (pill shape). Never touches page edges. */
+.cncfBadge {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 0.9rem 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: 100%;
+  text-decoration: none;
+  color: #ffffff;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.cncfBadge:hover {
+  text-decoration: none;
+  transform: translateY(-1px);
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.25);
+}
+.cncfMark {
+  height: 44px;
+  width: auto;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+.cncfBadge:hover .cncfMark {
+  transform: scale(1.08);
+}
+.cncfText {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  line-height: 1.3;
+  min-width: 0;
+}
+.cncfText strong {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+.cncfSub {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+@media screen and (max-width: 640px) {
+  .cncfMark {
+    height: 36px;
+  }
+  .cncfText strong {
+    font-size: 0.95rem;
+  }
+  .cncfSub {
+    font-size: 0.78rem;
+  }
+}

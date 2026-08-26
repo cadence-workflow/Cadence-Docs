@@ -6,41 +6,297 @@
 .heroBanner {
   /* Uber Safety Blue to Cosmic Latte */
   background: linear-gradient(90deg, #276ef1 05%, #FFF8E7 100%);
-}
-
-.hero.heroBanner .button--secondary.button--sm {
-  background-color: black;
+  /* positioning context for .heroInner; clip any code panel overflow */
+  position: relative;
+  overflow: hidden;
+  /* Subtle seam between the Hero and the section below it. Hardcoded like
+     .heroCode's border, since the gradient above is pinned identically in
+     both color modes. */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .heroCompact {
-  padding: 1.25rem 1rem;
+  padding: 2rem 1rem 2.5rem;
+  min-height: 55vh;
+  display: flex;
+  align-items: center;
 }
 
+/* Faint brand gear on the left side as a background watermark. Held to low
+   opacity so it reads as texture behind the copy without competing with the
+   code panel. Decorative only (empty alt + aria-hidden); z-index 0 keeps it
+   under .heroInner (z-index 1). Hidden on narrow screens. */
+.heroMark {
+  position: absolute;
+  top: 50%;
+  left: 1.5rem;
+  transform: translateY(-50%);
+  width: min(380px, 40%);
+  height: auto;
+  opacity: 0.08;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+/* Two columns on desktop: copy over the blue end of the gradient where white
+   type stays high-contrast, code panel over the cream end. min-width: 0 lets
+   the panel scroll internally instead of stretching the row. */
+.heroInner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: stretch;
+  gap: 1.75rem;
+}
+
+.heroCopy,
+.heroCode {
+  flex: 1 1 50%;
+  min-width: 0;
+}
+
+/* The gradient is hardcoded identically in both color modes, so pin the copy to
+   white. Inheriting Infima's --ifm-hero-text-color would turn it black in dark
+   mode, leaving the title and subtitle dark on the blue end of the gradient. */
+.heroCopy {
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Pushed to the bottom of the column so the CTA row aligns with the bottom of
+   the code panel, leaving a clear gap after the CNCF pill above it. */
+.heroCopyMain {
+  margin-top: auto;
+}
+
+/* Fluid type: scales continuously with the viewport between the clamp bounds
+   so the headline never jumps at a single breakpoint. */
 .heroCompactTitle {
-  font-size: 1.75rem;
+  font-size: clamp(1.9rem, 1.15rem + 2.6vw, 2.6rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-weight: 800;
   margin-bottom: 0.35rem;
+  max-width: 15ch;
+  text-wrap: balance;
 }
 
+/* The 62ch cap only binds once the layout stacks; on desktop the column itself
+   is the narrower constraint. */
 .heroCompactSubtitle {
-  font-size: 0.95rem;
-  margin-bottom: 0.6rem;
+  font-size: clamp(0.9rem, 0.82rem + 0.35vw, 1.05rem);
+  line-height: 1.4;
+  max-width: 62ch;
+  margin-bottom: 0.85rem;
+  opacity: 0.95;
 }
 
-/* ~2x button--sm's font-size, with a tight line-height and only a slight
-   padding bump so the CTA doesn't grow much taller than button--sm despite
-   the much bigger text. */
-.heroCompactCta {
+/* Social proof eyebrow above the headline, shaped like the FeaturedCarousel
+   .tag so it reads as native UI. Translucent fill keeps it quieter than the
+   CTAs below it. */
+.heroEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-bottom: 0.6rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* Smaller than .heroCtaIcon to match the pill's smaller type. */
+.heroEyebrowIcon {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+}
+
+.heroEyebrowSep {
+  margin: 0 0.15rem;
+  opacity: 0.55;
+}
+
+/* Only this segment is interactive: the star count next to it is static text,
+   so the link affordance sits on the words rather than on the whole pill. */
+.heroEyebrowLink {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.5);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+.heroEyebrowLink:hover {
+  color: inherit;
+  text-decoration-color: currentColor;
+}
+.heroEyebrowLink:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Dark panel for the workflow snippet. The shadow separates it from the cream
+   end of the gradient; the hairline border reads as an inner highlight. */
+.heroCode {
+  padding: 1.25rem 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background-color: #0B0F19;
+  box-shadow: 0 12px 30px rgba(11, 15, 25, 0.28);
+  overflow: auto;
+  display: flex;
+  align-items: center;
+}
+
+.heroCodePre {
+  margin: 0;
+  padding: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  text-align: left;
+  width: 100%;
+  /* The snippet is tab-indented Go; the 8-column default would eat the column. */
+  tab-size: 2;
+}
+
+.heroCodeLine {
+  display: block;
+}
+
+/* CTA row: one primary action and one outlined GitHub action.
+   Left-aligned so the buttons sit over the blue side of the hero gradient,
+   where white type/borders stay high-contrast. */
+.heroCtas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.15rem;
+  margin-bottom: 0;
+}
+
+.heroCncf {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 0;
+  /* Explicit, always-present gap below the CNCF pill. margin-top:auto on
+     .heroCopyMain only opens a gap when the code panel is the taller column;
+     when the copy is taller (the common case) that auto-margin collapses to
+     zero and the pill would smash against the star eyebrow. This guarantees
+     separation at every width and viewport height. */
+  margin-bottom: clamp(1.75rem, 5vh, 3.5rem);
+}
+
+.heroCncf :global(section) {
+  width: auto;
+  padding: 0;
+  background: transparent;
+  margin: 0;
+  border-radius: 0;
+}
+
+/* Shared CTA sizing: ~2x button--sm text with a tight line-height so the
+   buttons don't grow much taller than button--sm despite the bigger label.
+   inline-flex centers the GitHub glyph against its label. */
+.heroCtaPrimary,
+.heroCtaSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   font-size: 1.1rem;
   line-height: 1;
-  padding: 0.50rem 1.0rem;
+  padding: 0.6rem 1.15rem;
+  font-weight: 600;
+  border: 2px solid transparent;
+}
+
+.heroCtaIcon {
+  width: 1.15em;
+  height: 1.15em;
+  flex-shrink: 0;
+}
+
+/* Primary: the same dark slate as the code panel, which ties the two hero
+   columns together and reads softer than plain black while holding more
+   contrast against the blue gradient than a white fill would. */
+.heroCtaPrimary {
+  background-color: #0B0F19;
+  border-color: #0B0F19;
+  color: #fff;
+}
+.heroCtaPrimary:hover {
+  background-color: #1b2437;
+  border-color: #1b2437;
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Secondary: white outline for the GitHub action, quieter than primary
+   but still a clear button on the blue gradient. */
+.heroCtaSecondary {
+  background-color: transparent;
+  border-color: #fff;
+  color: #fff;
+}
+.heroCtaSecondary:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  text-decoration: none;
+}
+
+.heroCtaPrimary:focus-visible,
+.heroCtaSecondary:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
 }
 
 @media screen and (max-width: 996px) {
   .heroCompact {
-    padding: 1rem;
+    padding: 1.75rem 1rem 2rem;
   }
 
+  /* Reclaim full width for the copy on phones/tablets. */
+  .heroMark {
+    display: none;
+  }
+
+  /* Stack the code panel under the copy. flex-basis has to drop to auto here:
+     a 50% basis would resolve against the column's height. */
+  .heroInner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+  }
+
+  .heroCopy,
+  .heroCode {
+    flex: 0 0 auto;
+  }
+
+  /* Let the headline use the full stacked-column width; size stays fluid. */
   .heroCompactTitle {
-    font-size: 1.5rem;
+    max-width: 100%;
+  }
+
+  .heroCodePre {
+    font-size: 0.75rem;
+  }
+
+  /* Stack the CTAs full width so each is an easy tap target. */
+  .heroCtas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .heroCtaPrimary,
+  .heroCtaSecondary {
+    width: 100%;
+    justify-content: center;
   }
 }

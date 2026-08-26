@@ -1,0 +1,414 @@
+/* Full-width banner section with gradient background */
+.bannerOuter {
+  width: 100%;
+  padding: 1.25rem 2rem 2rem;
+  background: linear-gradient(135deg, #f5f7fb 0%, #eef2f8 50%, #f5f7fb 100%);
+}
+
+/* Header row spans the full card width: the title + subtitle group sits on the
+   left (aligned to the first card's left edge), the community links pill on the
+   right (aligned to the last card's right edge). space-between distributes the
+   gap between them so the three text elements read as one balanced bar. */
+.bannerHeader {
+  margin: 0 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Title + subtitle sit inline, separated by a dot. */
+.bannerTitleWrap {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+/* Typography (font-size/weight/color) comes from the shared
+   .homepage-section-heading class; margin stays 0 here so the title sits
+   inline with .bannerSubtitle on the same baseline. */
+.bannerTitle {
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.bannerSubtitle {
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin: 0;
+  color: #666666;
+  position: relative;
+}
+
+.bannerSubtitle::before {
+  content: "·";
+  margin-right: 0.6rem;
+  color: #bbb;
+  font-weight: 400;
+}
+
+/* Fluid grid: 4 cards on wide screens, reflowing to 3 / 2 / 1 as the viewport
+   narrows. auto-fit + minmax lets the row rebalance at every width instead of
+   staying jammed in a single nowrap line that gets cramped between breakpoints. */
+.cardsWrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  width: 100%;
+}
+
+/* Card base styling */
+.card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  padding: 2.5rem 2rem;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-top: 4px solid #276ef1;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #1b1b1d;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(39, 110, 241, 0.15);
+}
+
+/* Badge styling */
+.badge {
+  display: inline-block;
+  padding: 0.3rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+/* Colored badge variants */
+.card--discussion .badge {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.card--contribute .badge {
+  background-color: #f3e5f5;
+  color: #6a1b9a;
+}
+
+.card--issues .badge {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.card--examples .badge {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+/* Card type styling - colored top borders */
+.card--discussion {
+  border-top-color: #1565c0;
+}
+
+.card--discussion:hover {
+  box-shadow: 0 8px 16px rgba(21, 101, 192, 0.15);
+}
+
+.card--contribute {
+  border-top-color: #6a1b9a;
+}
+
+.card--contribute:hover {
+  box-shadow: 0 8px 16px rgba(106, 27, 154, 0.15);
+}
+
+.card--issues {
+  border-top-color: #e65100;
+}
+
+.card--issues:hover {
+  box-shadow: 0 8px 16px rgba(230, 81, 0, 0.15);
+}
+
+.card--examples {
+  border-top-color: #2e7d32;
+}
+
+.card--examples:hover {
+  box-shadow: 0 8px 16px rgba(46, 125, 50, 0.15);
+}
+
+/* Icon styling */
+.icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.card--discussion .icon {
+  color: #1565c0;
+}
+
+.card--contribute .icon {
+  color: #6a1b9a;
+}
+
+.card--issues .icon {
+  color: #e65100;
+}
+
+.card--examples .icon {
+  color: #2e7d32;
+}
+
+/* Card title */
+.cardTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  margin: 0;
+  color: #1b1b1d;
+}
+
+/* Card description */
+.cardDesc {
+  font-size: 0.85rem;
+  text-align: center;
+  margin: 0;
+  color: #666666;
+  line-height: 1.4;
+  flex-grow: 1;
+}
+
+/* Arrow indicator appears on hover */
+.arrow {
+  font-size: 1.5rem;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: all 0.3s ease;
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+}
+
+.card:hover .arrow {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+.card--discussion:hover .arrow {
+  color: #1565c0;
+}
+
+.card--contribute:hover .arrow {
+  color: #6a1b9a;
+}
+
+.card--issues:hover .arrow {
+  color: #e65100;
+}
+
+.card--examples:hover .arrow {
+  color: #2e7d32;
+}
+
+/* Tablet: Keep horizontal, reduce padding */
+@media screen and (max-width: 1024px) {
+  .bannerOuter {
+    padding: 2rem 1rem;
+  }
+
+  .bannerTitle {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .cardsWrapper {
+    gap: 1rem;
+  }
+
+  .card {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .cardTitle {
+    font-size: 1rem;
+  }
+
+  .cardDesc {
+    font-size: 0.8125rem;
+  }
+}
+
+/* Mobile: Stack vertically */
+@media screen and (max-width: 640px) {
+  .bannerOuter {
+    padding: 1.5rem 1rem;
+  }
+
+  .bannerTitle {
+    margin-bottom: 0.5rem;
+  }
+
+  .bannerSubtitle {
+    font-size: 0.85rem;
+  }
+
+  .bannerHeader {
+    margin-bottom: 1.5rem;
+  }
+
+  .cardsWrapper {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .card {
+    padding: 1.25rem 1rem;
+  }
+
+  .cardTitle {
+    font-size: 0.95rem;
+  }
+
+  .cardDesc {
+    font-size: 0.75rem;
+  }
+
+  .badge {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.65rem;
+  }
+
+  .icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .arrow {
+    bottom: 1rem;
+    right: 1rem;
+    font-size: 1.25rem;
+  }
+}
+
+/* Small phones: 2-up gets cramped once the description text has to squeeze
+   into ~150px columns, so collapse to a single column rather than breaking
+   out of the container's side gutters. */
+@media screen and (max-width: 480px) {
+  .cardsWrapper {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Translucent pill wrapper in the header, styled like the hero eyebrow but
+   using neutral colors that read on the light gradient background. */
+.communityLinksPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1.1rem;
+  border: 1px solid rgba(39, 110, 241, 0.18);
+  border-radius: 999px;
+  background-color: rgba(39, 110, 241, 0.06);
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.communityLink {
+  color: #276ef1;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s ease;
+}
+
+.communityLink:hover {
+  opacity: 0.7;
+  text-decoration: underline;
+}
+
+/* ------------------------------------------------------------------ */
+/* Dark mode. The section otherwise hardcodes a light gradient, white  */
+/* cards, and dark text, which reads as a jarring light band on a dark */
+/* page. These overrides swap in dark surfaces and light type.         */
+/* ------------------------------------------------------------------ */
+html[data-theme='dark'] .bannerOuter {
+  background: linear-gradient(135deg, #1a1d24 0%, #15171d 50%, #1a1d24 100%);
+}
+
+html[data-theme='dark'] .bannerSubtitle {
+  color: #a0a4ab;
+}
+
+/* Only override the side/bottom borders and leave border-top-color untouched
+   so the per-variant colored accent (.card--discussion, .card--contribute,
+   etc.) still reads at the top of each card in dark mode. */
+html[data-theme='dark'] .card {
+  background: #1e2129;
+  border-right-color: #2c303a;
+  border-bottom-color: #2c303a;
+  border-left-color: #2c303a;
+  color: #e6e7e9;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Lighten the badge fills for dark mode: the pale pastel variants used on the
+   light banner (e.g. #e3f2fd) sit as bright blocks on the dark card. Use a
+   translucent tint of the accent color so the badge reads as a subtle chip
+   while keeping the colored text legible. */
+html[data-theme='dark'] .card--discussion .badge {
+  background-color: rgba(21, 101, 192, 0.18);
+  color: #7ab8ff;
+}
+html[data-theme='dark'] .card--contribute .badge {
+  background-color: rgba(156, 122, 218, 0.20);
+  color: #cdb1ff;
+}
+html[data-theme='dark'] .card--issues .badge {
+  background-color: rgba(230, 130, 30, 0.18);
+  color: #ffb266;
+}
+html[data-theme='dark'] .card--examples .badge {
+  background-color: rgba(46, 125, 50, 0.20);
+  color: #7bd68a;
+}
+
+/* Match the icon color to the brighter dark-mode accent used above so the
+   glyph and the badge feel like part of the same accent, not two different
+   greens/blues at different brightness. */
+html[data-theme='dark'] .card--discussion .icon { color: #7ab8ff; }
+html[data-theme='dark'] .card--contribute .icon { color: #cdb1ff; }
+html[data-theme='dark'] .card--issues     .icon { color: #ffb266; }
+html[data-theme='dark'] .card--examples   .icon { color: #7bd68a; }
+
+html[data-theme='dark'] .cardTitle {
+  color: #f5f6f7;
+}
+
+html[data-theme='dark'] .cardDesc {
+  color: #a0a4ab;
+}
+
+html[data-theme='dark'] .communityLinksPill {
+  border-color: rgba(120, 165, 245, 0.3);
+  background-color: rgba(120, 165, 245, 0.12);
+}
+
+html[data-theme='dark'] .communityLink {
+  color: #78a5f5;
+}
+

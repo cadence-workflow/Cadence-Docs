@@ -70,3 +70,17 @@ html[data-theme='light'] .DocSearch {
 html[data-theme='dark'] .DocSearch {
   --docsearch-highlight-color: #276ef1; /* Highlight color for search results */
 }
+
+/* Shared typography for homepage section headings ("Why Cadence?", "What's
+   new?", "Get involved!") so they share identical font-size, font-weight, and
+   bottom margin regardless of which component renders them. Components with
+   their own header layout (e.g. a flex row pairing the heading with a
+   subtitle or controls) should reset margin-bottom to 0 locally and let their
+   wrapper manage spacing instead. */
+.homepage-section-heading {
+  font-size: clamp(1.5rem, 1.25rem + 1vw, 1.875rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  color: var(--ifm-font-color-base);
+}
