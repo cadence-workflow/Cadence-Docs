@@ -10,6 +10,7 @@ keywords:
   - cadence async signal
   - cadence signal channel
   - cadence java signal example
+  - cadence java signals tutorial
 permalink: /docs/java-client/signals
 ---
 

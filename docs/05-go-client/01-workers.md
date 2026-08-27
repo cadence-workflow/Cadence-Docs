@@ -14,6 +14,7 @@ keywords:
   - golang workflow engine
   - workflow engine go
   - embedded workflow engine go
+  - cadence go worker tutorial
 permalink: /docs/go-client/workers
 ---
 

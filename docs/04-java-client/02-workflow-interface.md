@@ -10,6 +10,7 @@ keywords:
   - cadence java workflow definition
   - java workflow annotations
   - cadence workflow interface java
+  - cadence java workflow interface tutorial
 permalink: /docs/java-client/workflow-interface
 ---
 

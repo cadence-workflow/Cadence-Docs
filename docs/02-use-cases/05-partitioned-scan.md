@@ -10,6 +10,7 @@ keywords:
   - cadence heartbeat progress
   - cadence activity scan
   - cadence use case
+  - cadence storage scan tutorial
 permalink: /docs/use-cases/partitioned-scan
 ---
 

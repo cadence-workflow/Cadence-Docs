@@ -10,6 +10,7 @@ keywords:
   - cadence use case
   - cadence ml pipeline
   - cadence task routing
+  - cadence big data ml tutorial
 permalink: /docs/use-cases/big-ml
 ---
 

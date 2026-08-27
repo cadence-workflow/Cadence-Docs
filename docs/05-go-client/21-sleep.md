@@ -10,6 +10,7 @@ keywords:
   - pause workflow
   - workflow delay
   - go client sleep
+  - cadence go sleep tutorial
 permalink: /docs/go-client/sleep
 ---
 

@@ -11,6 +11,7 @@ keywords:
   - go client testing
   - cadence test suite
   - mock activity
+  - cadence go workflow testing tutorial
 permalink: /docs/go-client/workflow-testing
 ---
 

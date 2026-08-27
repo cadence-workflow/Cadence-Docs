@@ -11,6 +11,7 @@ keywords:
   - async workflow
   - go client signals
   - cadence go client
+  - cadence go signals tutorial
 permalink: /docs/go-client/signals
 ---
 

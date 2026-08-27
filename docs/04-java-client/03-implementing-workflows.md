@@ -10,6 +10,7 @@ keywords:
   - cadence workflow code java
   - newActivityStub java
   - cadence java workflow example
+  - cadence java implementing workflows tutorial
 permalink: /docs/java-client/implementing-workflows
 ---
 

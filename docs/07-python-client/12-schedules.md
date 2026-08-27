@@ -8,6 +8,7 @@ keywords:
   - cadence python recurring workflow
   - cadence python overlap policy
   - cadence python backfill schedule
+  - cadence python schedules tutorial
 permalink: /docs/python-client/schedules
 ---
 

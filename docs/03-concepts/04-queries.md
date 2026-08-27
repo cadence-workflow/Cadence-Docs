@@ -10,6 +10,7 @@ keywords:
   - cadence query workflow
   - cadence concepts
   - read workflow state
+  - cadence synchronous query tutorial
 permalink: /docs/concepts/queries
 ---
 

@@ -7,6 +7,7 @@ keywords:
   - cadence python signal handler
   - cadence python signal workflow
   - cadence python signal external workflow
+  - cadence python signals tutorial
 permalink: /docs/python-client/signals
 ---
 

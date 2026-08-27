@@ -12,6 +12,7 @@ keywords:
   - ExecuteWithMinVersion
   - ExecuteWithVersion
   - go client versioning
+  - cadence go workflow versioning tutorial
 permalink: /docs/go-client/workflow-versioning
 ---
 

@@ -11,6 +11,7 @@ keywords:
   - cadence golang child workflow example
   - ChildWorkflowOptions go
   - ParentClosePolicy go
+  - cadence go child workflows tutorial
 permalink: /docs/go-client/child-workflows
 ---
 

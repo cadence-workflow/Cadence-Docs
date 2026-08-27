@@ -8,6 +8,7 @@ keywords:
   - cadence python workflow.run
   - cadence python signal handler
   - cadence python query handler
+  - cadence python workflows tutorial
 permalink: /docs/python-client/workflows
 ---
 

@@ -7,6 +7,7 @@ keywords:
   - cadence timer tasks
   - cadence workflow sleep
   - cadence global domain timers
+  - cadence timers tutorial
 permalink: /docs/concepts/timers
 ---
 

@@ -10,6 +10,7 @@ keywords:
   - WorkflowFailureException java
   - cadence error handling java
   - cadence java exception example
+  - cadence java exception handling tutorial
 permalink: /docs/java-client/exception-handling
 ---
 

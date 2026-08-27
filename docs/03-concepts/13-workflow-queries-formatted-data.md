@@ -10,6 +10,7 @@ keywords:
   - cadence query formatted output
   - cadence web custom controls
   - workflow internal state
+  - cadence custom workflow controls tutorial
 permalink: /docs/concepts/workflow-queries-formatted-data
 ---
 

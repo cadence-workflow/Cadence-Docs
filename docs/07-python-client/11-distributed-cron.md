@@ -6,6 +6,7 @@ keywords:
   - cadence python cron
   - cadence python distributed cron
   - cadence python recurring workflow
+  - cadence python distributed cron tutorial
 permalink: /docs/python-client/distributed-cron
 ---
 

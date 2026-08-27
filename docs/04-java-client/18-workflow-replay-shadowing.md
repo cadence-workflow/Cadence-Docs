@@ -10,6 +10,7 @@ keywords:
   - cadence workflow versioning test
   - WorkflowReplayer java
   - cadence shadow test java
+  - cadence java workflow replay tutorial
 permalink: /docs/java-client/workflow-replay-shadowing
 ---
 

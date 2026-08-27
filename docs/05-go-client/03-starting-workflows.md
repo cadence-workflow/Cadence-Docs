@@ -10,6 +10,7 @@ keywords:
   - cadence go sdk start workflow
   - start workflow programmatically cadence
   - cadence go workflow trigger
+  - cadence go start workflow tutorial
 permalink: /docs/go-client/start-workflows
 ---
 

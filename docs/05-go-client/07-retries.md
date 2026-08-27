@@ -12,6 +12,7 @@ keywords:
   - RetryPolicy
   - heartbeat progress
   - cadence go client
+  - cadence go retries tutorial
 permalink: /docs/go-client/retries
 ---
 

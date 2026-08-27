@@ -10,6 +10,7 @@ keywords:
   - cadence recurring workflow
   - cadence cron schedule
   - cadence java cron example
+  - cadence java distributed cron tutorial
 permalink: /docs/java-client/distributed-cron
 ---
 

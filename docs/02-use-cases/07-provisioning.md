@@ -10,6 +10,7 @@ keywords:
   - cadence locking
   - cadence fault tolerant provisioning
   - cadence use case
+  - cadence infrastructure provisioning tutorial
 permalink: /docs/use-cases/provisioning
 ---
 

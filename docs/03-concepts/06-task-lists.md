@@ -10,6 +10,7 @@ keywords:
   - cadence worker routing
   - cadence concepts
   - cadence task dispatch
+  - cadence task lists tutorial
 permalink: /docs/concepts/task-lists
 ---
 

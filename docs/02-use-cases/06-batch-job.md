@@ -10,6 +10,7 @@ keywords:
   - cadence durability
   - cadence high throughput
   - cadence use case
+  - cadence batch job tutorial
 permalink: /docs/use-cases/batch-job
 ---
 

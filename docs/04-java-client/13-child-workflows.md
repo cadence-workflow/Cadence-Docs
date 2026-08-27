@@ -11,6 +11,7 @@ keywords:
   - cadence java child workflow example
   - newChildWorkflowStub java
   - ParentClosePolicy java
+  - cadence java child workflows tutorial
 permalink: /docs/java-client/child-workflows
 ---
 

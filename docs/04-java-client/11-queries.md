@@ -10,6 +10,7 @@ keywords:
   - cadence stack trace query
   - cadence java query example
   - cadence read workflow state
+  - cadence java queries tutorial
 permalink: /docs/java-client/queries
 ---
 

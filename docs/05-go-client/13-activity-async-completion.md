@@ -10,6 +10,7 @@ keywords:
   - ErrResultPending
   - external activity completion
   - go client async activity
+  - cadence go async activity completion tutorial
 permalink: /docs/go-client/activity-async-completion
 ---
 

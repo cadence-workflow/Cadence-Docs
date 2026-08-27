@@ -6,6 +6,7 @@ keywords:
   - cadence python query
   - cadence python query workflow
   - cadence python query handler
+  - cadence python queries tutorial
 permalink: /docs/python-client/queries
 ---
 

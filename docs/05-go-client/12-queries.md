@@ -12,6 +12,7 @@ keywords:
   - __stack_trace
   - go client queries
   - QueryWorkflow
+  - cadence go queries tutorial
 permalink: /docs/go-client/queries
 ---
 

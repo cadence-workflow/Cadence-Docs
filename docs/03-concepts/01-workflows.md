@@ -13,6 +13,7 @@ keywords:
   - cadence workflow definition
   - cadence workflow example
   - durable workflow
+  - cadence workflows tutorial
 permalink: /docs/concepts/workflows
 ---
 

@@ -12,6 +12,7 @@ keywords:
   - PanicError
   - CanceledError
   - go client error handling
+  - cadence go error handling tutorial
 permalink: /docs/go-client/error-handling
 ---
 

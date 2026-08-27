@@ -10,6 +10,7 @@ keywords:
   - cadence activity java
   - activity interface java
   - cadence java activity example
+  - cadence java activity interface tutorial
 permalink: /docs/java-client/activity-interface
 ---
 

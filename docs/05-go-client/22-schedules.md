@@ -10,6 +10,7 @@ keywords:
   - cadence go overlap policy
   - cadence go backfill schedule
   - cadence go pause schedule
+  - cadence go schedules tutorial
 permalink: /docs/go-client/schedules
 ---
 

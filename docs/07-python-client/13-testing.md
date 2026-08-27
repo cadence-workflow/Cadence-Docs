@@ -7,6 +7,7 @@ keywords:
   - cadence python workflow test
   - cadence python unit test
   - cadence python TestWorkflowEnvironment
+  - cadence python testing tutorial
 permalink: /docs/python-client/testing
 ---
 

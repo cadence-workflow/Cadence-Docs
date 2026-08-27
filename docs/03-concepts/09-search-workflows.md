@@ -11,6 +11,7 @@ keywords:
   - cadence workflow query
   - cadence concepts
   - cadence memo
+  - cadence search workflows tutorial
 permalink: /docs/concepts/search-workflows
 ---
 

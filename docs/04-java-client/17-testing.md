@@ -10,6 +10,7 @@ keywords:
   - cadence workflow test java
   - cadence activity test java
   - cadence java test example
+  - cadence java testing tutorial
 permalink: /docs/java-client/testing
 ---
 

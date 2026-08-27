@@ -12,6 +12,7 @@ keywords:
   - HasLastCompletionResult
   - GetLastCompletionResult
   - go client cron
+  - cadence go distributed cron tutorial
 permalink: /docs/go-client/distributed-cron
 ---
 

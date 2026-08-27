@@ -10,6 +10,7 @@ keywords:
   - cadence random number workflow
   - cadence sideEffect replay
   - cadence java side effect example
+  - cadence java side effect tutorial
 permalink: /docs/java-client/side-effect
 ---
 

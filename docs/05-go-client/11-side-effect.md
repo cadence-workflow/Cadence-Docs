@@ -10,6 +10,7 @@ keywords:
   - random value workflow
   - go client side effect
   - inline activity
+  - cadence go side effect tutorial
 permalink: /docs/go-client/side-effect
 ---
 

@@ -9,6 +9,7 @@ keywords:
   - cadence S3 polling
   - cadence monitoring use case
   - cadence heartbeat
+  - cadence polling tutorial
 permalink: /docs/use-cases/polling
 ---
 

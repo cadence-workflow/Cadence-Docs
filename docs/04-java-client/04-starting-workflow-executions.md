@@ -10,6 +10,7 @@ keywords:
   - cadence grpc java
   - cadence tchannel java
   - cadence java client setup
+  - cadence java start workflow tutorial
 permalink: /docs/java-client/starting-workflow-executions
 ---
 

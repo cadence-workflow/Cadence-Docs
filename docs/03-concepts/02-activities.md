@@ -10,6 +10,7 @@ keywords:
   - cadence heartbeat
   - long running activity
   - cadence activity worker
+  - cadence activities tutorial
 permalink: /docs/concepts/activities
 ---
 

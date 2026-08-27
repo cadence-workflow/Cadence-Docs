@@ -12,6 +12,7 @@ keywords:
   - mismatched decisions
   - workflow code changes
   - go client non-deterministic
+  - cadence go non-deterministic error tutorial
 permalink: /docs/go-client/workflow-non-deterministic-error
 ---
 

@@ -12,6 +12,7 @@ keywords:
   - NewWorkflowReplayer
   - shadow mode
   - go client replay
+  - cadence go workflow replay tutorial
 permalink: /docs/go-client/workflow-replay-shadowing
 ---
 

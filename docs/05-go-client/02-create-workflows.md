@@ -10,6 +10,7 @@ keywords:
   - cadence go workflow example
   - cadence workflow registration go
   - cadence go sdk workflow
+  - cadence go create workflow tutorial
 permalink: /docs/go-client/create-workflows
 ---
 

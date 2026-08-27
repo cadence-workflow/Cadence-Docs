@@ -13,6 +13,7 @@ keywords:
   - cadence schedule catch-up
   - cadence scheduler
   - workflow scheduling
+  - cadence schedules tutorial
 permalink: /docs/concepts/schedules
 ---
 

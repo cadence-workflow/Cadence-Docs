@@ -11,6 +11,7 @@ keywords:
   - dsl workflow engine
   - cadence bpmn
   - cadence iwf
+  - cadence dsl workflows tutorial
 permalink: /docs/use-cases/dsl
 ---
 

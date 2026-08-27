@@ -12,6 +12,7 @@ keywords:
   - concurrent session limit
   - file processing workflow
   - go client sessions
+  - cadence go sessions tutorial
 permalink: /docs/go-client/sessions
 ---
 

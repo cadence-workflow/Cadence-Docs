@@ -10,6 +10,7 @@ keywords:
   - java activity execution history
   - cadence activity best practices
   - cadence java activity example
+  - cadence java implementing activities tutorial
 permalink: /docs/java-client/implementing-activities
 ---
 

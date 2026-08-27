@@ -10,6 +10,7 @@ keywords:
   - cadence go sdk execute activity
   - cadence activity scheduling go
   - cadence golang activity execution
+  - cadence go execute activity tutorial
 permalink: /docs/go-client/execute-activity
 ---
 

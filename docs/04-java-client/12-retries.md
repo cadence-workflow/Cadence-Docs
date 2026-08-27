@@ -10,6 +10,7 @@ keywords:
   - cadence backoff retry
   - cadence workflow retry
   - cadence java retry example
+  - cadence java retries tutorial
 permalink: /docs/java-client/retries
 ---
 

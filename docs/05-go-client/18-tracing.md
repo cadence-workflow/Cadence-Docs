@@ -12,6 +12,7 @@ keywords:
   - HeaderWriter
   - HeaderReader
   - go client tracing
+  - cadence go tracing tutorial
 permalink: /docs/go-client/tracing
 ---
 

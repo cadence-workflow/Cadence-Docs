@@ -11,6 +11,7 @@ keywords:
   - cadence human task
   - cadence synchronization
   - cadence signalWorkflowExecution
+  - cadence event handling tutorial
 permalink: /docs/concepts/events
 ---
 

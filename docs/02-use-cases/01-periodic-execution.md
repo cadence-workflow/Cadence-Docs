@@ -9,6 +9,7 @@ keywords:
   - cadence scheduled workflow
   - cadence recurring workflow
   - cadence cron use case
+  - cadence periodic execution tutorial
 permalink: /docs/use-cases/periodic-execution
 ---
 

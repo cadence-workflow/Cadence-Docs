@@ -9,6 +9,7 @@ keywords:
   - interactive workflow
   - cadence background task
   - cadence session state
+  - cadence interactive application tutorial
 permalink: /docs/use-cases/interactive
 ---
 

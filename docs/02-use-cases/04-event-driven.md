@@ -10,6 +10,7 @@ keywords:
   - cadence loyalty program
   - cadence fraud detection
   - cadence use case
+  - cadence event driven application tutorial
 permalink: /docs/use-cases/event-driven
 ---
 

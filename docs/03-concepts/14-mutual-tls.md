@@ -10,6 +10,7 @@ keywords:
   - cadence certificate auth
   - cadence client server tls
   - cadence encryption in transit
+  - cadence mutual tls tutorial
 permalink: /docs/concepts/mutual-tls
 ---
 

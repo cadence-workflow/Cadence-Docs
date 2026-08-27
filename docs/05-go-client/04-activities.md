@@ -10,6 +10,7 @@ keywords:
   - cadence go sdk activity
   - cadence activity context go
   - cadence activity example go
+  - cadence go activities tutorial
 permalink: /docs/go-client/activities
 ---
 

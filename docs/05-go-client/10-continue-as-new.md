@@ -10,6 +10,7 @@ keywords:
   - long running workflow
   - ContinueAsNewError
   - go client
+  - cadence go continue as new tutorial
 permalink: /docs/go-client/continue-as-new
 ---
 

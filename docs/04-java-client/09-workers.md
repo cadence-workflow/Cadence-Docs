@@ -10,6 +10,7 @@ keywords:
   - register workflow java
   - cadence task list java
   - cadence worker configuration
+  - cadence java worker tutorial
 permalink: /docs/java-client/workers
 ---
 

@@ -7,6 +7,7 @@ keywords:
   - cadence python client setup
   - cadence python registry
   - cadence python task list
+  - cadence python workers tutorial
 permalink: /docs/python-client/workers
 ---
 

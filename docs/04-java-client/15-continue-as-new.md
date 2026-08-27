@@ -10,6 +10,7 @@ keywords:
   - cadence workflow reset java
   - cadence periodic workflow java
   - cadence java continueAsNew example
+  - cadence java continue as new tutorial
 permalink: /docs/java-client/continue-as-new
 ---
 

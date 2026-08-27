@@ -12,6 +12,7 @@ keywords:
   - worker auto scaling
   - go client autoscaler
   - dynamic poller management
+  - cadence go worker auto scaling tutorial
 permalink: /docs/go-client/worker-auto-scaling
 ---
 
