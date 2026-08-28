@@ -46,32 +46,18 @@ Runnable Batch Future sample:
 |--------|-------------|------|
 | **Batch processing** | Fans out a configurable number of activities with a configurable concurrency limit | [concurrency](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/concurrency) |
 
-Start the worker from the sample directory with `go run .`, then trigger a run:
-
-```bash
-cadence --domain cadence-samples \
-  workflow start \
-  --workflow_type cadence_samples.BatchWorkflow \
-  --tl cadence-samples-worker \
-  --et 300 \
-  --input '{"Concurrency":3,"TotalSize":10}'
-```
 
 ---
 
 ## Version requirement
 
-:::caution
-`NewBatchFuture` requires Go client **v1.3.1-rc.10** or later to use it from the `workflow` package. The current concurrency sample uses **v1.4.0-rc.3**. Earlier releases, including **v1.3.0**, provide the feature from the experimental `x` package as `x.NewBatchFuture`.
+`workflow.NewBatchFuture` requires Go client v1.3.1-rc.10 or later.
 
-Because v1.3.0 is the most recent stable tag at the time of writing, `go get go.uber.org/cadence@latest` resolves to a version that does **not** contain `workflow.NewBatchFuture`. Pin a compatible prerelease:
+`go get go.uber.org/cadence@latest` currently installs v1.3.0, so request a compatible version explicitly:
 
 ```bash
 go get go.uber.org/cadence@v1.4.0-rc.3
 ```
-
-When upgrading from v1.3.0, replace the `x.NewBatchFuture` call and `x` import. The implementation behavior is otherwise unchanged.
-:::
 
 ---
 
