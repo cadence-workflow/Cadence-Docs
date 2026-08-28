@@ -198,6 +198,176 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', 'id': 'about/license' },
       ],
     },
+    {
+      label: 'Tech Review (WIP)',
+      type: 'category',
+      items: [
+        { type: 'doc', id: 'tech-review/index' },
+        {
+          label: 'Day 0 - Planning',
+          type: 'category',
+          items: [
+            { type: 'doc', id: 'tech-review/day-0-planning/index' },
+            {
+              label: 'Scope',
+              type: 'category',
+              items: [
+                { type: 'doc', id: 'tech-review/day-0-planning/scope/vision-goals' },
+                { type: 'doc', id: 'tech-review/day-0-planning/scope/primary-use-cases' },
+                { type: 'doc', id: 'tech-review/day-0-planning/scope/roadmap-process' },
+                { type: 'doc', id: 'tech-review/day-0-planning/scope/target-personas' },
+                { type: 'doc', id: 'tech-review/day-0-planning/scope/target-organizations' },
+                { type: 'doc', id: 'tech-review/day-0-planning/scope/end-user-research' },
+              ],
+            },
+            {
+              label: 'Usability',
+              type: 'category',
+              items: [
+                { type: 'doc', id: 'tech-review/day-0-planning/usability/persona-interactions' },
+                { type: 'doc', id: 'tech-review/day-0-planning/usability/ux-ui' },
+                { type: 'doc', id: 'tech-review/day-0-planning/usability/production-integrations' },
+              ],
+            },
+            {
+              label: 'Design',
+              type: 'category',
+              items: [
+                { type: 'doc', id: 'tech-review/day-0-planning/design/design-principles' },
+                { type: 'doc', id: 'tech-review/day-0-planning/design/architecture-requirements' },
+                { type: 'doc', id: 'tech-review/day-0-planning/design/service-dependencies' },
+                { type: 'doc', id: 'tech-review/day-0-planning/design/iam' },
+                { type: 'doc', id: 'tech-review/day-0-planning/design/sovereignty' },
+                { type: 'doc', id: 'tech-review/day-0-planning/design/compliance-requirements' },
+                { type: 'doc', id: 'tech-review/day-0-planning/design/high-availability' },
+                { type: 'doc', id: 'tech-review/day-0-planning/design/resource-requirements' },
+                { type: 'doc', id: 'tech-review/day-0-planning/design/storage-requirements' },
+                { type: 'doc', id: 'tech-review/day-0-planning/design/api-design' },
+                { type: 'doc', id: 'tech-review/day-0-planning/design/release-processes' },
+              ],
+            },
+            {
+              label: 'Installation',
+              type: 'category',
+              items: [
+                { type: 'doc', id: 'tech-review/day-0-planning/installation/installation-initialization' },
+                { type: 'doc', id: 'tech-review/day-0-planning/installation/validation' },
+              ],
+            },
+            {
+              label: 'Security',
+              type: 'category',
+              items: [
+                { type: 'doc', id: 'tech-review/day-0-planning/security/security-self-assessment' },
+                { type: 'doc', id: 'tech-review/day-0-planning/security/security-tenets' },
+                { type: 'doc', id: 'tech-review/day-0-planning/security/security-hygiene' },
+                { type: 'doc', id: 'tech-review/day-0-planning/security/threat-modeling' },
+              ],
+            },
+          ],
+        },
+        {
+          label: 'Day 1 - Installation and Deployment',
+          type: 'category',
+          items: [
+            { type: 'doc', id: 'tech-review/day-1-installation/index' },
+            { type: 'doc', id: 'tech-review/day-1-installation/installation-configuration' },
+            {
+              label: 'Enablement & Rollback',
+              type: 'category',
+              items: [
+                { type: 'doc', id: 'tech-review/day-1-installation/enablement-rollback/live-cluster-enablement-rollback' },
+                { type: 'doc', id: 'tech-review/day-1-installation/enablement-rollback/default-behaviors' },
+                { type: 'doc', id: 'tech-review/day-1-installation/enablement-rollback/testing-enablement' },
+                { type: 'doc', id: 'tech-review/day-1-installation/enablement-rollback/resource-cleanup' },
+              ],
+            },
+            {
+              label: 'Rollout, Upgrade & Rollback Planning',
+              type: 'category',
+              items: [
+                { type: 'doc', id: 'tech-review/day-1-installation/rollout-upgrade-rollback/infrastructure-compatibility' },
+                { type: 'doc', id: 'tech-review/day-1-installation/rollout-upgrade-rollback/rollback-procedures' },
+                { type: 'doc', id: 'tech-review/day-1-installation/rollout-upgrade-rollback/failure-scenarios' },
+                { type: 'doc', id: 'tech-review/day-1-installation/rollout-upgrade-rollback/rollback-metrics' },
+                { type: 'doc', id: 'tech-review/day-1-installation/rollout-upgrade-rollback/upgrade-rollback-testing' },
+                { type: 'doc', id: 'tech-review/day-1-installation/rollout-upgrade-rollback/deprecations' },
+                { type: 'doc', id: 'tech-review/day-1-installation/rollout-upgrade-rollback/alpha-beta-capabilities' },
+              ],
+            },
+          ],
+        },
+        {
+          label: 'Day 2 - Day-to-Day Operations',
+          type: 'category',
+          items: [
+            { type: 'doc', id: 'tech-review/day-2-operations/index' },
+            {
+              label: 'Scalability & Reliability',
+              type: 'category',
+              items: [
+                { type: 'doc', id: 'tech-review/day-2-operations/scalability-reliability/api-object-scaling' },
+                { type: 'doc', id: 'tech-review/day-2-operations/scalability-reliability/slos-slis' },
+                { type: 'doc', id: 'tech-review/day-2-operations/scalability-reliability/operations-impact' },
+                { type: 'doc', id: 'tech-review/day-2-operations/scalability-reliability/resource-usage-impact' },
+                { type: 'doc', id: 'tech-review/day-2-operations/scalability-reliability/resource-exhaustion' },
+                { type: 'doc', id: 'tech-review/day-2-operations/scalability-reliability/load-testing' },
+                { type: 'doc', id: 'tech-review/day-2-operations/scalability-reliability/recommended-limits' },
+                { type: 'doc', id: 'tech-review/day-2-operations/scalability-reliability/resilience-patterns' },
+              ],
+            },
+            {
+              label: 'Observability',
+              type: 'category',
+              items: [
+                { type: 'doc', id: 'tech-review/day-2-operations/observability/signals' },
+                { type: 'doc', id: 'tech-review/day-2-operations/observability/audit-logging' },
+                { type: 'doc', id: 'tech-review/day-2-operations/observability/dashboards' },
+                { type: 'doc', id: 'tech-review/day-2-operations/observability/finops' },
+                { type: 'doc', id: 'tech-review/day-2-operations/observability/health-parameters' },
+                { type: 'doc', id: 'tech-review/day-2-operations/observability/workload-detection' },
+                { type: 'doc', id: 'tech-review/day-2-operations/observability/service-health-validation' },
+                { type: 'doc', id: 'tech-review/day-2-operations/observability/slos' },
+                { type: 'doc', id: 'tech-review/day-2-operations/observability/slis' },
+              ],
+            },
+            {
+              label: 'Dependencies',
+              type: 'category',
+              items: [
+                { type: 'doc', id: 'tech-review/day-2-operations/dependencies/runtime-dependencies' },
+                { type: 'doc', id: 'tech-review/day-2-operations/dependencies/lifecycle-policy' },
+                { type: 'doc', id: 'tech-review/day-2-operations/dependencies/source-composition-analysis' },
+              ],
+            },
+            {
+              label: 'Troubleshooting',
+              type: 'category',
+              items: [
+                { type: 'doc', id: 'tech-review/day-2-operations/troubleshooting/component-failure-recovery' },
+                { type: 'doc', id: 'tech-review/day-2-operations/troubleshooting/known-failure-modes' },
+              ],
+            },
+            {
+              label: 'Compliance',
+              type: 'category',
+              items: [
+                { type: 'doc', id: 'tech-review/day-2-operations/compliance/third-party-attribution' },
+                { type: 'doc', id: 'tech-review/day-2-operations/compliance/cncf-attribution' },
+              ],
+            },
+            {
+              label: 'Security',
+              type: 'category',
+              items: [
+                { type: 'doc', id: 'tech-review/day-2-operations/security/access-control' },
+                { type: 'doc', id: 'tech-review/day-2-operations/security/security-team' },
+              ],
+            },
+          ],
+        },
+      ],
+    },
     //{type: 'autogenerated', dirName: '.'}
   ],
 };
