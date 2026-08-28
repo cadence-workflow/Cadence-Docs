@@ -189,6 +189,14 @@ const config: Config = {
             from: ['/docs/about', '/docs/next/about'],
             to: '/community/contact-us',
           },
+          // The Failures runbook was renamed from Activity Failures
+          // when it grew to cover workflow-level failures. Cadence
+          // server binaries link to the old URL from workflow
+          // diagnostics output, so it must keep resolving.
+          {
+            from: '/docs/workflow-troubleshooting/activity-failures',
+            to: '/docs/workflow-troubleshooting/failures',
+          },
           // Bare base paths returned 404s for inbound traffic (Google
           // Search Console). The docs plugin (used by all three
           // sections) does not auto-generate a listing page at
