@@ -154,7 +154,7 @@ for i, f := range batch.GetFutures() {
 }
 ```
 
-### React to the first completed failure
+## Handling failures in completion order
 
 Iterating over `GetFutures()` and calling `Get` detects errors in factory order, not completion order. Use a `workflow.Selector` to react when each future completes, and derive the batch context from `workflow.WithCancel` if the first failure should cancel remaining work:
 
@@ -223,15 +223,13 @@ Tests should cover the maximum observed concurrency, partial failures, and cance
 ## When to use something else
 
 - **A plain fan-out loop** is simpler for a small, fixed number of items.
-- **`workflow.Selector`** is what you want if you need to react to completions as they land rather than after the batch drains, for example feeding results into a running aggregate or racing items against each other.
+- **A workflow selector using [`workflow.Selector`](https://pkg.go.dev/go.uber.org/cadence/workflow#Selector)** is useful when you need to process results as they become available, such as updating an aggregate or racing operations.
 - **Child workflows or [continue-as-new](/docs/go-client/continue-as-new)** are the answer when the *total* volume of work would exceed the history size or event count limit. Batch Future does not help there.
-- **A custom `workflow.Go` plus a channel semaphore** is only worth it if you need scheduling behavior Batch Future does not offer, such as priority ordering or a concurrency limit that changes during execution.
+- **A custom scheduler using [`workflow.Go`](https://pkg.go.dev/go.uber.org/cadence/workflow#Go) and workflow channels** is useful only when you need behavior Batch Future does not provide, such as priority ordering or a concurrency limit that changes during execution.
 
 ---
 
 ## References
 
-- [`workflow/batch.go`](https://github.com/cadence-workflow/cadence-go-client/blob/master/workflow/batch.go): the public API and its doc comments
-- [`internal/batch/batch_future.go`](https://github.com/cadence-workflow/cadence-go-client/blob/master/internal/batch/batch_future.go): the implementation
-- [Go SDK godoc: `go.uber.org/cadence/workflow`](https://pkg.go.dev/go.uber.org/cadence/workflow)
+- [Go SDK godoc: `workflow.NewBatchFuture`](https://pkg.go.dev/go.uber.org/cadence/workflow#NewBatchFuture)
 - [Introducing Batch Future with Concurrency Control](/blog/2025/09/25/introducing-batch-future-faster-activity-execution): the original announcement
