@@ -28,12 +28,12 @@ for _, f := range futures {
 }
 ```
 
-This schedules every activity at once. A large fan-out can exceed the Cadence server's per-workflow pending-activity limit, which is 1024 by default, and send more concurrent requests than a downstream service can handle.
+This schedules every activity at once. A large fan-out can exceed the Cadence server's limit on pending activities for each workflow, which is 1024 by default, and send more concurrent requests than a downstream service can handle.
 
 `workflow.NewBatchFuture` accepts a concurrency limit and a slice of *factories*, which create futures when called. It keeps at most that many futures in flight and starts queued work as slots become available.
 
 :::note
-Batch Future bounds **in-flight** operations. It does not reduce the number of history events your workflow produces, so event-count and history-size limits are unaffected. The same 5,000 activities write the same number of events whether you schedule them all at once or ten at a time. To limit total history size, use [Continue as new](/docs/go-client/continue-as-new) or [child workflows](/docs/go-client/child-workflows) instead.
+Batch Future bounds **in-flight** operations. It does not reduce the number of history events your workflow produces, so event count and history size limits are unaffected. The same 5,000 activities write the same number of events whether you schedule them all at once or ten at a time. To limit total history size, use [Continue as new](/docs/go-client/continue-as-new) or [child workflows](/docs/go-client/child-workflows) instead.
 :::
 
 ---
@@ -64,7 +64,7 @@ cadence --domain cadence-samples \
 :::caution
 `NewBatchFuture` requires Go client **v1.3.1-rc.10** or later to use it from the `workflow` package. The current concurrency sample uses **v1.4.0-rc.3**. Earlier releases, including **v1.3.0**, provide the feature from the experimental `x` package as `x.NewBatchFuture`.
 
-Because v1.3.0 is the most recent non-prerelease tag at the time of writing, `go get go.uber.org/cadence@latest` resolves to a version that does **not** contain `workflow.NewBatchFuture`. Pin a compatible prerelease:
+Because v1.3.0 is the most recent stable tag at the time of writing, `go get go.uber.org/cadence@latest` resolves to a version that does **not** contain `workflow.NewBatchFuture`. Pin a compatible prerelease:
 
 ```bash
 go get go.uber.org/cadence@v1.4.0-rc.3
@@ -121,10 +121,10 @@ func BatchWorkflow(ctx workflow.Context, input BatchWorkflowInput) error {
 
 Pay attention to how the loop variable and activity options are scoped:
 
-- **`taskID := taskID` shadows the loop variable.** Without it, every closure captures the same variable and uses its final value. Go 1.22 changed loop-variable scoping, so the copy is required only for modules targeting an earlier language version. Keeping it makes the intended capture explicit.
+- **`taskID := taskID` shadows the loop variable.** Without it, every closure captures the same variable and uses its final value. Go 1.22 changed loop variable scoping, so the copy is required only for modules targeting an earlier language version. Keeping it makes the intended capture explicit.
 - **`workflow.WithActivityOptions` is applied inside the factory.** Use the context passed to the factory. If neither that context nor its parent has activity options, `ExecuteActivity` returns a future that fails immediately because required timeouts are missing.
 
-Factories are not limited to activities. Anything that returns a `workflow.Future` works, including `workflow.ExecuteChildWorkflow`, so the same pattern bounds child-workflow fan-out.
+Factories are not limited to activities. Anything that returns a `workflow.Future` works, including `workflow.ExecuteChildWorkflow`, so the same pattern bounds the fan-out of child workflows.
 
 `GetFutures()` returns plain `workflow.Future` values. When factories start child workflows, child-specific methods such as `GetChildWorkflowExecution()` and `SignalChildWorkflow()` are not available through the batch futures.
 
@@ -199,13 +199,13 @@ for completed := 0; completed < len(batch.GetFutures()) && firstErr == nil; comp
 return firstErr
 ```
 
-Cancellation prevents some queued factories from starting, but their pre-created futures are not guaranteed to resolve. Started activities receive a cancellation request, but a running activity generally must heartbeat to observe it. Set `HeartbeatTimeout`, record heartbeats, and set `WaitForCancellation: true` if the workflow must wait for an activity to acknowledge cancellation. Do not assume that `batch.Get` can drain every future after canceling the batch context.
+Cancellation prevents some queued factories from starting, but the futures created for them in advance are not guaranteed to resolve. Started activities receive a cancellation request, but a running activity generally must heartbeat to observe it. Set `HeartbeatTimeout`, record heartbeats, and set `WaitForCancellation: true` if the workflow must wait for an activity to acknowledge cancellation. Do not assume that `batch.Get` can drain every future after canceling the batch context.
 
 ---
 
 ## Choosing a concurrency value
 
-For activity factories, keep concurrency below the Cadence server's per-workflow pending-activity limit, which is 1024 by default. The practical limit is the concurrency your workers and downstream services can handle.
+For activity factories, keep concurrency below the Cadence server's limit on pending activities for each workflow, which is 1024 by default. The practical limit is the concurrency your workers and downstream services can handle.
 
 Start conservative, with 3 to 5 concurrent items, then raise the limit while watching downstream error rates and your activities' `ScheduleToStart` latency. Rising `ScheduleToStart` latency means work is waiting longer for a worker, so extra concurrency is not increasing throughput.
 
@@ -219,14 +219,14 @@ A concurrency limit is not a rate limit. New work can start as soon as a slot op
 
 ## Determinism and migration
 
-`batchSize` determines which items are scheduled in which decision task, so it is baked into the shape of your workflow history. That makes all of the following non-deterministic changes that will break in-flight executions:
+`batchSize` determines which items are scheduled in which decision task, so it is baked into the shape of your workflow history. That makes all of the following nondeterministic changes that will break in-flight executions:
 
 - Introducing Batch Future into a workflow that previously used a plain fan-out loop
 - Removing Batch Future and going back to a plain loop
 - Changing `batchSize`
 - Changing the number or order of factories for a given input
 
-Use `workflow.GetVersion`, register a new workflow type, or wait for existing executions to finish before deploying one of these changes. Treat `batchSize` as versioned behavior too. See [Versioning](/docs/go-client/workflow-versioning) and [Non-deterministic errors](/docs/go-client/workflow-non-deterministic-error) for details.
+Use `workflow.GetVersion`, register a new workflow type, or wait for existing executions to finish before deploying one of these changes. Treat `batchSize` as versioned behavior too. See [Versioning](/docs/go-client/workflow-versioning) and [Nondeterministic errors](/docs/go-client/workflow-non-deterministic-error) for details.
 
 Before deployment, use [Workflow Replay and Shadowing](/docs/go-client/workflow-replay-shadowing) to replay production histories against the updated workflow.
 
@@ -239,7 +239,7 @@ Tests should cover the maximum observed concurrency, partial failures, and cance
 - **A plain fan-out loop** is simpler for a small, fixed number of items.
 - **`workflow.Selector`** is what you want if you need to react to completions as they land rather than after the batch drains, for example feeding results into a running aggregate or racing items against each other.
 - **Child workflows or [continue-as-new](/docs/go-client/continue-as-new)** are the answer when the *total* volume of work would exceed the history size or event count limit. Batch Future does not help there.
-- **A hand-rolled `workflow.Go` plus a channel semaphore** is only worth it if you need scheduling behavior Batch Future does not offer, such as priority ordering or a concurrency limit that changes mid-run.
+- **A custom `workflow.Go` plus a channel semaphore** is only worth it if you need scheduling behavior Batch Future does not offer, such as priority ordering or a concurrency limit that changes during execution.
 
 ---
 
