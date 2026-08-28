@@ -114,6 +114,7 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'go-client/starting-workflows' },
         { type: 'doc', id: 'go-client/activities' },
         { type: 'doc', id: 'go-client/execute-activity' },
+        { type: 'doc', id: 'go-client/batch-future' },
         { type: 'doc', id: 'go-client/child-workflows' },
         { type: 'doc', id: 'go-client/retries' },
         { type: 'doc', id: 'go-client/error-handling' },
