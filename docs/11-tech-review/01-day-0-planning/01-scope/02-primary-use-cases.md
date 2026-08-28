@@ -22,9 +22,9 @@ The table below groups common **production examples** under the **patterns** tea
 
 | Pattern | Production examples | Learn more |
 | --- | --- | --- |
-| **Long-running processes** | Background checks, onboarding incentives, subscription management, storage provisioning, restaurant orderability | [Operational management](/docs/use-cases/operational-management), [Provisioning](/docs/use-cases/provisioning), [Orchestration](/docs/use-cases/orchestration) |
-| **Synchronous interactions** | Eats orders, customer support routing, marketplace config | [Interactive applications](/docs/use-cases/interactive), [Event-driven](/docs/use-cases/event-driven) |
-| **Microservices orchestration** | Money movements, zone turnup, service deployments | [Orchestration](/docs/use-cases/orchestration), [Deployment](/docs/use-cases/deployment) |
+| **Long-running processes** | Background checks, onboarding incentives, subscription management, storage provisioning, catalog or merchant enablement | [Operational management](/docs/use-cases/operational-management), [Provisioning](/docs/use-cases/provisioning), [Orchestration](/docs/use-cases/orchestration) |
+| **Synchronous interactions** | Order flows, customer support routing, marketplace configuration | [Interactive applications](/docs/use-cases/interactive), [Event-driven](/docs/use-cases/event-driven) |
+| **Microservices orchestration** | Money movements, region or zone infrastructure bring-up, service deployments | [Orchestration](/docs/use-cases/orchestration), [Deployment](/docs/use-cases/deployment) |
 | **Batch processing** | Monthly reports, data aggregation | [Batch job](/docs/use-cases/batch-job), [Storage scan](/docs/use-cases/partitioned-scan) |
 | **Distributed cron** | Per-customer schedules, recurring business or infra jobs | [Periodic execution](/docs/use-cases/periodic-execution) |
 | **Singleton in distributed environments** | One active workflow per resource, mutex-style coordination | [Provisioning](/docs/use-cases/provisioning) (locking by workflow ID) |
@@ -33,7 +33,7 @@ Many applications combine several patterns. The [Use cases overview](/docs/use-c
 
 ## Who runs Cadence in production?
 
-Cadence is used in production by organizations including Uber (2,000+ domains), DoorDash, NetApp Instaclustr, and Cloudera across finance, delivery, data infrastructure, and platform engineering. See [ADOPTERS](https://github.com/cadence-workflow/cadence/blob/master/ADOPTERS.md) for the public list and [Workflow engine concepts](/docs/concepts/workflow-engine) for how the engine works under the hood.
+Cadence runs in production across finance, delivery, data infrastructure, and platform engineering at organizations listed in [ADOPTERS](https://github.com/cadence-workflow/cadence/blob/master/ADOPTERS.md). See [Workflow engine concepts](/docs/concepts/workflow-engine) for how the engine works under the hood.
 
 ## Not sure if Cadence fits?
 
