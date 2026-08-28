@@ -90,6 +90,15 @@ if err := child2.Get(ctx, &greeting2); err != nil {
 }
 ```
 
+:::note Bounding a large fan-out
+The snippet above starts every child at once, which is fine for a fixed handful. To fan out over a large
+list with a cap on how many children run concurrently, use [Batch Future](/docs/go-client/batch-future).
+`ExecuteChildWorkflow` returns a `ChildWorkflowFuture`, which satisfies `workflow.Future`, so it can be
+returned from a batch factory like any activity future. Note that the futures the batch hands back are
+plain `workflow.Future` values, so use this when you only need each child's result and not
+`GetChildWorkflowExecution()` or the signal helpers.
+:::
+
 **Signal a running child** by resolving its execution from the future, then calling `workflow.SignalExternalWorkflow`.
 
 ```go

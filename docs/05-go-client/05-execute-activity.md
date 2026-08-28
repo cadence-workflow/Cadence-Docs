@@ -117,4 +117,9 @@ However, this is not necessary. If you want to execute multiple :activity:activi
 repeatedly call `workflow.ExecuteActivity()`, store the returned futures, and then wait for all
 :activity:activities: to complete by calling the `Get()` methods of the future at a later time.
 
+That pattern schedules every :activity: at once, which is fine for a handful of them. At larger scale it can
+exhaust the server's per-workflow pending-:activity: limit and overwhelm the services your :activity:activities:
+call. To fan out over a large list with a cap on how many run at the same time, see
+[Batch Future](/docs/go-client/batch-future).
+
 To implement more complex wait conditions on returned future objects, use the `cadence.Selector` class.
