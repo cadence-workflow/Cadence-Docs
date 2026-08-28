@@ -94,6 +94,6 @@ Batch Actions close the gap between observing a problem and fixing it at scale. 
 
 Upgrade to the latest **Cadence Web** release and give it a try. We'd love to hear what workflows you're managing at scale.
 
-- **Ask a question** — [#cadence on CNCF Slack](https://communityinviter.com/apps/cloud-native/cncf)
+- **Ask a question** — [#cadence on CNCF Slack](https://inviter.co/cncf)
 - **Open an issue** — [cadence-web on GitHub](https://github.com/cadence-workflow/cadence-web/issues)
 - **Join the discussion** — [GitHub Discussions](https://github.com/cadence-workflow/cadence/discussions)

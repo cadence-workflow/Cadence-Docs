@@ -75,5 +75,5 @@ All you need is **Cadence Web v4.0.14+** and a running Cadence cluster.
 This is just the beginning. Custom Workflow Controls are currently supported in workflow queries, and we plan to extend them to other areas of Cadence Web. We'd love your feedback on what you build with them.
 
 - **Suggest a tag extension** - [Open an issue on cadence-web](https://github.com/cadence-workflow/cadence-web/issues)
-- **Ask a question** - [#cadence on CNCF Slack](https://communityinviter.com/apps/cloud-native/cncf)
+- **Ask a question** - [#cadence on CNCF Slack](https://inviter.co/cncf)
 - **Discuss use cases** - [GitHub Discussions](https://github.com/cadence-workflow/cadence/discussions)

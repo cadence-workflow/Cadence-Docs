@@ -64,7 +64,7 @@ Cadence is building a diverse maintainer base beyond any single company. Goals i
 - Transparent roadmaps published on [GitHub Projects](https://github.com/orgs/cadence-workflow/projects).
 - Regular community meetings, meetups, and open decision-making documented in [governance](https://cadenceworkflow.io/community/governance).
 - Growing the [ADOPTERS](https://github.com/cadence-workflow/cadence/blob/master/ADOPTERS.md) list and contributor pipeline so that companies using Cadence in production can shape its direction.
-- Community support through [CNCF Slack `#cadence-users`](https://communityinviter.com/apps/cloud-native/cncf), GitHub Issues, and maintainer office hours.
+- Community support through [CNCF Slack `#cadence-users`](https://inviter.co/cncf), GitHub Issues, and maintainer office hours.
 
 Over **150 companies** participate in the Cadence ecosystem today, and partners already offer managed Cadence deployments. The project is committed to supporting end users and to working with companies that want to offer managed Cadence services. Maintainers provide community support for self-hosted adopters and partner with vendors offering managed deployments. See [Contact us](https://cadenceworkflow.io/community/contact-us) for help getting started.
 

@@ -13,7 +13,7 @@ const ACTIONS = [
   {
     id: 'slack',
     label: 'Join us on Slack (CNCF)',
-    href: 'https://communityinviter.com/apps/cloud-native/cncf',
+    href: 'https://inviter.co/cncf',
     icon: 'mdi:slack',
     external: true,
   },

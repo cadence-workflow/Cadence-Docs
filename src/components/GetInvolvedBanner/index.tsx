@@ -106,7 +106,7 @@ export default function GetInvolvedBanner(): JSX.Element {
           <p className={styles.bannerSubtitle}>Join our open-source community</p>
         </div>
         <span className={styles.communityLinksPill}>
-          <Link href="https://communityinviter.com/apps/cloud-native/cncf" target="_blank" rel="noopener noreferrer" className={styles.communityLink}>
+          <Link href="https://inviter.co/cncf" target="_blank" rel="noopener noreferrer" className={styles.communityLink}>
             Join us on Slack
           </Link>
         </span>
