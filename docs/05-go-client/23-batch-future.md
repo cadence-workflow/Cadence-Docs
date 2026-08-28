@@ -377,5 +377,4 @@ Batch Future is not worth the migration cost in every case. Reconsider if:
 - [`workflow/batch.go`](https://github.com/cadence-workflow/cadence-go-client/blob/master/workflow/batch.go): the public API and its doc comments
 - [`internal/batch/batch_future.go`](https://github.com/cadence-workflow/cadence-go-client/blob/master/internal/batch/batch_future.go): the implementation
 - [Go SDK godoc: `go.uber.org/cadence/workflow`](https://pkg.go.dev/go.uber.org/cadence/workflow)
-- [Batch Future sample](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/concurrency)
 - [Introducing Batch Future with Concurrency Control](/blog/2025/09/25/introducing-batch-future-faster-activity-execution): the original announcement

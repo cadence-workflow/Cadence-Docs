@@ -181,11 +181,13 @@ Ready to supercharge your workflows? Here's how to get started:
 Make sure you're using the latest version of the Cadence Go client:
 
 ```bash
-go get github.com/uber/cadence-go-client@latest
+go get go.uber.org/cadence@latest
 ```
 
 ### 2. Try the Sample
-Check out our [Batch Future sample](https://github.com/cadence-workflow/cadence-samples/tree/master/cmd/samples/batch) to see it in action.
+Check out our [Batch Future sample](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/concurrency) to see it in action.
+
+For the full API reference, error handling semantics, and migration guidance, see the [Batch Future documentation](/docs/go-client/batch-future).
 
 ### 3. Migrate Your Workflows (With Caution)
 
