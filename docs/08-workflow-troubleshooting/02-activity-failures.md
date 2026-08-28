@@ -1,13 +1,14 @@
 ---
 layout: default
 title: Activity Failures
-description: This page explains the different types of activity failures in Cadence, including panic errors, custom errors, generic errors, and blob size limit violations, with guidance on how to mitigate each.
+description: This page explains the different types of activity failures in Cadence, including panic errors, custom errors, generic errors, and blob size or history size limit violations, with guidance on how to mitigate each.
 keywords:
   - cadence activity failures
   - activity panic error
   - custom error
   - generic error
   - blob size limit
+  - history size limit
   - ActivityTaskFailed
   - cadence troubleshooting
   - activity error types
@@ -49,3 +50,10 @@ Cadence enforces the maximum blob size in several cases. Some of these are:
 - Workflow/Activity error_details
 - Record marker
 - Heartbeat details
+
+## History size or count limits
+Description: This is an error caused when the workflow history grows past the size or event count limit configured for the domain. The workflow fails with the reason "HISTORY_EXCEEDS_LIMIT" and the details "Workflow history size / count exceeds limit." These limits are dynamically configured per cadence domain [link to code](https://github.com/cadence-workflow/cadence/blob/master/common/dynamicconfig/dynamicproperties/constants.go).
+
+Mitigation: Use ContinueAsNew to split long-running workflows into smaller runs before the history grows too large. Keep activity inputs and outputs small, and avoid unbounded loops of activities, signals, or timers within a single run.
+
+Read more about [continue as new](/docs/go-client/continue-as-new)
