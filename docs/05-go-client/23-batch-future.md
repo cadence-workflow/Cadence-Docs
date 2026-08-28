@@ -288,6 +288,70 @@ Any of these needs `workflow.GetVersion`. See [Versioning](/docs/go-client/workf
 
 ---
 
+## Migrating an existing workflow
+
+Adopting Batch Future in a workflow that is already running in production is not a drop-in code change. Because it alters how activities are scheduled, deploying it without a plan will fail replay for every in-flight execution. Pick one of the three approaches below based on how long your workflows live and how much coordination you can afford.
+
+### Option A: versioned migration (recommended for production)
+
+Gate the new path behind `workflow.GetVersion` so one deployment can serve both the old and new scheduling patterns. Existing executions keep replaying the unbounded loop; new ones use the batch.
+
+```go
+func ProcessUsers(ctx workflow.Context, userIDs []string) error {
+    v := workflow.GetVersion(ctx, "batchFutureRollout", workflow.DefaultVersion, 1)
+    if v == workflow.DefaultVersion {
+        return processUsersUnbounded(ctx, userIDs)
+    }
+    return processUsersBatched(ctx, userIDs, 5)
+}
+
+func processUsersBatched(ctx workflow.Context, userIDs []string, concurrency int) error {
+    factories := make([]func(workflow.Context) workflow.Future, len(userIDs))
+    for i, userID := range userIDs {
+        userID := userID
+        factories[i] = func(ctx workflow.Context) workflow.Future {
+            return workflow.ExecuteActivity(ctx, UpdateUserActivity, userID)
+        }
+    }
+
+    batch, err := workflow.NewBatchFuture(ctx, concurrency, factories)
+    if err != nil {
+        return err
+    }
+    return batch.Get(ctx, nil)
+}
+```
+
+Once every execution on `DefaultVersion` has finished, you can drop the old branch and narrow the version range. The versioning page covers that cleanup in detail.
+
+:::note
+If you want to deploy the code before activating the new behavior, add `workflow.ExecuteWithMinVersion()` to the `GetVersion` call. New executions will keep taking the old branch until you remove the option, which gives you a rollback that does not require a code revert. See [Versioning](/docs/go-client/workflow-versioning) for both options.
+:::
+
+Note that `batchSize` is part of the versioned behavior. Changing `5` to `20` later is itself a non-deterministic change, so it needs a new version number under the same change ID, or a new change ID if you have already retired the old branch.
+
+### Option B: new workflow type
+
+Register the batched implementation as a separate workflow type and move callers over to it. No versioning logic is needed because old executions continue running the old type untouched, but you do need to coordinate with everyone who starts the workflow, and you carry two implementations until the old type is drained. This is the simpler option when you control the callers and your workflows are short-lived.
+
+### Option C: terminate and replace
+
+Terminate the in-flight executions, deploy the batched code, and start fresh. Only viable when losing in-flight progress is acceptable, which usually means short workflows or a maintenance window you already have.
+
+### Test before you deploy
+
+Whichever option you choose, replay real production histories against the new code before it ships. [Workflow Replay and Shadowing](/docs/go-client/workflow-replay-shadowing) is built for this: a shadowing test scans recent executions, fetches their histories, and replays them against your updated definition, so a missing version gate fails in CI instead of in production.
+
+### When not to migrate
+
+Batch Future is not worth the migration cost in every case. Reconsider if:
+
+- Your workflows run for weeks or months, so the old branch has to stay in the code for just as long.
+- You cannot coordinate a versioning strategy across the teams that own the workflow and its callers.
+- Your fan-out is small enough that unbounded scheduling is not actually causing pressure on the server or your downstream.
+
+---
+
 ## When to use something else
 
 - **A plain fan-out loop** is the right answer for a small, fixed number of items. Batch Future adds machinery you do not need for ten activities.
