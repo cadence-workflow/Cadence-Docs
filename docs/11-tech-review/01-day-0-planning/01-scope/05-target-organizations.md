@@ -29,11 +29,11 @@ These organizations adopt Cadence when coordination logic (retries, timers, saga
 
 ### 2. Platform and internal developer platform (IDP) teams
 
-Platform teams offer **shared infrastructure** to many application squads. In Cadence deployments, they install and operate the workflow engine, define domain boundaries, wire observability, and onboard new teams.
+Platform teams make Cadence **available and usable** for many application squads. Some run Cadence themselves: install, operate, define domain boundaries, wire observability, and onboard new teams. Others **consume managed Cadence from a vendor** and focus on internal tooling that bridges Cadence to the rest of the company (developer portals, CI/CD, identity, service catalogs, SDK templates, and domain provisioning workflows).
 
-This pattern is common in mid-size and large companies where an **SRE or infrastructure group provides Cadence as an internal service**. One cluster may host hundreds or thousands of domains with isolation and capacity guardrails. Platform teams care about repeatable install paths, multitenancy, upgrades, and cost predictability as adoption grows.
+This pattern is common in mid-size and large companies where an **SRE or platform group provides Cadence as an internal service**, regardless of who hosts the underlying cluster. One environment may host hundreds or thousands of domains with isolation and capacity guardrails.
 
-**Why Cadence fits:** Cadence is self-hostable under Apache 2.0, supports Kubernetes and Helm, integrates with standard metrics stacks, and scales to large multi-tenant footprints described in [Vision & Goals](/docs/tech-review/day-0-planning/scope/vision-goals).
+**Why Cadence fits:** Cadence is self-hostable under Apache 2.0 when teams want full control, and its open APIs and clients also support **managed deployments** where platform engineers add the internal integration layer. See [Vision & Goals](/docs/tech-review/day-0-planning/scope/vision-goals) for multitenancy and scale targets.
 
 **Start here:** [Server installation](/docs/get-started/server-installation), [Operation guide](/docs/operation-guide/), [Open source workflow engine](/docs/concepts/open-source-workflow-engine).
 
@@ -69,7 +69,7 @@ These organizations contribute upstream, appear in [ADOPTERS](https://github.com
 
 ### 6. Startups and small engineering teams
 
-Startups and small teams adopt Cadence when a **single product** already needs durable workflows and simpler tools (cron plus queues) are becoming unmaintainable. One engineer may act as developer, operator, and cluster owner until the company grows.
+Startups and small teams adopt Cadence when a **single product** already needs durable workflows and simpler tools (cron plus queues) are becoming unmaintainable. One engineer may act as developer, operator, and cluster owner as the company grows.
 
 These organizations usually start with the [local quickstart](/docs/get-started/) or Docker, then move to a small Kubernetes cluster or a managed offering as traffic and team size increase.
 
@@ -84,8 +84,10 @@ Most deployments follow one of these models:
 | Model | Typical owner | When it fits |
 | --- | --- | --- |
 | **Self-hosted cluster** | Platform or SRE team | Full control, multitenancy, predictable cost at scale, custom compliance |
-| **Managed Cadence offering** | Vendor or cloud partner | Faster time to production, bundled persistence and observability |
+| **Managed Cadence offering** | Vendor hosts cluster; **platform team integrates internally** | Faster time to production; internal team builds tooling, onboarding, and company-specific guardrails |
 | **Team-local / dev cluster** | Application team | Evaluation, POC, or a single service before central platform rollout |
+
+With a managed offering, the vendor typically operates the Cadence cluster and bundled persistence. A **platform engineering team inside the customer organization** still often owns how Cadence is exposed to developers: credentials, domain standards, CI/CD hooks, and operational runbooks.
 
 Regardless of model, successful organizations usually **separate worker code** (owned by product teams) from **cluster operations** (owned by platform or SRE). See [Target persona interactions](/docs/tech-review/day-0-planning/usability/persona-interactions) for how those roles collaborate.
 
@@ -109,7 +111,6 @@ These groups are not always Cadence **operators**, but they shape adoption:
 | Organization type | Relationship to Cadence |
 | --- | --- |
 | **Systems integrators and consultancies** | Help customers evaluate, deploy, and harden Cadence in enterprise environments. |
-| **Open source contributors** | Extend the engine, clients, docs, and Helm charts; may become [maintainers](/community/governance). |
 | **Security and compliance functions** | Review data handling, encryption, and access control before org-wide rollout. |
 
 ## Organization summary
@@ -117,7 +118,7 @@ These groups are not always Cadence **operators**, but they shape adoption:
 | Priority | Organization type | Primary question |
 | --- | --- | --- |
 | 1 | Product engineering | How do we run durable product workflows in code at scale? |
-| 2 | Platform / IDP team | How do we offer workflow orchestration as shared infrastructure? |
+| 2 | Platform / IDP team | How do we make workflow orchestration easy for every team to consume? |
 | 3 | Data / ML / AI platform | How do we orchestrate long-running platform and pipeline work reliably? |
 | 4 | Regulated enterprise | Can we meet residency and audit needs with a self-hosted engine? |
 | 5 | Managed service provider | Can we build or operate Cadence for customers on an OSS foundation? |
