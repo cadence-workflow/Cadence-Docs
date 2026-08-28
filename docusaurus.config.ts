@@ -87,9 +87,6 @@ const config: Config = {
         theme: {
           customCss: './src/css/custom.css',
         },
-        googleTagManager: {
-          containerId: 'G-W63QD8QE6E',
-        },
         gtag: {
           trackingID: 'G-W63QD8QE6E',
           anonymizeIP: true,
