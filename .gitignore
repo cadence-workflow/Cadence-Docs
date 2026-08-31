@@ -33,6 +33,9 @@ yarn-error.log
 .cache-loader
 .lycheecache
 
+# Claude Code local config
+.claude/
+
 # Misc
 .envrc.local
 .env.local
