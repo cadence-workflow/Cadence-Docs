@@ -9,6 +9,12 @@
 
 #
 
+- title: Batch Future
+  description: Use the Cadence Go client to process activities or child workflows with a bounded concurrency limit.
+  href: /docs/go-client/batch-future
+  tag: Doc
+  cta: Learn more
+
 - title: "Batch Actions UI: Manage Thousands of Workflows at Once"
   description: Cadence Web now supports Batch Actions, letting operators terminate, signal, or cancel entire groups of workflows directly from the browser.
   href: /blog/2026/07/07/2026-07-07-batch-actions-ui/batch-actions-ui
