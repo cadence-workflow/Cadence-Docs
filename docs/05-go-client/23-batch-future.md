@@ -132,6 +132,8 @@ if err != nil {
 
 `Get` allocates or grows the slice as needed. It returns an error before waiting if the value is neither `nil` nor a slice pointer. Item failures do not stop the remaining factories during a normal bulk `Get`, and successful values are written to their positions in the output slice.
 
+Batch Future does not fail fast. `Get` waits for every operation to complete and then returns the aggregated errors. `GetFutures()` lets you inspect individual results, but Batch Future does not provide a method that returns when the first operation fails.
+
 Bulk `Get` combines failures with [`go.uber.org/multierr`](https://pkg.go.dev/go.uber.org/multierr). `multierr.Errors` returns the failures but not their input positions. To correlate a failure with an input, read individual items through `GetFutures()`. Index `i` corresponds to `factories[i]`:
 
 ```go
@@ -143,39 +145,6 @@ for i, f := range batch.GetFutures() {
     }
 }
 ```
-
-## Handling failures in completion order
-
-Iterating over `GetFutures()` and calling `Get` detects errors in factory order, not completion order. Use a `workflow.Selector` to react when each future completes, and derive the batch context from `workflow.WithCancel` if the first failure should cancel remaining work:
-
-```go
-batchCtx, cancel := workflow.WithCancel(ctx)
-defer cancel()
-
-batch, err := workflow.NewBatchFuture(batchCtx, 5, factories)
-if err != nil {
-    return err
-}
-
-selector := workflow.NewSelector(ctx)
-var firstErr error
-for i, future := range batch.GetFutures() {
-    i := i
-    selector.AddFuture(future, func(f workflow.Future) {
-        if err := f.Get(ctx, nil); err != nil && firstErr == nil {
-            firstErr = fmt.Errorf("item %d failed: %w", i, err)
-            cancel()
-        }
-    })
-}
-
-for completed := 0; completed < len(batch.GetFutures()) && firstErr == nil; completed++ {
-    selector.Select(ctx)
-}
-return firstErr
-```
-
-Cancellation prevents some queued factories from starting, but the futures created for them in advance are not guaranteed to resolve. Started activities receive a cancellation request, but a running activity generally must heartbeat to observe it. Set `HeartbeatTimeout`, record heartbeats, and set `WaitForCancellation: true` if the workflow must wait for an activity to acknowledge cancellation. Do not assume that `batch.Get` can drain every future after canceling the batch context.
 
 ---
 
@@ -215,7 +184,7 @@ Tests should cover the maximum observed concurrency, partial failures, and cance
 - **A plain fan-out loop** is simpler for a small, fixed number of items.
 - **A workflow selector using [`workflow.Selector`](https://pkg.go.dev/go.uber.org/cadence/workflow#Selector)** is useful when you need to process results as they become available, such as updating an aggregate or racing operations.
 - **Child workflows or [continue-as-new](/docs/go-client/continue-as-new)** are useful when work may exceed a single workflow's history limits. Batch Future can bound child workflow concurrency, but it does not reduce history usage.
-- **A custom scheduler using [`workflow.Go`](https://pkg.go.dev/go.uber.org/cadence/workflow#Go) and workflow channels** is useful only when you need behavior Batch Future does not provide, such as priority ordering or a concurrency limit that changes during execution.
+- **A custom scheduler using [`workflow.Go`](https://pkg.go.dev/go.uber.org/cadence/workflow#Go) and workflow channels** is useful only when you need behavior Batch Future does not provide, such as priority ordering, stopping new work after the first failure, or changing the concurrency limit during execution.
 
 ---
 
