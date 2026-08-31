@@ -180,16 +180,10 @@ One thing Batch Future doesn't do: it doesn't reduce the number of history event
 Ready to supercharge your workflows? Here's how to get started:
 
 ### 1. Update Your Go Client
-Make sure you're using the latest version of the Cadence Go client:
+`workflow.NewBatchFuture` is available in Go client v1.3.1 or later. Install the latest version:
 
 ```bash
 go get go.uber.org/cadence@latest
-```
-
-Check which API you get. `NewBatchFuture` shipped in v1.3.0 in the experimental `x` package as `x.NewBatchFuture`, and moved to the stable `workflow` package in v1.3.1-rc.10. Because v1.3.0 is still the newest non-prerelease tag, `@latest` resolves to the `x` version. Pin explicitly if you want `workflow.NewBatchFuture` as shown in the examples above:
-
-```bash
-go get go.uber.org/cadence@v1.3.1-rc.10
 ```
 
 ### 2. Try the Sample
