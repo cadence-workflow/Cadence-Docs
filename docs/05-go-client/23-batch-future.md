@@ -214,7 +214,7 @@ Tests should cover the maximum observed concurrency, partial failures, and cance
 
 - **A plain fan-out loop** is simpler for a small, fixed number of items.
 - **A workflow selector using [`workflow.Selector`](https://pkg.go.dev/go.uber.org/cadence/workflow#Selector)** is useful when you need to process results as they become available, such as updating an aggregate or racing operations.
-- **Child workflows or [continue-as-new](/docs/go-client/continue-as-new)** are the answer when the *total* volume of work would exceed the history size or event count limit. Batch Future does not help there.
+- **Child workflows or [continue-as-new](/docs/go-client/continue-as-new)** are useful when work may exceed a single workflow's history limits. Batch Future can bound child workflow concurrency, but it does not reduce history usage.
 - **A custom scheduler using [`workflow.Go`](https://pkg.go.dev/go.uber.org/cadence/workflow#Go) and workflow channels** is useful only when you need behavior Batch Future does not provide, such as priority ordering or a concurrency limit that changes during execution.
 
 ---
