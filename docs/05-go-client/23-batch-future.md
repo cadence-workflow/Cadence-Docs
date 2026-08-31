@@ -32,6 +32,8 @@ This schedules every activity at once. A large fan-out can exceed the Cadence se
 
 `workflow.NewBatchFuture` accepts a concurrency limit and a slice of *factories*, which create futures when called. It keeps at most that many futures in flight and starts queued work as slots become available.
 
+`workflow.NewBatchFuture` is available in Go client v1.3.1 or later.
+
 :::note
 Batch Future bounds **in-flight** operations. It does not reduce the number of history events your workflow produces, so event count and history size limits are unaffected. The same 5,000 activities write the same number of events whether you schedule them all at once or ten at a time. To limit total history size, use [Continue as new](/docs/go-client/continue-as-new) or [child workflows](/docs/go-client/child-workflows) instead.
 :::
@@ -46,18 +48,6 @@ Runnable Batch Future sample:
 |--------|-------------|------|
 | **Batch processing** | Fans out a configurable number of activities with a configurable concurrency limit | [concurrency](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/concurrency) |
 
-
----
-
-## Version requirement
-
-`workflow.NewBatchFuture` requires Go client v1.3.1-rc.10 or later.
-
-`go get go.uber.org/cadence@latest` currently installs v1.3.0, so request a compatible version explicitly:
-
-```bash
-go get go.uber.org/cadence@v1.4.0-rc.3
-```
 
 ---
 
