@@ -53,7 +53,7 @@ Runnable Batch Future sample:
 
 ## Basic usage
 
-Build one factory per item, then pass the slice to `NewBatchFuture` with your concurrency limit. This is the sample's workflow:
+Build one factory per item, then pass the slice to `NewBatchFuture` with your concurrency limit. This example matches the sample's workflow:
 
 ```go
 // BatchWorkflowInput configures the batch processing parameters.
