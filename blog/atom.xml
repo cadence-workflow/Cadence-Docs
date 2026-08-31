@@ -831,7 +831,7 @@ A very common case for some domains is to have separate documentation for their 
 <li class=""><strong>Resource Management</strong>: Better control over memory and CPU usage</li>
 <li class=""><strong>Rate Limiting Protection</strong>: Avoid hitting API rate limits by controlling execution speed</li>
 <li class=""><strong>Graceful Cancellation</strong>: All activities can be cancelled together if needed</li>
-<li class=""><strong>Simplified Error Handling</strong>: Single point of failure handling for the entire batch</li>
+<li class=""><strong>Aggregated Error Handling</strong>: A failing item doesn't stop the batch. Every failure is merged into one error you can unpack, so you choose whether to fail fast or collect them all</li>
 </ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="real-world-use-cases">Real-World Use Cases<a href="https://cadenceworkflow.io/blog/2025/09/25/introducing-batch-future-faster-activity-execution#real-world-use-cases" class="hash-link" aria-label="Direct link to Real-World Use Cases" title="Direct link to Real-World Use Cases" translate="no">​</a></h2>
 <p>Batch Future is perfect for scenarios like:</p>
@@ -848,15 +848,17 @@ A very common case for some domains is to have separate documentation for their 
 <li class=""><strong>Concurrency Control</strong>: Limits the number of pending futures</li>
 <li class=""><strong>Queue Management</strong>: Maintains a queue of to-be-scheduled futures and starts new ones as others complete</li>
 <li class=""><strong>Future Management</strong>: Returns a single future that completes when all futures finish</li>
-<li class=""><strong>Error Propagation</strong>: If any future fails, the error is stored in a multi-error wrapper entity, users can either cancel or fail open</li>
+<li class=""><strong>Error Propagation</strong>: A failing future doesn't stop the batch. Every factory runs to completion and the failures are merged with <code>go.uber.org/multierr</code>, so you can unpack them with <code>multierr.Errors(err)</code> or read the original error at each index from <code>GetFutures()</code></li>
 </ol>
+<p>One thing Batch Future doesn't do: it doesn't reduce the number of history events your workflow produces. Running 5,000 activities ten at a time writes exactly as many events as scheduling all 5,000 at once, so event-count and history-size limits are unaffected. If history size rather than concurrency is your constraint, reach for continue-as-new or child workflows instead.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="getting-started">Getting Started<a href="https://cadenceworkflow.io/blog/2025/09/25/introducing-batch-future-faster-activity-execution#getting-started" class="hash-link" aria-label="Direct link to Getting Started" title="Direct link to Getting Started" translate="no">​</a></h2>
 <p>Ready to supercharge your workflows? Here's how to get started:</p>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-update-your-go-client">1. Update Your Go Client<a href="https://cadenceworkflow.io/blog/2025/09/25/introducing-batch-future-faster-activity-execution#1-update-your-go-client" class="hash-link" aria-label="Direct link to 1. Update Your Go Client" title="Direct link to 1. Update Your Go Client" translate="no">​</a></h3>
-<p>Make sure you're using the latest version of the Cadence Go client:</p>
-<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">go get github.com/uber/cadence-go-client@latest</span><br></div></code></pre></div></div>
+<p><code>workflow.NewBatchFuture</code> is available in Go client v1.3.1 or later. Install the latest version:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">go get go.uber.org/cadence@latest</span><br></div></code></pre></div></div>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-try-the-sample">2. Try the Sample<a href="https://cadenceworkflow.io/blog/2025/09/25/introducing-batch-future-faster-activity-execution#2-try-the-sample" class="hash-link" aria-label="Direct link to 2. Try the Sample" title="Direct link to 2. Try the Sample" translate="no">​</a></h3>
-<p>Check out our <a href="https://github.com/cadence-workflow/cadence-samples/tree/master/cmd/samples/batch" target="_blank" rel="noopener noreferrer" class="">Batch Future sample</a> to see it in action.</p>
+<p>Check out our <a href="https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/concurrency" target="_blank" rel="noopener noreferrer" class="">Batch Future sample</a> to see it in action.</p>
+<p>For the full API reference, error handling semantics, and migration guidance, see the <a class="" href="https://cadenceworkflow.io/docs/go-client/batch-future">Batch Future documentation</a>.</p>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-migrate-your-workflows-with-caution">3. Migrate Your Workflows (With Caution)<a href="https://cadenceworkflow.io/blog/2025/09/25/introducing-batch-future-faster-activity-execution#3-migrate-your-workflows-with-caution" class="hash-link" aria-label="Direct link to 3. Migrate Your Workflows (With Caution)" title="Direct link to 3. Migrate Your Workflows (With Caution)" translate="no">​</a></h3>
 <p><strong>This is not a simple code change</strong>. Migrating to Batch Future requires workflow versioning and careful production planning.</p>
 <h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-challenge">The Challenge<a href="https://cadenceworkflow.io/blog/2025/09/25/introducing-batch-future-faster-activity-execution#the-challenge" class="hash-link" aria-label="Direct link to The Challenge" title="Direct link to The Challenge" translate="no">​</a></h4>
@@ -906,7 +908,7 @@ A very common case for some domains is to have separate documentation for their 
 <li class=""><strong>Monitoring</strong>: Use heartbeats for long-running activities within the batch</li>
 </ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="try-it-today">Try It Today!<a href="https://cadenceworkflow.io/blog/2025/09/25/introducing-batch-future-faster-activity-execution#try-it-today" class="hash-link" aria-label="Direct link to Try It Today!" title="Direct link to Try It Today!" translate="no">​</a></h2>
-<p>Batch Future is available now in the latest Cadence Go client. We can't wait to see how you use it to optimize your workflows!</p>
+<p>Batch Future is available now in the Cadence Go client. We can't wait to see how you use it to optimize your workflows!</p>
 <p>Have questions or feedback? Join our <a href="https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ" target="_blank" rel="noopener noreferrer" class="">Slack community</a> or open an issue on <a href="https://github.com/cadence-workflow/cadence-go-client" target="_blank" rel="noopener noreferrer" class="">GitHub</a>.</p>
 <p>Happy coding, and here's to faster, more efficient workflows!</p>]]></content>
         <author>
