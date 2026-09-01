@@ -24,7 +24,7 @@ Every workflow execution is owned by a single history shard on the Cadence serve
 
 Mitigations:
 
-- Use BatchFuture (or `workflow.NewBatchFuture`) instead of starting all activities at once. BatchFuture is a primitive in the Cadence Go client. You pass the full list of work and a concurrency limit. It starts activities only up to that limit, then starts more as earlier ones complete. The scheduling rate stays bounded no matter how large the input is. See [BatchFuture](/blog/2025/09/25/introducing-batch-future-faster-activity-execution).
+- Use BatchFuture (or `workflow.NewBatchFuture`) instead of starting all activities at once. BatchFuture is a primitive in the Cadence Go client. You pass the full list of work and a concurrency limit. It starts activities only up to that limit, then starts more as earlier ones complete. The scheduling rate stays bounded no matter how large the input is. See [BatchFuture](/docs/go-client/batch-future).
 - Combine the work into fewer, larger activities. Each activity processes a chunk of items instead of one item per activity. This cuts the number of history events and the scheduling pressure on the shard.
 - If a large fan-out is truly needed, spread it across [child workflows](/docs/go-client/child-workflows). Each child has its own workflow ID and lands on its own shard, so load is spread across the cluster instead of one shard.
 
