@@ -20,11 +20,11 @@ Antipatterns are workflow patterns that are not failures on their own, but often
 
 ## Many activities scheduled in quick succession
 
-Every workflow execution is owned by a single history shard on the Cadence server. Scheduling a large burst of activities in a short time (for example, 50 or more within a few seconds) puts all the history writes and task dispatch on that one shard. The shard becomes a hot shard. Latency gets worse for that workflow and for every other workflow on the same shard. The activity tasklist can also grow a backlog faster than workers can drain it.
+Every workflow execution is owned by a single history shard on the Cadence server. Scheduling a large burst of activities in a short time (for example, 50 or more ActivityTaskScheduled events within 10 seconds) puts all the history writes and task dispatch on that one shard. The shard becomes a hot shard. Latency gets worse for that workflow and for every other workflow on the same shard. The activity tasklist can also accumulate a backlog faster than workers can drain it.
 
 Mitigations:
 
-- Use a batch future instead of starting all activities at once. BatchFuture is a primitive in the Cadence Go client. You pass the full list of work and a concurrency limit. It starts activities only up to that limit, then starts more as earlier ones complete. The scheduling rate stays bounded no matter how large the input is. See [BatchFuture](/blog/2025/09/25/introducing-batch-future-faster-activity-execution).
+- Use BatchFuture (or `workflow.NewBatchFuture`) instead of starting all activities at once. BatchFuture is a primitive in the Cadence Go client. You pass the full list of work and a concurrency limit. It starts activities only up to that limit, then starts more as earlier ones complete. The scheduling rate stays bounded no matter how large the input is. See [BatchFuture](/blog/2025/09/25/introducing-batch-future-faster-activity-execution).
 - Combine the work into fewer, larger activities. Each activity processes a chunk of items instead of one item per activity. This cuts the number of history events and the scheduling pressure on the shard.
 - If a large fan-out is truly needed, spread it across [child workflows](/docs/go-client/child-workflows). Each child has its own workflow ID and lands on its own shard, so load is spread across the cluster instead of one shard.
 
@@ -36,5 +36,5 @@ Mitigations:
 
 - Let each cron run do one unit of work and return. The server schedules the next run. Do not call Continue-As-New from workflow code. See [distributed cron](/docs/go-client/distributed-cron).
 - If state must be carried from one run to the next, return it as the workflow result. Read it in the next run with HasLastCompletionResult and GetLastCompletionResult. Do not pass it through Continue-As-New.
-- Consider using the [Schedules](/docs/concepts/schedules) feature instead of distributed cron. A Schedule lives outside any workflow execution and starts a new workflow on each fire. Workflow code, including Continue-As-New, cannot interfere with the schedule. Schedules also support overlap policies (skip, buffer, run concurrently, or cancel/terminate the previous run), plus pausing, updating, and backfilling — none of which cron workflows support.
+- Consider using the [Schedules](/docs/concepts/schedules) feature instead of distributed cron. A Schedule lives outside any workflow execution and starts a new workflow on each fire. Workflow code, including Continue-As-New, cannot interfere with the schedule. Schedules also support overlap policies (skip, buffer, run concurrently, or cancel/terminate the previous run), plus pausing, updating, and backfilling, none of which cron workflows support.
 - If a single cron run grows too much history to finish in one execution, move the looping work into a child workflow. The child can use Continue-As-New to bound its history. The parent cron workflow keeps the schedule intact by waiting for the child and returning.
