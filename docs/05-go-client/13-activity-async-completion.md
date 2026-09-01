@@ -10,6 +10,7 @@ keywords:
   - ErrResultPending
   - external activity completion
   - go client async activity
+  - cadence go async activity completion tutorial
 permalink: /docs/go-client/activity-async-completion
 ---
 
@@ -23,6 +24,16 @@ There are two parts to implementing an asynchronously completed activity:
 1. The :activity: provides the information necessary for completion from an external system and notifies
 the Cadence service that it is waiting for that outside callback.
 2. The external service calls the Cadence service to complete the :activity:.
+
+## Samples
+
+Runnable async completion sample:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Expense approval** | Expense report workflow whose activity is completed by an external approval server | [expense](https://github.com/cadence-workflow/cadence-samples/tree/master/cmd/samples/expense) |
+
+---
 
 The following example demonstrates the first part:
 

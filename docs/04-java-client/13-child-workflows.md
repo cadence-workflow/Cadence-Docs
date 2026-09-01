@@ -11,12 +11,22 @@ keywords:
   - cadence java child workflow example
   - newChildWorkflowStub java
   - ParentClosePolicy java
+  - cadence java child workflows tutorial
 permalink: /docs/java-client/child-workflows
 ---
 
 Besides activities, a workflow can also orchestrate other workflows. The orchestrating workflow is the *parent* and the workflow it schedules is the *child*. A child has a lifecycle the parent shapes at every stage: the parent starts it, watches it, communicates with it, and decides its fate when the parent itself closes or is canceled.
 
 Child workflows run independently of that relationship in every other respect: each has its own event history, its own timeouts and retry policy, and can run on a different task list and worker pool than the parent. This page follows a child from start to finish.
+
+## Samples
+
+Runnable child-workflow samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Child workflow** | Parent starts a child, waits for its result | [HelloChild.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloChild.java) |
+| **Child cancellation** | Parent cancels a running child | [HelloCancelChild.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloCancelChild.java) |
 
 ---
 
@@ -182,17 +192,6 @@ scope.cancel();
 | `setWorkflowIdReusePolicy` | No | Whether a completed `WorkflowId` may be reused. |
 | `setRetryOptions` | No | Exponential retry policy applied to the child execution. |
 | `setParentClosePolicy` | No | What happens to the child when the parent closes. See [When the parent closes](#when-the-parent-closes). |
-
----
-
-## Samples
-
-Runnable child-workflow samples:
-
-| Sample | Description | Code |
-|--------|-------------|------|
-| **Child workflow** | Parent starts a child, waits for its result | [HelloChild.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloChild.java) |
-| **Child cancellation** | Parent cancels a running child | [HelloCancelChild.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloCancelChild.java) |
 
 ---
 

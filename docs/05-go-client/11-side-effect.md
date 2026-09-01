@@ -10,6 +10,7 @@ keywords:
   - random value workflow
   - go client side effect
   - inline activity
+  - cadence go side effect tutorial
 permalink: /docs/go-client/side-effect
 ---
 
@@ -24,6 +25,16 @@ end up executing a function more than once.
 The only way to fail `SideEffect` is to panic, which causes a :decision_task: failure. After the
 timeout, Cadence reschedules and then re-executes the :decision_task:, giving `SideEffect` another chance
 to succeed. Do not return any data from `SideEffect` other than through its recorded return value.
+
+## Samples
+
+Runnable side effect sample:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Side effect** | Workflow that records a non-deterministic value with `workflow.SideEffect` | [sideeffect](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/sideeffect) |
+
+---
 
 The following sample demonstrates how to use `SideEffect`:
 

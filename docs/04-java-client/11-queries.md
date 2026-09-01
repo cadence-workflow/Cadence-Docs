@@ -10,12 +10,23 @@ keywords:
   - cadence stack trace query
   - cadence java query example
   - cadence read workflow state
+  - cadence java queries tutorial
 permalink: /docs/java-client/queries
 ---
 
 The Query feature exposes workflow internal state to the external world. Cadence provides a synchronous :query: feature. From the :workflow: implementer point of view the :query: is exposed as a synchronous callback that is invoked by external entities. Multiple such callbacks can be provided per :workflow: type exposing different information to different external systems.
 
 :query:Query: callbacks must be read-only not mutating the :workflow: state in any way. The other limitation is that the :query: callback cannot contain any blocking code. Both above limitations rule out ability to invoke :activity:activities: from the :query: handlers.
+
+## Samples
+
+Runnable query samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Query method** | Workflow exposing its state through a query method | [HelloQuery.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloQuery.java) |
+| **Consistent query** | Strongly consistent reads of workflow state | [HelloConsistentQuery.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloConsistentQuery.java) |
+| **Formatted query responses** | Queries returning markdown that Cadence Web renders as a dashboard | [query](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/query) |
 
 ## Built-in Query: Stack Trace
 

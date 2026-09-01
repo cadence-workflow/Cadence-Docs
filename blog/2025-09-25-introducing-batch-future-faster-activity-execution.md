@@ -85,7 +85,7 @@ Batch Future provides several important advantages:
 - **Resource Management**: Better control over memory and CPU usage
 - **Rate Limiting Protection**: Avoid hitting API rate limits by controlling execution speed
 - **Graceful Cancellation**: All activities can be cancelled together if needed
-- **Simplified Error Handling**: Single point of failure handling for the entire batch
+- **Aggregated Error Handling**: A failing item doesn't stop the batch. Every failure is merged into one error you can unpack, so you choose whether to fail fast or collect them all
 
 ## Real-World Use Cases
 
@@ -171,21 +171,25 @@ Batch Future leverages Cadence's existing activity infrastructure with controlle
 2. **Concurrency Control**: Limits the number of pending futures
 3. **Queue Management**: Maintains a queue of to-be-scheduled futures and starts new ones as others complete
 4. **Future Management**: Returns a single future that completes when all futures finish
-5. **Error Propagation**: If any future fails, the error is stored in a multi-error wrapper entity, users can either cancel or fail open
+5. **Error Propagation**: A failing future doesn't stop the batch. Every factory runs to completion and the failures are merged with `go.uber.org/multierr`, so you can unpack them with `multierr.Errors(err)` or read the original error at each index from `GetFutures()`
+
+One thing Batch Future doesn't do: it doesn't reduce the number of history events your workflow produces. Running 5,000 activities ten at a time writes exactly as many events as scheduling all 5,000 at once, so event-count and history-size limits are unaffected. If history size rather than concurrency is your constraint, reach for continue-as-new or child workflows instead.
 
 ## Getting Started
 
 Ready to supercharge your workflows? Here's how to get started:
 
 ### 1. Update Your Go Client
-Make sure you're using the latest version of the Cadence Go client:
+`workflow.NewBatchFuture` is available in Go client v1.3.1 or later. Install the latest version:
 
 ```bash
-go get github.com/uber/cadence-go-client@latest
+go get go.uber.org/cadence@latest
 ```
 
 ### 2. Try the Sample
-Check out our [Batch Future sample](https://github.com/cadence-workflow/cadence-samples/tree/master/cmd/samples/batch) to see it in action.
+Check out our [Batch Future sample](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/concurrency) to see it in action.
+
+For the full API reference, error handling semantics, and migration guidance, see the [Batch Future documentation](/docs/go-client/batch-future).
 
 ### 3. Migrate Your Workflows (With Caution)
 
@@ -237,7 +241,7 @@ Before deploying, use [Workflow Shadowing](https://cadenceworkflow.io/docs/go-cl
 
 ## Try It Today!
 
-Batch Future is available now in the latest Cadence Go client. We can't wait to see how you use it to optimize your workflows!
+Batch Future is available now in the Cadence Go client. We can't wait to see how you use it to optimize your workflows!
 
 Have questions or feedback? Join our [Slack community](https://join.slack.com/t/uber-cadence/shared_invite/zt-3sdz5oow2-TXL478KDhHvJOuUm0nItiQ) or open an issue on [GitHub](https://github.com/cadence-workflow/cadence-go-client).
 

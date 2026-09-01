@@ -14,12 +14,24 @@ keywords:
   - golang workflow engine
   - workflow engine go
   - embedded workflow engine go
+  - cadence go worker tutorial
 permalink: /docs/go-client/workers
 ---
 
 A :worker: or *:worker: service* is a service that hosts the :workflow: and :activity: implementations. The :worker: polls the *Cadence service* for :task:tasks:, performs those :task:tasks:, and communicates :task: execution results back to the *Cadence service*. :worker:Worker: services are developed, deployed, and operated by Cadence customers.
 
 You can run a Cadence :worker: in a new or an existing service. Use the framework APIs to start the Cadence :worker: and link in all :activity: and :workflow: implementations that you require the service to execute.
+
+## Samples
+
+Runnable worker samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Worker setup** | Registers workflows and activities, then polls a task list | [worker.go](https://github.com/cadence-workflow/cadence-samples/blob/master/new_samples/hello_world/worker.go) |
+| **Auto scaling and monitoring** | Poller tuning with load generation and metrics dashboards | [autoscaling-monitoring](https://github.com/cadence-workflow/cadence-samples/tree/master/cmd/samples/advanced/autoscaling-monitoring) |
+
+---
 
 The following is an example worker service utilizing tchannel, one of the two transport protocols supported by Cadence.
 

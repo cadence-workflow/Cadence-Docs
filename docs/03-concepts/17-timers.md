@@ -7,6 +7,7 @@ keywords:
   - cadence timer tasks
   - cadence workflow sleep
   - cadence global domain timers
+  - cadence timers tutorial
 permalink: /docs/concepts/timers
 ---
 
@@ -15,6 +16,17 @@ permalink: /docs/concepts/timers
 Cadence timers allow :workflow:workflows: to wait without holding a :worker:worker: thread or process. The wait is durable: after the timer is created, a worker can restart or be removed from cache, and Cadence resumes the workflow when the timer fires.
 
 Timers are useful for delays, reminders, deadlines, and waiting for a signal or timeout.
+
+## Samples
+
+Runnable timer samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Timer racing an activity** | Fires a timer to take action when a long-running activity exceeds a threshold | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/timer) |
+| **Durable sleep** | Simple durable wait inside a workflow | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/sleep) |
+| **Delayed start** | Starts a workflow after a configured delay | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/delaystart) |
+| **Periodic workflow** | Timer loop that runs an activity periodically | [Java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloPeriodic.java) |
 
 ## Timer tasks
 

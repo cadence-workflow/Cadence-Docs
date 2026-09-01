@@ -12,12 +12,25 @@ keywords:
   - RetryPolicy
   - heartbeat progress
   - cadence go client
+  - cadence go retries tutorial
 permalink: /docs/go-client/retries
 ---
 
 :activity:Activities: and :workflow:workflows: can fail due to various intermediate conditions. In those cases, we want
 to retry the failed :activity: or child :workflow: or even the parent :workflow:. This can be achieved
-by supplying an optional retry policy. A retry policy looks like the following:
+by supplying an optional retry policy.
+
+## Samples
+
+Runnable retry sample:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Activity retry with heartbeat** | Activity retried automatically, resuming from its last heartbeat progress | [retryactivity](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/retryactivity) |
+
+---
+
+A retry policy looks like the following:
 
 ``` go
 // RetryPolicy defines the retry policy.

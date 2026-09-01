@@ -10,6 +10,7 @@ keywords:
   - cadence workflow compensation
   - cadence retry
   - cadence use case
+  - cadence orchestration tutorial
 permalink: /docs/use-cases/orchestration
 ---
 
@@ -20,6 +21,19 @@ In some cases, instead of trying to complete the process by retrying for a long 
 
 Cadence is a perfect fit for such scenarios. It guarantees that :workflow: code eventually completes, has built-in support
 for unlimited exponential :activity: retries and simplifies coding of the compensation logic. It also gives full visibility into the state of each :workflow:, in contrast to an orchestration based on queues where getting a current status of each individual request is practically impossible.
+
+## Samples
+
+Runnable orchestration samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Trip booking Saga** | Books a car, hotel, and flight, running compensations when a step fails | [Java](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/bookingsaga) |
+| **Saga basics** | Minimal example of registering compensations with the Saga class | [Java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloSaga.java) |
+| **Sequential microservice calls** | Chains activities, passing each result to the next step | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/greetings) |
+| **Human-approval orchestration** | Expense report workflow that waits on an external approval service | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/cmd/samples/expense) |
+
+---
 
 Following are some real-world examples of Cadence-based service orchestration scenarios:
 

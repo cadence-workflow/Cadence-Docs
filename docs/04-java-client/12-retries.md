@@ -10,6 +10,7 @@ keywords:
   - cadence backoff retry
   - cadence workflow retry
   - cadence java retry example
+  - cadence java retries tutorial
 permalink: /docs/java-client/retries
 ---
 
@@ -18,6 +19,15 @@ to retry the failed :activity: or child :workflow: or even the parent :workflow:
 by supplying an optional [retry options](https://www.javadoc.io/doc/com.uber.cadence/cadence-client/latest/com/uber/cadence/common/RetryOptions.Builder.html#setInitialInterval(java.time.Duration)).
 
 > Note that sometimes it's also referred as RetryPolicy
+
+## Samples
+
+Runnable retry samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Activity retry** | Activity retried automatically with `RetryOptions` | [HelloActivityRetry.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloActivityRetry.java) |
+| **Retries with compensation** | Saga that combines activity retries with compensation on failure | [bookingsaga](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/bookingsaga) |
 
 ## RetryOptions
 A RetryOptions includes the following.

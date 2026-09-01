@@ -9,12 +9,24 @@ keywords:
   - cadence S3 polling
   - cadence monitoring use case
   - cadence heartbeat
+  - cadence polling tutorial
 permalink: /docs/use-cases/polling
 ---
 
 Polling is executing a periodic action checking for a state change. Examples are pinging a host, calling a REST API, or listing an Amazon S3 bucket for newly uploaded files.
 
 Cadence support for long running :activity:activities: and unlimited retries makes it a good fit.
+
+## Samples
+
+Runnable samples covering the building blocks of polling:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Activity retry with heartbeat** | Long-running activity that heartbeats progress and retries without limit | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/retryactivity) · [Java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloActivityRetry.java) |
+| **Durable timer** | Fires a durable timer to take action when an operation runs too long | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/timer) |
+
+---
 
 Some real-world use cases:
 

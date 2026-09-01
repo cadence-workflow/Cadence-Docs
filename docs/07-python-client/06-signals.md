@@ -7,12 +7,21 @@ keywords:
   - cadence python signal handler
   - cadence python signal workflow
   - cadence python signal external workflow
+  - cadence python signals tutorial
 permalink: /docs/python-client/signals
 ---
 
 # Signals
 
 Signals are one-way messages sent to a running workflow. They can carry arguments and can mutate workflow state. For a deeper overview, see the [Signal Handling in the Cadence Python Client](https://cadenceworkflow.io/blog/2026/04/28/2026-04-28-python-client-signal/python-client-signal) blog post.
+
+## Samples
+
+Runnable signal sample:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Human in the loop** | Agent workflow whose approve/reject step is driven by signals | [human_in_the_loop](https://github.com/cadence-workflow/cadence-samples/tree/master/python_sdk_samples/openai_samples/human_in_the_loop) |
 
 ## Defining a signal handler
 

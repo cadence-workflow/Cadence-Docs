@@ -10,6 +10,7 @@ keywords:
   - cadence go sdk activity
   - cadence activity context go
   - cadence activity example go
+  - cadence go activities tutorial
 permalink: /docs/go-client/activities
 ---
 
@@ -29,6 +30,15 @@ service to :workflow_worker:workflow_workers: with every :event: that the :workf
 history can thus adversely impact the performance of your :workflow:. Therefore, be mindful of the amount
 of data you transfer via :activity: invocation parameters or return values. Otherwise, no additional
 limitations exist on :activity: implementations.
+
+## Samples
+
+Runnable activity samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Basic activities** | Activity implementations invoked from a workflow | [activities](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/activities) |
+| **Local activity** | Short activity executed directly on the workflow worker | [localactivity](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/localactivity) |
 
 ## Overview
 

@@ -22,6 +22,9 @@ exclude = [
   "slack\\.com",
   "reddit\\.com",
   "lf\\.biz",
+  "stackoverflow\\.com",
+  "www\\.uber\\.com/blog",
+  "doordash\\.engineering",
 ]
 
 # Never traverse these paths when expanding inputs.

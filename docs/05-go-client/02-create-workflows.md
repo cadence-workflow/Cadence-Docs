@@ -10,6 +10,7 @@ keywords:
   - cadence go workflow example
   - cadence workflow registration go
   - cadence go sdk workflow
+  - cadence go create workflow tutorial
 permalink: /docs/go-client/create-workflows
 ---
 
@@ -26,6 +27,15 @@ However, in order to facilitate this operational model, both the Cadence program
 the managed service impose some requirements and restrictions on the implementation of the
 coordination logic. The details of these requirements and restrictions are described in the
 **Implementation** section below.
+
+## Samples
+
+Runnable workflow samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Hello world** | Complete workflow, worker, and starter with a detailed README | [hello_world](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/hello_world) |
+| **Sequential activities** | Workflow chaining several activities and passing results between them | [greetings](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/greetings) |
 
 ## Overview
 

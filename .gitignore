@@ -31,6 +31,10 @@ yarn-error.log
 # Generated files
 .docusaurus
 .cache-loader
+.lycheecache
+
+# Claude Code local config
+.claude/
 
 # Misc
 .envrc.local

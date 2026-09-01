@@ -12,6 +12,7 @@ keywords:
   - ExecuteWithMinVersion
   - ExecuteWithVersion
   - go client versioning
+  - cadence go workflow versioning tutorial
 permalink: /docs/go-client/workflow-versioning
 ---
 
@@ -19,6 +20,14 @@ The definition code of a Cadence :workflow: must be deterministic because Cadenc
 to reconstruct the :workflow: state by replaying the saved history :event: data on the :workflow:
 definition code. This means that any incompatible update to the :workflow: definition code could cause
 a non-deterministic issue if not handled correctly.
+
+## Samples
+
+Runnable versioning sample:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Workflow versioning** | Workflow evolved safely across versions with `workflow.GetVersion` | [versioning](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/versioning) |
 
 ## workflow.GetVersion()
 

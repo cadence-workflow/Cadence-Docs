@@ -10,12 +10,21 @@ keywords:
   - cadence go overlap policy
   - cadence go backfill schedule
   - cadence go pause schedule
+  - cadence go schedules tutorial
 permalink: /docs/go-client/schedules
 ---
 
 # Schedules
 
 The Go client exposes schedule management through `ScheduleClient`, obtained from any `cadence.Client` instance. For a full explanation of overlap policies, backfill, catch-up, and when to use Schedules over `CronSchedule`, see the [Schedules concept page](/docs/concepts/schedules).
+
+## Samples
+
+Runnable schedule sample:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Schedule operations** | One script per operation: create, update, pause, unpause, backfill, describe, list, and delete | [schedule](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/schedule) |
 
 ## Getting the client
 

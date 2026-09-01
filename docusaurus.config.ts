@@ -87,9 +87,6 @@ const config: Config = {
         theme: {
           customCss: './src/css/custom.css',
         },
-        googleTagManager: {
-          containerId: 'G-W63QD8QE6E',
-        },
         gtag: {
           trackingID: 'G-W63QD8QE6E',
           anonymizeIP: true,
@@ -415,7 +412,7 @@ const config: Config = {
             },
             {
               label: 'Cadence Community on CNCF Slack',
-              href: 'https://communityinviter.com/apps/cloud-native/cncf',
+              href: 'https://inviter.co/cncf',
             },
             {
               label: 'LinkedIn',

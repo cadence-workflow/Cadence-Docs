@@ -10,6 +10,7 @@ keywords:
   - workflow serialization
   - custom data converter
   - history payload size
+  - cadence data converter tutorial
 permalink: /docs/concepts/data-converter
 ---
 

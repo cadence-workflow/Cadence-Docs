@@ -9,10 +9,22 @@ keywords:
   - cadence scheduled workflow
   - cadence recurring workflow
   - cadence cron use case
+  - cadence periodic execution tutorial
 permalink: /docs/use-cases/periodic-execution
 ---
 
 Periodic execution, frequently referred to as distributed cron, is when you execute business logic periodically. The advantage of Cadence for these scenarios is that it guarantees execution, sophisticated error handling, retry policies, and visibility into execution history.
+
+## Samples
+
+Runnable periodic-execution samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Schedules** | Create, pause, update, and backfill a schedule as a server-side object, independent of the workflow | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/schedule) · [Python](https://github.com/cadence-workflow/cadence-samples/tree/master/python_sdk_samples/schedule_samples) |
+| **Distributed Cron** | Recurring workflow driven by a `CronSchedule` cron expression on the start options | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/cmd/samples/cron) · [Java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloCron.java) |
+
+---
 
 Another important dimension is scale. Some use cases require periodic execution for a large number of entities.
 At Uber, there are applications that create periodic :workflow:workflows: per customer.

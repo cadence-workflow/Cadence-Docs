@@ -8,12 +8,22 @@ keywords:
   - cadence python workflow.run
   - cadence python signal handler
   - cadence python query handler
+  - cadence python workflows tutorial
 permalink: /docs/python-client/workflows
 ---
 
 # Workflows
 
 A workflow is a class decorated with `@registry.workflow()`. The class has exactly one `@workflow.run` method that contains the workflow logic.
+
+## Samples
+
+Runnable workflow samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Schedule workflow** | Minimal workflow definition run by a schedule | [workflow.py](https://github.com/cadence-workflow/cadence-samples/blob/master/python_sdk_samples/schedule_samples/workflow.py) |
+| **Research agent workflow** | Multi-step research agent built on the OpenAI SDK | [research_workflow.py](https://github.com/cadence-workflow/cadence-samples/blob/master/python_sdk_samples/openai_samples/auto-research/research_workflow.py) |
 
 ## Defining a workflow
 
