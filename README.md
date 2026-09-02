@@ -1,133 +1,68 @@
-# [Cadence docs](https://cadenceworkflow.io) &middot; ![Build and Deploy](https://img.shields.io/github/actions/workflow/status/cadence-workflow/Cadence-Docs/publish-to-gh-pages.yml?label=Build%20and%20Deploy&link=https%3A%2F%2Fgithub.com%2Fcadence-workflow%2FCadence-Docs%2Factions%2Fworkflows%2Fpublish-to-gh-pages.yml) ![Nightly integration test](https://img.shields.io/github/actions/workflow/status/cadence-workflow/Cadence-Docs/nightly-integration-test.yml?label=Nightly%20integration%20test&link=https%3A%2F%2Fgithub.com%2Fcadence-workflow%2FCadence-Docs%2Factions%2Fworkflows%2Fnightly-integration-test.yml)
+# Cadence docs
 
+[![Build and Deploy](https://img.shields.io/github/actions/workflow/status/cadence-workflow/Cadence-Docs/publish-to-gh-pages.yml?label=Build%20and%20Deploy)](https://github.com/cadence-workflow/Cadence-Docs/actions/workflows/publish-to-gh-pages.yml)
+[![Nightly integration test](https://img.shields.io/github/actions/workflow/status/cadence-workflow/Cadence-Docs/nightly-integration-test.yml?label=Nightly%20integration%20test)](https://github.com/cadence-workflow/Cadence-Docs/actions/workflows/nightly-integration-test.yml)
 
+This repository is the source of [cadenceworkflow.io](https://cadenceworkflow.io), the documentation site for [Cadence](https://github.com/cadence-workflow/cadence). It is built with [Docusaurus](https://docusaurus.io/).
 
-# cadenceworkflow.io
+> 📚 **New to contributing to Cadence?** Check out our [Contributing Guide](https://cadenceworkflow.io/community/how-to-contribute/getting-started) for an overview of the contribution process across all Cadence repositories. For setup and development instructions specific to this site, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
-[Cadence docs](https://cadenceworkflow.io) is built using [Docusaurus](https://docusaurus.io/).
+## Quick start
 
-> 📚 **New to contributing to Cadence?** Check out our [Contributing Guide](https://cadenceworkflow.io/community/how-to-contribute/getting-started) for an overview of the contribution process across all Cadence repositories. This document contains Cadence backend specific setup and development instructions.
-
-### Installation
+Requires Node.js 22 or newer.
 
 ```console
 npm install
-```
-
-### Local Development
-
-```console
 npm run start
 ```
 
-This command starts a local development server and opens up a browser window at http://localhost:3000/. Most changes are reflected live without having to restart the server.
+This starts a local development server at http://localhost:3000/ and opens a browser window. Most changes are reflected live without restarting the server.
 
-### Build
+To generate the static site into the `build` directory, which can be served by any static host:
 
 ```console
 npm run build
 ```
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+[CONTRIBUTING.md](CONTRIBUTING.md) covers the rest: Node version pinning, npm registry configuration, the production preview you should run before opening a pull request, and how to add or move a page.
 
-### Preview the production / GitHub Pages build
+## How the site is deployed
 
-Our [website](https://cadenceworkflow.io) is deployed by using GitHub pages, which are static HTML pages generated from the codebase whereas `npm run start` runs Docusaurus in development mode, injecting styles and updates them with HMR. Before you land your changes you need to check how they are going to look like in the website. Here are the steps to perform that test:
+The live site is published by the **Build and Deploy** workflow ([`publish-to-gh-pages.yml`](.github/workflows/publish-to-gh-pages.yml)), which runs on every push to `master` and can also be triggered manually. It builds with `npm ci && npm run build`, deploys the `build` directory to the `gh-pages` branch, and then asks the Algolia crawler to re-index the site.
 
-Run this once:
+`npm run deploy` also exists as a manual fallback that builds and pushes to `gh-pages` from your machine, using either `USE_SSH=true npm run deploy` or `GIT_USER=<your GitHub username> npm run deploy`. Day to day you should not need it; prefer letting the workflow deploy.
 
-```console
-chmod +x scripts/preview-github-pages-build.sh
-```
+### Configuration
 
-Run this before every test:
+A few options in [`docusaurus.config.ts`](docusaurus.config.ts) can be overridden by environment variables so the site can be deployed to more than one place. The deploy workflow reads them from the repository's `production` environment settings.
 
-```console
-./scripts/preview-github-pages-build.sh --serve      # then open http://localhost:4173/
-```
-
-Alternatively, you can run the following:
-
-```console
-npm run preview:github-pages -- --serve
-```
-
-### Environment Variables
-
-In order to deploy to multiple environments, some configuration options in `docusaurus.config.ts` are made available for override through environment variables.
+The canonical cadenceworkflow.io deployment uses:
 
 ```bash
-# Can be replaced by your GH pages URL, i.e., https://<userId>.github.io/
+# Site origin, used to build absolute URLs.
 CADENCE_DOCS_URL=https://cadenceworkflow.io
 
-# For GitHub Pages project sites (e.g. username.github.io/Cadence-Docs/), use /<repo>/
-# Official cadenceworkflow.io build uses BASE_URL=/
-BASE_URL=/Cadence-Docs/
+# Served from the domain root.
+BASE_URL=/
 
-# For GitHub pages only, this is your GitHub org/user name.
+# GitHub org that owns the repository.
 ORGANIZATION_NAME=cadence-workflow
 ```
 
-#### CNAME
+If a variable is not set, the workflow derives a sensible default from the repository name, so a fork deploys to `/<repo>/` without any configuration. Deploying your own fork for preview purposes is documented in [CONTRIBUTING.md](CONTRIBUTING.md); the values above are for the canonical site and should not be copied to a fork.
 
-A file `static/CNAME` should be present to use a [custom domain for GitHub Pages](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site) (e.g. cadenceworkflow.io). The deploy workflow creates it from **`secrets.CUSTOM_DOMAIN`** (`finnp/create-file-action`).
+### Custom domain
 
-### Deployment
+Serving the site from a [custom domain](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site) such as cadenceworkflow.io requires a `static/CNAME` file, because anything under `static/` is copied to the root of the build output. The file is not committed: the deploy workflow creates it from the `CUSTOM_DOMAIN` secret. Forks have no such secret and therefore no custom domain, which is the intended behavior.
 
-Using SSH:
+## Contributing
 
-```console
-USE_SSH=true npm run deploy
-```
+Documentation contributions are welcome and are a good way to get started with the project. Start with [CONTRIBUTING.md](CONTRIBUTING.md) for how to set up, verify, and submit a change to this site.
 
-Not using SSH:
+Two common tasks are documented there rather than here, since both are contributor workflows: [updating the featured reading carousel](CONTRIBUTING.md#updating-the-featured-reading-carousel) on the homepage, which is driven entirely by [`src/data/featuredLinks.yaml`](src/data/featuredLinks.yaml), and [updating release data](CONTRIBUTING.md#updating-release-data) under `static/data/releases/`, which is normally handled automatically by a scheduled workflow.
 
-```console
-GIT_USER=<Your GitHub username> npm run deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
-
-
-### Updating Release Data
-
-The release pages rely on data from GitHub that is persisted as JSON files under `static/data/releases/`.
-In order to update the release information for display, this can be done manually or be set up as part of the CI/CD process by running the `scripts/fetch-releases.sh` script. Script uses the [GitHub CLI](https://cli.github.com/) to fetch the release data.
-
-Automatic updates to release data are performed by a GitHub Action `fetch-release-data`, which will check if new data is available, and if so, update the release data with the latest information and open a branch named `fetch-release-data` and open a PR if one is not open already.
-
-Manual approval is required before merging and continuing to deployment.
-
-### Updating the Featured Reading Carousel
-
-The homepage "Featured reading" carousel is driven entirely by [`src/data/featuredLinks.yaml`](src/data/featuredLinks.yaml) — no code changes are needed to add, remove, or reorder items. Items are rendered in the order they appear in the file, so add a new entry wherever it should show up in the carousel.
-
-Each entry supports:
-
-- `title` (required): Card headline.
-- `description` (required): One or two short sentences.
-- `href` (required): Internal route (e.g. `/docs/...`) or a full external URL.
-- `tag` (required): One of `Blog`, `Doc`, `Community`, `FAQ`, `Video` (defined in `src/data/featuredTags.ts`). An unrecognized tag fails the build with a clear error.
-- `image` (optional): Overrides the tag's default image. A path under `static/` (e.g. `/img/foo.png`) or a full URL.
-- `cta` (optional): Call-to-action label; defaults to "Read more".
-
-```yaml
-- title: "Introducing Cadence Schedules"
-  description: Cadence Schedules bring first-class recurring workflow execution to the platform.
-  href: /blog/2026/06/23/cadence-schedules
-  tag: Blog
-  cta: Read post
-```
-
-For `Video` items linking to YouTube, the carousel automatically pulls the video's thumbnail as the card image, falling back to the tag's default image if the thumbnail fails to load.
-
-# NPM Registry
-
-Ensure you have a `.npmrc` [file](https://docs.npmjs.com/cli/v9/configuring-npm/npmrc/) configured with `registry=https://registry.npmjs.org/`.
-This will ensure the dependencies are pulled from the correct source and to prevent internal npm registries from being pushed onto the package-lock.json
+For questions, join the **#cadence-contributors** channel on the CNCF Slack workspace, or see the [contact page](https://cadenceworkflow.io/community/contact-us) for other options.
 
 ## License
 
-The source code in this repository is licensed under the Apache 2.0 License.
-The documentation in this repository is licensed under the Creative Commons Attribution 4.0 International License.
-See [LICENSE](https://github.com/cadence-workflow/Cadence-Docs/blob/master/LICENSE.md) for details.
+The source code in this repository is licensed under the Apache License 2.0. The documentation content is licensed under the Creative Commons Attribution 4.0 International License. See [LICENSE.md](LICENSE.md) for details.

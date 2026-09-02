@@ -51,7 +51,7 @@ You can also comment on the issue or pull request you are working on. Asking ear
 
 ### Node.js
 
-This site requires **Node.js 22 or newer**. The version is pinned in [`.nvmrc`](.nvmrc) and [`.node-version`](.node-version), and enforced by the `engines` field in [`package.json`](package.json). CI builds on the current Node 22 LTS release.
+This site requires **Node.js 22 or newer**. The version is pinned in [`.nvmrc`](https://github.com/cadence-workflow/Cadence-Docs/blob/master/.nvmrc) and [`.node-version`](https://github.com/cadence-workflow/Cadence-Docs/blob/master/.node-version), and enforced by the `engines` field in [`package.json`](https://github.com/cadence-workflow/Cadence-Docs/blob/master/package.json). CI builds on the current Node 22 LTS release.
 
 If you use [nvm](https://github.com/nvm-sh/nvm):
 
@@ -60,7 +60,7 @@ nvm install
 nvm use
 ```
 
-If you use [direnv](https://direnv.net/), this repository ships an [`.envrc`](.envrc) that selects the pinned Node version for you and sets `NODE_OPTIONS=--openssl-legacy-provider`, which some dependencies still need. Put any personal environment overrides in `.envrc.local`, which is loaded automatically and is not tracked by git.
+If you use [direnv](https://direnv.net/), this repository ships an [`.envrc`](https://github.com/cadence-workflow/Cadence-Docs/blob/master/.envrc) that selects the pinned Node version for you and sets `NODE_OPTIONS=--openssl-legacy-provider`, which some dependencies still need. Put any personal environment overrides in `.envrc.local`, which is loaded automatically and is not tracked by git.
 
 ### npm registry
 
@@ -90,7 +90,7 @@ The development server is the right tool while you are writing. It is *not* suff
 
 ## Verify your change
 
-Work through the steps that apply to your change. This is the same verification the [pull request template](.github/pull_request_template.md) asks you to describe, and the detailed rules live in [`.github/pull_request_guidance.md`](.github/pull_request_guidance.md).
+Work through the steps that apply to your change. This is the same verification the [pull request template](https://github.com/cadence-workflow/Cadence-Docs/blob/master/.github/pull_request_template.md) asks you to describe, and the detailed rules live in [`.github/pull_request_guidance.md`](https://github.com/cadence-workflow/Cadence-Docs/blob/master/.github/pull_request_guidance.md).
 
 ### 1. Build the site
 
@@ -98,7 +98,7 @@ Work through the steps that apply to your change. This is the same verification 
 npm run build
 ```
 
-Always run this. The build is your main safety net for links: [`docusaurus.config.ts`](docusaurus.config.ts) sets both `onBrokenLinks: 'throw'` and `onBrokenMarkdownLinks: 'throw'`, so a broken internal link fails the build rather than shipping quietly. It also validates the featured carousel data described below.
+Always run this. The build is your main safety net for links: [`docusaurus.config.ts`](https://github.com/cadence-workflow/Cadence-Docs/blob/master/docusaurus.config.ts) sets both `onBrokenLinks: 'throw'` and `onBrokenMarkdownLinks: 'throw'`, so a broken internal link fails the build rather than shipping quietly. It also validates the featured carousel data described below.
 
 ### 2. Type-check, if you touched TypeScript
 
@@ -135,8 +135,8 @@ For any change that affects rendering, check affected pages in both color modes 
 
 ## What CI runs on your pull request
 
-- **Build** ([`build.yml`](.github/workflows/build.yml)) runs `npm ci && npm run build` on every push and pull request. This is the check that catches broken internal links.
-- **Link check** ([`link-check-pr.yml`](.github/workflows/link-check-pr.yml)) runs [lychee](https://github.com/lycheeverse/lychee) against external `http(s)` links in the markdown files your pull request changed. Internal links are deliberately left to the build, which understands Docusaurus routing. This check is currently advisory: it reports failures but does not block merging. That is temporary, so please read its output and fix genuinely broken links rather than ignoring it.
+- **Build** ([`build.yml`](https://github.com/cadence-workflow/Cadence-Docs/blob/master/.github/workflows/build.yml)) runs `npm ci && npm run build` on every push and pull request. This is the check that catches broken internal links.
+- **Link check** ([`link-check-pr.yml`](https://github.com/cadence-workflow/Cadence-Docs/blob/master/.github/workflows/link-check-pr.yml)) runs [lychee](https://github.com/lycheeverse/lychee) against external `http(s)` links in the markdown files your pull request changed. Internal links are deliberately left to the build, which understands Docusaurus routing. This check is currently advisory: it reports failures but does not block merging. That is temporary, so please read its output and fix genuinely broken links rather than ignoring it.
 - **DCO** verifies every commit is signed off. See below.
 
 Maintainers must approve workflow runs for first-time contributors, so your checks may sit idle briefly before they start.
@@ -168,7 +168,7 @@ fix(carousel): Correct fallback image for video items
 
 Most changes here use the `docs` type. Full conventions, including the type list, are documented in [Pull Request Conventions](https://cadenceworkflow.io/community/how-to-contribute/pull-request-conventions).
 
-Write the pull request description for a maintainer reading it a year from now. Explain what changed and, more importantly, why: what was wrong or unclear before. See [How to Write a Git Commit Message](https://cbea.ms/git-commit/) for the underlying habit. The [pull request template](.github/pull_request_template.md) prompts you for each part, and [`.github/pull_request_guidance.md`](.github/pull_request_guidance.md) has worked examples of good and bad answers.
+Write the pull request description for a maintainer reading it a year from now. Explain what changed and, more importantly, why: what was wrong or unclear before. See [How to Write a Git Commit Message](https://cbea.ms/git-commit/) for the underlying habit. The [pull request template](https://github.com/cadence-workflow/Cadence-Docs/blob/master/.github/pull_request_template.md) prompts you for each part, and [`.github/pull_request_guidance.md`](https://github.com/cadence-workflow/Cadence-Docs/blob/master/.github/pull_request_guidance.md) has worked examples of good and bad answers.
 
 Before you submit, confirm that you have:
 
@@ -189,19 +189,19 @@ Documentation lives under `docs/`, organized into numbered directories and files
 
 Two things catch people out:
 
-- **Sidebars are explicit, not generated.** [`sidebars.ts`](sidebars.ts) lists every page by ID, and the filesystem-autogenerated option is deliberately commented out. A new page will build fine and be reachable by URL, but it will not appear in the sidebar until you add it to the right category. The community and FAQ sections have their own files, [`sidebarsCommunity.js`](sidebarsCommunity.js) and [`sidebarsFAQ.js`](sidebarsFAQ.js).
-- **Moved or renamed pages need a redirect.** Add an entry to the `plugin-client-redirects` configuration in [`docusaurus.config.ts`](docusaurus.config.ts) so existing links and search results keep working. Redirects only take effect in a production build, so `npm run start` will not show them. Verify them with the production preview.
+- **Sidebars are explicit, not generated.** [`sidebars.ts`](https://github.com/cadence-workflow/Cadence-Docs/blob/master/sidebars.ts) lists every page by ID, and the filesystem-autogenerated option is deliberately commented out. A new page will build fine and be reachable by URL, but it will not appear in the sidebar until you add it to the right category. The community and FAQ sections have their own files, [`sidebarsCommunity.js`](https://github.com/cadence-workflow/Cadence-Docs/blob/master/sidebarsCommunity.js) and [`sidebarsFAQ.js`](https://github.com/cadence-workflow/Cadence-Docs/blob/master/sidebarsFAQ.js).
+- **Moved or renamed pages need a redirect.** Add an entry to the `plugin-client-redirects` configuration in [`docusaurus.config.ts`](https://github.com/cadence-workflow/Cadence-Docs/blob/master/docusaurus.config.ts) so existing links and search results keep working. Redirects only take effect in a production build, so `npm run start` will not show them. Verify them with the production preview.
 
 ### Updating the featured reading carousel
 
-The homepage "Featured reading" carousel is driven entirely by [`src/data/featuredLinks.yaml`](src/data/featuredLinks.yaml). No code changes are needed to add, remove, or reorder items. Items render in the order they appear in the file, so add a new entry wherever it should show up.
+The homepage "Featured reading" carousel is driven entirely by [`src/data/featuredLinks.yaml`](https://github.com/cadence-workflow/Cadence-Docs/blob/master/src/data/featuredLinks.yaml). No code changes are needed to add, remove, or reorder items. Items render in the order they appear in the file, so add a new entry wherever it should show up.
 
 Each entry supports:
 
 - `title` (required): Card headline.
 - `description` (required): One or two short sentences.
 - `href` (required): Internal route (e.g. `/docs/...`) or a full external URL.
-- `tag` (required): One of `Blog`, `Doc`, `Community`, `FAQ`, `Video`, defined in [`src/data/featuredTags.ts`](src/data/featuredTags.ts). An unrecognized tag fails the build with a clear error.
+- `tag` (required): One of `Blog`, `Doc`, `Community`, `FAQ`, `Video`, defined in [`src/data/featuredTags.ts`](https://github.com/cadence-workflow/Cadence-Docs/blob/master/src/data/featuredTags.ts). An unrecognized tag fails the build with a clear error.
 - `image` (optional): Overrides the tag's default image. A path under `static/` (e.g. `/img/foo.png`) or a full URL.
 - `cta` (optional): Call-to-action label; defaults to "Read more".
 
@@ -243,4 +243,4 @@ Cadence follows the [CNCF Code of Conduct](https://github.com/cncf/foundation/bl
 
 ## License
 
-By contributing, you agree that your contributions are licensed under this repository's terms: source code under the Apache License 2.0, and documentation content under the Creative Commons Attribution 4.0 International License. See [LICENSE.md](LICENSE.md) for details.
+By contributing, you agree that your contributions are licensed under this repository's terms: source code under the Apache License 2.0, and documentation content under the Creative Commons Attribution 4.0 International License. See [LICENSE.md](https://github.com/cadence-workflow/Cadence-Docs/blob/master/LICENSE.md) for details.
