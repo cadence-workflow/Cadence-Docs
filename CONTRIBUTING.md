@@ -1,10 +1,10 @@
 # Contributing to Cadence Docs
 
-Welcome, and thank you for helping improve the Cadence documentation. This repository is the source of [cadenceworkflow.io](https://cadenceworkflow.io), built with [Docusaurus](https://docusaurus.io/).
+Thanks for improving the Cadence documentation. This repository is the source of [cadenceworkflow.io](https://cadenceworkflow.io), built with [Docusaurus](https://docusaurus.io/).
 
-> 📚 **New to contributing to Cadence?** Check out our [Contributing Guide](https://cadenceworkflow.io/community/how-to-contribute/getting-started) for an overview of the contribution process across all Cadence repositories. This document contains setup and development instructions specific to the documentation site.
+> 📚 **New to contributing to Cadence?** See the [Contributing Guide](https://cadenceworkflow.io/community/how-to-contribute/getting-started) for how contributions work across Cadence repositories. This file covers setup and development for the docs site.
 
-Docs contributions are one of the most valuable things you can do for the project, and they are a great way to get started. If anything here does not make sense, or does not work when you run it, that is a bug in this guide. Please open an issue and tell us.
+Documentation patches help the project directly. They are also a good first contribution. If anything here does not make sense, or does not work when you run it, that is a bug in this guide. Please open an issue and tell us.
 
 - [Ways to contribute](#ways-to-contribute)
 - [Find an issue](#find-an-issue)
@@ -22,20 +22,20 @@ Docs contributions are one of the most valuable things you can do for the projec
 
 ## Ways to contribute
 
-Fixing a typo is a real contribution and you do not need permission to do it. Beyond that, we welcome:
+Fixing a typo counts, and you do not need permission. We also welcome the following contributions.
 
-- Corrections to anything inaccurate or out of date
-- Clarifying pages that confused you when you were learning Cadence
+- Fixes for inaccurate or outdated content
+- Clarifications to pages that confused you while learning Cadence
 - New guides, codelabs, FAQ entries, and blog posts
-- Improvements to site structure, navigation, and search
+- Changes to site structure, navigation, or search
 - Accessibility and rendering fixes
-- Reporting docs bugs you do not have time to fix yourself
+- Reports of docs bugs you cannot fix yourself
 
-For the full picture of contributor roles across the project, see [Ways to Contribute](https://cadenceworkflow.io/community/how-to-contribute/ways-to-contribute).
+For contributor roles across the project, see [Ways to Contribute](https://cadenceworkflow.io/community/how-to-contribute/ways-to-contribute).
 
 ## Find an issue
 
-Browse [open issues in this repository](https://github.com/cadence-workflow/Cadence-Docs/issues). Cadence aggregates many issues in the [main Cadence repository](https://github.com/cadence-workflow/cadence/issues), so it is worth checking there too, particularly the [good first issues](https://github.com/cadence-workflow/cadence/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22good%20first%20issue%22%20label%3Aup-for-grabs).
+Start with [open issues in this repository](https://github.com/cadence-workflow/Cadence-Docs/issues). Many Cadence issues live in the [main Cadence repository](https://github.com/cadence-workflow/cadence/issues), including [good first issues](https://github.com/cadence-workflow/cadence/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22good%20first%20issue%22%20label%3Aup-for-grabs). Check both before choosing work.
 
 Once you find something you want to work on, comment on the issue to say so. That prevents duplicated effort and gives maintainers a chance to add context before you start.
 
@@ -45,7 +45,7 @@ If you cannot find a suitable issue but you know something is wrong or missing, 
 
 The fastest way to reach maintainers is the **#cadence-contributors** channel on the CNCF Slack workspace. If you are not already a member, request an invite at [slack.cncf.io](https://slack.cncf.io/). Other ways to get in touch are listed on the [contact page](https://cadenceworkflow.io/community/contact-us).
 
-You can also comment on the issue or pull request you are working on. Asking early is encouraged, and a partially finished pull request is a perfectly good place to start a conversation.
+You can also comment on the issue or pull request you are working on. A draft pull request is a good place to ask questions.
 
 ## Development environment
 
@@ -64,13 +64,13 @@ If you use [direnv](https://direnv.net/), this repository ships an [`.envrc`](ht
 
 ### npm registry
 
-Make sure you have an [`.npmrc`](https://docs.npmjs.com/cli/v9/configuring-npm/npmrc/) configured with:
+Your [`.npmrc`](https://docs.npmjs.com/cli/v9/configuring-npm/npmrc/) should point to the public registry.
 
 ```
 registry=https://registry.npmjs.org/
 ```
 
-This ensures dependencies resolve from the public registry, and stops an internal corporate registry from leaking into `package-lock.json`.
+This keeps installs on the public registry and prevents a corporate registry from rewriting `package-lock.json`.
 
 ### Install dependencies
 
@@ -86,7 +86,7 @@ npm run start
 
 This starts the Docusaurus development server at http://localhost:3000/ and opens a browser window. Most edits appear immediately without a restart.
 
-The development server is the right tool while you are writing. It is *not* sufficient for verifying a change before you open a pull request, because it injects styles and serves content differently from the deployed site. See below.
+Use the development server while writing. Do not rely on it for pre-PR verification because it injects styles and serves content differently from the deployed site. See the verification steps below.
 
 ## Verify your change
 
@@ -98,7 +98,7 @@ Work through the steps that apply to your change. This is the same verification 
 npm run build
 ```
 
-Always run this. The build is your main safety net for links: [`docusaurus.config.ts`](https://github.com/cadence-workflow/Cadence-Docs/blob/master/docusaurus.config.ts) sets both `onBrokenLinks: 'throw'` and `onBrokenMarkdownLinks: 'throw'`, so a broken internal link fails the build rather than shipping quietly. It also validates the featured carousel data described below.
+Run this every time. Broken internal links fail the build because [`docusaurus.config.ts`](https://github.com/cadence-workflow/Cadence-Docs/blob/master/docusaurus.config.ts) sets both `onBrokenLinks: 'throw'` and `onBrokenMarkdownLinks: 'throw'`. The build also validates the featured carousel data described below.
 
 ### 2. Type-check, if you touched TypeScript
 
@@ -106,7 +106,7 @@ Always run this. The build is your main safety net for links: [`docusaurus.confi
 npm run typecheck
 ```
 
-Worth knowing: this is **not** part of CI today, so it only protects you if you run it. Use it whenever you change anything under `src/`, `docusaurus.config.ts`, or the sidebar files.
+This check is **not** part of CI today. Run it yourself whenever you change anything under `src/`, `docusaurus.config.ts`, or the sidebar files.
 
 ### 3. Preview the production build
 
@@ -136,7 +136,7 @@ For any change that affects rendering, check affected pages in both color modes 
 ## What CI runs on your pull request
 
 - **Build** ([`build.yml`](https://github.com/cadence-workflow/Cadence-Docs/blob/master/.github/workflows/build.yml)) runs `npm ci && npm run build` on every push and pull request. This is the check that catches broken internal links.
-- **Link check** ([`link-check-pr.yml`](https://github.com/cadence-workflow/Cadence-Docs/blob/master/.github/workflows/link-check-pr.yml)) runs [lychee](https://github.com/lycheeverse/lychee) against external `http(s)` links in the markdown files your pull request changed. Internal links are deliberately left to the build, which understands Docusaurus routing. This check is currently advisory: it reports failures but does not block merging. That is temporary, so please read its output and fix genuinely broken links rather than ignoring it.
+- **Link check** ([`link-check-pr.yml`](https://github.com/cadence-workflow/Cadence-Docs/blob/master/.github/workflows/link-check-pr.yml)) runs [lychee](https://github.com/lycheeverse/lychee) against external `http(s)` links in the markdown files your pull request changed. Internal links are deliberately left to the build, which understands Docusaurus routing. This check is advisory for now. It reports failures but does not block merging. That will change, so read the output and fix broken links instead of ignoring failures.
 - **DCO** verifies every commit is signed off. See below.
 
 Maintainers must approve workflow runs for first-time contributors, so your checks may sit idle briefly before they start.
@@ -168,7 +168,7 @@ fix(carousel): Correct fallback image for video items
 
 Most changes here use the `docs` type. Full conventions, including the type list, are documented in [Pull Request Conventions](https://cadenceworkflow.io/community/how-to-contribute/pull-request-conventions).
 
-Write the pull request description for a maintainer reading it a year from now. Explain what changed and, more importantly, why: what was wrong or unclear before. See [How to Write a Git Commit Message](https://cbea.ms/git-commit/) for the underlying habit. The [pull request template](https://github.com/cadence-workflow/Cadence-Docs/blob/master/.github/pull_request_template.md) prompts you for each part, and [`.github/pull_request_guidance.md`](https://github.com/cadence-workflow/Cadence-Docs/blob/master/.github/pull_request_guidance.md) has worked examples of good and bad answers.
+Write the pull request description for a maintainer reading it a year from now. State what changed and why the old text or behavior was wrong or unclear. See [How to Write a Git Commit Message](https://cbea.ms/git-commit/) for the underlying habit. The [pull request template](https://github.com/cadence-workflow/Cadence-Docs/blob/master/.github/pull_request_template.md) prompts you for each part, and [`.github/pull_request_guidance.md`](https://github.com/cadence-workflow/Cadence-Docs/blob/master/.github/pull_request_guidance.md) has worked examples of good and bad answers.
 
 Before you submit, confirm that you have:
 
@@ -179,7 +179,7 @@ Before you submit, confirm that you have:
 - [ ] Signed every commit with `-s`
 - [ ] Noted any moved or renamed page so a redirect can be added
 
-Two maintainer approvals are required to merge. Expect review comments on everything, from anyone; that is normal and not a judgment of your work. Comments prefixed with `nit:` are stylistic preferences that do not block merging.
+Merging requires two maintainer approvals. Review comments can come from anyone and are a normal part of the process. Comments prefixed with `nit:` are style suggestions and do not block merging.
 
 ## Common documentation tasks
 
@@ -187,7 +187,7 @@ Two maintainer approvals are required to merge. Expect review comments on everyt
 
 Documentation lives under `docs/`, organized into numbered directories and files such as `docs/05-go-client/23-batch-future.md`. The numeric prefixes control ordering only; Docusaurus strips them from the published URL, so that file is served at `/docs/go-client/batch-future`.
 
-Two things catch people out:
+New contributors often miss two steps.
 
 - **Sidebars are explicit, not generated.** [`sidebars.ts`](https://github.com/cadence-workflow/Cadence-Docs/blob/master/sidebars.ts) lists every page by ID, and the filesystem-autogenerated option is deliberately commented out. A new page will build fine and be reachable by URL, but it will not appear in the sidebar until you add it to the right category. The community and FAQ sections have their own files, [`sidebarsCommunity.js`](https://github.com/cadence-workflow/Cadence-Docs/blob/master/sidebarsCommunity.js) and [`sidebarsFAQ.js`](https://github.com/cadence-workflow/Cadence-Docs/blob/master/sidebarsFAQ.js).
 - **Moved or renamed pages need a redirect.** Add an entry to the `plugin-client-redirects` configuration in [`docusaurus.config.ts`](https://github.com/cadence-workflow/Cadence-Docs/blob/master/docusaurus.config.ts) so existing links and search results keep working. Redirects only take effect in a production build, so `npm run start` will not show them. Verify them with the production preview.
@@ -196,7 +196,7 @@ Two things catch people out:
 
 The homepage "Featured reading" carousel is driven entirely by [`src/data/featuredLinks.yaml`](https://github.com/cadence-workflow/Cadence-Docs/blob/master/src/data/featuredLinks.yaml). No code changes are needed to add, remove, or reorder items. Items render in the order they appear in the file, so add a new entry wherever it should show up.
 
-Each entry supports:
+Each YAML entry may include the following fields.
 
 - `title` (required): Card headline.
 - `description` (required): One or two short sentences.
@@ -223,11 +223,11 @@ Normally you do not need to. The `fetch-release-data` GitHub Action checks for n
 
 ## Publish a personal GitHub Pages preview
 
-Optional, and only useful for larger changes. You can deploy your fork to your own GitHub Pages site, giving you a shareable URL such as `https://<your-username>.github.io/Cadence-Docs/`.
+This step is optional. Use it for larger changes. You can deploy your fork to your own GitHub Pages site, giving you a shareable URL such as `https://<your-username>.github.io/Cadence-Docs/`.
 
-This is worth doing when a local preview is not enough:
+Consider a fork deployment when a local preview is not enough.
 
-- You want to share a rendered page with a reviewer, or gather feedback before opening a pull request.
+- Share a rendered page with a reviewer or get feedback before opening a pull request.
 - Your change touches links or assets, and you need to catch paths that break when the site is served from a subpath rather than the domain root. `npm run start` serves from `/`, so it never exercises this. The canonical site also runs at `/`, but a fork's project site runs under `/Cadence-Docs/`.
 
 Note that a fork deploys with `BASE_URL=/Cadence-Docs/` and no custom domain. Do not set `CUSTOM_DOMAIN` or commit a `static/CNAME` file on your fork; those exist for the canonical cadenceworkflow.io deployment only, and setting them on a fork will send your preview to the wrong hostname.
