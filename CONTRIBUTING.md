@@ -225,17 +225,26 @@ Normally you do not need to. The `fetch-release-data` GitHub Action checks for n
 
 This step is optional. Use it for larger changes. You can deploy your fork to your own GitHub Pages site, giving you a shareable URL such as `https://<your-username>.github.io/Cadence-Docs/`.
 
-Consider a fork deployment when a local preview is not enough.
+**Deploy a branch**
 
-- Share a rendered page with a reviewer or get feedback before opening a pull request.
-- Your change touches links or assets, and you need to catch paths that break when the site is served from a subpath rather than the domain root. `npm run start` serves from `/`, so it never exercises this. The canonical site also runs at `/`, but a fork's project site runs under `/Cadence-Docs/`.
+1. In your fork, open the Actions tab. The first time, click "I understand my workflows, go ahead and enable them".
+2. Select the "Build and Deploy" workflow.
+3. Run workflow, choose your branch, then Run workflow.
+4. Wait 1 to 2 minutes for it to finish.
+5. Open `https://<your-username>.github.io/Cadence-Docs/`.
 
-Note that a fork deploys with `BASE_URL=/Cadence-Docs/` and no custom domain. Do not set `CUSTOM_DOMAIN` or commit a `static/CNAME` file on your fork; those exist for the canonical cadenceworkflow.io deployment only, and setting them on a fork will send your preview to the wrong hostname.
+**One-time setup, after your first deploy**
 
-<!-- TODO: Paste the step-by-step personal GitHub Pages setup here.
-     Should cover: forking, enabling GitHub Pages on the fork, the repo
-     variables to set (BASE_URL, ORGANIZATION_NAME, CADENCE_DOCS_URL),
-     triggering the deploy workflow, and how to confirm the site is live. -->
+1. In your fork, go to Settings, then Pages.
+2. Under Build and deployment, set Source to "Deploy from a branch".
+3. Set Branch to `gh-pages` and Folder to `/ (root)`, then Save.
+
+The first deploy creates the `gh-pages` branch, which is why this comes second.
+
+**Good to know**
+
+- Pushing to master auto-deploys. Any other branch must be run manually.
+- It's one live site; each run replaces what was there before.
 
 ## Code of Conduct
 
