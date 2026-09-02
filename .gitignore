@@ -36,6 +36,9 @@ yarn-error.log
 # Claude Code local config
 .claude/
 
+# Cursor local config (rules, etc.)
+.cursor/
+
 # Misc
 .envrc.local
 .env.local
