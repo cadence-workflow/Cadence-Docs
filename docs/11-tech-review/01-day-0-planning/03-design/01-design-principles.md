@@ -12,7 +12,7 @@ Cadence is a **durable execution engine** for long-running, distributed applicat
 
 Building distributed systems comes with a common set of overheads: retries, durable state, failure recovery, timers, coordination across services, and visibility into work in flight. Most teams reimplement these concerns in every new service, or wire them together from databases, queues, and cron. Worse, application developers are often forced to reason about the underlying infrastructure instead of the business problem.
 
-Cadence aims to **handle these overheads seamlessly**. Users express what should happen in workflow code; the platform makes it durable, recoverable, and observable.
+Cadence aims to handle this. Users express what should happen in workflow code; the platform makes it durable, recoverable, and observable.
 
 This page summarizes the **principles that guide Cadence's programming model, server architecture, and operational design**. For strategic direction, see [Vision & Goals](/docs/tech-review/day-0-planning/scope/vision-goals). For deployment and environment requirements, see [Architecture requirements](/docs/tech-review/day-0-planning/design/architecture-requirements).
 
@@ -35,6 +35,7 @@ Cadence takes responsibility for concerns that every long-running distributed pr
 - **Retries** against transient failures, downstream outages, and activity timeouts (distinct from recovery after worker crashes or service restarts)
 - **Durability** that preserves workflow state for seconds or years without custom checkpoint tables
 - **Failure recovery** after worker, network, or Cadence service outages
+- **Regional and zonal failovers** that move running workflows to a healthy location for outage mitigation, capacity rebalancing, or planned maintenance, without application code coordinating the move
 - **Durable timers and schedules** without polling databases or per-entity cron
 - **State machine transitions** expressed as ordinary code branches rather than scattered status columns
 - Correlating progress across steps without ad hoc message chains
@@ -117,9 +118,11 @@ External queues (Kafka, SQS, etc.) may still appear **inside activities** when i
 
 ### 4. Shard-based horizontal scale
 
-Workflow executions are partitioned across **history shards** (by workflow ID). Each shard is an independent unit of processing with assigned ownership among History service instances.
+Workflow executions are partitioned across **history shards** (by workflow ID). Each shard is an independent unit of processing with assigned ownership among History service instances, and within a shard, workflow creates and updates are serialized.
 
-Throughput scales with shard count and service replicas toward **very large execution cardinality** (billions of workflow executions in large deployments). Shard count is chosen at cluster provisioning time and should be sized for expected workflow cardinality and update rate. 
+Throughput scales with shard count and service replicas. Shard count is fixed at cluster provisioning time and is sized for the **cluster size you expect to run** and your instance size, not for a target number of workflows, since each shard is owned by exactly one History node. Large deployments run billions of workflow executions per month.
+
+See [Cluster configuration](/docs/operation-guide/setup#static-configuration) for shard sizing guidance.
 
 ### 5. Multitenancy through domains and task lists
 
@@ -209,7 +212,7 @@ The principles above deliver concrete platform capabilities teams rely on in pro
 | **Scalability** | Shard partitioning and worker scale-out for very large execution counts |
 | **Adaptive operation** | Dynamic config, worker scaling, and tunable limits per domain |
 | **Built-in UI** | Cadence Web UI with search, history, and workflow actions |
-| **Observability** | Prometheus metrics, structured logging, visibility stores |
+| **Observability** | Metrics through a pluggable emitter interface (Prometheus, StatsD, M3, and others), structured logging, visibility stores |
 
 ## Common workload patterns
 
@@ -220,10 +223,10 @@ Cadence is a general-purpose engine. Production adopters repeatedly apply the sa
 | **Microservices orchestration** | Coordinating calls across many services with sagas and compensation | [Orchestration](/docs/use-cases/orchestration) |
 | **Long-running processes** | Provisioning, onboarding, background checks, subscription lifecycles | [Operational management](/docs/use-cases/operational-management), [Provisioning](/docs/use-cases/provisioning) |
 | **Synchronous interactions** | Reservation flows, order handling, support routing | [Interactive applications](/docs/use-cases/interactive) |
-| **Batch processing** | Monthly reports, **data aggregation**, large partitioned scans | [Batch job](/docs/use-cases/batch-job), [Storage scan](/docs/use-cases/partitioned-scan) |
+| **Batch processing** | Monthly reports, data aggregation, large partitioned scans | [Batch job](/docs/use-cases/batch-job), [Storage scan](/docs/use-cases/partitioned-scan) |
 | **Distributed cron** | Per-customer schedules, recurring business or infrastructure jobs | [Periodic execution](/docs/use-cases/periodic-execution) |
 | **Singleton in distributed systems** | One active workflow per resource; mutex-style coordination | [Provisioning](/docs/use-cases/provisioning) |
-| **Infrastructure operations** | **Service deployments**, **region or zone bring-up** | [Deployment](/docs/use-cases/deployment) |
+| **Infrastructure operations** | Service deployments, region or zone bring-up | [Deployment](/docs/use-cases/deployment) |
 
 Many applications combine several patterns on one shared Cadence cluster.
 
