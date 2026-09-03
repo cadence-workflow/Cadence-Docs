@@ -17,11 +17,11 @@ permalink: /docs/workflow-troubleshooting/timeout-risks
 
 The issues on the [Timeouts](/docs/workflow-troubleshooting/timeouts) page cover timeouts that have already occurred. This page covers activity configurations that put your workflow at risk of timing out, even when no timeout has happened yet. Fixing these early avoids hard-to-debug timeout failures later.
 
-## Activity StartToClose timeout at the workflow execution timeout cap
+## Activity StartToClose timeout greater than workflow execution timeout
 
-When an activity is scheduled, the Cadence server validates and adjusts the configured timeout values before persisting the decision. One adjustment it makes is capping the activity's StartToClose timeout at the workflow's overall execution timeout. If your activity requests a StartToClose timeout larger than the workflow timeout, the server silently rewrites it down to the workflow timeout.
+When an activity is scheduled, the Cadence server validates and adjusts the requested timeout values before recording them in the ActivityTaskScheduled event in workflow history. If the requested StartToClose timeout is larger than the workflow's execution timeout, the server silently lowers it to match. So the symptom you'll see in workflow history is an activity whose StartToClose timeout is exactly equal to the workflow execution timeout.
 
-An activity whose StartToClose timeout is exactly equal to the workflow execution timeout likely had its original value silently capped. Even if the value was intentionally set this way, the activity has zero headroom. It must complete before the workflow itself times out, leaving no time for retries or other activities.
+This usually means the original value was silently lowered by the server. Even if the value was intentionally set this way, the activity has zero headroom. It must complete before the workflow itself times out, leaving no time for retries or other activities.
 
 Mitigations:
 
