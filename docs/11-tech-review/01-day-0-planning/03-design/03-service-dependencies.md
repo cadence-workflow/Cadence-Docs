@@ -10,7 +10,7 @@ keywords:
   - cadence infrastructure
 ---
 
-Cadence is a **self-contained distributed service**, not a cluster add-on. It defines no custom resources, requires no access to a Kubernetes API server, and installs no controller or operator into the environment that hosts it. It runs on Kubernetes, VMs, bare metal, or a laptop.
+Cadence is a **self-contained distributed service**, not a cluster add-on. It defines no custom resources, requires no access to a Kubernetes API server, and installs no controller or operator into the environment that hosts it. It runs on Kubernetes, VMs, or a laptop.
 
 The question this page answers is therefore not "what does Cadence install into your cluster" but **"what else has to be running for a Cadence cluster to work."** The short answer is: **one database, and nothing else.** Everything beyond that is opted into by enabling a feature.
 
