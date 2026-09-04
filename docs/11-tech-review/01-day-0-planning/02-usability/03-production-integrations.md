@@ -88,7 +88,7 @@ Cloud provider coverage is uneven at present. Google Cloud has a [full deploymen
 
 ### Archival and payload storage
 
-History and visibility archival are configured independently and each select a provider. The filestore provider writes to a mounted volume, the `s3store` provider targets Amazon S3 or any S3-compatible endpoint through an explicit endpoint and path-style option, and the `gstorage` provider targets Google Cloud Storage. See [Archival](/docs/concepts/archival).
+History and visibility archival are configured independently, and each selects its own provider. The filestore provider writes to a mounted volume. `s3store` covers Amazon S3 and any S3-compatible endpoint, taking an explicit endpoint and a path-style flag for the latter. `gstorage` targets Google Cloud Storage. See [Archival](/docs/concepts/archival).
 
 Payload handling is a client concern rather than a server one. A custom [data converter](/docs/concepts/data-converter) can compress, encrypt, or replace large payloads with a claim check pointing at an external object store, which keeps workflow histories small without the server needing to know the storage system.
 
