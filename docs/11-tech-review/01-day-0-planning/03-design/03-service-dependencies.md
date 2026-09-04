@@ -41,7 +41,7 @@ The absence of these dependencies is a deliberate design choice, and it is often
 | Not required | Why |
 | --- | --- |
 | **etcd, ZooKeeper, or Consul** | Cluster membership uses [Ringpop](https://github.com/uber/ringpop-go), a gossip protocol compiled into the server binary. There is no external coordination service to run, secure, or upgrade. |
-| **An external message broker for core orchestration** | Workflow and activity task dispatch runs through internal task lists owned by the Matching service. See [Built-in task dispatch](/docs/tech-review/day-0-planning/design/design-principles). |
+| **An external message broker for core orchestration** | Workflow and activity task dispatch runs through internal task lists owned by the Matching service. See [Built-in task dispatch](/docs/tech-review/day-0-planning/design/design-principles#3-built-in-task-dispatch). |
 | **A Kubernetes API server, CRDs, or an operator** | Cadence is not a cluster extension and holds no Kubernetes-specific code paths. |
 | **A hosted control plane or vendor account** | Cadence is Apache 2.0 and fully self-hosted. It emits no telemetry and phones no service home. See [Sovereignty](/docs/tech-review/day-0-planning/design/sovereignty). |
 | **A separate service for cross-region replication** | Cross-cluster replication moves data between Cadence clusters using a database-backed replication queue. It adds no third-party infrastructure. |
