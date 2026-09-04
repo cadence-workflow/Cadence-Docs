@@ -55,7 +55,7 @@ Setting `cassandra.enabled=false` and supplying connection details points the cl
 
 Server and Web UI containers run as a non-root user with privilege escalation disabled and capabilities dropped. ServiceAccount creation is on by default, while RBAC and NetworkPolicy resources are off so that organizations managing those centrally are not overridden.
 
-Outside Kubernetes, Cadence is distributed as container images on Docker Hub and runs under Docker Compose for local work. See [Server installation](/docs/get-started/server-installation) and the [Helm codelab](/docs/codelabs/helm-deploy-postgres-opensearch) for a worked deployment against PostgreSQL and OpenSearch.
+Outside Kubernetes, Cadence is distributed as container images on Docker Hub and runs under Docker Compose for local work. [Installation and initialization](/docs/tech-review/day-0-planning/installation/installation-initialization) documents the install paths and the commands for each. See [Server installation](/docs/get-started/server-installation) and the [Helm codelab](/docs/codelabs/helm-deploy-postgres-opensearch) for a worked deployment against PostgreSQL and OpenSearch.
 
 ### Persistence and visibility
 
@@ -111,6 +111,7 @@ Cadence runs as one cluster or several. [Cross-datacenter replication](/docs/con
 ## Related documentation
 
 - [Service dependencies](/docs/tech-review/day-0-planning/design/service-dependencies)
+- [Installation and initialization](/docs/tech-review/day-0-planning/installation/installation-initialization)
 - [Target persona interactions](/docs/tech-review/day-0-planning/usability/persona-interactions)
 - [Design principles](/docs/tech-review/day-0-planning/design/design-principles)
 - [Cluster configuration](/docs/operation-guide/setup)
