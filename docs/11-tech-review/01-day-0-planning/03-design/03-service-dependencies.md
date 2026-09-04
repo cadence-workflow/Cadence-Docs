@@ -73,7 +73,7 @@ Adopters who do not need custom search attributes should leave advanced visibili
 
 ### Archival
 
-[Archival](/docs/concepts/archival) copies closed workflow histories and visibility records to cheaper long-term storage before retention deletes them. Providers are pluggable: Amazon S3, Google Cloud Storage, or a filesystem path. The filesystem provider writes to local disk, so it needs a volume shared across the Worker hosts; the object-store providers need only credentials and network reachability. Archival is disabled by default.
+[Archival](/docs/concepts/archival) copies closed workflow histories and visibility records to cheaper long-term storage before retention deletes them. Providers are pluggable: Amazon S3, Google Cloud Storage, or a filesystem path. The filesystem provider writes to local disk, so the archive path must be writable from **every host that can perform an archival, which includes the History service and not only the Worker**. Visibility records are archived inline from History; history archival runs in a Worker system workflow by default but also falls back to an inline write from History when the history is small enough. The object-store providers need only credentials and network reachability. Archival is disabled by default.
 
 ### Metrics
 
@@ -81,7 +81,9 @@ Metrics are emitted through a pluggable interface with implementations for Prome
 
 ### Authentication
 
-Cadence validates JWTs issued by an external OIDC or OAuth provider; it does not bundle an identity provider or issue credentials itself. See [Identity and access management](/docs/tech-review/day-0-planning/design/iam).
+Cadence does not run an identity provider. The OAuth authorizer validates JWTs signed by an external OIDC or OAuth provider against a public key you configure, which is the path for normal callers.
+
+There is one exception worth knowing: the CLI can sign **admin JWTs** itself using a configured private key, and the server recognizes these as internally issued. A deployment that only needs operator access can therefore enforce identity without standing up an external provider. See [Identity and access management](/docs/tech-review/day-0-planning/design/iam).
 
 ## Internal components
 
