@@ -18,25 +18,23 @@ This page covers what Cadence composes with. What a cluster requires to start is
 
 ## Integration summary
 
-**Deployment.** The project maintains a [Helm chart](https://github.com/cadence-workflow/cadence-charts) that deploys the four server services and, optionally, the Web UI. It needs Kubernetes 1.29 or later and declares six optional subcharts, so a cluster installs whole or points at external datastores. Autoscaling, disruption budget, network policy, and RBAC templates ship with it.
+**Deployment.** The four server services are stateless and run under whatever deployment engine an organization already operates. Container images are published for Docker, and the documented production pattern uses an `auto-setup` image for schema creation and a release-tagged image for steady state. For Kubernetes, the project maintains a [Helm chart](https://github.com/cadence-workflow/cadence-charts) that deploys the services and, optionally, the Web UI. It needs Kubernetes 1.29 or later and declares six optional subcharts, so a cluster installs whole or points at external datastores. Autoscaling, disruption budget, network policy, and RBAC templates ship with it.
 
 **Databases.** Workflow history lives in Apache Cassandra, MySQL, or PostgreSQL. CockroachDB and TiDB work through PostgreSQL and MySQL compatibility.
 
 **Search and messaging.** Listing workflows by complex predicates uses Elasticsearch, OpenSearch, or Apache Pinot as a visibility store, with Apache Kafka carrying records to the search index.
 
-**Observability.** Cadence emits Prometheus metrics by default, with StatsD and M3 as alternatives. The chart offers a ServiceMonitor for Prometheus Operator and a PodMonitoring resource for Google Cloud Managed Service for Prometheus. Reference [Grafana dashboards](/docs/get-started/grafana-helm-setup) are published, and the Go client carries OpenTracing instrumentation validated against Jaeger.
+**Observability.** Cadence emits Prometheus metrics by default, with StatsD and M3 as alternatives. The chart offers a ServiceMonitor for Prometheus Operator and a PodMonitoring resource for Google Cloud Managed Service for Prometheus. Reference [Grafana dashboards](/docs/get-started/grafana-helm-setup) are published, and the Go SDK carries OpenTracing instrumentation validated against Jaeger.
 
-**Security and transport.** TLS is configurable on every connection Cadence opens, covering PostgreSQL, MySQL, Cassandra, Elasticsearch, and Kafka. Clients reach the frontend over [mutual TLS](/docs/concepts/mutual-tls). Kafka accepts SASL, managed search endpoints accept AWS request signing, and a proxy sidecar allows cloud IAM authentication instead of stored passwords.
+**Security and transport.** TLS is configurable on every connection Cadence opens, covering PostgreSQL, MySQL, Cassandra, Elasticsearch, and Kafka. SDK connections to the frontend use [mutual TLS](/docs/concepts/mutual-tls). Kafka accepts SASL, managed search endpoints accept AWS request signing, and a proxy sidecar allows cloud IAM authentication instead of stored passwords.
 
 **Long-term storage.** Closed histories archive to a local filesystem, Amazon S3, S3-compatible storage, or Google Cloud Storage. Large payloads can move to an external blob store through a custom [data converter](/docs/concepts/data-converter).
-
-**Clients and protocols.** The gRPC API is primary, with Thrift over TChannel retained for older workers and an [HTTP API](/docs/concepts/http-api) for non-gRPC callers. Go, Java, and Python clients are maintained in the project organization, Ruby is community maintained, and .NET and TypeScript are in development.
-
-**Documented gaps.** Cadence documents no OpenTelemetry integration, no Kubernetes operator for the server, and no guidance for running behind a service mesh. Tracing is documented for the Go client only.
 
 ## Integration details
 
 ### Deployment and orchestration
+
+Cadence composes with an existing deployment system rather than replacing it. The server services hold no local state, so scheduling, rollout, and restart policy stay with whatever engine an organization already runs. The rest of this section covers the project-maintained Helm chart, which is the packaged path for Kubernetes.
 
 The chart is versioned separately from the server. At [chart `1.6.7`](https://github.com/cadence-workflow/cadence-charts/blob/cadence-1.6.7/charts/cadence/Chart.yaml) the packaged server is `v1.4.1` and the Web UI is `v4.0.11`. The `kubeVersion` floor of 1.29 comes from the native sidecar init container pattern the database proxy relies on.
 
@@ -65,16 +63,18 @@ Advanced visibility adds two components. On the write path the history service a
 
 ### Observability
 
-| Integration | Mechanism | Support |
+Cadence's default is a Prometheus-compatible metrics endpoint on port 9090. Any other observability stack integrates the same way, by selecting it in server configuration. The table below lists examples of that mechanism rather than products the project maintains.
+
+| Integration | Mechanism | Integration maintained by |
 | --- | --- | --- |
-| Prometheus | Metrics endpoint on port 9090, enabled by default | Project maintained |
-| Prometheus Operator | `ServiceMonitor` resource, opt-in | Project maintained |
-| Google Cloud Managed Service for Prometheus | `PodMonitoring` resource, opt-in | Project maintained |
-| Grafana | Reference dashboards and Helm setup guide | Project maintained |
-| StatsD, M3 | Alternative metrics emitters selected by config | Project maintained |
-| OpenTracing, Jaeger | Go client tracing interceptor | Project maintained |
+| Prometheus | Metrics endpoint on port 9090, enabled by default | Cadence project |
+| Prometheus Operator | `ServiceMonitor` resource, opt-in | Cadence project |
+| Google Cloud Managed Service for Prometheus | `PodMonitoring` resource, opt-in | Cadence project |
+| Grafana | Reference dashboards and Helm setup guide | Cadence project |
+| StatsD, M3 | Alternative metrics emitters selected by config | Cadence project |
+| OpenTracing, Jaeger | Go SDK tracing interceptor | Cadence project |
 | Datadog | Dashboard templates, scraping the Prometheus endpoint | Third party |
-| Go `pprof` | Profiling endpoint, opt-in per service | Project maintained |
+| Go `pprof` | Profiling endpoint, opt-in per service | Cadence project |
 
 Metric emission is chosen by configuration rather than compiled in, so an organization standardized on StatsD or M3 does not need a Prometheus deployment. [Monitoring](/docs/operation-guide/monitoring) covers the signals themselves and [Tracing](/docs/go-client/tracing) covers the Go interceptor.
 
@@ -88,23 +88,21 @@ Cloud provider coverage is uneven at present. Google Cloud has a [full deploymen
 
 ### Archival and payload storage
 
-History and visibility archival are configured independently, and each selects its own provider. The filestore provider writes to a mounted volume. `s3store` covers Amazon S3 and any S3-compatible endpoint, taking an explicit endpoint and a path-style flag for the latter. `gstorage` targets Google Cloud Storage. See [Archival](/docs/concepts/archival).
+History and visibility archival are configured independently, and each selects its own provider due to different storage and search requirements. The filestore provider writes to a mounted volume. `s3store` covers Amazon S3 and any S3-compatible endpoint, taking an explicit endpoint and a path-style flag for the latter. `gstorage` targets Google Cloud Storage. See [Archival](/docs/concepts/archival).
 
-Payload handling is a client concern rather than a server one. A custom [data converter](/docs/concepts/data-converter) can compress, encrypt, or replace large payloads with a claim check pointing at an external object store, which keeps workflow histories small without the server needing to know the storage system.
+Payload handling is an SDK concern rather than a server one. A custom [data converter](/docs/concepts/data-converter) can compress, encrypt, or replace large payloads with a claim check pointing at an external object store, which keeps workflow histories small without the server needing to know the storage system.
 
-### Clients, protocols, and support tiers
+### SDKs, protocols, and support tiers
 
 | Integration | Notes | Support |
 | --- | --- | --- |
 | gRPC and Protobuf | Primary API, definitions in `cadence-idl` | Project maintained |
 | Thrift over TChannel | Retained for older workers | Project maintained |
 | HTTP API | Selected methods over HTTP and JSON, server v1.2.0 and later | Project maintained |
-| Go, Java, Python clients | Include in-memory test environments and replay tooling | Project maintained |
-| Ruby client | Community contributed | Community |
-| .NET and TypeScript clients | In development | Community |
-| iWF | State machine and DSL layer built on Cadence | Third party |
+| Go, Java, Python SDKs | Include in-memory test environments and replay tooling | Project maintained |
+| TypeScript SDK | In development | Community |
 
-Every maintained client ships a test environment that runs workflows in process, and the Go and Java clients add replay and shadowing tools that verify code changes against recorded production histories. See the [replay and shadowing codelab](/docs/codelabs/workflow-tests-go-replayer-shadower).
+Every maintained SDK ships a test environment that runs workflows in process, and the Go and Java SDKs add replay and shadowing tools that verify code changes against recorded production histories. See the [replay and shadowing codelab](/docs/codelabs/workflow-tests-go-replayer-shadower).
 
 Cadence runs as one cluster or several. [Cross-datacenter replication](/docs/concepts/cross-dc-replication) connects clusters for regional failover, and managed Cadence offerings from third parties build on the same open source server and APIs.
 
