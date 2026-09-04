@@ -10,7 +10,7 @@ keywords:
   - cadence infrastructure
 ---
 
-Cadence is a **self-contained distributed service**, not a cluster add-on. It defines no custom resources, requires no access to a Kubernetes API server, and installs no controller or operator into the environment that hosts it. It runs equally well on Kubernetes, VMs, bare metal, or a laptop.
+Cadence is a **self-contained distributed service**, not a cluster add-on. It defines no custom resources, requires no access to a Kubernetes API server, and installs no controller or operator into the environment that hosts it. It runs on Kubernetes, VMs, bare metal, or a laptop.
 
 The question this page answers is therefore not "what does Cadence install into your cluster" but **"what else has to be running for a Cadence cluster to work."** The short answer is: **one database, and nothing else.** Everything beyond that is opted into by enabling a feature.
 
@@ -24,10 +24,10 @@ A Cadence cluster requires exactly one external service: a database. It holds wo
 
 | Backend | Status | Notes |
 | --- | --- | --- |
-| **Cassandra** | Production | The most widely deployed backend; CI covers 4.1 |
+| **Cassandra** | Production | CI covers 4.1 |
 | **MySQL** | Production | CI covers 8.0 |
 | **PostgreSQL** | Production | CI covers 17.4 |
-| **SQLite** | Development only | Single-node, single-connection; no clustering |
+| **SQLite** | Development only | Single node, cannot be clustered; SQLite's exclusive write locks mean one shared connection pool per process |
 | MongoDB, DynamoDB | In progress | Plugins exist but are [not yet complete](https://github.com/cadence-workflow/cadence/blob/master/docs/persistence.md) |
 
 Persistence sits behind a plugin interface, so the backend is a configuration choice rather than a build-time one. Versioned schemas and the `cadence-cassandra-tool` and `cadence-sql-tool` utilities ship with the [server repository](https://github.com/cadence-workflow/cadence/tree/master/schema).
@@ -36,13 +36,13 @@ By default the same datastore also serves **basic visibility** — listing and f
 
 ## What Cadence does not require
 
-The absence of these dependencies is a deliberate design choice, and it is often the difference between adopting Cadence and not.
+The absence of these dependencies is a deliberate design choice, and it shapes what an adopter has to operate.
 
 | Not required | Why |
 | --- | --- |
 | **etcd, ZooKeeper, or Consul** | Cluster membership uses [Ringpop](https://github.com/uber/ringpop-go), a gossip protocol compiled into the server binary. There is no external coordination service to run, secure, or upgrade. |
 | **An external message broker for core orchestration** | Workflow and activity task dispatch runs through internal task lists owned by the Matching service. See [Built-in task dispatch](/docs/tech-review/day-0-planning/design/design-principles#3-built-in-task-dispatch). |
-| **A Kubernetes API server, CRDs, or an operator** | Cadence is not a cluster extension and holds no Kubernetes-specific code paths. |
+| **A Kubernetes API server, CRDs, or an operator** | Cadence is not a cluster extension. The server has no Kubernetes client dependency and makes no Kubernetes API calls. |
 | **A hosted control plane or vendor account** | Cadence is Apache 2.0 and fully self-hosted. It emits no telemetry and phones no service home. See [Sovereignty](/docs/tech-review/day-0-planning/design/sovereignty). |
 | **A separate service for cross-region replication** | Cross-cluster replication moves data between Cadence clusters using a database-backed replication queue. It adds no third-party infrastructure. |
 
@@ -57,7 +57,7 @@ Each of the following is introduced by turning on a specific feature. A cluster 
 | [Advanced visibility](/docs/concepts/search-workflows) | OpenSearch, Elasticsearch, or Pinot — **and a message bus (Kafka)** | Searching or filtering workflows by custom search attributes |
 | [Archival](/docs/concepts/archival) | Amazon S3, Google Cloud Storage, or a shared filesystem | Retaining closed workflow history beyond the domain retention period |
 | [Async workflow APIs](https://github.com/cadence-workflow/cadence/blob/master/docs/howtos/async-api.md) | Kafka | Accepting workflow starts through a queue rather than a synchronous call |
-| Metrics | Prometheus, StatsD, M3, or another emitter | Collecting server metrics |
+| Metrics | Prometheus, StatsD, or M3 | Collecting server metrics |
 | Authentication | An OIDC or OAuth provider | Enforcing caller identity at the Frontend |
 | [Web UI](https://github.com/cadence-workflow/cadence-web) | The `cadence-web` service | Browsing workflows through a browser rather than the CLI |
 
