@@ -104,7 +104,7 @@ Most Cadence configuration can be changed later. A few choices are effectively p
 | `numHistoryShards` | Fixed for the life of the cluster. Changing it requires migrating to a new cluster. |
 | Global domains enabled | Local domains aren't recommended. Use Global domains with 1 replica instead. This gives you the freedom of replicating to another cluster if you change your mind in the future |
 | Persistence engine | Switching engines is a cluster migration, not a configuration change. |
-| Per-domain archival URI | Set once when archival is enabled for a domain and cannot be changed. |
+| Per-domain archival URI | Changing URI later will lead to losing any archived workflows with the old URI |
 
 :::warning[Check numHistoryShards before you create a cluster]
 The shipped Docker and Helm defaults set `numHistoryShards` to `4`, which is a development value. Because the number is fixed at provisioning time, a cluster created with 4 shards can never distribute work across more than 4 History nodes, and the only remedy is a migration to a new cluster.
