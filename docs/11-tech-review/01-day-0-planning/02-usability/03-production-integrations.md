@@ -84,7 +84,7 @@ TLS configuration follows one shape across every backing service, taking a CA fi
 
 Authentication to managed cloud services has three documented paths. Elasticsearch and OpenSearch endpoints fronted by AWS accept request signing. A database proxy sidecar handles Google Cloud SQL, including IAM database authentication that removes stored passwords. Kafka accepts SASL credentials.
 
-Cloud provider coverage is uneven at present. Google Cloud has a [full deployment guide](https://github.com/cadence-workflow/cadence-charts/blob/cadence-1.6.7/charts/cadence/docs/gcp/deploying-with-cloud-sql.md) with four connection modes, while AWS and Azure appear as configuration options without equivalent walkthroughs. Operator-facing authorization is separate from all of this, and the [CLI](/docs/cli/) accepts JWT credentials for administrative commands.
+Cloud provider coverage is uneven at present. Google Cloud has a [full deployment guide](https://github.com/cadence-workflow/cadence-charts/blob/cadence-1.6.7/charts/cadence/docs/gcp/deploying-with-cloud-sql.md) with four connection modes, while AWS and Azure appear as configuration options without equivalent walkthroughs. Operator-facing authorization is separate from all of this, and the [CLI](/docs/cli) accepts JWT credentials for administrative commands.
 
 ### Archival and payload storage
 
