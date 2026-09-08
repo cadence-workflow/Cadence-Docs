@@ -29,7 +29,7 @@ You select roles per process with `--services=frontend,history,matching,worker` 
 
 Membership and shard ownership are in transition. Cluster membership still uses a **ringpop gossip ring** seeded from bootstrap addresses. Shard assignment is moving to [Shard Manager](https://github.com/cadence-workflow/shard-manager), a dedicated service that assigns shards to hosts and rebalances as hosts come and go.
 
-Shard Manager currently requires **etcd**. That etcd dependency is planned to be removed in early 2027, when Shard Manager is generally available.
+Shard Manager currently requires **etcd**. That etcd dependency is planned to be removed when Shard Manager is generally available.
 
 Because the API surface does not change between tiers, workflow and activity code written against a local deployment runs unchanged against a production cluster. What changes is how many instances of each role you run, which optional dependencies you enable, and how the datastore is provisioned.
 
@@ -46,7 +46,7 @@ See [Deployment topology](/docs/concepts/topology) for the full component pictur
 | Blobstore | Optional | Filestore, S3, or GCS, used by [archival](/docs/concepts/archival). |
 | Web UI | Optional, recommended | Deployed separately; connects outbound to Frontend over gRPC. |
 | CLI | Optional, recommended | Primary operator and support tool. |
-| etcd | Not default, needed with Shard Manager | Required today when using [Shard Manager](https://github.com/cadence-workflow/shard-manager). Planned to be removed in early 2027 when Shard Manager is generally available. |
+| etcd | Not default, needed with Shard Manager | Required today when using [Shard Manager](https://github.com/cadence-workflow/shard-manager). Planned to be removed when Shard Manager is generally available. |
 
 Cadence's minimum dependency is a single database. **Basic visibility** is backed by that same database and is enough to list and filter workflows. [Advanced visibility](/docs/concepts/search-workflows) is what adds custom search attributes and SQL-like queries, and enabling it is what pulls Kafka and a search store into your dependency set. A Matching deployment on Shard Manager currently adds etcd as well.
 
@@ -104,7 +104,7 @@ Most Cadence configuration can be changed later. A few choices are effectively p
 | `numHistoryShards` | Fixed for the life of the cluster. Changing it requires migrating to a new cluster. |
 | Global domains enabled | Local domains aren't recommended. Use Global domains with 1 replica instead. This gives you the freedom of replicating to another cluster if you change your mind in the future |
 | Persistence engine | Switching engines is a cluster migration, not a configuration change. |
-| Per-domain archival URI | Changing URI later will lead to losing any archived workflows with the old URI |
+| Per-domain archival URI | Changing the URI later is intentionally not supported as it would lead to losing any archived workflows with the old URI |
 
 :::warning[Check numHistoryShards before you create a cluster]
 The shipped Docker and Helm defaults set `numHistoryShards` to `4`, which is a development value. Because the number is fixed at provisioning time, a cluster created with 4 shards can never distribute work across more than 4 History nodes, and the only remedy is a migration to a new cluster.
@@ -112,7 +112,7 @@ The shipped Docker and Helm defaults set `numHistoryShards` to `4`, which is a d
 [Cluster configuration](/docs/operation-guide/setup#static-configuration) recommends **1K to 16K** depending on the cluster size you expect, typically **2K for SQL-based persistence and 8K for Cassandra**. Too low caps your maximum cluster size; too high forces a larger initial cluster, since History nodes that own no shards waste resources.
 :::
 
-Enabling global domains deserves the same forethought. Even if you run a single cluster and need no replication today, enabling cross-DC replication from the start (using the same name for `masterClusterName` and `currentClusterName`) is what keeps a future datastore or cluster migration straightforward. Converting later is manual, painful and error-prone for domains that were created as local.
+Enabling global domains deserves the same forethought. Even if you run a single cluster and need no replication today, enabling cross-DC replication from the start (using the same name for `primaryClusterName` and `currentClusterName`) is what keeps a future datastore or cluster migration straightforward. Converting later is manual, painful and error-prone for domains that were created as local.
 
 ## Worker and client requirements
 
