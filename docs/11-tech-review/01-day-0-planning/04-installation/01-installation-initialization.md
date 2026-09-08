@@ -55,7 +55,7 @@ helm repo update
 helm install cadence-release cadence/cadence -n cadence --create-namespace
 ```
 
-The chart defaults to Cassandra with automatic schema initialization. Switching to PostgreSQL or MySQL requires setting the appropriate subchart and persistence driver values. Example values files are provided for common configurations (Cassandra with PVCs, MySQL, PostgreSQL, PostgreSQL + Elasticsearch/OpenSearch, Cloud SQL, TLS, and metrics). See the [Helm chart README](https://github.com/cadence-workflow/cadence-charts/blob/main/charts/cadence/README.md) for the full `values.yaml` reference and the [Helm deployment codelab](/docs/codelabs/helm-deploy-postgres-opensearch) for a step-by-step walkthrough on GKE.
+The chart defaults to Cassandra with automatic schema initialization. Switching to PostgreSQL or MySQL requires setting the appropriate subchart and persistence driver values. Example values files are provided for common configurations (Cassandra with PVCs, MySQL, PostgreSQL, PostgreSQL + Elasticsearch/OpenSearch, Cloud SQL, TLS, and metrics). See the [Helm chart README](https://github.com/cadence-workflow/cadence-charts/blob/main/charts/cadence/README.md) for the full `values.yaml` reference and the [Helm deployment codelab](/docs/codelabs/helm-deploy-postgres-opensearch) for a step-by-step walkthrough on GKE. [Production integrations](/docs/tech-review/day-0-planning/usability/production-integrations) covers the subchart inventory and what each backing service connects to.
 
 ## CLI installation
 
@@ -103,6 +103,7 @@ Beyond the server, a complete deployment includes:
 - **[Get Started](/docs/get-started/)**: 5-minute quickstart
 - **[Server Installation](/docs/get-started/server-installation)**: Docker Compose setup with domain registration and troubleshooting
 - **[Helm deployment codelab](/docs/codelabs/helm-deploy-postgres-opensearch)**: step-by-step Kubernetes walkthrough
+- **[Production integrations](/docs/tech-review/day-0-planning/usability/production-integrations)**: subchart inventory, observability, security, and client support tiers
 - **[Cluster Configuration](/docs/operation-guide/setup)**: production configuration (static config, dynamic config, persistence, replication)
 - **[Docker README](https://github.com/cadence-workflow/cadence/blob/master/docker/README.md)**: Docker Compose variants and production `docker run` reference
 - **[Helm chart README](https://github.com/cadence-workflow/cadence-charts/blob/main/charts/cadence/README.md)**: full `values.yaml` reference and chart dependencies
