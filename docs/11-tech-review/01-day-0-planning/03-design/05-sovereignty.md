@@ -91,7 +91,9 @@ A data converter is not a blanket guarantee, and the boundary is documented: it 
 
 ## Retention and deletion
 
-Each domain has a retention period, bounded by cluster dynamic configuration that defaults to a minimum of 1 day and a maximum of 30. When retention expires, Cadence deletes the execution, its history, its current execution record, and its visibility record. If archival is enabled for both the cluster and the domain, the history and visibility record are archived first.
+Each domain has a retention period, bounded by cluster dynamic configuration that defaults to a minimum of 1 day and a maximum of 30. When retention expires, Cadence deletes the execution, its history, its current execution record, and its visibility record from primary storage.
+
+Archival, where it is enabled, does not run on a single schedule. History and visibility are separately configured at both the cluster and the domain level, and they are archived at different points: the visibility record is archived when the workflow closes, and the history is archived when retention expires, just before the delete. Retention removes the visibility record from primary storage at the same time it removes the history, whether or not an archived copy of it was made earlier. See [Archival](/docs/concepts/archival).
 
 Targeted deletion, for a single execution rather than by retention, is available through administrative tooling, and its scope should be understood precisely:
 
@@ -106,9 +108,8 @@ Cadence provides deletion primitives per store rather than a single erasure oper
 
 Archival is [documented as best effort](/docs/concepts/archival): a history or visibility record can be removed from primary storage without a corresponding archive copy. That is not the common path, but it is possible under these conditions:
 
-- **Archival was not enabled** for both the cluster and the domain when retention expired. Retention then deletes without attempting to archive. 
 - **Admin delete** removes primary records directly and does not run archival.
-- **Persistent failures to write the blobstore.** Most of the time Cadence archives **inline**: it writes the record to the blobstore immediately as part of the retention path. If that write fails or takes too long, the history service starts an archival workflow on Cadence workers to retry the upload. That workflow eventually gives up. Primary storage can then be cleaned up without a durable archive copy.
+- **Persistent failures to write the blobstore.** Cadence prefers to archive **inline**, writing to the blobstore on the same path that will delete the record. Visibility is attempted inline when the workflow closes. History is attempted inline at retention only when the execution's history is under a configurable size limit, 500 KB by default. When an inline write fails, is throttled, or is skipped because the history is too large, Cadence signals an archival workflow on its own workers to retry the upload, and that workflow eventually gives up. Primary storage is cleaned up either way.
 
 Cadence does not currently guarantee "no delete from primary until archived." That guarantee is listed as planned work on the archival page.
 
