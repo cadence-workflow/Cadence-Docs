@@ -38,7 +38,9 @@ From https://cbea.ms/git-commit/#why-not-how:
 
 3. **How did you verify it?**
    - Concrete, copyable steps (e.g. Docusaurus build and/or start, which pages checked)
+   - A link to a personal GitHub Pages deployment (e.g. `https://<user>.github.io/Cadence-Docs/`) also counts as valid verification
    - ✅ GOOD: `npm run build` and `npm run start`, verified docs/concepts/search-workflows and operation-guide/troubleshooting
+   - ✅ GOOD: Verified via GitHub Pages preview at `https://<user>.github.io/Cadence-Docs/docs/...`
    - ❌ BAD: "Built locally" or "Looks good"
    - If link checker or lint was used, include the command
    - **If the PR modifies non-text files** (see item 4 below), verification **must** include production preview and dark/light mode — flag if missing
