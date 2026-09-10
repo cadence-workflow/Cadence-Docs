@@ -35,7 +35,7 @@ Every workflow records an append-only history of events: inputs, activity result
 
 History is an audit of **workflow execution**, not a substitute for an organization-wide audit log of every human or machine that touched the cluster. Signals, terminate, and reset appear in that history. When domain audit logging is enabled, domain create, update, failover, deprecate, and delete are recorded separately as domain audit entries, with the domain state before and after the change. Failover history, the case operators need most often, is queryable through Cadence Web and the CLI. A broader record of who authenticated and which administrative RPC ran is an adopter concern; Day 2 [audit logging](/docs/tech-review/day-2-operations/observability/audit-logging) is the operational counterpart to this page.
 
-Payloads in history are stored as written unless a [data converter](/docs/concepts/data-converter) encrypts or offloads them. Search attributes, memo, workflow IDs, and task list names are not covered by a data converter and remain in the clear. Archival guidance is that workflows should not operate on clear text personally identifiable information, because archived histories can be kept indefinitely.
+Payloads in history, including memo values started from the Go, Java, and Python clients, are stored as written unless a [data converter](/docs/concepts/data-converter) encrypts or offloads them. Search attributes, workflow IDs, run IDs, and task list names do not go through a custom data converter and remain in the clear. Archival guidance is that workflows should not operate on clear text personally identifiable information, because archived histories can be kept indefinitely.
 
 ## Retention, archival, and deletion
 

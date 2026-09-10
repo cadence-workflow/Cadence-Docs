@@ -81,7 +81,7 @@ Adopters do not have to send payloads to Cadence in readable form. A custom [dat
 
 The claim-check pattern is the answer for data that must not leave a specific system at all. Interfaces are documented for the Go and Java clients.
 
-A data converter is not a blanket guarantee, and the boundary is documented: it does **not** cover search attribute values, memo, workflow IDs, run IDs, task list names, timer durations, application logs, or metrics. Anything used for search or routing is stored in the clear by design. Archival guidance makes the same point, advising that workflows should not operate on clear text personally identifiable information, since archived histories can be retained indefinitely.
+A data converter is not a blanket guarantee. Memo values on the Go, Java, and Python clients use the same converter as history payloads. Search attribute values, workflow IDs, run IDs, task list names, timer durations, application logs, and metrics do not. Search attributes are encoded as JSON so they remain queryable. Archival guidance makes the same point, advising that workflows should not operate on clear text personally identifiable information, since archived histories can be retained indefinitely.
 
 ## Encryption
 
