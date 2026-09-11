@@ -15,7 +15,7 @@ To run Cadence in a highly available configuration, an adopter must provide: a r
 
 All Cadence service instances are stateless. Durable state lives in the database, so any instance can be replaced without data loss and capacity scales by adding instances. Production guidance recommends at least 4 nodes for each of Frontend, History, and Matching, spread across availability zones. See [Architecture requirements](/docs/tech-review/day-0-planning/design/architecture-requirements) and [Cluster configuration](/docs/operation-guide/setup).
 
-If any node fails, remaining nodes continue serving. For History specifically, shard ownership is reassigned to surviving nodes automatically, without operator intervention. [Architecture requirements](/docs/tech-review/day-0-planning/design/architecture-requirements) notes the membership and shard ownership mechanisms, including the ongoing move of shard assignment to [Shard Manager](https://github.com/cadence-workflow/shard-manager). The recommended SLO targets for a healthy cluster are documented in [Cluster monitoring](/docs/operation-guide/monitoring#cadence-service-slo-recommendation).
+If any node fails, remaining nodes continue serving. For History specifically, shard ownership is reassigned to surviving nodes automatically, without operator intervention. [Architecture requirements](/docs/tech-review/day-0-planning/design/architecture-requirements) notes the membership and shard ownership mechanisms. The recommended SLO targets for a healthy cluster are documented in [Cluster monitoring](/docs/operation-guide/monitoring#cadence-service-slo-recommendation).
 
 ## Multi-cluster disaster recovery
 
