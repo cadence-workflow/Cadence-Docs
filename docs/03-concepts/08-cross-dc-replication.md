@@ -31,13 +31,15 @@ standby clusters (if any) will poll the history from active to replicate the wor
 
 However, standby clusters can also receive the requests, e.g. for starting workflows or starting activities. They know which cluster the domain is active at.
 So the requests can be routed to the active clusters. This is called `api-forwarding` in Cadence. `api-forwarding` makes it possible to have no downtime during failover.
-There are two `api-forwarding` policy: `selected-api-forwarding` and `all-domain-api-forwarding` policy.
+There are four `api-forwarding` policies: `selected-apis-forwarding`, `selected-apis-forwarding-v2`, `all-domain-apis-forwarding`, and `all-domain-apis-forwarding-v2`
+(see the [policy definitions](https://github.com/cadence-workflow/cadence/blob/c861d469a5efd3ee3460051b3ab119cb1a02f8f0/service/frontend/wrappers/clusterredirection/policy.go#L41-L79) in the server source).
+The default when no policy is configured is `noop` (no forwarding).
 
-When using `selected-api-forwarding`, applications need to run different set of activity & workflow :worker:workers: polling on every cluster.
+When using `selected-apis-forwarding`, applications need to run different set of activity & workflow :worker:workers: polling on every cluster.
 Cadence will only dispatch tasks on the current active cluster; :worker:workers: on the standby cluster will sit idle
 until the Global :domain:Domain: is failed over. This is recommended if XDC is being used in multiple clusters running in very remote data centers(regions), which forwarding is expensive to do.
 
-When using `all-domain-api-forwarding`, applications only need to run activity & workflow :worker:workers: polling on one cluster. This makes it easier for the application setup. This is recommended
+When using `all-domain-apis-forwarding`, applications only need to run activity & workflow :worker:workers: polling on one cluster. This makes it easier for the application setup. This is recommended
 when clusters are all in local or nearby datacenters.  See more details in [discussion](https://github.com/cadence-workflow/cadence/discussions/4530).
 
 ### Conflict Resolution
