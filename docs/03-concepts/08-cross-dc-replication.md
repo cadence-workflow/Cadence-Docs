@@ -31,7 +31,8 @@ standby clusters (if any) will poll the history from active to replicate the wor
 
 However, standby clusters can also receive the requests, e.g. for starting workflows or starting activities. They know which cluster the domain is active at.
 So the requests can be routed to the active clusters. This is called `api-forwarding` in Cadence. `api-forwarding` makes it possible to have no downtime during failover.
-There are four `api-forwarding` policies: `selected-apis-forwarding`, `selected-apis-forwarding-v2`, `all-domain-apis-forwarding`, and `all-domain-apis-forwarding-v2`.
+There are four `api-forwarding` policies: `selected-apis-forwarding`, `selected-apis-forwarding-v2`, `all-domain-apis-forwarding`, and `all-domain-apis-forwarding-v2`
+(see the [policy definitions](https://github.com/cadence-workflow/cadence/blob/c861d469a5efd3ee3460051b3ab119cb1a02f8f0/service/frontend/wrappers/clusterredirection/policy.go#L41-L79) in the server source).
 The default when no policy is configured is `noop` (no forwarding).
 
 When using `selected-apis-forwarding`, applications need to run different set of activity & workflow :worker:workers: polling on every cluster.
