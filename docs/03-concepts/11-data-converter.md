@@ -50,12 +50,12 @@ The converter is called for all of the following, but not for everything in the 
 
 | DataConverter sees | DataConverter does NOT see |
 |--------------------|---------------------------|
-| Workflow inputs / outputs | Search attribute values |
-| Activity inputs / outputs | Memo (uses default JSON converter) |
-| Signal payloads | Workflow IDs / run IDs |
-| Query responses | Task list names |
-| Child workflow inputs / outputs | Application logs / metrics |
-| | Timer durations |
+| Workflow inputs / outputs | Search attribute values (always default JSON) |
+| Activity inputs / outputs | Workflow IDs / run IDs |
+| Signal payloads | Task list names |
+| Query responses | Application logs / metrics |
+| Child workflow inputs / outputs | Timer durations |
+| Memo values (Go, Java, and Python clients) | |
 
 The interface you implement in each SDK:
 
@@ -251,7 +251,7 @@ public <T> T fromData(byte[] content, Class<T> valueClass, Type valueType)
 **Full sample:** [Go](https://github.com/cadence-workflow/cadence-samples/blob/master/new_samples/data/encrypted_dataconverter_workflow.go) · [Java](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/encryption)
 
 :::caution
-The demo key in both samples is for demonstration only. In production, load the 32-byte AES key (64 hex chars) from a secrets manager or the `CADENCE_ENCRYPTION_KEY` environment variable. Encryption protects history payloads, but it does **not** protect search attributes, memo, application logs, or metrics. See [What a DataConverter does not protect](#what-a-dataconverter-does-not-protect).
+The demo key in both samples is for demonstration only. In production, load the 32-byte AES key (64 hex chars) from a secrets manager or the `CADENCE_ENCRYPTION_KEY` environment variable. Encryption protects history payloads and memo values encoded by the SDK. It does **not** protect search attributes, application logs, or metrics. See [What a DataConverter does not protect](#what-a-dataconverter-does-not-protect).
 :::
 
 ---
@@ -440,7 +440,7 @@ Any time you change or rotate a converter, update the `WorkflowClient` and all w
 
 ### What a DataConverter does not protect
 
-Encrypting your payloads does not encrypt everything. The following are separate disclosure surfaces that a `DataConverter` never touches: search attribute values, memo (which uses the default JSON converter unless you explicitly wrap that path too), application logs, metrics, workflow IDs, run IDs, task list names, and timer durations. Treat each of these as its own data-governance concern.
+Encrypting your payloads does not encrypt everything. Memo values on the Go, Java, and Python clients go through the same `DataConverter` as history payloads. Search attribute values always use default JSON so they stay queryable. Application logs, metrics, workflow IDs, run IDs, task list names, and timer durations are also outside the converter. Treat each of these as its own data-governance concern. The CLI encodes `--memo` with `json.Marshal`, so CLI-started memos are not covered by a custom converter.
 
 ### Per-payload size limits
 
