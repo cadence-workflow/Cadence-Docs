@@ -9,16 +9,7 @@ keywords:
   - cadence web ui
 ---
 
-The Cadence user experience spans three interfaces rather than a single screen: language **SDKs** for writing workflows, a **CLI** for scripted operations, and a **Web UI** for visual ones. A user may touch more than one in a single task. The interfaces are described below in the order a user meets them.
-
-```mermaid
-flowchart TD
-    Dev["Developer writes workflow code"] --> SDK["Language SDKs: Go, Java (official); Python, Ruby (community)"]
-    SDK --> Worker["Worker process polls a task list"]
-    Worker --> Server["Cadence server + persistence"]
-    CLI["cadence CLI"] --> Server
-    WebUI["Cadence Web UI"] --> Server
-```
+The Cadence user experience spans three interfaces rather than a single screen: language **SDKs** for writing workflows, a **CLI** for scripted operations, and a **Web UI** for visual ones. A user may touch more than one in a single task.
 
 ## SDKs — the authoring interface
 
