@@ -13,7 +13,7 @@ The Cadence user experience spans three interfaces rather than a single screen: 
 
 ## SDKs — the authoring interface
 
-Cadence has no GUI workflow builder and no YAML dialect. Workflows and activities are written as ordinary functions in a general-purpose language, and Cadence makes their execution durable across process and host failures. Per the [Get started guide](https://cadenceworkflow.io/docs/get-started), SDKs are available for **Go and Java (official)** and **Python and Ruby (community)**, with [iWF](https://cadenceworkflow.io/docs/get-started) available as a DSL framework layered on top for teams who want one.
+Workflows and activities are written as ordinary functions in a general-purpose language, and Cadence makes their execution durable across process and host failures. Per the [Get started guide](https://cadenceworkflow.io/docs/get-started), SDKs are available for **Go and Java (official)** and **Python and Ruby (community)**, with [iWF](https://cadenceworkflow.io/docs/get-started) available as a DSL framework layered on top for teams who want one.
 
 From the [helloworld sample](https://github.com/cadence-workflow/cadence-samples/blob/d643bfcd7fb9c45707c3667ed54ca0c0354ea640/cmd/samples/recipes/helloworld/helloworld_workflow.go):
 
