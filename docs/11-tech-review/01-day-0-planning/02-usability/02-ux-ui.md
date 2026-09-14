@@ -9,7 +9,7 @@ keywords:
   - cadence web ui
 ---
 
-The Cadence user experience spans three interfaces rather than a single screen: language **SDKs** for writing workflows, a **CLI** for scripted operations, and a **Web UI** for visual ones. A user may touch more than one in a single task.
+The Cadence user experience spans three interfaces: language **SDKs** for writing workflows, a **CLI** for scripted operations, and a **Web UI** for visual ones. A user may touch more than one in a single task.
 
 ## SDKs: the authoring interface
 
@@ -64,9 +64,3 @@ The Web UI's available capabilities vary by deployment configuration.
 - [Target persona interactions](/docs/tech-review/day-0-planning/usability/persona-interactions)
 - [Production integrations](/docs/tech-review/day-0-planning/usability/production-integrations)
 - [Design principles](/docs/tech-review/day-0-planning/design/design-principles)
-- [End user research](/docs/tech-review/day-0-planning/scope/end-user-research)
-- [Get started with Cadence](/docs/get-started)
-- [cadence-web repository at v4.0.16](https://github.com/cadence-workflow/cadence-web/tree/v4.0.16)
-- [Cadence CLI docs](/docs/cli)
-- [Cadence Helm chart at cadence-1.6.7](https://github.com/cadence-workflow/cadence-charts/tree/cadence-1.6.7)
-- [Search workflows (Advanced visibility)](/docs/concepts/search-workflows)
