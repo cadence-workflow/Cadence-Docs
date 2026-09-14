@@ -62,8 +62,9 @@ only be set when the :domain: is provisioned.
 
 #### Clusters
 A list of clusters where the :domain: can fail over to, including the current active cluster.
-This is also a read-only setting that can only be set when the :domain: is provisioned. A re-replication feature on the
-roadmap will allow updating this config to add/remove clusters in the future.
+The list can be changed after the :domain: is created. Clusters can be added and removed, but an update always sets
+the full list, so it must name every cluster you want to keep. You cannot remove the cluster the :domain: is
+currently active in, and the update only works when sent to the [primary cluster](#running-in-production).
 
 #### Active Cluster Name
 Name of the current active cluster for the Global :domain:Domain:. This config is updated each time the Global :domain:Domain: is failed over to
