@@ -29,16 +29,6 @@ Cadence has one public API. It is defined as Protobuf in [cadence-idl](https://g
 
 Legacy Thrift definitions: [thrift/](https://github.com/cadence-workflow/cadence-idl/tree/master/thrift).
 
-## Conventions
-
-- `XRequest` and `XResponse` per RPC. Package `uber.cadence.api.v1`, `snake_case` fields, enum zero value `*_INVALID`.
-- Almost every request carries `domain`. Executions are `{ workflow_id, run_id }`. See [common.proto](https://github.com/cadence-workflow/cadence-idl/blob/master/proto/uber/cadence/api/v1/common.proto).
-- Payloads are opaque bytes. Encoding belongs to the SDK [data converter](/docs/concepts/data-converter).
-- Pagination uses `page_size` and an opaque `next_page_token`.
-- Worker RPCs long-poll. Start, signal, and cancel RPCs carry a `request_id`.
-- Errors are typed in [error.proto](https://github.com/cadence-workflow/cadence-idl/blob/master/proto/uber/cadence/api/v1/error.proto) and mapped to gRPC status codes in [errors.go](https://github.com/cadence-workflow/cadence/blob/master/common/types/mapper/proto/errors.go).
-- Request headers are listed in [headers.go](https://github.com/cadence-workflow/cadence/blob/master/common/headers.go).
-
 ## Related documentation
 
 - [Production integrations](/docs/tech-review/day-0-planning/usability/production-integrations)
