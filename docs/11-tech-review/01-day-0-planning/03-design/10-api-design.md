@@ -9,9 +9,9 @@ keywords:
   - cadence api compatibility
 ---
 
-Cadence has one public API. It is defined as Protobuf in [cadence-idl](https://github.com/cadence-workflow/cadence-idl) and served by the Frontend to SDKs, workers, the CLI, and the Web UI. Defaults, configuration, API changes, compatibility, and versioning will follow.
+Cadence has one public API. It is defined as Protobuf in [cadence-idl](https://github.com/cadence-workflow/cadence-idl) and served by the Frontend to SDKs, workers, the CLI, and the Web UI.
 
-## Topology
+## Topology and Conventions
 
 - Clients call only the Frontend. History and Matching APIs are internal. See [Topology](/docs/concepts/topology) and [Architecture requirements](/docs/tech-review/day-0-planning/design/architecture-requirements).
 - gRPC is primary. Thrift over TChannel remains for older SDKs, and an optional [HTTP/JSON](/docs/concepts/http-api) inbound serves allow-listed procedures. See [`common/rpc`](https://github.com/cadence-workflow/cadence/tree/master/common/rpc).
