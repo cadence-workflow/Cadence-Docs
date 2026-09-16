@@ -55,7 +55,7 @@ What the UI can do depends on the cluster and how cadence-web is configured.
 
 - **Visibility.** The UI's search experience follows the cluster. With [advanced visibility](/docs/concepts/search-workflows) it can query executions; without it, the UI shows a listing with limited search experience.
 - **Feature flags.** Several UI areas are opt-in; see the [cadence-web README](https://github.com/cadence-workflow/cadence-web/blob/master/README.md#feature-flags).
-- **Authentication.** Auth can be off or JWT. Under JWT, users without write access to a domain do not get write actions. The CLI has the equivalent `--jwt` path.
+- **Authentication.** Auth can be off or JWT. Under JWT, users without write access to a domain do not get write actions. Batch actions instead depend on access to the `cadence-batcher` domain. The CLI has the equivalent `--jwt` path. 
 
 ## Related documentation
 
