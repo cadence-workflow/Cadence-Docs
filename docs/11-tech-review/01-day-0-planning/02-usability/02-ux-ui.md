@@ -13,7 +13,7 @@ The Cadence user experience spans three interfaces: language **SDKs** for writin
 
 ## SDKs: the authoring interface
 
-Workflows and activities are written as ordinary functions in a general-purpose language, and Cadence makes their execution durable across process and host failures. Per the [Get started guide](/docs/get-started), SDKs are available for **Go and Java (official)** and **Python and Ruby (community)**, with [iWF](/docs/get-started) available as a DSL framework layered on top for teams who want one.
+Workflows and activities are written as functions in a general-purpose language, and Cadence makes their execution durable across process and host failures. Per the [Get started guide](/docs/get-started), SDKs are available for **Go and Java (official)** and **Python and Ruby (community)**, with [iWF](https://github.com/indeedeng/iwf) available as a DSL framework layered on top for teams who want one.
 
 From the [helloworld sample](https://github.com/cadence-workflow/cadence-samples/blob/d643bfcd7fb9c45707c3667ed54ca0c0354ea640/cmd/samples/recipes/helloworld/helloworld_workflow.go):
 
@@ -35,7 +35,7 @@ func helloWorldWorkflow(ctx workflow.Context, name string) error {
 }
 ```
 
-The developer experience here is deliberately unremarkable: normal control flow, normal types, normal tests. The SDK repositories carry replay and shadowing test helpers so a workflow change can be checked against real recorded histories before deployment.
+The Go and Java SDKs add replay and shadowing helpers so a workflow change can be checked against real recorded histories before deployment.
 
 ## CLI: the scriptable interface
 
@@ -45,19 +45,17 @@ It is distributed as a Homebrew binary, a local build (`make tools` from the ser
 
 ## Web UI: the visual interface
 
-[cadence-web](https://github.com/cadence-workflow/cadence-web/tree/v4.0.16) is part of a default deployment: it ships as the `ubercadence/web` image, comes up with the Cadence Docker Compose setup, and is deployed by the [official Helm chart](https://github.com/cadence-workflow/cadence-charts/blob/cadence-1.6.7/charts/cadence/values.yaml). The quickstart points a new user at it on `localhost:8088` before their first workflow runs. It can also run standalone against any gRPC-reachable cluster.
+[cadence-web](https://github.com/cadence-workflow/cadence-web) is an optional, separately deployed browser UI. Docker Compose includes it; the [Helm chart](https://github.com/cadence-workflow/cadence-charts) can deploy it; a local server binary does not. It can also run standalone against any gRPC-reachable cluster.
 
-At release [v4.0.16](https://github.com/cadence-workflow/cadence-web/releases/tag/v4.0.16) it covers domains and failover history; workflow search; a workflow page with summary details, filterable event history with JSON export, payloads, and a pending-activity badge; single-execution actions (start, restart, reset, signal, cancel, terminate) plus batch cancel/terminate/signal across a query with a rate limit; registered workflow queries that can render interactive Markdoc; a `__stack_trace` tab; task list worker inspection; cron and schedule listings; Diagnostics; and archived histories.
-
+It covers domains and failover history; workflow search; a workflow page with summary details, filterable event history with JSON export, payloads, and a pending-activity badge; single-execution actions (start, restart, reset, signal, cancel, terminate) plus batch cancel/terminate/signal; registered workflow queries that can render interactive Markdoc; a `__stack_trace` tab; task list worker inspection; cron and schedule listings; Diagnostics; and archived histories.
 
 ## Deployment-dependent Web UI capabilities
 
-The Web UI's available capabilities vary by deployment configuration.
+What the UI can do depends on the cluster and how cadence-web is configured.
 
-- **Cluster capability** decides the search experience: cadence-web reads `advancedVisibilityEnabled` from `describeCluster` and falls back to basic search when the feature is absent. Basic visibility is, per the [Search workflows docs](/docs/concepts/search-workflows), "basic listing without being able to search".
-- **Feature flags** gate several UI areas behind environment variables, some with a minimum Cadence server version; see the [README feature-flags table](https://github.com/cadence-workflow/cadence-web/blob/v4.0.16/README.md#feature-flags). The [dynamic config resolvers](https://github.com/cadence-workflow/cadence-web/tree/v4.0.16/src/config/dynamic/resolvers) behind it are the extension point for forks.
-- **Authentication** is `disabled` or cookie-based `jwt` (`CADENCE_WEB_AUTH_STRATEGY`). Under `jwt`, the [`WORKFLOW_ACTIONS_ENABLED` resolver](https://github.com/cadence-workflow/cadence-web/blob/v4.0.16/src/config/dynamic/resolvers/workflow-actions-enabled.ts) withholds write actions from users without write access to the domain and falls back to disabled if access cannot be resolved. The CLI carries `--jwt`/`--jwt-private-key` for the equivalent path.
-
+- **Visibility.** The UI's search experience follows the cluster. With [advanced visibility](/docs/concepts/search-workflows) it can query executions; without it, the UI shows a listing with limited search experience.
+- **Feature flags.** Several UI areas are opt-in; see the [cadence-web README](https://github.com/cadence-workflow/cadence-web/blob/master/README.md#feature-flags).
+- **Authentication.** Auth can be off or JWT. Under JWT, users without write access to a domain do not get write actions. The CLI has the equivalent `--jwt` path.
 
 ## Related documentation
 
