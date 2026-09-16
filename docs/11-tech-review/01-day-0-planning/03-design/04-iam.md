@@ -12,7 +12,7 @@ keywords:
 
 Cadence is not an identity provider. It does not store users, issue passwords, or broker SSO. Callers arrive at the Frontend already holding credentials the adopter issued, and Cadence decides whether that caller may run a given API on a given domain.
 
-That split is the whole design. Identity lives in the organization's existing directory, certificates, or token issuer. Access control lives in Cadence as a **policy enforcement point** on Frontend, with a pluggable **authorizer** as the decision point. Related pages: [Architecture requirements](/docs/tech-review/day-0-planning/design/architecture-requirements) for where Frontend sits, [Sovereignty](/docs/tech-review/day-0-planning/design/sovereignty) for where data lives, [Compliance requirements](/docs/tech-review/day-0-planning/design/compliance-requirements) for how this maps to program controls, and Day 2 [access control](/docs/tech-review/day-2-operations/security/access-control) for operating it.
+Identity lives in the organization's existing directory, certificates, or token issuer. Access control lives in Cadence as a **policy enforcement point** on Frontend, with a pluggable **authorizer** as the decision point. Related pages: [Architecture requirements](/docs/tech-review/day-0-planning/design/architecture-requirements) for where Frontend sits, [Sovereignty](/docs/tech-review/day-0-planning/design/sovereignty) for where data lives, [Compliance requirements](/docs/tech-review/day-0-planning/design/compliance-requirements) for how this maps to program controls, and Day 2 [access control](/docs/tech-review/day-2-operations/security/access-control) for operating it.
 
 ## Who talks to Cadence, and how they identify
 
@@ -30,7 +30,7 @@ Cadence never dials into workers. Workers authenticate as **clients** of Fronten
 
 ## Authentication
 
-Two independent layers are available. They compose; neither replaces the other.
+Two independent layers are available:
 
 **Transport.** TLS is configurable on client-to-Frontend, inter-service, replication, and datastore connections. Mutual TLS is documented for SDK clients: both sides present certificates, so the cluster can require a known client cert before any RPC is accepted. Certificate issuance and rotation stay with the adopter's CA. A runnable setup is in the [mTLS sample](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/client_tls).
 
@@ -39,7 +39,7 @@ Two independent layers are available. They compose; neither replaces the other.
 - An **internal** key pair. The cluster holds the public key; the CLI, Go admin JWT helper, and internal services sign with the matching private key. These tokens use the issuer `internal-jwt`.
 - An **external** identity provider. The authorizer fetches signing keys from a JWKS URL and extracts groups and an admin flag with [JMESPath](https://jmespath.org/) expressions against the token claims. The development config comments show this against a generic OIDC provider.
 
-Tokens must expire, and remaining lifetime cannot exceed a configured maximum TTL. A missing, expired, over-TTL, or invalid token is a deny.
+Tokens must expire, and remaining lifetime cannot exceed a configured maximum TTL. Missing, expired, over-TTL, or invalid tokens are denied.
 
 When the OAuth authorizer is **not** enabled, Frontend uses a no-op authorizer that allows every request. That is the local and proof-of-concept default, so a laptop cluster does not require an IdP. Production clusters that need API authorization turn the OAuth authorizer on.
 
