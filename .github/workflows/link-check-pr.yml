@@ -10,8 +10,14 @@ name: Link check (PR)
 on:
   pull_request:
     paths:
-      - '**/*.md'
-      - '**/*.mdx'
+      - 'docs/**/*.md'
+      - 'docs/**/*.mdx'
+      - 'blog/**/*.md'
+      - 'blog/**/*.mdx'
+      - 'faq/**/*.md'
+      - 'faq/**/*.mdx'
+      - 'community/**/*.md'
+      - 'community/**/*.mdx'
       - 'lychee.toml'
       - '.github/workflows/link-check-pr.yml'
 
@@ -37,8 +43,14 @@ jobs:
         uses: tj-actions/changed-files@v45
         with:
           files: |
-            **/*.md
-            **/*.mdx
+            docs/**/*.md
+            docs/**/*.mdx
+            blog/**/*.md
+            blog/**/*.mdx
+            faq/**/*.md
+            faq/**/*.mdx
+            community/**/*.md
+            community/**/*.mdx
 
       - name: Restore lychee cache
         if: steps.changed.outputs.any_changed == 'true'
