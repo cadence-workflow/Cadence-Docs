@@ -25,7 +25,7 @@
 <link rel="preload" href="https://d1a3f4spazzrp4.cloudfront.net/dotcom-assets/fonts/UberMoveText-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
 <link rel="preload" href="https://d1a3f4spazzrp4.cloudfront.net/dotcom-assets/fonts/UberMoveText-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
 <link rel="preload" href="https://d1a3f4spazzrp4.cloudfront.net/dotcom-assets/fonts/UberMoveText-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.2798ae1d.css">
-<script src="/assets/js/runtime~main.452e5414.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.d9719186.js" defer="defer"></script>
 <script src="/assets/js/main.e07fe089.js" defer="defer"></script>
 </head>
 <body>
@@ -129,6 +129,7 @@
 <li class="task-list-item"><input type="checkbox" disabled=""> <!-- -->Run the production preview if your change is anything beyond prose in a <code>.md</code> file</li>
 <li class="task-list-item"><input type="checkbox" disabled=""> <!-- -->Checked affected pages in dark mode and light mode</li>
 <li class="task-list-item"><input type="checkbox" disabled=""> <!-- -->Listed the specific pages you verified, in the description</li>
+<li class="task-list-item"><input type="checkbox" disabled=""> <!-- -->Published a personal GitHub Pages preview if the change affects the site, and added its URL to <code>How did you verify it?</code></li>
 <li class="task-list-item"><input type="checkbox" disabled=""> <!-- -->Signed every commit with <code>-s</code></li>
 <li class="task-list-item"><input type="checkbox" disabled=""> <!-- -->Noted any moved or renamed page so a redirect can be added</li>
 </ul>
@@ -158,7 +159,10 @@
 <p>The release pages read from JSON files under <code>static/data/releases/</code>. To refresh them manually, run <code>scripts/fetch-releases.sh</code>, which uses the <a href="https://cli.github.com/" target="_blank" rel="noopener noreferrer" class="">GitHub CLI</a>.</p>
 <p>Normally you do not need to. The <code>fetch-release-data</code> GitHub Action checks for new release data, and when it finds some, pushes a <code>fetch-release-data</code> branch and opens a pull request if one is not already open. Those pull requests need manual approval before merging.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="publish-a-personal-github-pages-preview">Publish a personal GitHub Pages preview<a href="#publish-a-personal-github-pages-preview" class="hash-link" aria-label="Direct link to Publish a personal GitHub Pages preview" title="Direct link to Publish a personal GitHub Pages preview" translate="no">​</a></h2>
-<p>This step is optional. Use it for larger changes. You can deploy your fork to your own GitHub Pages site, giving you a shareable URL such as <code>https://&lt;your-username&gt;.github.io/Cadence-Docs/</code>.</p>
+<p>Every pull request that changes published site content or behavior must include a personal GitHub Pages preview. This includes changes under <code>docs/</code>, <code>blog/</code>, <code>faq/</code>, <code>community/</code>, <code>src/</code>, or <code>static/</code>, along with Docusaurus configuration, sidebars, styles, scripts, and package files. A preview is not required when every changed file is limited to <code>.gitar/</code>, <code>.github/</code>, or root-level repository documentation such as <code>CONTRIBUTING.md</code>.</p>
+<p>Deploy your fork to your own GitHub Pages site, then add the URL to <code>How did you verify it?</code> in the pull request description. Link the affected page when one exists. Use the site root for changes without a page-specific route:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">https://&lt;your-username&gt;.github.io/Cadence-Docs/</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">https://&lt;your-username&gt;.github.io/Cadence-Docs/docs/concepts/example-page</span><br></div></code></pre></div></div>
+<p>The hosted preview is required in addition to the local build and any production-preview checks that apply to the change. It does not replace them.</p>
 <p><strong>Deploy a branch</strong></p>
 <ol>
 <li class="">In your fork, open the Actions tab. The first time, click &quot;I understand my workflows, go ahead and enable them&quot;.</li>
