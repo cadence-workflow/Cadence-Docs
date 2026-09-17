@@ -65,6 +65,8 @@ Error and CancellationException are never retried and are not even passed to thi
 
 It's probably too complicated to learn how to set those timeouts by reading the above. There is an easy way to deal with it.
 
+When `HeartbeatTimeout` is omitted, the Java client fills it from `ScheduleToClose`. Set a shorter heartbeat timeout and call the [heartbeat API](/docs/java-client/implementing-activities#activity-heart-beating) when a long-running activity needs faster worker-failure detection.
+
 **LocalActivity without retry**: Use ScheduleToClose for overall timeout
 
 **Regular Activity without retry**:

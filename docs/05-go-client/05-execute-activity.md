@@ -60,8 +60,9 @@ values, then the same context instance can be used when calling `workflow.Execut
 
 ## Activity timeouts
 
-There can be various kinds of timeouts associated with an :activity:. Cadence guarantees that :activity:activities:
-are executed *at most once*, so an :activity: either succeeds or fails with one of the following timeouts:
+There can be various kinds of timeouts associated with an :activity:. An :activity: may execute more than once,
+especially when a timeout or worker failure causes a configured retry. Activity implementations should therefore be
+idempotent. An :activity: either succeeds or fails with one of the following timeouts:
 
 Timeout | Description
 --- | ---

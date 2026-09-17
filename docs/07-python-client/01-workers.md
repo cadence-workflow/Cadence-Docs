@@ -41,7 +41,7 @@ async with Client(domain="my-domain", target=CADENCE_TARGET) as client:
 | Option | Description |
 |---|---|
 | `domain` | Cadence domain (required) |
-| `target` | Cadence frontend address, `host:port` (default: `localhost:7833`) |
+| `target` | Cadence frontend address, `host:port` (required; no SDK default) |
 | `identity` | Identity string shown in workflow history (default: auto-generated) |
 | `data_converter` | Custom data converter for serializing workflow arguments |
 
