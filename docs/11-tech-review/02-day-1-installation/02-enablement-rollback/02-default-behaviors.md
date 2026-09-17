@@ -41,13 +41,13 @@ Three **independent** environment variables (each also a command-line flag) sele
 | `CADENCE_ENVIRONMENT` | `--env` / `-e` | The environment file, for example `production.yaml` | `development` |
 | `CADENCE_AVAILABILITY_ZONE` | `--zone` / `--az` | Optional zone file, for example `production_az1.yaml` | No zone file |
 
-If both a flag and its environment variable are set, the flag wins. A fourth variable, `CADENCE_ROOT` (`--root` / `-r`), is the process root used to resolve a relative config directory. The misspelled `CADENCE_AVAILABILTY_ZONE` is still accepted as an alias of the zone variable.
+If both a flag and its environment variable are set, the flag wins. A fourth variable, `CADENCE_ROOT` (`--root` / `-r`), is the process root used to resolve a relative config directory.
 
 A different use of environment variables is **inside** the YAML: `$VAR` or `{$VAR:default}` placeholders expand after the files are merged. That expansion does not map arbitrary environment names onto Go config fields.
 
 Static changes require a rolling restart of the affected services. Persistence backends, cluster identity, TLS, authorization, and archival providers belong to this layer. Some values are cluster design decisions rather than tuning knobs:
 
-- `numHistoryShards` is chosen when the cluster is created. History shard ID is `hash(workflowID) % numHistoryShards`, so raising or lowering the number remaps every existing execution. Cadence does not support changing it in place (increase or decrease). Replicated clusters must use the **same** value so a workflow maps to the same shard ID on every cluster. To run with a different count, [migrate to a new cluster](/docs/operation-guide/migration).
+- `numHistoryShards` is chosen when the cluster is created. History shard ID is `hash(workflowID) % numHistoryShards`, so raising or lowering the number remaps every existing execution. Cadence does not support changing it in place. Replicated clusters should keep the same count. To scale an environment further [migrating to a larger cluster](/docs/operation-guide/migration#migrate-with-global-domain-replication-feature) is possible but risky; see [the Migration page](/docs/operation-guide/migration#migrate-with-global-domain-replication-feature) for more details.
 - Cluster names, initial failover versions, and failover-version increments must remain consistent across replicated clusters.
 - Removing a persistence or archival provider while stored data still depends on it is not a safe rollback.
 
