@@ -23,11 +23,19 @@ The Cadence Python client is an async Python SDK for building workflows and acti
 pip install cadence-python-client
 ```
 
+Or with `uv`:
+
+```bash
+uv add cadence-python-client
+```
+
+The SDK supports Python 3.11, 3.12, and 3.13.
+
 ## Packages
 
 ### `cadence.client`
 
-`Client` connects to the Cadence frontend, starts and signals workflows, and manages schedules.
+`Client` connects to the Cadence frontend, starts, signals, queries, and cancels workflows, and manages schedules.
 
 ### `cadence.worker`
 
@@ -39,11 +47,27 @@ Decorators and functions for defining workflow logic: `@workflow.run`, `@workflo
 
 ### `cadence.activity`
 
-Decorators for defining activities: `@activity.defn`, `@activity.method`. Context functions: `activity.heartbeat()`, `activity.info()`.
+Decorators for defining activities: `@activity.defn`, `@activity.method`. Context functions cover metadata, heartbeats, cancellation, and access to the client.
 
 ### `cadence.testing`
 
-`TestWorkflowEnvironment` runs workflows in-memory for unit tests without a Cadence server.
+`TestWorkflowEnvironment` runs workflows in-memory, and `TestActivityEnvironment` executes individual activities with simulated metadata, heartbeats, cancellation, and timeouts.
+
+### `cadence.data_converter`
+
+`DataConverter` defines payload serialization. `DefaultDataConverter` handles JSON-compatible Python values, while `cadence.contrib.pydantic.PydanticDataConverter` adds Pydantic v2 model support.
+
+### `cadence.context`
+
+`ContextPropagator` and `ContextVarPropagator` carry request-scoped values from clients into workflows, activities, child workflows, and continue-as-new.
+
+### `cadence.metrics`
+
+`MetricsEmitter` enables custom metrics backends. `PrometheusMetrics` exports built-in client and worker metrics.
+
+### `cadence.contrib`
+
+Optional integrations include [Pydantic](https://github.com/cadence-workflow/cadence-python-client/tree/v0.4.0/cadence/contrib/pydantic), [OpenAI Agents](https://github.com/cadence-workflow/cadence-python-client/tree/v0.4.0/cadence/contrib/openai), and [Google ADK](https://github.com/cadence-workflow/cadence-python-client/tree/v0.4.0/cadence/contrib/google_adk).
 
 ## Feature coverage
 
@@ -61,8 +85,13 @@ Decorators for defining activities: `@activity.defn`, `@activity.method`. Contex
 | Sleep and wait conditions | Yes |
 | Distributed cron | Yes |
 | Schedules | Yes |
-| In-memory workflow testing | Yes |
-| Workflow versioning (get_version) | Not yet |
-| Side effects | Not yet |
+| Workflow and activity cancellation | Yes |
+| In-memory workflow and activity testing | Yes |
+| Workflow versioning (`get_version`) | Yes |
+| Side effects and mutable side effects | Yes |
+| Workflow search-attribute upserts | Yes |
+| Context propagation | Yes |
+| Prometheus and custom metrics emitters | Yes |
+| Custom and Pydantic data converters | Yes |
 | Activity async completion | Not yet |
 | Sessions | Not yet |
