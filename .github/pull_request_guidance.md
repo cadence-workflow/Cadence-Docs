@@ -17,12 +17,19 @@ What was wrong or unclear before? Why this wording or structure? Why this fix?
 
 ALL changes:
 - Run `npm run build` and `npm run start`, and list which pages you checked
+
+REQUIRED for changes to published site content or behavior (includes docs/,
+blog/, faq/, community/, src/, static/, .mdx, Docusaurus configuration,
+sidebars, CSS/SCSS, scripts, and package files):
 - Deploy the branch to your personal GitHub Pages site and include the URL:
   `https://<your-username>.github.io/Cadence-Docs/`
 - Link the affected page when one exists. The site root is acceptable when the
   change has no page-specific route.
 - Follow [Publish a personal GitHub Pages preview](../CONTRIBUTING.md#publish-a-personal-github-pages-preview)
   for deployment and one-time setup instructions.
+- A preview is not required when every changed file is limited to `.gitar/`,
+  `.github/`, or root-level repository documentation such as
+  `CONTRIBUTING.md`.
 
 REQUIRED for non-text changes (anything beyond prose edits in .md files — includes .mdx, docusaurus.config.*, sidebars.*, src/, static/ non-markdown, CSS/SCSS, scripts, package files):
 - Run the production preview: `npm run preview:github-pages -- --serve` and verify affected pages at http://localhost:4173/
@@ -39,7 +46,7 @@ REQUIRED for non-text changes (anything beyond prose edits in .md files — incl
 - Bad: `http://localhost:3000`, `https://cadenceworkflow.io/docs/...`, a GitHub Actions run, or a repository URL. None is a personal GitHub Pages preview.
 - Bad: Only ran `npm run start` for a component/config/style change (must use production preview)
 
-Every pull request missing a personal GitHub Pages preview will be flagged.
+Site-changing pull requests missing a personal GitHub Pages preview will be flagged.
 Non-text changes missing production preview verification will also be flagged. -->
 **How did you verify it?**
 

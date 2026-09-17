@@ -38,7 +38,8 @@ From https://cbea.ms/git-commit/#why-not-how:
 
 3. **How did you verify it?**
    - Concrete, copyable steps (e.g. Docusaurus build and/or start, which pages checked)
-   - Must include a personal GitHub Pages deployment link matching
+   - If the PR changes published site content or behavior, it must include a
+     personal GitHub Pages deployment link matching
      `https://<username>.github.io/Cadence-Docs/`, optionally followed by a page path
    - Link the affected page when one exists; the site root is acceptable when the change has no page-specific route
    - Local build commands and page checks support the verification but do not replace the required personal preview
@@ -49,8 +50,14 @@ From https://cbea.ms/git-commit/#why-not-how:
    - If link checker or lint was used, include the command
    - **If the PR modifies non-text files** (see item 5 below), verification **must** include production preview and dark/light mode — flag if missing
 
-4. **Personal GitHub Pages Preview (required for all changes)**
-   - Every PR must include a personal GitHub Pages preview in **How did you verify it?**
+4. **Personal GitHub Pages Preview (required for site changes)**
+   - Require a personal GitHub Pages preview when the PR changes any of:
+     - `docs/`, `blog/`, `faq/`, `community/`, `src/`, or `static/`
+     - `.mdx`, CSS, or SCSS files
+     - `docusaurus.config.*`, `sidebars.*`, scripts, or package files
+   - Do not require a preview when every changed file is limited to `.gitar/`,
+     `.github/`, or root-level repository documentation such as
+     `CONTRIBUTING.md`, `README.md`, or `NOTICE`
    - Accept URLs matching `https://<username>.github.io/Cadence-Docs/` with an optional page path
    - Do not accept localhost, the production Cadence site, GitHub Actions run URLs, or repository URLs
    - If the link is missing or malformed, emit a `[Personal GitHub Pages Preview]` recommendation
@@ -95,7 +102,7 @@ From https://cbea.ms/git-commit/#why-not-how:
 - **[What changed?]**
 - **[Why?]**
 - **[How did you verify it?]**
-- **[Personal GitHub Pages Preview]** (required for all changes)
+- **[Personal GitHub Pages Preview]** (required for site changes)
 - **[Production Preview Verification]** (required for non-text changes, part of verification)
 - **[Potential risks]**
 - **[Related changes]**
