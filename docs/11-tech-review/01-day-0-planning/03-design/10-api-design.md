@@ -33,7 +33,7 @@ Legacy Thrift definitions: [thrift/](https://github.com/cadence-workflow/cadence
 
 - Each RPC has a dedicated `VerbNounRequest`/`VerbNounResponse` message pair, e.g. [`StartWorkflowExecution`](https://github.com/cadence-workflow/cadence-idl/blob/master/proto/uber/cadence/api/v1/service_workflow.proto#L46).
 - Services are split by concern (Workflow, Worker, Visibility, Domain, Schedule, Meta).
-- Errors use typed Protobuf messages, not bare gRPC status codes, e.g. [`error.proto`](https://github.com/cadence-workflow/cadence-idl/blob/master/proto/uber/cadence/api/v1/error.proto).
+- Errors return a standard gRPC status code and message, plus a typed Protobuf message in the details field, e.g. [`error.proto`](https://github.com/cadence-workflow/cadence-idl/blob/master/proto/uber/cadence/api/v1/error.proto).
 - Paginated list endpoints, such as the Visibility, Domain, and Schedule list APIs, take a `page_size` and an opaque `next_page_token`, e.g. [`ListWorkflowExecutions`](https://github.com/cadence-workflow/cadence-idl/blob/master/proto/uber/cadence/api/v1/service_visibility.proto#L59-L66). A few small, bounded listings (e.g. `ListTaskListPartitions`) return their full result set.
 
 ## Defaults
