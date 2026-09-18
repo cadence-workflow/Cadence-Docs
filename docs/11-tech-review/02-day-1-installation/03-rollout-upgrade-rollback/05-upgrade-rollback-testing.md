@@ -46,13 +46,13 @@ A persistence backup is optional. Operators who want that extra precaution can t
 
 Schema version numbers are independent of Cadence server release numbers. The schema tools record the current version in persistence and apply migrations in order. They do not provide down migrations. Before a schema ships in an official release, the upgrade is already part of that high-scale pre-release soak. Rollback is expected to keep the newer schema and restore the previous binary.
 
-The project ensures backward compatibility between adjacent minor versions N and N+1. It does not ensure compatibility between N-1 and N+1. After you upgrade to N+1, rolling the server binary back to N is the supported path. Rolling back to N-1 is not guaranteed to work. If that farther rollback is necessary, ask in [CNCF Slack `#cadence-users`](https://inviter.co/cncf) or ask the maintainers before you attempt it.
+The project aims to keep adjacent minor versions N and N+1 backward compatible, so rolling the server binary back from N+1 to N is the supported path unless the release notes document an incompatible migration. Compatibility between N-1 and N+1 is not maintained. If a farther rollback is necessary, ask in [CNCF Slack `#cadence-users`](https://inviter.co/cncf) or ask the maintainers before you attempt it.
 
 On startup, Cadence compares the installed schema with the version required by the binary. Persistence must be at least as new as the binary expects. This asymmetric check is intentional: after an additive schema migration, the previous binary can run against the newer schema during rollback. See the [schema compatibility check](https://github.com/cadence-workflow/cadence/blob/master/tools/common/schema/handler.go) and [schema verification implementation](https://github.com/cadence-workflow/cadence/blob/master/common/persistence/schema/verify.go).
 
 Do not assume every schema or data migration is backward compatible. Check the target release notes before upgrading and do not roll a binary back across a release that documents an incompatible migration. Also:
 
-- Upgrade one minor release at a time. Rollback is guaranteed between N and N+1. It is not guaranteed between N-1 and N+1. If you need to roll back past N, ask in [CNCF Slack `#cadence-users`](https://inviter.co/cncf) or ask the maintainers.
+- Upgrade one minor release at a time. Rollback is supported between N and N+1. It is not maintained between N-1 and N+1. If you need to roll back past N, ask in [CNCF Slack `#cadence-users`](https://inviter.co/cncf) or ask the maintainers.
 - Do not use the auto-setup image to migrate production schemas. It is intended for development and initial setup.
 - Do not change `numHistoryShards`, cluster identity, or the persistence driver as part of a binary upgrade. Changing those values requires a separate cluster migration.
 - Test advanced visibility separately from the default persistence store because it has its own schema and write path.
