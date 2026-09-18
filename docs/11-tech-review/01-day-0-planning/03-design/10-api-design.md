@@ -34,15 +34,15 @@ Legacy Thrift definitions: [thrift/](https://github.com/cadence-workflow/cadence
 - Each RPC has a dedicated `VerbNounRequest`/`VerbNounResponse` message pair, e.g. [`StartWorkflowExecution`](https://github.com/cadence-workflow/cadence-idl/blob/master/proto/uber/cadence/api/v1/service_workflow.proto#L46).
 - Services are split by concern (Workflow, Worker, Visibility, Domain, Schedule, Meta).
 - Errors use typed Protobuf messages, not bare gRPC status codes, e.g. [`error.proto`](https://github.com/cadence-workflow/cadence-idl/blob/master/proto/uber/cadence/api/v1/error.proto).
-- List endpoints paginate with `page_size` and an opaque `next_page_token`, e.g. [`ListWorkflowExecutions`](https://github.com/cadence-workflow/cadence-idl/blob/master/proto/uber/cadence/api/v1/service_visibility.proto#L59-L66).
+- Paginated list endpoints, such as the Visibility, Domain, and Schedule list APIs, take a `page_size` and an opaque `next_page_token`, e.g. [`ListWorkflowExecutions`](https://github.com/cadence-workflow/cadence-idl/blob/master/proto/uber/cadence/api/v1/service_visibility.proto#L59-L66). A few small, bounded listings (e.g. `ListTaskListPartitions`) return their full result set.
 
 ## Defaults
 
-When a request does not set an optional field, the Frontend fills in a server-side default. List calls that omit `page_size` get the configured maximum (1000 by default). `StartWorkflowExecution` without `WorkflowExecutionStartToCloseTimeout` uses the domain-level default. The server rejects any single event payload larger than 2 MB (and warns at 256 KB). Each domain sets its own history retention period, between 1 and 30 days, at registration time.
+When a request does not set an optional field, the Frontend fills in a server-side default. List calls that omit `page_size` get the configured maximum (1000 by default). The server rejects any single event payload larger than 2 MB (and warns at 256 KB). Each domain sets its own history retention period at registration time, bounded by cluster dynamic configuration (`system.minRetentionDays`, default 1 day, and `system.maxRetentionDays`, default 30 days).
 
 ## Additional configuration
 
-Operators can change most API limits and behaviors at runtime through [dynamic configuration](/docs/operation-guide/setup). This does not need a server redeploy. Values can be set globally or per domain. Key settings include:
+Operators can change most API limits and behaviors at runtime through [dynamic configuration](/docs/operation-guide/setup#dynamic-configuration). This does not need a server redeploy. Values can be set globally or per domain. Key settings include:
 
 - **Rate limits**: per-instance and global RPS caps for user, worker, visibility, and async request classes (e.g. `frontend.rps`, default 1200).
 - **Page sizes**: maximum items per list or history page (`frontend.visibilityMaxPageSize`, `frontend.historyMaxPageSize`).
