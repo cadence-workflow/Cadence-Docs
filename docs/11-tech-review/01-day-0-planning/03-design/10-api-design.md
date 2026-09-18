@@ -18,12 +18,12 @@ Cadence has one public API. It is defined as Protobuf in [cadence-idl](https://g
 
 | Service | Scope |
 | --- | --- |
-| [`WorkflowAPI`](https://github.com/cadence-workflow/cadence-idl/blob/master/proto/uber/cadence/api/v1/service_workflow.proto) | Start, signal, query, cancel, terminate, reset, and describe workflow executions. Get execution history. |
-| [`WorkerAPI`](https://github.com/cadence-workflow/cadence-idl/blob/master/proto/uber/cadence/api/v1/service_worker.proto) | Long-poll for decision and activity tasks, report results, and send heartbeats. Used by workers through the Cadence SDKs. |
-| [`VisibilityAPI`](https://github.com/cadence-workflow/cadence-idl/blob/master/proto/uber/cadence/api/v1/service_visibility.proto) | List, scan, and count workflow executions, including archived ones. |
-| [`DomainAPI`](https://github.com/cadence-workflow/cadence-idl/blob/master/proto/uber/cadence/api/v1/service_domain.proto) | Register, describe, update, fail over, and delete domains. |
-| [`ScheduleAPI`](https://github.com/cadence-workflow/cadence-idl/blob/master/proto/uber/cadence/api/v1/service_schedule.proto) | Create, update, pause, unpause, and backfill schedules. |
-| [`MetaAPI`](https://github.com/cadence-workflow/cadence-idl/blob/master/proto/uber/cadence/api/v1/service_meta.proto) | Health checks for load balancers. |
+| [`WorkflowAPI`](https://github.com/cadence-workflow/cadence-idl/blob/master/proto/uber/cadence/api/v1/service_workflow.proto) | APIs to interact with workflows, such as starting, signaling, querying, canceling, terminating, resetting, and describing executions, plus fetching their history |
+| [`WorkerAPI`](https://github.com/cadence-workflow/cadence-idl/blob/master/proto/uber/cadence/api/v1/service_worker.proto) | APIs used by worker services through the Cadence SDKs to long-poll for decision and activity tasks, report results, and send heartbeats |
+| [`VisibilityAPI`](https://github.com/cadence-workflow/cadence-idl/blob/master/proto/uber/cadence/api/v1/service_visibility.proto) | APIs used for workflow visibility, to list, scan, and count executions, including archived ones |
+| [`DomainAPI`](https://github.com/cadence-workflow/cadence-idl/blob/master/proto/uber/cadence/api/v1/service_domain.proto) | APIs to interact with domains, such as registering, describing, updating, failing over, and deleting them |
+| [`ScheduleAPI`](https://github.com/cadence-workflow/cadence-idl/blob/master/proto/uber/cadence/api/v1/service_schedule.proto) | APIs to interact with schedules, such as creating, updating, pausing, unpausing, and backfilling them |
+| [`MetaAPI`](https://github.com/cadence-workflow/cadence-idl/blob/master/proto/uber/cadence/api/v1/service_meta.proto) | Health checks for load balancers |
 
 Operators use [`AdminAPI`](https://github.com/cadence-workflow/cadence-idl/blob/master/proto/uber/cadence/admin/v1/service.proto) through the admin CLI. It gives access to cluster, shard, and queue inspection, dynamic configuration, and replication tools. It is not part of the client-facing pipeline above.
 
