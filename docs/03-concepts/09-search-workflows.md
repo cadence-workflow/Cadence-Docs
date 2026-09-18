@@ -61,7 +61,7 @@ In the Java client, the *WorkflowOptions.Builder* has similar methods for [memo]
 
 Some important distinctions between memo and search attributes:
 
-- Memo can support all data types because it is not indexed. Search attributes only support basic data types (including String, also called Text, Int, Float, Bool, and Datetime) because the visibility backend indexes them.
+- Memo can support all data types because it is not indexed. Search attributes only support the indexed types Cadence registers: `STRING`, `KEYWORD`, `INT`, `DOUBLE`, `BOOL`, and `DATETIME`.
 - Memo does not restrict key names. Search attributes require keys to be allowlisted before use.
 - Memo works with basic visibility. Search attributes require an advanced visibility backend and Kafka.
 
@@ -107,12 +107,12 @@ cadence --domain samples-domain adm cl asa --search_attr_key NewKey --search_att
 
 The numbers for the attribute types map as follows:
 
-- 0 = String(Text)
-- 1 = Keyword
-- 2 = Int
-- 3 = Double
-- 4 = Bool
-- 5 = DateTime
+- 0 = `STRING`
+- 1 = `KEYWORD`
+- 2 = `INT`
+- 3 = `DOUBLE`
+- 4 = `BOOL`
+- 5 = `DATETIME`
 
 #### Keyword vs String(Text)
 

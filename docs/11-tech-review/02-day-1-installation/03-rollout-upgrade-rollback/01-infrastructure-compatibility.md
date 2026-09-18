@@ -56,8 +56,8 @@ Application clients and workers connect to Frontend. Cadence does not open conne
 
 | Endpoint | Default port | Use |
 | --- | --- | --- |
-| Frontend gRPC | `7833` | Go, Java, and Python SDKs; Web and internal clients |
-| Frontend TChannel/Thrift | `7933` | Go and Java SDKs and compatibility clients |
+| Frontend gRPC | `7833` | Go, Java 4.x, Java 3.x, and Python SDKs; Web and internal clients |
+| Frontend TChannel/Thrift | `7933` | Go SDK, Java 3.x, and other TChannel clients. Java 4.x removed TChannel. |
 | Frontend HTTP/JSON | `8800` when enabled | Allow-listed HTTP API procedures |
 | History gRPC / TChannel | `7834` / `7934` | Internal service traffic |
 | Matching gRPC / TChannel | `7835` / `7935` | Internal service traffic |
@@ -86,20 +86,22 @@ Cadence does not require a hosted control plane or project-operated cloud servic
 | SDK | Current runtime baseline | Transport |
 | --- | --- | --- |
 | Go | Current [`go.mod`](https://github.com/cadence-workflow/cadence-go-client/blob/master/go.mod) declares Go 1.23 | gRPC or TChannel |
-| Java | [Supported runtimes](/docs/releases/cadence-java-client) are Java 11, 17, and 21 | gRPC or TChannel |
+| Java | [Supported runtimes](/docs/releases/cadence-java-client) are Java 11, 17, and 21 | gRPC in [4.x](https://github.com/cadence-workflow/cadence-java-client/releases/tag/v4.0.0). TChannel remains in 3.x. |
 | Python | [`pyproject.toml`](https://github.com/cadence-workflow/cadence-python-client/blob/main/pyproject.toml) declares Python 3.11 through 3.13 | gRPC |
 
 The SDK runtime and transport belong to the application worker, not the Cadence server host. Workers can run on Kubernetes, VMs, or developer machines. They can be upgraded independently as long as their API version is compatible with the server. For workflow-code upgrades, replay existing histories before rollout because infrastructure compatibility does not protect against nondeterministic workflow code changes.
 
 ## How compatibility is checked
 
-Compatibility is re-evaluated through the release artifacts and continuous-integration matrices rather than a separately maintained certification list:
+Compatibility is re-evaluated through release artifacts and continuous-integration matrices rather than a separately maintained certification list.
 
-- Server CI runs integration suites against the persistence, Kafka, and selected search configurations listed above; other rows are covered by maintained deployment examples.
-- SDK repositories build and test against their declared language/runtime versions.
-- Release image workflows build Linux `amd64` and `arm64` images.
-- The Helm chart encodes its Kubernetes floor in `Chart.yaml`, which Helm enforces at install and upgrade time.
-- Schema compatibility is maintained through versioned migrations applied before server rollout.
+| Check | When it runs |
+| --- | --- |
+| Server persistence, Kafka, and selected search integration suites | On every [push and pull request](https://github.com/cadence-workflow/cadence/blob/master/.github/workflows/ci-checks.yml) to the server repository. Other adapter rows are covered by maintained deployment examples, not by that matrix. |
+| SDK language and runtime tests | On every push and pull request to the [Go](https://github.com/cadence-workflow/cadence-go-client/blob/master/.github/workflows/ci-checks.yml), [Java](https://github.com/cadence-workflow/cadence-java-client/blob/master/.github/workflows/ci-checks.yml), and [Python](https://github.com/cadence-workflow/cadence-python-client/blob/main/.github/workflows/ci_checks.yml) SDK repositories. |
+| Linux `amd64` and `arm64` images | The [image workflow](https://github.com/cadence-workflow/cadence/blob/master/.github/workflows/docker_publish.yml) builds on pull requests, publishes `master` tags on every push to `master`, and publishes version tags on each GitHub Release. |
+| Helm Kubernetes floor | Helm reads `kubeVersion` from `Chart.yaml` at install and upgrade time. |
+| Schema compatibility | Operators apply versioned migrations before a new binary. Each server process then verifies that persistence is not older than the binary expects. |
 
 Operators should pin release images and chart versions rather than deploy `master` or `latest`, test datastore and managed-service versions in staging, and recheck the chart's `kubeVersion` and release notes before each upgrade. Cadence server processes are stateless, so a scheduler restart does not discard workflows; durable state remains in persistence while clients and workers reconnect.
 
