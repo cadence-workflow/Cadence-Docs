@@ -63,7 +63,7 @@ Advanced visibility adds two components. On the write path the history service a
 
 ### Observability
 
-Cadence emits metrics only when a reporter is configured. The official Helm chart selects Prometheus by default; server configuration can select Prometheus, StatsD, or M3 instead. Prometheus scrape ports are configurable per service, so there is no universal Cadence port 9090. Port 9090 commonly belongs to the Prometheus server itself.
+Cadence emits metrics only when a reporter is configured. The official Helm chart selects Prometheus by default and exposes each service's scrape endpoint on port `9090` unless `metrics.port` is overridden; server configuration can select Prometheus, StatsD, or M3 instead. Treat `9090` as the chart default rather than a fixed Cadence port. Port `9090` is also the conventional port of the Prometheus server itself.
 
 | Integration | Mechanism | Integration maintained by |
 | --- | --- | --- |
