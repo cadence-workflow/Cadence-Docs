@@ -8,7 +8,7 @@ keywords:
   - cadence api topology
 ---
 
-Cadence has one public API. It is defined as Protobuf in [cadence-idl](https://github.com/cadence-workflow/cadence-idl) and served by the Frontend to SDKs, workers, the CLI, and the Web UI. This page covers topology for now. Conventions, defaults, additional configuration, API changes, compatibility, and versioning will follow separately.
+Cadence has one public API. It is defined as Protobuf in [cadence-idl](https://github.com/cadence-workflow/cadence-idl) and served by the Frontend to SDKs, workers, the CLI, and the Web UI. Defaults, additional configuration, API changes, compatibility, and versioning will follow separately.
 
 ## Topology
 
@@ -28,6 +28,10 @@ Cadence has one public API. It is defined as Protobuf in [cadence-idl](https://g
 Operators separately use [`AdminAPI`](https://github.com/cadence-workflow/cadence-idl/blob/master/proto/uber/cadence/admin/v1/service.proto) through the admin CLI, for cluster, shard, and queue inspection, dynamic configuration, and replication tooling. It sits outside the client-facing pipeline above.
 
 Legacy Thrift definitions: [thrift/](https://github.com/cadence-workflow/cadence-idl/tree/master/thrift).
+
+## Conventions
+
+Every RPC uses a dedicated `VerbNounRequest`/`VerbNounResponse` message pair. Services are split by concern (Workflow, Worker, Visibility, Domain, Schedule, Meta). List endpoints paginate with `page_size` and an opaque `next_page_token`. Errors are typed Protobuf messages rather than bare gRPC status codes.
 
 ## Related documentation
 
