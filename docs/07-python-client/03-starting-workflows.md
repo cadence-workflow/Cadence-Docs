@@ -44,9 +44,16 @@ async with Client(domain="my-domain", target=CADENCE_TARGET) as client:
 | `execution_start_to_close_timeout` | Max total duration for the workflow (required) |
 | `task_start_to_close_timeout` | Max time for a single decision task (default: 10 s) |
 | `cron_schedule` | Start as a recurring cron workflow |
+| `cron_overlap_policy` | How overlapping cron runs are handled |
+| `delay_start` | Delay before the first run |
+| `jitter_start` | Randomize the first run by up to this duration |
+| `first_run_at` | Timezone-aware `datetime` for the first run |
 | `retry_policy` | Retry policy for the workflow |
 | `memo` | Key-value metadata attached to the execution |
 | `workflow_id_reuse_policy` | Controls what happens if the workflow ID is already in use |
+| `active_cluster_selection_policy` | Select an active cluster for a multi-cluster domain |
+
+`first_run_at` must be timezone-aware and cannot be before the Unix epoch. `delay_start` and `jitter_start` cannot be negative.
 
 ## Signal a running workflow
 
@@ -80,6 +87,8 @@ await client.cancel_workflow(
 ```
 
 Cancellation is cooperative. The workflow receives the cancellation and may continue for some time while cleaning up.
+
+See [Cancellation](/docs/python-client/cancellation) for workflow and activity cancellation handling.
 
 ## Signal-with-start
 
