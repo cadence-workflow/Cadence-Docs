@@ -101,6 +101,10 @@ public class GettingStarted {
 To link the :workflow: implementation to the Cadence framework, it should be registered with a :worker: that connects to
 a Cadence Service. By default the :worker: connects to the locally running Cadence service.
 
+:::note
+The `WorkflowServiceTChannel` example below applies to the 3.x Java client. The 4.x client removed TChannel and Thrift; use `WorkflowServiceGrpc` instead. Java 3.x supports both transports.
+:::
+
 ```java
 import com.uber.cadence.client.WorkflowClient;
 import com.uber.cadence.client.WorkflowClientOptions;
