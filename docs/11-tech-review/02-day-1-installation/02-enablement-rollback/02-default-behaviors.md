@@ -68,12 +68,12 @@ Cadence absorbs durability, timers, recovery, and coordination, but it does not 
 | Behavior | Default | Override |
 | --- | --- | --- |
 | Existing applications | Unchanged after Cadence is installed | Connect with a Cadence SDK and register a domain |
-| Workflow task list | No default; the caller must select one | Set it in workflow start options |
+| Workflow TaskList | No default; the caller must select one | Set it in workflow start options |
 | Workflow execution timeout | No default; the caller must provide one | Set it in workflow start options |
 | Decision-task timeout | 10 seconds when omitted by the SDK | Set the decision-task start-to-close timeout |
 | Workflow ID | Generated UUID when omitted | Supply a stable application ID |
 | Workflow ID reuse | Allow a new run after the previous run failed, timed out, or was terminated | Set the workflow ID reuse policy |
-| Activity task list | Inherits the workflow task list | Set an activity-specific task list |
+| Activity TaskList | Inherits the workflow TaskList | Set an activity-specific TaskList |
 | Activity and workflow retries | Disabled unless a retry policy is supplied | Attach a retry policy with its limits and non-retryable errors |
 | Cron schedule | Disabled | Supply a cron schedule in workflow options |
 | Context propagation | No application context propagators by default | Configure propagators on clients and workers |
@@ -89,7 +89,7 @@ A domain is the boundary for retention, archival, replication, and many dynamic 
 
 - The server accepts retention periods from 1 through 30 days by default. The CLI supplies 3 days when `domain register` omits `--retention`; that is a CLI convenience, not a server default.
 - History and visibility archival are disabled by default in production-oriented container configuration. Enabling archival requires both a statically configured provider and domain-level enablement. After archival is enabled for a domain, its archival URI cannot be changed.
-- A task list starts with one read partition and one write partition. Additional partitions and adaptive scaling are operator choices. When reducing partitions, lower write partitions first, allow tasks to drain, and then lower read partitions.
+- A TaskList starts with one read partition and one write partition. Additional partitions and adaptive scaling are operator choices. When reducing partitions, lower write partitions first, allow tasks to drain, and then lower read partitions.
 - A domain is local unless it is registered as global with replication configuration. Multi-cluster failover is never inferred from Kubernetes regions or server placement.
 
 ## Production overrides
