@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Search workflows (Advanced visibility)
-description: This page explains Cadence advanced visibility, which enables searching and filtering workflows using SQL-like queries on custom key-value search attributes backed by Elasticsearch.
+description: This page explains Cadence advanced visibility, which enables SQL-like search and filtering with Elasticsearch, OpenSearch, or Pinot.
 keywords:
   - cadence search workflows
   - cadence advanced visibility
@@ -39,7 +39,7 @@ Runnable search attribute samples:
 
 ## Memo vs Search Attributes
 
-Cadence offers two methods for creating :workflow:workflows: with key-value pairs: memo and search attributes. Memo can only be provided on :workflow: start. Also, memo data are not indexed, and are therefore not searchable. Memo data are visible when listing :workflow:workflows: using the list APIs. Search attributes data are indexed so you can search :workflow:workflows: by :query:querying: on these attributes. However, search attributes require the use of Elasticsearch.
+Cadence offers two methods for creating :workflow:workflows: with key-value pairs: memo and search attributes. Memo can only be provided on :workflow: start. Also, memo data are not indexed, and are therefore not searchable. Memo data are visible when listing :workflow:workflows: using the list APIs. Search attribute data are indexed so you can search :workflow:workflows: by :query:querying: on these attributes. Search attributes require advanced visibility backed by Elasticsearch, OpenSearch, or Pinot, with Kafka carrying visibility records to the index.
 
 Memo and search attributes are available in the Go client in [StartWorkflowOptions](https://godoc.org/go.uber.org/cadence/internal#StartWorkflowOptions).
 
@@ -51,7 +51,7 @@ type StartWorkflowOptions struct {
     Memo map[string]interface{}
 
     // SearchAttributes - Optional indexed info that can be used in query of List/Scan/Count workflow APIs (only
-    // supported when Cadence server is using Elasticsearch). The key and value type must be registered on Cadence server side.
+    // supported when Cadence server is using advanced visibility). The key and value type must be registered on Cadence server side.
     // Use GetSearchAttributes API to get valid key and corresponding value type.
     SearchAttributes map[string]interface{}
 }
@@ -61,9 +61,9 @@ In the Java client, the *WorkflowOptions.Builder* has similar methods for [memo]
 
 Some important distinctions between memo and search attributes:
 
-- Memo can support all data types because it is not indexed. Search attributes only support basic data types (including String(aka Text), Int, Float, Bool, Datetime) because it is indexed by Elasticsearch.
-- Memo does not restrict on key names. Search attributes require that keys are allowlisted before using them because Elasticsearch has a limit on indexed keys.
-- Memo doesn't require Cadence clusters to depend on Elasticsearch while search attributes only works with Elasticsearch.
+- Memo can support all data types because it is not indexed. Search attributes only support basic data types (including String, also called Text, Int, Float, Bool, and Datetime) because the visibility backend indexes them.
+- Memo does not restrict key names. Search attributes require keys to be allowlisted before use.
+- Memo works with basic visibility. Search attributes require an advanced visibility backend and Kafka.
 
 ## Search Attributes (Go Client Usage)
 

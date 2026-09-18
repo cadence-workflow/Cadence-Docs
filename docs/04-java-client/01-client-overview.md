@@ -56,7 +56,7 @@ While many features are already supported in the Cadence Golang client, some fea
 | Feature                                                | Go Client | Java Client | Issue |
 |--------------------------------------------------------|-----------|-------------|-------|
 | **Up to Date Samples**                                 | Supported | No          | [Link](https://github.com/cadence-workflow/cadence-java-samples/issues) |
-| **Customer provided context propagator**               | Supported | No          |       |
+| **Customer provided context propagator**               | Supported | Supported   | [Java API](https://github.com/cadence-workflow/cadence-java-client/blob/master/src/main/java/com/uber/cadence/context/ContextPropagator.java) |
 | **Poller autoscale**                                   | Supported | No          |       |
 | **Auto heartbeat[^auto-heartbeat]**                    | Supported | No          |       |
 | **Jitter start**                                       | Supported | No          |       |
