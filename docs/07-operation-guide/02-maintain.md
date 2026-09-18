@@ -22,7 +22,7 @@ This includes how to use and maintain a Cadence cluster for both clients and ser
   * See if the external traffic to frontend is normal
   * If the slowness is due to too many tasks on a tasklist, you may need to [scale up the tasklist](/docs/operation-guide/maintain/#scale-up-a-tasklist-using-scalable-tasklist-feature)
   * If persistence latency is getting too high, try scale up your DB instance
-* Never change the [`numOfShards` of a cluster](/docs/operation-guide/setup/#static-configuration). If you need that because the current one is too small, follow the instructions to [migrate your cluster to a new one](migration).
+* Never change the [`numHistoryShards` of an existing cluster](/docs/operation-guide/setup/#static-configuration). If the current value is too small, follow the instructions to [migrate to a new cluster](/docs/operation-guide/migration).
 
 ## Scale up a tasklist using `Scalable tasklist` feature
 By default a tasklist is not scalable enough to support hundreds of tasks per second. That’s mainly because each tasklist is assigned to a Matching service node, and dispatching tasks in a tasklist is in sequence.
@@ -81,7 +81,7 @@ Make sure rolling restart to keep high availability.
 
 To get notified about release, please subscribe the release of project by : Go to https://github.com/cadence-workflow/cadence -> Click the right top "Watch" button -> Custom -> "Release".
 
-It's recommended to upgrade one minor version at a time. E.g, if you are at 0.10, you should upgrade to 0.11, stabilize it with running some normal workload to make sure that the upgraded server is happy with the schema changes. After ~1 hour, then upgrade to 0.12. then 0.13. etc.
+Upgrade one minor version at a time. For example, upgrade from version N to N+1 and run a representative workload while the cluster stabilizes. Continue to N+2 only after confirming that the server and the upgraded schema are healthy.
 
 The reason is that for each minor upgrade, you should be able to follow the release notes about what you should do for upgrading. The release notes may require you to run some commands. This will also help to narrow down the cause when something goes wrong.
 
@@ -98,7 +98,7 @@ You should read through the release instruction for each minor release to unders
   * Upgrade MySQL/Postgres schema if applicable
   * Upgrade Cassandra schema if applicable
   * Upgrade ElasticSearch schema if applicable
-* Usually schema change is backward compatible. So rolling back usually is not a problem. It also means that Cadence allows running a mixed version of schema, as long as they are all greater than or equal to the required version of the server.
+* Schema changes are usually backward compatible, so the previous server binary can normally run against the upgraded schema. During a rolling deployment, old and new server binaries can share the cluster after the schema is at least as new as every running binary requires.
 Other requirements for upgrading should be found in the release notes. It may contain information about config changes, or special rollback instructions if normal rollback may cause problems.
 * Similarly, data migration should be done before upgrading the server binary.
 
@@ -110,8 +110,10 @@ NOTE: Do not use “auto-setup” images to upgrade your schema. It's mainly for
 For how to apply database schema, refer to this doc: [SQL tool README](https://github.com/cadence-workflow/cadence/tree/master/tools/sql)
 [Cassandra tool README](https://github.com/cadence-workflow/cadence/tree/master/tools/cassandra)
 
-The tool makes use of a table called “schema_versions” to keep track of upgrading History. But there is no transaction guarantee for cross table operations. So in case of some error, you may need to fix or apply schema change manually.
-Also, the schema tool by default will upgrade schema to the latest, so no manual is required. ( you can also specify to let it upgrade to any place, like 0.14).
+Use the schema tools and files shipped with the server release you are deploying. Releases that include `cadence-server update-schema` can read the server's static configuration and update all configured persistence stores. For earlier releases, run `cadence-sql-tool` or `cadence-cassandra-tool` for each default and visibility store.
+
+The tools use the `schema_version` and `schema_update_history` tables to track schema upgrades. There is no transaction guarantee across all DDL statements and version-table updates, so a partial failure can require manual repair before retrying.
+By default, the schema tool upgrades to the latest schema included with the checked-out release. You can also specify a target schema version.
 
 Database schema changes are versioned in the folders: [Versioned Schema Changes](https://github.com/cadence-workflow/cadence/tree/master/schema/mysql/v8/cadence/versioned) for Default Store
 and [Versioned Schema Changes](https://github.com/cadence-workflow/cadence/tree/master/schema/mysql/v8/visibility/versioned) for Visibility Store if you use database for basic visibility instead of ElasticSearch.

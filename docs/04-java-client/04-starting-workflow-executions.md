@@ -33,6 +33,10 @@ Runnable samples for starting workflows from client code:
 
 A simple `WorkflowClient` instance that utilizes the :tchannel: communication protocol can be initialized as follows:
 
+:::note
+`WorkflowServiceTChannel` applies to the 3.x Java client. The 4.x client removed TChannel and Thrift; use `WorkflowServiceGrpc` instead. Java 3.x supports both transports. The `Thrift2ProtoAdapter` gRPC example later on this page is also a 3.x construction.
+:::
+
 ```java
 WorkflowClient workflowClient =
         WorkflowClient.newInstance(
