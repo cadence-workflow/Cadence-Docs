@@ -49,14 +49,13 @@ on any host, the second and third must run on the same host as the first one. Th
 
 ## Differences between Java and Golang Clients
 
-While many features are already supported in the Cadence Golang client, some features are missing in the Java client. The Cadence development team aims for feature parity between the two clients, with new features typically being implemented in cadence-go-client first.
+While many features are already supported in the Cadence Golang client, some features are missing in the Java client. The Cadence development team aims for feature parity between the two clients, with new features typically being implemented in cadence-go-client first. Both clients support a customer-provided [context propagator](https://github.com/cadence-workflow/cadence-java-client/blob/master/src/main/java/com/uber/cadence/context/ContextPropagator.java).
 
 ### Feature Comparison
 
 | Feature                                                | Go Client | Java Client | Issue |
 |--------------------------------------------------------|-----------|-------------|-------|
 | **Up to Date Samples**                                 | Supported | No          | [Link](https://github.com/cadence-workflow/cadence-java-samples/issues) |
-| **Customer provided context propagator**               | Supported | No          |       |
 | **Poller autoscale**                                   | Supported | No          |       |
 | **Auto heartbeat[^auto-heartbeat]**                    | Supported | No          |       |
 | **Jitter start**                                       | Supported | No          |       |

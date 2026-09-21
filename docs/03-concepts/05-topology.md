@@ -34,7 +34,7 @@ At the core of Cadence is a highly scalable multitenant service. The service exp
 - Internal Worker Service: implements Cadence workflows and activities for internal requirements such as archiving
 - Workers: are effectively the client apps for Cadence. This is where user created workflow and activity logic is executed
 
-Internally it depends on a persistent store. Currently, Apache Cassandra, MySQL, PostgreSQL, CockroachDB ([PostgreSQL compatible](https://www.cockroachlabs.com/docs/stable/postgresql-compatibility.html)) and TiDB ([MySQL compatible](https://docs.pingcap.com/tidb/dev/mysql-compatibility)) stores are supported out of the box. For listing :workflow:workflows: using complex predicates, ElasticSearch and OpenSearch cluster can be used.
+Internally it depends on a persistent store. Apache Cassandra, MySQL, and PostgreSQL have first-class plugins, schemas, and project CI coverage. CockroachDB and TiDB may provide compatible PostgreSQL or MySQL wire protocols, but Cadence does not ship dedicated plugins or test them in project CI. For listing :workflow:workflows: using complex predicates, advanced visibility supports Elasticsearch, OpenSearch, or Pinot with Kafka.
 
 Cadence service is responsible for keeping :workflow: state and associated durable timers. It maintains internal queues (called :task_list:task_lists:) which are used to dispatch :task:tasks: to external :worker:workers:.
 
@@ -47,9 +47,9 @@ Cadence service is multitenant. Therefore it is expected that multiple pools of 
 
 Cadence reuses terminology from _workflow automation_ :domain:. So fault-oblivious stateful code is called :workflow:.
 
-The Cadence service does not execute :workflow: code directly. The :workflow: code is hosted by an external (from the service point of view) :workflow_worker: process. These processes receive _:decision_task:decision_tasks:_ that contain :event:events: that the :workflow: is expected to handle from the Cadence service, delivers them to the :workflow: code, and communicates :workflow: _:decision:decisions:_ back to the service.
+The Cadence servers do not execute :workflow: code directly. The :workflow: code is hosted by an external (from the servers' point of view) :workflow_worker: process. These processes receive _:decision_task:decision_tasks:_ that contain :event:events: that the :workflow: is expected to handle from the Cadence servers, deliver them to the :workflow: code, and communicate :workflow: _:decision:decisions:_ back to the servers.
 
-As :workflow: code is external to the service, it can be implemented in any language that can talk service Thrift API. Currently Java and Go clients are production ready. While Python and C# clients are under development. Let us know if you are interested in contributing a client in your preferred language.
+Because :workflow: code runs in your own process rather than on the Cadence servers, those servers do not constrain the language you write it in. Any language that can call the Cadence API can host :workflow:workflows:. The project maintains production-ready Go, Java, and Python SDKs. Go connects over gRPC or TChannel. Java 4.x uses gRPC; Java 3.x still supports TChannel. Python uses gRPC.
 
 The Cadence service API doesn't impose any specific :workflow: definition language. So a specific :worker: can be implemented to execute practically any existing :workflow: specification. The model the Cadence team chose to support out of the box is based on the idea of durable function. Durable functions are as close as possible to application business logic with minimal plumbing required.
 

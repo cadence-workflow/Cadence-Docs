@@ -55,12 +55,12 @@ There are quite many configs in Cadence. Here are the most basic configuration t
 |Config name|Explanation|Recommended value|
 | --------- | --------- | ----------------- |
 | numHistoryShards | This is the most important one in Cadence config.It will be a fixed number in the cluster forever. The only way to change it is to migrate to another cluster. Refer to Migrate cluster section. <br/>   <br/> Some facts about it: <br/> 1. Each workflow will be mapped to a single shard. Within a shard, all the workflow creation/updates are serialized.  <br/> 2. Each shard will be assigned to only one History node to own the shard, using a Consistent Hashing Ring. Each shard will consume a small amount of memory/CPU to do background processing. Therefore, a single History node cannot own too many shards. You may need to figure out a good number range based on your instance size(memory/CPU).  <br/> 3. Also, you can’t add an infinite number of nodes to a cluster because this config is fixed. When the number of History nodes is closed or equal to numHistoryShards, there will be some History nodes that have no shards assigned to it. This will be wasting resources.   <br/> <br/> Based on above, you don’t want to have a small number of shards which will limit the maximum size of your cluster. You also don’t want to have a too big number, which will require you to have a quite big initial size of the cluster.  <br/>  Also, typically a production cluster will start with a smaller number and then we add more nodes/hosts to it. But to keep high availability, it’s recommended to use at least 4 nodes for each service(Frontend/History/Matching) at the beginning.  | 1K~16K depending on the size ranges of the cluster you expect to run, and the instance size. **Typically 2K for SQL based persistence, and 8K for Cassandra based.**|
-| ringpop | This is the config to let all nodes of all services connected to each other. ALL the bootstrap nodes MUST be reachable by ringpop when a service is starting up, within a MaxJoinDuration. defaultMaxJoinDuration is 2 minutes. <br/><br/> It’s not required that bootstrap nodes need to be Frontend/History or Matching. In fact, it can be running none of them as long as it runs Ringpop protocol.  | For dns mode: Recommended to put the DNS of Frontend service <br/><br/> For hosts or hostfile mode: A list of Frontend service node addresses if using hosts mode. Make sure all the bootstrap nodes are reachable at startup. |
+| ringpop | This configuration lets the nodes of all services discover each other. Bootstrap nodes must be reachable while a service is starting, within `MaxJoinDuration`. The compiled default is 10 seconds; deployment configuration can override it. Bootstrap nodes do not need to run Frontend, History, or Matching as long as they run the Ringpop protocol. | For DNS mode, use the DNS name of the Frontend service. For hosts or host-file mode, provide reachable Frontend service node addresses. |
 | publicClient | The Cadence Frontend service addresses that internal Cadence system(like system workflows) need to talk to. <br/><br/> After connected, all nodes in Ringpop will form a ring with identifiers of what service they serve. Ideally Cadence should be able to get Frontend address from there. But Ringpop doesn’t expose this API yet. | Recommended be DNS of Frontend service, so that requests will be distributed to all Frontend nodes.  <br/><br/>Using localhost+Port or local container IP address+Port will not work if the IP/container is not running frontend |
 | services.NAME.rpc | Configuration of how to listen to network ports and serve traffic. <br/><br/> bindOnLocalHost:true will bind on 127.0.0.1. It’s mostly for local development. In production usually you have to specify the IP that containers will use by using bindOnIP <br/><br/> NAME is the matter for the “--services” option in the server startup command.| Name: Use as recommended in development.yaml. bindOnIP : an IP address that the container will serve the traffic with |
 | services.NAME.pprof | Golang profiling service , will bind on the same IP as RPC | a port that you want to serve pprof request |
 | services.Name.metrics | See Metrics&Logging section | cc |
-| clusterMetadata | Cadence cluster configuration. <br/><br/>enableGlobalDomain：true will enable Cadence Cross datacenter replication(aka XDC) feature.<br/><br/>failoverVersionIncrement: This decides the maximum clusters that you will have replicated to each other at the same time. For example 10 is sufficient for most cases.<br/><br/>masterClusterName: a master cluster must be one of the enabled clusters, usually the very first cluster to start. It is only meaningful for internal purposes.<br/><br/>currentClusterName: current cluster name using this config file. <br/><br/>clusterInformation is a map from clusterName to the cluster configure <br/><br/>initialFailoverVersion: each cluster must use a different value from 0 to failoverVersionIncrement-1. <br/><br/>rpcName: must be “cadence-frontend”. Can be improved in this issue. <br/><br/>rpcAddress: the address to talk to the Frontend of the cluster for inter-cluster replication. <br/><br/>Note that even if you don’t need XDC replication right now, if you want to migrate data stores in the future, you should enable xdc from every beginning. You just need to use the same name of cluster for both masterClusterName and  currentClusterName. <br/><br/> Go to [cross dc replication](/docs/concepts/cross-dc-replication/#running-in-production) for how to configure replication in production | As explanation. |
+| clusterMetadata | Cadence cluster configuration. `currentClusterName` identifies the cluster using this file. `clusterInformation` describes the known clusters and their RPC addresses. Each cluster uses a distinct `initialFailoverVersion` from 0 through `failoverVersionIncrement - 1`; keep the increment and cluster identities consistent across replicated clusters. See [cross-cluster replication](/docs/concepts/cross-dc-replication/#running-in-production) for production configuration. | Define one local cluster for a single-cluster deployment. Configure every participating cluster explicitly before using global-domain failover. |
 | dcRedirectionPolicy | For allowing forwarding frontend requests from passive cluster to active clusters.  | “selected-apis-forwarding” |
 | archival | This is for archival history feature, skip if you don’t need it. Go to [workflow archival](/docs/concepts/archival/#running-in-production) for how to configure archival in production | N/A |
 | blobstore | This is also for archival history feature Default cadence server is using file based blob store implementation.  | N/A |
@@ -169,10 +169,12 @@ cadence:
     - "/Users/<?>/cadence/config/dynamicconfig:/etc/custom-dynamicconfig"
 ```
 
-* Local docker-compose by logging into the container: run `docker exec -it docker_cadence_1 /bin/bash` to login your container. Then `vi config/dynamicconfig/development.yaml` to make any change. After you changed the config, use `docker restart docker_cadence_1` to restart the cadence instance. Note that you can also use this approach to change static config, but it must be changed through `config/config_template.yaml` instead of `config/docker.yaml` because `config/docker.yaml` is generated on startup.
+* Local docker-compose by logging into the container: run `docker exec -it docker_cadence_1 /bin/bash` to log in to your container. Then edit `config/dynamicconfig/development.yaml`. The file-based client polls and reloads this file without a server restart. Static configuration still requires a restart and must be changed through `config/config_template.yaml` instead of `config/docker.yaml`, because `config/docker.yaml` is generated on startup.
 
 
-* In production cluster: Follow this example of Helm Chart to deploy Cadence, update dynamic config [here](https://github.com/banzaicloud/banzai-charts/blob/be57e81c107fd2ccdfc6cf95dccf6cbab226920c/cadence/templates/server-configmap.yaml#L170) and restart the cluster.
+* In a production cluster: update the dynamic configuration file mounted into every relevant Cadence instance. The file-based client polls the file, so a server restart is not required. The operator remains responsible for distributing a consistent file and allowing for the configured polling interval.
+
+  On Kubernetes, use the official [Cadence Helm chart](https://github.com/cadence-workflow/cadence-charts/tree/main/charts/cadence). Put overrides under `dynamicConfig.values` in your Helm values (the chart documents this field and the [key list](https://pkg.go.dev/github.com/uber/cadence/common/dynamicconfig/dynamicproperties)). Then `helm upgrade` so the ConfigMap is rewritten. Cadence polls that file; the chart default interval is 60 seconds. For an install walkthrough, see [Deploy Cadence with Helm](/docs/codelabs/helm-deploy-postgres-opensearch). If you use the `configstore` client instead, skip the file and use the CLI commands in the next section.
 
 
 * DEBUG: How to make sure your updates on dynamicconfig is loaded? for example, if you added the following to `development.yaml`
@@ -180,7 +182,7 @@ cadence:
 frontend.visibilityListMaxQPS:
   - value: 10000
 ```
-After restarting Cadence instances, execute a command like this to let Cadence load the config(it's lazy loading when using it).
+After the file has reloaded, execute a command like this to exercise the configuration key. Dynamic values are resolved lazily when used.
 `cadence --domain <> workflow list`
 
 Then you should see the logs like below
@@ -209,10 +211,11 @@ dynamicConfigClient:
 ```
 
 After changing the client to `configstore` and restarting Cadence, you can manage dynamic configs using `cadence admin config` CLI commands. You may need to set your custom dynamic configs again as the previous configs are not automatically migrated from the YAML file to the database.
-* `cadence admin config listdc` lists all dynamic config overrides
-* `cadence admin config getdc --dynamic_config_name <dynamic config keyname>` gets the value of a specific dynamic config
-* `cadence admin config updc --dynamic_config_name <dynamic config keyname> --dynamic_config_value '{"Value": <new value>}'` updates the value of a specific dynamic config
-* `cadence admin config resdc --dynamic_config_name <dynamic config keyname>` restores a specific dynamic config to its default value
+* `cadence admin config list` lists all dynamic configuration overrides
+* `cadence admin config listall` lists all available dynamic configuration keys
+* `cadence admin config get --dynamic_config_name <dynamic config keyname>` gets the value of a specific dynamic configuration
+* `cadence admin config update --dynamic_config_name <dynamic config keyname> --dynamic_config_value '{"Value": <new value>}'` updates a dynamic configuration value
+* `cadence admin config restore --dynamic_config_name <dynamic config keyname>` restores a dynamic configuration to its default value
 
 ## Other Advanced Features
 * Go to [advanced visibility](/docs/concepts/search-workflows/#running-in-production) for how to configure advanced visibility in production.
@@ -222,7 +225,7 @@ After changing the client to `configstore` and restarting Cadence, you can manag
 * Go to [cross dc replication](/docs/concepts/cross-dc-replication/#running-in-production) for how to configure replication in production.
 
 ## Deployment & Release
-Kubernetes is the most popular way to deploy Cadence cluster. And easiest way is to use [Cadence Helm Charts](https://github.com/banzaicloud/banzai-charts/tree/master/cadence) that maintained by a community project.
+Kubernetes is the most popular way to deploy a Cadence cluster. The supported path is the official [Cadence Helm charts](https://github.com/cadence-workflow/cadence-charts). Chart values, including `dynamicConfig.values`, are documented in the [cadence chart README](https://github.com/cadence-workflow/cadence-charts/tree/main/charts/cadence). A GKE walkthrough is in [Deploy Cadence with Helm](/docs/codelabs/helm-deploy-postgres-opensearch).
 
 If you are looking for deploying Cadence using other technologies, then it's recommended to use Cadence docker images. You can use offical ones, or you may customize it based on what you need. See [Cadence docker package](https://github.com/cadence-workflow/cadence/tree/master/docker#using-docker-image-for-production) for how to run the images.
 

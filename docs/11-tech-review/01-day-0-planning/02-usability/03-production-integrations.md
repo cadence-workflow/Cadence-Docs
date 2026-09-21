@@ -20,7 +20,7 @@ This page covers what Cadence composes with. What a cluster requires to start is
 
 **Deployment.** The four server services are stateless and run under whatever deployment engine an organization already operates. Container images are published for Docker, and the documented production pattern uses an `auto-setup` image for schema creation and a release-tagged image for steady state. For Kubernetes, the project maintains a [Helm chart](https://github.com/cadence-workflow/cadence-charts) that deploys the services and, optionally, the Web UI. It needs Kubernetes 1.29 or later and declares six optional subcharts, so a cluster installs whole or points at external datastores. Autoscaling, disruption budget, network policy, and RBAC templates ship with it.
 
-**Databases.** Workflow history lives in Apache Cassandra, MySQL, or PostgreSQL. CockroachDB and TiDB work through PostgreSQL and MySQL compatibility.
+**Databases.** Workflow history lives in Apache Cassandra, MySQL, or PostgreSQL. CockroachDB and TiDB may offer compatible PostgreSQL or MySQL wire protocols, but Cadence has no dedicated plugin or project CI coverage for them; adopters must validate those combinations.
 
 **Search and messaging.** Listing workflows by complex predicates uses Elasticsearch, OpenSearch, or Apache Pinot as a visibility store, with Apache Kafka carrying records to the search index.
 
@@ -63,16 +63,16 @@ Advanced visibility adds two components. On the write path the history service a
 
 ### Observability
 
-Cadence's default is a Prometheus-compatible metrics endpoint on port 9090. Any other observability stack integrates the same way, by selecting it in server configuration. The table below lists examples of that mechanism rather than products the project maintains.
+Cadence emits metrics only when a reporter is configured. The official Helm chart selects Prometheus by default and exposes each service's scrape endpoint on port `9090` unless `metrics.port` is overridden; server configuration can select Prometheus, StatsD, or M3 instead. Treat `9090` as the chart default rather than a fixed Cadence port. Port `9090` is also the conventional port of the Prometheus server itself.
 
 | Integration | Mechanism | Integration maintained by |
 | --- | --- | --- |
-| Prometheus | Metrics endpoint on port 9090, enabled by default | Cadence project |
+| Prometheus | Configurable scrape endpoint; selected by default in the Helm chart | Cadence project |
 | Prometheus Operator | `ServiceMonitor` resource, opt-in | Cadence project |
 | Google Cloud Managed Service for Prometheus | `PodMonitoring` resource, opt-in | Cadence project |
 | Grafana | Reference dashboards and Helm setup guide | Cadence project |
 | StatsD, M3 | Alternative metrics emitters selected by config | Cadence project |
-| OpenTracing, Jaeger | Go SDK tracing interceptor | Cadence project |
+| OpenTracing, Jaeger | Go and Java SDK tracing support | Cadence project |
 | Datadog | Dashboard templates, scraping the Prometheus endpoint | Third party |
 | Go `pprof` | Profiling endpoint, opt-in per service | Cadence project |
 
@@ -97,7 +97,7 @@ Payload handling is an SDK concern rather than a server one. A custom [data conv
 | Integration | Notes | Support |
 | --- | --- | --- |
 | gRPC and Protobuf | Primary API, definitions in `cadence-idl` | Project maintained |
-| Thrift over TChannel | Retained for older workers | Project maintained |
+| Thrift over TChannel | Server still serves it. The Go SDK and Java 3.x clients use it; Java 4.x and Python are gRPC-only | Project maintained |
 | HTTP API | Selected methods over HTTP and JSON, server v1.2.0 and later | Project maintained |
 | Go, Java, Python SDKs | Include in-memory test environments and replay tooling | Project maintained |
 | TypeScript SDK | In development | Community |

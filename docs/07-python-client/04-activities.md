@@ -123,12 +123,14 @@ order = await fetch_order.with_options(
 
 ### Activity options
 
+The Python SDK starts with a 1-hour `schedule_to_close_timeout` and a 10-second `schedule_to_start_timeout`, then applies the options supplied by the workflow. If `start_to_close_timeout` or `heartbeat_timeout` is omitted, each is set to the effective Schedule-to-Close timeout. Set explicit values when these defaults do not fit the activity.
+
 | Option | Description |
 |---|---|
-| `start_to_close_timeout` | Max time for one activity attempt (required if `schedule_to_close_timeout` is not set) |
-| `schedule_to_close_timeout` | Max total time including scheduling and all retries |
-| `schedule_to_start_timeout` | Max time waiting in the task list before execution starts |
-| `heartbeat_timeout` | Max time between heartbeats for long-running activities |
+| `start_to_close_timeout` | Max time for one activity attempt (default: effective Schedule-to-Close timeout) |
+| `schedule_to_close_timeout` | Max total time including scheduling and all retries (default: 1 hour) |
+| `schedule_to_start_timeout` | Max time waiting in the task list before execution starts (default: 10 seconds) |
+| `heartbeat_timeout` | Max time between heartbeats for long-running activities (default: effective Schedule-to-Close timeout) |
 | `task_list` | Override the task list for this activity |
 | `retry_policy` | Retry policy (see [Retries](/docs/python-client/retries)) |
 

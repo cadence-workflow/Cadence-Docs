@@ -21,12 +21,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           persist-credentials: false
 
       - name: Use Node.js lts/jod (v22)
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: lts/jod
           cache: 'npm'
@@ -37,7 +37,7 @@ jobs:
           npm run build
 
       - name: Restore lychee cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: .lycheecache
           key: lychee-weekly-${{ github.run_id }}
@@ -68,7 +68,7 @@ jobs:
         # '' != '0' evaluates to true in GitHub Actions expressions, so the
         # issue would be created on every run.
         if: steps.lychee.outputs.exit_code != '0'
-        uses: peter-evans/create-issue-from-file@v5
+        uses: peter-evans/create-issue-from-file@v6
         with:
           title: 'Link check report'
           content-filepath: ./lychee-report.md

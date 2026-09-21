@@ -40,7 +40,7 @@ Cadence does not impose any system limit on :activity: duration. It is up to the
 - `ScheduleToClose` is the maximum time from the :workflow: requesting an :activity: execution to its completion.
 - `Heartbeat` is the maximum time between heartbeat requests. See [Long Running Activities](#long-running-activities).
 
-Either `ScheduleToClose` or both `ScheduleToStart` and `StartToClose` timeouts are required.
+The command sent to Cadence must contain either `ScheduleToClose` or both `ScheduleToStart` and `StartToClose`. SDK validation and defaults differ. Go requires explicit `ScheduleToStart` and `StartToClose` values, Java accepts either valid combination and fills omitted values, and Python begins with a 1-hour `ScheduleToClose` and 10-second `ScheduleToStart` before applying user options.
 
 Timeouts are the key to manage activities. For more tips of how to set proper timeout, read this [Stack Overflow QA](https://stackoverflow.com/questions/65139178/how-to-set-proper-timeout-values-for-cadence-activitieslocal-and-regular-activi/65139179#65139179).
 

@@ -17,7 +17,7 @@ permalink: /docs/concepts/data-converter
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Cadence serializes every workflow input, output, activity parameter, signal payload, and query response through a `DataConverter` before writing it to workflow history. The default JSON converter works for most cases, but three problems come up in production:
+Cadence serializes every workflow input, output, activity parameter, signal payload, and query response through a `DataConverter` before writing it to workflow history. Each SDK supplies a default converter suitable for its language. Java uses JSON, Go supports JSON plus Thrift values and raw byte passthrough, and Python uses its msgspec-based JSON encoding. These defaults work for most cases, but three problems come up in production:
 
 - **Size limits.** Cadence enforces a per-payload cap (~2 MB by default). Large inputs are rejected outright.
 - **Plaintext history.** Sensitive payloads such as PII or PHI are stored as-is and readable by anyone with history access.
