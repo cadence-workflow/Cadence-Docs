@@ -40,7 +40,7 @@ If you are using local domains, an easy way is to create a global domain and mig
 ## Migrate with [Global Domain Replication](/docs/concepts/cross-dc-replication/#running-in-production) feature
 NOTE 1: If a domain are NOT a global domain, you cannot use the XDC feature to migrate. The only way is to migrate in a [naive approach](migration#migrate-with-naive-approach)
 
-NOTE 2: Only migrating to the same numHistoryShards is allowed.
+NOTE 2: Keep `numHistoryShards` **equal** on the source and target. That is the supported long-term replication setup. You can migrate to a cluster with **more** shards to scale (risky). After you fail over to the larger cluster, you cannot fail back: replication is polled by shard ID, and the old cluster would miss shards it does not have. Cut off the old cluster, then create a new replica with the **same** shard count as the active cluster if you still need bidirectional or standby replication. You cannot raise or lower this number in place on an existing cluster.
 
 ### Step 0 - Verify clusters' setup is correct
 
@@ -58,7 +58,7 @@ cadence --address <newClusterAddress> --do <domain_name> domain describe
 ```
 to make sure it doesn't exist in the new cluster.
 
-* Target replication cluster should have numHistoryShards >= source cluster
+* Keep `numHistoryShards` equal on the source and target. A larger target is only for a one-way scale-up migration; after failover you cannot fail back.
 
 * Target cluster should have the same search attributes enabled in dynamic configuration and in ElasticSearch.
 

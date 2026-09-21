@@ -118,9 +118,9 @@ Enabling global domains deserves the same forethought. Even if you run a single 
 
 Workflow and activity code runs in **your** processes, not inside the Cadence cluster, so worker requirements are separate from cluster requirements:
 
-- Outbound network access to Frontend over gRPC (default port `7833`) or TChannel (default port `7933`), the service name `cadence-frontend`, a domain, and a task list.
+- Outbound network access to Frontend, the service name `cadence-frontend`, a domain, and a task list. Go supports gRPC (`7833`) or TChannel (`7933`). Java 4.x uses gRPC; Java 3.x still supports TChannel. Python uses gRPC.
 - **No inbound ports.** Workers long poll the Frontend for tasks, and Cadence never dials back into a worker. Workers can run in private subnets or behind NAT.
-- Client-side metrics through tally, to Prometheus, M3, or StatsD.
+- Client-side metrics through the SDK's metrics interface. Go and Java integrate with Tally; Python exposes a metrics emitter backed by `prometheus-client`.
 - Optional TLS on the gRPC connection, including [mutual TLS](/docs/concepts/mutual-tls).
 
 Workers scale independently of the cluster, so worker capacity is an application concern rather than a cluster provisioning one. Client SDKs are available for [Go](/docs/go-client/), [Java](/docs/java-client/), and [Python](/docs/python-client/index), with additional clients in the wider ecosystem.
