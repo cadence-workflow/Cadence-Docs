@@ -61,6 +61,62 @@ The file-based client periodically reloads its YAML file in each Cadence process
 
 Dynamic configuration can tune a subsystem that static configuration initialized, but it cannot create a missing dependency. For example, dynamic switches can pause archival or select an already configured advanced visibility store, but they cannot initialize an archival provider or datastore that is absent from static YAML.
 
+## Opt-in features
+
+Many Cadence capabilities stay off after a default install. A hello-world worker on a registered domain does not enable them. Operators and application owners turn them on through the same four surfaces above. How you reverse the change is the reverse of that layer: restore YAML and restart, restore the dynamic key, update the domain, or deploy workers and clients without the flag.
+
+This is not a complete catalog of dynamic configuration keys. It is the features people most often miss because they are shipped, documented, and still off until you ask for them. How to turn a running cluster's optional subsystems off again is also on [Live cluster enablement and rollback](/docs/tech-review/day-1-installation/enablement-rollback/live-cluster-enablement-rollback). Experimental or alpha surfaces are out of scope here.
+
+### Cluster and operator features
+
+These usually need static YAML, dynamic configuration, or a domain update. Several need more than one layer: the store or listener is in static config, and a dynamic key or domain setting actually starts using it.
+
+| Feature | Default | How you opt in |
+| --- | --- | --- |
+| [Advanced visibility](/docs/concepts/search-workflows) | Basic visibility on the core datastore | Add an Elasticsearch, OpenSearch, or Pinot store and Kafka in static YAML, rolling-restart the services that open those clients, then set the write and read store names in dynamic configuration. |
+| [Archival](/docs/concepts/archival) | Disabled | Configure a blob provider in static YAML, then enable archival on the domain. |
+| [HTTP API](/docs/concepts/http-api) | Frontend does not serve HTTP | Add the Frontend `http` section in static YAML and restart Frontend. |
+| [API authorization](/docs/tech-review/day-0-planning/design/iam) | No-op authorizer allows every caller | Enable the OAuth/JWT authorizer (or your own `Authorizer`) in static YAML and restart Frontend. |
+| [TLS / mTLS](/docs/concepts/mutual-tls) | Plaintext unless you configure it | Set TLS on the relevant RPC, client, and datastore sections in static YAML and restart. |
+| [Task list partitions](/docs/operation-guide/maintain) | One read partition and one write partition | Raise partition counts through dynamic configuration or the database-backed partition APIs. |
+| [Adaptive task-list scaling](https://cadenceworkflow.io/blog/2025/06/30/adaptive-tasklist-scaler) | Disabled; partition counts remain manual | First [migrate each task list's partition configuration to persistence](https://github.com/cadence-workflow/cadence/blob/v1.4.1/docs/migration/tasklist-partition-config.md), enable `matching.enableGetNumberOfPartitionsFromCache`, then enable `matching.enableAdaptiveScaler` for the task list. |
+| Isolation groups | Tasks can run on any worker for the task list | Set isolation-group dynamic configuration so decision and activity tasks stay in a worker group. See [zonal isolation](/blog/zonal-isolation-v1/zonal-isolation-v1). |
+| [Cross-cluster replication](/docs/concepts/cross-dc-replication) | Local domains, no failover | List every participating cluster in `clusterGroupMetadata` in static YAML, then register the domain with `--global_domain true`. |
+| Active-active global domains | A global domain uses one active cluster when no cluster attribute is selected | Register the domain with an `--active_clusters` attribute-to-cluster map, then enable `frontend.enableActiveClusterSelectionPolicyInStartWorkflow` for callers that select an attribute when starting a workflow. This is a domain-level map, not the static `clusterGroupMetadata.clusterGroup` map. |
+| Global Frontend rate limiter | Disabled; local host-level limiting remains available | Roll out `frontend.globalRatelimiterMode` by rate-limit key, using a shadow mode before `global`. Restore `local` or `disabled` to roll back. |
+| History transfer and timer queues v2 | Disabled for every shard | Enable `history.enableTransferQueueV2` and `history.enableTimerQueueV2` through shard-filtered dynamic configuration. Start with a small shard set and restore both keys to `false` to roll back. |
+| Histogram metrics | Migrating metrics emit timer values only | Set the static `histograms` migration block to `both`, migrate dashboards and alerts, then set it to `histogram`. Restore `timer` and restart services to roll back. |
+| [Workflow-specific rate limits](/blog/2024/09/05/workflow-specific-rate-limits) | Cluster and domain QPS only | Set the per-workflow dynamic configuration keys for the domain. |
+| [Workflow Diagnostics](/blog/2025/08/06/workflow-diagnostics) | No diagnostics workflow runs until requested; the Web view is hidden | Run `workflow diag` on demand. Set `CADENCE_WORKFLOW_DIAGNOSTICS_ENABLED=true` on Cadence Web to expose the UI. Removing the Web flag hides the UI but does not disable the CLI or API. |
+| Cadence Web extra UI | Core UI only | Enable the [Web feature flags](https://github.com/cadence-workflow/cadence-web#feature-flags) for the views you want. Those flags hide or show UI; they do not replace server configuration. |
+
+`pprof`, Prometheus `ServiceMonitor` / `PodMonitoring`, and similar scrape endpoints are also off until the service or chart enables them. See [Production integrations](/docs/tech-review/day-0-planning/usability/production-integrations).
+
+Two recovery mechanisms also require an explicit operator action:
+
+- The Worker service's [persistence scanners and fixers](https://github.com/cadence-workflow/cadence/blob/v1.4.1/service/worker/scanner/README.md) are disabled by default because fixers can modify or delete persisted state. The supported concrete-execution and timer fixers require both their global `worker.*FixerEnabled` key and the corresponding domain allow key. Enable them only for a diagnosed invariant and disable them after the repair. The current-execution fixer is not suitable for general use.
+- Replication DLQ tasks remain in the dead-letter queue until an operator runs `cadence admin dlq merge` with the intended DLQ type and message boundary. Merge reintroduces those tasks for processing and has no "unmerge" operation, so inspect the queue before running it.
+
+### SDK and workflow features
+
+Application workers and starters have their own switches. Server configuration does not turn these on for you.
+
+| Feature | Default | How you opt in |
+| --- | --- | --- |
+| Activity and workflow retries | No retry policy | Attach a `RetryPolicy` on the activity or workflow options. See [Go retries](/docs/go-client/retries). |
+| Cron | Off | Set `CronSchedule` on start options. |
+| [Schedules](/docs/concepts/schedules) | The scheduler worker is disabled and no schedule objects exist | Enable `worker.enableScheduler` for the domain, then create schedules through the CLI or a supported SDK. Delete the schedules before disabling the worker when rolling back. |
+| [Worker poller auto scaling](/docs/go-client/worker-auto-scaling) | Fixed poller counts | Set `AutoScalerOptions` on the Go worker. |
+| Typed "workflow already completed" errors | Off on the Go client | Set `client.FeatureFlags.WorkflowExecutionAlreadyCompletedErrorEnabled` (and the same flag on the worker) so Signal, Cancel, and Terminate can return `WorkflowExecutionAlreadyCompletedError` instead of a generic not-found error. |
+| Client auto-forwarding | Off | Set `FeatureFlags.AutoforwardingEnabled` on the Go client when a global domain should follow the active cluster. |
+| Ephemeral task lists | Off | Set `FeatureFlags.EphemeralTaskListsEnabled` on the Go worker when you use ephemeral task lists (for example in tests). |
+| Strong query consistency | Eventual | Request a strong query consistency level in the query options. See [Go queries](/docs/go-client/queries). |
+| Context propagation | None | Register context propagators on both clients and workers. |
+| Custom payload conversion | SDK default converter | Set the same [data converter](/docs/concepts/data-converter) on clients and workers to add encryption, compression, or a claim-check pattern. Existing histories remain encoded with the previous converter, so keep backward decoding support during rollback. |
+| [Custom Workflow Controls](/docs/concepts/workflow-queries-formatted-data) | Queries render their ordinary result | On Cadence Web 4.0.14 or later, return the `formattedData` query-response envelope with Markdown controls. Revert the query handler to an ordinary response to remove the controls. |
+
+`FeatureFlags` on the Go SDK is the client-side counterpart of server dynamic configuration: a breaking or more precise behavior stays off so existing applications keep compiling and running. Put the flags on `client.Options` and `worker.Options` together when the worker and the starter must agree. Other language SDKs use worker and client options rather than this Go struct; check that SDK's options type for the equivalent.
+
 ## Application behavior
 
 Cadence absorbs durability, timers, recovery, and coordination, but it does not guess the application-specific limits needed to run a workflow.
@@ -105,7 +161,7 @@ A minimal local deployment favors ease of evaluation. Before production traffic,
 | Visibility | Configure the default visibility store; add advanced visibility and Kafka only when indexed search is needed |
 | Archival | Configure durable object storage before enabling archival on domains |
 | Capacity | Tune persistence QPS, API limits, worker concurrency, and task-list partitions from measured load |
-| Multi-cluster | Configure cluster metadata and global domains before relying on cross-cluster replication or failover |
+| Multi-cluster | Configure the cluster group and register domains as global before relying on cross-cluster replication or failover |
 
 Cadence defaults are intended to make a small deployment operable, not to select production capacity or an organization's security policy. Apply overrides narrowly, record them with the deployment configuration, and validate them on a non-production domain before broad rollout.
 
@@ -116,6 +172,10 @@ Cadence defaults are intended to make a small deployment operable, not to select
 - [Live cluster enablement and rollback](/docs/tech-review/day-1-installation/enablement-rollback/live-cluster-enablement-rollback)
 - [Domain operations](/docs/cli#domain-operation-examples)
 - [Go client retries](/docs/go-client/retries)
+- [Go worker auto scaling](/docs/go-client/worker-auto-scaling)
 - [Archival](/docs/concepts/archival)
 - [Advanced visibility](/docs/concepts/search-workflows)
+- [HTTP API](/docs/concepts/http-api)
+- [Schedules](/docs/concepts/schedules)
 - [Cross-cluster replication](/docs/concepts/cross-dc-replication)
+- [Go FeatureFlags](https://pkg.go.dev/go.uber.org/cadence@v1.3.1/client#FeatureFlags)

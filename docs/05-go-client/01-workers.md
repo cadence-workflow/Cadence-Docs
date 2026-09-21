@@ -69,9 +69,11 @@ func init() {
 
 func main() {
     serviceClient := buildCadenceClient()
-    worker := buildWorker(serviceClient)
-    err := worker.Start()
+    cadenceWorker, err := buildWorker(serviceClient)
     if err != nil {
+        logger.Fatal("Failed to create worker", zap.Error(err))
+    }
+    if err := cadenceWorker.Start(); err != nil {
         logger.Fatal("Failed to start worker")
     }
     logger.Info("Started Worker.", zap.String("worker", TaskListName))
@@ -95,14 +97,14 @@ func buildCadenceClient() workflowserviceclient.Interface {
     return workflowserviceclient.New(dispatcher.ClientConfig(CadenceService))
 }
 
-func buildWorker(service workflowserviceclient.Interface) worker.Worker {
+func buildWorker(service workflowserviceclient.Interface) (worker.Worker, error) {
     // TaskListName identifies set of client workflows, activities, and workers.
     // It could be your group or client or application name.
     workerOptions := worker.Options{
         Logger:       logger,
         MetricsScope: tally.NewTestScope(TaskListName, map[string]string{}),
     }
-    return worker.New(
+    return worker.NewV2(
         service,
         Domain,
         TaskListName,

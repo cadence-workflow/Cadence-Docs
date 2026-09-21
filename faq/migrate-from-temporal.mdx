@@ -105,10 +105,13 @@ options := client.StartWorkflowOptions{
 w := worker.New(c, "my-task-queue", worker.Options{})
 
 // Cadence
-w := worker.New(cadenceClient, "your-domain", "my-task-list", worker.Options{})
+w, err := worker.NewV2(cadenceClient, "your-domain", "my-task-list", worker.Options{})
+if err != nil {
+    return err
+}
 ```
 
-Note that the Cadence worker constructor takes the domain name as an explicit argument.
+Note that the Cadence worker constructor returns an initialization error and takes the domain name as an explicit argument.
 
 ## Java SDK
 

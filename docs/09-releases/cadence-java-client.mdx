@@ -16,11 +16,17 @@ export const releases = getReleaseData('cadence-java-client.json');
 export const latestRelease = getLatestRelease(releases);
 
 
-Cadence follows [semantic versioning](https://semver.org/spec/v2.0.0.html) and you can find more information about changes between version on the Cadence [changelog](https://github.com/cadence-workflow/cadence/blob/master/CHANGELOG.md).
+The Cadence Java client follows [semantic versioning](https://semver.org/spec/v2.0.0.html). See the Java client's [GitHub Releases](https://github.com/cadence-workflow/cadence-java-client/releases) for changes and migration notes.
 
-:::tip[Latest release for General Availability]
+:::tip[Most recently published GA release]
 
 > <strong><a href={latestRelease.html_url} target="_blank">{latestRelease.name}</a> </strong>published on {latestRelease.published_at_date}
+
+:::
+
+:::note[Java release lines]
+
+Java 4.x is the current gRPC-only major line. Java 3.x remains a separate release line that supports both gRPC and TChannel. The project does not publish an end-of-life date for the 3.x line. Check GitHub Releases for the latest patch in each line.
 
 :::
 

@@ -36,13 +36,20 @@ docs: Update getting started guide
 - **test**: Adding or updating tests
 - **chore**: Changes to build process, dependencies, or tools
 
+Add `!` after the type or scope when a change breaks compatibility. Describe the migration in the pull request body and include a `BREAKING CHANGE:` footer when applicable.
+
+```text
+feat(api)!: remove deprecated request field
+```
+
 ### PR Title Guidelines
 
 Follow the [Chris Beams guide](https://chris.beams.io/posts/git-commit/) to writing git commit messages. All PR titles should:
 
-- Start with UPPER case
 - Be specific (avoid generic titles like "bug fixes")
 - Use imperative mood ("Add feature" not "Added feature")
+
+For schema and public-interface changes, complete the breaking-change review template in that Cadence repository. It asks for impact analysis, testing, rollout, and rollback plans. The [server template](https://github.com/cadence-workflow/cadence/blob/master/.github/workflows/breaking_change_pr_template.md) is the current text of that review.
 
 **Examples from Cadence repositories:**
 - [Make sync activity retry multiple times before fetch history from remote](https://github.com/cadence-workflow/cadence/pull/1379)

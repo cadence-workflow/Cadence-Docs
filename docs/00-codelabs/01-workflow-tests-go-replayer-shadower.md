@@ -187,7 +187,10 @@ func main() {
 	workerOptions := worker.Options{
 		Logger:       logger,
 	}
-	w := worker.New(cadenceClient, Domain, TaskList, workerOptions)
+	w, err := worker.NewV2(cadenceClient, Domain, TaskList, workerOptions)
+	if err != nil {
+		logger.Fatal("Failed to create worker.", zap.Error(err))
+	}
 	w.RegisterWorkflowWithOptions(SimpleWorkflow, workflow.RegisterOptions{Name: "workflow-shadowing.SimpleWorkflow"})
 	w.RegisterActivityWithOptions(ActivityA, activity.RegisterOptions{Name: "workflow-shadowing.ActivityA"})
 	w.RegisterActivityWithOptions(ActivityB, activity.RegisterOptions{Name: "workflow-shadowing.ActivityB"})

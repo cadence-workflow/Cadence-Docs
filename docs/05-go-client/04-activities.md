@@ -55,10 +55,6 @@ import (
     "go.uber.org/zap"
 )
 
-func init() {
-    activity.Register(SimpleActivity)
-}
-
 // SimpleActivity is a sample Cadence activity function that takes one parameter and
 // returns a string containing the parameter value.
 func SimpleActivity(ctx context.Context, value string) (string, error) {
@@ -140,15 +136,15 @@ that call `RecordActivityHeartbeat`.
 
 ### Registration
 
-To make the :activity: visible to the :worker: process hosting it, the :activity: must be registered via a
-call to `activity.Register`.
+To make the :activity: visible to the :worker: process hosting it, register the implementation on the Worker instance:
 
 ```go
-func init() {
-    activity.Register(SimpleActivity)
-}
+w.RegisterActivity(SimpleActivity)
 ```
-This call creates an in-memory mapping inside the :worker: process between the fully qualified function
+
+The global `activity.Register` and `activity.RegisterWithOptions` functions are deprecated. Registering on the Worker keeps the implementations associated with that worker.
+
+Registration creates an in-memory mapping inside the :worker: process between the fully qualified function
 name and the implementation. If a :worker: receives a request to start an :activity: execution for an
 :activity: type it does not know, it will fail that request.
 

@@ -242,14 +242,17 @@ Cadence is a general-purpose workflow engine that fits a wide range of distribut
 
 Cadence maintains production-ready SDKs for Go, Java, and Python. Other language clients are maintained separately in the wider ecosystem.
 
-The Go SDK (`go.uber.org/cadence`) is the most widely used in production. A Cadence worker is an ordinary Go binary that calls `worker.New()` and registers your workflow and activity functions. There is no special runtime, no sidecar, and no DSL; workflows are plain Go functions that happen to be durable.
+The Go SDK (`go.uber.org/cadence`) is the most widely used in production. A Cadence worker is an ordinary Go binary that calls `worker.NewV2()` and registers your workflow and activity functions. There is no special runtime or sidecar; workflows are plain Go functions that happen to be durable.
 
 ```go
 // A minimal Go worker registering one workflow and one activity.
-w := worker.New(service, domain, taskList, worker.Options{})
+w, err := worker.NewV2(service, domain, taskList, worker.Options{})
+if err != nil {
+    return err
+}
 w.RegisterWorkflow(SubscriptionWorkflow)
 w.RegisterActivity(ChargeCustomer)
-w.Start()
+return w.Start()
 ```
 
 Workers can be embedded in existing Go services or run as standalone binaries. The Cadence server is the only external dependency; all workflow state is stored server-side.

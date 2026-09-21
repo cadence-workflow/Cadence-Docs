@@ -379,7 +379,7 @@ workflowClient := client.NewClient(
 )
 
 // Worker side: used when executing workflows and activities
-w := worker.New(
+w, err := worker.NewV2(
     cadenceServiceClient,
     domain,
     taskList,
@@ -387,9 +387,12 @@ w := worker.New(
         DataConverter: converter,
     },
 )
+if err != nil {
+    return err
+}
 w.RegisterWorkflow(MyWorkflow)
 w.RegisterActivity(MyActivity)
-w.Start()
+return w.Start()
 ```
 
 </TabItem>

@@ -18,7 +18,7 @@ There could be some reasons that you need to migrate Cadence clusters:
 * Migrate to different storage, for example from Postgres/MySQL to Cassandra, or using multiple SQL database as a sharded SQL cluster for Cadence
 * Split traffic
 * Datacenter migration
-* Scale up -- to change numOfHistoryShards.
+* Scale up to change `numHistoryShards`.
 
 Below are two different approaches for migrating a cluster.
 
@@ -74,18 +74,16 @@ cadence --address <newClusterAddress> adm cluster add-search-attr --search_attr_
 ```
 
 ### Step 1 - Connect the two clusters using global domain(replication) feature
-Include the Cluster Information for both the old and new clusters in the ClusterMetadata config of both clusters.
+List both the old and new clusters in the `clusterGroupMetadata` config of both clusters.
 Example config for currentCluster
 ```yaml
-dcRedirectionPolicy:
-  policy: "all-domain-apis-forwarding" # use selected-apis-forwarding if using older versions don't support this policy
-
-clusterMetadata:
-  enableGlobalDomain: true
+clusterGroupMetadata:
   failoverVersionIncrement: 10
-  masterClusterName: "<newClusterName>"
+  primaryClusterName: "<newClusterName>"
   currentClusterName: "<currentClusterName>"
-  clusterInformation:
+  clusterRedirectionPolicy:
+    policy: "all-domain-apis-forwarding" # requires server v0.23.2 or later, see the note below
+  clusterGroup:
     <currentClusterName>:
       enabled: true
       initialFailoverVersion: 1
@@ -99,15 +97,13 @@ clusterMetadata:
 ```
 for newClusterName:
 ```yaml
-dcRedirectionPolicy:
-  policy: "all-domain-apis-forwarding"
-
-clusterMetadata:
-  enableGlobalDomain: true
+clusterGroupMetadata:
   failoverVersionIncrement: 10
-  masterClusterName: "<newClusterName>"
+  primaryClusterName: "<newClusterName>"
   currentClusterName: "<newClusterName>"
-  clusterInformation:
+  clusterRedirectionPolicy:
+    policy: "all-domain-apis-forwarding"
+  clusterGroup:
     <currentClusterName>:
       enabled: true
       initialFailoverVersion: 1
@@ -121,32 +117,34 @@ clusterMetadata:
 ```
 
 Deploy the config.
-In older versions(`<= v0.22`), only `selected-apis-forwarding` is supported. This would require you to deploy a different set of workflow/activity connected to the new Cadence cluster during migration, if high availability/seamless migration is required. Because `selected-apis-forwarding` only forwarding the non-worker APIs.
 
-With `all-domain-apis-forwarding` policy, all worker + non-worker APIs are forwarded by Cadence cluster. You don't need to make any deployment change to your workflow/activity workers during migration. Once migration, let all workers connect to the new Cadence cluster before removing/shutdown the old cluster.
+The two forwarding policies differ in which APIs a passive cluster forwards to the active one, and that determines whether you have to move your workers during the migration:
 
-Therefore, it's recommended to upgrade your Cadence cluster to a higher version with `all-domain-apis-forwarding` policy supported. The below steps assuming you are using this policy.
+- `all-domain-apis-forwarding`, available since server v0.23.2, forwards every API, including the worker APIs that workflow and activity workers poll on. Your workers can keep pointing at the old cluster for the whole migration. You repoint them at the new cluster's frontend at the end, before shutting the old cluster down.
+- `selected-apis-forwarding` forwards only the non-worker APIs. Workers polling the old cluster go idle once the domain becomes active in the new cluster, so a seamless migration requires running a second set of workflow and activity workers connected to the new cluster before you fail over.
+
+Upgrade to a version that supports `all-domain-apis-forwarding` before migrating if you can. The steps below assume that policy.
 
 
 ### Step 2 - Test Replicating one domain
 
-First of all, try replicating a single domain to make sure everything work. Here uses `domain update` to failover, you can also use `managed failover` feature to failover. You may use some testing domains for this like `cadence-canary`.
+First of all, try replicating a single domain to make sure everything work. The steps below fail over one domain at a time with `domain failover`, which requires server v1.4.0 or later; on earlier versions use `domain update --active_cluster <cluster>` instead. If you own many domains, the [managed failover](/docs/concepts/cross-dc-replication) feature moves a marked set of them with a single command. You may use some testing domains for this like `cadence-canary`.
 
 * 2.1 Assuming the domain only contain `currentCluster` in the cluster list, let's add the new cluster to the domain.
 ```bash
 cadence --address <currentClusterAddress> --do <domain_name> domain update --clusters <currentClusterName>,<newClusterName>
 ```
 
-Run the command below to refresh the domain after adding a new cluster to the cluster list; we need to update the active_cluster to the same value that it appears to be.
+Run the command below to refresh the domain after adding a new cluster to the cluster list; we need to set the active cluster to the same value that it already is.
 
 ```bash
-cadence --address <currentClusterAddress> --do <domain_name> domain update --active_cluster <currentClusterName>
+cadence --address <currentClusterAddress> --do <domain_name> domain failover --active_cluster <currentClusterName>
 ```
 
 
-* 2.2 failover the domain to be active in new cluster
+* 2.2 failover the domain to be active in new cluster. Run this on the new cluster, the one that should become active:
 ```bash
-cadence --address <currentClusterAddress> --do workflow-prototype domain update --active_cluster <newClusterName>
+cadence --address <newClusterAddress> --do workflow-prototype domain failover --active_cluster <newClusterName>
 ```
 
 Use the domain describe command to verify the entire domain is replicated to the new cluster.
@@ -183,7 +181,7 @@ cadence --address <initialClusterAddress> --do <domain_name> workflow show --wor
 
 ### Step 3 - Start to replicate all domains
 
-You can repeat Step 2 for all the domains. Or you can use the managed failover feature to failover all the domains in the cluster with a single command. See more details in the [global domain documentation](/docs/concepts/cross-dc-replication).
+You can repeat Step 2 for all the domains. Or you can mark the domains with `IsManagedByCadence:true` and use the managed failover feature to move all of them with a single command. See more details in the [global domain documentation](/docs/concepts/cross-dc-replication).
 
 Because replication cannot be triggered without a decision. Again best way is to send a garbage signal to all the workflows.
 
