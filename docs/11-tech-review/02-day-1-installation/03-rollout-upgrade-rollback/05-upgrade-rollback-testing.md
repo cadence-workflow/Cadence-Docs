@@ -42,19 +42,19 @@ Use adjacent minor releases and the latest patch in each minor line. Read both r
 
 The rehearsal succeeds only when existing and new executions continue through all three transitions without data loss, stuck task delivery, schema-version errors, or a sustained regression in service health. Pod readiness alone is not sufficient.
 
-Upgrade a staging cluster with the same persistence, visibility, and version pair before touching production. For a [multi-cluster](/docs/concepts/cross-dc-replication) deployment, advance one cluster at a time: apply the N+1 schema on the first cluster and soak, then the second cluster and soak, then roll the N+1 binary on the first cluster and soak, then the second cluster. That order keeps a cluster on the previous schema available while the first schema upgrade is proven.
+Upgrade a staging environment with the same persistence, visibility, and version pair before touching production. For a [multi-cluster](/docs/concepts/cross-dc-replication) deployment, apply the N+1 schema on each cluster, then roll the N+1 binary one cluster at a time and soak after each binary rollout. A dedicated soak between schema upgrades is not required: schema tools have no down migration, and the supported rollback is the previous binary on the newer schema. If a schema problem is found while another cluster still has the previous schema, the failover recovery below is available.
 
 ## If a schema upgrade needs to be reversed
 
-The schema tools do not provide down migrations. The supported rollback is still the previous **binary** on the newer schema. Adjacent-version schemas are applied and soaked before any N+1 binary starts, which is the main guard that a binary rollback remains safe.
+The schema tools do not provide down migrations. The supported rollback is still the previous **binary** on the newer schema. Adjacent-version schemas are applied before any N+1 binary starts, which is the main guard that a binary rollback remains safe.
 
 If a schema change itself is the problem:
 
-1. **One cluster still on the previous schema:** [Fail over](/docs/concepts/cross-dc-replication) to that cluster. Delete the affected workflows on the upgraded cluster, then let replication rebuild them from the healthy cluster.
-2. **Every cluster already on the new schema:** Use a [batch reset](/docs/cli) or restart of the impacted workflows so they replay on a healthy code path.
+1. **One cluster still on the previous schema:** [Fail over](/docs/concepts/cross-dc-replication) to that cluster, then delete the affected workflows on the upgraded cluster. Replication does not resend an execution on its own if open workflows don't have a new history event; users may need to send a signal to each affected open workflow on the now-active cluster to trigger a decision and start replication. A [batch signal job](/docs/cli#signal-cancel-terminate-workflows-as-a-batch-job) with a `CloseTime = missing` query covers the open executions.
+2. **Every cluster already on the new schema:** Reset the impacted workflows so they replay on a healthy code path. `cadence workflow reset-batch` takes either an input file of workflows or a visibility query. See [Reset workflow](/docs/cli#reset-workflow).
 3. **No previous action resolved the issue:** Restore the datastore and visibility stores from a backup taken before the schema change, then run the previous binary against that restored schema. Treat restore as the last option, not the default recovery path.
 
-Historically, Cadence has not required a production schema rollback in the past. A persistence backup is still available as that last-resort precaution; take datastore and visibility backups with the provider's usual procedure if you want it.
+To date, Cadence has not required a production schema rollback. A persistence backup is still available as that last-resort precaution; take datastore and visibility backups with the provider's usual procedure if you want it.
 
 ## Schema compatibility during rollback
 
