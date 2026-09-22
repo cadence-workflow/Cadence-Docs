@@ -110,9 +110,10 @@ NOTE: Do not use “auto-setup” images to upgrade your schema. It's mainly for
 For how to apply database schema, refer to this doc: [SQL tool README](https://github.com/cadence-workflow/cadence/tree/master/tools/sql)
 [Cassandra tool README](https://github.com/cadence-workflow/cadence/tree/master/tools/cassandra)
 
-Use the schema tools and files shipped with the server release you are deploying. Releases that include `cadence-server update-schema` can read the server's static configuration and update all configured persistence stores. For earlier releases, run `cadence-sql-tool` or `cadence-cassandra-tool` for each default and visibility store.
+Use the schema tools and files shipped with the server release you are deploying. Run `cadence-sql-tool` or `cadence-cassandra-tool` for each configured default and visibility store.
 
 The tools use the `schema_version` and `schema_update_history` tables to track schema upgrades. There is no transaction guarantee across all DDL statements and version-table updates, so a partial failure can require manual repair before retrying.
+
 By default, the schema tool upgrades to the latest schema included with the checked-out release. You can also specify a target schema version.
 
 Database schema changes are versioned in the folders: [Versioned Schema Changes](https://github.com/cadence-workflow/cadence/tree/master/schema/mysql/v8/cadence/versioned) for Default Store

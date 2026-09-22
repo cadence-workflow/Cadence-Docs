@@ -10,7 +10,9 @@ keywords:
 
 Cadence upgrades persistence schemas before server processes. Schema migrations move forward, while a rollback normally restores the previous server binary without reverting the schema. This sequence lets old and new server processes share a cluster during a rolling deployment when the release's schema changes are backward compatible.
 
-Cadence validates the individual parts of this compatibility model in continuous integration. The project does not currently run a public end-to-end test that deploys two released server versions and performs the complete upgrade, downgrade, and second upgrade automatically. Operators should therefore rehearse the sequence below in a staging cluster before each production minor-version upgrade.
+Cadence tests schema, persistence, and startup compatibility in continuous integration. The complete upgrade path is then exercised by rolling each candidate release through more than 20 environments: development first, then staging, then production, from higher-tier clusters to lower-tier ones.
+
+The public CI suite does not currently include an automated job that deploys two released server images and runs upgrade, rollback, and second-upgrade in isolation. Operators may still rehearse that three-transition sequence in their own staging cluster before a production minor-version upgrade.
 
 ## What the project tests
 
@@ -18,21 +20,21 @@ Cadence validates the individual parts of this compatibility model in continuous
 | --- | --- |
 | Persistence backends | Server integration suites run against Cassandra, MySQL, PostgreSQL, and SQLite. Additional jobs exercise Elasticsearch, OpenSearch, Pinot, Kafka, and cross-cluster replication configurations. |
 | Schema updates | Unit and integration tests apply versioned migrations, exercise fresh-store setup, and verify the schema recorded in each configured default and visibility store. |
-| High-scale pre-release soak | Before a version is published as a stable GitHub Release, it is run at high scale, including schema upgrades against billions of workflow executions. Those builds are published as documented pre-release tags, for example [`v1.2.19-prerelease07`](https://github.com/cadence-workflow/cadence/releases/tag/v1.2.19-prerelease07). |
+| Staged pre-release rollout | Before a version is published as a stable GitHub Release, it is rolled through more than 20 environments, from development and staging into production, higher-tier clusters first, at high scale. Pre-release tags such as [`v1.2.19-prerelease07`](https://github.com/cadence-workflow/cadence/releases/tag/v1.2.19-prerelease07) mark those soaks. |
 | Server startup | Schema verification checks that persistence is not older than the version required by the server binary. A newer schema is accepted to permit binary rollback after a backward-compatible migration. |
 | API evolution | Changes to public interfaces and schemas trigger the repository's breaking-change review, which asks authors to document compatibility, rollout, and rollback safety. |
 | Release deployment | Release images and the Helm chart are built independently. The chart runs schema setup as a separate job before starting the Cadence services. |
 
 See the server's [CI workflow](https://github.com/cadence-workflow/cadence/blob/master/.github/workflows/ci-checks.yml), [schema update tests](https://github.com/cadence-workflow/cadence/tree/master/common/persistence/schema), [breaking-change review template](https://github.com/cadence-workflow/cadence/blob/master/.github/workflows/breaking_change_pr_template.md), and [GitHub Releases](https://github.com/cadence-workflow/cadence/releases) for the current validation paths.
 
-These tests establish backend, migration, and high-scale behavior for a revision. They do not replace a rehearsal with the exact database service, configuration, deployment package, and adjacent server versions used in a given production cluster.
+Continuous integration covers backends, migrations, and startup checks for a revision. The staged rollout already exercises each upgrade across more than 20 environments at high scale, including billions of workflow executions and the most critical production services. An operator's own setup may still differ. Neither public CI nor the staged rollout replaces a rehearsal with the exact database service, configuration, deployment package, and adjacent server versions used in a given production cluster.
 
 ## Upgrade, downgrade, and upgrade rehearsal
 
 Use adjacent minor releases and the latest patch in each minor line. Read both releases' notes before the rehearsal because a release can require configuration changes or a one-time data migration in addition to schema changes.
 
 1. **Prepare the baseline:** Deploy version N with the same persistence and visibility backends as production. Start representative workflows that remain open across the test, including timers, signals, queries, activities, retries, and search attributes used by the application.
-2. **Apply the N+1 schemas:** Use the schema tooling and schema files shipped with N+1. Apply the default-store and visibility-store changes before starting N+1 server processes. Use `cadence-cassandra-tool` or `cadence-sql-tool` for releases that provide the database-specific tools. Releases that include the configuration-driven `cadence-server update-schema` command can update the stores declared in the server configuration.
+2. **Apply the N+1 schemas:** Use the schema tooling and schema files shipped with N+1. Apply the default-store and visibility-store changes before starting N+1 server processes. Run `cadence-cassandra-tool` or `cadence-sql-tool` for each configured default and visibility store.
 3. **Roll forward to N+1:** Replace Cadence server processes gradually so N and N+1 coexist during the rollout. Wait for service membership and History shard ownership to stabilize between batches.
 4. **Validate N+1:** Confirm that workflows started on N continue, workers keep polling, new workflows start and complete, signals and queries succeed, timers fire, visibility queries return expected results, and service error and persistence latency metrics remain within the deployment's normal range.
 5. **Roll binaries back to N:** Restore the N server image without downgrading the schema. Repeat the workload and operational checks. A release note that marks a change as incompatible overrides the general rollback expectation.
@@ -44,15 +46,14 @@ A persistence backup is optional. Operators who want that extra precaution can t
 
 ## Schema compatibility during rollback
 
-Schema version numbers are independent of Cadence server release numbers. The schema tools record the current version in persistence and apply migrations in order. They do not provide down migrations. Before a schema ships in an official release, the upgrade is already part of that high-scale pre-release soak. Rollback is expected to keep the newer schema and restore the previous binary.
+Schema version numbers are independent of Cadence server release numbers. The schema tools record the current version in persistence and apply migrations in order. They do not provide down migrations. Before a schema ships in an official release, the upgrade has already been part of that staged pre-release rollout. Rollback is expected to keep the newer schema and restore the previous binary.
 
-The project aims to keep adjacent minor versions N and N+1 backward compatible, so rolling the server binary back from N+1 to N is the supported path unless the release notes document an incompatible migration. Compatibility between N-1 and N+1 is not maintained. If a farther rollback is necessary, ask in [CNCF Slack `#cadence-users`](https://inviter.co/cncf) or ask the maintainers before you attempt it.
+The project aims to keep adjacent minor versions N and N+1 backward compatible, so rolling the server binary back from N+1 to N is the supported path unless the release notes document an incompatible schema or data migration. Check the target release notes before upgrading. Compatibility between N-1 and N+1 is not maintained. If a farther rollback is necessary, ask the maintainers in [`#cadence-users` on CNCF Slack](https://inviter.co/cncf) before you attempt it.
 
 On startup, Cadence compares the installed schema with the version required by the binary. Persistence must be at least as new as the binary expects. This asymmetric check is intentional: after an additive schema migration, the previous binary can run against the newer schema during rollback. See the [schema compatibility check](https://github.com/cadence-workflow/cadence/blob/master/tools/common/schema/handler.go) and [schema verification implementation](https://github.com/cadence-workflow/cadence/blob/master/common/persistence/schema/verify.go).
 
 Do not assume every schema or data migration is backward compatible. Check the target release notes before upgrading and do not roll a binary back across a release that documents an incompatible migration. Also:
 
-- Upgrade one minor release at a time. Rollback is supported between N and N+1. It is not maintained between N-1 and N+1. If you need to roll back past N, ask in [CNCF Slack `#cadence-users`](https://inviter.co/cncf) or ask the maintainers.
 - Do not use the auto-setup image to migrate production schemas. It is intended for development and initial setup.
 - Do not change `numHistoryShards`, cluster identity, or the persistence driver as part of a binary upgrade. Changing those values requires a separate cluster migration.
 - Test advanced visibility separately from the default persistence store because it has its own schema and write path.
