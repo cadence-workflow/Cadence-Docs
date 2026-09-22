@@ -60,9 +60,9 @@
 <p>Batch Actions close the gap between observing a problem and fixing it at scale. Whether you're recovering from an incident, migrating workflows, or just cleaning up old executions, everything you need is now in one place.</p>
 <p>Upgrade to the latest <strong>Cadence Web</strong> release and give it a try. We'd love to hear what workflows you're managing at scale.</p>
 <ul>
-<li class=""><strong>Ask a question</strong> — <a href="https://inviter.co/cncf" target="_blank" rel="noopener noreferrer" class="">#cadence on CNCF Slack</a></li>
-<li class=""><strong>Open an issue</strong> — <a href="https://github.com/cadence-workflow/cadence-web/issues" target="_blank" rel="noopener noreferrer" class="">cadence-web on GitHub</a></li>
-<li class=""><strong>Join the discussion</strong> — <a href="https://github.com/cadence-workflow/cadence/discussions" target="_blank" rel="noopener noreferrer" class="">GitHub Discussions</a></li>
+<li class=""><strong>Ask a question</strong> - <a href="https://inviter.co/cncf" target="_blank" rel="noopener noreferrer" class="">#cadence-users on CNCF Slack</a></li>
+<li class=""><strong>Open an issue</strong> - <a href="https://github.com/cadence-workflow/cadence-web/issues" target="_blank" rel="noopener noreferrer" class="">cadence-web on GitHub</a></li>
+<li class=""><strong>Join the discussion</strong> - <a href="https://github.com/cadence-workflow/cadence/discussions" target="_blank" rel="noopener noreferrer" class="">GitHub Discussions</a></li>
 </ul>]]></content:encoded>
             <category>Announcement</category>
             <category>Cadence Web</category>
@@ -568,7 +568,7 @@ observability the Shard Manager provides.</p>]]></content:encoded>
 <p>This is just the beginning. Custom Workflow Controls are currently supported in workflow queries, and we plan to extend them to other areas of Cadence Web. We'd love your feedback on what you build with them.</p>
 <ul>
 <li class=""><strong>Suggest a tag extension</strong> - <a href="https://github.com/cadence-workflow/cadence-web/issues" target="_blank" rel="noopener noreferrer" class="">Open an issue on cadence-web</a></li>
-<li class=""><strong>Ask a question</strong> - <a href="https://inviter.co/cncf" target="_blank" rel="noopener noreferrer" class="">#cadence on CNCF Slack</a></li>
+<li class=""><strong>Ask a question</strong> - <a href="https://inviter.co/cncf" target="_blank" rel="noopener noreferrer" class="">#cadence-users on CNCF Slack</a></li>
 <li class=""><strong>Discuss use cases</strong> - <a href="https://github.com/cadence-workflow/cadence/discussions" target="_blank" rel="noopener noreferrer" class="">GitHub Discussions</a></li>
 </ul>]]></content:encoded>
             <category>Announcement</category>
