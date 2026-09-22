@@ -21,7 +21,8 @@ const config: Config = {
   // document title / og:title come from HOMEPAGE_DOCUMENT_TITLE in
   // src/homepageSeo.ts (used by src/pages/index.tsx), and the swizzled
   // src/theme/ThemeProvider/TitleFormatter keys off that exact constant to drop
-  // the ` | Cadence` suffix. Edit the constant, not the literal in index.tsx.
+  // the ` | Cadence` suffix. Edit that constant; do not inline the string here
+  // or in index.tsx.
   title: 'Cadence',
   tagline: 'Orchestrate with Confidence: The Open-Source Workflow Engine for Tomorrow',
   favicon: 'img/favicon.ico',
