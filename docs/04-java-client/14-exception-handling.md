@@ -141,6 +141,7 @@ public class HelloException {
      // Get a new client
      // NOTE: to set a different options, you can do like this:
      // ClientOptions.newBuilder().setRpcTimeout(5 * 1000).build();
+     // WorkflowServiceTChannel is 3.x only. Java 4.x uses WorkflowServiceGrpc.
      WorkflowClient workflowClient =
          WorkflowClient.newInstance(
              new WorkflowServiceTChannel(ClientOptions.defaultInstance()),

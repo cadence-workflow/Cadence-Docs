@@ -40,7 +40,7 @@ The absence of these dependencies is a deliberate design choice, and it shapes w
 
 | Not required | Why |
 | --- | --- |
-| **etcd, ZooKeeper, or Consul** | Cluster membership uses [Ringpop](https://github.com/uber/ringpop-go), a gossip protocol compiled into the server binary. There is no external coordination service to run, secure, or upgrade. |
+| **etcd, ZooKeeper, or Consul for the default deployment** | Cluster membership and shard ownership use [Ringpop](https://github.com/uber/ringpop-go), a gossip protocol compiled into the server binary. The optional [Shard Manager](https://github.com/cadence-workflow/shard-manager) currently introduces an etcd dependency. |
 | **An external message broker for core orchestration** | Workflow and activity task dispatch runs through internal task lists owned by the Matching service. See [Built-in task dispatch](/docs/tech-review/day-0-planning/design/design-principles#3-built-in-task-dispatch). |
 | **A Kubernetes API server, CRDs, or an operator** | Cadence is not a cluster extension. The server has no Kubernetes client dependency and makes no Kubernetes API calls. |
 | **A hosted control plane or vendor account** | Cadence is Apache 2.0 and fully self-hosted. It emits no telemetry and phones no service home. See [Sovereignty](/docs/tech-review/day-0-planning/design/sovereignty). |
@@ -60,6 +60,7 @@ Each of the following is introduced by turning on a specific feature. A cluster 
 | Metrics | Prometheus, StatsD, or M3 | Collecting server metrics |
 | Authentication | An OIDC or OAuth provider | Enforcing caller identity at the Frontend |
 | [Web UI](https://github.com/cadence-workflow/cadence-web) | The `cadence-web` service | Browsing workflows through a browser rather than the CLI |
+| [Shard Manager](https://github.com/cadence-workflow/shard-manager) | etcd | Replacing default Ringpop-based shard ownership with the optional Shard Manager |
 
 ### Advanced visibility requires a message bus
 
@@ -112,7 +113,7 @@ They communicate over YARPC (gRPC and Thrift) and locate each other through Ring
 | Metrics backend | No | Observability |
 | OIDC / OAuth provider | No | Authentication |
 | `cadence-web` | No | Browser UI |
-| Coordination service (etcd, ZooKeeper, Consul) | **Never** | — |
+| Coordination service (etcd) | No | Optional Shard Manager |
 | Kubernetes API access, CRDs, operator | **Never** | — |
 
 A minimal production cluster is therefore Cadence plus one database. A full-featured one adds a search backend, Kafka, an object store, a metrics backend, an identity provider, and the Web UI — each independently, and each only when the corresponding feature is wanted.

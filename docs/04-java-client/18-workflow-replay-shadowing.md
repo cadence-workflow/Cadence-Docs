@@ -113,6 +113,10 @@ Local shadowing test is similar to the replay test. First create a workflow shad
 
 Here's a simple example. The example is also available [here](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/test/java/com/uber/cadence/samples/hello/HelloWorkflowShadowingTest.java).
 
+:::note
+`WorkflowServiceTChannel` applies to the 3.x Java client. Java 4.x removed TChannel; use `WorkflowServiceGrpc`.
+:::
+
 ```java
 public void testShadowing() throws Throwable {
   IWorkflowService service = new WorkflowServiceTChannel(ClientOptions.defaultInstance());

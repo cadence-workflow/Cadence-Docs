@@ -76,6 +76,26 @@ await client.create_schedule(
 )
 ```
 
+### Create in a paused state
+
+Pass `state` alongside your schedule configuration to prevent the schedule from firing before a worker deployment or other dependency is ready:
+
+```python
+await client.create_schedule(
+    "daily-etl",
+    spec=schedule_spec,
+    action=schedule_action,
+    policies=schedule_policies,
+    state=schedule_pb2.ScheduleState(
+        paused=True,
+        pause_info=schedule_pb2.SchedulePauseInfo(
+            reason="waiting for worker deployment",
+            paused_by="release-pipeline",
+        ),
+    ),
+)
+```
+
 ### Overlap policies
 
 | Constant | Behavior |
@@ -122,7 +142,11 @@ resp = await client.describe_schedule("daily-etl")
 print(resp.state.paused)
 print(resp.info.next_run_time)
 print(resp.info.last_run_time)
+print(resp.info.buffered_fire_count)
+print(resp.info.running_workflow_count)
 ```
+
+`buffered_fire_count` is the number of queued fires waiting to start. `running_workflow_count` is the number of workflow executions currently tracked as running for the schedule.
 
 ## Pause and unpause
 

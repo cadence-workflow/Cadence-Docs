@@ -42,7 +42,7 @@ jobs:
 
       # same as build.yml
       - name: Checkout 🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -56,7 +56,7 @@ jobs:
           FILE_DATA: ${{ secrets.CUSTOM_DOMAIN }}
 
       - name: Use Node.js lts/jod (v22)
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: lts/jod
           # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
