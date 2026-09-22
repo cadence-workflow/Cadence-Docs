@@ -42,7 +42,19 @@ Use adjacent minor releases and the latest patch in each minor line. Read both r
 
 The rehearsal succeeds only when existing and new executions continue through all three transitions without data loss, stuck task delivery, schema-version errors, or a sustained regression in service health. Pod readiness alone is not sufficient.
 
-A persistence backup is optional. Operators who want that extra precaution can take datastore and visibility backups with their provider's usual procedure. A restore is the recovery path if a schema change needs to be undone.
+Upgrade a staging cluster with the same persistence, visibility, and version pair before touching production. For a [multi-cluster](/docs/concepts/cross-dc-replication) deployment, advance one cluster at a time: apply the N+1 schema on the first cluster and soak, then the second cluster and soak, then roll the N+1 binary on the first cluster and soak, then the second cluster. That order keeps a cluster on the previous schema available while the first schema upgrade is proven.
+
+## If a schema upgrade needs to be reversed
+
+The schema tools do not provide down migrations. The supported rollback is still the previous **binary** on the newer schema. Adjacent-version schemas are applied and soaked before any N+1 binary starts, which is the main guard that a binary rollback remains safe.
+
+If a schema change itself is the problem:
+
+1. **One cluster still on the previous schema:** [Fail over](/docs/concepts/cross-dc-replication) to that cluster. Delete the affected workflows on the upgraded cluster, then let replication rebuild them from the healthy cluster.
+2. **Every cluster already on the new schema:** Use a [batch reset](/docs/cli) or restart of the impacted workflows so they replay on a healthy code path.
+3. **No previous action resolved the issue:** Restore the datastore and visibility stores from a backup taken before the schema change, then run the previous binary against that restored schema. Treat restore as the last option, not the default recovery path.
+
+Historically, Cadence has not required a production schema rollback in the past. A persistence backup is still available as that last-resort precaution; take datastore and visibility backups with the provider's usual procedure if you want it.
 
 ## Schema compatibility during rollback
 
