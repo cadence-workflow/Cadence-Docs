@@ -12,6 +12,7 @@ keywords:
   - etcd
   - shard
   - shards
+permalink: /docs/shard-manager/architecture
 ---
 
 import ArchitectureDiagram from './ArchitectureDiagram';
@@ -31,7 +32,7 @@ A service can be _both_ an executor and a spectator, e.g. Cadence Matching is an
 
 <ArchitectureDiagram />
 
-From the diagram above we see two important things. First, the client application never interacts with etcd, enabling schema changes, and potentially other persistence stores, without upgrading clients. Second, the Shard Manager service is not in the request path the spectator caches the shard-to-owner mappings and sends the message directly.
+From the diagram above we see two important things. First, the client application never interacts with etcd, enabling schema changes, and potentially other persistence stores, without upgrading clients. Second, the Shard Manager service is not in the request path. The spectator caches the shard-to-owner mappings and sends the message directly.
 
 ## The service
 
@@ -47,13 +48,13 @@ The IDLs are found in the [shard-manager repository](https://github.com/cadence-
 
 Every namespace elects a leader, using etcd. Leadership is deliberately short-lived: a leader holds it for `leaderPeriod` (60s in the shipped development config) and then resigns, so leadership circulates around the instances.
 
-The leader only has one responsibility: it runs the rebalancing loop for its namespace. The loop has two triggers — an etcd watch event telling it the namespace state changed, and a timer.
+The leader only has one responsibility: it runs the rebalancing loop for its namespace. The loop is triggered by an etcd watch event telling it the namespace state changed, or by a timer.
 
 Each pass the leader:
 
 1. Marks executors whose last heartbeat is older than `heartbeatTTL` as stale. Their shards become eligible for reassignment.
 2. Collects shards from draining and lost executors.
-3. Reassigns the shards that need new owners, and make necessary load balancing moves.
+3. Reassigns the shards that need new owners, and makes necessary load balancing moves.
 4. Writes the new assignment to etcd in a single transaction.
 
 We currently provide two load balancers, `NAIVE` and `GREEDY`, selected per namespace. We have seen the best results using the greedy load balancer.
@@ -72,7 +73,7 @@ State lives under a configurable prefix, split into a leader store and a main st
 
 Per namespace Shard Manager stores executor heartbeats and status, each executor's shard set, per-shard statistics, and the drained shard and host sets.
 
-Write rate scales with executors, not application traffic: one write per executor per `heartbeat_interval`. Data volume scales with the number of shards and executors.
+Write rate scales with executors, not application traffic: one write per executor per `heartbeat_interval`, set in the executor's own client config. Data volume scales with the number of shards and executors.
 
 Executor count has a hard limit. The leader writes a rebalance as one etcd transaction, and it compares the `ModRevision` of every executor in the namespace, so the transaction is sized by the total number of executors, not by how many shards moved. etcd's `--max-txn-ops` (default 128) therefore caps a namespace at roughly `--max-txn-ops` executors; a rebalance past that fails.
 

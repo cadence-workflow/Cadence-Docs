@@ -10,6 +10,7 @@ keywords:
   - consistent hashing alternative
   - cadence matching
   - shards
+permalink: /docs/shard-manager
 ---
 
 :::note Experimental
@@ -49,5 +50,5 @@ make start-shard-manager-canary
 
 ## Where to go next
 
-- [Architecture](01-architecture.md) — how the service, etcd, leader election, and rebalancing fit together.
-- [cadence-workflow/shard-manager](https://github.com/cadence-workflow/shard-manager) — the source, the client libraries, and `smctl`.
+- [Architecture](01-architecture.md). How the service, etcd, leader election, and rebalancing fit together.
+- [cadence-workflow/shard-manager](https://github.com/cadence-workflow/shard-manager). The source, the client libraries, and `smctl`.
