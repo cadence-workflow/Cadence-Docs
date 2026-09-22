@@ -11,7 +11,7 @@ permalink: /docs/python-client/retries
 
 # Retries
 
-Cadence retries activities and workflows automatically on failure. You control the retry behavior with a `RetryPolicy`.
+Retries are opt-in. Cadence does not retry an activity or workflow unless you attach a `RetryPolicy`. Once configured, the Cadence server records and schedules attempts durably, including after worker or server restarts.
 
 ## RetryPolicy
 

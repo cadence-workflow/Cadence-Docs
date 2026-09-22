@@ -38,14 +38,31 @@ From https://cbea.ms/git-commit/#why-not-how:
 
 3. **How did you verify it?**
    - Concrete, copyable steps (e.g. Docusaurus build and/or start, which pages checked)
-   - A link to a personal GitHub Pages deployment (e.g. `https://<user>.github.io/Cadence-Docs/`) also counts as valid verification
+   - If the PR changes published site content or behavior, it must include a
+     personal GitHub Pages deployment link matching
+     `https://<username>.github.io/Cadence-Docs/`, optionally followed by a page path
+   - Link the affected page when one exists; the site root is acceptable when the change has no page-specific route
+   - Local build commands and page checks support the verification but do not replace the required personal preview
    - ✅ GOOD: `npm run build` and `npm run start`, verified docs/concepts/search-workflows and operation-guide/troubleshooting
-   - ✅ GOOD: Verified via GitHub Pages preview at `https://<user>.github.io/Cadence-Docs/docs/...`
+   - ✅ GOOD: Verified via GitHub Pages preview at `https://<username>.github.io/Cadence-Docs/docs/...`
+   - ❌ BAD: `http://localhost:3000`, `https://cadenceworkflow.io/docs/...`, a GitHub Actions run, or a repository URL
    - ❌ BAD: "Built locally" or "Looks good"
    - If link checker or lint was used, include the command
-   - **If the PR modifies non-text files** (see item 4 below), verification **must** include production preview and dark/light mode — flag if missing
+   - **If the PR modifies non-text files** (see item 5 below), verification **must** include production preview and dark/light mode — flag if missing
 
-4. **Production Preview Verification (required for non-text changes)**
+4. **Personal GitHub Pages Preview (required for site changes)**
+   - Require a personal GitHub Pages preview when the PR changes any of:
+     - `docs/`, `blog/`, `faq/`, `community/`, `src/`, or `static/`
+     - `.mdx`, CSS, or SCSS files
+     - `docusaurus.config.*`, `sidebars.*`, scripts, or package files
+   - Do not require a preview when every changed file is limited to `.gitar/`,
+     `.github/`, or root-level repository documentation such as
+     `CONTRIBUTING.md`, `README.md`, or `NOTICE`
+   - Accept URLs matching `https://<username>.github.io/Cadence-Docs/` with an optional page path
+   - Do not accept localhost, the production Cadence site, GitHub Actions run URLs, or repository URLs
+   - If the link is missing or malformed, emit a `[Personal GitHub Pages Preview]` recommendation
+
+5. **Production Preview Verification (required for non-text changes)**
    - **Applies when the PR modifies:** `.mdx` files, `docusaurus.config.*`, `sidebars.*`, `src/` directory, `static/` (non-markdown), CSS/SCSS, scripts, or package files — anything beyond prose edits in static `.md` files
    - Description must mention running `npm run preview:github-pages -- --serve`
    - Description must mention checking both dark mode and light mode on affected pages
@@ -58,12 +75,12 @@ From https://cbea.ms/git-commit/#why-not-how:
 
 ### Optional Sections (N/A allowed when appropriate)
 
-5. **Potential risks**
+6. **Potential risks**
    - Broken internal/outbound links? Wrong version or code references?
    - Sidebar/navigation impact? Missing redirects?
    - N/A is fine for small typo fixes or obvious copy edits
 
-6. **Related changes**
+7. **Related changes**
    - If this doc change accompanies a code change, link the issue or main-repo PR
    - N/A for standalone docs fixes (typos, clarity, new tutorial)
 
@@ -85,6 +102,7 @@ From https://cbea.ms/git-commit/#why-not-how:
 - **[What changed?]**
 - **[Why?]**
 - **[How did you verify it?]**
+- **[Personal GitHub Pages Preview]** (required for site changes)
 - **[Production Preview Verification]** (required for non-text changes, part of verification)
 - **[Potential risks]**
 - **[Related changes]**

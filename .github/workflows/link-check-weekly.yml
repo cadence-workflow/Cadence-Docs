@@ -1,8 +1,8 @@
 # Weekly site-wide link check.
 #
 # Builds the Docusaurus site and runs lychee against the rendered HTML
-# under build/docs, build/community, and build/faq (blog and changelog
-# are intentionally excluded). On failure, opens or updates a single
+# under build/docs, build/blog, build/community, and build/faq
+# (changelog is intentionally excluded). On failure, opens or updates a single
 # rolling GitHub issue labeled "link-rot" so findings are tracked over
 # time without spamming new issues each week.
 name: Link check (weekly)
@@ -21,12 +21,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           persist-credentials: false
 
       - name: Use Node.js lts/jod (v22)
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: lts/jod
           cache: 'npm'
@@ -37,13 +37,13 @@ jobs:
           npm run build
 
       - name: Restore lychee cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: .lycheecache
           key: lychee-weekly-${{ github.run_id }}
           restore-keys: lychee-weekly-
 
-      - name: Run lychee on built docs, community, and faq
+      - name: Run lychee on built docs, blog, community, and faq
         id: lychee
         uses: lycheeverse/lychee-action@v2
         with:
@@ -52,6 +52,7 @@ jobs:
             --config lychee.toml
             --base ./build
             './build/docs/**/*.html'
+            './build/blog/**/*.html'
             './build/community/**/*.html'
             './build/faq/**/*.html'
           # Do not fail the job so the next step can open/update the
@@ -67,7 +68,7 @@ jobs:
         # '' != '0' evaluates to true in GitHub Actions expressions, so the
         # issue would be created on every run.
         if: steps.lychee.outputs.exit_code != '0'
-        uses: peter-evans/create-issue-from-file@v5
+        uses: peter-evans/create-issue-from-file@v6
         with:
           title: 'Link check report'
           content-filepath: ./lychee-report.md

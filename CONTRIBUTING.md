@@ -176,6 +176,7 @@ Before you submit, confirm that you have:
 - [ ] Run the production preview if your change is anything beyond prose in a `.md` file
 - [ ] Checked affected pages in dark mode and light mode
 - [ ] Listed the specific pages you verified, in the description
+- [ ] Published a personal GitHub Pages preview if the change affects the site, and added its URL to `How did you verify it?`
 - [ ] Signed every commit with `-s`
 - [ ] Noted any moved or renamed page so a redirect can be added
 
@@ -223,7 +224,16 @@ Normally you do not need to. The `fetch-release-data` GitHub Action checks for n
 
 ## Publish a personal GitHub Pages preview
 
-This step is optional. Use it for larger changes. You can deploy your fork to your own GitHub Pages site, giving you a shareable URL such as `https://<your-username>.github.io/Cadence-Docs/`.
+Every pull request that changes published site content or behavior must include a personal GitHub Pages preview. This includes changes under `docs/`, `blog/`, `faq/`, `community/`, `src/`, or `static/`, along with Docusaurus configuration, sidebars, styles, scripts, and package files. A preview is not required when every changed file is limited to `.gitar/`, `.github/`, or root-level repository documentation such as `CONTRIBUTING.md`.
+
+Deploy your fork to your own GitHub Pages site, then add the URL to `How did you verify it?` in the pull request description. Link the affected page when one exists. Use the site root for changes without a page-specific route:
+
+```text
+https://<your-username>.github.io/Cadence-Docs/
+https://<your-username>.github.io/Cadence-Docs/docs/concepts/example-page
+```
+
+The hosted preview is required in addition to the local build and any production-preview checks that apply to the change. It does not replace them.
 
 **Deploy a branch**
 

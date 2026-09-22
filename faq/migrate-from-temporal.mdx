@@ -139,6 +139,10 @@ import com.uber.cadence.activity.Activity;
 
 ### Client setup
 
+:::note
+`WorkflowServiceTChannel` applies to the 3.x Java client. The 4.x client removed TChannel and Thrift; use `WorkflowServiceGrpc` instead.
+:::
+
 ```java
 // Cadence
 IWorkflowService service = new WorkflowServiceTChannel(ClientOptions.defaultInstance());

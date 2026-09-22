@@ -92,7 +92,7 @@ The server image `ubercadence/server` is updated with every release. See [Docker
 |---|---|---|
 | Go | Official | [cadence-workflow/cadence-go-client](https://github.com/cadence-workflow/cadence-go-client) |
 | Java | Official | [cadence-workflow/cadence-java-client](https://github.com/cadence-workflow/cadence-java-client) |
-| Python | Community | |
+| Python | Official | [cadence-workflow/cadence-python-client](https://github.com/cadence-workflow/cadence-python-client) |
 | Ruby | Community | [coinbase/cadence-ruby](https://github.com/coinbase/cadence-ruby) |
 | .NET | In development | |
 
@@ -170,7 +170,7 @@ Schema migrations are managed by the `cadence-sql-tool` CLI bundled with the ser
 
 | Channel | Link |
 |---|---|
-| CNCF Slack (`#cadence-workflow`) | [Join](https://inviter.co/cncf) |
+| CNCF Slack (`#cadence-users`) | [Join](https://inviter.co/cncf) |
 | Stack Overflow | [`cadence-workflow` tag](https://stackoverflow.com/questions/tagged/cadence-workflow) |
 | GitHub Issues | [cadence-workflow/cadence/issues](https://github.com/cadence-workflow/cadence/issues) |
 | GitHub Discussions | [cadence-workflow/cadence/discussions](https://github.com/cadence-workflow/cadence/discussions) |
