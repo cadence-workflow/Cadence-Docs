@@ -32,6 +32,8 @@ Runnable workflow samples:
 | **Hello World** | One workflow invoking a single activity | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/hello_world) · [Java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloActivity.java) |
 | **Sequential activities** | Several activities chained, passing results between them | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/greetings) · [Java](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/calculation) |
 
+Workflow-start options and their defaults are documented in each SDK's source: [Go `StartWorkflowOptions`](https://github.com/cadence-workflow/cadence-go-client/blob/v1.3.1/internal/client.go), [Java `WorkflowOptions`](https://github.com/cadence-workflow/cadence-java-client/blob/v4.0.0/src/main/java/com/uber/cadence/client/WorkflowOptions.java), and [Python `StartWorkflowOptions`](https://github.com/cadence-workflow/cadence-python-client/blob/v0.4.0/cadence/client.py).
+
 ## Example
 
 Let's look at a use case. A customer signs up for an application with a trial period. After the period, if the customer has not cancelled, he should be charged once a month for the renewal. The customer has to be notified by email about the charges and should be able to cancel the subscription at any time.

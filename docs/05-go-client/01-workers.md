@@ -73,10 +73,9 @@ func main() {
     if err != nil {
         logger.Fatal("Failed to create worker", zap.Error(err))
     }
-    if err := cadenceWorker.Start(); err != nil {
-        logger.Fatal("Failed to start worker")
+    if err := cadenceWorker.Run(); err != nil {
+        logger.Fatal("Failed to run worker", zap.Error(err))
     }
-    logger.Info("Started Worker.", zap.String("worker", TaskListName))
 }
 
 func buildCadenceClient() workflowserviceclient.Interface {

@@ -32,7 +32,7 @@ Cadence uses the usual marker for each language. Adding one of these is what mak
 | Java SDK | `@Deprecated` and Javadoc | `javac -Xlint:deprecation` and IDEs warn on use. Example: the `query` overloads on [`WorkflowStub`](https://github.com/cadence-workflow/cadence-java-client/blob/v4.0.0/src/main/java/com/uber/cadence/client/WorkflowStub.java). |
 | Python SDK | No equivalent marker today | Use of a deprecated Python API does not by itself fail or warn in a build. |
 
-Proto's `[deprecated = true]` option has no compile-time effect in every language. Java and Go are the ones that turn it into a warning.
+Proto's `[deprecated = true]` option does not produce a compile-time warning in every generated language. Generated Java and Go code surfaces the deprecation to their respective tooling.
 
 Deprecated configuration and CLI usage can also show up as **warning logs at runtime**, even when the old value is still accepted. Treat those lines as leftover use to fix, not as a permanent compatibility path. The messages below are examples of that pattern. Later deprecations may log different text, on different components, or only after a specific flag or config is read.
 
