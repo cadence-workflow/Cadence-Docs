@@ -163,6 +163,13 @@ if err != nil {
 fmt.Printf("Paused: %v\n", resp.State.Paused)
 fmt.Printf("Next run: %v\n", resp.Info.NextRunTime)
 fmt.Printf("Last run: %v\n", resp.Info.LastRunTime)
+fmt.Printf("Total runs: %d\n", resp.Info.TotalRuns)
+fmt.Printf("Created: %v\n", resp.Info.CreateTime)
+fmt.Printf("Last updated: %v\n", resp.Info.LastUpdateTime)
+fmt.Printf("Missed runs: %d\n", resp.Info.MissedRuns)
+fmt.Printf("Skipped runs: %d\n", resp.Info.SkippedRuns)
+fmt.Printf("Buffered fires: %d\n", resp.Info.BufferedFireCount)
+fmt.Printf("Running workflows: %d\n", resp.Info.RunningWorkflowCount)
 ```
 
 ## Pause and unpause
