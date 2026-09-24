@@ -12,6 +12,15 @@ During a server rollout, compare each metric with its pre-rollout level. If a me
 
 Start with what applications see when they call Cadence. Then check whether workflows are progressing and whether persistence and replication are keeping up.
 
+| Area | Metric | What to watch for |
+| --- | --- | --- |
+| Frontend requests | `cadence_errors`, `cadence_requests` | Errors rising relative to requests |
+| Frontend latency | `cadence_latency` | Regular API calls, such as starting a workflow, consistently slower |
+| Canary | `workflow_success` for `workflow.sanity` | Scheduled runs no longer succeeding |
+| History tasks | `task_latency`, `task_latency_queue` | Sustained increase in transfer or timer task latency |
+| Persistence | `persistence_errors`, `persistence_requests`, `persistence_latency` | More failed or slower database operations |
+| Replication | `replication_tasks_lag_gauge` | Lag that keeps rising after the new version is deployed |
+
 ## Frontend requests
 
 Check whether Cadence is serving requests successfully. In the [frontend availability example](/docs/operation-guide/monitoring#service-availabilityserver-metrics), `cadence_requests` counts incoming requests and `cadence_errors` counts internal service errors. If errors rise relative to requests after the rollout begins, check which frontend operations are failing.
