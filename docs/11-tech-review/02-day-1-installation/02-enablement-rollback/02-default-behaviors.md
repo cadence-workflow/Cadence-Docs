@@ -65,7 +65,7 @@ Dynamic configuration can tune a subsystem that static configuration initialized
 
 Many Cadence capabilities stay off after a default install. A hello-world worker on a registered domain does not enable them. Operators and application owners turn them on through the same four surfaces above. How you reverse the change is the reverse of that layer: restore YAML and restart, restore the dynamic key, update the domain, or deploy workers and clients without the flag.
 
-This is not a complete catalog of dynamic configuration keys. It is the features people most often miss because they are shipped, documented, and still off until you ask for them. How to turn a running cluster's optional subsystems off again is also on [Live cluster enablement and rollback](/docs/tech-review/day-1-installation/enablement-rollback/live-cluster-enablement-rollback). Experimental or alpha surfaces are out of scope here.
+This is not a complete catalog of dynamic configuration keys. It is the features people most often miss because they are shipped, documented, and still off until you ask for them. How to turn a running cluster's optional subsystems off again is also on [Live cluster enablement and rollback](/docs/tech-review/day-1-installation/enablement-rollback/live-cluster-enablement-rollback). How to try one of them on a narrow scope, including shadow modes, is on [Alpha and beta capabilities](/docs/tech-review/day-1-installation/rollout-upgrade-rollback/alpha-beta-capabilities).
 
 ### Cluster and operator features
 

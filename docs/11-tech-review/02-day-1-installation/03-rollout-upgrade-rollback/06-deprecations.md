@@ -56,7 +56,7 @@ When the existing surface can remain available, the project follows this sequenc
 3. **Announce the removal:** Describe required action in release notes or a migration guide.
 4. **Release the change:** Follow that component's release notes for the exact compatibility boundary and migration steps. Do not infer compatibility only from another Cadence component's version.
 
-Security, data-integrity, or correctness defects can require a faster change. Experimental surfaces can also change without the same compatibility expectations as stable APIs.
+Security, data-integrity, or correctness defects can require a faster change. An off-by-default capability can also change without the same compatibility expectations as the default path. See [Alpha and beta capabilities](/docs/tech-review/day-1-installation/rollout-upgrade-rollback/alpha-beta-capabilities).
 
 ## Current deprecations
 
