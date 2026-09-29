@@ -23,11 +23,11 @@ There is no published catalog that marks features alpha or beta. Do not infer ma
 
 Treat a capability as early only when its release notes or usage documentation explicitly describes it as experimental or preview, or warns that its behavior or interface can change or be removed. Do not enable a flag that appears only in source code and has no release note, blog post, or usage guide identifying it as supported for opt-in use. Such a flag is an internal implementation detail, not a user-facing alpha or beta feature.
 
-Features that are off only because they need extra infrastructure, such as TLS, archival, or advanced visibility, are supported opt-ins. Their defaults and rollback steps are on [Default behaviors](/docs/tech-review/day-1-installation/enablement-rollback/default-behaviors). The default path has the compatibility expectations on [Deprecations and removals](/docs/tech-review/day-1-installation/rollout-upgrade-rollback/deprecations). An early capability can change, including being removed, when a release note says so.
+A documented opt-in is a supported feature whose compiled default stays off. That includes infrastructure you configure yourself, such as TLS, archival, or advanced visibility, and a behavior change shipped behind a flag, such as the global Frontend rate limiter. The flag lets existing deployments keep the previous behavior until they enable it. Once release notes or usage documentation describe that opt-in as available, it has the compatibility expectations on [Deprecations and removals](/docs/tech-review/day-1-installation/rollout-upgrade-rollback/deprecations). Defaults and rollback steps are on [Default behaviors](/docs/tech-review/day-1-installation/enablement-rollback/default-behaviors). An early capability can change, including being removed, when a release note says so.
 
-## Enable a non-stable feature
+## Enable an opt-in feature
 
-A non-stable feature can reach you in a few ways. A release note, blog post, or usage guide may describe it as experimental, preview, or still under test. Some features are opt-in by nature and stay off until you enable them. Maintainers may also recommend a specific feature for your deployment. Use the steps below unless that announcement or recommendation gives different instructions.
+Use these steps when you enable a supported opt-in. The same steps apply when release notes or usage documentation describe a feature as experimental, preview, or still under test. A supported opt-in stays off so existing deployments keep the previous behavior. Maintainers may also recommend a specific feature for your deployment. When an announcement gives different instructions, follow those instructions.
 
 1. Deploy the release with the capability still at its compiled default. Open workflows continue on the previous path.
 2. Enable it for the smallest scope the feature allows. Most features turn on through dynamic configuration. Filters in the current server include domain, task list, task type, shard, and, for some keys, a rate-limit key. The allowed filters are declared on each key in [`constants.go`](https://github.com/cadence-workflow/cadence/blob/v1.4.1/common/dynamicconfig/dynamicproperties/constants.go). Some features turn on through static YAML, such as a new listener or datastore. Those changes take effect after a rolling restart.
@@ -41,18 +41,16 @@ The file-based dynamic configuration client reloads its YAML in each process. Th
 
 These keys are in Cadence server v1.4.1. `disabled` is the serving default unless the table says otherwise.
 
-`frontend.globalRatelimiterMode` has been used for years. Enabling it changes how rate limits are applied and provides more stable quota management. It is opt-in in the current release and it will become the default in Cadence v2.
-
 | Key | Default | What shadow does | Filter |
 | --- | --- | --- | --- |
-| `frontend.globalRatelimiterMode` | `disabled` | `local-shadow-global` and `global-shadow-local` run both limiters and serve one of them, so the other can warm up before you switch | Rate-limit key |
-| `history.historyTaskDLQMode` | `disabled` | `shadow` writes failed history tasks to the dead-letter queue and does not process them. `enabled` also processes that queue | Domain |
-| `history.timerProcessorCachedQueueReaderMode` | `disabled` | `shadow` prefetches with the cached reader and still serves reads from the base reader | Shard |
+| `frontend.globalRatelimiterMode` | `disabled` | This key has been used for years. Enabling it changes how rate limits are applied and provides more stable quota management. `local-shadow-global` and `global-shadow-local` run both limiters and serve one of them, so the other can warm up before you switch | Rate-limit key |
+| `history.historyTaskDLQMode` | `disabled` | `shadow` writes failed history tasks to the dead-letter queue and does not process them. `enabled` writes those tasks, and processes them only when `history.historyTaskDLQProcessorEnabled` is also true. That key defaults to `false` | Domain |
+| `history.timerProcessorCachedQueueReaderMode` | `disabled` | This key serves timer-task reads from an in-memory cache and reduces database usage. It is an internal optimization. No release note or usage guide identifies it as a supported opt-in, so leave it at `disabled` unless maintainers recommend enabling it. `shadow` prefetches with the cached reader and still serves reads from the base reader | Shard |
 | `history.taskSchedulerEnableRateLimiter` | `false` | The limiter stays off until this key is true. `history.taskSchedulerEnableRateLimiterShadowMode` defaults to `true`, so turning the limiter on starts in shadow unless you set the shadow key to `false` | Shadow key: domain |
 
 ## SDK flags
 
-The Go SDK names the same idea `FeatureFlags`: flags that turn on a breaking client behavior. The zero value leaves those booleans off, so an upgraded SDK keeps the previous behavior until the application sets the flag. Set the flag on both the client and the worker when the two must agree. See [`FeatureFlags`](https://github.com/cadence-workflow/cadence-go-client/blob/v1.3.1/internal/internal_utils.go) in Go SDK v1.3.1 and the SDK rows on [Default behaviors](/docs/tech-review/day-1-installation/enablement-rollback/default-behaviors).
+The Go SDK names the same idea `FeatureFlags`. Its boolean fields default to off, so an upgraded SDK keeps the previous behavior for those fields until the application sets the flag. `PollerAutoScalerEnabled` is deprecated; use `AutoScalerOptions` instead. `MetricEmitMode` is the exception. Leaving it unset selects [`metrics.EmitHistogramsOnly`](https://github.com/cadence-workflow/cadence-go-client/blob/v1.4.0/internal/common/metrics/emit.go#L58), which emits histogram metrics. Set `metrics.EmitTimersOnly` to keep the previous timer-only metrics, or `metrics.EmitBoth` to emit both. Set a boolean flag on both the client and the worker when the two must agree. See [`FeatureFlags`](https://github.com/cadence-workflow/cadence-go-client/blob/v1.4.0/internal/internal_utils.go) in Go SDK v1.4.0 and the SDK rows on [Default behaviors](/docs/tech-review/day-1-installation/enablement-rollback/default-behaviors).
 
 Java and Python expose worker and client options on their own types. Check the options for the SDK you ship before assuming a Go flag name exists there.
 

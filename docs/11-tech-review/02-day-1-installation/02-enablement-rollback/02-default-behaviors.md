@@ -65,7 +65,7 @@ Dynamic configuration can tune a subsystem that static configuration initialized
 
 Many Cadence capabilities stay off after a default install. A hello-world worker on a registered domain does not enable them. Operators and application owners turn them on through the same four surfaces above. How you reverse the change is the reverse of that layer: restore YAML and restart, restore the dynamic key, update the domain, or deploy workers and clients without the flag.
 
-This is not a complete catalog of dynamic configuration keys. It is the features people most often miss because they are shipped, documented, and still off until you ask for them. How to turn a running cluster's optional subsystems off again is also on [Live cluster enablement and rollback](/docs/tech-review/day-1-installation/enablement-rollback/live-cluster-enablement-rollback). How to try one of them on a narrow scope, including shadow modes, is on [Alpha and beta capabilities](/docs/tech-review/day-1-installation/rollout-upgrade-rollback/alpha-beta-capabilities).
+This is not a complete catalog of dynamic configuration keys. It is the features people most often miss because they are shipped, documented, and still off until you ask for them. How to turn a running cluster's optional subsystems off again is also on [Live cluster enablement and rollback](/docs/tech-review/day-1-installation/enablement-rollback/live-cluster-enablement-rollback). How to enable one of them on a narrow scope, including shadow modes, is on [Alpha and beta capabilities](/docs/tech-review/day-1-installation/rollout-upgrade-rollback/alpha-beta-capabilities).
 
 ### Cluster and operator features
 
@@ -115,7 +115,7 @@ Application workers and starters have their own switches. Server configuration d
 | Custom payload conversion | SDK default converter | Set the same [data converter](/docs/concepts/data-converter) on clients and workers to add encryption, compression, or a claim-check pattern. Existing histories remain encoded with the previous converter, so keep backward decoding support during rollback. |
 | [Custom Workflow Controls](/docs/concepts/workflow-queries-formatted-data) | Queries render their ordinary result | On Cadence Web 4.0.14 or later, return the `formattedData` query-response envelope with Markdown controls. Revert the query handler to an ordinary response to remove the controls. |
 
-`FeatureFlags` on the Go SDK is the client-side counterpart of server dynamic configuration: a breaking or more precise behavior stays off so existing applications keep compiling and running. Put the flags on `client.Options` and `worker.Options` together when the worker and the starter must agree. Other language SDKs use worker and client options rather than this Go struct; check that SDK's options type for the equivalent.
+`FeatureFlags` on the Go SDK is the client-side counterpart of server dynamic configuration. Its boolean fields stay off so existing applications keep the previous behavior for those fields. `MetricEmitMode` is the exception: an unset value selects [`metrics.EmitHistogramsOnly`](https://github.com/cadence-workflow/cadence-go-client/blob/v1.4.0/internal/common/metrics/emit.go#L58) and emits histogram metrics. `metrics.EmitTimersOnly` keeps the previous timer-only metrics, and `metrics.EmitBoth` emits both. Put the boolean flags on `client.Options` and `worker.Options` together when the worker and the starter must agree. Other language SDKs use worker and client options rather than this Go struct; check that SDK's options type for the equivalent.
 
 ## Application behavior
 
@@ -178,4 +178,4 @@ Cadence defaults are intended to make a small deployment operable, not to select
 - [HTTP API](/docs/concepts/http-api)
 - [Schedules](/docs/concepts/schedules)
 - [Cross-cluster replication](/docs/concepts/cross-dc-replication)
-- [Go FeatureFlags](https://pkg.go.dev/go.uber.org/cadence@v1.3.1/client#FeatureFlags)
+- [Go FeatureFlags](https://pkg.go.dev/go.uber.org/cadence@v1.4.0/client#FeatureFlags)
