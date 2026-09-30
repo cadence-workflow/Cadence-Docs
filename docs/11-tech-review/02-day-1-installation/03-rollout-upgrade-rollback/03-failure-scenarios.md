@@ -18,7 +18,7 @@ Tasks stay persisted until acknowledged, and the next shard owner redelivers any
 
 Timers are persisted per shard and fire late while their shard has no owner. Workers poll Frontend and reconnect on their own, without a redeploy.
 
-If the server is not running for longer periods of time, workflows will hit timeouts and be failed when the server becomes available again.
+If the server is down longer than an open workflow's timeout, that workflow times out once the server is back.
 
 ## Failure modes
 
@@ -69,7 +69,7 @@ Cluster names, `initialFailoverVersion`, and `failoverVersionIncrement` must mat
 
 ### Application code
 
-The rollout most likely to break a running workflow is the adopter's own worker deploy.
+The adopter's own worker deploy can also break running workflows.
 
 | Failure | Cause | Impact on running workloads |
 | --- | --- | --- |
