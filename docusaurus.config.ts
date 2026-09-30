@@ -17,6 +17,9 @@ import { envReplace } from '@pnpm/config.env-replace';
 const defaultLocale = 'en';
 
 const config: Config = {
+  // Keep this short. Docs/blog titles are `{page} | ${title}`. Homepage
+  // document title and og:title are set in src/pages/index.tsx so they can
+  // self-identify the product without rewriting every other page.
   title: 'Cadence',
   tagline: 'Orchestrate with Confidence: The Open-Source Workflow Engine for Tomorrow',
   favicon: 'img/favicon.ico',

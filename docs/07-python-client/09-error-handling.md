@@ -101,6 +101,8 @@ except SignalExternalWorkflowFailed as e:
 When a workflow is cancelled, pending `await` points raise `asyncio.CancelledError`. Catch it to run cleanup:
 
 ```python
+import asyncio
+
 @registry.workflow()
 class LongWorkflow:
     @workflow.run
@@ -112,11 +114,14 @@ class LongWorkflow:
             raise  # re-raise so Cadence records the cancellation
 ```
 
+If the exception is not re-raised, the workflow can complete normally. For activity cancellation, heartbeat delivery, and child cancellation, see [Cancellation](/docs/python-client/cancellation).
+
 ## Error reference
 
 | Exception | When raised |
 |---|---|
 | `ActivityFailure` | Activity exhausted all retries or returned a non-retryable error |
+| `ActivityCancelledError` | A synchronous activity reports cooperative cancellation |
 | `WorkflowFailure` | A workflow execution failed |
 | `StartChildWorkflowExecutionFailed` | Child workflow could not be started |
 | `ChildWorkflowExecutionFailed` | Child workflow started but failed |
@@ -132,5 +137,10 @@ class LongWorkflow:
 Import from `cadence.error`:
 
 ```python
-from cadence.error import ActivityFailure, ChildWorkflowExecutionFailed, CadenceRpcError
+from cadence.error import (
+    ActivityCancelledError,
+    ActivityFailure,
+    CadenceRpcError,
+    ChildWorkflowExecutionFailed,
+)
 ```

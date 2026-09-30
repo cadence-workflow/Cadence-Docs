@@ -49,7 +49,7 @@ Cadence reuses terminology from _workflow automation_ :domain:. So fault-oblivio
 
 The Cadence servers do not execute :workflow: code directly. The :workflow: code is hosted by an external (from the servers' point of view) :workflow_worker: process. These processes receive _:decision_task:decision_tasks:_ that contain :event:events: that the :workflow: is expected to handle from the Cadence servers, deliver them to the :workflow: code, and communicate :workflow: _:decision:decisions:_ back to the servers.
 
-Because :workflow: code runs in your own process rather than on the Cadence servers, those servers do not constrain the language you write it in. Any language that can call the Cadence API can host :workflow:workflows:. The project maintains production-ready Go, Java, and Python SDKs. Go connects over gRPC or TChannel. Java 4.x uses gRPC; Java 3.x still supports TChannel. Python uses gRPC.
+Because :workflow: code runs in your own process rather than on the Cadence servers, those servers do not constrain the language you write it in. Any language that can call the Cadence API can host :workflow:workflows:. The project maintains production-ready Go, Java, and Python SDKs. Go connects over gRPC or TChannel. Java 3.x supports gRPC or TChannel; Java 4.x is gRPC-only. Python uses gRPC.
 
 The Cadence service API doesn't impose any specific :workflow: definition language. So a specific :worker: can be implemented to execute practically any existing :workflow: specification. The model the Cadence team chose to support out of the box is based on the idea of durable function. Durable functions are as close as possible to application business logic with minimal plumbing required.
 

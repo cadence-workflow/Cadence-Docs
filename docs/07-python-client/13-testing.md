@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Testing
-description: How to unit test workflows in the Cadence Python SDK using TestWorkflowEnvironment.
+description: How to unit test workflows and activities in the Cadence Python SDK with in-memory test environments.
 keywords:
   - cadence python testing
   - cadence python workflow test
@@ -13,7 +13,10 @@ permalink: /docs/python-client/testing
 
 # Testing
 
-`TestWorkflowEnvironment` runs workflow code in-memory without a Cadence server. It executes workflow and activity logic deterministically, mocks activities with fixed values or custom functions, and advances virtual time for timer-based workflows.
+The SDK provides two in-memory test environments that do not require a Cadence server:
+
+- `TestWorkflowEnvironment` executes workflows deterministically, mocks activities, and advances virtual time.
+- `TestActivityEnvironment` executes one activity with simulated metadata, heartbeats, cancellation, and timeouts.
 
 ## Samples
 
@@ -23,6 +26,7 @@ Test samples:
 |--------|-------------|------|
 | **Buffer overlap test** | Exercises schedule overlap policies against a running server | [test_buffer_overlap.py](https://github.com/cadence-workflow/cadence-samples/blob/master/python_sdk_samples/schedule_samples/test_buffer_overlap.py) |
 | **Queue full test** | Exercises schedule queue limits against a running server | [test_queue_full.py](https://github.com/cadence-workflow/cadence-samples/blob/master/python_sdk_samples/schedule_samples/test_queue_full.py) |
+| **Activity environment tests** | Covers execution, heartbeats, cancellation, methods, and timeouts without a server | [test_activity_environment.py](https://github.com/cadence-workflow/cadence-python-client/blob/v0.4.0/tests/cadence/testing/test_activity_environment.py) |
 
 ## Basic test
 
@@ -133,6 +137,74 @@ status = await client.query_workflow("my-wf", "", "get_status", result_type=str)
 assert status == "processing"
 ```
 
+## Testing an activity
+
+Pass an activity definition directly to `TestActivityEnvironment.execute_activity`:
+
+```python
+from cadence import activity
+from cadence.testing import TestActivityEnvironment
+
+@activity.defn()
+async def greet(name: str) -> str:
+    return f"Hello, {name}!"
+
+@pytest.mark.asyncio
+async def test_greet_activity():
+    with TestActivityEnvironment() as env:
+        result = await env.execute_activity(greet, "Cadence")
+
+    assert result == "Hello, Cadence!"
+```
+
+Synchronous activities and activity methods are supported. To execute an activity by name, register it first:
+
+```python
+env = TestActivityEnvironment()
+env.register_activity(greet)
+result = await env.execute_activity("greet", "Cadence")
+```
+
+### Heartbeats
+
+Seed heartbeat details to simulate a retry, then inspect heartbeats emitted by the activity:
+
+```python
+from cadence import activity
+
+@activity.defn()
+async def resumable_activity() -> int:
+    previous_page, previous_count = activity.heartbeat_details(str, int)
+    assert (previous_page, previous_count) == ("previous-page", 20)
+    activity.heartbeat("current-page", 40)
+    return 40
+
+env = TestActivityEnvironment()
+env.set_heartbeat_details("previous-page", 20)
+
+result = await env.execute_activity(resumable_activity)
+
+assert result == 40
+assert env.heartbeat_count == 1
+assert env.get_heartbeat_details(str, int) == ["current-page", 40]
+```
+
+Inside the activity, `activity.heartbeat_details(str, int)` returns the seeded values.
+
+### Cancellation and timeout
+
+Call `env.cancel()` before or during execution to simulate an activity cancellation request. Async activities receive `asyncio.CancelledError` after they heartbeat; synchronous activities can observe `activity.is_cancelled()`.
+
+Use `set_test_timeout` to impose a wall-clock limit:
+
+```python
+env = TestActivityEnvironment()
+env.set_test_timeout(timedelta(milliseconds=100))
+
+with pytest.raises(asyncio.TimeoutError):
+    await env.execute_activity(slow_activity)
+```
+
 ## TestWorkflowEnvironment reference
 
 | Method / Property | Description |
@@ -152,3 +224,21 @@ assert status == "processing"
 with TestWorkflowEnvironment(registry) as env:
     ...
 ```
+
+## TestActivityEnvironment reference
+
+| Method / Property | Description |
+|---|---|
+| `env.registry` | Registry used to resolve activities by name |
+| `env.client` | Client returned by `activity.client()` during async activity execution |
+| `env.register_activity(definition)` | Register one activity |
+| `env.register_activities(instance)` | Register decorated activity methods on an object |
+| `await env.execute_activity(activity, *args, **kwargs)` | Execute a definition or registered activity name |
+| `env.set_heartbeat_details(*details)` | Seed heartbeat details from a simulated previous attempt |
+| `env.heartbeat_count` | Number of heartbeats in the last execution |
+| `env.get_heartbeat_details(*types)` | Decode details from the latest heartbeat |
+| `env.cancel()` | Request cancellation |
+| `env.set_test_timeout(duration)` | Set a wall-clock execution timeout |
+| `env.close()` | Shut down the activity thread pool |
+
+`TestActivityEnvironment` is also a synchronous context manager.

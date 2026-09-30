@@ -97,7 +97,7 @@ Payload handling is an SDK concern rather than a server one. A custom [data conv
 | Integration | Notes | Support |
 | --- | --- | --- |
 | gRPC and Protobuf | Primary API, definitions in `cadence-idl` | Project maintained |
-| Thrift over TChannel | Server still serves it. The Go SDK and Java 3.x clients use it; Java 4.x and Python are gRPC-only | Project maintained |
+| Thrift over TChannel | Server still serves it. The Go SDK and Java 3.x clients can use it; Java 4.x and Python are gRPC-only | Project maintained |
 | HTTP API | Selected methods over HTTP and JSON, server v1.2.0 and later | Project maintained |
 | Go, Java, Python SDKs | Include in-memory test environments and replay tooling | Project maintained |
 | TypeScript SDK | In development | Community |

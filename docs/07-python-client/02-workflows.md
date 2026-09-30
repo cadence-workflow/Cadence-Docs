@@ -107,7 +107,11 @@ print(ctx.info().workflow_id)
 print(ctx.info().workflow_run_id)
 print(ctx.info().workflow_domain)
 print(ctx.info().workflow_task_list)
+print(ctx.info().memo)
+print(ctx.info().search_attributes)
 ```
+
+`WorkflowInfo` also exposes the workflow type and active data converter. Calls to [`workflow.upsert_search_attributes`](/docs/python-client/search-attributes) update `info().search_attributes` immediately.
 
 ## Initialization
 
@@ -139,3 +143,5 @@ Workflow code must be deterministic. The same sequence of inputs must always pro
 - Do not use `random`, `uuid`, or other non-deterministic sources.
 - Do not make I/O calls directly -- run them as activities.
 - Do not use threading or `asyncio.create_task()` -- the workflow event loop is controlled by the worker.
+
+When a workflow needs a short non-deterministic calculation, record the result with [`workflow.side_effect`](/docs/python-client/side-effects). Protect incompatible changes to the sequence of workflow operations with [`workflow.get_version`](/docs/python-client/workflow-versioning).

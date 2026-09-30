@@ -86,7 +86,7 @@ Cadence does not require a hosted control plane or project-operated cloud servic
 | SDK | Current runtime baseline | Transport |
 | --- | --- | --- |
 | Go | Current [`go.mod`](https://github.com/cadence-workflow/cadence-go-client/blob/master/go.mod) declares Go 1.23 | gRPC or TChannel |
-| Java | [Supported runtimes](/docs/releases/cadence-java-client) are Java 11, 17, and 21 | gRPC in [4.x](https://github.com/cadence-workflow/cadence-java-client/releases/tag/v4.0.0). TChannel remains in 3.x. |
+| Java | [Supported runtimes](/docs/releases/cadence-java-client) are Java 11, 17, and 21 | gRPC in 3.x and 4.x; TChannel in 3.x only, removed in [4.x](https://github.com/cadence-workflow/cadence-java-client/releases/tag/v4.0.0) |
 | Python | [`pyproject.toml`](https://github.com/cadence-workflow/cadence-python-client/blob/main/pyproject.toml) declares Python 3.11 through 3.13 | gRPC |
 
 The SDK runtime and transport belong to the application worker, not the Cadence server host. Workers can run on Kubernetes, VMs, or developer machines. They can be upgraded independently as long as their API version is compatible with the server. For workflow-code upgrades, replay existing histories before rollout because infrastructure compatibility does not protect against nondeterministic workflow code changes.

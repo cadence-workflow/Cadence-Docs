@@ -41,9 +41,17 @@ async with Client(domain="my-domain", target=CADENCE_TARGET) as client:
 | Option | Description |
 |---|---|
 | `domain` | Cadence domain (required) |
-| `target` | Cadence frontend address, `host:port` (required; no SDK default) |
+| `target` | Cadence frontend address as `host:port` (required) |
 | `identity` | Identity string shown in workflow history (default: auto-generated) |
 | `data_converter` | Custom data converter for serializing workflow arguments |
+| `service_name` | Cadence service name sent in RPC metadata (default: `cadence-frontend`) |
+| `caller_name` | Caller name sent in RPC metadata (default: `cadence-client`) |
+| `metrics_emitter` | Metrics backend; defaults to `NoOpMetricsEmitter` |
+| `context_propagators` | Sequence of context propagators used for workflow headers |
+| `credentials` | Optional gRPC channel credentials |
+| `compression` | gRPC compression mode |
+| `interceptors` | Additional gRPC async client interceptors |
+| `channel_arguments` | Additional gRPC channel arguments |
 
 ## Registry
 
@@ -89,6 +97,34 @@ async with Client(domain="my-domain", target=CADENCE_TARGET) as client:
 ```
 
 `Worker` runs two pollers internally: one for decision (workflow) tasks and one for activity tasks. Both run concurrently.
+
+### Worker options
+
+```python
+async with Worker(
+    client,
+    "my-task-list",
+    registry,
+    max_concurrent_activity_execution_size=200,
+    max_concurrent_decision_task_execution_size=100,
+    activity_task_pollers=4,
+    decision_task_pollers=4,
+):
+    await asyncio.Event().wait()
+```
+
+| Option | Description | Default |
+|---|---|---|
+| `max_concurrent_activity_execution_size` | Maximum concurrently executing activities | `1000` |
+| `max_concurrent_decision_task_execution_size` | Maximum concurrently executing decision tasks | `1000` |
+| `task_list_activities_per_second` | Activity dispatch rate limit for the task list; `0.0` leaves it unlimited | `0.0` |
+| `activity_task_pollers` | Number of activity pollers | `2` |
+| `decision_task_pollers` | Number of decision pollers | `2` |
+| `disable_activity_worker` | Disable activity polling | `False` |
+| `disable_workflow_worker` | Disable decision-task polling | `False` |
+| `identity` | Worker identity recorded by Cadence | Generated from the client identity and task list |
+| `metrics_emitter` | Metrics backend | Inherited from the client |
+| `context_propagators` | Context propagators | Inherited from the client |
 
 ### Disabling one poller
 
