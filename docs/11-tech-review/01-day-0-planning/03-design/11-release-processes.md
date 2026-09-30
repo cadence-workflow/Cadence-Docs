@@ -6,11 +6,12 @@ keywords:
   - cadence release process
   - cadence versioning
   - cadence release cadence
+permalink: /docs/tech-review/day-0-planning/design/release-processes
 ---
 
 Cadence publishes stable versions as GitHub Releases. The server, language SDKs, Helm chart, and Web UI have independent versions and release schedules. Review the release notes for every component that you upgrade.
 
-The server uses one pipeline for every official release. Maintainers publish the scope in a tracking issue, tag merged commits as prereleases, and verify those builds in Uber production clusters. Before publishing, they announce in CNCF Slack that the release is coming and open the tracking issue for the following release. After the verified commit is published with release notes, they announce the release in the same channel.
+The server uses one pipeline for every official release. Maintainers publish the scope in a tracking issue, tag merged commits as prereleases, and verify those builds in Uber production clusters. They then announce in CNCF Slack that the release is coming and open the tracking issue for the following release. After that, they publish the verified commit with release notes and announce that the release is out.
 
 ## Version numbers
 
@@ -47,17 +48,21 @@ Maintainers pull that prerelease into Uber, test it, and roll it out to Uber pro
 
 [Upgrade and rollback testing](/docs/tech-review/day-1-installation/rollout-upgrade-rollback/upgrade-rollback-testing) describes that staged rollout, including the scale of the clusters involved.
 
-### 3. Promote the verified build and publish release notes
+### 3. Announce that the release is coming and open the next tracking issue
 
-When a prerelease is verified, maintainers tag that same commit as the official release and write the release notes. The official version number is chosen at that point. It can keep the prerelease line, as with [`v1.4.1`](https://github.com/cadence-workflow/cadence/releases/tag/v1.4.1) and `v1.4.1-prerelease33` (both commit `3410187`), or move to the next minor, as with [`v1.4.0`](https://github.com/cadence-workflow/cadence/releases/tag/v1.4.0) and `v1.3.7-prerelease34` (both commit `1a42a94`). The prerelease tag remains; the official tag is the version operators adopt.
+Once a prerelease is verified, maintainers announce in [CNCF Slack `#cadence-users`](https://inviter.co/cncf) that the official release is coming. [Join the CNCF Slack workspace](https://inviter.co/cncf) and open `#cadence-users` to see these posts and ask questions.
+
+With that announcement, they open a new release-tracking issue for the following version and start linking the features and bug fixes planned for it. That issue is the scope list for the next cycle, in the same form as [Release Tracking: Cadence v1.4.2](https://github.com/cadence-workflow/cadence/issues/8300).
+
+### 4. Promote the verified build and publish release notes
+
+Maintainers tag that same verified commit as the official release and write the release notes. The official version number is chosen at that point. It can keep the prerelease line, as with [`v1.4.1`](https://github.com/cadence-workflow/cadence/releases/tag/v1.4.1) and `v1.4.1-prerelease33` (both commit `3410187`), or move to the next minor, as with [`v1.4.0`](https://github.com/cadence-workflow/cadence/releases/tag/v1.4.0) and `v1.3.7-prerelease34` (both commit `1a42a94`). The prerelease tag remains; the official tag is the version operators adopt.
 
 Release notes are published on [GitHub Releases](https://github.com/cadence-workflow/cadence/releases). They are the written record for that version: migration steps, features, bug fixes, and behavior changes. Deprecations and removals called out there are also described on [Deprecations and removals](/docs/tech-review/day-1-installation/rollout-upgrade-rollback/deprecations).
 
-### 4. Announce the release and open the next tracking issue
+### 5. Announce that the release is out
 
-Maintainers post twice in [CNCF Slack `#cadence-users`](https://inviter.co/cncf). Before the official release is published, they announce that it is coming. After it is published, they announce that the release is out and point to the release notes. [Join the CNCF Slack workspace](https://inviter.co/cncf) and open `#cadence-users` to see these posts and ask questions.
-
-With the pre-release announcement, maintainers open a new release-tracking issue for the following version and start linking the features and bug fixes planned for it. That issue is the scope list for the next cycle, in the same form as [Release Tracking: Cadence v1.4.2](https://github.com/cadence-workflow/cadence/issues/8300).
+After the official release is published, maintainers post again in `#cadence-users` and point to the release notes.
 
 ## What to deploy
 
