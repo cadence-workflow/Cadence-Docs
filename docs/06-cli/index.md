@@ -191,6 +191,9 @@ Run `cadence tasklist` for help on tasklist operations
 **Note:** make sure you have a Cadence server running before using :CLI:
 
 ### Domain operation examples
+
+For field-level references, see the released server's [domain command flags](https://github.com/cadence-workflow/cadence/blob/v1.4.1/tools/cli/domain_utils.go) and the IDL definitions for [`RegisterDomainRequest` and `UpdateDomainRequest`](https://github.com/cadence-workflow/cadence-idl/blob/master/proto/uber/cadence/api/v1/service_domain.proto).
+
 - Register a new :domain: named "samples-domain":
 ```bash
 cadence --domain samples-domain domain register

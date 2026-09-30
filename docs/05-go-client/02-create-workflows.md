@@ -52,10 +52,6 @@ import (
     "go.uber.org/cadence/workflow"
 )
 
-func init() {
-    workflow.Register(SimpleWorkflow)
-}
-
 func SimpleWorkflow(ctx workflow.Context, value string) error {
     ao := workflow.ActivityOptions{
         TaskList:               "sampleTaskList",
@@ -159,10 +155,9 @@ For some client code to be able to invoke a :workflow: type, the :worker: proces
 all the implementations it has access to. A :workflow: is registered with the following call:
 
 ```go
-workflow.Register(SimpleWorkflow)
+w.RegisterWorkflow(SimpleWorkflow)
 ```
 
-This call essentially creates an in-memory mapping inside the :worker: process between the fully
-qualified function name and the implementation. It is safe to call this registration method from
-an **init()** function. If the :worker: receives :task:tasks: for a :workflow: type it does not know, it will
-fail that :task:. However, the failure of the :task: will not cause the entire :workflow: to fail.
+The global `workflow.Register` functions are deprecated. Registering on the Worker keeps the implementations associated with that worker.
+
+This call creates an in-memory mapping inside the :worker: process between the fully qualified function name and the implementation. If the :worker: receives :task:tasks: for a :workflow: type it does not know, it will fail that :task:. However, the failure of the :task: will not cause the entire :workflow: to fail.
