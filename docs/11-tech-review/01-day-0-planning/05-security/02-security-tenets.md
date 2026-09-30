@@ -8,7 +8,7 @@ keywords:
   - cadence security defaults
 ---
 
-This page reviews the [Cloud Native Security Tenets](https://github.com/cncf/contribute-site/blob/main/docs/community/tags/security-and-compliance/publications/secure-defaults-cloud-native-8.md) published by TAG Security, describes how Cadence meets them today, and explains how operators loosen security from Cadence's defaults.
+This page reviews the [Cloud Native Security Tenets](https://github.com/cncf/contribute-site/blob/main/docs/community/tags/security-and-compliance/publications/secure-defaults-cloud-native-8.md) published by TAG Security and Compliance, describes how Cadence meets them today, and explains how operators loosen security from Cadence's defaults.
 
 ## How Cadence satisfies the tenets
 
@@ -16,10 +16,10 @@ This page reviews the [Cloud Native Security Tenets](https://github.com/cncf/con
 | --- | --- |
 | 1. Security is a design requirement | [Mutual TLS](/docs/concepts/mutual-tls) and JWT-based authorization ([`common/authorization`](https://github.com/cadence-workflow/cadence/tree/master/common/authorization)) are pluggable components built into the server. |
 | 2. Secure configuration has the best UX | Not fully met. TLS and authorization are both off in the stock `config/development.yaml`, so enabling them takes extra configuration. This is a known gap, covered below. |
-| 3. Insecure configuration is a conscious decision | Partially met. An operator has to add a `tls:` or `authorization:` block to turn security on, which is the reverse of the tenet's intent (secure by default, with an explicit opt-out). Uber's own production deployments always run with TLS and authorization enabled. |
+| 3. Insecure configuration is a conscious decision | Not met. The insecure configuration is the default and requires no decision. An operator has to add a `tls:` or `authorization:` block to turn security on, which is the reverse of the tenet's intent (secure by default, with an explicit opt-out). Uber's own production deployments always run with TLS and authorization enabled. |
 | 4. Insecure-to-secure transitions are possible | Met. TLS, mTLS, and OAuth authorization can each be enabled independently and incrementally without a breaking migration. The [`NoopAuthorizer`](https://github.com/cadence-workflow/cadence/blob/master/common/authorization/nopAuthorizer.go) can be swapped for the OAuth authorizer without a schema or protocol change. |
 | 5. Secure defaults are inherited | Not directly applicable. Cadence does not sit on another cloud native security layer, such as a service mesh, that it inherits defaults from. It manages its own TLS and authorization configuration. |
-| 6. Exception lists have first-class support | Partially met. The [`NoopAuthorizer`](https://github.com/cadence-workflow/cadence/blob/master/common/authorization/nopAuthorizer.go) is an explicit, named configuration choice and not a silent fallback, but Cadence does not log when an operator is running in that mode. |
+| 6. Exception lists have first-class support | Not met. The [`NoopAuthorizer`](https://github.com/cadence-workflow/cadence/blob/master/common/authorization/nopAuthorizer.go) can be selected explicitly, but it is also the silent fallback when no `authorization:` block is configured ([`factory.go`](https://github.com/cadence-workflow/cadence/blob/master/common/authorization/factory.go) only checks whether the OAuth authorizer is enabled), and Cadence does not log when an operator is running in that mode. |
 | 7. Secure defaults protect against pervasive exploits | Met for what is enabled. With TLS and OAuth turned on, Cadence enforces certificate validation, JWT signature verification, and JWT TTL bounds (`maxJwtTTL`). None of this applies when the features are left off. |
 | 8. Security limitations are explainable | Partially met. The [`common/authorization` README](https://github.com/cadence-workflow/cadence/blob/master/common/authorization/README.md) documents the two authorizer options and their tradeoffs, but there is no consolidated document of known security limitations. |
 
