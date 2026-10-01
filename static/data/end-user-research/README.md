@@ -1,6 +1,6 @@
 # Cadence community survey data, 2023 to 2025
 
-These files are a sanitized copy of the Cadence community surveys run on SurveyMonkey. They exist so a CNCF reviewer can check the counts on [End user research](/docs/tech-review/day-0-planning/scope/end-user-research).
+These files are a sanitized copy of the Cadence community surveys run on SurveyMonkey. Check the counts on [End User Research](../../../docs/11-tech-review/01-day-0-planning/01-scope/06-end-user-research.md). That is a path in this repo, so it works on GitHub. This file is static data, not a Docusaurus page.
 
 | File | Survey | Responses |
 | --- | --- | --- |

@@ -117,18 +117,13 @@ In 2025, all 6 respondents also selected documentation when asked where onboardi
 - 39 responses across three years is a small sample. 2025 has 6 responses.
 - The surveys were voluntary. These counts do not show how common each answer is among Cadence users.
 - Questions and options changed each year, so the tables are three snapshots, not a trend.
-- Several 2024 questions were answered by 3 to 8 of 18 people. Those rows include the answered count.
+- Several 2024 questions were answered by 2 to 8 of 18 people. Those rows include the answered count.
 
 ## Reports and data
 
-The published reports are the sanitized CSVs and the README that lists removed columns, pinned at commit [`400b59141e8ce572878993510eb6af6cce1e7ada`](https://github.com/cadence-workflow/Cadence-Docs/blob/400b59141e8ce572878993510eb6af6cce1e7ada/static/data/end-user-research/):
+The reports are the sanitized CSVs and a README of removed columns. The versioned copy is [`static/data/end-user-research`](https://github.com/cadence-workflow/Cadence-Docs/tree/400b59141e8ce572878993510eb6af6cce1e7ada/static/data/end-user-research). GitHub renders the README there.
 
-- [Data README](https://github.com/cadence-workflow/Cadence-Docs/blob/400b59141e8ce572878993510eb6af6cce1e7ada/static/data/end-user-research/README.md)
-- [2023.csv](https://github.com/cadence-workflow/Cadence-Docs/blob/400b59141e8ce572878993510eb6af6cce1e7ada/static/data/end-user-research/2023.csv)
-- [2024.csv](https://github.com/cadence-workflow/Cadence-Docs/blob/400b59141e8ce572878993510eb6af6cce1e7ada/static/data/end-user-research/2024.csv)
-- [2025.csv](https://github.com/cadence-workflow/Cadence-Docs/blob/400b59141e8ce572878993510eb6af6cce1e7ada/static/data/end-user-research/2025.csv)
-
-The same files are also served from this site at [Data README](pathname:///data/end-user-research/README.md), [2023.csv](pathname:///data/end-user-research/2023.csv), [2024.csv](pathname:///data/end-user-research/2024.csv), and [2025.csv](pathname:///data/end-user-research/2025.csv). The GitHub links above are the versioned copies.
+The same CSVs are on this site: [2023.csv](pathname:///data/end-user-research/2023.csv), [2024.csv](pathname:///data/end-user-research/2024.csv), and [2025.csv](pathname:///data/end-user-research/2025.csv).
 
 ## Related documentation
 
