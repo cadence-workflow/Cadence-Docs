@@ -141,6 +141,7 @@ export default function CommunityWidget() {
                     >
                       <Icon icon={action.icon} className={styles.actionIcon} width={20} />
                       <span>{action.label}</span>
+                      <span className={styles.newsletterBadge}>New</span>
                     </button>
                     {emailOpen && (
                       <div className={styles.emailDrawer}>
