@@ -52,6 +52,7 @@ export default function CommunityWidget() {
   const [showTooltip, setShowTooltip] = useState(true);
   const [emailOpen, setEmailOpen] = useState(false);
   const [email, setEmail] = useState('');
+  // false | 'opened' | 'blocked'
   const [submitted, setSubmitted] = useState(false);
   const panelRef = useRef(null);
   const fabRef = useRef(null);
@@ -110,12 +111,13 @@ export default function CommunityWidget() {
     const win = window.open(url, '_blank');
     if (win) {
       win.opener = null;
-      setSubmitted(true);
+      setSubmitted('opened');
     } else {
-      // Popup blocked: still show confirm copy with a direct path via groups.io reopen.
-      setSubmitted(true);
+      setSubmitted('blocked');
     }
   }
+
+  const joinUrl = email ? `${JOIN_URL}?email=${encodeURIComponent(email)}` : JOIN_URL;
 
   return (
     <div className={styles.widget} aria-label="Community actions">
@@ -156,10 +158,11 @@ export default function CommunityWidget() {
                     </button>
                     {emailOpen && (
                       <div className={styles.emailDrawer}>
-                        {submitted ? (
+                        {submitted === 'opened' ? (
                           <p className={styles.emailConfirm}>
-                            Check your inbox to confirm. You are signing up for the Cadence
-                            community newsletter
+                            Confirm on the groups.io tab (click{' '}
+                            <strong>Confirm Email Address</strong>), then check your inbox.
+                            After you confirm, you are on the Cadence community newsletter
                             {email ? (
                               <>
                                 {' '}
@@ -167,6 +170,25 @@ export default function CommunityWidget() {
                               </>
                             ) : null}
                             .
+                          </p>
+                        ) : submitted === 'blocked' ? (
+                          <p className={styles.emailConfirm}>
+                            Popup blocked. Open groups.io to finish signup
+                            {email ? (
+                              <>
+                                {' '}
+                                for <strong>{email}</strong>
+                              </>
+                            ) : null}
+                            :{' '}
+                            <a
+                              href={joinUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={styles.emailFallbackLink}
+                            >
+                              Open groups.io ↗
+                            </a>
                           </p>
                         ) : (
                           <form onSubmit={handleEmailSubmit} className={styles.emailForm}>

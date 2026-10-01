@@ -402,3 +402,13 @@ html[data-theme='dark'] .emailConfirm {
 html[data-theme='dark'] .newsletterBadge {
   background: #3B82F6;
 }
+
+.emailFallbackLink {
+  color: #1D4ED8;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+html[data-theme='dark'] .emailFallbackLink {
+  color: #93C5FD;
+}
