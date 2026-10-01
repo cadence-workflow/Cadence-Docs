@@ -19,7 +19,7 @@ Server versions use the `vMAJOR.MINOR.PATCH` form, but the numbers are coarser t
 
 | Kind | Example | What it contains |
 | --- | --- | --- |
-| **Major** | [`v1.0.0`](https://github.com/cadence-workflow/cadence/releases/tag/v1.0.0) | A new version line. Current server releases are on the 1.x line. |
+| **Major** | [`v1.0.0`](https://github.com/cadence-workflow/cadence/releases/tag/v1.0.0) | A new version line. Expect breaking changes. Make sure you carefully read the release notes for upgrade. Current server releases are on the 1.x line. |
 | **Minor** | [`v1.4.0`](https://github.com/cadence-workflow/cadence/releases/tag/v1.4.0) | A larger milestone, such as a major new capability or a broad cleanup of deprecated configuration. |
 | **Patch** | [`v1.4.1`](https://github.com/cadence-workflow/cadence/releases/tag/v1.4.1) | A full feature release. It usually contains new features, bug fixes, and performance work, and can require schema or configuration changes. Treat it as at least a semantic-versioning minor upgrade. |
 | **Prerelease** | `v1.4.1-prerelease33` | An incremental build from `master`, verified in production before an official release. Consecutive prereleases are usually a small set of commits apart. |
