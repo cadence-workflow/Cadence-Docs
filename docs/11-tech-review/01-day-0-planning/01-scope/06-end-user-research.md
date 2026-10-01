@@ -18,7 +18,7 @@ Cadence has run three public community surveys: 2023 (15 responses), 2024 (18 re
 | Cadence Workflow OSS Community feedback 2024 | 18 | Role, region, languages, usage stage, activity scale, use cases, improvement areas, ratings |
 | Cadence Community Survey 2025 | 6 | Languages, usage stage, activity scale, use cases, database, improvement areas, CNCF confidence, AI agents |
 
-The questions changed each year. Counts below are from the [sanitized files](pathname:///data/end-user-research/README.md). Each table lists how many people answered that question.
+The questions changed each year. Counts below are from the [sanitized files](https://github.com/cadence-workflow/Cadence-Docs/blob/400b59141e8ce572878993510eb6af6cce1e7ada/static/data/end-user-research/README.md). Each table lists how many people answered that question.
 
 ## Role
 
@@ -121,20 +121,14 @@ In 2025, all 6 respondents also selected documentation when asked where onboardi
 
 ## Reports and data
 
-The published reports are the sanitized CSVs and the README that lists removed columns:
+The published reports are the sanitized CSVs and the README that lists removed columns, pinned at commit [`400b59141e8ce572878993510eb6af6cce1e7ada`](https://github.com/cadence-workflow/Cadence-Docs/blob/400b59141e8ce572878993510eb6af6cce1e7ada/static/data/end-user-research/):
 
-- [Data README](pathname:///data/end-user-research/README.md)
-- [2023.csv](pathname:///data/end-user-research/2023.csv)
-- [2024.csv](pathname:///data/end-user-research/2024.csv)
-- [2025.csv](pathname:///data/end-user-research/2025.csv)
+- [Data README](https://github.com/cadence-workflow/Cadence-Docs/blob/400b59141e8ce572878993510eb6af6cce1e7ada/static/data/end-user-research/README.md)
+- [2023.csv](https://github.com/cadence-workflow/Cadence-Docs/blob/400b59141e8ce572878993510eb6af6cce1e7ada/static/data/end-user-research/2023.csv)
+- [2024.csv](https://github.com/cadence-workflow/Cadence-Docs/blob/400b59141e8ce572878993510eb6af6cce1e7ada/static/data/end-user-research/2024.csv)
+- [2025.csv](https://github.com/cadence-workflow/Cadence-Docs/blob/400b59141e8ce572878993510eb6af6cce1e7ada/static/data/end-user-research/2025.csv)
 
-After those files are committed, pin the folder in the CNCF questionnaire with a commit hash:
-
-```text
-https://github.com/cadence-workflow/Cadence-Docs/blob/<commit>/static/data/end-user-research/
-```
-
-Replace `<commit>` with the hash of the commit that added `static/data/end-user-research/`.
+The same files are also served from this site at [Data README](pathname:///data/end-user-research/README.md), [2023.csv](pathname:///data/end-user-research/2023.csv), [2024.csv](pathname:///data/end-user-research/2024.csv), and [2025.csv](pathname:///data/end-user-research/2025.csv). The GitHub links above are the versioned copies.
 
 ## Related documentation
 
