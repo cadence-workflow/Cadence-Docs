@@ -27,6 +27,13 @@ const ACTIONS = [
     external: true,
   },
   {
+    id: 'reddit',
+    label: 'Join us on Reddit',
+    href: 'https://www.reddit.com/r/cadenceworkflow/',
+    icon: 'mdi:reddit',
+    external: true,
+  },
+  {
     id: 'contact',
     label: 'Contact the team',
     href: '/community/contact-us',
