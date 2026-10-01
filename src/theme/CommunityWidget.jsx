@@ -5,19 +5,19 @@ import styles from './CommunityWidget.module.css';
 
 const JOIN_URL = 'https://lists.cncf.io/g/cncf-cadence-community/join';
 
-// Subscribe first. Meetup and Discord removed for now.
+// Slack first (highlighted). Subscribe second. No meetup or Discord.
 const ACTIONS = [
-  {
-    id: 'newsletter',
-    label: 'Subscribe to updates',
-    icon: 'mdi:email-newsletter',
-  },
   {
     id: 'slack',
     label: 'Join us on Slack (CNCF)',
     href: 'https://inviter.co/cncf',
     icon: 'mdi:slack',
     external: true,
+  },
+  {
+    id: 'newsletter',
+    label: 'Subscribe to updates',
+    icon: 'mdi:email-newsletter',
   },
   {
     id: 'github',
@@ -62,9 +62,6 @@ export default function CommunityWidget() {
       setEmailOpen(false);
       setSubmitted(false);
       setEmail('');
-    } else {
-      // Subscribe is the primary action; open the drawer when the panel opens.
-      setEmailOpen(true);
     }
   }, [open]);
 
@@ -144,7 +141,6 @@ export default function CommunityWidget() {
                     >
                       <Icon icon={action.icon} className={styles.actionIcon} width={20} />
                       <span>{action.label}</span>
-                      <span className={styles.newsletterBadge}>New</span>
                     </button>
                     {emailOpen && (
                       <div className={styles.emailDrawer}>
@@ -208,6 +204,23 @@ export default function CommunityWidget() {
                 );
               }
 
+              if (action.id === 'slack') {
+                return (
+                  <li key={action.id}>
+                    <a
+                      href={action.href}
+                      className={styles.actionItemPrimary}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Icon icon={action.icon} className={styles.actionIconPrimary} width={20} />
+                      <span>{action.label}</span>
+                      <span className={styles.primaryBadge}>New</span>
+                    </a>
+                  </li>
+                );
+              }
+
               return action.external ? (
                 <li key={action.id}>
                   <a
@@ -235,7 +248,7 @@ export default function CommunityWidget() {
       <div ref={wrapperRef} className={`${styles.fabWrapper} ${open ? styles.fabWrapperOpen : ''}`}>
         {showTooltip && !open && (
           <div className={styles.tooltip} aria-hidden="true">
-            <span>Subscribe</span>
+            <span>Join Slack</span>
           </div>
         )}
         <button

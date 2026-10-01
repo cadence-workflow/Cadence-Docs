@@ -204,56 +204,62 @@ html[data-theme='dark'] .actionIcon {
   to   { opacity: 0; }
 }
 
-/* Meetup CTA row - top priority action */
-.actionItemMeetup {
+/* Primary CTA row (Slack): dark blue, inverted badge */
+.actionItemPrimary {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   padding: 0.8rem 1rem;
-  color: #1D4ED8;
+  color: #ffffff;
   text-decoration: none;
   font-size: 0.95rem;
   font-weight: 700;
-  background: linear-gradient(90deg, #EFF6FF 0%, #DBEAFE 100%);
-  border-bottom: 2px solid #BFDBFE;
+  background: #1D4ED8;
+  border-bottom: 2px solid #1e3a8a;
   transition: background 0.15s;
 }
 
-.actionItemMeetup:hover {
-  background: #DBEAFE;
-  color: #1D4ED8;
+.actionItemPrimary:hover {
+  background: #1e40af;
+  color: #ffffff;
   text-decoration: none;
 }
 
-html[data-theme='dark'] .actionItemMeetup {
-  background: linear-gradient(90deg, rgba(37,99,235,0.2) 0%, rgba(37,99,235,0.12) 100%);
-  border-bottom-color: rgba(37, 99, 235, 0.3);
-  color: #93C5FD;
+html[data-theme='dark'] .actionItemPrimary {
+  background: #2563EB;
+  border-bottom-color: #1D4ED8;
+  color: #ffffff;
 }
 
-html[data-theme='dark'] .actionItemMeetup:hover {
-  background: rgba(37, 99, 235, 0.3);
-  color: #BFDBFE;
+html[data-theme='dark'] .actionItemPrimary:hover {
+  background: #3B82F6;
+  color: #ffffff;
 }
 
-.meetupBadge {
+.actionIconPrimary {
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.primaryBadge {
   margin-left: auto;
   font-size: 0.65rem;
   font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  background: #2563EB;
-  color: #ffffff;
+  background: #ffffff;
+  color: #1D4ED8;
   padding: 0.15rem 0.45rem;
   border-radius: 999px;
   flex-shrink: 0;
 }
 
-html[data-theme='dark'] .meetupBadge {
-  background: #3B82F6;
+html[data-theme='dark'] .primaryBadge {
+  background: #EFF6FF;
+  color: #1D4ED8;
 }
 
-/* Newsletter CTA row - visually elevated as the primary action */
+/* Newsletter CTA row - secondary highlight */
 .actionItemNewsletter {
   display: flex;
   align-items: center;
