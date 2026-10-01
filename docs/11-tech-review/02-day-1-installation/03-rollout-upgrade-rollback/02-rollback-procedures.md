@@ -10,7 +10,7 @@ keywords:
 
 A Cadence rollback restores the previous server binary and leaves the persistence schema at its newer version. Cadence has no rollback controller of its own. Operators roll back with the tool that deployed the release, such as Helm, Docker Compose, or their own manifests. Workflow state lives in the database, so rolling back a server process does not move or rewrite open executions.
 
-This works because schema changes are applied before the new binary and are usually backward compatible, and the project aims to keep adjacent minor versions compatible. At startup, each server process [checks](https://github.com/cadence-workflow/cadence/blob/master/tools/common/schema/handler.go) that the installed schema is at least the version the binary expects. A newer schema is accepted on purpose, so the previous binary starts normally against it. See [Upgrade and rollback testing](/docs/tech-review/day-1-installation/rollout-upgrade-rollback/upgrade-rollback-testing) for how this path is exercised.
+This works because schema changes are applied before the new binary and are usually backward compatible, and the project aims to keep adjacent minor versions compatible. At startup, each server process [checks](https://github.com/cadence-workflow/cadence/blob/master/tools/common/schema/handler.go) that the installed schema is at least the version the binary expects, and the optional [stricter schema verification](https://github.com/cadence-workflow/cadence/blob/master/common/persistence/schema/verify.go) applies the same rule. A newer schema is accepted on purpose, so the previous binary starts normally against it. See [Upgrade and rollback testing](/docs/tech-review/day-1-installation/rollout-upgrade-rollback/upgrade-rollback-testing) for how this path is exercised.
 
 For how a rollback can fail, see [Failure scenarios](/docs/tech-review/day-1-installation/rollout-upgrade-rollback/failure-scenarios). For the signals that should trigger one, see [Rollback metrics](/docs/tech-review/day-1-installation/rollout-upgrade-rollback/rollback-metrics).
 
@@ -47,7 +47,7 @@ Before running `helm rollback`, compare the schema version in the database with 
 
 ## Dynamic configuration
 
-[Dynamic configuration](/docs/operation-guide/setup#dynamic-configuration) is not versioned with a release, so a server rollback does not revert it. Revert it separately:
+[Dynamic configuration](/docs/operation-guide/setup#dynamic-configuration) is not versioned with the server binary, so redeploying the previous binary does not revert it. The exception is file-based config on Helm: `helm rollback` also restores `dynamicConfig.values`, and the pods recreated by the image change mount the restored file. Otherwise, revert it separately:
 
 - **File-based client:** restore the previous YAML file. Processes reload the file on their polling interval. On Helm, restore `dynamicConfig.values`, run `helm upgrade`, then restart the server pods, for example with `kubectl rollout restart`. The chart mounts the file with `subPath`, so a ConfigMap change does not reach running pods.
 - **`configstore` client:** use `cadence admin config update` to set the previous value, or `cadence admin config restore` to remove an override. Without `--filter`, `restore` removes the unfiltered value. With `--filter`, it removes only the matching filtered value. See [Config store client](/docs/operation-guide/setup#config-store-client).
