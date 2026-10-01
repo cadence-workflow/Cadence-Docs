@@ -15,7 +15,7 @@ interface Props {
 export default function MailingListSignup({
   id,
   headline = 'Stay in the loop',
-  tagline = 'Get meetup announcements, release notes, and community updates delivered to your inbox.',
+  tagline = 'Get release notes and community updates delivered to your inbox.',
   badge,
 }: Props) {
   const [email, setEmail] = useState('');

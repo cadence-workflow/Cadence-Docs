@@ -5,26 +5,18 @@ import styles from './CommunityWidget.module.css';
 
 const JOIN_URL = 'https://lists.cncf.io/g/cncf-cadence-community/join';
 
-// Master FAB order preserved. Newsletter is appended last.
+// Subscribe first. Meetup and Discord removed for now.
 const ACTIONS = [
   {
-    id: 'meetup',
-    label: 'Join the community meetup',
-    href: '/community/meetup',
-    icon: 'mdi:calendar-star',
+    id: 'newsletter',
+    label: 'Subscribe to updates',
+    icon: 'mdi:email-newsletter',
   },
   {
     id: 'slack',
     label: 'Join us on Slack (CNCF)',
     href: 'https://inviter.co/cncf',
     icon: 'mdi:slack',
-    external: true,
-  },
-  {
-    id: 'discord',
-    label: 'Join us on Discord',
-    href: 'https://discord.gg/ynvjm2Et5',
-    icon: 'mdi:discord',
     external: true,
   },
   {
@@ -39,11 +31,6 @@ const ACTIONS = [
     label: 'Contact the team',
     href: '/community/contact-us',
     icon: 'mdi:email-outline',
-  },
-  {
-    id: 'newsletter',
-    label: 'Subscribe to updates',
-    icon: 'mdi:email-newsletter',
   },
 ];
 
@@ -75,6 +62,9 @@ export default function CommunityWidget() {
       setEmailOpen(false);
       setSubmitted(false);
       setEmail('');
+    } else {
+      // Subscribe is the primary action; open the drawer when the panel opens.
+      setEmailOpen(true);
     }
   }, [open]);
 
@@ -245,7 +235,7 @@ export default function CommunityWidget() {
       <div ref={wrapperRef} className={`${styles.fabWrapper} ${open ? styles.fabWrapperOpen : ''}`}>
         {showTooltip && !open && (
           <div className={styles.tooltip} aria-hidden="true">
-            <span>Next meetup</span>
+            <span>Subscribe</span>
           </div>
         )}
         <button

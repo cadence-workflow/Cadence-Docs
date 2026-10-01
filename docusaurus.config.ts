@@ -208,6 +208,10 @@ const config: Config = {
             to: '/community/contact-us',
           },
           {
+            from: '/community/meetup',
+            to: '/community/contact-us',
+          },
+          {
             from: '/faq',
             to: '/faq/best-practices',
           },
