@@ -17,7 +17,7 @@ The Cadence project will:
 - Write a formal self-assessment
 - Open a [Joint Security Review](https://github.com/cncf/toc/issues/new?template=joint-security-review.yaml) issue in the CNCF TOC repository, which routes the request to TAG Security and Compliance
 
-The remaining pages in this section ([Cloud Native Security Tenets](/docs/tech-review/day-0-planning/security/security-tenets), [Security Hygiene](/docs/tech-review/day-0-planning/security/security-hygiene), and [Cloud Native Threat Modeling](/docs/tech-review/day-0-planning/security/threat-modeling)) cover the same ground the self-assessment template asks for and can seed that document when it is opened. They should be viewed as speculative until they have been confirmed in Peer Review by the TAG Security and Compliance team.
+The remaining pages in this section ([Cloud Native Security Tenets](/docs/tech-review/day-0-planning/security/security-tenets), [Security Hygiene](/docs/tech-review/day-0-planning/security/security-hygiene), and [Cloud Native Threat Modeling](/docs/tech-review/day-0-planning/security/threat-modeling)) cover the same ground the self-assessment template asks for and can seed that document when it is opened. They should be viewed as speculative until the TAG Security and Compliance team has reviewed them as part of the Joint Security Review.
 
 ## Related documentation
 
