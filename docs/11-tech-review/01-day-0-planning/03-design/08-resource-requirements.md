@@ -42,7 +42,7 @@ The table shows the p50 and max load for three reference environment sizes.
 - **Activities/sec**: activity task calls between workers and the server, counting both picking up a task (`RecordActivityTaskStarted`) and reporting its result (`RespondActivityTask*`).
 - **Decisions/sec**: decision task calls, counted the same way (`RecordDecisionTaskStarted` and `RespondDecisionTask*`). A decision is each time a worker runs workflow code to decide what happens next.
 
-All three environments use Cassandra for persistence with 8K to 16K [history shards](/docs/operation-guide/setup#static-configuration) (16,384 on L, 8,192 on S and M) and OpenSearch for advanced visibility. SQL-backed clusters may need different sizing, so confirm with bench. Each runs as two clusters, and the numbers cover both clusters together. They don't include cross-cluster replication traffic. [Cluster monitoring](/docs/operation-guide/monitor) shows how to chart StartWorkflow, activity, and decision rates for your own cluster.
+All three environments use Cassandra for persistence with 8K to 16K [history shards](/docs/operation-guide/setup#static-configuration) (16,384 on L, 8,192 on S and M) and OpenSearch for advanced visibility. SQL-backed clusters may need different sizing, so confirm with bench. Each runs as two clusters, and the numbers cover both clusters together. They don't include cross-cluster replication traffic. [Cluster monitoring](/docs/operation-guide/monitoring) shows how to chart StartWorkflow, activity, and decision rates for your own cluster.
 
 The estimates in the next two sections cover Cadence services only. Size Cassandra, OpenSearch, and Kafka (which advanced visibility needs) with their own guidance. See [Storage requirements](/docs/tech-review/day-0-planning/design/storage-requirements). Cores are vCPUs, and the tables show allocated capacity at the target utilization, which on Kubernetes means the CPU and memory requests. The Cadence Helm chart sets no resource requests by default. Worker is Cadence's internal Worker service. Your workflow and activity workers run outside the cluster (see [Worker and client requirements](/docs/tech-review/day-0-planning/design/architecture-requirements#worker-and-client-requirements)).
 
@@ -127,11 +127,11 @@ These rules are starting points, not hard limits:
 
 ### In-cluster
 
-All Cadence components (Frontend, History, Matching, and Worker) must be able to reach each other inside a cluster. Every component also needs access to the database and, if you use advanced visibility, to the visibility store. With advanced visibility, all Cadence services also need access to Kafka. See [Service dependencies](/docs/tech-review/day-0-planning/design/service-dependencies) for the full list.
+All Cadence components (Frontend, History, Matching, and Worker) must be able to reach each other inside a cluster. Every component also needs access to the database and, if you use advanced visibility, to the visibility store. With advanced visibility, all Cadence services also need access to Kafka. History publishes visibility records and Worker indexes them, but every service opens a Kafka client at startup when advanced visibility is enabled. See [Service dependencies](/docs/tech-review/day-0-planning/design/service-dependencies) for the full list.
 
 ### Cross-cluster
 
-History in cluster A must be able to reach Frontend in cluster B, and the other way round. Frontend can also forward API calls to the Frontend of the cluster where a domain is active, depending on the cluster redirection policy. Frontend can sit behind a proxy or load balancer. Nothing else crosses clusters. Each cluster keeps its own database and visibility store, and Cadence replicates workflow data itself, so the datastores never talk to each other.
+History and Worker in cluster A must be able to reach Frontend in cluster B, and the other way round. History pulls workflow replication tasks, and Worker pulls domain replication messages. Frontend can also forward API calls to the Frontend of the cluster where a domain is active, depending on the cluster redirection policy. Frontend can sit behind a proxy or load balancer. Nothing else crosses clusters. Each cluster keeps its own database and visibility store, and Cadence replicates workflow data itself, so the datastores never talk to each other.
 
 Replication is asynchronous. Latency between regions doesn't block running workflows, but it increases replication lag, which is how much recent progress can be lost on failover. Replication traffic grows with the event rate. See [cross-DC replication](/docs/concepts/cross-dc-replication) for how replication and failover work.
 
@@ -142,7 +142,7 @@ Replication is asynchronous. Latency between regions doesn't block running workf
 - [High availability](/docs/tech-review/day-0-planning/design/high-availability)
 - [Storage requirements](/docs/tech-review/day-0-planning/design/storage-requirements)
 - [Cluster configuration](/docs/operation-guide/setup)
-- [Cluster monitoring](/docs/operation-guide/monitor)
+- [Cluster monitoring](/docs/operation-guide/monitoring)
 - [Cross-DC replication](/docs/concepts/cross-dc-replication)
 - [Search workflows](/docs/concepts/search-workflows)
 - [Cadence bench suite](https://github.com/cadence-workflow/cadence/tree/master/bench)
