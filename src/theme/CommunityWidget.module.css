@@ -241,6 +241,23 @@ html[data-theme='dark'] .actionItemPrimary:hover {
   flex-shrink: 0;
 }
 
+.actionItemPrimaryBtn {
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.actionItemPrimaryBtn:hover {
+  background: #1e40af;
+  color: #ffffff;
+}
+
+html[data-theme='dark'] .actionItemPrimaryBtn:hover {
+  background: #3B82F6;
+  color: #ffffff;
+}
+
 .primaryBadge {
   margin-left: auto;
   font-size: 0.65rem;
