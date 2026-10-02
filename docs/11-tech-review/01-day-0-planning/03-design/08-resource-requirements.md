@@ -26,11 +26,15 @@ The main drivers are:
 
 ## Reference environment sizes
 
-:::warning[These numbers are a reference, not a sizing guarantee]
+:::warning[These numbers are a reference]
 The sizes and tables on this page come from three reference environments and are meant for rough capacity estimates. Your workflow shapes, payload sizes, datastore, and hardware will move the numbers. Run the [bench suite](/docs/operation-guide/setup#stressbench-test-a-cluster) against your own setup before provisioning, and again whenever the setup changes.
 :::
 
-The table shows the p50 and max load for three reference environment sizes.
+The tables show the p50 and max load for three reference environment sizes.
+
+All three environments use Cassandra for persistence with 8K to 16K [history shards](/docs/operation-guide/setup#static-configuration) (16,384 on L, 8,192 on S and M) and OpenSearch for advanced visibility. SQL-backed clusters may need different sizing, so confirm with bench. Each runs as two clusters. The numbers cover both clusters together, including cross-cluster replication traffic.
+
+### Cadence
 
 | Size | External events/sec (p50 / max) | Activities/sec (p50 / max) | Decisions/sec (p50 / max) |
 |---|---|---|---|
@@ -42,9 +46,49 @@ The table shows the p50 and max load for three reference environment sizes.
 - **Activities/sec**: activity task calls between workers and the server, counting both picking up a task (`RecordActivityTaskStarted`) and reporting its result (`RespondActivityTask*`).
 - **Decisions/sec**: decision task calls, counted the same way (`RecordDecisionTaskStarted` and `RespondDecisionTask*`). A decision is each time a worker runs workflow code to decide what happens next.
 
-All three environments use Cassandra for persistence with 8K to 16K [history shards](/docs/operation-guide/setup#static-configuration) (16,384 on L, 8,192 on S and M) and OpenSearch for advanced visibility. SQL-backed clusters may need different sizing, so confirm with bench. Each runs as two clusters, and the numbers cover both clusters together. They don't include cross-cluster replication traffic. [Cluster monitoring](/docs/operation-guide/monitoring) shows how to chart StartWorkflow, activity, and decision rates for your own cluster.
+[Cluster monitoring](/docs/operation-guide/monitoring) shows how to chart StartWorkflow, activity, and decision rates for your own cluster.
 
-The estimates in the next two sections cover Cadence services only. Size Cassandra, OpenSearch, and Kafka (which advanced visibility needs) with their own guidance. See [Storage requirements](/docs/tech-review/day-0-planning/design/storage-requirements). Cores are vCPUs, and the tables show allocated capacity at the target utilization, which on Kubernetes means the CPU and memory requests. The Cadence Helm chart sets no resource requests by default. Worker is Cadence's internal Worker service. Your workflow and activity workers run outside the cluster (see [Worker and client requirements](/docs/tech-review/day-0-planning/design/architecture-requirements#worker-and-client-requirements)).
+The estimates in the next two sections cover Cadence services only. Cores are vCPUs, and the tables show allocated capacity at the target utilization, which on Kubernetes means the CPU and memory requests. The Cadence Helm chart sets no resource requests by default. Worker is Cadence's internal Worker service. Your workflow and activity workers run outside the cluster (see [Worker and client requirements](/docs/tech-review/day-0-planning/design/architecture-requirements#worker-and-client-requirements)).
+
+### Persistence
+
+Cadence doesn't publish node counts for its datastores, since they depend on your hardware, data size, and retention. The tables below show the load the reference environments put on their datastores. Use them to size your own with your datastore's tooling.
+
+Cadence keeps data in two stores: the execution store holds workflow state, history, and task lists, and the visibility store holds the records used to list and search workflows.
+
+#### Execution
+
+| Size | Reads/sec (p50 / max) | Writes/sec (p50 / max) | Conditional updates/sec (p50 / max) | Deletes/sec (p50 / max) |
+|---|---|---|---|---|
+| S | ~6,100 / ~9,400 | ~3,700 / ~5,800 | ~4,100 / ~6,200 | ~2,700 / ~3,600 |
+| M | ~10,300 / ~15,400 | ~10,600 / ~19,000 | ~14,400 / ~23,100 | ~4,500 / ~5,300 |
+| L | ~18,800 / ~27,000 | ~27,700 / ~38,700 | ~32,700 / ~45,800 | ~6,300 / ~7,700 |
+
+- **Reads**: loading workflow state and history, and reading pending tasks (`GetWorkflowExecution`, `ReadHistoryBranch`, `GetTasks`, `GetHistoryTasks`).
+- **Writes**: appending history events and adding tasks to task lists (`AppendHistoryNodes`, `CreateTask`).
+- **Conditional updates**: writes that apply only if the stored state hasn't changed (`UpdateWorkflowExecution`, `CreateWorkflowExecution`, `UpdateTaskList`, `UpdateShard`). Cassandra runs these as lightweight transactions, which take about four round trips compared with one for a plain write.
+- **Deletes**: completing tasks and removing workflows after retention (`RangeCompleteHistoryTask`, `CompleteTask`, `DeleteHistoryBranch`, `DeleteWorkflowExecution`).
+
+Every decision and every activity adds one history append and one conditional update. The tasks it schedules are written in the same batch as that update and deleted later, once processed. Your own rates are on the [persistence dashboards](/docs/operation-guide/monitoring#cadence-default-persistence-monitoring).
+
+#### Visibility
+
+With basic visibility, visibility records live in a database of the same type as the execution store. [Architecture requirements](/docs/tech-review/day-0-planning/design/architecture-requirements#production) recommends a separate database for it in production. [Advanced visibility](/docs/concepts/search-workflows) is optional. It adds a search store, such as Elasticsearch, OpenSearch, or Pinot, fed through Kafka. History publishes each record to Kafka, and Worker indexes it into the search store.
+
+| Size | Writes/sec (p50 / max) | Deletes/sec (p50 / max) | Reads/sec (p50 / max) | Average record size |
+|---|---|---|---|---|
+| S | ~1,200 / ~1,700 | ~420 / ~630 | <1 / ~2 | ~660 B |
+| M | ~1,700 / ~3,700 | ~530 / ~570 | ~1 / ~5 | ~710 B |
+| L | ~2,900 / ~5,400 | ~760 / ~850 | ~15 / ~60 | ~740 B |
+
+- **Writes**: visibility records. Cadence writes one when a workflow starts, one when it closes, and one each time it updates search attributes (`RecordWorkflowExecutionStarted`, `RecordWorkflowExecutionClosed`, `UpsertWorkflowExecution`).
+- **Deletes**: removing records of workflows past retention (`DeleteWorkflowExecution`).
+- **Reads**: List, Count, and Scan queries from your applications, the CLI, and the Web UI.
+- **Average record size**: depends on your workflows, mostly on how many search attributes and how large a memo they carry. Use it as a reference only.
+
+Each operation counts once, before any replication inside your visibility store.
+
+With advanced visibility, every visibility write and delete passes through Kafka first, so the writes and deletes columns also show how much traffic Kafka carries.
 
 ## Single cluster estimates
 
@@ -116,7 +160,7 @@ With two clusters, the target drops to 25% CPU and memory utilization. The lower
 
 ## Sizing guidelines
 
-These rules are starting points, not hard limits:
+Treat these rules as starting points:
 
 - Give each instance at least 2 cores.
 - Run at least 4 instances each of History, Frontend, and Matching, and at least 2 of Worker. Load spreads more evenly across more instances, and losing one hurts less. See [High availability](/docs/tech-review/day-0-planning/design/high-availability).
@@ -127,11 +171,11 @@ These rules are starting points, not hard limits:
 
 ### In-cluster
 
-All Cadence components (Frontend, History, Matching, and Worker) must be able to reach each other inside a cluster. Every component also needs access to the database and, if you use advanced visibility, to the visibility store. With advanced visibility, all Cadence services also need access to Kafka. History publishes visibility records and Worker indexes them, but every service opens a Kafka client at startup when advanced visibility is enabled. See [Service dependencies](/docs/tech-review/day-0-planning/design/service-dependencies) for the full list.
+All Cadence components (Frontend, History, Matching, and Worker) must be able to reach each other inside a cluster. Every component also needs access to the execution and visibility stores. With advanced visibility, all Cadence services also need access to Kafka. History publishes visibility records and Worker indexes them, but every service opens a Kafka client at startup when advanced visibility is enabled. See [Service dependencies](/docs/tech-review/day-0-planning/design/service-dependencies) for the full list.
 
 ### Cross-cluster
 
-History and Worker in cluster A must be able to reach Frontend in cluster B, and the other way round. History pulls workflow replication tasks, and Worker pulls domain replication messages. Frontend can also forward API calls to the Frontend of the cluster where a domain is active, depending on the cluster redirection policy. Frontend can sit behind a proxy or load balancer. Nothing else crosses clusters. Each cluster keeps its own database and visibility store, and Cadence replicates workflow data itself, so the datastores never talk to each other.
+History and Worker in cluster A must be able to reach Frontend in cluster B, and the other way round. History pulls workflow replication tasks, and Worker pulls domain replication messages. Frontend can also forward API calls to the Frontend of the cluster where a domain is active, depending on the cluster redirection policy. Frontend can sit behind a proxy or load balancer. Nothing else crosses clusters. Each cluster keeps its own execution and visibility stores, and Cadence replicates workflow data itself, so the datastores never talk to each other.
 
 Replication is asynchronous. Latency between regions doesn't block running workflows, but it increases replication lag, which is how much recent progress can be lost on failover. Replication traffic grows with the event rate. See [cross-DC replication](/docs/concepts/cross-dc-replication) for how replication and failover work.
 
