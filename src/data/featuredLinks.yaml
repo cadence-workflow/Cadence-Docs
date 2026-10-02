@@ -57,11 +57,11 @@
   tag: FAQ
   cta: Read FAQ
 
-- title: Community Meetups
-  description: Join the recurring Cadence community meetup to share demos, ask questions, and connect with maintainers.
-  href: /community/meetup
+- title: Join the Cadence community
+  description: Subscribe for release notes and community news, or reach the team on Slack and GitHub.
+  href: /community/contact-us
   tag: Community
-  cta: Join us
+  cta: Get involved
 
 - title: "Bypass the 2 MB Limit Without Shrinking Your Workflow"
   description: The claim-check pattern offloads large Cadence payloads to an external blob store so only a tiny reference travels through workflow history.
