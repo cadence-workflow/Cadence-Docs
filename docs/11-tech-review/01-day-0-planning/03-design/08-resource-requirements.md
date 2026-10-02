@@ -32,7 +32,7 @@ The sizes and tables on this page come from three reference environments and are
 
 The tables show the p50 and max load for three reference environment sizes.
 
-All three environments use Cassandra for persistence with 8K to 16K [history shards](/docs/operation-guide/setup#static-configuration) (16,384 on L, 8,192 on S and M) and OpenSearch for advanced visibility. SQL-backed clusters may need different sizing, so confirm with bench. Each runs as two clusters. The numbers cover both clusters together, including cross-cluster replication traffic.
+All three environments use Cassandra for persistence with 8K to 16K [history shards](/docs/operation-guide/setup#static-configuration) (16,384 on L, 8,192 on S and M) and OpenSearch for advanced visibility. SQL-backed clusters may need different sizing, so confirm with bench. Each runs as two clusters, and the numbers cover both clusters together. The persistence and visibility tables include writes from cross-cluster replication. The Cadence table counts only API calls from clients and workers.
 
 ### Cadence
 
@@ -77,7 +77,7 @@ With basic visibility, visibility records live in a database of the same type as
 
 | Size | Writes/sec (p50 / max) | Deletes/sec (p50 / max) | Reads/sec (p50 / max) | Average record size |
 |---|---|---|---|---|
-| S | ~1,200 / ~1,700 | ~420 / ~630 | <1 / ~2 | ~660 B |
+| S | ~1,200 / ~1,700 | ~420 / ~630 | &lt;1 / ~2 | ~660 B |
 | M | ~1,700 / ~3,700 | ~530 / ~570 | ~1 / ~5 | ~710 B |
 | L | ~2,900 / ~5,400 | ~760 / ~850 | ~15 / ~60 | ~740 B |
 
