@@ -10,7 +10,7 @@ keywords:
   - cadence voting process
   - cadence open source governance
   - cadence contribution guidelines
-date: 2025-05-09
+date: 2026-10-02
 authors: demirkayaender
 tags:
   - announcement
@@ -64,6 +64,9 @@ We strive to simplify our project to make it easier to understand and contribute
 ---
 
 ## Official Roles
+
+The current TSC members and maintainers are listed in [MAINTAINERS.md](https://github.com/cadence-workflow/cadence/blob/master/MAINTAINERS.md). Profiles on the [team page](/community/team) can be out of date.
+
 ### Maintainer
 A maintainer is a person who understands the Cadence codebase, with consistent past contributions. Maintainer rights and responsibilities are as follows:
   * Merge rights (code-review is still required in most cases),
@@ -88,12 +91,28 @@ Cadence Technical Steering Committee
   * Govern standards and practices,
   * Facilitates contributions
 
-Eligibility requirements are:
-  * Must already be a maintainer
-  * 2+ approved large project proposals
-  * Involvement in 2 large projects’ designs 
-  * Attendance in community meetings to talk about updates and provide their inputs
-  * Voted approval from Technical Steering Committee
+A person is eligible for the TSC in either of these ways:
+
+  * They are already a maintainer, with 2+ approved large project proposals and involvement in 2 large projects’ designs.
+  * They have consistent, long-term involvement in the community and in steering the project.
+
+Either path also requires attendance in community meetings to talk about updates and provide their inputs, and voted approval from the Technical Steering Committee.
+
+### Leaving an official role
+An official role belongs to the person. A change of employer does not end it.
+
+A maintainer or TSC member leaves the role in any of these cases:
+
+  * They step down in public, in the TSC repository or at a community meeting. The TSC records the step-down.
+  * They are inactive for 6 months. For a maintainer, inactivity means no pull requests, reviews, or issue work. For a TSC member, it means no steering work, including community meetings, planning, and decisions. Six months is the same window the project uses for a sustained contribution.
+  * They leave the Cadence team at a company that funds their Cadence work and do not confirm that they will keep contributing.
+  * The TSC votes to end the role. The TSC can end a maintainer's rights when it considers that necessary for the project, including for community health, collaboration, quality, or another reason recorded with the vote. The TSC can likewise vote a member out of the committee.
+
+For inactivity, or for a departure from a funded Cadence team, a TSC member emails the person and opens the question in the TSC repository. The person can confirm that they will continue. A confirmation keeps the role. If they do not confirm within the [two-week notice](#governing-model--voting-process), the TSC decides with the recorded vote.
+
+A vote to end a role uses that same recorded vote. The TSC notifies the person when the vote opens and states the reason in the TSC repository. Voting a person out of the TSC leaves their maintainer rights in place unless that vote also ends those rights. Ending a maintainer role leaves TSC membership in place unless that vote also ends it.
+
+After the role ends, the TSC may list the person as emeritus on the [team page](/community/team). Emeritus recognizes past work. It does not include merge rights or a vote. Returning to an active role follows the eligibility rules for that role and a new TSC vote.
 
 ---
 
@@ -146,13 +165,23 @@ The Cadence community follows a [Code of Conduct](https://github.com/uber/.githu
 
 ## **Project Roadmap**
 
-The TSC is responsible for maintaining and updating the project roadmap. The roadmap outlines:
+The TSC owns the roadmap. The roadmap outlines:
 
 * Upcoming features and milestones.  
 * Technical debt and areas of improvement.  
 * Long-term goals for the project.
 
-The roadmap is published and updated regularly on the [GitHub Roadmap Project](https://github.com/orgs/cadence-workflow/projects/1) where high-level details are posted on our [project website](/).
+The TSC defines and refreshes the roadmap once a year. It may soft-refresh priorities around the middle of the year. A soft refresh adjusts emphasis inside the year's scope. The TSC can also accept a project at any time during the year when its importance and funding support it. Changing the year's scope, and accepting a project, uses the recorded vote above. A vote is not required when a TSC member, a maintainer, or a company volunteers for the work, a TSC member accepts that offer in public, and no one pushes back. If someone pushes back, the TSC uses the recorded vote.
+
+A TSC member opens the annual proposal in [cadence-workflow/TSC-Discussions](https://github.com/cadence-workflow/TSC-Discussions). The [2027 roadmap proposal](https://github.com/cadence-workflow/TSC-Discussions/issues/3) is the current example.
+
+After the year's scope is approved, and whenever an idea comes up later, the project collects ideas in public. An idea is raised on GitHub, for example on the [2027 call for project ideas](https://github.com/cadence-workflow/cadence/issues/8533). A conversation in [CNCF Slack `#cadence-users`](https://inviter.co/cncf) or in a community meeting becomes an idea when a maintainer records it on GitHub.
+
+Maintainers and other community members can comment, volunteer, and vote on an idea. That vote shows popularity and interest. The TSC uses it as input. The TSC accepts a project with its recorded vote, or without a vote when a TSC member, a maintainer, or a company volunteers for the work, a TSC member accepts that offer in public, and no one pushes back. The TSC then names an owner. Volunteering before acceptance shows interest.
+
+Day-to-day bug reports, small improvements, and release work continue through GitHub issues. The roadmap is the commitment for larger, multi-month work.
+
+Status is tracked on the [Cadence GitHub projects](https://github.com/orgs/cadence-workflow/projects). The [Roadmap](https://github.com/orgs/cadence-workflow/projects/1) board is the year's plan. High-level updates are also posted on the [project website](/). The process is described in [Roadmap process](/docs/tech-review/day-0-planning/scope/roadmap-process).
 
 ---
 
