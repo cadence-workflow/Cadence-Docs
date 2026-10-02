@@ -74,14 +74,14 @@ These usually need static YAML, dynamic configuration, or a domain update. Sever
 | Feature | Default | How you opt in |
 | --- | --- | --- |
 | [Advanced visibility](/docs/concepts/search-workflows) | Basic visibility on the core datastore | Add an Elasticsearch, OpenSearch, or Pinot store and Kafka in static YAML, rolling-restart the services that open those clients, then set the write and read store names in dynamic configuration. |
-| [Archival](/docs/concepts/archival) | Disabled | Configure a blob provider in static YAML, then enable archival on the domain. |
+| [Archival](/docs/concepts/archival) | Disabled in Docker and Helm; the source development config enables a local filesystem provider | Configure a blob provider in static YAML, then enable archival on the domain. |
 | [HTTP API](/docs/concepts/http-api) | Frontend does not serve HTTP | Add the Frontend `http` section in static YAML and restart Frontend. |
 | [API authorization](/docs/tech-review/day-0-planning/design/iam) | No-op authorizer allows every caller | Enable the OAuth/JWT authorizer (or your own `Authorizer`) in static YAML and restart Frontend. |
 | [TLS / mTLS](/docs/concepts/mutual-tls) | Plaintext unless you configure it | Set TLS on the relevant RPC, client, and datastore sections in static YAML and restart. |
 | [Task list partitions](/docs/operation-guide/maintain) | One read partition and one write partition | Raise partition counts through dynamic configuration or the database-backed partition APIs. |
 | [Adaptive task-list scaling](https://cadenceworkflow.io/blog/2025/06/30/adaptive-tasklist-scaler) | Disabled; partition counts remain manual | First [migrate each task list's partition configuration to persistence](https://github.com/cadence-workflow/cadence/blob/v1.4.1/docs/migration/tasklist-partition-config.md), enable `matching.enableGetNumberOfPartitionsFromCache`, then enable `matching.enableAdaptiveScaler` for the task list. |
 | Isolation groups | Tasks can run on any worker for the task list | Set isolation-group dynamic configuration so decision and activity tasks stay in a worker group. See [zonal isolation](/blog/zonal-isolation-v1/zonal-isolation-v1). |
-| [Cross-cluster replication](/docs/concepts/cross-dc-replication) | Local domains, no failover | List every participating cluster in `clusterGroupMetadata` in static YAML, then register the domain with `--global_domain true`. |
+| [Cross-cluster replication](/docs/concepts/cross-dc-replication) | A raw API registration is local unless `is_global_domain` is true | List every participating cluster in `clusterGroupMetadata` in static YAML, then register the domain with `--global_domain true`. Pass the flag explicitly because the current CLI defaults it to true. |
 | Active-active global domains | A global domain uses one active cluster when no cluster attribute is selected | Enable both History transfer and timer queues v2. Register the domain with an `--active_clusters` attribute-to-cluster map (or add that map with `domain update` command), then enable `frontend.enableActiveClusterSelectionPolicyInStartWorkflow` for callers that select an attribute when starting a workflow. See the [active-active design and limitations](https://github.com/cadence-workflow/cadence/blob/v1.4.1/docs/design/active-active/active-active.md). |
 | Global Frontend rate limiter | Disabled; local host-level limiting remains available | Roll out `frontend.globalRatelimiterMode` by rate-limit key, using a shadow mode before `global`. Restore `local` or `disabled` to roll back. |
 | History transfer and timer queues v2 | Disabled for every shard | Enable `history.enableTransferQueueV2` and `history.enableTimerQueueV2` through shard-filtered dynamic configuration. Start with a small shard set and restore both keys to `false` to roll back. |
@@ -105,7 +105,7 @@ Application workers and starters have their own switches. Server configuration d
 | --- | --- | --- |
 | Activity and workflow retries | No retry policy | Attach a `RetryPolicy` on the activity or workflow options. See [Go retries](/docs/go-client/retries). |
 | Cron | Off | Set `CronSchedule` on start options. |
-| [Schedules](/docs/concepts/schedules) | The scheduler worker is disabled and no schedule objects exist | Enable `worker.enableScheduler` for the domain, then create schedules through the CLI or a supported SDK. Delete the schedules before disabling the worker when rolling back. |
+| [Schedules](/docs/concepts/schedules) | Disabled by the compiled and Helm defaults; enabled by the development dynamic-config file packaged in the Docker image | Enable `worker.enableScheduler` for the domain, then create schedules through the CLI or a supported SDK. Delete the schedules before disabling the worker when rolling back. |
 | [Worker poller auto scaling](/docs/go-client/worker-auto-scaling) | Fixed poller counts | Set `AutoScalerOptions` on the Go worker. |
 | Typed "workflow already completed" errors | Off on the Go client | Set `client.FeatureFlags.WorkflowExecutionAlreadyCompletedErrorEnabled` (and the same flag on the worker) so Signal, Cancel, and Terminate can return `WorkflowExecutionAlreadyCompletedError` instead of a generic not-found error. |
 | Client auto-forwarding | Off | Set `FeatureFlags.AutoforwardingEnabled` on the Go client when a global domain should follow the active cluster. |
@@ -143,10 +143,10 @@ Retries are opt-in. Once a retry policy is attached, the Cadence server records 
 
 A domain is the boundary for retention, archival, replication, and many dynamic configuration filters. Domain registration persists these settings; they are not inherited from a Kubernetes namespace.
 
-- The server accepts retention periods from 1 through 30 days by default. The CLI supplies 3 days when `domain register` omits `--retention`; that is a CLI convenience, not a server default.
+- Compiled server configuration accepts retention periods from 1 through 30 days. The Docker and Helm dynamic configuration lowers the minimum to 0. The CLI supplies 3 days when `domain register` omits `--retention`; that is a CLI convenience, not a server default.
 - History and visibility archival are disabled by default in production-oriented container configuration. Enabling archival requires both a statically configured provider and domain-level enablement. After archival is enabled for a domain, its archival URI cannot be changed.
 - A TaskList starts with one read partition and one write partition. Additional partitions and adaptive scaling are operator choices. When reducing partitions, lower write partitions first, allow tasks to drain, and then lower read partitions.
-- A domain is local unless it is registered as global with replication configuration. Multi-cluster failover is never inferred from Kubernetes regions or server placement.
+- A raw API registration is local unless `is_global_domain` is true. The current CLI sets `--global_domain` to true by default, so pass `--global_domain false` explicitly when you want a local domain. Multi-cluster failover is never inferred from Kubernetes regions or server placement.
 
 ## Production overrides
 
