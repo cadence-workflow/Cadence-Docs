@@ -26,7 +26,7 @@ The main [Cadence repository](https://github.com/cadence-workflow/cadence/tree/m
 
 The dashboards do not include alerts. [Cluster monitoring](/docs/operation-guide/monitoring) suggests monitors and thresholds for the key panels.
 
-The local [Docker Compose setups](https://github.com/cadence-workflow/cadence/tree/master/docker) start Prometheus and Grafana with these dashboards loaded. For Kubernetes, see the [Grafana Helm setup guide](/docs/get-started/grafana-helm-setup).
+The default [Docker Compose setup](https://github.com/cadence-workflow/cadence/blob/master/docker/docker-compose.yml) starts Prometheus and Grafana with these dashboards loaded. For Kubernetes, see the [Grafana Helm setup guide](/docs/get-started/grafana-helm-setup).
 
 ### Requirements
 
