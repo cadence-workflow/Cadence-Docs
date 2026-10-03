@@ -53,10 +53,11 @@ Disablement is the reverse of the table above. Choose how much you want to take 
 | Scale a role to zero (`kubectl scale` / Helm replica values) | That role stops serving. Scaling Frontend to zero rejects client RPCs. Scaling History to zero stalls execution. Scaling Matching to zero stalls task dispatch. Scaling the internal Worker to zero pauses archival, scanners, and similar system workflows. | Unchanged, in the datastore | Unaffected |
 | `helm uninstall` | All Cadence pods and Services in the release go away | **Preserved** on PersistentVolumeClaims (the chart and the [Helm codelab](/docs/codelabs/helm-deploy-postgres-opensearch) keep PVCs on purpose) | Unaffected |
 | Delete the namespace | Cadence and any in-namespace datastore go away | Deleted with the PVCs | Unaffected |
-| `docker compose down` without `-v` | Compose services stop | Named volumes remain | N/A |
+| `docker compose stop` | Compose services stop | Unchanged. The same anonymous volumes stay attached. `docker compose start` brings them back | N/A |
+| `docker compose down` without `-v` | Compose services stop | Orphaned. Shipped Compose files do not declare named volumes, so image `VOLUME` dirs become anonymous volumes. The next `up` does not reattach them and starts empty. `down -v` deletes them | N/A |
 | Stop the `cadence-server` process | That process's roles stop. Remaining members stay in the Ringpop ring and take over History shards | Unchanged | N/A |
 
-Re-enablement after a scale-to-zero or `helm uninstall` that left the database is: start the processes again against the **same** datastore and the **same** `numHistoryShards`. Schema is already applied. Membership reforms, History reclaims shards, and in-flight workflows resume as workers poll. That is the rollback of "we turned Cadence off."
+Re-enablement after a scale-to-zero or `helm uninstall` that left the database is: start the processes again against the **same** datastore and the **same** `numHistoryShards`. Schema is already applied. Membership reforms, History reclaims shards, and in-flight workflows resume as workers poll. That is the rollback of "we turned Cadence off." On the shipped Compose files, `docker compose stop` then `start` is that same rollback. `docker compose down` then `up` is not, because the next `up` does not mount the orphaned anonymous volumes.
 
 Deleting the database or the namespace is not a rollback. It is data destruction. Cleanup of leftover objects is on [Resource cleanup](/docs/tech-review/day-1-installation/enablement-rollback/resource-cleanup).
 
