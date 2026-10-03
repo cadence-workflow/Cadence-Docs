@@ -22,7 +22,7 @@ Disablement that leaves persistence in place is covered on [Live cluster enablem
 | CustomResourceDefinition | No | **N/A.** No CRDs to delete. |
 | ValidatingWebhookConfiguration / MutatingWebhookConfiguration | No | **N/A.** |
 | APIService / aggregated API | No | **N/A.** |
-| Ordinary Kubernetes objects (Deployments, Services, Jobs, ConfigMaps, Secrets, ServiceAccounts, optional HPAs, Ingress, ServiceMonitor, PodMonitoring, NetworkPolicy, RBAC) | Yes, when installed via the [Helm chart](https://github.com/cadence-workflow/cadence-charts) | Removed by `helm uninstall` (or by deleting the namespace). |
+| Ordinary Kubernetes objects (Deployments, Services, Jobs, ConfigMaps, Secrets, ServiceAccounts, optional HPAs, Ingress, ServiceMonitor, PodMonitoring, NetworkPolicy) | Yes, when installed via the [Helm chart](https://github.com/cadence-workflow/cadence-charts) | Removed by `helm uninstall`. Deleting the namespace removes the namespaced ones. |
 
 Evidence: the [cadence-charts](https://github.com/cadence-workflow/cadence-charts) templates directory contains Deployments, Services, Jobs, ConfigMaps, Secrets, and related objects. It contains no `CustomResourceDefinition` manifests and no `crds/` directory. The [cadence](https://github.com/cadence-workflow/cadence) server repository likewise defines no Kubernetes CRDs. Cadence extends its own Frontend API and persistence model, not the Kubernetes API. See also [Live cluster enablement and rollback](/docs/tech-review/day-1-installation/enablement-rollback/live-cluster-enablement-rollback), which states the same CRD and webhook boundary.
 
@@ -34,7 +34,7 @@ Cadence cleanup is layered. Stopping the server is not the same as deleting work
 
 | Layer | Created by | Removed by stopping Cadence / `helm uninstall`? | How to remove |
 | --- | --- | --- | --- |
-| 1. Kubernetes / Helm objects | Cadence Helm release (and optional subcharts) | Yes, for release-managed objects | `helm uninstall`, or delete the namespace |
+| 1. Kubernetes / Helm objects | Cadence Helm release (and optional subcharts) | Yes, for release-managed objects, including cluster-scoped RBAC when `rbac.create` is true | `helm uninstall`. Namespace delete removes namespaced objects only |
 | 2. PersistentVolumeClaims / in-cluster datastore volumes | StatefulSet `volumeClaimTemplates` from optional Bitnami/OpenSearch subcharts | **No.** Retained on purpose | `kubectl delete pvc`, or delete the namespace |
 | 3. Persistence schemas / keyspaces / databases | Schema Jobs or `cadence-cassandra-tool` / `cadence-sql-tool` | No | Drop with the datastore's tools (or recreate the store) |
 | 4. Visibility stores (ES/OpenSearch indices, Kafka topics) | Schema Job / chart topic provisioning / server writes | No (unless the whole in-cluster subchart PVC or namespace is deleted) | Delete indices and topics with search/messaging tools, or destroy that store |
@@ -51,7 +51,7 @@ The [Cadence Helm chart](https://github.com/cadence-workflow/cadence-charts/tree
 | Operation | What is removed | What remains |
 | --- | --- | --- |
 | `helm uninstall <release> -n <namespace>` | Release-managed Deployments, Services, Jobs, ConfigMaps, Secrets, ServiceAccounts, and other chart objects, including enabled subchart workloads | The namespace itself. **PersistentVolumeClaims** from StatefulSet volumeClaimTemplates. Data in any **external** datastore the chart was pointed at |
-| `kubectl delete namespace <namespace>` | Everything in the namespace, including PVCs for in-cluster datastores | External datastores, archival buckets, application workers outside the namespace |
+| `kubectl delete namespace <namespace>` | Everything in the namespace, including PVCs for in-cluster datastores | External datastores, archival buckets, application workers outside the namespace. **ClusterRole and ClusterRoleBinding** if `rbac.create` was true and `helm uninstall` did not run first |
 | Scale role replicas to zero | Running pods for that role | All Kubernetes objects and all data |
 
 Practical commands (replace names with your release and namespace):
@@ -63,13 +63,13 @@ helm uninstall cadence-release -n cadence-postgres-os2
 # After helm uninstall, destroy in-cluster datastore volumes deliberately
 kubectl delete pvc --all -n cadence-postgres-os2
 
-# Or remove the whole namespace (pods, services, jobs, PVCs)
+# Or remove namespaced objects, including PVCs. Run helm uninstall first if rbac.create was true.
 kubectl delete namespace cadence-postgres-os2
 ```
 
-The chart [README uninstall section](https://github.com/cadence-workflow/cadence-charts/blob/main/README.md#uninstallation) uses `helm delete` (an alias of `helm uninstall`). The [Helm codelab Step 6](/docs/codelabs/helm-deploy-postgres-opensearch) is the operator-facing cleanup guide: namespace delete for complete cleanup, or `helm uninstall` followed by `kubectl delete pvc --all` when PVCs must go too.
+The chart [README uninstall section](https://github.com/cadence-workflow/cadence-charts/blob/main/README.md#uninstallation) uses `helm delete` (an alias of `helm uninstall`). The [Helm codelab Step 6](/docs/codelabs/helm-deploy-postgres-opensearch) deletes the namespace for that walkthrough. The example values leave `rbac.create` at its default of `false`, so that delete does not leave chart RBAC behind. If you turned `rbac.create` on, run `helm uninstall` before deleting the namespace, or delete the ClusterRole and ClusterRoleBinding by name.
 
-Schema Jobs are part of the release. Completed Jobs are also eligible for automatic removal after `ttlSecondsAfterFinished` (60 seconds in the chart templates). They do not leave CRDs or cluster-scoped API extensions behind. ClusterRole and ClusterRoleBinding are created only when `rbac.create` is enabled (default `false`).
+Schema Jobs are part of the release. Completed Jobs are also eligible for automatic removal after `ttlSecondsAfterFinished` (60 seconds in the chart templates). They do not leave CRDs or aggregated APIs behind. ClusterRole and ClusterRoleBinding are created only when `rbac.create` is enabled (default `false`). Those objects are cluster-scoped. `helm uninstall` removes them because Helm tracks the release. `kubectl delete namespace` does not.
 
 ## PersistentVolumeClaims and datastore volumes
 
@@ -79,7 +79,7 @@ When the chart enables an in-cluster database or search subchart with persistenc
 | --- | --- |
 | Keep workflow data, remove Cadence pods | `helm uninstall` only |
 | Destroy in-cluster volumes after uninstall | `kubectl delete pvc --all -n <namespace>` |
-| Destroy everything in the install namespace | `kubectl delete namespace <namespace>` |
+| Destroy namespaced objects and PVCs | `kubectl delete namespace <namespace>` (does not remove ClusterRole or ClusterRoleBinding) |
 | External managed database (Cloud SQL, self-managed Cassandra outside the chart, and similar) | Uninstall does not touch it. Drop schemas or decommission that service separately |
 
 Reinstalling the chart against retained PVCs (or the same external store) with the same `numHistoryShards` is how you bring Cadence back without losing executions. See [Live cluster enablement and rollback](/docs/tech-review/day-1-installation/enablement-rollback/live-cluster-enablement-rollback).
@@ -142,23 +142,29 @@ Internal Cadence Worker service pods (archival, scanners, and similar system wor
 
 ## Docker Compose cleanup
 
-Shipped Compose files under [`cadence/docker`](https://github.com/cadence-workflow/cadence/tree/master/docker) (`docker-compose.yml`, `docker-compose-mysql.yml`, `docker-compose-postgres.yml`, Elasticsearch/OpenSearch variants, and similar) run Cassandra, MySQL, PostgreSQL, Elasticsearch, OpenSearch, and Kafka **without** declaring named volumes for those datastores. The images still expose data directories as Docker `VOLUME`s, so Compose attaches **anonymous volumes** that survive a plain `down`.
+Shipped Compose files under [`cadence/docker`](https://github.com/cadence-workflow/cadence/tree/master/docker) (`docker-compose.yml`, `docker-compose-mysql.yml`, `docker-compose-postgres.yml`, Elasticsearch/OpenSearch variants, and similar) run Cassandra, MySQL, PostgreSQL, Elasticsearch, OpenSearch, and Kafka **without** declaring named volumes for those datastores. The images still expose data directories as Docker `VOLUME`s, so Compose attaches **anonymous volumes**. Those volumes have no stable name. `docker compose down` does not delete them, and the next `up` does not mount them. It creates new empty volumes. The old data sits in orphaned volumes until `docker volume prune` or an explicit `docker volume rm`.
 
 | Command | Processes | Datastore volumes |
 | --- | --- | --- |
-| `docker compose down` | Containers and networks removed | Anonymous datastore volumes **remain** |
+| `docker compose stop` / `start` | Containers stop and start again | Anonymous volumes stay attached. Data is kept |
+| `docker compose down` | Containers and networks removed | Anonymous volumes are **orphaned**, not reattached by the next `up` |
 | `docker compose down -v` | Containers and networks removed | Anonymous volumes **deleted** (data destruction) |
+| `docker volume prune` | None | Removes orphaned anonymous volumes left by `down` |
 | Bind mounts such as `./prometheus` and `./grafana` | Not removed by Compose | Remain on the host filesystem |
 
 ```bash
-# Stop Compose services; keep datastore volumes
+# Pause Compose services and keep the same anonymous volumes
+docker compose -f docker/docker-compose.yml stop
+docker compose -f docker/docker-compose.yml start
+
+# Remove containers. Anonymous volumes are orphaned and not reused by the next up
 docker compose -f docker/docker-compose.yml down
 
-# Stop and destroy anonymous volumes (deletes local workflow data)
+# Remove containers and delete anonymous volumes (deletes local workflow data)
 docker compose -f docker/docker-compose.yml down -v
 ```
 
-If you added your own named volumes in an override file, `-v` removes those as well. External databases pointed at by custom Compose files are untouched either way.
+To keep data across `down` and `up`, add named volumes or bind mounts in an override file. `down -v` removes named volumes you added as well. External databases pointed at by custom Compose files are untouched either way.
 
 ## Binary or process installs
 
@@ -176,7 +182,8 @@ There is no Cadence uninstall package that reverses schema setup on VMs. Remove 
 | --- | --- | --- | --- |
 | Scale to zero / stop processes | Down for stopped roles | Unaffected | Preserved |
 | `helm uninstall` | Down | Unaffected | Preserved on PVCs / external stores |
-| `docker compose down` | Down | N/A | Preserved on anonymous volumes |
+| `docker compose stop` / `start` | Down, then back | N/A | Preserved on the same anonymous volumes |
+| `docker compose down` | Down | N/A | Orphaned. The next `up` starts **empty** |
 | `docker compose down -v` | Down | N/A | **Destroyed** (local Compose volumes) |
 | `kubectl delete pvc` or `kubectl delete namespace` | Down if Cadence was there | Unaffected | **Destroyed** for in-cluster volumes |
 | Drop DB / indices / topics / archival blobs | N/A | N/A | **Destroyed** for that store |
