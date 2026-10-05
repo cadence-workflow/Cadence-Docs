@@ -113,6 +113,14 @@ class OrderWorkflow:
         return "done"
 ```
 
+You can also execute a decorated activity definition directly. `with_options` preserves its parameter and result types:
+
+```python
+order = await fetch_order.with_options(
+    start_to_close_timeout=timedelta(minutes=5),
+).execute(order_id)
+```
+
 ### Activity options
 
 The Python SDK starts with a 1-hour `schedule_to_close_timeout` and a 10-second `schedule_to_start_timeout`, then applies the options supplied by the workflow. If `start_to_close_timeout` or `heartbeat_timeout` is omitted, each is set to the effective Schedule-to-Close timeout. Set explicit values when these defaults do not fit the activity.
@@ -149,6 +157,31 @@ async def process_large_file(file_path: str) -> int:
 
 Pass progress details to `heartbeat()` and retrieve them on restart with `activity.heartbeat_details()`.
 
+## Cancellation
+
+Cancellation is delivered to activities through heartbeat responses. Long-running activities must set `heartbeat_timeout` and heartbeat regularly to receive cancellation promptly.
+
+Async activities receive `asyncio.CancelledError` after a heartbeat observes the cancellation request:
+
+```python
+import asyncio
+from cadence import activity
+
+@activity.defn()
+async def cancellable_activity() -> None:
+    try:
+        while True:
+            await do_work()
+            activity.heartbeat()
+    except asyncio.CancelledError:
+        await clean_up()
+        raise
+```
+
+Synchronous activities can use `activity.is_cancelled()`, `activity.raise_if_cancelled()`, or `activity.wait_for_cancelled(timeout)`. Raise `cadence.error.ActivityCancelledError` after cleanup to report the activity as cancelled.
+
+See [Cancellation](/docs/python-client/cancellation) for complete workflow and activity examples.
+
 ## Activity context
 
 Inside an activity, use the `activity` module to access context:
@@ -163,3 +196,5 @@ async def my_activity() -> None:
     print(info.attempt)
     print(info.heartbeat_timeout)
 ```
+
+`activity.client()` returns the worker's client from an async activity; it is not supported in synchronous activities. `activity.in_activity()` reports whether the current code is running in an activity context.

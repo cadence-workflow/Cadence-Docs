@@ -3,12 +3,14 @@ import { Icon } from '@iconify/react';
 import Link from '@docusaurus/Link';
 import styles from './CommunityWidget.module.css';
 
+const JOIN_URL = 'https://lists.cncf.io/g/cncf-cadence-community/join';
+
+// Subscribe first (highlighted + New). Slack second, no New.
 const ACTIONS = [
   {
-    id: 'meetup',
-    label: 'Join the community meetup',
-    href: '/community/meetup',
-    icon: 'mdi:calendar-star',
+    id: 'newsletter',
+    label: 'Subscribe to updates',
+    icon: 'mdi:email-newsletter',
   },
   {
     id: 'slack',
@@ -18,17 +20,17 @@ const ACTIONS = [
     external: true,
   },
   {
-    id: 'discord',
-    label: 'Join us on Discord',
-    href: 'https://discord.gg/ynvjm2Et5',
-    icon: 'mdi:discord',
-    external: true,
-  },
-  {
     id: 'github',
     label: 'Discuss on GitHub',
     href: 'https://github.com/cadence-workflow/cadence/discussions',
     icon: 'mdi:github',
+    external: true,
+  },
+  {
+    id: 'reddit',
+    label: 'Join us on Reddit',
+    href: 'https://www.reddit.com/r/cadenceworkflow/',
+    icon: 'mdi:reddit',
     external: true,
   },
   {
@@ -41,8 +43,34 @@ const ACTIONS = [
 
 export default function CommunityWidget() {
   const [open, setOpen] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(true);
+  const [emailOpen, setEmailOpen] = useState(false);
+  const [email, setEmail] = useState('');
+  // false | 'opened' | 'blocked'
+  const [submitted, setSubmitted] = useState(false);
   const panelRef = useRef(null);
   const fabRef = useRef(null);
+  const wrapperRef = useRef(null);
+  const emailInputRef = useRef(null);
+
+  useEffect(() => {
+    const t = setTimeout(() => setShowTooltip(false), 4000);
+    return () => clearTimeout(t);
+  }, []);
+
+  useEffect(() => {
+    if (emailOpen) {
+      setTimeout(() => emailInputRef.current?.focus(), 50);
+    }
+  }, [emailOpen]);
+
+  useEffect(() => {
+    if (!open) {
+      setEmailOpen(false);
+      setSubmitted(false);
+      setEmail('');
+    }
+  }, [open]);
 
   useEffect(() => {
     if (!open) return;
@@ -55,8 +83,8 @@ export default function CommunityWidget() {
       if (
         panelRef.current &&
         !panelRef.current.contains(e.target) &&
-        fabRef.current &&
-        !fabRef.current.contains(e.target)
+        wrapperRef.current &&
+        !wrapperRef.current.contains(e.target)
       ) {
         setOpen(false);
       }
@@ -69,6 +97,21 @@ export default function CommunityWidget() {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [open]);
+
+  function handleEmailSubmit(e) {
+    e.preventDefault();
+    if (!email) return;
+    const url = `${JOIN_URL}?email=${encodeURIComponent(email)}`;
+    const win = window.open(url, '_blank');
+    if (win) {
+      win.opener = null;
+      setSubmitted('opened');
+    } else {
+      setSubmitted('blocked');
+    }
+  }
+
+  const joinUrl = email ? `${JOIN_URL}?email=${encodeURIComponent(email)}` : JOIN_URL;
 
   return (
     <div className={styles.widget} aria-label="Community actions">
@@ -91,8 +134,85 @@ export default function CommunityWidget() {
             </button>
           </div>
           <ul className={styles.actionList}>
-            {ACTIONS.map((action) =>
-              action.external ? (
+            {ACTIONS.map((action) => {
+              if (action.id === 'newsletter') {
+                return (
+                  <li key={action.id}>
+                    <button
+                      className={`${styles.actionItemPrimary} ${styles.actionItemPrimaryBtn}`}
+                      onClick={() => {
+                        setEmailOpen((v) => !v);
+                        setSubmitted(false);
+                      }}
+                      aria-expanded={emailOpen}
+                    >
+                      <Icon icon={action.icon} className={styles.actionIconPrimary} width={20} />
+                      <span>{action.label}</span>
+                      <span className={styles.primaryBadge}>New</span>
+                    </button>
+                    {emailOpen && (
+                      <div className={styles.emailDrawer}>
+                        {submitted === 'opened' ? (
+                          <p className={styles.emailConfirm}>
+                            Confirm on the groups.io tab (click{' '}
+                            <strong>Confirm Email Address</strong>), then check your inbox.
+                            After you confirm, you are on the Cadence community newsletter
+                            {email ? (
+                              <>
+                                {' '}
+                                as <strong>{email}</strong>
+                              </>
+                            ) : null}
+                            .
+                          </p>
+                        ) : submitted === 'blocked' ? (
+                          <p className={styles.emailConfirm}>
+                            Popup blocked. Open groups.io to finish signup
+                            {email ? (
+                              <>
+                                {' '}
+                                for <strong>{email}</strong>
+                              </>
+                            ) : null}
+                            :{' '}
+                            <a
+                              href={joinUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={styles.emailFallbackLink}
+                            >
+                              Open groups.io ↗
+                            </a>
+                          </p>
+                        ) : (
+                          <form onSubmit={handleEmailSubmit} className={styles.emailForm}>
+                            <input
+                              ref={emailInputRef}
+                              type="email"
+                              required
+                              placeholder="you@example.com"
+                              value={email}
+                              onChange={(e) => setEmail(e.target.value)}
+                              className={styles.emailInput}
+                              aria-label="Email address"
+                            />
+                            <button
+                              type="submit"
+                              className={styles.emailSubmit}
+                              disabled={!email}
+                              aria-label="Subscribe"
+                            >
+                              <Icon icon="mdi:arrow-right" width={18} />
+                            </button>
+                          </form>
+                        )}
+                      </div>
+                    )}
+                  </li>
+                );
+              }
+
+              return action.external ? (
                 <li key={action.id}>
                   <a
                     href={action.href}
@@ -111,20 +231,30 @@ export default function CommunityWidget() {
                     <span>{action.label}</span>
                   </Link>
                 </li>
-              )
-            )}
+              );
+            })}
           </ul>
         </div>
       )}
-      <button
-        ref={fabRef}
-        className={`${styles.fab} ${open ? styles.fabOpen : ''}`}
-        onClick={() => setOpen((v) => !v)}
-        aria-label={open ? 'Close community menu' : 'Open community actions'}
-        aria-expanded={open}
-      >
-        <Icon icon={open ? 'mdi:close' : 'mdi:account-group'} width={26} />
-      </button>
+      <div ref={wrapperRef} className={`${styles.fabWrapper} ${open ? styles.fabWrapperOpen : ''}`}>
+        {showTooltip && !open && (
+          <div className={styles.tooltip} aria-hidden="true">
+            <span>Join the newsletter</span>
+          </div>
+        )}
+        <button
+          ref={fabRef}
+          className={`${styles.fab} ${open ? styles.fabOpen : ''}`}
+          onClick={() => {
+            setOpen((v) => !v);
+            setShowTooltip(false);
+          }}
+          aria-label={open ? 'Close community menu' : 'Open community actions'}
+          aria-expanded={open}
+        >
+          <Icon icon={open ? 'mdi:close' : 'mdi:account-group'} width={26} />
+        </button>
+      </div>
     </div>
   );
 }
