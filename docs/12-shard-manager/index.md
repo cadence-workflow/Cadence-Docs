@@ -23,11 +23,11 @@ Shard Manager manages the shards of an application, such as Cadence Matching. It
 Cadence historically used [Ringpop](https://github.com/uber/ringpop-go) to manage shards. Ringpop is a traditional [consistent hash ring](https://en.wikipedia.org/wiki/Consistent_hashing). While mathematically and theoretically beautiful, consistent hashing gives a set of problems:
 
 1. **Load Balancing** - A ring balances by shard count, never by shard load. Moving a shard means every host changing its view of the ring at the same instant, and nothing coordinates that. Methods such as virtual nodes make it possible to shuffle the shards, but do not allow fine-grained control.
-2. **Graceful Handovers** - When a shard moves in a traditional consistent hash ring, requests will simultaneously go to both owners, causing availability drops. With a centralized Shard Manager we let the old owner drain before the new one takes over. It also opens the door to warming caches on the new owner before the handover, and truly zero-downtime transfers. That is not implemented yet.
+2. **Graceful Handovers** - When a shard moves in a traditional consistent hash ring, requests will simultaneously go to both owners, causing availability drops. With a centralized Shard Manager we let the old owner drain before the new one takes over. It also opens the door to warming caches on the new owner before the handover, and truly zero-downtime transfers. Graceful handover is not implemented yet.
 3. **Debuggability and Introspection** - In a traditional consistent hash ring the state of the shard assignments is spread across all participants, and there is no authority on what the correct state is. A single misbehaving instance can therefore cause issues across the cluster, and shard assignment issues are extremely hard to debug. With central assignment the mapping is a record we can inspect with `smctl`, the Shard Manager CLI.
 4. **Operability** - A ring cannot be steered. There is no way to take a single hot shard off a host, or to empty a host ahead of a deploy, without changing the membership list itself.
 
-Shard Manager solves all of these problems by centralizing the assignment decision: balancing by real load, graceful handovers, introspection with `smctl`, and operability such as [draining shards and hosts](01-architecture.md#draining).
+Shard Manager solves all of these problems by centralizing the assignment decision: balancing by real load, introspection with `smctl`, and operability such as [draining shards and hosts](01-architecture.md#draining).
 
 ## Running it
 
