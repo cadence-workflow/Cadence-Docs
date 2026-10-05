@@ -94,7 +94,7 @@ With advanced visibility, every visibility write and delete passes through Kafka
 
 With one cluster there's no second region to fail over to, so the target is 40% CPU and memory utilization. That leaves room for traffic spikes without paying for a standby copy.
 
-### S
+### Small (S)
 
 | Component | Nodes | Cores per node | RAM per node | Total cores | Total RAM |
 |---|---|---|---|---|---|
@@ -104,7 +104,7 @@ With one cluster there's no second region to fail over to, so the target is 40% 
 | Worker | 4 | 2 | 4 GiB | 8 | 16 GiB |
 | **Total** | **28** | | | **56** | **288 GiB** |
 
-### M
+### Medium (M)
 
 | Component | Nodes | Cores per node | RAM per node | Total cores | Total RAM |
 |---|---|---|---|---|---|
@@ -114,7 +114,7 @@ With one cluster there's no second region to fail over to, so the target is 40% 
 | Worker | 4 | 4 | 4 GiB | 16 | 16 GiB |
 | **Total** | **34** | | | **136** | **776 GiB** |
 
-### L
+### Large (L)
 
 | Component | Nodes | Cores per node | RAM per node | Total cores | Total RAM |
 |---|---|---|---|---|---|
@@ -128,7 +128,7 @@ With one cluster there's no second region to fail over to, so the target is 40% 
 
 With two clusters, the target drops to 25% CPU and memory utilization. The lower target covers failover. If one cluster goes down, the other takes its traffic and runs at roughly 50%. Each cluster is sized for half the load. The tables show the node count per cluster and the totals across both.
 
-### S
+### Small (S)
 
 | Component | Nodes per cluster | Nodes total | Cores per node | RAM per node | Total cores | Total RAM |
 |---|---|---|---|---|---|---|
@@ -138,7 +138,7 @@ With two clusters, the target drops to 25% CPU and memory utilization. The lower
 | Worker | 4 | 8 | 2 | 4 GiB | 16 | 32 GiB |
 | **Total** | **25** | **50** | | | **100** | **472 GiB** |
 
-### M
+### Medium (M)
 
 | Component | Nodes per cluster | Nodes total | Cores per node | RAM per node | Total cores | Total RAM |
 |---|---|---|---|---|---|---|
@@ -148,7 +148,7 @@ With two clusters, the target drops to 25% CPU and memory utilization. The lower
 | Worker | 4 | 8 | 4 | 4 GiB | 32 | 32 GiB |
 | **Total** | **29** | **58** | | | **232** | **1,272 GiB** |
 
-### L
+### Large (L)
 
 | Component | Nodes per cluster | Nodes total | Cores per node | RAM per node | Total cores | Total RAM |
 |---|---|---|---|---|---|---|
@@ -171,7 +171,7 @@ Treat these rules as starting points:
 
 ### In-cluster
 
-All Cadence components (Frontend, History, Matching, and Worker) must be able to reach each other inside a cluster. Every component also needs access to the execution and visibility stores. With advanced visibility, all Cadence services also need access to Kafka. History publishes visibility records and Worker indexes them, but every service opens a Kafka client at startup when advanced visibility is enabled. See [Service dependencies](/docs/tech-review/day-0-planning/design/service-dependencies) for the full list.
+All Cadence components (Frontend, History, Matching, and Worker) must be able to reach each other inside a cluster. Every component needs access to the execution store, and Frontend, History, and Worker also need access to the visibility store. With advanced visibility, Frontend, History, and Worker also need access to Kafka. Matching never reads or writes visibility records, so it needs neither. See [Service dependencies](/docs/tech-review/day-0-planning/design/service-dependencies) for the full list.
 
 ### Cross-cluster
 
