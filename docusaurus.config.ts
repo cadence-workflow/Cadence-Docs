@@ -208,6 +208,10 @@ const config: Config = {
             to: '/community/contact-us',
           },
           {
+            from: '/community/meetup',
+            to: '/community/contact-us',
+          },
+          {
             from: '/faq',
             to: '/faq/best-practices',
           },
@@ -377,6 +381,7 @@ const config: Config = {
             { label: 'Cadence Web', href: 'https://github.com/cadence-workflow/cadence-web' },
             { label: 'Cadence IDLs', href: 'https://github.com/cadence-workflow/cadence-idl' },
             { label: 'Helm Charts', href: 'https://github.com/cadence-workflow/cadence-charts' },
+            { label: 'Shard Manager', href: 'https://github.com/cadence-workflow/shard-manager' },
           ],
         },
       ],

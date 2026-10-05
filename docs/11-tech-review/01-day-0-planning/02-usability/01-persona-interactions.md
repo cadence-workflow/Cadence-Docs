@@ -171,10 +171,9 @@ Workflow operators work on **business workflows** (what the product team shipped
 
 Documentation is organized by task and persona on [cadenceworkflow.io](https://cadenceworkflow.io). When docs are not enough:
 
-- [Contact us](https://cadenceworkflow.io/community/contact-us)
+- [Contact us](https://cadenceworkflow.io/community/contact-us) for support channels and the community newsletter
 - [CNCF Slack `#cadence-users`](https://inviter.co/cncf) for questions and discussion
 - [GitHub Issues](https://github.com/cadence-workflow/cadence/issues) for defects and feature requests
-- [Community meetups](/community/meetup) for live Q&A with maintainers
 
 ## Related documentation
 
