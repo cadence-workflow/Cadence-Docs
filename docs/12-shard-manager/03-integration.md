@@ -57,11 +57,11 @@ The status a processor reports decides whether its shard stays in the namespace.
 `SetShardStatus` and the `Status` field of `GetShardReport` are a pair. The processor holds the status, the client writes it, and it should be included on the next heartbeat. Most implementations look like this:
 
 ```go
-func (p *ShardProcessor) SetShardStatus(status types.ShardStatus) {
+func (p *MyShardProcessor) SetShardStatus(status types.ShardStatus) {
 	p.status.Store(int32(status))
 }
 
-func (p *ShardProcessor) GetShardReport() executorclient.ShardReport {
+func (p *MyShardProcessor) GetShardReport() executorclient.ShardReport {
 	return executorclient.ShardReport{
 		ShardLoad: p.load(),
 		Status:    types.ShardStatus(p.status.Load()),
@@ -89,6 +89,9 @@ To serve requests, get the `ShardProcessor` from the executor. The executor is g
 proc, err := executor.GetShardProcess(ctx, shardKey)
 if errors.Is(err, executorclient.ErrShardProcessNotFound) {
 	// this host does not own the shard
+	return nil, err
+}
+if err != nil {
 	return nil, err
 }
 
