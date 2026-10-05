@@ -8,7 +8,7 @@ keywords:
   - cadence breaking changes
 ---
 
-Cadence repositories use semantic versioning and publish changes in GitHub Releases. The server, SDKs, Helm chart, and Web UI have independent versions and release schedules. Review the release notes for every component that you upgrade.
+Cadence repositories publish changes in GitHub Releases. Server version numbers are coarser than strict semantic versioning: any official server release, including a patch-number bump, can contain features and migration steps. See [Release processes](/docs/tech-review/day-0-planning/design/release-processes). The server, SDKs, Helm chart, and Web UI have independent versions and release schedules. Review the release notes for every component that you upgrade.
 
 A deprecation is a call to stop using that surface and move to the replacement as soon as possible. Cadence does not publish a fixed deprecation period or an end-of-life calendar. The old path may keep working so you can migrate without an immediate outage, but that is not permission to stay on it. Do not wait for a later removal date unless a release note or migration guide names one.
 
@@ -18,7 +18,7 @@ Deprecation and removal notices use several channels:
 
 - **GitHub Releases:** Release notes are the written record for behavior changes, migration steps, and removed features. See the [server](https://github.com/cadence-workflow/cadence/releases), [Go SDK](https://github.com/cadence-workflow/cadence-go-client/releases), [Java SDK](https://github.com/cadence-workflow/cadence-java-client/releases), [Python SDK](https://github.com/cadence-workflow/cadence-python-client/releases), [Helm chart](https://github.com/cadence-workflow/cadence-charts/releases), and [Web UI](https://github.com/cadence-workflow/cadence-web/releases) releases.
 - **CNCF Slack `#cadence-users`:** This is the most active community channel. Maintainers announce deprecations, removals, and other breaking changes here, and it is the place to ask follow-up questions. [Join the CNCF Slack workspace](https://inviter.co/cncf) and open `#cadence-users`.
-- **Migration and upgrade documentation:** Changes that require operator action include a replacement or migration procedure. Read each minor release's notes before an upgrade.
+- **Migration and upgrade documentation:** Changes that require operator action include a replacement or migration procedure. Read the notes for every official release before an upgrade, including a patch-number bump.
 - **Source-level deprecation markers:** SDK APIs and Protocol Buffer fields are marked in source so language tooling can warn on new use. Those warnings appear in editors and, when the checks are enabled, in build and CI results.
 - **Runtime and CLI warnings:** Some deprecated configuration keys and flags still work, and Cadence prints a warning when they are used so you can find leftover usage in logs.
 - **Other community posts:** Larger migrations can also appear on the [Cadence blog](/blog) and in [GitHub Discussions](https://github.com/cadence-workflow/cadence/discussions).
@@ -94,6 +94,7 @@ Deprecating a Cadence domain is an operational action that prevents new workflow
 
 ## Related documentation
 
+- [Release processes](/docs/tech-review/day-0-planning/design/release-processes)
 - [Infrastructure compatibility](/docs/tech-review/day-1-installation/rollout-upgrade-rollback/infrastructure-compatibility)
 - [Upgrade and rollback testing](/docs/tech-review/day-1-installation/rollout-upgrade-rollback/upgrade-rollback-testing)
 - [Cluster maintenance](/docs/operation-guide/maintain)

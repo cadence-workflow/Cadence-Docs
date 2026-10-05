@@ -262,7 +262,7 @@ If you use retry or the cron feature to :query: :workflow:workflows: that will s
 
 ### General Notes About Queries
 
-- Pagesize default is 1000, and cannot be larger than 10k
+- Advanced-visibility list pages default to [1000 items](https://github.com/cadence-workflow/cadence/blob/v1.4.1/common/dynamicconfig/dynamicproperties/constants.go#L3655-L3659). When reading from Elasticsearch or OpenSearch, [`frontend.esIndexMaxResultWindow`](https://github.com/cadence-workflow/cadence/blob/v1.4.1/common/dynamicconfig/dynamicproperties/constants.go#L3673-L3676) limits a page to 10,000 items by default. Workflow-history pages use a separate [hard cap of 1000 events](https://github.com/cadence-workflow/cadence/blob/v1.4.1/service/frontend/api/handler.go#L1865-L1872).
 - Range :query: on Cadence timestamp (StartTime, CloseTime, ExecutionTime) cannot be larger than 9223372036854775807 (maxInt64 - 1001)
 - :query:Query: by time range will have 1ms resolution
 - :query:Query: column names are case sensitive
@@ -351,7 +351,7 @@ elasticsearch:
 2. Get the Cadence Docker compose file. Run `curl -O https://raw.githubusercontent.com/cadence-workflow/cadence/master/docker/docker-compose-es.yml`
 3. Start Cadence Docker (which contains Apache Kafka, Apache Zookeeper, and Elasticsearch) using `docker-compose -f docker-compose-es.yml up`
 4. From the Docker output log, make sure Elasticsearch and Cadence started correctly. If you encounter an insufficient disk space error, try `docker system prune -a --volumes`
-5. Register a local domain and start using it. `cadence --do samples-domain d re`
+5. Register a domain and start using it. `cadence --domain samples-domain domain register --retention 3`
 6. Add the key to ElasticSearch And also allowlist search attributes. `cadence --do domain adm cl asa --search_attr_key NewKey --search_attr_type 1`
 
 ## Running in Production

@@ -91,7 +91,7 @@ A data converter is not a blanket guarantee. Memo values on the Go, Java, and Py
 
 ## Retention and deletion
 
-Each domain has a retention period, bounded by cluster dynamic configuration that defaults to a minimum of 1 day and a maximum of 30. When retention expires, Cadence deletes the execution, its history, its current execution record, and its visibility record from primary storage.
+Each domain has a retention period bounded by cluster dynamic configuration. The compiled bounds are [1 through 30 days](https://github.com/cadence-workflow/cadence/blob/v1.4.1/common/dynamicconfig/dynamicproperties/constants.go#L3512-L3520); the [Docker](https://github.com/cadence-workflow/cadence/blob/v1.4.1/config/dynamicconfig/development.yaml#L4-L6) and [Helm](https://github.com/cadence-workflow/cadence-charts/blob/cadence-1.6.7/charts/cadence/values.yaml#L1250-L1252) configurations lower the minimum to 0. When retention expires, Cadence [deletes the execution, its history, its current execution record, and its visibility record](https://github.com/cadence-workflow/cadence/blob/v1.4.1/service/history/task/timer_task_executor_base.go#L149-L176) from primary storage.
 
 Archival, where it is enabled, does not run on a single schedule. History and visibility are separately configured at both the cluster and the domain level, and they are archived at different points: the visibility record is archived when the workflow closes, and the history is archived when retention expires, just before the delete. Retention removes the visibility record from primary storage at the same time it removes the history, whether or not an archived copy of it was made earlier. See [Archival](/docs/concepts/archival).
 

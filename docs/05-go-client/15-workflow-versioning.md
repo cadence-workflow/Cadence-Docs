@@ -128,6 +128,12 @@ You only need to preserve the first call to `GetVersion()` for each `changeID`. 
 `GetVersion()` call, but you need to ensure the following:
 
 * All executions with an older version are completed.
+* No running worker, and no version you might roll back to, has code that calls `GetVersion()` for this
+change ID with `minSupported` above `DefaultVersion`. Executions that reach this step on the new code record
+no version marker. When such code replays them, `GetVersion()` returns `DefaultVersion`, which is below
+`minSupported`, so the code panics. For example, simply deleting `GetVersion(ctx, "Step1", 2, 2)` from the
+example above is unsafe: during the rollout, a worker still running that call can replay an execution that
+ran this step on the new code, get `DefaultVersion`, which is below its `minSupported` of 2, and panic.
 * You can no longer use `Step1` for the changeID. If you need to make changes to that same part in
 the future, such as change from ActivityD to ActivityE, you would need to use a different changeID
 like `Step1-fix2`, and start minVersion from DefaultVersion again. The code would look like the

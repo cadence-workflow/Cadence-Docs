@@ -79,7 +79,7 @@ Test/Staging environments should match the **shape** of production rather than i
 
 This is also the tier where two things are cheapest to validate:
 
-- **Capacity.** The server repository ships a [bench suite](https://github.com/cadence-workflow/cadence/tree/master/bench), and cluster configuration recommends running it against your own setup whenever the setup changes. Cadence does not publish per-node throughput numbers, so a bench run against your hardware and datastore is the authoritative answer for your deployment.
+- **Capacity.** The server repository ships a [bench suite](https://github.com/cadence-workflow/cadence/tree/master/bench), and cluster configuration recommends running it against your own setup whenever the setup changes. A bench result is a rough estimate of what that workload will use in production. Payload size, workflow diversity, and traffic patterns can change how much CPU and memory each node uses. Reference sizes are on [Resource requirements](/docs/tech-review/day-0-planning/design/resource-requirements).
 - **Upgrades and rollback.** Schema changes are applied before server binaries and are generally backward compatible, which is what makes rolling upgrades possible. Rehearse that ordering here.
 
 ### Production
