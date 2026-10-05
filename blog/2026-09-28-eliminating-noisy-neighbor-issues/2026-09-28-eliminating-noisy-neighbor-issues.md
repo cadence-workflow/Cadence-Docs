@@ -15,7 +15,7 @@ tags:
 
 Cadence is a multi-tenant workflow orchestration platform, where a single cluster can serve many domains running different types of workflows. When a domain has a sudden traffic spike, it can consume a disproportionate share of resources used for history task processing and degrade performance for other domains in the same cluster, which is a noisy neighbor problem.
 
-As the scale and diversity of workloads in a Cadence cluster grow, isolation between domains becomes increasingly important for maintaining predictable performance and reliability. To address this challenge, we redesigned two key components of the Cadence History service—the history task scheduler and history queue—to provide stronger domain-level isolation.
+As the scale and diversity of workloads in a Cadence cluster grow, isolation between domains becomes increasingly important for maintaining predictable performance and reliability. To address this challenge, we redesigned two key components of the Cadence History service (the history task scheduler and history queue) to provide stronger domain-level isolation.
 <!-- truncate -->
 
 ## The Old Architecture
@@ -40,7 +40,7 @@ The history queue persists cursors in the database to track task processing prog
 - **Ack Level**: The highest point below which all tasks have been processed and deleted from the database. Each active queue and standby queue has a separate ack level.
 - **Max Read Level**: The upper bound of tasks which have been created. The active and standby queues within the same shard share the same max read level.
 
-On shard reload, each queue resumes processing tasks withing range [**Ack Level**, **Max Read Level**), and new task IDs are allocated starting from the max read level.
+On shard reload, each queue resumes processing tasks within range [**Ack Level**, **Max Read Level**), and new task IDs are allocated starting from the max read level.
 
 > **NOTE**: Active and standby queues maintain separate ack levels to avoid head-of-line blocking. Standby tasks may need to wait for replication before they can be processed. If active and standby tasks shared the same ack level, a delayed standby task could prevent the ack level from advancing even when subsequent active tasks have already been processed.
 >
@@ -75,18 +75,18 @@ The new history queue uses a layered structure to process tasks while preventing
 
 - **Shard context** - Fetches and tracks the queue processing progress from the database.
 - **History engine** - Appends tasks to the database and notifies the transfer/timer queue to fetch new tasks from the database.
-- **Transfer/Timer queue** - the event loop. Manages timing (when to wake up, when to persist state) and owns the root virtual queue.
-- **Virtual queue manager** - Manages a set of virtual queues. Under normal conditions, there is only one—the root queue. When a domain generates too many tasks, the mitigator creates additional virtual queues to isolate and throttle that domain.
+- **Transfer/Timer queue** - The event loop. Manages timing (when to wake up, when to persist state) and owns the root virtual queue.
+- **Virtual queue manager** - Manages a set of virtual queues. Under normal conditions, there is only one (the root queue). When a domain generates too many tasks, the mitigator creates additional virtual queues to isolate and throttle that domain.
 - **Virtual queue** - Each virtual queue runs its own goroutine and processes an ordered list of virtual slices sequentially. It is an isolation unit of the history queue. New tasks are always added to the root queue.
 - **Virtual slice** - Represents a range of tasks with an associated filter. It is the smallest processing unit.
-- **Monitor** - Detects when a domain generate too many tasks and sends a notification to the mitigator.
+- **Monitor** - Detects when a domain generates too many tasks and sends a notification to the mitigator.
 - **Mitigator** - Creates additional virtual queues to isolate and throttle tasks from overloaded domains.
 - **Queue reader** - Fetches tasks from the database.
 
 #### Virtual Slice Operations
 ![split by task key](./split-by-key.png)
 ![split by domainIDs](./split-by-domain.png)
-**Split**: A virtual slice can be splitted by a task key or domainIDs. The diagrams above shows how a virtual slice are splitted by a task key and domainIDs.
+**Split**: A virtual slice can be split by a task key or domainIDs. The diagrams above show how a virtual slice is split by a task key and domainIDs.
 
 ![merge slices](./merge-slice.png)
 **Merge**: 2 slices can be merged. The diagram above shows the most complex merge scenario. A merge operation of 2 virtual slices can produce 1 to 3 virtual slices.
@@ -97,20 +97,20 @@ The virtual queue structure generalizes the existing active/standby queue model,
 
 ### History Task Scheduler
 ![new scheduler](./new-scheduler.png)
-The diagram above shows how the task scheduler schedules tasks from different domains with different priorities. When a task is submitted to the task scheduler, it’s appended to a queue based on its domain and priority (priority is assigned by priority assigner based on its type), and the scheduler processes the queues with a weighted round-robin algorithm. The weights are configurable, but by default, each domain is assigned the same weight, ensuring that all domains receive a fair share of the scheduling capacity.
+The diagram above shows how the task scheduler schedules tasks from different domains with different priorities. When a task is submitted to the task scheduler, it is appended to a queue based on its domain and priority (priority is assigned by the priority assigner based on its type), and the scheduler processes the queues with a weighted round-robin algorithm. The weights are configurable, but by default, each domain is assigned the same weight, ensuring that all domains receive a fair share of the scheduling capacity.
 
 ## Improvements Observed at Uber
-![traffic spike](./new-tasks.png)
+![traffic spike 2](./new-tasks.png)
 ![latency spike](./new-latency.png)
-After switching to the new implementation, it is very obvious that the traffic spike from invoices domain no longer increased the task processing latency for other domains.
+After switching to the new implementation, it is very obvious that the traffic spike from the invoices domain no longer increases the task processing latency for other domains.
 ![queuev2 latency](./queuev2-latency.png)
-Besides, the overall p99 latency also became less spiky after enabling history queuev2 at Uber.
+Additionally, the overall p99 latency also became less spiky after enabling History Queue V2 at Uber.
 
 ## How to Enable the New Features
 
 ### Prerequisites
 
-To use this feature, upgrade Cadence server to [v1.4.0 or later](https://github.com/cadence-workflow/cadence/tree/v1.4.0).
+To use this feature, upgrade Cadence Server to [v1.4.0 or later](https://github.com/cadence-workflow/cadence/tree/v1.4.0).
 
 ### Configuration
 
@@ -131,9 +131,9 @@ The History Task Scheduler is controlled by the following feature flags:
 
 * `history.taskSchedulerGlobalDomainRPS`: Defines the global task processing rate limit, in requests per second (RPS), for each domain. Can be configured by `domainName`.
 
-* `history.taskSchedulerEnableRateLimiter`: Enables rate limiting in the History Task Scheduler. Defaults to false. When enabled, task processing is throttled according to the configured domain-level rate limits.
+* `history.taskSchedulerEnableRateLimiter`: Enables rate limiting in the History Task Scheduler. Defaults to `false`. When enabled, task processing is throttled according to the configured domain-level rate limits.
 
-* `history.taskSchedulerEnableRateLimiterShadowMode`: Enables shadow mode for the History Task Scheduler rate limiter. Defaults to true. Can be configured by `domainName`. In shadow mode, rate-limit decisions are evaluated and recorded for observability, but tasks are not actually throttled.
+* `history.taskSchedulerEnableRateLimiterShadowMode`: Enables shadow mode for the History Task Scheduler rate limiter. Defaults to `true`. Can be configured by `domainName`. In shadow mode, rate-limit decisions are evaluated and recorded for observability, but tasks are not actually throttled.
 
 * `history.taskSchedulerDomainRoundRobinWeight`: Defines the weight assigned to each domain by the task scheduler's weighted round-robin scheduling algorithm. Can be configured by `domainName`. The weight determines the relative share of task processing capacity allocated to each domain.
 
@@ -145,7 +145,7 @@ The History Task Scheduler is controlled by the following feature flags:
 
    * **2.a. Enable History Queue V2:** Set `history.enableTransferQueueV2` and `history.enableTimerQueueV2` to `true`, then restart `cadence-history` for the changes to take effect.
    * **2.b. Enable Virtual Queue Splitting:** Once you are confident that History Queue V2 is operating as expected, set `history.enableTransferQueueV2PendingTaskCountAlert` and `history.enableTimerQueueV2PendingTaskCountAlert` to `true`.
-   * **2.c. Enable task scheduler rate limiter in shadow mode:** Set `history.taskSchedulerEnableRateLimiter` to true. 
+   * **2.c. Enable task scheduler rate limiter in shadow mode:** Set `history.taskSchedulerEnableRateLimiter` to `true`. 
 
 ### Monitoring and Observability
 
@@ -154,7 +154,7 @@ The History Task Scheduler is controlled by the following feature flags:
 - `task_scheduler_allowed_counter_per_domain` - Measures the number of tasks per domain that are allowed to proceed by the task scheduler's rate limiter. 
 - `task_scheduler_throttled_counter_per_domain` - Measures the number of tasks per domain that are throttled by the task scheduler's rate limiter.
 
-These metrics become available after setting history.taskSchedulerEnableRateLimiter to true. Use them to monitor task scheduling QPS for each domain and tune history.taskSchedulerGlobalDomainRPS accordingly.
+These metrics become available after setting `history.taskSchedulerEnableRateLimiter` to `true`. Use them to monitor task scheduling QPS for each domain and tune `history.taskSchedulerGlobalDomainRPS` accordingly.
 
 At Uber, the rate limiter is kept in shadow mode by default. Shadow mode is disabled for individual domains only when needed to mitigate incidents. Disabling shadow mode is not recommended for latency-sensitive domains, as active rate limiting may increase task processing latency.
 
