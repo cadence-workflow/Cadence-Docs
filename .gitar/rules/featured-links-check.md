@@ -42,7 +42,7 @@ Read the `permalink` key from the file's YAML frontmatter. That value is the `hr
 
 Examples from this repo:
 - `faq/cadence-faq.mdx` has `permalink: /faq/cadence-faq`
-- `community/meetup.mdx` has `permalink: /community/meetup`
+- `community/contact-us.mdx` has `permalink: /community/contact-us`
 - `docs/03-concepts/16-schedules.md` has `permalink: /docs/concepts/schedules`
 
 ### blog

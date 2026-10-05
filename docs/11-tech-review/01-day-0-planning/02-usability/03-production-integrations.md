@@ -24,7 +24,7 @@ This page covers what Cadence composes with. What a cluster requires to start is
 
 **Search and messaging.** Listing workflows by complex predicates uses Elasticsearch, OpenSearch, or Apache Pinot as a visibility store, with Apache Kafka carrying records to the search index.
 
-**Observability.** Cadence emits Prometheus metrics by default, with StatsD and M3 as alternatives. The chart offers a ServiceMonitor for Prometheus Operator and a PodMonitoring resource for Google Cloud Managed Service for Prometheus. Reference [Grafana dashboards](/docs/get-started/grafana-helm-setup) are published, and the Go SDK carries OpenTracing instrumentation validated against Jaeger.
+**Observability.** The server emits metrics after a reporter is configured. The official Helm chart selects Prometheus by default; static server configuration can select Prometheus, StatsD, or M3. The chart offers a ServiceMonitor for Prometheus Operator and a PodMonitoring resource for Google Cloud Managed Service for Prometheus. Reference [Grafana dashboards](/docs/get-started/grafana-helm-setup) are published, and the Go SDK carries OpenTracing instrumentation validated against Jaeger.
 
 **Security and transport.** TLS is configurable on every connection Cadence opens, covering PostgreSQL, MySQL, Cassandra, Elasticsearch, and Kafka. SDK connections to the frontend use [mutual TLS](/docs/concepts/mutual-tls). Kafka accepts SASL, managed search endpoints accept AWS request signing, and a proxy sidecar allows cloud IAM authentication instead of stored passwords.
 
