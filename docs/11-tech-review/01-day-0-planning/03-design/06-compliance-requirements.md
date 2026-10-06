@@ -39,7 +39,7 @@ Payloads in history, including memo values started from the Go, Java, and Python
 
 ## Retention, archival, and deletion
 
-Each domain has a retention period (cluster defaults bound it between 1 and 30 days). When retention expires, Cadence deletes the execution from primary storage, including its visibility record. History and visibility archival are enabled separately at both the cluster and the domain level, and they run at different points: visibility is archived when the workflow closes, history when retention expires. Archival is [best effort](/docs/concepts/archival): persistent blobstore failures can mean primary data is removed without a durable archive copy.
+Each domain has a retention period bounded by cluster dynamic configuration. The compiled bounds are 1 through 30 days, while the Docker and Helm configurations lower the minimum to 0. When retention expires, Cadence deletes the execution from primary storage, including its visibility record. History and visibility archival are enabled separately at both the cluster and the domain level, and they run at different points: visibility is archived when the workflow closes, history when retention expires. Archival is [best effort](/docs/concepts/archival): persistent blobstore failures can mean primary data is removed without a durable archive copy.
 
 Targeted deletion of a single execution is available through administrative tooling. The server-side path (`cadence admin workflow delete --remote`) removes history, mutable state, and visibility. Already archived blobs are not deleted. The full sequence and limits are on [Sovereignty](/docs/tech-review/day-0-planning/design/sovereignty#retention-and-deletion).
 
