@@ -92,7 +92,7 @@ Once the server is up, most operational switches do not require taking the clust
 | [Archival](/docs/concepts/archival) | Cluster YAML plus per-domain status and URI | Disable at cluster or domain. The URI, once set on a domain, cannot be changed |
 | [OAuth authorization](/docs/tech-review/day-0-planning/design/iam) | `authorization.oauthAuthorizer.enable` in static config | Set it back to off and restart Frontend. The no-op authorizer allows all callers |
 | HTTP API | `http` section on Frontend RPC config | Remove it and restart Frontend |
-| A domain | `cadence domain register` | Deprecate or delete. Delete removes metadata, not executions. See [Sovereignty](/docs/tech-review/day-0-planning/design/sovereignty#retention-and-deletion) |
+| A domain | `cadence domain register` | Deprecate, then delete only after no executions are listed. Delete removes domain metadata and does not delete archived blobs. See [Sovereignty](/docs/tech-review/day-0-planning/design/sovereignty#retention-and-deletion) |
 
 Static YAML (TLS, `numHistoryShards`, persistence driver, cluster group metadata) needs a rolling restart to pick up. `numHistoryShards` cannot be changed in place at all; that requires a [cluster migration](/docs/operation-guide/migration), not an enablement toggle.
 

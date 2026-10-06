@@ -39,7 +39,7 @@ Cadence cleanup is layered. Stopping the server is not the same as deleting work
 | 3. Persistence schemas / keyspaces / databases | Schema Jobs or `cadence-cassandra-tool` / `cadence-sql-tool` | No | Drop with the datastore's tools (or recreate the store) |
 | 4. Visibility stores (ES/OpenSearch indices, Kafka topics) | Schema Job / chart topic provisioning / server writes | No (unless the whole in-cluster subchart PVC or namespace is deleted) | Delete indices and topics with search/messaging tools, or destroy that store |
 | 5. Archival blob objects | Worker archival path, when enabled | No | Delete objects in the configured filestore, S3, or GCS URI |
-| 6. Domains and workflow execution data | Domain register and workflow APIs | Domain delete removes **metadata only** | Retention, admin workflow delete, store drop, or archival URI cleanup. See [Sovereignty](/docs/tech-review/day-0-planning/design/sovereignty#retention-and-deletion) |
+| 6. Domains and workflow execution data | Domain register and workflow APIs | Domain delete succeeds only after the domain is deprecated and no executions are listed. It then removes domain metadata. It does not delete archived blobs | Retention or admin workflow delete is how executions leave the list before domain delete can succeed. See [Sovereignty](/docs/tech-review/day-0-planning/design/sovereignty#retention-and-deletion) |
 | 7. Application workers | Adopter application deploy | No. Not part of the Helm release | Stop or undeploy the worker processes separately |
 
 Data destruction is always an explicit operator step. Scale-to-zero and `helm uninstall` that leave the database are reversible enablement rollback, not cleanup of workflow state.
@@ -121,12 +121,12 @@ When archival is enabled, closed workflow histories and visibility records are w
 | Operation | Removes | Does not remove |
 | --- | --- | --- |
 | `cadence domain deprecate` | Marks the domain deprecated (no new executions) | Existing executions, histories, visibility, archives |
-| `cadence domain delete` | Domain **metadata** only | Workflow executions, histories, visibility records, archives |
+| `cadence domain delete` | Domain metadata, and only after the domain is deprecated and `ListWorkflowExecutions` returns no executions | Archived blobs. The request is rejected while any execution is still listed |
 | Domain retention expiry | Execution, history, current-execution record, and visibility record in primary storage (and archival of history when configured) | Already archived blobs outside primary storage |
 | Admin workflow delete | Primary execution records (visibility depends on `--remote`; see Sovereignty) | Archived blobs unless deleted separately |
 | Drop database / delete PVC / delete archival bucket | Everything in that store | Nothing in other stores |
 
-Domain delete is confirmed interactively in the CLI and calls `DeleteDomainByName` on the domain metadata tables only. It is not a bulk workflow purge. Full erasure across stores is an operator runbook composed from retention, admin delete, visibility delete, archival object delete, and ultimately store teardown. Details and the deletion matrix live under [Sovereignty: Retention and deletion](/docs/tech-review/day-0-planning/design/sovereignty#retention-and-deletion).
+The CLI confirms interactively, then calls Frontend `DeleteDomain`. Frontend rejects that request unless the domain is already deprecated and `ListWorkflowExecutions` returns no executions. After those checks pass, domain metadata is removed through `DeleteDomainByName`. Domain delete is not a way to drop the domain record and keep execution history, and it does not delete archived blobs. Executions have to leave the list first, through retention or admin delete. Full erasure across stores is an operator runbook composed from retention, admin delete, visibility delete, archival object delete, and ultimately store teardown. Details and the deletion matrix live under [Sovereignty: Retention and deletion](/docs/tech-review/day-0-planning/design/sovereignty#retention-and-deletion).
 
 ## Application workers
 
@@ -187,7 +187,7 @@ There is no Cadence uninstall package that reverses schema setup on VMs. Remove 
 | `docker compose down -v` | Down | N/A | **Destroyed** (local Compose volumes) |
 | `kubectl delete pvc` or `kubectl delete namespace` | Down if Cadence was there | Unaffected | **Destroyed** for in-cluster volumes |
 | Drop DB / indices / topics / archival blobs | N/A | N/A | **Destroyed** for that store |
-| Domain delete | Domain metadata gone | N/A | Executions **preserved** |
+| Domain delete | Rejected unless the domain is deprecated and no executions are listed. On success, domain metadata is gone | N/A | Listed executions must already be gone. Archived blobs **remain** |
 
 Install and uninstall behavior is also exercised in project testing described on [Testing enablement](/docs/tech-review/day-1-installation/enablement-rollback/testing-enablement).
 
