@@ -87,7 +87,7 @@ A practical rehearsal for enablement and disablement:
 
 1. **Enable** Cadence with the deployment path you run in production (Helm values, Compose overlay, or binaries), including any optional subsystem you rely on.
 2. Register a domain, start a worker, and complete a representative workflow (see [Validation](/docs/tech-review/day-0-planning/installation/validation)).
-3. **Disable** without destroying the datastore you intend to keep. On Kubernetes, scale roles to zero or run `helm uninstall` / `helm delete` and leave PVCs or the external database in place. On the shipped Compose files, use `docker compose stop`. A plain `docker compose down` orphans anonymous volumes, and the next `up` starts empty unless you added named volumes or bind mounts.
+3. **Disable** without destroying the datastore you intend to keep. On Kubernetes, scale roles to zero or run `helm uninstall` / `helm delete` and leave PVCs or the external database in place. On the shipped Compose files, use `docker compose stop`. A plain `docker compose down` orphans Cassandra, MySQL, and PostgreSQL volumes and deletes Kafka, Elasticsearch, and OpenSearch data with those containers. The next `up` starts empty unless you added named volumes or bind mounts.
 4. Confirm the host Kubernetes cluster (if any) is unaffected, and that workflow data remains in the datastore when you chose a non-destructive disable.
 5. **Re-enable** against the same datastore and `numHistoryShards` (`docker compose start` after `stop`, or a new Helm install against the retained PVCs or external database). Confirm open and new workflows progress again.
 
