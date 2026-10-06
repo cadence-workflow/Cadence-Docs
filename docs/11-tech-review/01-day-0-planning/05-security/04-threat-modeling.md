@@ -13,7 +13,7 @@ keywords:
 
 Cadence's privilege model has two layers.
 
-- API authorization: when the [OAuth authorizer](https://github.com/cadence-workflow/cadence/blob/master/common/authorization/README.md) is enabled, access is scoped per domain and not cluster-wide. A caller's JWT `groups` claim determines which domains and operations it can act on, and administrative operations (for example, domain create, update, and failover) require a separate `admin` claim. Without the OAuth authorizer, the [`NoopAuthorizer`](https://github.com/cadence-workflow/cadence/blob/master/common/authorization/nopAuthorizer.go) grants unrestricted access. See [Cloud Native Security Tenets](/docs/tech-review/day-0-planning/security/security-tenets) for the tradeoff of shipping with it off by default.
+- API authorization: when the [OAuth authorizer](https://github.com/cadence-workflow/cadence/blob/master/common/authorization/README.md) is enabled, access is scoped per domain and not cluster-wide. A caller's JWT `groups` claim determines which domains and operations it can act on. Operations tagged as administrative (registering, updating, deprecating, and deleting a domain, plus most admin RPCs) are allowed when the JWT carries the `Admin` claim or, for the domain APIs, when the caller belongs to the domain's write groups. Domain failover is a write operation. The full permission table is on [Identity and Access Management](/docs/tech-review/day-0-planning/design/iam). Without the OAuth authorizer, the [`NoopAuthorizer`](https://github.com/cadence-workflow/cadence/blob/master/common/authorization/nopAuthorizer.go) grants unrestricted access. See [Cloud Native Security Tenets](/docs/tech-review/day-0-planning/security/security-tenets) for the tradeoff of shipping with it off by default.
 - Process privilege: the official [Docker images](https://github.com/cadence-workflow/cadence/blob/master/Dockerfile) run as a non-root `cadence` user by default (the `alpine-nonroot` base stage), which limits the impact of a container compromise.
 
 Cadence does not manage the credentials it uses to reach its dependencies. The server holds credentials for its persistence layer (Cassandra, MySQL, PostgreSQL) and, when archival is enabled, for a blobstore (S3, GCS, or filestore). Operators are responsible for scoping those credentials to what the server needs, for example by avoiding a database superuser account. Cadence neither prescribes nor enforces this today.
@@ -31,7 +31,7 @@ This section follows the five stages of the [CNCF Software Supply Chain Best Pra
 - Every commit needs a DCO sign-off ([`.github/dco.yml`](https://github.com/cadence-workflow/cadence/blob/master/.github/dco.yml)). This is an attestation of origin, not a cryptographic signature, and the project does not require GPG or SSH signed commits.
 - Branch protection on `master` requires approving reviews and blocks force pushes. The [`CODEOWNERS`](https://github.com/cadence-workflow/cadence/blob/master/.github/CODEOWNERS) file lists all maintainers as owners of the whole repository.
 - The cadence-workflow GitHub organization requires multi-factor authentication for members.
-- CI runs `golangci-lint` on every PR, and Snyk Code performs static analysis of the Go source.
+- CI runs `make lint` on every PR (`go vet -copylocks`, `revive`, and `nilaway` on the type mapper packages), and Snyk Code performs static analysis of the Go source. The project does not use golangci-lint.
 - No secret scanner runs in CI. Maintainer credential practices (SSH keys, key rotation, short-lived tokens) are managed through GitHub and are not documented by the project.
 
 ### Materials
@@ -52,11 +52,11 @@ This section follows the five stages of the [CNCF Software Supply Chain Best Pra
 
 ### Artefacts
 
-Cadence does not generate a Software Bill of Materials (SBOM), sign container images or other artifacts, or publish build provenance attestations (for example with Sigstore/cosign or SLSA). The `docker/build-push-action` steps in [`docker_publish.yml`](https://github.com/cadence-workflow/cadence/blob/master/.github/workflows/docker_publish.yml) set no provenance or SBOM options. These are known gaps and are not on the roadmap today.
+Cadence does not generate a Software Bill of Materials (SBOM) or sign container images or other artifacts (for example with Sigstore/cosign). The `docker/build-push-action` steps in [`docker_publish.yml`](https://github.com/cadence-workflow/cadence/blob/master/.github/workflows/docker_publish.yml) set no explicit provenance or SBOM options, so the published images carry only the default BuildKit SLSA provenance attestation that the action attaches (visible with `docker buildx imagetools inspect`). That attestation is not signed, the project does not document it, and nothing verifies it before deployment. These are known gaps and are not on the roadmap today.
 
 ### Deployments
 
-Images are published to Docker Hub by the Cadence server workflow when a GitHub release is published, using a Docker Hub username and access token stored as GitHub Actions secrets. Because nothing is signed or attested, users cannot cryptographically verify an image or its freshness before deploying it. Users who need that assurance can pin images by digest and verify them against their own build.
+Images are published to Docker Hub by the Cadence server workflow on every push to `master` (tagged `master`) and when a GitHub release is published (tagged with the release version), using a Docker Hub username and access token stored as GitHub Actions secrets. Because nothing is signed, users cannot cryptographically verify an image or its freshness before deploying it, and the `master` tag moves with every merge. Users who need that assurance can pin images by digest and verify them against their own build.
 
 Release automation differs by repository. The Cadence server images and the Go client are released entirely through GitHub Actions. The Python and Java clients have partly manual release steps.
 
