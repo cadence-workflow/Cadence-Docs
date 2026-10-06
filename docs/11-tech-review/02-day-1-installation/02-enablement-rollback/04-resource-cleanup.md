@@ -142,29 +142,34 @@ Internal Cadence Worker service pods (archival, scanners, and similar system wor
 
 ## Docker Compose cleanup
 
-Shipped Compose files under [`cadence/docker`](https://github.com/cadence-workflow/cadence/tree/master/docker) (`docker-compose.yml`, `docker-compose-mysql.yml`, `docker-compose-postgres.yml`, Elasticsearch/OpenSearch variants, and similar) run Cassandra, MySQL, PostgreSQL, Elasticsearch, OpenSearch, and Kafka **without** declaring named volumes for those datastores. The images still expose data directories as Docker `VOLUME`s, so Compose attaches **anonymous volumes**. Those volumes have no stable name. `docker compose down` does not delete them, and the next `up` does not mount them. It creates new empty volumes. The old data sits in orphaned volumes until `docker volume prune` or an explicit `docker volume rm`.
+Shipped Compose files under [`cadence/docker`](https://github.com/cadence-workflow/cadence/tree/master/docker) do not declare named volumes. What `docker compose down` keeps depends on whether the image declares a `VOLUME`.
 
-| Command | Processes | Datastore volumes |
+Cassandra (`cassandra:4.1.1`), MySQL (`mysql:8.0`), and PostgreSQL (`postgres:17.4`) declare a data `VOLUME`. Compose attaches an anonymous volume. `down` leaves that volume on disk, orphaned, and the next `up` does not reattach it, so the database starts empty. `down -v` deletes those volumes. `docker volume prune` removes the orphans.
+
+Kafka (`bitnamilegacy/kafka:3.7`), Elasticsearch (`elasticsearch-oss:7.9.3`), and OpenSearch (`opensearch:2.13.0`) in the shipped Compose files do not declare a `VOLUME`. Their data stays in the container writable layer and is deleted when `down` removes the container. It is not left in an orphaned volume. `down -v` does not change that. The container is already gone.
+
+| Command | Cassandra, MySQL, PostgreSQL | Kafka, Elasticsearch, OpenSearch |
 | --- | --- | --- |
-| `docker compose stop` / `start` | Containers stop and start again | Anonymous volumes stay attached. Data is kept |
-| `docker compose down` | Containers and networks removed | Anonymous volumes are **orphaned**, not reattached by the next `up` |
-| `docker compose down -v` | Containers and networks removed | Anonymous volumes **deleted** (data destruction) |
-| `docker volume prune` | None | Removes orphaned anonymous volumes left by `down` |
-| Bind mounts such as `./prometheus` and `./grafana` | Not removed by Compose | Remain on the host filesystem |
+| `docker compose stop` / `start` | Anonymous volumes stay attached. Data is kept | Container is not removed. Data in the container layer is kept |
+| `docker compose down` | Anonymous volumes are **orphaned**. The next `up` starts empty | Container is removed. Index and topic data are **deleted** with it |
+| `docker compose down -v` | Anonymous volumes are **deleted** | Same as `down`: container-layer data is deleted |
+| `docker volume prune` | Removes orphaned database volumes left by `down` | No database-style volume to prune |
+
+Bind mounts such as `./prometheus` and `./grafana` stay on the host either way.
 
 ```bash
-# Pause Compose services and keep the same anonymous volumes
+# Pause Compose services and keep database volumes and search/Kafka containers
 docker compose -f docker/docker-compose.yml stop
 docker compose -f docker/docker-compose.yml start
 
-# Remove containers. Anonymous volumes are orphaned and not reused by the next up
-docker compose -f docker/docker-compose.yml down
+# Remove containers. Database volumes are orphaned. Search and Kafka container data is deleted
+docker compose -f docker/docker-compose-es-v7.yml down
 
-# Remove containers and delete anonymous volumes (deletes local workflow data)
+# Also delete orphaned database volumes
 docker compose -f docker/docker-compose.yml down -v
 ```
 
-To keep data across `down` and `up`, add named volumes or bind mounts in an override file. `down -v` removes named volumes you added as well. External databases pointed at by custom Compose files are untouched either way.
+To keep database data across `down` and `up`, add named volumes or bind mounts in an override file. `down -v` removes named volumes you added as well. The same override is required if Kafka topics or search indices must survive `down`. External databases pointed at by custom Compose files are untouched either way.
 
 ## Binary or process installs
 
@@ -182,9 +187,9 @@ There is no Cadence uninstall package that reverses schema setup on VMs. Remove 
 | --- | --- | --- | --- |
 | Scale to zero / stop processes | Down for stopped roles | Unaffected | Preserved |
 | `helm uninstall` | Down | Unaffected | Preserved on PVCs / external stores |
-| `docker compose stop` / `start` | Down, then back | N/A | Preserved on the same anonymous volumes |
-| `docker compose down` | Down | N/A | Orphaned. The next `up` starts **empty** |
-| `docker compose down -v` | Down | N/A | **Destroyed** (local Compose volumes) |
+| `docker compose stop` / `start` | Down, then back | N/A | Preserved. Database volumes stay attached, and Kafka and search containers are not removed |
+| `docker compose down` | Down | N/A | Database volumes orphaned (next `up` is empty). Kafka and search data deleted with the container |
+| `docker compose down -v` | Down | N/A | **Destroyed.** Database volumes deleted, and Kafka and search containers removed |
 | `kubectl delete pvc` or `kubectl delete namespace` | Down if Cadence was there | Unaffected | **Destroyed** for in-cluster volumes |
 | Drop DB / indices / topics / archival blobs | N/A | N/A | **Destroyed** for that store |
 | Domain delete | Rejected unless the domain is deprecated and no executions are listed. On success, domain metadata is gone | N/A | Listed executions must already be gone. Archived blobs **remain** |
