@@ -6,6 +6,7 @@ keywords:
   - cadence user research
   - cadence adoption research
   - cadence end user feedback
+permalink: /docs/tech-review/day-0-planning/scope/end-user-research
 ---
 
 Cadence completed three public community survey rounds released from 2023 through 2025. This page aggregates the questions that remained comparable across those rounds:
