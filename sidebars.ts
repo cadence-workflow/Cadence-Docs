@@ -169,6 +169,14 @@ const sidebars: SidebarsConfig = {
       ],
     },
     {
+      label: 'Shard Manager',
+      type: 'category',
+      items: [
+        { type: 'doc', id: 'shard-manager/index' },
+        { type: 'doc', id: 'shard-manager/architecture' },
+      ],
+    },
+    {
       label: 'Production Operation',
       type: 'category',
       items: [
