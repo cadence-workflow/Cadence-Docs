@@ -85,9 +85,24 @@ function TeamProfileCardCol(props: ProfileProps) {
   );
 }
 
+const maintainersListUrl =
+  "https://github.com/cadence-workflow/cadence/blob/master/MAINTAINERS.md";
+
+function MaintainerListNote(): JSX.Element {
+  return (
+    <p>
+      Profiles on this page can be out of date. The current list of TSC members
+      and maintainers is{" "}
+      <Link href={maintainersListUrl}>MAINTAINERS.md</Link>.
+    </p>
+  );
+}
+
 /* Maintainers:  */
 export function MaintainersRow(): JSX.Element {
   return (
+    <>
+    <MaintainerListNote />
     <div className="row">
       <TeamProfileCardCol name="Abhishek Jha" githubUrl="https://github.com/abhishekj720" linkedinUrl="https://www.linkedin.com/in/mrjhaabhishek/">
         👋🏻 Abhishek Jha is a Software Developer for Cadence Workflows at Uber, specializing in developing robust distributed systems.<br />
@@ -139,6 +154,7 @@ export function MaintainersRow(): JSX.Element {
         Seva was born and grew up in Saint Petersburg, Russia, and studied Information Security at Saint Petersburg Electrotechnical University. Throughout his career he's worked across both DevOps and backend engineering — rarely one without the other. When he's not working on Cadence, he's spending time with his wife and two kids in Denmark.
       </TeamProfileCardCol>
     </div>
+    </>
   );
 }
 

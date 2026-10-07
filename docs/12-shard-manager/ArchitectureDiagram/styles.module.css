@@ -1,0 +1,54 @@
+/* Palette for the architecture diagram. Defined here rather than inline on the
+   SVG so the diagram follows the site's light/dark toggle. */
+.diagram {
+  --d-surface: #f8fafc;
+  --d-surface-border: #e2e8f0;
+  --d-group: #eef2f7;
+  --d-group-border: #cbd5e1;
+  --d-box: #e8eef4;
+  --d-box-border: #94a3b8;
+  --d-chip: #f8fafc;
+  --d-chip-border: #cbd5e1;
+  --d-text: #1e293b;
+  --d-muted: #45525f;
+  --d-line: #94a3b8;
+  --d-accent: #276ef1;
+  --d-accent-soft: #dbeafe;
+
+  /* Always scales to the content column, never scrolls or clips. The viewBox
+     is kept no wider than it needs to be so the labels stay a usable size once
+     it is scaled down on a half-width window. */
+  display: block;
+  width: 100%;
+  max-width: 640px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.figure {
+  margin: 1.5rem 0;
+}
+
+.caption {
+  margin-top: 0.75rem;
+  text-align: center;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--ifm-color-emphasis-700);
+}
+
+html[data-theme='dark'] .diagram {
+  --d-surface: #221b14;
+  --d-surface-border: #3d3227;
+  --d-group: #2a2119;
+  --d-group-border: #4a3b2d;
+  --d-box: #33281e;
+  --d-box-border: #6b5843;
+  --d-chip: #2a2119;
+  --d-chip-border: #5b4636;
+  --d-text: #ffe6cc;
+  --d-muted: #e2cbb0;
+  --d-line: #7d6852;
+  --d-accent: #ffb86b;
+  --d-accent-soft: #4a3520;
+}
