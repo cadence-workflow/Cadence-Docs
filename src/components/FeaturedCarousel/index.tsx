@@ -59,17 +59,6 @@ const FILTER_OPTIONS: Array<'All' | FeaturedTag> = [
 const resolveImage = (item: FeaturedItem) =>
   item.image ?? TAG_DEFAULT_IMAGE[item.tag] ?? FALLBACK_IMAGE;
 
-// Keep the card footprint unchanged. Explicit rem sizes so the fixed
-// 1/3 media title band actually fills with type (cqh proved too small).
-const titleFontSize = (title: string): string => {
-  const n = title.trim().length;
-  if (n <= 16) return '2.35rem';
-  if (n <= 28) return '2rem';
-  if (n <= 42) return '1.7rem';
-  if (n <= 58) return '1.4rem';
-  return '1.2rem';
-};
-
 const getYouTubeId = (url: string): string | null => {
   const m = url.match(
     /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([\w-]{11})/,
@@ -348,10 +337,7 @@ export default function FeaturedCarousel(): JSX.Element {
                       />
                       {item.tag && <span className={styles.tag} data-tag={item.tag}>{item.tag}</span>}
                       <div className={styles.mediaShade} aria-hidden="true" />
-                      <Heading
-                        as="h3"
-                        className={styles.cardTitle}
-                        style={{fontSize: titleFontSize(item.title)}}>
+                      <Heading as="h3" className={styles.cardTitle}>
                         <span className={styles.cardTitleText}>{item.title}</span>
                       </Heading>
                     </div>
