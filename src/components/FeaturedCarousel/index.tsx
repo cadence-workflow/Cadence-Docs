@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import {useBaseUrlUtils} from '@docusaurus/useBaseUrl';
@@ -14,6 +14,8 @@ import styles from './styles.module.css';
 
 type FeaturedItem = {
   title: string;
+  /** Optional shorter label for the carousel title band. */
+  shortTitle?: string;
   description: string;
   href: string;
   image?: string;
@@ -73,6 +75,76 @@ const getPerView = (): number => {
   if (window.matchMedia('(max-width: 996px)').matches) return 2;
   return 3;
 };
+
+// One shared title size for every card: start from the CSS band size, then
+// shrink to whatever the longest label still needs. Never ellipsis; prefer
+// shortTitle in data when the full title can't fit cleanly.
+function fitSharedCardTitles(track: HTMLElement): void {
+  const headings = [
+    ...track.querySelectorAll<HTMLElement>('[data-card-title]'),
+  ];
+  if (headings.length === 0) {
+    return;
+  }
+
+  headings.forEach((heading) => {
+    heading.style.fontSize = '';
+  });
+
+  const base = parseFloat(getComputedStyle(headings[0]).fontSize);
+  if (!Number.isFinite(base) || base <= 0) {
+    return;
+  }
+
+  let shared = base;
+  for (const heading of headings) {
+    const text = heading.querySelector<HTMLElement>('[data-card-title-text]');
+    if (!text) {
+      continue;
+    }
+    // Compare against the content box — clientHeight includes padding, and
+    // with justify-content:flex-end overflow spills past the top padding and
+    // gets clipped by overflow:hidden.
+    const cs = getComputedStyle(heading);
+    const avail =
+      heading.clientHeight -
+      parseFloat(cs.paddingTop) -
+      parseFloat(cs.paddingBottom);
+    let size = shared;
+    heading.style.fontSize = `${size}px`;
+    while (text.scrollHeight > avail + 1 && size > 12) {
+      size -= 0.5;
+      heading.style.fontSize = `${size}px`;
+    }
+    shared = Math.min(shared, size);
+  }
+
+  headings.forEach((heading) => {
+    heading.style.fontSize = `${shared}px`;
+  });
+}
+
+function CardTitle({
+  title,
+  label,
+}: {
+  title: string;
+  label: string;
+}): JSX.Element {
+  const lines = label.split('\n').filter((line) => line.length > 0);
+
+  return (
+    <h3 className={styles.cardTitle} data-card-title aria-label={title}>
+      <span className={styles.cardTitleText} data-card-title-text>
+        {lines.map((line, i) => (
+          <span key={i} className={styles.cardTitleLine}>
+            {line}
+          </span>
+        ))}
+      </span>
+    </h3>
+  );
+}
 
 export default function FeaturedCarousel(): JSX.Element {
   const {withBaseUrl} = useBaseUrlUtils();
@@ -171,6 +243,38 @@ export default function FeaturedCarousel(): JSX.Element {
   useEffect(() => {
     setPage((p) => Math.min(p, pageCount - 1));
   }, [pageCount]);
+
+  // Keep every card title on one shared size so short labels don't dwarf long ones.
+  // Refit after web fonts swap in — the first pass often sizes against the
+  // fallback face, and ResizeObserver won't fire when only glyph metrics change.
+  useLayoutEffect(() => {
+    const track = trackRef.current;
+    if (!track) {
+      return;
+    }
+    const run = () => fitSharedCardTitles(track);
+    run();
+    let cancelled = false;
+    const fonts = document.fonts;
+    fonts?.ready.then(() => {
+      if (!cancelled) {
+        run();
+      }
+    });
+    const onFontsDone = () => {
+      if (!cancelled) {
+        run();
+      }
+    };
+    fonts?.addEventListener?.('loadingdone', onFontsDone);
+    const ro = new ResizeObserver(run);
+    ro.observe(track);
+    return () => {
+      cancelled = true;
+      fonts?.removeEventListener?.('loadingdone', onFontsDone);
+      ro.disconnect();
+    };
+  }, [activeTag, visibleItems.length]);
 
   // Translate the track from the measured item stride, clamped to the end.
   // Runs on page/breakpoint changes and on every resize, since the
@@ -316,6 +420,7 @@ export default function FeaturedCarousel(): JSX.Element {
                   <Link
                     className={clsx('card', styles.card)}
                     to={item.href}
+                    data-tag={item.tag}
                     tabIndex={hidden ? -1 : undefined}>
                     <div className={styles.media}>
                       <img
@@ -335,11 +440,13 @@ export default function FeaturedCarousel(): JSX.Element {
                         }
                       />
                       {item.tag && <span className={styles.tag} data-tag={item.tag}>{item.tag}</span>}
+                      <div className={styles.mediaShade} aria-hidden="true" />
+                      <CardTitle
+                        title={item.title}
+                        label={item.shortTitle ?? item.title}
+                      />
                     </div>
                     <div className={styles.body}>
-                      <Heading as="h3" className={styles.cardTitle}>
-                        {item.title}
-                      </Heading>
                       <p className={styles.desc}>{item.description}</p>
                       <span className={styles.cta}>{item.cta ?? 'Read more'} →</span>
                     </div>
