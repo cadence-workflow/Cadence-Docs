@@ -17,6 +17,7 @@
   cta: Learn more
 
 - title: "Batch Actions UI: Manage Thousands of Workflows at Once"
+  shortTitle: Batch Actions UI
   description: Cadence Web now supports Batch Actions, letting operators terminate, signal, or cancel entire groups of workflows directly from the browser.
   href: /blog/2026/07/07/2026-07-07-batch-actions-ui/batch-actions-ui
   tag: Blog
@@ -56,12 +57,14 @@
   cta: Read FAQ
 
 - title: Migrating from Temporal to Cadence
+  shortTitle: Migrate from Temporal
   description: "Practical guide for migrating Go or Java applications from Temporal to Cadence: SDK package mapping, concept renames, and client setup differences."
   href: /faq/migrate-from-temporal
   tag: FAQ
   cta: Read FAQ
 
 - title: Join the Cadence community
+  shortTitle: Cadence Community
   description: Subscribe for release notes and community news, or reach the team on Slack and GitHub.
   href: /community/contact-us
   tag: Community
@@ -75,7 +78,7 @@
   cta: Read post
 
 - title: "Your Workflow History Is Storing More Than You Think"
-  shortTitle: Workflow History Data Converters
+  shortTitle: History Data Converters
   description: Cadence writes every workflow input, activity parameter, signal, and query response into history as JSON. A custom DataConverter can add compression, encryption, or claim-check offload without changing workflow code.
   href: /blog/2026/06/03/2026-06-03-workflow-history-data-converter/workflow-history-data-converter
   tag: Blog
@@ -95,6 +98,7 @@
   cta: Learn more
 
 - title: "Signal Handling in the Cadence Python Client"
+  shortTitle: Python Signal Handling
   description: Learn how to register a workflow signal handler and send signals to a running workflow using the Cadence Python client.
   href: /blog/2026/04/28/2026-04-28-python-client-signal/python-client-signal
   tag: Blog
