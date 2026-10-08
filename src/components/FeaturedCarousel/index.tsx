@@ -59,15 +59,15 @@ const FILTER_OPTIONS: Array<'All' | FeaturedTag> = [
 const resolveImage = (item: FeaturedItem) =>
   item.image ?? TAG_DEFAULT_IMAGE[item.tag] ?? FALLBACK_IMAGE;
 
-// Fixed title box is 1/3 of the card; longer copy steps down so it still
-// fits in at most two lines inside that band.
+// Keep the card footprint unchanged. Explicit rem sizes so the fixed
+// 1/3 media title band actually fills with type (cqh proved too small).
 const titleFontSize = (title: string): string => {
   const n = title.trim().length;
-  if (n <= 16) return 'clamp(1.9rem, 3.6vw, 2.45rem)';
-  if (n <= 28) return 'clamp(1.65rem, 3.1vw, 2.1rem)';
-  if (n <= 42) return 'clamp(1.4rem, 2.6vw, 1.8rem)';
-  if (n <= 58) return 'clamp(1.2rem, 2.3vw, 1.5rem)';
-  return 'clamp(1.05rem, 2vw, 1.3rem)';
+  if (n <= 16) return '2.35rem';
+  if (n <= 28) return '2rem';
+  if (n <= 42) return '1.7rem';
+  if (n <= 58) return '1.4rem';
+  return '1.2rem';
 };
 
 const getYouTubeId = (url: string): string | null => {
