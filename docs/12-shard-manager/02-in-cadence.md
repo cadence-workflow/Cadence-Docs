@@ -30,6 +30,26 @@ As an executor, Matching heartbeats to Shard Manager and runs a shard processor 
 
 Frontend, History and Matching all act as spectators. They resolve a task list owner through the [shard distributor resolver](https://github.com/cadence-workflow/cadence/blob/68a7c58b827ce1e2fb2b2eeb80faf343d0b138d6/common/membership/sharddistributorresolver.go#L86-L101), which handles the gradual onboarding. The resolver uses the Matching hash ring for excluded task lists, and when no spectator is configured.
 
+## Configuration
+
+Matching needs the address of the Shard Manager service and a namespace block. From [`config/development.yaml`](https://github.com/cadence-workflow/cadence/blob/68a7c58b827ce1e2fb2b2eeb80faf343d0b138d6/config/development.yaml#L136-L144):
+
+```yaml
+shardDistributorClient:
+  hostPort: "localhost:7943" # Address of the Shard Manager
+
+shard-distributor-matching:
+  namespaces:
+    - namespace: cadence-matching-dev # The namespace declared in the Shard Manager config
+      heartbeat_interval: 1s # How often the executor heartbeats
+      ttl_shard: 5m # How long an unused shard processor is kept
+      ttl_report: 1m # How long a shard load report stays valid
+```
+
+[`heartbeat_interval`](https://github.com/cadence-workflow/shard-manager/blob/0887404e2ee97c5ec792fa7311141bc053a3ee15/service/sharddistributor/client/clientcommon/config.go#L13) has to be consistent with [`process.heartbeatTTL`](https://github.com/cadence-workflow/shard-manager/blob/0887404e2ee97c5ec792fa7311141bc053a3ee15/service/sharddistributor/config/config.go#L104-L107) on the Shard Manager service. An executor whose last heartbeat is older than `heartbeatTTL` is marked stale and its shards are handed to another host, so the interval has to leave room for a missed heartbeat. The development config pairs a 1s interval with a [2s TTL](https://github.com/cadence-workflow/shard-manager/blob/0887404e2ee97c5ec792fa7311141bc053a3ee15/config/development.yaml#L118-L120).
+
+When `shard-distributor-matching.namespaces` is empty Matching builds a no-op executor and uses the hash ring for everything.
+
 ## Controlling the rollout
 
 Two operational dynamic config keys decide whether the ownership of a given task list is decided by Shard Manager or the hash ring.
@@ -56,26 +76,6 @@ The percentage is applied per task list, using a hash of the name. The same task
 The percentage also gates the executor. It is read on every heartbeat, so setting it to `0` stops the host heartbeating and hands everything back to the ring.
 
 Each lookup emits the counter [`shard_distributor_resolver_lookups`](https://github.com/cadence-workflow/cadence/blob/68a7c58b827ce1e2fb2b2eeb80faf343d0b138d6/common/metrics/defs.go#L3602), tagged `routing_path` with either `hash_ring` or `shard_distributor`. That is the metric to watch during a rollout.
-
-## Configuration
-
-Matching needs the address of the Shard Manager service and a namespace block. From [`config/development.yaml`](https://github.com/cadence-workflow/cadence/blob/68a7c58b827ce1e2fb2b2eeb80faf343d0b138d6/config/development.yaml#L136-L144):
-
-```yaml
-shardDistributorClient:
-  hostPort: "localhost:7943" # Address of the Shard Manager
-
-shard-distributor-matching:
-  namespaces:
-    - namespace: cadence-matching-dev # The namespace declared in the Shard Manager config
-      heartbeat_interval: 1s # How often the executor heartbeats
-      ttl_shard: 5m # How long an unused shard processor is kept
-      ttl_report: 1m # How long a shard load report stays valid
-```
-
-[`heartbeat_interval`](https://github.com/cadence-workflow/shard-manager/blob/0887404e2ee97c5ec792fa7311141bc053a3ee15/service/sharddistributor/client/clientcommon/config.go#L13) has to be consistent with [`process.heartbeatTTL`](https://github.com/cadence-workflow/shard-manager/blob/0887404e2ee97c5ec792fa7311141bc053a3ee15/service/sharddistributor/config/config.go#L104-L107) on the Shard Manager service. An executor whose last heartbeat is older than `heartbeatTTL` is marked stale and its shards are handed to another host, so the interval has to leave room for a missed heartbeat. The development config pairs a 1s interval with a [2s TTL](https://github.com/cadence-workflow/shard-manager/blob/0887404e2ee97c5ec792fa7311141bc053a3ee15/config/development.yaml#L118-L120).
-
-When `shard-distributor-matching.namespaces` is empty Matching builds a no-op executor and uses the hash ring for everything.
 
 ## Automatic draining
 

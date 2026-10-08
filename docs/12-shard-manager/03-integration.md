@@ -35,6 +35,23 @@ shardDistribution:
 
 Fixed namespaces have a fixed set of shards that should always be assigned to an executor, meant for services with a known shard count, such as Cadence History. In an `ephemeral` namespace shards are created on demand. When executors die, their shards are reassigned to active executors. An ephemeral shard leaves the namespace when it reports `DONE`. [Cadence Matching](02-in-cadence.md) uses an ephemeral namespace, with one shard per task list name. `fixed` namespaces require a `shardNum`, `ephemeral` does not.
 
+## Client configuration
+
+Both clients read the same block. The canary [builds it in Go](https://github.com/cadence-workflow/shard-manager/blob/0887404e2ee97c5ec792fa7311141bc053a3ee15/cmd/sharddistributor-canary/main.go#L59-L64) instead of YAML, with one entry for each of its two namespaces:
+
+```yaml
+namespaces:
+  - namespace: my-service
+    heartbeat_interval: 1s # How often the executor heartbeats, and so the write rate to etcd.
+    ttl_shard: 5m # How long an unused shard processor is kept before it is marked done
+    ttl_report: 1m # How long a shard load report stays valid. Applied by your own GetShardReport
+peer_ttl: 2m # How long the peer chooser keeps an idle connection. Defaults to 2m
+```
+
+`ttl_report` is used by your processor. The client reads `heartbeat_interval` and `ttl_shard`. For `ttl_report` it is the responsibility of your `GetShardReport` function to respect it. Matching does that by [recomputing the load](https://github.com/cadence-workflow/cadence/blob/68a7c58b827ce1e2fb2b2eeb80faf343d0b138d6/service/matching/tasklist/shard_processor.go#L71-L83) once the previous report is older than the TTL.
+
+Set `heartbeat_interval` against the service's `heartbeatTTL`. An executor whose last heartbeat is older than `heartbeatTTL` is treated as stale and loses its shards, so the interval has to leave room for a missed beat.
+
 ## Executor integration
 
 ### The shard processor
@@ -73,7 +90,17 @@ The ephemeral canary [calls `SetShardStatus(DONE)` on itself](https://github.com
 
 ### The shard processor factory
 
-The Executor client needs a `ShardProcessorFactory` that it can use to build a `ShardProcessor` for a given shard ID. The fx module for a single namespace is:
+The Executor client needs a [`ShardProcessorFactory`](https://github.com/cadence-workflow/shard-manager/blob/0887404e2ee97c5ec792fa7311141bc053a3ee15/service/sharddistributor/client/executorclient/client.go#L50-L52) that it can use to build a `ShardProcessor` for a given shard ID. It has one method:
+
+```go
+type MyShardProcessorFactory struct{}
+
+func (f *MyShardProcessorFactory) NewShardProcessor(shardID string) (*MyShardProcessor, error) {
+	return &MyShardProcessor{shardID: shardID}, nil
+}
+```
+
+Provide the factory, then wire the executor. The fx module for a single namespace is:
 
 ```go
 executorclient.ModuleWithNamespace[*MyShardProcessor]("my-service")
@@ -141,19 +168,3 @@ A drained shard comes back as `FailedPrecondition`. Retrying will not find an ow
 
 The spectator and the chooser depend on each other through the YARPC dispatcher. Break the cycle by calling `chooser.SetSpectators` once both exist, as the canary does in [`module.go`](https://github.com/cadence-workflow/shard-manager/blob/0887404e2ee97c5ec792fa7311141bc053a3ee15/service/sharddistributor/canary/module.go#L92-L96).
 
-## Client configuration
-
-Both clients read the same block. The canary [builds it in Go](https://github.com/cadence-workflow/shard-manager/blob/0887404e2ee97c5ec792fa7311141bc053a3ee15/cmd/sharddistributor-canary/main.go#L59-L64) instead of YAML, with one entry for each of its two namespaces:
-
-```yaml
-namespaces:
-  - namespace: my-service
-    heartbeat_interval: 1s # How often the executor heartbeats, and so the write rate to etcd.
-    ttl_shard: 5m # How long an unused shard processor is kept before it is marked done
-    ttl_report: 1m # How long a shard load report stays valid. Applied by your own GetShardReport
-peer_ttl: 2m # How long the peer chooser keeps an idle connection. Defaults to 2m
-```
-
-`ttl_report` is used by your processor. The client reads `heartbeat_interval` and `ttl_shard`. For `ttl_report` it is the responsibility of your `GetShardReport` function to respect it. Matching does that by [recomputing the load](https://github.com/cadence-workflow/cadence/blob/68a7c58b827ce1e2fb2b2eeb80faf343d0b138d6/service/matching/tasklist/shard_processor.go#L71-L83) once the previous report is older than the TTL.
-
-Set `heartbeat_interval` against the service's `heartbeatTTL`. An executor whose last heartbeat is older than `heartbeatTTL` is treated as stale and loses its shards, so the interval has to leave room for a missed beat.
