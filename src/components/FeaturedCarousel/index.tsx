@@ -102,9 +102,17 @@ function fitSharedCardTitles(track: HTMLElement): void {
     if (!text) {
       continue;
     }
+    // Compare against the content box — clientHeight includes padding, and
+    // with justify-content:flex-end overflow spills past the top padding and
+    // gets clipped by overflow:hidden.
+    const cs = getComputedStyle(heading);
+    const avail =
+      heading.clientHeight -
+      parseFloat(cs.paddingTop) -
+      parseFloat(cs.paddingBottom);
     let size = shared;
     heading.style.fontSize = `${size}px`;
-    while (text.scrollHeight > heading.clientHeight + 1 && size > 14) {
+    while (text.scrollHeight > avail + 1 && size > 12) {
       size -= 0.5;
       heading.style.fontSize = `${size}px`;
     }
@@ -237,6 +245,8 @@ export default function FeaturedCarousel(): JSX.Element {
   }, [pageCount]);
 
   // Keep every card title on one shared size so short labels don't dwarf long ones.
+  // Refit after web fonts swap in — the first pass often sizes against the
+  // fallback face, and ResizeObserver won't fire when only glyph metrics change.
   useLayoutEffect(() => {
     const track = trackRef.current;
     if (!track) {
@@ -244,9 +254,26 @@ export default function FeaturedCarousel(): JSX.Element {
     }
     const run = () => fitSharedCardTitles(track);
     run();
+    let cancelled = false;
+    const fonts = document.fonts;
+    fonts?.ready.then(() => {
+      if (!cancelled) {
+        run();
+      }
+    });
+    const onFontsDone = () => {
+      if (!cancelled) {
+        run();
+      }
+    };
+    fonts?.addEventListener?.('loadingdone', onFontsDone);
     const ro = new ResizeObserver(run);
     ro.observe(track);
-    return () => ro.disconnect();
+    return () => {
+      cancelled = true;
+      fonts?.removeEventListener?.('loadingdone', onFontsDone);
+      ro.disconnect();
+    };
   }, [activeTag, visibleItems.length]);
 
   // Translate the track from the measured item stride, clamped to the end.

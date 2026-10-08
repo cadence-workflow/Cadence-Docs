@@ -350,7 +350,7 @@
   align-items: stretch;
   color: #fff;
   text-align: left;
-  /* JS grows/shrinks per card so every title fills this band. */
+  /* JS picks one shared size across cards so every title fits this band. */
   font-size: calc(33cqh / 2.2);
   font-weight: 700;
   line-height: 1.05;
