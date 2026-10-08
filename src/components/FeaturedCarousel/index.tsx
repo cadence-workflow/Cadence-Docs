@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import {useBaseUrlUtils} from '@docusaurus/useBaseUrl';
@@ -73,6 +73,52 @@ const getPerView = (): number => {
   if (window.matchMedia('(max-width: 996px)').matches) return 2;
   return 3;
 };
+
+// Shrink title type until the full string fits the 50% media band — never ellipsis.
+function CardTitle({title}: {title: string}): JSX.Element {
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const textRef = useRef<HTMLSpanElement>(null);
+
+  useLayoutEffect(() => {
+    const heading = headingRef.current;
+    const text = textRef.current;
+    if (!heading || !text) {
+      return;
+    }
+
+    const fit = () => {
+      heading.style.fontSize = '';
+      const base = parseFloat(getComputedStyle(heading).fontSize);
+      if (!Number.isFinite(base) || base <= 0) {
+        return;
+      }
+      let size = base;
+      heading.style.fontSize = `${size}px`;
+      // Leave a 1px slack for subpixel rounding so we never clip.
+      while (text.scrollHeight > heading.clientHeight + 1 && size > 12) {
+        size -= 0.5;
+        heading.style.fontSize = `${size}px`;
+      }
+    };
+
+    fit();
+    const ro = new ResizeObserver(fit);
+    ro.observe(heading);
+    if (heading.parentElement) {
+      ro.observe(heading.parentElement);
+    }
+    return () => ro.disconnect();
+  }, [title]);
+
+  // Plain h3 so the ref attaches (theme Heading does not forward refs).
+  return (
+    <h3 className={styles.cardTitle} ref={headingRef}>
+      <span className={styles.cardTitleText} ref={textRef}>
+        {title}
+      </span>
+    </h3>
+  );
+}
 
 export default function FeaturedCarousel(): JSX.Element {
   const {withBaseUrl} = useBaseUrlUtils();
@@ -337,9 +383,7 @@ export default function FeaturedCarousel(): JSX.Element {
                       />
                       {item.tag && <span className={styles.tag} data-tag={item.tag}>{item.tag}</span>}
                       <div className={styles.mediaShade} aria-hidden="true" />
-                      <Heading as="h3" className={styles.cardTitle}>
-                        <span className={styles.cardTitleText}>{item.title}</span>
-                      </Heading>
+                      <CardTitle title={item.title} />
                     </div>
                     <div className={styles.body}>
                       <p className={styles.desc}>{item.description}</p>

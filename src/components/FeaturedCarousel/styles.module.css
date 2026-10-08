@@ -333,31 +333,28 @@
   margin: 0;
   padding: 0.4rem 1rem 0.6rem;
   display: flex;
-  align-items: stretch;
+  flex-direction: column;
+  justify-content: flex-end;
   color: #fff;
   /*
-    One size for all cards: two lines of type fill the 50% band
-    (50cqh / 2.15 ≈ line box height with line-height 1.05).
+    Start large enough to fill the half-band; CardTitle shrinks per-card
+    until the full title fits — never ellipsis / never "...".
   */
-  font-size: 2.25rem;
-  font-size: calc(50cqh / 2.15);
+  font-size: 2rem;
+  font-size: calc(50cqh / 2.6);
   font-weight: 700;
-  line-height: 1.05;
+  line-height: 1.1;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
   overflow: hidden;
 }
 
 .cardTitleText {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  overflow: hidden;
+  display: block;
+  overflow: visible;
   overflow-wrap: break-word;
   width: 100%;
-  height: 100%;
   /* Keep type anchored to the bottom of the filled title band. */
-  align-content: end;
+  margin-top: auto;
 }
 
 .desc {
