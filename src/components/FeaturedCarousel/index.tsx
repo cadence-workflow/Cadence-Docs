@@ -59,6 +59,17 @@ const FILTER_OPTIONS: Array<'All' | FeaturedTag> = [
 const resolveImage = (item: FeaturedItem) =>
   item.image ?? TAG_DEFAULT_IMAGE[item.tag] ?? FALLBACK_IMAGE;
 
+// Large overlaid titles wrap better with the first word on its own line
+// (e.g. "Introducing" / "Cadence Schedules"). Applied to every multi-word
+// title so cards share the same stacking rhythm.
+const formatCardTitle = (title: string): string => {
+  const parts = title.trim().split(/\s+/);
+  if (parts.length < 2) {
+    return title;
+  }
+  return `${parts[0]}\n${parts.slice(1).join(' ')}`;
+};
+
 const getYouTubeId = (url: string): string | null => {
   const m = url.match(
     /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([\w-]{11})/,
@@ -338,7 +349,7 @@ export default function FeaturedCarousel(): JSX.Element {
                       {item.tag && <span className={styles.tag} data-tag={item.tag}>{item.tag}</span>}
                       <div className={styles.mediaShade} aria-hidden="true" />
                       <Heading as="h3" className={styles.cardTitle}>
-                        {item.title}
+                        {formatCardTitle(item.title)}
                       </Heading>
                     </div>
                     <div className={styles.body}>

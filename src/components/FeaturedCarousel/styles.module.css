@@ -325,14 +325,15 @@
   height: 33.333%;
   min-height: 33.333%;
   margin: 0;
-  padding: 0.5rem 1.25rem 1rem;
+  padding: 0.35rem 1.15rem 0.85rem;
   display: flex;
   align-items: flex-end;
   color: #fff;
-  font-size: clamp(1.35rem, 2.6vw, 1.85rem);
+  font-size: clamp(1.55rem, 3.2vw, 2.2rem);
   font-weight: 700;
-  line-height: 1.2;
-  text-wrap: balance;
+  line-height: 1.15;
+  /* Honor explicit \n breaks in featuredLinks titles (e.g. Introducing / Cadence Schedules). */
+  white-space: pre-line;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
 }
 
