@@ -337,13 +337,13 @@
   justify-content: flex-end;
   color: #fff;
   /*
-    Start large enough to fill the half-band; CardTitle shrinks per-card
-    until the full title fits — never ellipsis / never "...".
+    Shared starting size for every card. JS then locks all titles to the
+    single minimum that still fits the longest headline (no ellipsis).
   */
-  font-size: 2rem;
-  font-size: calc(50cqh / 2.6);
+  font-size: 1.75rem;
+  font-size: calc(50cqh / 3.2);
   font-weight: 700;
-  line-height: 1.1;
+  line-height: 1.15;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
   overflow: hidden;
 }

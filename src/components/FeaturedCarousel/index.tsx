@@ -74,50 +74,53 @@ const getPerView = (): number => {
   return 3;
 };
 
-// Shrink title type until the full string fits the 50% media band — never ellipsis.
 function CardTitle({title}: {title: string}): JSX.Element {
-  const headingRef = useRef<HTMLHeadingElement>(null);
-  const textRef = useRef<HTMLSpanElement>(null);
-
-  useLayoutEffect(() => {
-    const heading = headingRef.current;
-    const text = textRef.current;
-    if (!heading || !text) {
-      return;
-    }
-
-    const fit = () => {
-      heading.style.fontSize = '';
-      const base = parseFloat(getComputedStyle(heading).fontSize);
-      if (!Number.isFinite(base) || base <= 0) {
-        return;
-      }
-      let size = base;
-      heading.style.fontSize = `${size}px`;
-      // Leave a 1px slack for subpixel rounding so we never clip.
-      while (text.scrollHeight > heading.clientHeight + 1 && size > 12) {
-        size -= 0.5;
-        heading.style.fontSize = `${size}px`;
-      }
-    };
-
-    fit();
-    const ro = new ResizeObserver(fit);
-    ro.observe(heading);
-    if (heading.parentElement) {
-      ro.observe(heading.parentElement);
-    }
-    return () => ro.disconnect();
-  }, [title]);
-
-  // Plain h3 so the ref attaches (theme Heading does not forward refs).
   return (
-    <h3 className={styles.cardTitle} ref={headingRef}>
-      <span className={styles.cardTitleText} ref={textRef}>
-        {title}
-      </span>
+    <h3 className={styles.cardTitle}>
+      <span className={styles.cardTitleText}>{title}</span>
     </h3>
   );
+}
+
+// One shared title size for every card: start from the CSS fill size, then
+// take the minimum that still fits each full title (no ellipsis).
+function fitUniformCardTitles(track: HTMLElement | null) {
+  if (!track) {
+    return;
+  }
+  const headings = Array.from(
+    track.querySelectorAll<HTMLHeadingElement>(`.${styles.cardTitle}`),
+  );
+  if (headings.length === 0) {
+    return;
+  }
+
+  headings.forEach((heading) => {
+    heading.style.fontSize = '';
+  });
+  const base = parseFloat(getComputedStyle(headings[0]).fontSize);
+  if (!Number.isFinite(base) || base <= 0) {
+    return;
+  }
+
+  let shared = base;
+  for (const heading of headings) {
+    const text = heading.querySelector<HTMLElement>(`.${styles.cardTitleText}`);
+    if (!text) {
+      continue;
+    }
+    let size = base;
+    heading.style.fontSize = `${size}px`;
+    while (text.scrollHeight > heading.clientHeight + 1 && size > 12) {
+      size -= 0.5;
+      heading.style.fontSize = `${size}px`;
+    }
+    shared = Math.min(shared, size);
+  }
+
+  headings.forEach((heading) => {
+    heading.style.fontSize = `${shared}px`;
+  });
 }
 
 export default function FeaturedCarousel(): JSX.Element {
@@ -238,6 +241,19 @@ export default function FeaturedCarousel(): JSX.Element {
     window.addEventListener('resize', reposition);
     return () => window.removeEventListener('resize', reposition);
   }, [startIndex, perView, visibleItems.length]);
+
+  // Keep every card title on the same type size (fits the longest headline).
+  useLayoutEffect(() => {
+    const track = trackRef.current;
+    const run = () => fitUniformCardTitles(track);
+    run();
+    if (!track) {
+      return;
+    }
+    const ro = new ResizeObserver(run);
+    ro.observe(track);
+    return () => ro.disconnect();
+  }, [visibleItems, perView, page]);
 
   return (
     <section className={styles.carousel}>
