@@ -14,6 +14,8 @@ import styles from './styles.module.css';
 
 type FeaturedItem = {
   title: string;
+  /** Optional shorter label for the carousel title band. */
+  shortTitle?: string;
   description: string;
   href: string;
   image?: string;
@@ -74,53 +76,55 @@ const getPerView = (): number => {
   return 3;
 };
 
-function CardTitle({title}: {title: string}): JSX.Element {
+// Big title that fills the bottom third. Shrink only if this card overflows —
+// never ellipsis. Prefer shortTitle in data for long headlines.
+function CardTitle({
+  title,
+  label,
+}: {
+  title: string;
+  label: string;
+}): JSX.Element {
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const textRef = useRef<HTMLSpanElement>(null);
+
+  useLayoutEffect(() => {
+    const heading = headingRef.current;
+    const text = textRef.current;
+    if (!heading || !text) {
+      return;
+    }
+
+    const fit = () => {
+      heading.style.fontSize = '';
+      const base = parseFloat(getComputedStyle(heading).fontSize);
+      if (!Number.isFinite(base) || base <= 0) {
+        return;
+      }
+      let size = base;
+      heading.style.fontSize = `${size}px`;
+      while (text.scrollHeight > heading.clientHeight + 1 && size > 14) {
+        size -= 0.5;
+        heading.style.fontSize = `${size}px`;
+      }
+    };
+
+    fit();
+    const ro = new ResizeObserver(fit);
+    ro.observe(heading);
+    if (heading.parentElement) {
+      ro.observe(heading.parentElement);
+    }
+    return () => ro.disconnect();
+  }, [label]);
+
   return (
-    <h3 className={styles.cardTitle}>
-      <span className={styles.cardTitleText}>{title}</span>
+    <h3 className={styles.cardTitle} ref={headingRef} aria-label={title}>
+      <span className={styles.cardTitleText} ref={textRef}>
+        {label}
+      </span>
     </h3>
   );
-}
-
-// One shared title size for every card: start from the CSS fill size, then
-// take the minimum that still fits each full title (no ellipsis).
-function fitUniformCardTitles(track: HTMLElement | null) {
-  if (!track) {
-    return;
-  }
-  const headings = Array.from(
-    track.querySelectorAll<HTMLHeadingElement>(`.${styles.cardTitle}`),
-  );
-  if (headings.length === 0) {
-    return;
-  }
-
-  headings.forEach((heading) => {
-    heading.style.fontSize = '';
-  });
-  const base = parseFloat(getComputedStyle(headings[0]).fontSize);
-  if (!Number.isFinite(base) || base <= 0) {
-    return;
-  }
-
-  let shared = base;
-  for (const heading of headings) {
-    const text = heading.querySelector<HTMLElement>(`.${styles.cardTitleText}`);
-    if (!text) {
-      continue;
-    }
-    let size = base;
-    heading.style.fontSize = `${size}px`;
-    while (text.scrollHeight > heading.clientHeight + 1 && size > 12) {
-      size -= 0.5;
-      heading.style.fontSize = `${size}px`;
-    }
-    shared = Math.min(shared, size);
-  }
-
-  headings.forEach((heading) => {
-    heading.style.fontSize = `${shared}px`;
-  });
 }
 
 export default function FeaturedCarousel(): JSX.Element {
@@ -241,19 +245,6 @@ export default function FeaturedCarousel(): JSX.Element {
     window.addEventListener('resize', reposition);
     return () => window.removeEventListener('resize', reposition);
   }, [startIndex, perView, visibleItems.length]);
-
-  // Keep every card title on the same type size (fits the longest headline).
-  useLayoutEffect(() => {
-    const track = trackRef.current;
-    const run = () => fitUniformCardTitles(track);
-    run();
-    if (!track) {
-      return;
-    }
-    const ro = new ResizeObserver(run);
-    ro.observe(track);
-    return () => ro.disconnect();
-  }, [visibleItems, perView, page]);
 
   return (
     <section className={styles.carousel}>
@@ -399,7 +390,10 @@ export default function FeaturedCarousel(): JSX.Element {
                       />
                       {item.tag && <span className={styles.tag} data-tag={item.tag}>{item.tag}</span>}
                       <div className={styles.mediaShade} aria-hidden="true" />
-                      <CardTitle title={item.title} />
+                      <CardTitle
+                        title={item.title}
+                        label={item.shortTitle ?? item.title}
+                      />
                     </div>
                     <div className={styles.body}>
                       <p className={styles.desc}>{item.description}</p>

@@ -263,13 +263,14 @@
   height: 100%;
   object-fit: contain;
   display: block;
-  opacity: 0.34;
+  /* Keep art quiet so thumbnail/chrome text can't compete with the title. */
+  opacity: 0.22;
   transform: scale(1.04);
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 .card:hover .media img {
-  opacity: 0.45;
+  opacity: 0.3;
   transform: scale(1.08);
 }
 
@@ -282,10 +283,10 @@
 .mediaShade {
   position: absolute;
   inset: 0;
-  /* Keep imagery clear on top; opaque read band in the bottom half for titles. */
+  /* Soft top; solid read band across the bottom third for the title. */
   background:
-    linear-gradient(180deg, rgba(8, 15, 30, 0.04) 35%, rgba(8, 15, 30, 0.55) 55%, rgba(8, 15, 30, 0.88) 100%),
-    linear-gradient(135deg, color-mix(in srgb, var(--card-accent) 18%, transparent), transparent 62%);
+    linear-gradient(180deg, rgba(8, 15, 30, 0.05) 45%, rgba(8, 15, 30, 0.72) 66%, rgba(8, 15, 30, 0.92) 100%),
+    linear-gradient(135deg, color-mix(in srgb, var(--card-accent) 20%, transparent), transparent 62%);
   pointer-events: none;
 }
 
@@ -323,27 +324,24 @@
 }
 
 .cardTitle {
-  /* Bottom half of the media — same box on every card, filled with title. */
+  /* Bottom third of the media — big type fills this band. */
   position: relative;
   z-index: 2;
   box-sizing: border-box;
-  height: 50%;
-  min-height: 50%;
-  max-height: 50%;
+  height: 33.333%;
+  min-height: 33.333%;
+  max-height: 33.333%;
   margin: 0;
-  padding: 0.4rem 1rem 0.6rem;
+  padding: 0.35rem 1rem 0.55rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   color: #fff;
-  /*
-    Shared starting size for every card. JS then locks all titles to the
-    single minimum that still fits the longest headline (no ellipsis).
-  */
-  font-size: 1.75rem;
-  font-size: calc(50cqh / 3.2);
+  /* Two lines of type fill the third; JS shrinks only if this card overflows. */
+  font-size: 1.85rem;
+  font-size: calc(33cqh / 2.2);
   font-weight: 700;
-  line-height: 1.15;
+  line-height: 1.1;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
   overflow: hidden;
 }
@@ -353,8 +351,6 @@
   overflow: visible;
   overflow-wrap: break-word;
   width: 100%;
-  /* Keep type anchored to the bottom of the filled title band. */
-  margin-top: auto;
 }
 
 .desc {

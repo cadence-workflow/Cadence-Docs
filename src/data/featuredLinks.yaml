@@ -1,6 +1,7 @@
 # Featured links shown in the homepage carousel.
 # Edit this list to change what is featured — no code changes needed.
-#   title:       Card headline
+#   title:       Card headline (also used for accessibility)
+#   shortTitle:  OPTIONAL. Shorter carousel label when the full title is too long to fill cleanly
 #   description: One or two short sentences
 #   href:        Internal route (/docs/...) or full external URL
 #   tag:         REQUIRED. One of: Blog, Doc, Community, FAQ, Video
@@ -22,12 +23,14 @@
   cta: Learn more
 
 - title: Custom Workflow Controls in Cadence Web
+  shortTitle: Custom Workflow Controls
   description: What if your workflow could tell operators exactly what's happening, and let them take action, right from the Cadence Web UI?
   href: https://www.youtube.com/watch?v=SLlOk_BbtKo
   tag: Video
   cta: Watch video
 
 - title: "Encrypt Cadence History Payloads (And Know What You Didn't Encrypt)"
+  shortTitle: Encrypt History Payloads
   description: AES-256-GCM encryption makes Cadence history payloads opaque, but the DataConverter only covers part of the data surface.
   href: /blog/2026/06/17/2026-06-17-encrypt-cadence-history/encrypt-cadence-history
   tag: Blog
@@ -52,18 +55,21 @@
   cta: Join us
 
 - title: "Bypass the 2 MB Limit Without Shrinking Your Workflow"
+  shortTitle: Bypass the 2 MB Limit
   description: The claim-check pattern offloads large Cadence payloads to an external blob store so only a tiny reference travels through workflow history.
   href: /blog/2026/06/10/2026-06-10-claim-check-pattern/claim-check-pattern
   tag: Blog
   cta: Read post
 
 - title: "Your Workflow History Is Storing More Than You Think"
+  shortTitle: Workflow History Data Converters
   description: Cadence writes every workflow input, activity parameter, signal, and query response into history as JSON — a custom DataConverter can add compression, encryption, or claim-check offload without changing workflow code.
   href: /blog/2026/06/03/2026-06-03-workflow-history-data-converter/workflow-history-data-converter
   tag: Blog
   cta: Read post
 
 - title: Workflow Engine and Workflow Orchestration
+  shortTitle: Workflow Engine
   description: Cadence is an open-source workflow engine for Go, Java, and Python — fault-tolerant, stateful, and built for long-running distributed applications.
   href: /docs/concepts/workflow-engine
   tag: Doc
@@ -82,6 +88,7 @@
   cta: Read post
 
 - title: "Two Hidden Deadlocks in Cadence Matching: 1 Day, 2 Engineers, 6 Lines of Code"
+  shortTitle: Two Hidden Matching Deadlocks
   description: How the new Cadence Shard Manager found and mitigated two latent deadlocks in the Matching service in a single day.
   href: /blog/2026/04/20/2026-04-20-shard-manager-incident/shard-manager-incident
   tag: Blog
@@ -94,18 +101,21 @@
   cta: Read FAQ
 
 - title: Deploy Cadence with Helm on GKE (PostgreSQL + OpenSearch)
+  shortTitle: Deploy Cadence with Helm
   description: A codelab for deploying Cadence on Google Kubernetes Engine using Helm with PostgreSQL, Kafka, and OpenSearch for advanced visibility.
   href: /docs/codelabs/helm-deploy-postgres-opensearch
   tag: Doc
   cta: Start codelab
 
 - title: "Data Converters: Encryption & Compression"
+  shortTitle: Data Converters
   description: Implement custom Cadence DataConverters to compress, encrypt, serialize, or offload workflow payloads using the Go and Java samples.
   href: /docs/concepts/data-converter
   tag: Doc
   cta: Learn more
 
 - title: How To Write Tests With Workflow Replayer and Shadower
+  shortTitle: Workflow Replayer Tests
   description: A codelab on writing Go tests for Cadence workflows using the Workflow Replayer and Shadower to catch non-deterministic changes.
   href: /docs/codelabs/workflow-tests-go-replayer-shadower
   tag: Doc
