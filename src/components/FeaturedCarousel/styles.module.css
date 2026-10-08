@@ -336,12 +336,13 @@
   min-height: 33.333%;
   max-height: 33.333%;
   margin: 0;
-  padding: 0.35rem 1rem 0.55rem;
+  padding: 0.35rem 1.15rem 0.7rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
+  align-items: stretch;
   color: #fff;
-  text-align: center;
+  text-align: left;
   /* Two lines of type fill the third; JS shrinks only if this card overflows. */
   font-size: 1.85rem;
   font-size: calc(33cqh / 2.2);
@@ -356,7 +357,7 @@
   overflow: visible;
   overflow-wrap: break-word;
   width: 100%;
-  text-align: center;
+  text-align: left;
 }
 
 .desc {
