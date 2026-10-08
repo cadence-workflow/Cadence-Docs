@@ -28,7 +28,7 @@ Matching is an example of a service that takes both client roles of the Shard Ma
 
 As an executor, Matching heartbeats to Shard Manager and runs a shard processor per owned task list name. Stopping a processor shuts down the task list managers for that name, which is how a host gives up a shard. Each executor publishes `tchannel`, `grpc` and `hostIP` in its [heartbeat metadata](https://github.com/cadence-workflow/cadence/blob/68a7c58b827ce1e2fb2b2eeb80faf343d0b138d6/service/matching/handler/engine.go#L263-L267), so callers can reach it.
 
-Frontend, History and Matching all act as spectators. They resolve a task list owner through the [shard distributor resolver](https://github.com/cadence-workflow/cadence/blob/68a7c58b827ce1e2fb2b2eeb80faf343d0b138d6/common/membership/sharddistributorresolver.go#L86-L101), which handles the gradual onboarding, asks the spectator for the owner and falls back to the Matching hash ring in case of issues.
+Frontend, History and Matching all act as spectators. They resolve a task list owner through the [shard distributor resolver](https://github.com/cadence-workflow/cadence/blob/68a7c58b827ce1e2fb2b2eeb80faf343d0b138d6/common/membership/sharddistributorresolver.go#L86-L101), which handles the gradual onboarding. The resolver uses the Matching hash ring for excluded task lists, and when no spectator is configured.
 
 ## Controlling the rollout
 
@@ -39,7 +39,7 @@ Two operational dynamic config keys decide whether the ownership of a given task
 - [`matching.excludeShortLivedTaskListsFromShardManager`](https://github.com/cadence-workflow/cadence/blob/68a7c58b827ce1e2fb2b2eeb80faf343d0b138d6/common/dynamicconfig/dynamicproperties/constants.go#L5312-L5316)
     - Keeps task lists with a UUID in the name on the ring. Defaults to `true`. Most task lists with UUIDs in them are short lived and low load. This option makes it possible to onboard only the long lived ones.
 
-Operational dynamic config is held in a Cassandra-backed config store, separate from the dynamic config file, and is updated at runtime with the `cadence admin config` CLI.
+Operational dynamic config is held in a [config store backed by the primary persistence store](https://github.com/cadence-workflow/cadence/blob/68a7c58b827ce1e2fb2b2eeb80faf343d0b138d6/common/dynamicconfig/dynamicconfigfx/fx.go#L159-L178), separate from the dynamic config, and is updated at runtime with the `cadence admin config` CLI.
 
 To onboard 10 percent of task lists:
 

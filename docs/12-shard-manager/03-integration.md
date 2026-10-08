@@ -33,7 +33,7 @@ shardDistribution:
       shardNum: 32
 ```
 
-Fixed namespaces have a fixed set of shards that should always be assigned to an executor, meant for services with a known shard count, such as Cadence History. In an `ephemeral` namespace shards are created and destroyed on demand, and shards are dropped when the executor owning them dies. They can then be recreated by the application layer as needed. [Cadence Matching](02-in-cadence.md) uses an ephemeral namespace, with one shard per task list name. `fixed` namespaces require a `shardNum`, `ephemeral` does not.
+Fixed namespaces have a fixed set of shards that should always be assigned to an executor, meant for services with a known shard count, such as Cadence History. In an `ephemeral` namespace shards are created on demand. When executors die, their shards are reassigned to active executors. An ephemeral shard leaves the namespace when it reports `DONE`. [Cadence Matching](02-in-cadence.md) uses an ephemeral namespace, with one shard per task list name. `fixed` namespaces require a `shardNum`, `ephemeral` does not.
 
 ## Executor integration
 
@@ -103,7 +103,7 @@ The canary uses it only to [check ownership](https://github.com/cadence-workflow
 
 Every `GetShardProcess` call [records the shard as used](https://github.com/cadence-workflow/shard-manager/blob/0887404e2ee97c5ec792fa7311141bc053a3ee15/service/sharddistributor/client/executorclient/clientimpl.go#L124-L125), which resets the `ttl_shard` clock. Services should not cache the processor handle. Keep the `GetShardProcess` call on the request path, otherwise the shard will look idle and be retired while it is still working.
 
-`executorclient.Params` has two optional fields. `Enabled` is read on every heartbeat, which gives you a runtime switch for rolling the executor in and out. `DrainObserver` ties the executor to service discovery, so the host heartbeats as draining when it is pulled out and resumes when it comes back. Matching uses it this way, described under [automatic draining](02-in-cadence.md#automatic-draining).
+`executorclient.Params` has three optional fields. `Metadata` is the map the executor publishes with its heartbeat, typically containing routing information so the callers can find the executor. `Enabled` is read on every heartbeat, which gives you a runtime switch for rolling the executor in and out. `DrainObserver` ties the executor to service discovery, so the host heartbeats as draining when it is pulled out and resumes when it comes back. Matching uses it this way, described under [automatic draining](02-in-cadence.md#automatic-draining).
 
 ## Spectator integration
 
@@ -135,6 +135,8 @@ executorMetadata := executorclient.ExecutorMetadata{
 }
 ```
 
+The map reaches the executor through `Params.Metadata`. Under fx, supply it as the canary does with [`fx.Supply`](https://github.com/cadence-workflow/shard-manager/blob/0887404e2ee97c5ec792fa7311141bc053a3ee15/cmd/sharddistributor-canary/main.go#L76-L87). Without it the chooser has no address to dial and the call fails.
+
 A drained shard comes back as `FailedPrecondition`. Retrying will not find an owner, so handle it separately from `Unavailable` in your retry policy.
 
 The spectator and the chooser depend on each other through the YARPC dispatcher. Break the cycle by calling `chooser.SetSpectators` once both exist, as the canary does in [`module.go`](https://github.com/cadence-workflow/shard-manager/blob/0887404e2ee97c5ec792fa7311141bc053a3ee15/service/sharddistributor/canary/module.go#L92-L96).
@@ -148,8 +150,10 @@ namespaces:
   - namespace: my-service
     heartbeat_interval: 1s # How often the executor heartbeats, and so the write rate to etcd.
     ttl_shard: 5m # How long an unused shard processor is kept before it is marked done
-    ttl_report: 1m # How long a shard load report stays valid before it is recomputed
+    ttl_report: 1m # How long a shard load report stays valid. Applied by your own GetShardReport
 peer_ttl: 2m # How long the peer chooser keeps an idle connection. Defaults to 2m
 ```
+
+`ttl_report` is used by your processor. The client reads `heartbeat_interval` and `ttl_shard`. For `ttl_report` it is the responsibility of your `GetShardReport` function to respect it. Matching does that by [recomputing the load](https://github.com/cadence-workflow/cadence/blob/68a7c58b827ce1e2fb2b2eeb80faf343d0b138d6/service/matching/tasklist/shard_processor.go#L71-L83) once the previous report is older than the TTL.
 
 Set `heartbeat_interval` against the service's `heartbeatTTL`. An executor whose last heartbeat is older than `heartbeatTTL` is treated as stale and loses its shards, so the interval has to leave room for a missed beat.
