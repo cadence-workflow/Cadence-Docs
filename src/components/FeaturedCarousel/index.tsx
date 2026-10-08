@@ -76,8 +76,9 @@ const getPerView = (): number => {
   return 3;
 };
 
-// Big title that fills the bottom third. Shrink only if this card overflows —
-// never ellipsis. Prefer shortTitle in data for long headlines.
+// Big title pinned to the bottom third. Grow until the band is filled, then
+// shrink only if this card overflows — never ellipsis. Prefer shortTitle in
+// data when the full title can't fill cleanly.
 function CardTitle({
   title,
   label,
@@ -95,18 +96,31 @@ function CardTitle({
       return;
     }
 
+    const fits = () => text.scrollHeight <= heading.clientHeight + 1;
+
     const fit = () => {
-      heading.style.fontSize = '';
-      const base = parseFloat(getComputedStyle(heading).fontSize);
-      if (!Number.isFinite(base) || base <= 0) {
+      const band = heading.clientHeight;
+      if (band <= 0) {
         return;
       }
-      let size = base;
-      heading.style.fontSize = `${size}px`;
-      while (text.scrollHeight > heading.clientHeight + 1 && size > 14) {
-        size -= 0.5;
-        heading.style.fontSize = `${size}px`;
+      // Largest size that still fits the band — short labels grow, long ones
+      // settle where two lines fill the block.
+      let lo = 14;
+      let hi = Math.max(band * 0.95, 14);
+      heading.style.fontSize = `${lo}px`;
+      if (!fits()) {
+        return;
       }
+      while (hi - lo > 0.4) {
+        const mid = (lo + hi) / 2;
+        heading.style.fontSize = `${mid}px`;
+        if (fits()) {
+          lo = mid;
+        } else {
+          hi = mid;
+        }
+      }
+      heading.style.fontSize = `${lo}px`;
     };
 
     fit();
