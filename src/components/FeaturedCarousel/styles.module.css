@@ -366,6 +366,10 @@
   text-align: left;
 }
 
+.cardTitleLine {
+  display: block;
+}
+
 .desc {
   margin: 0;
   font-size: 0.9rem;

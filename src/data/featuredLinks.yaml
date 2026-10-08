@@ -11,7 +11,8 @@
 #
 
 - title: "Introducing Cadence Schedules"
-  shortTitle: Cadence Schedules
+  # Two lines so the title fills the bottom band like the longer cards.
+  shortTitle: "Cadence\nSchedules"
   description: Cadence Schedules bring first-class recurring workflow execution to the platform with overlap policies, backfill, pause/unpause, and full observability, all without touching your workflow code.
   href: /blog/2026/06/23/cadence-schedules
   tag: Blog

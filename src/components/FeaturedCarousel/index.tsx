@@ -132,10 +132,16 @@ function CardTitle({
     return () => ro.disconnect();
   }, [label]);
 
+  const lines = label.split('\n').filter((line) => line.length > 0);
+
   return (
     <h3 className={styles.cardTitle} ref={headingRef} aria-label={title}>
       <span className={styles.cardTitleText} ref={textRef}>
-        {label}
+        {lines.map((line, i) => (
+          <span key={i} className={styles.cardTitleLine}>
+            {line}
+          </span>
+        ))}
       </span>
     </h3>
   );
