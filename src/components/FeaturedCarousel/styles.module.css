@@ -318,23 +318,31 @@
 }
 
 .cardTitle {
-  /* Same overlay treatment as before — title block is 1/3 of the media height. */
+  /* Fixed title box (1/3 of media). Font size is set inline from title length. */
   position: relative;
   z-index: 2;
   box-sizing: border-box;
   height: 33.333%;
   min-height: 33.333%;
+  max-height: 33.333%;
   margin: 0;
   padding: 0.35rem 1.15rem 0.85rem;
   display: flex;
   align-items: flex-end;
   color: #fff;
-  font-size: clamp(1.55rem, 3.2vw, 2.2rem);
   font-weight: 700;
-  line-height: 1.15;
-  /* Honor explicit \n breaks in featuredLinks titles (e.g. Introducing / Cadence Schedules). */
-  white-space: pre-line;
+  line-height: 1.2;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+
+.cardTitleText {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  overflow-wrap: break-word;
 }
 
 .desc {

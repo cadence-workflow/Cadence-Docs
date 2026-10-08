@@ -59,15 +59,15 @@ const FILTER_OPTIONS: Array<'All' | FeaturedTag> = [
 const resolveImage = (item: FeaturedItem) =>
   item.image ?? TAG_DEFAULT_IMAGE[item.tag] ?? FALLBACK_IMAGE;
 
-// Large overlaid titles wrap better with the first word on its own line
-// (e.g. "Introducing" / "Cadence Schedules"). Applied to every multi-word
-// title so cards share the same stacking rhythm.
-const formatCardTitle = (title: string): string => {
-  const parts = title.trim().split(/\s+/);
-  if (parts.length < 2) {
-    return title;
-  }
-  return `${parts[0]}\n${parts.slice(1).join(' ')}`;
+// Fixed title box; longer copy gets a smaller type size so every card
+// stays within two lines instead of ballooning to fill the media panel.
+const titleFontSize = (title: string): string => {
+  const n = title.trim().length;
+  if (n <= 16) return 'clamp(1.7rem, 3.2vw, 2.15rem)';
+  if (n <= 28) return 'clamp(1.45rem, 2.7vw, 1.85rem)';
+  if (n <= 42) return 'clamp(1.2rem, 2.2vw, 1.5rem)';
+  if (n <= 58) return 'clamp(1.05rem, 1.9vw, 1.3rem)';
+  return 'clamp(0.95rem, 1.7vw, 1.15rem)';
 };
 
 const getYouTubeId = (url: string): string | null => {
@@ -348,8 +348,11 @@ export default function FeaturedCarousel(): JSX.Element {
                       />
                       {item.tag && <span className={styles.tag} data-tag={item.tag}>{item.tag}</span>}
                       <div className={styles.mediaShade} aria-hidden="true" />
-                      <Heading as="h3" className={styles.cardTitle}>
-                        {formatCardTitle(item.title)}
+                      <Heading
+                        as="h3"
+                        className={styles.cardTitle}
+                        style={{fontSize: titleFontSize(item.title)}}>
+                        <span className={styles.cardTitleText}>{item.title}</span>
                       </Heading>
                     </div>
                     <div className={styles.body}>
