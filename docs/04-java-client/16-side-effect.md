@@ -10,6 +10,7 @@ keywords:
   - cadence random number workflow
   - cadence sideEffect replay
   - cadence java side effect example
+  - cadence java side effect tutorial
 permalink: /docs/java-client/side-effect
 ---
 
@@ -20,6 +21,14 @@ in replay. Common use case is to run some short non-deterministic code in workfl
 getting random number. The only way to fail SideEffect is to panic which causes decision task
 failure. The decision task after timeout is rescheduled and re-executed giving SideEffect
 another chance to succeed.
+
+## Samples
+
+Runnable side effect sample:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Side effect** | Workflow that records a non-deterministic value with `sideEffect` | [HelloSideEffect.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloSideEffect.java) |
 
 :::caution 
 Do not use sideEffect function to modify any workflow state. Only use the

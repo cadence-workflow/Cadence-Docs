@@ -1,5 +1,5 @@
 .carousel {
-  padding: 3rem 0 4rem 0;
+  padding: 2rem 0;
 }
 
 /* The section wraps its content in Docusaurus's global .container, which caps
@@ -13,6 +13,10 @@
 }
 
 @media (max-width: 640px) {
+  .carousel {
+    padding: 1.5rem 0;
+  }
+
   .carousel :global(.container) {
     padding-left: 1rem;
     padding-right: 1rem;
@@ -26,9 +30,11 @@
   margin-bottom: 1.25rem;
 }
 
+/* Typography (font-size/weight/color) comes from the shared
+   .homepage-section-heading class; margin stays 0 here since .header already
+   manages spacing below the title via its own flex layout. */
 .title {
   margin: 0;
-  font-size: 1.75rem;
 }
 
 .controls {

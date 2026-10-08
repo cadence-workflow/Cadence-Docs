@@ -8,12 +8,21 @@ keywords:
   - cadence python recurring workflow
   - cadence python overlap policy
   - cadence python backfill schedule
+  - cadence python schedules tutorial
 permalink: /docs/python-client/schedules
 ---
 
 # Schedules
 
 The Python client exposes schedule management through methods on `Client`. For a full explanation of overlap policies, backfill, catch-up, and when to use Schedules over `cron_schedule`, see the [Schedules concept page](/docs/concepts/schedules).
+
+## Samples
+
+Runnable schedule sample:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Schedule operations** | One script per operation: create, update, pause, unpause, backfill, describe, list, and delete | [schedule_samples](https://github.com/cadence-workflow/cadence-samples/tree/master/python_sdk_samples/schedule_samples) |
 
 Schedule operations use protobuf types from `cadence.api.v1.schedule_pb2`. Duration fields use `from_timedelta` from `google.protobuf.duration`; Timestamp fields need a small helper since no equivalent `from_datetime` exists:
 
@@ -67,6 +76,26 @@ await client.create_schedule(
 )
 ```
 
+### Create in a paused state
+
+Pass `state` alongside your schedule configuration to prevent the schedule from firing before a worker deployment or other dependency is ready:
+
+```python
+await client.create_schedule(
+    "daily-etl",
+    spec=schedule_spec,
+    action=schedule_action,
+    policies=schedule_policies,
+    state=schedule_pb2.ScheduleState(
+        paused=True,
+        pause_info=schedule_pb2.SchedulePauseInfo(
+            reason="waiting for worker deployment",
+            paused_by="release-pipeline",
+        ),
+    ),
+)
+```
+
 ### Overlap policies
 
 | Constant | Behavior |
@@ -113,7 +142,11 @@ resp = await client.describe_schedule("daily-etl")
 print(resp.state.paused)
 print(resp.info.next_run_time)
 print(resp.info.last_run_time)
+print(resp.info.buffered_fire_count)
+print(resp.info.running_workflow_count)
 ```
+
+`buffered_fire_count` is the number of queued fires waiting to start. `running_workflow_count` is the number of workflow executions currently tracked as running for the schedule.
 
 ## Pause and unpause
 

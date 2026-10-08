@@ -31,7 +31,7 @@ const PATTERNS = [
     colorRgb: "220, 38, 38",
     symptom: "PII, PHI, or credentials visible in workflow history or the Cadence UI",
     what: "AES-256-GCM wraps every payload before it reaches history. Without your key, operators see nothing readable.",
-    tradeoff: "Covers history payloads only — not search attributes, memo, or logs.",
+    tradeoff: "Covers history payloads and SDK memo values. Not search attributes or logs.",
     docHref: "/docs/concepts/data-converter#encryption",
   },
 ];

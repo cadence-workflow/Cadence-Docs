@@ -1,92 +1,91 @@
+import React from 'react';
 import clsx from 'clsx';
+import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
 
 type FeatureItem = {
   title: string;
-  Svg: React.ComponentType<React.ComponentProps<'svg'>>;
-  description: JSX.Element;
+  description: string;
+  Icon: React.FC;
 };
 
-const FeatureList: FeatureItem[] = [
+// Inlined line icons (matching GetInvolvedBanner's icon style) instead of the
+// old 200px illustration SVGs, to keep this section compact and high-density.
+const StateMachineIcon: React.FC = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="5" cy="12" r="3" />
+    <circle cx="19" cy="6" r="3" />
+    <circle cx="19" cy="18" r="3" />
+    <path d="M7.8 10.7l8.4-3.4" />
+    <path d="M7.8 13.3l8.4 3.4" />
+  </svg>
+);
+
+const DatabaseIcon: React.FC = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <ellipse cx="12" cy="5" rx="8" ry="3" />
+    <path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5" />
+    <path d="M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6" />
+  </svg>
+);
+
+const QueueIcon: React.FC = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect x="3" y="4" width="14" height="4" rx="1" />
+    <rect x="3" y="10" width="14" height="4" rx="1" />
+    <rect x="3" y="16" width="10" height="4" rx="1" />
+  </svg>
+);
+
+const FEATURES: FeatureItem[] = [
   {
-    title: 'Simplify Stateful Application Development',
-    Svg: require('@site/static/img/arrow_divert_filled.svg').default,
-    description: (
-      <>
-        Encode complex business logic, while seamlessly managing scalability, reliability, and availability, freeing developers from these concerns
-      </>
-    ),
+    title: 'Event-Sourced State',
+    description: 'Workflows resume seamlessly from exact points of failure using execution history logs.',
+    Icon: StateMachineIcon,
   },
   {
-    title: 'Run Resilient Workflows in Any Environment',
-    Svg: require('@site/static/img/gears_blue.svg').default,
-    description: (
-      <>
-        Cadence enables writing stateful applications without worrying about the complexity of handling process failures.
-      </>
-    ),
+    title: 'No External Message Queues',
+    description: 'Eliminate SQS/RabbitMQ management: Cadence handles task matching and queuing natively.',
+    Icon: QueueIcon,
   },
   {
-    title: 'Horizontal Scalability for Massive Workflow Loads',
-    Svg: require('@site/static/img/chart_bar_ascending_filled.svg').default,
-    description: (
-      <>
-        Cadence scales horizontally to handle millions of concurrent workflows, and it includes asynchronous history event replication out-of-the-box, providing robust recovery from zone failures
-      </>
-    ),
+    title: 'Pluggable Persistence',
+    description: 'Scalable storage backend support for Cassandra, PostgreSQL, MySQL, and OpenSearch.',
+    Icon: DatabaseIcon,
   },
 ];
-
-function Feature({ title, Svg, description }: FeatureItem) {
-  return (
-    <div className={clsx('col col--12')}>
-      <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
-      </div>
-      <div className="text--center padding-horiz--md">
-        <Heading as="h3">{title}</Heading>
-        <p>{description}</p>
-      </div>
-    </div>
-  );
-}
-
-function FeatureHorizontal({ title, Svg, description }: FeatureItem) {
-  return (
-
-    <div className="col col--4 margin-top--lg margin-bottom--lg">
-      <div className="card card--full-height item shadow--tl">
-        <div className="card__header text--center">
-          <Heading as="h3">{title}</Heading>
-          <Svg className={styles.featureSvg} role="img" />
-        </div>
-        <div className="card__body">
-          <div className="text--center text--break padding-horiz--md">
-            <p>{description}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export default function HomepageFeatures(): JSX.Element {
   return (
     <section className={styles.features}>
-      <div className="container">
-        <div className="row">
-          {FeatureList.map((props, idx) => (
-            <FeatureHorizontal key={idx} {...props} />
-          ))}
-        </div>
+      <Heading as="h2" className={clsx('homepage-section-heading', styles.heading)}>
+        Why Cadence?
+      </Heading>
 
-        {/* <div className="row">
-          {FeatureList.map((props, idx) => (
-            <Feature key={idx} {...props} />
-          ))}
-        </div> */}
+      <div className={styles.grid}>
+        {FEATURES.map(({ title, description, Icon }) => (
+          <div className={styles.item} key={title}>
+            <span className={styles.iconWrap}>
+              <Icon />
+            </span>
+            <div>
+              <Heading as="h3" className={styles.itemTitle}>
+                {title}
+              </Heading>
+              <p className={styles.itemDesc}>{description}</p>
+            </div>
+          </div>
+        ))}
       </div>
+
+      <p className={styles.socialProof}>
+        Powering mission-critical workflows at companies like Uber, DoorDash, and NetApp.
+      </p>
+
+      <Link to="/docs/concepts" className={styles.cta}>
+        Explore Cadence Architecture & Core Concepts →
+      </Link>
     </section>
   );
 }

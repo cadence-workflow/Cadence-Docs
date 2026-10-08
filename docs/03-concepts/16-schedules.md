@@ -13,12 +13,21 @@ keywords:
   - cadence schedule catch-up
   - cadence scheduler
   - workflow scheduling
+  - cadence schedules tutorial
 permalink: /docs/concepts/schedules
 ---
 
 # Schedules
 
 Cadence Schedules let you run a workflow on a recurring cadence. Unlike the older `CronSchedule` option on `StartWorkflowOptions`, Schedules are first-class server-side objects: you can inspect them, pause them, update them, backfill missed runs, and observe their history without touching your workflow code.
+
+## Samples
+
+Runnable schedule samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Schedule operations** | One script per operation: create, update, pause, unpause, backfill, describe, list, and delete | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/schedule) · [Python](https://github.com/cadence-workflow/cadence-samples/tree/master/python_sdk_samples/schedule_samples) |
 
 ## How it works
 

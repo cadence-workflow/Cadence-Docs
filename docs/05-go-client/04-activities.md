@@ -10,6 +10,7 @@ keywords:
   - cadence go sdk activity
   - cadence activity context go
   - cadence activity example go
+  - cadence go activities tutorial
 permalink: /docs/go-client/activities
 ---
 
@@ -30,6 +31,15 @@ history can thus adversely impact the performance of your :workflow:. Therefore,
 of data you transfer via :activity: invocation parameters or return values. Otherwise, no additional
 limitations exist on :activity: implementations.
 
+## Samples
+
+Runnable activity samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Basic activities** | Activity implementations invoked from a workflow | [activities](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/activities) |
+| **Local activity** | Short activity executed directly on the workflow worker | [localactivity](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/localactivity) |
+
 ## Overview
 
 The following example demonstrates a simple :activity: that accepts a string parameter, appends a word
@@ -44,10 +54,6 @@ import (
     "go.uber.org/cadence/activity"
     "go.uber.org/zap"
 )
-
-func init() {
-    activity.Register(SimpleActivity)
-}
 
 // SimpleActivity is a sample Cadence activity function that takes one parameter and
 // returns a string containing the parameter value.
@@ -130,15 +136,15 @@ that call `RecordActivityHeartbeat`.
 
 ### Registration
 
-To make the :activity: visible to the :worker: process hosting it, the :activity: must be registered via a
-call to `activity.Register`.
+To make the :activity: visible to the :worker: process hosting it, register the implementation on the Worker instance:
 
 ```go
-func init() {
-    activity.Register(SimpleActivity)
-}
+w.RegisterActivity(SimpleActivity)
 ```
-This call creates an in-memory mapping inside the :worker: process between the fully qualified function
+
+The global `activity.Register` and `activity.RegisterWithOptions` functions are deprecated. Registering on the Worker keeps the implementations associated with that worker.
+
+Registration creates an in-memory mapping inside the :worker: process between the fully qualified function
 name and the implementation. If a :worker: receives a request to start an :activity: execution for an
 :activity: type it does not know, it will fail that request.
 

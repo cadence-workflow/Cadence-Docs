@@ -9,6 +9,10 @@
   /* positioning context for .heroInner; clip any code panel overflow */
   position: relative;
   overflow: hidden;
+  /* Subtle seam between the Hero and the section below it. Hardcoded like
+     .heroCode's border, since the gradient above is pinned identically in
+     both color modes. */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .heroCompact {

@@ -1,0 +1,71 @@
+---
+layout: default
+title: Cloud Native Threat Modeling
+description: Cadence least privilege requirements, certificate rotation, and secure software supply chain practices.
+keywords:
+  - cadence threat modeling
+  - cadence least privilege
+  - cadence certificate rotation
+  - cadence supply chain security
+permalink: /docs/tech-review/day-0-planning/security/threat-modeling
+---
+
+## Least privilege
+
+Cadence's privilege model has three layers.
+
+- API authorization: when the [OAuth authorizer](https://github.com/cadence-workflow/cadence/blob/master/common/authorization/README.md) is enabled, access is scoped per domain and not cluster-wide. A caller's JWT `groups` claim determines which domains and operations it can act on. Operations tagged as administrative (registering, updating, deprecating, and deleting a domain, plus most admin RPCs) are allowed when the JWT carries the `Admin` claim or, for the domain APIs, when the caller belongs to the domain's write groups. Domain failover is a write operation. The full permission table is on [Identity and Access Management](/docs/tech-review/day-0-planning/design/iam). Without the OAuth authorizer, the [`NoopAuthorizer`](https://github.com/cadence-workflow/cadence/blob/master/common/authorization/nopAuthorizer.go) grants unrestricted access. See [Cloud Native Security Tenets](/docs/tech-review/day-0-planning/security/security-tenets) for the tradeoff of shipping with it off by default.
+- Process privilege: the official [Docker images](https://github.com/cadence-workflow/cadence/blob/master/Dockerfile) run as a non-root `cadence` user by default (the `alpine-nonroot` base stage), which limits the impact of a container compromise.
+- Kubernetes privilege: the official [Helm chart](https://github.com/cadence-workflow/cadence-charts) creates a service account and mounts its token into the pods by default ([`values.yaml`](https://github.com/cadence-workflow/cadence-charts/blob/97f757930c7aa5849970034e2dd698812ae74bbd/charts/cadence/values.yaml#L577-L586)). RBAC objects are off by default. When `rbac.create` is enabled, the chart binds a cluster-wide `ClusterRole` with get, list, and watch on pods, services, endpoints, deployments, replicasets, configmaps, and secrets ([`rbac.yaml`](https://github.com/cadence-workflow/cadence-charts/blob/97f757930c7aa5849970034e2dd698812ae74bbd/charts/cadence/templates/rbac.yaml)). The server itself does not call the Kubernetes API, and the chart does not document a use case for that role, so adopters should leave it disabled, and consider setting `automountServiceAccountToken: false`, unless a sidecar or custom integration needs cluster read access.
+
+Cadence does not manage the credentials it uses to reach its dependencies. The server holds credentials for its persistence layer (Cassandra, MySQL, PostgreSQL) and, when archival is enabled, for a blobstore (S3, GCS, or filestore). Operators are responsible for scoping those credentials to what the server needs, for example by avoiding a database superuser account. Cadence neither prescribes nor enforces this today.
+
+## Certificate rotation
+
+TLS certificates are loaded once at process startup. [`common/config/tls.go`](https://github.com/cadence-workflow/cadence/blob/master/common/config/tls.go) calls `tls.LoadX509KeyPair` on the configured `certFile` and `keyFile`, and nothing watches those files afterward. Rotating a certificate therefore means restarting the process, typically with a rolling deploy, so it picks up the new files. 
+
+## Secure software supply chain
+
+This section follows the five stages of the [CNCF Software Supply Chain Best Practices](https://project.linuxfoundation.org/hubfs/CNCF_SSCP_v1.pdf) paper. The paper tags each recommendation as moderate or high assurance. Each stage below summarizes selected moderate-assurance practices and the known gaps against them. It is not a complete moderate-baseline assessment, which would need a recommendation-by-recommendation status matrix that has not been produced. Practices that the paper reserves for high assurance, such as reproducible builds and offline roots of trust, are not implemented and are not listed individually.
+
+### Source code
+
+- Every commit needs a DCO sign-off ([`.github/dco.yml`](https://github.com/cadence-workflow/cadence/blob/master/.github/dco.yml)). A sign-off is an attestation of origin, not a cryptographic signature. Organization members can instead satisfy the requirement with a GPG-signed commit, which is the stronger attestation, but signed commits are not required of anyone.
+- Branch protection on `master` requires approving reviews and blocks force pushes. The [`CODEOWNERS`](https://github.com/cadence-workflow/cadence/blob/master/.github/CODEOWNERS) file lists all maintainers as owners of the whole repository.
+- The cadence-workflow GitHub organization requires multi-factor authentication for members.
+- CI runs `make lint` on every PR (`go vet -copylocks`, `revive`, and `nilaway` on the type mapper packages), and Snyk Code performs static analysis of the Go source. The project does not use golangci-lint.
+- No secret scanner runs in CI. Maintainer credential practices (SSH keys, key rotation, short-lived tokens) are managed through GitHub and are not documented by the project.
+
+### Materials
+
+- Dependencies are Go modules pinned by `go.sum` checksums and compiled from source during the build.
+- The [`fresh-go-deps-check`](https://github.com/cadence-workflow/cadence/blob/master/.github/workflows/fresh-go-deps-check.yml) workflow rejects PRs that pin dependencies published too recently for the community to have vetted them.
+- [Snyk](https://snyk.io/) scans dependencies for known CVEs, checks licenses, and scans container images. It opens PRs for critical-severity CVEs only, as described on [Security Hygiene](/docs/tech-review/day-0-planning/security/security-hygiene). Other dependency updates arrive through ordinary PRs.
+- Cadence does not maintain a dependency inventory (such as OWASP Dependency-Track) and does not vendor modules or mirror them in an internal registry.
+- The base images (`golang` and `alpine`) are prebuilt Docker Hub images referenced by tag, not by digest.
+
+### Build pipelines
+
+- Builds run in [GitHub Actions](https://github.com/cadence-workflow/cadence/tree/master/.github/workflows) on GitHub-hosted runners, which GitHub provisions fresh for each job. Pipelines are defined as code in the repository.
+- The Docker images use multi-stage builds and run as a non-root user (see [Least privilege](#least-privilege)).
+- Third-party GitHub Actions are pinned by major version tag (for example `actions/checkout@v4`), not by commit SHA. Most workflows do not declare a `permissions:` block, so they run with the repository's default token permissions.
+- Dockerfile `FROM` lines are not pinned by digest.
+- These are known gaps and there are no committed plans to close them.
+
+### Artefacts
+
+Cadence does not generate a Software Bill of Materials (SBOM) or sign container images or other artifacts (for example with Sigstore/cosign). The `docker/build-push-action` steps in [`docker_publish.yml`](https://github.com/cadence-workflow/cadence/blob/master/.github/workflows/docker_publish.yml) set no explicit provenance or SBOM options, so the published images carry only the default BuildKit SLSA provenance attestation that the action attaches (visible with `docker buildx imagetools inspect`). That attestation is not signed, the project does not document it, and nothing verifies it before deployment. These are known gaps and are not on the roadmap today.
+
+### Deployments
+
+Images are published to Docker Hub by the Cadence server workflow on every push to `master` (tagged `master`) and when a GitHub release is marked released (excluding prereleases), tagged with the release version, using a Docker Hub username and access token stored as GitHub Actions secrets. Because nothing is signed, users cannot cryptographically verify an image or its freshness before deploying it, and the `master` tag moves with every merge. Users who need that assurance can pin images by digest and verify them against their own build.
+
+Release automation differs by repository. The server images publish through GitHub Actions as described above. The [Python client](https://github.com/cadence-workflow/cadence-python-client/blob/master/.github/workflows/python-publish.yml) publishes to PyPI when a GitHub release is published, and the [Java client](https://github.com/cadence-workflow/cadence-java-client/blob/master/.github/workflows/release.yml) publishes to Maven Central on a `v*` tag push or a manual workflow dispatch. The [Go client](https://github.com/cadence-workflow/cadence-go-client) repository has no release workflow. Its tags and releases are created by maintainers, and Go modules are fetched directly from those tags.
+
+## Related documentation
+
+- [Security Self-Assessment](/docs/tech-review/day-0-planning/security/security-self-assessment)
+- [Cloud Native Security Tenets](/docs/tech-review/day-0-planning/security/security-tenets)
+- [Security Hygiene](/docs/tech-review/day-0-planning/security/security-hygiene)
+- [Mutual TLS](/docs/concepts/mutual-tls)
+- [`common/authorization` README](https://github.com/cadence-workflow/cadence/blob/master/common/authorization/README.md)

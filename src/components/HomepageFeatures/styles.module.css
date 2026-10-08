@@ -1,11 +1,89 @@
+/* Full-bleed padding (matches the 2rem/1rem side gutters used by the
+   FeaturedCarousel and GetInvolvedBanner sections directly below/above this
+   one) instead of Infima's centered .container, so all three bands share the
+   same left/right edges. Kept compact so the "What's new?" carousel's top
+   edge stays near the fold. */
 .features {
-  display: flex;
-  align-items: center;
-  padding: 2rem 0;
-  width: 100%;
+  padding: 2rem 2rem;
 }
 
-.featureSvg {
-  height: 200px;
-  width: 200px;
+.heading {
+  margin-bottom: 1.25rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  min-width: 0;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 10px;
+}
+
+.iconWrap {
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  color: var(--ifm-color-primary);
+  background: color-mix(in srgb, var(--ifm-color-primary) 12%, transparent);
+}
+
+.iconWrap svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.itemTitle {
+  margin: 0 0 0.3rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.itemDesc {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.socialProof {
+  margin: 0 0 1rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.cta {
+  display: block;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+}
+
+.cta:hover {
+  color: var(--ifm-color-primary);
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .features {
+    padding: 1.5rem 1rem 1.5rem;
+  }
 }

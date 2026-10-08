@@ -10,11 +10,24 @@ keywords:
   - cadence java workflow definition
   - java workflow annotations
   - cadence workflow interface java
+  - cadence java workflow interface tutorial
 permalink: /docs/java-client/workflow-interface
 ---
 
 :workflow:Workflow: encapsulates the orchestration of :activity:activities: and child :workflow:workflows:.
 It can also answer synchronous :query:queries: and receive external :event:events: (also known as :signal:signals:).
+
+## Samples
+
+Runnable workflow-interface samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **File processing** | Interface with signal and query methods | [FileProcessingWorkflow.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/fileprocessing/FileProcessingWorkflow.java) |
+| **Signal and query methods** | Workflow interfaces that define signal or query methods | [HelloSignal.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloSignal.java) · [HelloQuery.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloQuery.java) |
+| **Separate interface and implementation** | Workflow interface and implementation in separate files | [calculation](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/calculation) |
+
+---
 
 A :workflow: must define an interface class. All of its methods must have one of the following annotations:
 

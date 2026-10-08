@@ -31,13 +31,15 @@ standby clusters (if any) will poll the history from active to replicate the wor
 
 However, standby clusters can also receive the requests, e.g. for starting workflows or starting activities. They know which cluster the domain is active at.
 So the requests can be routed to the active clusters. This is called `api-forwarding` in Cadence. `api-forwarding` makes it possible to have no downtime during failover.
-There are two `api-forwarding` policy: `selected-api-forwarding` and `all-domain-api-forwarding` policy.
+There are four `api-forwarding` policies: `selected-apis-forwarding`, `selected-apis-forwarding-v2`, `all-domain-apis-forwarding`, and `all-domain-apis-forwarding-v2`
+(see the [policy definitions](https://github.com/cadence-workflow/cadence/blob/c861d469a5efd3ee3460051b3ab119cb1a02f8f0/service/frontend/wrappers/clusterredirection/policy.go#L41-L79) in the server source).
+The default when no policy is configured is `noop` (no forwarding).
 
-When using `selected-api-forwarding`, applications need to run different set of activity & workflow :worker:workers: polling on every cluster.
+When using `selected-apis-forwarding`, applications need to run different set of activity & workflow :worker:workers: polling on every cluster.
 Cadence will only dispatch tasks on the current active cluster; :worker:workers: on the standby cluster will sit idle
 until the Global :domain:Domain: is failed over. This is recommended if XDC is being used in multiple clusters running in very remote data centers(regions), which forwarding is expensive to do.
 
-When using `all-domain-api-forwarding`, applications only need to run activity & workflow :worker:workers: polling on one cluster. This makes it easier for the application setup. This is recommended
+When using `all-domain-apis-forwarding`, applications only need to run activity & workflow :worker:workers: polling on one cluster. This makes it easier for the application setup. This is recommended
 when clusters are all in local or nearby datacenters.  See more details in [discussion](https://github.com/cadence-workflow/cadence/discussions/4530).
 
 ### Conflict Resolution
@@ -60,8 +62,9 @@ only be set when the :domain: is provisioned.
 
 #### Clusters
 A list of clusters where the :domain: can fail over to, including the current active cluster.
-This is also a read-only setting that can only be set when the :domain: is provisioned. A re-replication feature on the
-roadmap will allow updating this config to add/remove clusters in the future.
+The list can be changed after the :domain: is created. Clusters can be added and removed, but an update always sets
+the full list, so it must name every cluster you want to keep. You cannot remove the cluster the :domain: is
+currently active in, and the update only works when sent to the [primary cluster](#running-in-production).
 
 #### Active Cluster Name
 Name of the current active cluster for the Global :domain:Domain:. This config is updated each time the Global :domain:Domain: is failed over to
@@ -91,31 +94,39 @@ ActiveClusterName: dc1
 Clusters: dc1, dc2
 ```
 
-#### Failover Global Domain using domain update command(being deprecated in favor of managed graceful failover)
+#### Failover a Global Domain
 The following command can be used to failover Global :domain:Domain: *my-domain-global* to the *dc2* cluster:
 
 ```bash
-$ cadence --do my-domain-global d up --ac dc2
+$ cadence --address <dc2-frontend> --do my-domain-global domain failover --active_cluster dc2
 ```
 
-#### Failover Global Domain using Managed Graceful Failover
+Run the command against the cluster that should become active, which is currently the passive cluster. Cadence also accepts the command on any other cluster in the group, including the primary cluster, but the intended target is the recommended place to issue it. Two optional flags are worth knowing:
 
-First of all, update the domain to enable this feature for the domain
+- `--failover_timeout_seconds <seconds>` performs a graceful failover: the incoming active cluster waits up to this duration for pending replication :task:tasks: to drain before taking over, instead of switching immediately.
+- `--reason "<text>"` records why the failover happened, for tracking and transparency. Read the recorded failovers back with `cadence --do my-domain-global domain list-failover-history`.
+
+`domain failover` and `domain list-failover-history` were added in server v1.4.0. Older documentation and scripts use `domain update --active_cluster <cluster>` to fail over, which is what you need on earlier versions. Where `domain failover` is available, prefer it: it only changes the active cluster, so it cannot overwrite the rest of the :domain: configuration by accident, and some deployments restrict `domain update` to administrators while still allowing failover.
+
+#### Failover many Global Domains with Managed Failover
+
+Managed failover is an operational convenience for teams that own a large number of :domain:domains:. Rather than issuing one `domain failover` per :domain:, you mark the :domain:domains: a platform team is responsible for and move all of them with a single command. It does not replace the per-domain command above, and a :domain: that is not managed this way is failed over exactly as shown in the previous section.
+
+First, mark each :domain: you want to include in managed failover:
 ```bash
-$ cadence --do test-global-domain-0 d update --domain_data IsManagedByCadence:true
-$ cadence --do test-global-domain-1 d update --domain_data IsManagedByCadence:true
-$ cadence --do test-global-domain-2 d update --domain_data IsManagedByCadence:true
+$ cadence --do test-global-domain-0 domain update --domain_data IsManagedByCadence:true
+$ cadence --do test-global-domain-1 domain update --domain_data IsManagedByCadence:true
+$ cadence --do test-global-domain-2 domain update --domain_data IsManagedByCadence:true
 ...
 ```
 
-Then you can start failover the those global domains using managed failover:
+Then fail over the whole set with one command:
 ```bash
 cadence admin cluster failover start --source_cluster dc1 --target_cluster dc2
 ```
-This will failover all the domains with `IsManagedByCadence:true` from dc1 to dc2.
+This fails over every :domain: with `IsManagedByCadence:true` from dc1 to dc2, in batches, as a workflow you can watch, pause, and resume.
 
-You can provide more detailed options when using the command, and also watch the progress of the failover.
-Feel free to explore the `cadence admin cluster failover` tab.
+The command accepts more options, including a graceful failover timeout, a batch size, an explicit :domain: list, and a failover drill mode for rehearsing without moving traffic. Run `cadence admin cluster failover --help` for the current set.
 
 ## Running Locally
 
@@ -125,23 +136,21 @@ The best way is to use Cadence [docker-compose](https://github.com/cadence-workf
 
 ## Running in Production
 
-Enable global domain feature needs to be enabled in [static config](/docs/operation-guide/setup/#static-configuration).
+Every cluster that participates in replication must be listed in the `clusterGroupMetadata` section of the [static config](/docs/operation-guide/setup/#static-configuration) of each cluster.
 
 Here we use clusterDCA and clusterDCB as an example. We pick clusterDCA as the primary(used to called "master") cluster.
-The only difference of being a primary cluster is that it is responsible for domain registration. Primary can be changed later but it needs to be the same across all clusters.
+The only difference of being a primary cluster is that it is responsible for domain registration. Failover does not have to go through the primary cluster; run `domain failover` on the cluster that should become active. Primary can be changed later but it needs to be the same across all clusters.
 
-The ClusterMeta config of clusterDCA should be
+The `clusterGroupMetadata` config of clusterDCA should be
 
 ```yaml
-dcRedirectionPolicy:
-  policy: "selected-apis-forwarding"
-
-clusterMetadata:
-  enableGlobalDomain: true
+clusterGroupMetadata:
   failoverVersionIncrement: 10
-  masterClusterName: "clusterDCA"
+  primaryClusterName: "clusterDCA"
   currentClusterName: "clusterDCA"
-  clusterInformation:
+  clusterRedirectionPolicy:
+    policy: "selected-apis-forwarding"
+  clusterGroup:
     clusterDCA:
       enabled: true
       initialFailoverVersion: 1
@@ -154,18 +163,16 @@ clusterMetadata:
       rpcAddress: "<>:<>"
 ```
 
-And ClusterMeta config of clusterDCB should be
+And the `clusterGroupMetadata` config of clusterDCB should be
 
 ```yaml
-dcRedirectionPolicy:
-  policy: "selected-apis-forwarding"
-
-clusterMetadata:
-  enableGlobalDomain: true
+clusterGroupMetadata:
   failoverVersionIncrement: 10
-  masterClusterName: "clusterDCA"
+  primaryClusterName: "clusterDCA"
   currentClusterName: "clusterDCB"
-  clusterInformation:
+  clusterRedirectionPolicy:
+    policy: "selected-apis-forwarding"
+  clusterGroup:
     clusterDCA:
       enabled: true
       initialFailoverVersion: 1
@@ -174,10 +181,11 @@ clusterMetadata:
     clusterDCB:
       enabled: true
       initialFailoverVersion: 0
-
       rpcName: "cadence-frontend"
       rpcAddress: "<>:<>"
 ```
+
+Only `currentClusterName` differs between the two files. The top-level `clusterMetadata` and `dcRedirectionPolicy` keys are the deprecated names for `clusterGroupMetadata` and its nested `clusterRedirectionPolicy`; the server still accepts them and logs a warning at startup, but new configuration should use the names above.
 
 After the configuration is deployed:
 
@@ -185,8 +193,8 @@ After the configuration is deployed:
 `cadence --do <domain_name> domain register --global_domain true  --clusters clusterDCA,clusterDCB --active_cluster clusterDCA`
 
 
-2. Run some workflow and failover domain from one to another
-`cadence --do <domain_name> domain update  --active_cluster clusterDCB`
+2. Run some workflow and failover the domain from clusterDCA to clusterDCB. Issue the command against clusterDCB, the cluster that should become active:
+`cadence --address <clusterDCB-frontend> --do <domain_name> domain failover --active_cluster clusterDCB`
 
 Then the domain should be failed over to clusterDCB. Now workflows are read-only in clusterDCA. So your workers polling tasks from clusterDCA will become idle.
 

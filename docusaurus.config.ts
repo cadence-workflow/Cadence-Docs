@@ -17,6 +17,12 @@ import { envReplace } from '@pnpm/config.env-replace';
 const defaultLocale = 'en';
 
 const config: Config = {
+  // Keep this short. Docs/blog titles are `{page} | ${title}`. The homepage
+  // document title / og:title come from HOMEPAGE_DOCUMENT_TITLE in
+  // src/homepageSeo.ts (used by src/pages/index.tsx), and the swizzled
+  // src/theme/ThemeProvider/TitleFormatter keys off that exact constant to drop
+  // the ` | Cadence` suffix. Edit that constant; do not inline the string here
+  // or in index.tsx.
   title: 'Cadence',
   tagline: 'Orchestrate with Confidence: The Open-Source Workflow Engine for Tomorrow',
   favicon: 'img/favicon.ico',
@@ -86,9 +92,6 @@ const config: Config = {
         } satisfies BlogOptions,
         theme: {
           customCss: './src/css/custom.css',
-        },
-        googleTagManager: {
-          containerId: 'G-W63QD8QE6E',
         },
         gtag: {
           trackingID: 'G-W63QD8QE6E',
@@ -202,6 +205,10 @@ const config: Config = {
           },
           {
             from: '/community',
+            to: '/community/contact-us',
+          },
+          {
+            from: '/community/meetup',
             to: '/community/contact-us',
           },
           {
@@ -374,6 +381,7 @@ const config: Config = {
             { label: 'Cadence Web', href: 'https://github.com/cadence-workflow/cadence-web' },
             { label: 'Cadence IDLs', href: 'https://github.com/cadence-workflow/cadence-idl' },
             { label: 'Helm Charts', href: 'https://github.com/cadence-workflow/cadence-charts' },
+            { label: 'Shard Manager', href: 'https://github.com/cadence-workflow/shard-manager' },
           ],
         },
       ],
@@ -415,7 +423,7 @@ const config: Config = {
             },
             {
               label: 'Cadence Community on CNCF Slack',
-              href: 'https://communityinviter.com/apps/cloud-native/cncf',
+              href: 'https://inviter.co/cncf',
             },
             {
               label: 'LinkedIn',

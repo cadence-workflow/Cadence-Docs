@@ -36,7 +36,7 @@ In the last several years, Cadence has made significant investments in its scala
 
 ## What’s Changing in the Community?
 
-We’ll stop using our Slack workspace ([uber-cadence.slack.com](http://uber-cadence.slack.com)). Going forward, we’ll use CNCF’s Slack workspace ([cloud-native.slack.com](https://cloud-native.slack.com/)). Join this new workspace using [Community Inviter](https://communityinviter.com/apps/cloud-native/cncf) and join the *\#cadence-users* channel to contact us. 
+We’ll stop using our Slack workspace ([uber-cadence.slack.com](http://uber-cadence.slack.com)). Going forward, we’ll use CNCF’s Slack workspace ([cloud-native.slack.com](https://cloud-native.slack.com/)). Join this new workspace using [Community Inviter](https://inviter.co/cncf) and join the *\#cadence-users* channel to contact us. 
 
 Our website ([cadenceworkflow.io](http://cadenceworkflow.io)) and our GitHub org ([github.com/cadence-workflow](http://github.com/cadence-workflow)) will stay the same and we’ll continue sharing new features from there. 
 

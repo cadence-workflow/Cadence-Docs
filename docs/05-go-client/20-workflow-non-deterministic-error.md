@@ -12,6 +12,7 @@ keywords:
   - mismatched decisions
   - workflow code changes
   - go client non-deterministic
+  - cadence go non-deterministic error tutorial
 permalink: /docs/go-client/workflow-non-deterministic-error
 ---
 
@@ -27,6 +28,15 @@ Consider the following diagram where `Workflow A` is running on `Host A` but sud
 Workflow A then will be picked up by Host B and continues its execution. This process is called <b>change of workflow ownership</b>. However, after Host B gains ownership of the Workflow A, it does not have any information about its historical executions. For example, Workflow A may have executed many activities and it fails. Host B needs to redo all its history until the moment of failure. The process of reconstructing history of a workflow is called <b>history replay</b>.
 
 In general, any errors that occur during the replay process are called <b>non-deterministic errors</b>. We will explore different types of non-deterministic errors in sections below but first let's try to understand how Cadence is able to perform the replay of workflow in case of failure.
+
+## Samples
+
+Samples for preventing and detecting non-deterministic errors:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Workflow versioning** | Prevents non-deterministic errors when changing workflow code with `workflow.GetVersion` | [versioning](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/versioning) |
+| **Replay test** | Detects non-deterministic changes by replaying recorded history | [replay_test.go](https://github.com/cadence-workflow/cadence-samples/blob/master/cmd/samples/recipes/helloworld/replay_test.go) |
 
 ## Decision tasks of workflow
 

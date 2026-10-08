@@ -42,7 +42,7 @@ jobs:
 
       # same as build.yml
       - name: Checkout 🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -56,7 +56,7 @@ jobs:
           FILE_DATA: ${{ secrets.CUSTOM_DOMAIN }}
 
       - name: Use Node.js lts/jod (v22)
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: lts/jod
           # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
@@ -77,12 +77,18 @@ jobs:
       - name: Re-index Algolia search 🔍
         env:
           ALGOLIA_CRAWLER_ID: ${{ secrets.ALGOLIA_CRAWLER_ID }}
+          ALGOLIA_CRAWLER_USER_ID: ${{ secrets.ALGOLIA_CRAWLER_USER_ID }}
           ALGOLIA_CRAWLER_API_KEY: ${{ secrets.ALGOLIA_CRAWLER_API_KEY }}
         run: |
-          if [ -z "$ALGOLIA_CRAWLER_ID" ] || [ -z "$ALGOLIA_CRAWLER_API_KEY" ]; then
-            echo "ALGOLIA_CRAWLER_ID or ALGOLIA_CRAWLER_API_KEY secret not set, skipping re-indexing"
+          if [ -z "$ALGOLIA_CRAWLER_ID" ] || [ -z "$ALGOLIA_CRAWLER_USER_ID" ] || [ -z "$ALGOLIA_CRAWLER_API_KEY" ]; then
+            echo "Algolia crawler secrets not set, skipping re-indexing"
             exit 0
           fi
+          # The Crawler API uses basic auth with the crawler user ID as the
+          # username and the crawler API key as the password. Both come from
+          # https://dashboard.algolia.com/crawler/settings and are distinct
+          # from the regular Algolia application credentials.
           curl -X POST "https://crawler.algolia.com/api/1/crawlers/${ALGOLIA_CRAWLER_ID}/reindex" \
-            --user "${ALGOLIA_CRAWLER_API_KEY}:" \
-            --fail
+            --user "${ALGOLIA_CRAWLER_USER_ID}:${ALGOLIA_CRAWLER_API_KEY}" \
+            --fail-with-body \
+            --silent --show-error

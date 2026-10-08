@@ -14,12 +14,12 @@ jobs:
     steps:
     - name: Checkout 🛎️
       # https://github.com/actions/checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         persist-credentials: false
     - name: Use Node.js lts/jod (v22)
       # https://github.com/actions/setup-node
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v5
       with:
         node-version: lts/jod
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/

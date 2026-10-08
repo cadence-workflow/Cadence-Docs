@@ -10,6 +10,18 @@
 
 #
 
+- title: Batch Future
+  description: Use the Cadence Go client to process activities or child workflows with a bounded concurrency limit.
+  href: /docs/go-client/batch-future
+  tag: Doc
+  cta: Learn more
+
+- title: "Batch Actions UI: Manage Thousands of Workflows at Once"
+  description: Cadence Web now supports Batch Actions, letting operators terminate, signal, or cancel entire groups of workflows directly from the browser.
+  href: /blog/2026/07/07/2026-07-07-batch-actions-ui/batch-actions-ui
+  tag: Blog
+  cta: Read post
+
 - title: "Introducing Cadence Schedules"
   shortTitle: Cadence Schedules
   description: Cadence Schedules bring first-class recurring workflow execution to the platform with overlap policies, backfill, pause/unpause, and full observability, all without touching your workflow code.
@@ -49,11 +61,11 @@
   tag: FAQ
   cta: Read FAQ
 
-- title: Community Meetups
-  description: Join the recurring Cadence community meetup to share demos, ask questions, and connect with maintainers.
-  href: /community/meetup
+- title: Join the Cadence community
+  description: Subscribe for release notes and community news, or reach the team on Slack and GitHub.
+  href: /community/contact-us
   tag: Community
-  cta: Join us
+  cta: Get involved
 
 - title: "Bypass the 2 MB Limit Without Shrinking Your Workflow"
   shortTitle: Bypass the 2 MB Limit

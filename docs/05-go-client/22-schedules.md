@@ -10,12 +10,21 @@ keywords:
   - cadence go overlap policy
   - cadence go backfill schedule
   - cadence go pause schedule
+  - cadence go schedules tutorial
 permalink: /docs/go-client/schedules
 ---
 
 # Schedules
 
 The Go client exposes schedule management through `ScheduleClient`, obtained from any `cadence.Client` instance. For a full explanation of overlap policies, backfill, catch-up, and when to use Schedules over `CronSchedule`, see the [Schedules concept page](/docs/concepts/schedules).
+
+## Samples
+
+Runnable schedule sample:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Schedule operations** | One script per operation: create, update, pause, unpause, backfill, describe, list, and delete | [schedule](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/schedule) |
 
 ## Getting the client
 
@@ -154,6 +163,13 @@ if err != nil {
 fmt.Printf("Paused: %v\n", resp.State.Paused)
 fmt.Printf("Next run: %v\n", resp.Info.NextRunTime)
 fmt.Printf("Last run: %v\n", resp.Info.LastRunTime)
+fmt.Printf("Total runs: %d\n", resp.Info.TotalRuns)
+fmt.Printf("Created: %v\n", resp.Info.CreateTime)
+fmt.Printf("Last updated: %v\n", resp.Info.LastUpdateTime)
+fmt.Printf("Missed runs: %d\n", resp.Info.MissedRuns)
+fmt.Printf("Skipped runs: %d\n", resp.Info.SkippedRuns)
+fmt.Printf("Buffered fires: %d\n", resp.Info.BufferedFireCount)
+fmt.Printf("Running workflows: %d\n", resp.Info.RunningWorkflowCount)
 ```
 
 ## Pause and unpause

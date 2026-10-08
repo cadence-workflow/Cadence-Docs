@@ -10,7 +10,7 @@ keywords:
   - cadence voting process
   - cadence open source governance
   - cadence contribution guidelines
-date: 2025-05-09
+date: 2026-10-02
 authors: demirkayaender
 tags:
   - announcement
@@ -64,6 +64,9 @@ We strive to simplify our project to make it easier to understand and contribute
 ---
 
 ## Official Roles
+
+The current TSC members and maintainers are listed in [MAINTAINERS.md](https://github.com/cadence-workflow/cadence/blob/master/MAINTAINERS.md). Profiles on the [team page](/community/team) can be out of date.
+
 ### Maintainer
 A maintainer is a person who understands the Cadence codebase, with consistent past contributions. Maintainer rights and responsibilities are as follows:
   * Merge rights (code-review is still required in most cases),
@@ -88,12 +91,32 @@ Cadence Technical Steering Committee
   * Govern standards and practices,
   * Facilitates contributions
 
-Eligibility requirements are:
-  * Must already be a maintainer
-  * 2+ approved large project proposals
-  * Involvement in 2 large projects’ designs 
-  * Attendance in community meetings to talk about updates and provide their inputs
-  * Voted approval from Technical Steering Committee
+A person is eligible for the TSC in either of these ways:
+
+  * They are already a maintainer, with 2+ approved large project proposals and involvement in 2 large projects’ designs.
+  * They have consistent, long-term involvement in the community and in steering the project.
+
+Either path also requires attendance in community meetings to talk about updates and provide their inputs, and voted approval from the Technical Steering Committee.
+
+### Leaving an official role
+An official role belongs to the person.
+
+A maintainer or TSC member leaves the role in any of these cases:
+
+  * They step down in writing or in public. The TSC records the step-down.
+  * A maintainer leaves the Cadence team at a company that funds their Cadence work. The TSC may end the maintainer role at once. The person has two weeks to notify the TSC that they will keep contributing. That notice reverses the removal.
+  * A maintainer is inactive for six months. Inactivity means no pull requests, reviews, or issue work. This inactivity rule does not apply to TSC members.
+  * The TSC votes to end the role. The TSC can vote any maintainer out when it considers that necessary for the project, including for community health, collaboration, quality, or another reason recorded with the vote. The TSC can likewise vote a member out of the committee.
+
+Leaving a funded Cadence team can end the maintainer role as soon as the TSC records it. That two-week window is for the person to stay a maintainer, not a waiting period before the TSC can act. If they notify within two weeks, the removal is reversed and maintainership is reinstated. They open a GitHub issue in [cadence](https://github.com/cadence-workflow/cadence) or [TSC-Discussions](https://github.com/cadence-workflow/TSC-Discussions). No confirmation is required for that notification.
+
+A TSC member who leaves a funded Cadence team keeps the TSC seat until the TSC votes through an issue or a pull request.
+
+Six months of inactivity lets the TSC end a maintainer role. The change is a [MAINTAINERS.md](https://github.com/cadence-workflow/cadence/blob/master/MAINTAINERS.md) update with two TSC members involved: a TSC member opens the pull request and another TSC member approves it, or someone else opens the pull request and two or more TSC members approve it.
+
+A vote to end a role uses the recorded vote, or an issue or pull request for a TSC member who left a funded team. The TSC states the reason in the TSC repository. Voting a person out of the TSC leaves their maintainer rights in place unless that vote also ends those rights.
+
+After the role ends, the TSC may list the person as emeritus on the [team page](/community/team). Emeritus recognizes past work. It does not include merge rights or a vote. Returning to an active role follows the eligibility rules for that role and a new TSC vote, except for a maintainer reinstated by a notice within two weeks. Any maintainer who lost the role within the last six months can ask to be voted in again.
 
 ---
 
@@ -104,8 +127,8 @@ Eligibility requirements are:
    * Submit issues to report bugs, suggest features, or ask questions.  
    * Create pull requests for code, documentation, or tests.  
 2. **Review Process**:  
-   * All pull requests must be reviewed by at least one committer.
-   * Significant changes require approval from the core team.
+   * All pull requests must be reviewed by at least one maintainer.
+   * Significant changes require approval from the TSC.
    * Based on your past contributions and future commitments, you may be invited to be a part of Cadence open source teams listed in [cadence-workflow](https://github.com/cadence-workflow) org.
 3. **Code Standards**:  
    * Follow the project's coding styles and guidelines.  
@@ -125,13 +148,21 @@ Voting can be held online or offline if a member cannot make the meeting or if a
 
 Each election should be posted in a TSC dedicated GitHub repo. Each member is reached via their email, which is shared with every TSC member. It’s the member’s responsibility to provide a working email address in case the email bounces back. The member who calls for voting sends email notifications. 
 
-Voting has to be recorded and should clearly show a vote was cast from the voter's account (email or GitHub or another account officially linked to the voter). A vote could be "in favor", "not in favor", or "abstain".
+Voting has to be recorded and should clearly show a vote was cast from the voter's account (email or GitHub or another account officially linked to the voter). A vote could be "in favor", "not in favor", or "abstain". When the vote is a pull request, a TSC member's approval counts as "in favor". Requesting changes counts as "not in favor".
+
+Each company counts at most two TSC votes. The majority is calculated from that company-capped total, not from headcount. Count each company's ballots as follows:
+
+  * If there is at least one vote in favor and at least one not in favor, count one in favor and one not in favor. Ignore abstains from that company.
+  * If there are votes on only one side, in favor or not in favor, plus abstains, count one vote on that side and one abstain.
+  * If there are only abstains, only in favor or only not in favor, count up to two of those votes.
+
+Abstains do not choose a side. They count toward whether the TSC has received enough votes to decide. The outcome is still the majority of counted "in favor" and "not in favor" votes.
 
 In case a response wasn't received from all the members within two weeks, all the pending votes, with the 2-week notice period already expired, will be cast by the end of the first day (Pacific Time) of the coming month. This way, every member can expect a voting might be happening and they can find voting issues in the dedicated repo. Decisions will be made based on received votes at that time. 
 
-At any time after the initial notification, if more than half of the total number of TSC members sends “favor” or “not in favor”, a decision can be made without waiting for other members, since their vote will have no effect.
+At any time after the initial notification, if more than half of the company-capped votes have been received, including counted abstains, a decision can be made without waiting for other members, since their vote will have no effect.
 
-Otherwise, voting results are decided based on the total number of "favor" and "not in favor" votes, ignoring "abstain" votes. Whichever vote has a majority will be the decision. If no majority is reached, TSC can continue with a re-election or status quo is maintained (i.e., no change).
+Otherwise, voting results are decided based on the counted "favor" and "not in favor" votes after the company cap. Whichever vote has a majority will be the decision. If no majority is reached, TSC can continue with a re-election or status quo is maintained (i.e., no change).
 
 Every decision should be published at a TSC GitHub repo with vote numbers for TSC visibility, and announced publicly.
 
@@ -146,13 +177,25 @@ The Cadence community follows a [Code of Conduct](https://github.com/uber/.githu
 
 ## **Project Roadmap**
 
-The TSC is responsible for maintaining and updating the project roadmap. The roadmap outlines:
+The TSC owns the roadmap. The roadmap outlines:
 
 * Upcoming features and milestones.  
 * Technical debt and areas of improvement.  
 * Long-term goals for the project.
 
-The roadmap is published and updated regularly on the [GitHub Roadmap Project](https://github.com/orgs/cadence-workflow/projects/1) where high-level details are posted on our [project website](/).
+The TSC defines and refreshes the roadmap once a year. It may soft-refresh priorities around the middle of the year. A soft refresh adjusts emphasis inside the year's scope. The TSC can also accept a project at any time during the year when its importance and funding support it. Changing the year's scope uses the recorded vote above. The vote-free path is for accepting a project only.
+
+Accepting a project uses the recorded vote, or a vote-free path that assumes good faith so work is not blocked. A TSC member who proposes a project and volunteers for it accepts it without another TSC member's approval. A maintainer or a company that volunteers needs at least one TSC member to accept that offer in writing or in public. There is no pushback window before acceptance. After the fact, a TSC member can push back and open the acceptance to discussion and a recorded vote. That vote can reverse the acceptance, including progress already made.
+
+A TSC member opens the annual proposal in [cadence-workflow/TSC-Discussions](https://github.com/cadence-workflow/TSC-Discussions). The [2027 roadmap proposal](https://github.com/cadence-workflow/TSC-Discussions/issues/3) is the current example.
+
+After the year's scope is approved, and whenever an idea comes up later, the project collects ideas in public. An idea is raised on GitHub, for example on the [2027 call for project ideas](https://github.com/cadence-workflow/cadence/issues/8533). A conversation in [CNCF Slack `#cadence-users`](https://inviter.co/cncf) or in a community meeting becomes an idea when a maintainer records it on GitHub.
+
+Maintainers and other community members can comment, volunteer, and vote on an idea. That vote shows popularity and interest. The TSC uses it as input. The TSC accepts a project with its recorded vote, or on the vote-free path above. The TSC then names an owner. Volunteering before acceptance shows interest.
+
+Day-to-day bug reports, small improvements, and release work continue through GitHub issues. The roadmap is the commitment for larger, multi-month work.
+
+Status is tracked on the [Cadence GitHub projects](https://github.com/orgs/cadence-workflow/projects). The [Roadmap](https://github.com/orgs/cadence-workflow/projects/1) board is the year's plan. High-level updates are also posted on the [project website](/). The process is described in [Roadmap process](/docs/tech-review/day-0-planning/scope/roadmap-process).
 
 ---
 
@@ -164,7 +207,7 @@ All repositories under the Cadence Workflow organization are released under the 
 
 ## **Amendments**
 
-This governance document is a living document. Changes can be proposed by any contributor and must be approved by the core team. Updates will be announced to the community.
+This governance document is a living document. Changes can be proposed by any contributor and must be approved by the TSC. Updates will be announced to the community.
 
 ---
 

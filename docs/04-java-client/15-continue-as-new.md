@@ -10,6 +10,7 @@ keywords:
   - cadence workflow reset java
   - cadence periodic workflow java
   - cadence java continueAsNew example
+  - cadence java continue as new tutorial
 permalink: /docs/java-client/continue-as-new
 ---
 
@@ -32,3 +33,11 @@ public void greet(String name) {
 }
 
 ```
+
+## Samples
+
+Runnable continue-as-new sample:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Periodic loop** | Periodic workflow that restarts itself with `continueAsNew` | [HelloPeriodic.java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloPeriodic.java) |

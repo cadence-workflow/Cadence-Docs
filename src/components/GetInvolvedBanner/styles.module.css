@@ -26,11 +26,11 @@
   flex-wrap: wrap;
 }
 
+/* Typography (font-size/weight/color) comes from the shared
+   .homepage-section-heading class; margin stays 0 here so the title sits
+   inline with .bannerSubtitle on the same baseline. */
 .bannerTitle {
-  font-size: 1.35rem;
-  font-weight: 700;
   margin: 0;
-  color: #1b1b1d;
   letter-spacing: -0.5px;
 }
 
@@ -261,7 +261,6 @@
   }
 
   .bannerTitle {
-    font-size: 1.25rem;
     margin-bottom: 0.5rem;
   }
 
@@ -307,6 +306,15 @@
   }
 }
 
+/* Small phones: 2-up gets cramped once the description text has to squeeze
+   into ~150px columns, so collapse to a single column rather than breaking
+   out of the container's side gutters. */
+@media screen and (max-width: 480px) {
+  .cardsWrapper {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Translucent pill wrapper in the header, styled like the hero eyebrow but
    using neutral colors that read on the light gradient background. */
 .communityLinksPill {
@@ -340,10 +348,6 @@
 /* ------------------------------------------------------------------ */
 html[data-theme='dark'] .bannerOuter {
   background: linear-gradient(135deg, #1a1d24 0%, #15171d 50%, #1a1d24 100%);
-}
-
-html[data-theme='dark'] .bannerTitle {
-  color: #f5f6f7;
 }
 
 html[data-theme='dark'] .bannerSubtitle {

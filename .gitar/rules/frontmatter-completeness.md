@@ -21,6 +21,8 @@ When evaluating a changed `.md` or `.mdx` file under `blog/` or `docs/`:
   - `README.md` at any level
   - `docs/GLOSSARY.md`
   - Partials / includes beginning with `_` (e.g., `_category_.json` siblings, `_partial.md`)
+  - Pages under `docs/11-tech-review/` that contain only YAML frontmatter.
+    These pages are works in progress by design.
 
 ## Structural checks
 

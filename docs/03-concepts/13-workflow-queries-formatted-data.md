@@ -10,6 +10,7 @@ keywords:
   - cadence query formatted output
   - cadence web custom controls
   - workflow internal state
+  - cadence custom workflow controls tutorial
 permalink: /docs/concepts/workflow-queries-formatted-data
 ---
 
@@ -72,6 +73,18 @@ Your workflow has internal state. What if your users could see it *and* act on i
 </details>
 
 Cadence Web renders **markdown** returned by workflow queries. Add three Markdoc tags ([`{% signal %}`](#-signal-), [`{% start %}`](#-start-), [`{% image %}`](#-image-)) and your query response becomes a live ops dashboard. Below, we'll build one from scratch in three steps. See the full [Tag Reference](#tag-reference) for all attributes.
+
+---
+
+## Samples
+
+Full working examples in both Go and Java:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **MarkdownQueryWorkflow** | Signals, start buttons, images | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/query/markdown_query.go) · [Java](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/query/MarkdownQueryWorkflow.java) |
+| **LunchVoteWorkflow** | Interactive voting with live results | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/query/lunch_vote_workflow.go) · [Java](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/query/LunchVoteWorkflow.java) |
+| **OrderFulfillmentWorkflow** | Full ops dashboard with state machine | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/query/order_fulfillment_workflow.go) · [Java](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/query/OrderFulfillmentWorkflow.java) |
 
 ---
 
@@ -369,19 +382,3 @@ Renders an image with optional size control. Standard markdown images (`![alt](u
 | `alt` | Yes | Alt text |
 | `width` | No | Width in pixels |
 | `height` | No | Height in pixels |
-
----
-
-## Sample Code
-
-Full working examples in both Go and Java:
-
-| Sample | Description | Go | Java |
-|--------|-------------|----|------|
-| **MarkdownQueryWorkflow** | Signals, start buttons, images | [Go source](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/query/markdown_query.go) | [Java source](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/query/MarkdownQueryWorkflow.java) |
-| **LunchVoteWorkflow** | Interactive voting with live results | [Go source](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/query/lunch_vote_workflow.go) | [Java source](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/query/LunchVoteWorkflow.java) |
-| **OrderFulfillmentWorkflow** | Full ops dashboard with state machine | [Go source](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/query/order_fulfillment_workflow.go) | [Java source](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/query/OrderFulfillmentWorkflow.java) |
-
-:::note
-Requires **Cadence Web v4.0.14+** for MarkDoc rendering support.
-:::

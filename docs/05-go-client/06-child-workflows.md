@@ -11,12 +11,22 @@ keywords:
   - cadence golang child workflow example
   - ChildWorkflowOptions go
   - ParentClosePolicy go
+  - cadence go child workflows tutorial
 permalink: /docs/go-client/child-workflows
 ---
 
 `workflow.ExecuteChildWorkflow` schedules another workflow from inside a running workflow. The scheduling workflow is the *parent* and the scheduled workflow is the *child*. A child has a lifecycle the parent shapes at every stage: the parent starts it, watches it, communicates with it, and decides its fate when the parent itself closes or is canceled.
 
 Child workflows run independently of that relationship in every other respect: each has its own event history, its own timeouts and retry policy, and can run on a different task list and worker pool than the parent. This page follows a child from start to finish.
+
+## Samples
+
+Runnable child-workflow samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Child workflow** | Parent starts a child, waits for its result | [Go source](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/childworkflow) |
+| **Child cancellation** | Parent cancels a running child | [Recipe](https://github.com/cadence-workflow/cadence-samples/tree/master/cmd/samples/recipes/childworkflow) |
 
 ---
 
@@ -79,6 +89,15 @@ if err := child2.Get(ctx, &greeting2); err != nil {
     return err
 }
 ```
+
+:::note Bounding a large fan-out
+The snippet above starts every child at once, which is fine for a fixed handful. To fan out over a large
+list with a cap on how many children run concurrently, use [Batch Future](/docs/go-client/batch-future).
+`ExecuteChildWorkflow` returns a `ChildWorkflowFuture`, which satisfies `workflow.Future`, so it can be
+returned from a batch factory like any activity future. Note that the futures the batch hands back are
+plain `workflow.Future` values, so use this when you only need each child's result and not
+`GetChildWorkflowExecution()` or the signal helpers.
+:::
 
 **Signal a running child** by resolving its execution from the future, then calling `workflow.SignalExternalWorkflow`.
 
@@ -178,17 +197,6 @@ _ = future.Get(ctx, nil)
 | `RetryPolicy` | No | Exponential retry policy applied to the child execution. |
 | `WaitForCancellation` | No | If `true`, the parent waits for the child to finish reacting to a cancellation. See [Cancelling a child](#cancelling-a-child). |
 | `ParentClosePolicy` | No | What happens to the child when the parent closes. See [When the parent closes](#when-the-parent-closes). |
-
----
-
-## Samples
-
-Runnable child-workflow samples:
-
-| Sample | Description | Code |
-|--------|-------------|------|
-| **Child workflow** | Parent starts a child, waits for its result | [Go source](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/childworkflow) |
-| **Child cancellation** | Parent cancels a running child | [Recipe](https://github.com/cadence-workflow/cadence-samples/tree/master/cmd/samples/recipes/childworkflow) |
 
 ---
 

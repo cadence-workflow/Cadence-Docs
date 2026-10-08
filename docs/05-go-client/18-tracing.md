@@ -12,6 +12,7 @@ keywords:
   - HeaderWriter
   - HeaderReader
   - go client tracing
+  - cadence go tracing tutorial
 permalink: /docs/go-client/tracing
 ---
 
@@ -27,6 +28,15 @@ configure and leverage tracing, see the [OpenTracing documentation](https://open
 The OpenTracing support has been validated using [Jaeger](https://www.jaegertracing.io/), but other implementations
 mentioned [here](https://opentracing.io/docs/supported-tracers/) should also work. Tracing support utilizes generic context
 propagation support provided by the client.
+
+## Samples
+
+Runnable tracing and context propagation samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Tracing** | Workflow instrumented with a Jaeger tracer | [tracing](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/tracing) |
+| **Context propagation** | Custom context propagated across a workflow and an activity | [ctxpropagation](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/ctxpropagation) |
 
 ## Context Propagation
 
@@ -94,7 +104,7 @@ type ContextPropagator interface {
 
 ### Is there a complete example?
 
-The [context propagation sample](https://github.com/cadence-workflow/cadence-samples/blob/master/cmd/samples/recipes/ctxpropagation/workflow.go)
+The [context propagation sample](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/ctxpropagation)
 configures a custom context propagator and shows context propagation of custom keys across a :workflow: and an :activity:.
 
 ### Can I configure multiple context propagators?

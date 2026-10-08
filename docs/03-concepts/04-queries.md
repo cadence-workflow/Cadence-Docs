@@ -10,6 +10,7 @@ keywords:
   - cadence query workflow
   - cadence concepts
   - read workflow state
+  - cadence synchronous query tutorial
 permalink: /docs/concepts/queries
 ---
 
@@ -20,6 +21,18 @@ To execute a :query: an external client calls a synchronous Cadence API providin
 :query:Query: callbacks must be read-only not mutating the :workflow: state in any way. The other limitation is that the :query: callback cannot contain any blocking code. Both above limitations rule out ability to invoke :activity:activities: from the :query: handlers.
 
 Cadence team is currently working on implementing _update_ feature that would be similar to :query: in the way it is invoked, but would support :workflow: state mutation and :local_activity: invocations. From user's point of view, _update_ is similar to signal + strong consistent query, but implemented in a much less expensive way in Cadence.
+
+## Samples
+
+Runnable query samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Query workflow state** | Exposes in-progress workflow state to synchronous queries | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/query) · [Java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloQuery.java) |
+| **Consistent query** | Strongly consistent reads of workflow state | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/consistentquery) · [Java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloConsistentQuery.java) |
+| **Query an agent workflow** | Query that lists pending interruptions in a human-in-the-loop agent, requires an OpenAI API key | [Python](https://github.com/cadence-workflow/cadence-samples/tree/master/python_sdk_samples/openai_samples/human_in_the_loop) |
+
+Queries can also return formatted markdown that Cadence Web renders as an interactive dashboard. See [Custom Workflow Controls](/docs/concepts/workflow-queries-formatted-data) for details and samples.
 
 ## Stack Trace Query
 

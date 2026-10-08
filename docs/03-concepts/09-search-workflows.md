@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Search workflows (Advanced visibility)
-description: This page explains Cadence advanced visibility, which enables searching and filtering workflows using SQL-like queries on custom key-value search attributes backed by Elasticsearch.
+description: This page explains Cadence advanced visibility, which enables SQL-like search and filtering with Elasticsearch, OpenSearch, or Pinot.
 keywords:
   - cadence search workflows
   - cadence advanced visibility
@@ -11,6 +11,7 @@ keywords:
   - cadence workflow query
   - cadence concepts
   - cadence memo
+  - cadence search workflows tutorial
 permalink: /docs/concepts/search-workflows
 ---
 
@@ -28,9 +29,17 @@ WorkflowType = "main.Workflow" AND CloseStatus != "completed" AND (StartTime >
 
 In other places, this is also called as `advanced visibility`. While `basic visibility` is referred to basic listing without being able to search.
 
+## Samples
+
+Runnable search attribute samples:
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **Search attributes** | Starting a workflow with search attributes and upserting them from workflow code | [Go](https://github.com/cadence-workflow/cadence-samples/tree/master/cmd/samples/recipes/searchattributes) · [Java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/hello/HelloSearchAttributes.java) |
+
 ## Memo vs Search Attributes
 
-Cadence offers two methods for creating :workflow:workflows: with key-value pairs: memo and search attributes. Memo can only be provided on :workflow: start. Also, memo data are not indexed, and are therefore not searchable. Memo data are visible when listing :workflow:workflows: using the list APIs. Search attributes data are indexed so you can search :workflow:workflows: by :query:querying: on these attributes. However, search attributes require the use of Elasticsearch.
+Cadence offers two methods for creating :workflow:workflows: with key-value pairs: memo and search attributes. Memo can only be provided on :workflow: start. Also, memo data are not indexed, and are therefore not searchable. Memo data are visible when listing :workflow:workflows: using the list APIs. Search attribute data are indexed so you can search :workflow:workflows: by :query:querying: on these attributes. Search attributes require advanced visibility backed by Elasticsearch, OpenSearch, or Pinot, with Kafka carrying visibility records to the index.
 
 Memo and search attributes are available in the Go client in [StartWorkflowOptions](https://godoc.org/go.uber.org/cadence/internal#StartWorkflowOptions).
 
@@ -42,7 +51,7 @@ type StartWorkflowOptions struct {
     Memo map[string]interface{}
 
     // SearchAttributes - Optional indexed info that can be used in query of List/Scan/Count workflow APIs (only
-    // supported when Cadence server is using Elasticsearch). The key and value type must be registered on Cadence server side.
+    // supported when Cadence server is using advanced visibility). The key and value type must be registered on Cadence server side.
     // Use GetSearchAttributes API to get valid key and corresponding value type.
     SearchAttributes map[string]interface{}
 }
@@ -52,9 +61,9 @@ In the Java client, the *WorkflowOptions.Builder* has similar methods for [memo]
 
 Some important distinctions between memo and search attributes:
 
-- Memo can support all data types because it is not indexed. Search attributes only support basic data types (including String(aka Text), Int, Float, Bool, Datetime) because it is indexed by Elasticsearch.
-- Memo does not restrict on key names. Search attributes require that keys are allowlisted before using them because Elasticsearch has a limit on indexed keys.
-- Memo doesn't require Cadence clusters to depend on Elasticsearch while search attributes only works with Elasticsearch.
+- Memo can support all data types because it is not indexed. Search attributes only support the indexed types Cadence registers: `STRING`, `KEYWORD`, `INT`, `DOUBLE`, `BOOL`, and `DATETIME`.
+- Memo does not restrict key names. Search attributes require keys to be allowlisted before use.
+- Memo works with basic visibility. Search attributes require an advanced visibility backend and Kafka.
 
 ## Search Attributes (Go Client Usage)
 
@@ -98,12 +107,12 @@ cadence --domain samples-domain adm cl asa --search_attr_key NewKey --search_att
 
 The numbers for the attribute types map as follows:
 
-- 0 = String(Text)
-- 1 = Keyword
-- 2 = Int
-- 3 = Double
-- 4 = Bool
-- 5 = DateTime
+- 0 = `STRING`
+- 1 = `KEYWORD`
+- 2 = `INT`
+- 3 = `DOUBLE`
+- 4 = `BOOL`
+- 5 = `DATETIME`
 
 #### Keyword vs String(Text)
 
@@ -253,7 +262,7 @@ If you use retry or the cron feature to :query: :workflow:workflows: that will s
 
 ### General Notes About Queries
 
-- Pagesize default is 1000, and cannot be larger than 10k
+- Advanced-visibility list pages default to [1000 items](https://github.com/cadence-workflow/cadence/blob/v1.4.1/common/dynamicconfig/dynamicproperties/constants.go#L3655-L3659). When reading from Elasticsearch or OpenSearch, [`frontend.esIndexMaxResultWindow`](https://github.com/cadence-workflow/cadence/blob/v1.4.1/common/dynamicconfig/dynamicproperties/constants.go#L3673-L3676) limits a page to 10,000 items by default. Workflow-history pages use a separate [hard cap of 1000 events](https://github.com/cadence-workflow/cadence/blob/v1.4.1/service/frontend/api/handler.go#L1865-L1872).
 - Range :query: on Cadence timestamp (StartTime, CloseTime, ExecutionTime) cannot be larger than 9223372036854775807 (maxInt64 - 1001)
 - :query:Query: by time range will have 1ms resolution
 - :query:Query: column names are case sensitive
@@ -342,7 +351,7 @@ elasticsearch:
 2. Get the Cadence Docker compose file. Run `curl -O https://raw.githubusercontent.com/cadence-workflow/cadence/master/docker/docker-compose-es.yml`
 3. Start Cadence Docker (which contains Apache Kafka, Apache Zookeeper, and Elasticsearch) using `docker-compose -f docker-compose-es.yml up`
 4. From the Docker output log, make sure Elasticsearch and Cadence started correctly. If you encounter an insufficient disk space error, try `docker system prune -a --volumes`
-5. Register a local domain and start using it. `cadence --do samples-domain d re`
+5. Register a domain and start using it. `cadence --domain samples-domain domain register --retention 3`
 6. Add the key to ElasticSearch And also allowlist search attributes. `cadence --do domain adm cl asa --search_attr_key NewKey --search_attr_type 1`
 
 ## Running in Production
