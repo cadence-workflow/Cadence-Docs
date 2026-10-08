@@ -1,72 +1,88 @@
 name: Fetch release data
+
 on:
   schedule:
     # Run every 8 hours
     - cron: '0 */8 * * *'
   workflow_dispatch:
+
+concurrency:
+  group: fetch-release-data
+  cancel-in-progress: false
+
 permissions:
   contents: write
   pull-requests: write
-
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  BRANCH: fetch-release-data-update
 
 jobs:
   fetch-release-data:
     runs-on: ubuntu-latest
     steps:
-      - name: Try checkout ${{ env.BRANCH }}
-        uses: actions/checkout@v5
-        id: try-checkout
-        continue-on-error: true
-        with:
-          ref: ${{ env.BRANCH }}
-
-      - name: Fallback to default branch if checkout failed
-        if: steps.try-checkout.outcome == 'failure'
+      - name: Check out the current default branch
         uses: actions/checkout@v5
         with:
           ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
 
-      - name: Configure git
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Fetch release data
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./scripts/fetch-releases.sh
 
-      - name: Ensure branch exists or create it
+      - name: Detect release data changes
+        id: changes
         run: |
-          git fetch origin $BRANCH || true
-          if git rev-parse --verify $BRANCH; then
-            git checkout $BRANCH
+          if git diff --quiet -- static/data/releases; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Release data is already current."
           else
-            git checkout -b $BRANCH
+            echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Fetch release data and update
-        id: fetch-release-data
+      - name: Set up Node.js
+        if: steps.changes.outputs.changed == 'true'
+        uses: actions/setup-node@v5
+        with:
+          node-version: lts/jod
+          cache: npm
+
+      - name: Validate the generated site
+        if: steps.changes.outputs.changed == 'true'
         run: |
-            # fetch release data
-            ./scripts/fetch-releases.sh
+          npm ci
+          npm run build
 
-            # exit if there are no changes to be made
-            if git diff --quiet static/data/releases; then
-              echo "skip_pr=true" >> $GITHUB_OUTPUT
-              echo "No changes to commit"
-              exit 0
-            fi
+      - name: Create or update the release data pull request
+        uses: peter-evans/create-pull-request@22a9089034f40e5a961c8808d113e2c98fb63676 # v7.0.11
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: fetch-release-data-update
+          base: ${{ github.event.repository.default_branch }}
+          delete-branch: true
+          add-paths: static/data/releases/*.json
+          commit-message: 'chore(releases): update release data'
+          title: 'chore(releases): update release data'
+          signoff: true
+          sign-commits: true
+          body: |
+            **What changed?**
 
-            job_url=$(gh run --repo ${{ github.repository }} view ${{ github.run_id }} --json jobs --jq '.jobs[] | select(.name == "${{ github.job }}") | .url')
+            Updated the generated release data for the Cadence service, Go client, and Java client.
 
-            # commit and push changes
-            git add static/data/releases
-            git commit -m "Update release data" -m "Job: $job_url"
-            git push origin $BRANCH
+            **Why?**
 
-      - name: Open a PR if needed
-        if: ${{ steps.fetch-release-data.outputs.skip_pr != 'true' }}
-        run: |
-            prs=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$BRANCH" --base 'master' --json title --jq 'length')
-            if ((prs == 0)); then
-              gh pr create -B master -H $BRANCH --title 'Update Cadence Release Data' --body "Created by Github action"
-            fi
+            The release pages use these snapshots to show current and historical GitHub releases.
+
+            **How did you verify it?**
+
+            - Ran `npm ci`.
+            - Ran `npm run build`.
+            - Source workflow: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+            **Potential risks**
+
+            Generated data only. The workflow validates the complete site before updating this pull request.
+
+            **Related changes**
+
+            N/A
