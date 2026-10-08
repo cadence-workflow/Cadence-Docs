@@ -243,10 +243,7 @@
 
 .media {
   position: relative;
-  /* Slightly taller panel so larger overlaid titles keep clear space under the tag. */
   aspect-ratio: 4 / 3;
-  display: flex;
-  align-items: flex-end;
   background: color-mix(in srgb, var(--card-accent) 14%, #f8fafc);
   overflow: hidden;
 }
@@ -262,14 +259,14 @@
   height: 100%;
   object-fit: contain;
   display: block;
-  /* Keep imagery present but quieter so the white title reads first. */
-  opacity: 0.28;
+  /* Imagery stays clearer in the top two-thirds; title band carries the read. */
+  opacity: 0.42;
   transform: scale(1.04);
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 .card:hover .media img {
-  opacity: 0.38;
+  opacity: 0.52;
   transform: scale(1.08);
 }
 
@@ -282,10 +279,15 @@
 .mediaShade {
   position: absolute;
   inset: 0;
-  /* Stronger bottom stop so larger titles stay readable over bright art. */
+  /* Soft wash above; opaque accent band in the bottom third for the title. */
   background:
-    linear-gradient(180deg, rgba(8, 15, 30, 0.08) 12%, rgba(8, 15, 30, 0.55) 58%, rgba(8, 15, 30, 0.9) 100%),
-    linear-gradient(135deg, color-mix(in srgb, var(--card-accent) 22%, transparent), transparent 62%);
+    linear-gradient(
+      180deg,
+      rgba(8, 15, 30, 0.04) 0%,
+      rgba(8, 15, 30, 0.12) 55%,
+      color-mix(in srgb, var(--card-accent) 72%, #0b1220) 68%,
+      color-mix(in srgb, var(--card-accent) 82%, #0b1220) 100%
+    );
   pointer-events: none;
 }
 
@@ -321,17 +323,25 @@
 }
 
 .cardTitle {
-  position: relative;
+  /* Title owns the bottom third of the opaque media panel. */
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 2;
+  box-sizing: border-box;
+  height: 33.333%;
   margin: 0;
-  padding: 2.75rem 1.15rem 1.2rem;
+  padding: 0.65rem 1.15rem 0.95rem;
+  display: flex;
+  align-items: flex-end;
   color: #fff;
-  font-size: clamp(1.3rem, 2.4vw, 1.75rem);
+  font-size: clamp(1.2rem, 2.1vw, 1.55rem);
   font-weight: 700;
   letter-spacing: -0.015em;
   line-height: 1.2;
   text-wrap: balance;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45), 0 2px 12px rgba(0, 0, 0, 0.35);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
 }
 
 .desc {
