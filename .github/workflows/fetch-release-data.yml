@@ -14,9 +14,6 @@ permissions:
   contents: write
   pull-requests: write
 
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
 jobs:
   fetch-release-data:
     runs-on: ubuntu-latest
@@ -28,6 +25,8 @@ jobs:
           persist-credentials: false
 
       - name: Fetch release data
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./scripts/fetch-releases.sh
 
       - name: Detect release data changes
