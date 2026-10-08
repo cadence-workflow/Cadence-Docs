@@ -7,6 +7,7 @@ keywords:
   - cadence least privilege
   - cadence certificate rotation
   - cadence supply chain security
+permalink: /docs/tech-review/day-0-planning/security/threat-modeling
 ---
 
 ## Least privilege
