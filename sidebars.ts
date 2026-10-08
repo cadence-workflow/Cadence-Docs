@@ -174,6 +174,8 @@ const sidebars: SidebarsConfig = {
       items: [
         { type: 'doc', id: 'shard-manager/index' },
         { type: 'doc', id: 'shard-manager/architecture' },
+        { type: 'doc', id: 'shard-manager/in-cadence' },
+        { type: 'doc', id: 'shard-manager/integration' },
       ],
     },
     {
