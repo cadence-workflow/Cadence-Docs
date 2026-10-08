@@ -263,13 +263,14 @@
   height: 100%;
   object-fit: contain;
   display: block;
-  opacity: 0.4;
+  /* Quiet enough that art doesn't compete with the title. */
+  opacity: 0.32;
   transform: scale(1.04);
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 .card:hover .media img {
-  opacity: 0.5;
+  opacity: 0.42;
   transform: scale(1.08);
 }
 
@@ -282,14 +283,19 @@
 .mediaShade {
   position: absolute;
   inset: 0;
-  /* Light wash overall; only the title third gets a soft darkening for contrast. */
+  /* Soft top; real read band across the bottom third — darker than the
+     wash, lighter than the near-black overlay. */
   background:
     linear-gradient(
       180deg,
-      transparent 0%,
-      transparent 55%,
-      color-mix(in srgb, var(--card-accent) 28%, rgba(20, 28, 42, 0.35)) 78%,
-      color-mix(in srgb, var(--card-accent) 38%, rgba(20, 28, 42, 0.55)) 100%
+      rgba(8, 15, 30, 0.06) 30%,
+      rgba(8, 15, 30, 0.48) 66%,
+      rgba(8, 15, 30, 0.78) 100%
+    ),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--card-accent) 18%, transparent),
+      transparent 62%
     );
   pointer-events: none;
 }
