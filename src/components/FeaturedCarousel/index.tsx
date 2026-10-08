@@ -76,9 +76,46 @@ const getPerView = (): number => {
   return 3;
 };
 
-// Big title pinned to the bottom third. Grow until the band is filled, then
-// shrink only if this card overflows — never ellipsis. Prefer shortTitle in
-// data when the full title can't fill cleanly.
+// One shared title size for every card: start from the CSS band size, then
+// shrink to whatever the longest label still needs. Never ellipsis; prefer
+// shortTitle in data when the full title can't fit cleanly.
+function fitSharedCardTitles(track: HTMLElement): void {
+  const headings = [
+    ...track.querySelectorAll<HTMLElement>('[data-card-title]'),
+  ];
+  if (headings.length === 0) {
+    return;
+  }
+
+  headings.forEach((heading) => {
+    heading.style.fontSize = '';
+  });
+
+  const base = parseFloat(getComputedStyle(headings[0]).fontSize);
+  if (!Number.isFinite(base) || base <= 0) {
+    return;
+  }
+
+  let shared = base;
+  for (const heading of headings) {
+    const text = heading.querySelector<HTMLElement>('[data-card-title-text]');
+    if (!text) {
+      continue;
+    }
+    let size = shared;
+    heading.style.fontSize = `${size}px`;
+    while (text.scrollHeight > heading.clientHeight + 1 && size > 14) {
+      size -= 0.5;
+      heading.style.fontSize = `${size}px`;
+    }
+    shared = Math.min(shared, size);
+  }
+
+  headings.forEach((heading) => {
+    heading.style.fontSize = `${shared}px`;
+  });
+}
+
 function CardTitle({
   title,
   label,
@@ -86,57 +123,11 @@ function CardTitle({
   title: string;
   label: string;
 }): JSX.Element {
-  const headingRef = useRef<HTMLHeadingElement>(null);
-  const textRef = useRef<HTMLSpanElement>(null);
-
-  useLayoutEffect(() => {
-    const heading = headingRef.current;
-    const text = textRef.current;
-    if (!heading || !text) {
-      return;
-    }
-
-    const fits = () => text.scrollHeight <= heading.clientHeight + 1;
-
-    const fit = () => {
-      const band = heading.clientHeight;
-      if (band <= 0) {
-        return;
-      }
-      // Largest size that still fits the band — short labels grow, long ones
-      // settle where two lines fill the block.
-      let lo = 14;
-      let hi = Math.max(band * 0.95, 14);
-      heading.style.fontSize = `${lo}px`;
-      if (!fits()) {
-        return;
-      }
-      while (hi - lo > 0.4) {
-        const mid = (lo + hi) / 2;
-        heading.style.fontSize = `${mid}px`;
-        if (fits()) {
-          lo = mid;
-        } else {
-          hi = mid;
-        }
-      }
-      heading.style.fontSize = `${lo}px`;
-    };
-
-    fit();
-    const ro = new ResizeObserver(fit);
-    ro.observe(heading);
-    if (heading.parentElement) {
-      ro.observe(heading.parentElement);
-    }
-    return () => ro.disconnect();
-  }, [label]);
-
   const lines = label.split('\n').filter((line) => line.length > 0);
 
   return (
-    <h3 className={styles.cardTitle} ref={headingRef} aria-label={title}>
-      <span className={styles.cardTitleText} ref={textRef}>
+    <h3 className={styles.cardTitle} data-card-title aria-label={title}>
+      <span className={styles.cardTitleText} data-card-title-text>
         {lines.map((line, i) => (
           <span key={i} className={styles.cardTitleLine}>
             {line}
@@ -244,6 +235,19 @@ export default function FeaturedCarousel(): JSX.Element {
   useEffect(() => {
     setPage((p) => Math.min(p, pageCount - 1));
   }, [pageCount]);
+
+  // Keep every card title on one shared size so short labels don't dwarf long ones.
+  useLayoutEffect(() => {
+    const track = trackRef.current;
+    if (!track) {
+      return;
+    }
+    const run = () => fitSharedCardTitles(track);
+    run();
+    const ro = new ResizeObserver(run);
+    ro.observe(track);
+    return () => ro.disconnect();
+  }, [activeTag, visibleItems.length]);
 
   // Translate the track from the measured item stride, clamped to the end.
   // Runs on page/breakpoint changes and on every resize, since the
