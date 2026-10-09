@@ -135,7 +135,7 @@ The History Task Scheduler is controlled by the following feature flags:
 
 * `history.taskSchedulerEnableRateLimiterShadowMode`: Enables shadow mode for the History Task Scheduler rate limiter. Defaults to `true`. Can be configured by `domainName`. In shadow mode, rate-limit decisions are evaluated and recorded for observability, but tasks are not actually throttled.
 
-* `history.taskSchedulerDomainRoundRobinWeight`: Defines the weight assigned to each domain by the task scheduler's weighted round-robin scheduling algorithm. Can be configured by `domainName`. The weight determines the relative share of task processing capacity allocated to each domain.
+* `history.taskSchedulerDomainRoundRobinWeight`: Defines a per-domain map from numeric task priorityID to the weight used by the task scheduler's weighted round-robin algorithm (default `{"1": 500, "9": 20, "17": 5}`). Can be configured by `domainName`.  By default, tasks with the same priority but from different domains have the same weight.
 
 
 ### Step-by-Step Enablement
@@ -159,10 +159,12 @@ These metrics become available after setting `history.taskSchedulerEnableRateLim
 At Uber, the rate limiter is kept in shadow mode by default. Shadow mode is disabled for individual domains only when needed to mitigate incidents. Disabling shadow mode is not recommended for latency-sensitive domains, as active rate limiting may increase task processing latency.
 
 - `task_requests_per_domain`: Measures the QPS of task processing broken down by domain.
-- `task_latency_per_domain_ns` or `task_latency_per_domain`: Measures task processing latency broken down by domain.
-- `task_latency_ns` or `task_latency`: Measures aggregated task processing latency across domains.
+- `task_latency_per_domain`: Measures task processing latency broken down by domain.
+- `task_latency`: Measures aggregated task processing latency across domains.
 
 Use these metrics to monitor the task processing latency. In particular, the per-domain task latency metric can help identify noisy-neighbor issues: a latency spike in one domain accompanied by increased latency in other domains may indicate that a high-traffic domain is a noisy neighbor.
+
+**Note:** Cadence [v1.4.1](https://github.com/cadence-workflow/cadence/releases#release-v1.4.1) introduces a metrics migration that changes metric names.
 
 #### Logs
 
