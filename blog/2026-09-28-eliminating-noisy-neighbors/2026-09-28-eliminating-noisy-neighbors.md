@@ -108,82 +108,13 @@ Additionally, the overall p99 latency also became less spiky after enabling Hist
 
 ## How to Enable the New Features
 
-### Prerequisites
-
-To use this feature, upgrade Cadence Server to [v1.4.0 or later](https://github.com/cadence-workflow/cadence/tree/v1.4.0).
-
-### Configuration
-
-History Queue V2 is controlled by the following feature flags:
-* `history.enableTransferQueueV2`: Enables History Queue V2 for the transfer queue. Defaults to `false` and requires a service restart to take effect. Can be configured by `ShardID`.
-
-* `history.enableTimerQueueV2`: Enables History Queue V2 for the timer queue. Defaults to `false` and requires a service restart to take effect. Can be configured by `ShardID`.
-
-* `history.enableTransferQueueV2PendingTaskCountAlert`: Enables virtual queue splitting for the transfer queue when the pending task count exceeds the configured threshold. Defaults to `false` and can be configured by `ShardID`.
-
-* `history.enableTimerQueueV2PendingTaskCountAlert`: Enables virtual queue splitting for the timer queue when the pending task count exceeds the configured threshold. Defaults to `false` and can be configured by `ShardID`.
-
-* `history.queueMaxPendingTaskCount`: Defines the maximum number of pending tasks allowed in a history queue per shard. Defaults to 10000. Once this limit is reached, the queue stops reading additional tasks from the database until the pending task count decreases.
-
-* `history.queueCriticalPendingTaskCount`: Defines the pending task count threshold that triggers a virtual queue split. Defaults to 9000. It must be less than `history.queueMaxPendingTaskCount`.
-
-The History Task Scheduler is controlled by the following feature flags:
-
-* `history.taskSchedulerGlobalDomainRPS`: Defines the global task processing rate limit, in requests per second (RPS), for each domain. Can be configured by `domainName`.
-
-* `history.taskSchedulerEnableRateLimiter`: Enables rate limiting in the History Task Scheduler. Defaults to `false`. When enabled, task processing is throttled according to the configured domain-level rate limits.
-
-* `history.taskSchedulerEnableRateLimiterShadowMode`: Enables shadow mode for the History Task Scheduler rate limiter. Defaults to `true`. Can be configured by `domainName`. In shadow mode, rate-limit decisions are evaluated and recorded for observability, but tasks are not actually throttled.
-
-* `history.taskSchedulerDomainRoundRobinWeight`: Defines a per-domain map from numeric task priorityID to the weight used by the task scheduler's weighted round-robin algorithm (default `{"1": 500, "9": 20, "17": 5}`). Can be configured by `domainName`.  By default, tasks with the same priority but from different domains have the same weight.
-
-
-### Step-by-Step Enablement
-
-1. **Update Cadence Server** - Deploy v1.4.0.
-2. **Configure Dynamic Settings**
-
-   * **2.a. Enable History Queue V2:** Set `history.enableTransferQueueV2` and `history.enableTimerQueueV2` to `true`, then restart `cadence-history` for the changes to take effect.
-   * **2.b. Enable Virtual Queue Splitting:** Once you are confident that History Queue V2 is operating as expected, set `history.enableTransferQueueV2PendingTaskCountAlert` and `history.enableTimerQueueV2PendingTaskCountAlert` to `true`.
-   * **2.c. Enable task scheduler rate limiter in shadow mode:** Set `history.taskSchedulerEnableRateLimiter` to `true`. 
-
-### Monitoring and Observability
-
-#### Key Metrics
-
-- `task_scheduler_allowed_counter_per_domain`: Measures the number of tasks per domain that are allowed to proceed by the task scheduler's rate limiter. 
-- `task_scheduler_throttled_counter_per_domain`: Measures the number of tasks per domain that are throttled by the task scheduler's rate limiter.
-
-These metrics become available after setting `history.taskSchedulerEnableRateLimiter` to `true`. Use them to monitor task scheduling QPS for each domain and tune `history.taskSchedulerGlobalDomainRPS` accordingly.
-
-At Uber, the rate limiter is kept in shadow mode by default. Shadow mode is disabled for individual domains only when needed to mitigate incidents. Disabling shadow mode is not recommended for latency-sensitive domains, as active rate limiting may increase task processing latency.
-
-- `task_requests_per_domain`: Measures the QPS of task processing broken down by domain.
-- `task_latency_per_domain`: Measures task processing latency broken down by domain.
-- `task_latency`: Measures aggregated task processing latency across domains.
-
-Use these metrics to monitor the task processing latency. In particular, the per-domain task latency metric can help identify noisy neighbors: a latency spike in one domain accompanied by increased latency in other domains may indicate that a high-traffic domain is a noisy neighbor.
-
-**Note:** Cadence [v1.4.1](https://github.com/cadence-workflow/cadence/releases#release-v1.4.1) introduces a metrics migration that changes metric names.
-
-#### Logs
-
-```json
-{
-  "level": "warn",
-  "msg": "Too many pending tasks, pause loading tasks for a while",
-  "service": "cadence-history",
-  "shard-id": "<shard-id>",
-  ...
-}
-```
-The log message above indicates that the queue is paused because of too many pending tasks in that shard.
+These features require Cadence Server v1.4.1 or later. For detailed configuration and deployment instructions, including feature flags, step-by-step enablement, monitoring, and troubleshooting, see the [Domain Isolation Configuration Guide](/docs/operation-guide/domain-isolation).
 
 ## Try it now!
 
-The new architecture has been running in production at Uber for over a year, and we have not observed noisy neighbors since its rollout. We are also building new features on top of this architecture, which are available only when History Queue V2 is enabled by setting `history.enableTransferQueueV2` and `history.enableTimerQueueV2` to `true`.
+The new architecture has been running in production at Uber for over a year, and we have not observed noisy neighbors since its rollout. We are also building new features on top of this architecture, which are available only when History Queue V2 is enabled.
 
-In the next release, we plan to enable History Queue V2 by default and begin deprecating History Queue V1. We encourage you to try History Queue V2 now and share your feedback with us!
+In the next release, we plan to enable History Queue V2 by default and begin deprecating History Queue V1. We encourage you to try History Queue V2 now and share your feedback with us! See the [Domain Isolation Configuration Guide](/docs/operation-guide/domain-isolation) for detailed setup instructions.
 
 
 ---
