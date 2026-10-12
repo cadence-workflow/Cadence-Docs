@@ -3,6 +3,12 @@ id: domain-isolation
 title: Domain Isolation Configuration
 sidebar_label: Domain Isolation
 description: Configure History Queue V2 and Task Scheduler features for domain-level isolation in Cadence clusters
+keywords:
+  - cadence domain isolation
+  - cadence history queue v2
+  - cadence task scheduler
+  - cadence noisy neighbor
+permalink: /docs/operation-guide/domain-isolation
 ---
 
 Domain isolation features in Cadence help eliminate noisy neighbor problems by providing stronger isolation between domains at the history task processing level. This guide covers the configuration and deployment of History Queue V2 and the domain-aware Task Scheduler.
@@ -259,10 +265,8 @@ This indicates that the queue is paused because the pending task count exceeded 
 - Shadow mode was disabled prematurely
 
 **Solutions**:
-1. Verify that shadow mode is enabled (`history.taskSchedulerEnableRateLimiterShadowMode: true`)
-2. Ignore if the domain is latency insensitive, the rate limiter is doing the right thing
-3. Review and adjust `history.taskSchedulerGlobalDomainRPS` based on actual workload
-4. Consider keeping shadow mode enabled for latency-sensitive domains
+1. Review and adjust `history.taskSchedulerGlobalDomainRPS` based on actual workload
+2. Consider keeping shadow mode enabled for latency-sensitive domains
 
 ## Best Practices
 
