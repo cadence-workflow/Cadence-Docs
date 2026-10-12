@@ -16,7 +16,7 @@ npm install
 npm run start
 ```
 
-The development server runs at http://localhost:3000/ and opens a browser window. Most edits reload without a restart.
+The development server runs at http://localhost:3001/ and opens a browser window. Most edits reload without a restart.
 
 To write the static site to `build/` for any static host, run:
 

@@ -84,7 +84,7 @@ npm install
 npm run start
 ```
 
-This starts the Docusaurus development server at http://localhost:3000/ and opens a browser window. Most edits appear immediately without a restart.
+This starts the Docusaurus development server at http://localhost:3001/ and opens a browser window. Most edits appear immediately without a restart.
 
 Use the development server while writing. Do not rely on it for pre-PR verification because it injects styles and serves content differently from the deployed site. See the verification steps below.
 

@@ -2,7 +2,6 @@
   {
     "id": 402149710,
     "tag_name": "v1.4.2",
-    "name": "v1.4.2",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.4.2",
     "draft": false,
     "prerelease": false,
@@ -16,7 +15,6 @@
   {
     "id": 401087573,
     "tag_name": "v1.4.2-prerelease16",
-    "name": "v1.4.2-prerelease16",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.4.2-prerelease16",
     "draft": false,
     "prerelease": true,
@@ -30,7 +28,6 @@
   {
     "id": 334570618,
     "tag_name": "v1.4.1",
-    "name": "v1.4.1",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.4.1",
     "draft": false,
     "prerelease": false,
@@ -44,7 +41,6 @@
   {
     "id": 280484554,
     "tag_name": "v1.4.0",
-    "name": "v1.4.0",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.4.0",
     "draft": false,
     "prerelease": false,
@@ -58,7 +54,6 @@
   {
     "id": 254787027,
     "tag_name": "v1.3.6",
-    "name": "v1.3.6",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.3.6",
     "draft": false,
     "prerelease": false,
@@ -72,7 +67,6 @@
   {
     "id": 248236716,
     "tag_name": "v1.3.5",
-    "name": "v1.3.5",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.3.5",
     "draft": false,
     "prerelease": false,
@@ -86,7 +80,6 @@
   {
     "id": 241316699,
     "tag_name": "v1.3.4",
-    "name": "v1.3.4",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.3.4",
     "draft": false,
     "prerelease": false,
@@ -100,7 +93,6 @@
   {
     "id": 238059570,
     "tag_name": "v1.3.3",
-    "name": "v1.3.3",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.3.3",
     "draft": false,
     "prerelease": false,
@@ -114,7 +106,6 @@
   {
     "id": 229841719,
     "tag_name": "v1.3.2",
-    "name": "v1.3.2",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.3.2",
     "draft": false,
     "prerelease": false,
@@ -128,7 +119,6 @@
   {
     "id": 224680892,
     "tag_name": "v1.3.1",
-    "name": "v1.3.1",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.3.1",
     "draft": false,
     "prerelease": false,
@@ -142,7 +132,6 @@
   {
     "id": 218640025,
     "tag_name": "v1.3.0",
-    "name": "v1.3.0",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.3.0",
     "draft": false,
     "prerelease": false,
@@ -156,7 +145,6 @@
   {
     "id": 214063876,
     "tag_name": "v1.2.19-prerelease07",
-    "name": "v1.2.19-prerelease07",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.2.19-prerelease07",
     "draft": false,
     "prerelease": true,
@@ -170,7 +158,6 @@
   {
     "id": 213404801,
     "tag_name": "v1.2.19-prerelease06",
-    "name": "",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.2.19-prerelease06",
     "draft": false,
     "prerelease": true,
@@ -184,7 +171,6 @@
   {
     "id": 210230532,
     "tag_name": "v1.2.18",
-    "name": "v1.2.18",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.2.18",
     "draft": false,
     "prerelease": false,
@@ -198,7 +184,6 @@
   {
     "id": 203935952,
     "tag_name": "v1.2.17",
-    "name": "v1.2.17",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.2.17",
     "draft": false,
     "prerelease": false,
@@ -212,7 +197,6 @@
   {
     "id": 201260785,
     "tag_name": "v1.2.16",
-    "name": "v1.2.16",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.2.16",
     "draft": false,
     "prerelease": false,
@@ -226,7 +210,6 @@
   {
     "id": 196176088,
     "tag_name": "v1.2.15",
-    "name": "v1.2.15",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.2.15",
     "draft": false,
     "prerelease": false,
@@ -240,7 +223,6 @@
   {
     "id": 185271008,
     "tag_name": "v1.2.14",
-    "name": "v1.2.14",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.2.14",
     "draft": false,
     "prerelease": false,
@@ -254,7 +236,6 @@
   {
     "id": 176898203,
     "tag_name": "v1.2.13",
-    "name": "v1.2.13",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.2.13",
     "draft": false,
     "prerelease": false,
@@ -268,7 +249,6 @@
   {
     "id": 170959860,
     "tag_name": "v1.2.12",
-    "name": "v1.2.12",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.2.12",
     "draft": false,
     "prerelease": false,
@@ -282,7 +262,6 @@
   {
     "id": 164867522,
     "tag_name": "v1.2.11",
-    "name": "v1.2.11",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.2.11",
     "draft": false,
     "prerelease": false,
@@ -296,7 +275,6 @@
   {
     "id": 158872134,
     "tag_name": "v1.2.10",
-    "name": "v1.2.10",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.2.10",
     "draft": false,
     "prerelease": false,
@@ -310,7 +288,6 @@
   {
     "id": 153695813,
     "tag_name": "v1.2.9",
-    "name": "v1.2.9",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.2.9",
     "draft": false,
     "prerelease": false,
@@ -324,7 +301,6 @@
   {
     "id": 148543078,
     "tag_name": "v1.2.8",
-    "name": "v1.2.8",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.2.8",
     "draft": false,
     "prerelease": false,
@@ -338,7 +314,6 @@
   {
     "id": 140708759,
     "tag_name": "v1.2.7",
-    "name": "v1.2.7",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.2.7",
     "draft": false,
     "prerelease": false,
@@ -352,7 +327,6 @@
   {
     "id": 134017243,
     "tag_name": "v1.2.6",
-    "name": "v1.2.6",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.2.6",
     "draft": false,
     "prerelease": false,
@@ -366,7 +340,6 @@
   {
     "id": 127748415,
     "tag_name": "v1.2.5",
-    "name": "v1.2.5",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.2.5",
     "draft": false,
     "prerelease": false,
@@ -380,7 +353,6 @@
   {
     "id": 122838364,
     "tag_name": "v1.2.4",
-    "name": "v1.2.4",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.2.4",
     "draft": false,
     "prerelease": false,
@@ -394,7 +366,6 @@
   {
     "id": 121735322,
     "tag_name": "v1.2.2",
-    "name": "v1.2.2",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.2.2",
     "draft": false,
     "prerelease": false,
@@ -408,7 +379,6 @@
   {
     "id": 121627788,
     "tag_name": "v1.2.1",
-    "name": "v1.2.1",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.2.1",
     "draft": false,
     "prerelease": false,
@@ -422,7 +392,6 @@
   {
     "id": 121376406,
     "tag_name": "v1.2.3",
-    "name": "v1.2.3 (Retracted, please use v1.2.4)",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.2.3",
     "draft": false,
     "prerelease": true,
@@ -436,7 +405,6 @@
   {
     "id": 100873415,
     "tag_name": "v1.0.0",
-    "name": "v1.0.0",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.0.0",
     "draft": false,
     "prerelease": false,
@@ -450,7 +418,6 @@
   {
     "id": 90871735,
     "tag_name": "v0.25.0",
-    "name": "v0.25.0",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.25.0",
     "draft": false,
     "prerelease": false,
@@ -464,7 +431,6 @@
   {
     "id": 67635023,
     "tag_name": "v0.24.0",
-    "name": "v0.24.0 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.24.0",
     "draft": false,
     "prerelease": false,
@@ -478,7 +444,6 @@
   {
     "id": 54458074,
     "tag_name": "v0.23.2",
-    "name": "v0.23.2 Patch Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.23.2",
     "draft": false,
     "prerelease": false,
@@ -492,7 +457,6 @@
   {
     "id": 53678053,
     "tag_name": "v0.23.1",
-    "name": "v0.23.1 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.23.1",
     "draft": false,
     "prerelease": false,
@@ -506,7 +470,6 @@
   {
     "id": 53202810,
     "tag_name": "v0.22.4",
-    "name": "v0.22.4 Patch Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.22.4",
     "draft": false,
     "prerelease": false,
@@ -520,7 +483,6 @@
   {
     "id": 51378640,
     "tag_name": "v0.22.3",
-    "name": "v0.22.3 Patch Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.22.3",
     "draft": false,
     "prerelease": false,
@@ -534,7 +496,6 @@
   {
     "id": 51375612,
     "tag_name": "v0.22.2",
-    "name": "v0.22.2 Patch Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.22.2",
     "draft": false,
     "prerelease": false,
@@ -548,7 +509,6 @@
   {
     "id": 51061822,
     "tag_name": "v0.22.1",
-    "name": "v0.22.1 Patch Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.22.1",
     "draft": false,
     "prerelease": false,
@@ -562,7 +522,6 @@
   {
     "id": 48203211,
     "tag_name": "v0.22.0",
-    "name": "v0.22.0 Minor Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.22.0",
     "draft": false,
     "prerelease": false,
@@ -576,7 +535,6 @@
   {
     "id": 44821473,
     "tag_name": "v0.21.3",
-    "name": "v0.21.3 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.21.3",
     "draft": false,
     "prerelease": false,
@@ -590,7 +548,6 @@
   {
     "id": 42616716,
     "tag_name": "v0.21.0",
-    "name": "v0.21.0 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.21.0",
     "draft": false,
     "prerelease": false,
@@ -604,7 +561,6 @@
   {
     "id": 41568752,
     "tag_name": "v0.20.0",
-    "name": "v0.20.0 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.20.0",
     "draft": false,
     "prerelease": false,
@@ -618,7 +574,6 @@
   {
     "id": 41561610,
     "tag_name": "v0.19.2",
-    "name": "v0.19.2 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.19.2",
     "draft": false,
     "prerelease": false,
@@ -632,7 +587,6 @@
   {
     "id": 40666496,
     "tag_name": "v0.19.1",
-    "name": "v0.19.1 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.19.1",
     "draft": false,
     "prerelease": false,
@@ -646,7 +600,6 @@
   {
     "id": 39963186,
     "tag_name": "v0.18.2",
-    "name": "v0.18.2 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.18.2",
     "draft": false,
     "prerelease": false,
@@ -660,7 +613,6 @@
   {
     "id": 39069647,
     "tag_name": "v0.18.1",
-    "name": "v0.18.1 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.18.1",
     "draft": false,
     "prerelease": false,
@@ -674,7 +626,6 @@
   {
     "id": 36788598,
     "tag_name": "v0.18.0",
-    "name": "v0.18.0 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.18.0",
     "draft": false,
     "prerelease": false,
@@ -688,7 +639,6 @@
   {
     "id": 36741910,
     "tag_name": "v0.16.1",
-    "name": "v0.16.1 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.16.1",
     "draft": false,
     "prerelease": false,
@@ -702,7 +652,6 @@
   {
     "id": 36361873,
     "tag_name": "v0.17.0",
-    "name": "v0.17.0 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.17.0",
     "draft": false,
     "prerelease": false,
@@ -716,7 +665,6 @@
   {
     "id": 35129787,
     "tag_name": "v0.16.0",
-    "name": "v0.16.0 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.16.0",
     "draft": false,
     "prerelease": false,
@@ -730,7 +678,6 @@
   {
     "id": 32945465,
     "tag_name": "v0.15.1",
-    "name": "v0.15.1 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.15.1",
     "draft": false,
     "prerelease": false,
@@ -744,7 +691,6 @@
   {
     "id": 32344465,
     "tag_name": "v0.15.0",
-    "name": "v0.15.0 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.15.0",
     "draft": false,
     "prerelease": false,
@@ -758,7 +704,6 @@
   {
     "id": 31675805,
     "tag_name": "v0.14.2",
-    "name": "v0.14.2 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.14.2",
     "draft": false,
     "prerelease": false,
@@ -772,7 +717,6 @@
   {
     "id": 31276618,
     "tag_name": "v0.14.0",
-    "name": "v0.14.0 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.14.0",
     "draft": false,
     "prerelease": false,
@@ -786,7 +730,6 @@
   {
     "id": 28329985,
     "tag_name": "v0.13.0",
-    "name": "v0.13.0 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.13.0",
     "draft": false,
     "prerelease": false,
@@ -800,7 +743,6 @@
   {
     "id": 26924009,
     "tag_name": "v0.12.0",
-    "name": "v0.12.0 Release ",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.12.0",
     "draft": false,
     "prerelease": false,
@@ -814,7 +756,6 @@
   {
     "id": 23697923,
     "tag_name": "v0.11.0",
-    "name": "v0.11.0 Release ",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.11.0",
     "draft": false,
     "prerelease": false,
@@ -828,7 +769,6 @@
   {
     "id": 21978893,
     "tag_name": "v0.10.3",
-    "name": "v0.10.3 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.10.3",
     "draft": false,
     "prerelease": false,
@@ -842,7 +782,6 @@
   {
     "id": 21816274,
     "tag_name": "v0.10.2",
-    "name": "v0.10.2 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.10.2",
     "draft": false,
     "prerelease": false,
@@ -856,7 +795,6 @@
   {
     "id": 21639550,
     "tag_name": "v0.9.8",
-    "name": "v0.9.8 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.9.8",
     "draft": false,
     "prerelease": false,
@@ -870,7 +808,6 @@
   {
     "id": 21638981,
     "tag_name": "v0.10.1",
-    "name": "v0.10.1 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.10.1",
     "draft": false,
     "prerelease": false,
@@ -884,7 +821,6 @@
   {
     "id": 20818682,
     "tag_name": "v0.9.5",
-    "name": "v0.9.5 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.9.5",
     "draft": false,
     "prerelease": false,
@@ -898,7 +834,6 @@
   {
     "id": 20690523,
     "tag_name": "v0.9.4",
-    "name": "v0.9.4 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.9.4",
     "draft": false,
     "prerelease": false,
@@ -912,7 +847,6 @@
   {
     "id": 20196363,
     "tag_name": "v0.9.0",
-    "name": "v0.9.0 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.9.0",
     "draft": false,
     "prerelease": false,
@@ -926,7 +860,6 @@
   {
     "id": 19635215,
     "tag_name": "v0.8.6",
-    "name": "v0.8.6 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.8.6",
     "draft": false,
     "prerelease": false,
@@ -940,7 +873,6 @@
   {
     "id": 19548836,
     "tag_name": "v0.8.5",
-    "name": "v0.8.5 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.8.5",
     "draft": false,
     "prerelease": false,
@@ -954,7 +886,6 @@
   {
     "id": 19547602,
     "tag_name": "v0.8.4",
-    "name": "v0.8.4 Patch Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.8.4",
     "draft": false,
     "prerelease": false,
@@ -968,7 +899,6 @@
   {
     "id": 19320040,
     "tag_name": "v0.8.3",
-    "name": "v0.8.3 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.8.3",
     "draft": false,
     "prerelease": false,
@@ -982,7 +912,6 @@
   {
     "id": 19176246,
     "tag_name": "v0.7.3",
-    "name": "v0.7.3 Patch Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.7.3",
     "draft": false,
     "prerelease": false,
@@ -996,7 +925,6 @@
   {
     "id": 19149671,
     "tag_name": "v0.7.2",
-    "name": "v0.7.2 Patch Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.7.2",
     "draft": false,
     "prerelease": false,
@@ -1010,7 +938,6 @@
   {
     "id": 19096471,
     "tag_name": "v0.7.1",
-    "name": "v0.7.1 Patch Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.7.1",
     "draft": false,
     "prerelease": false,
@@ -1024,7 +951,6 @@
   {
     "id": 19088462,
     "tag_name": "v0.7.0",
-    "name": "v0.7.0 release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.7.0",
     "draft": false,
     "prerelease": false,
@@ -1038,7 +964,6 @@
   {
     "id": 18963965,
     "tag_name": "v0.6.1",
-    "name": "v0.6.1 Patch Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.6.1",
     "draft": false,
     "prerelease": false,
@@ -1052,7 +977,6 @@
   {
     "id": 18783784,
     "tag_name": "v0.6.0",
-    "name": "v0.6.0 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.6.0",
     "draft": false,
     "prerelease": false,
@@ -1066,7 +990,6 @@
   {
     "id": 18049017,
     "tag_name": "v0.5.9",
-    "name": "v0.5.9 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.5.9",
     "draft": false,
     "prerelease": false,
@@ -1080,7 +1003,6 @@
   {
     "id": 17524928,
     "tag_name": "v0.5.8",
-    "name": "v0.5.8 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.5.8",
     "draft": false,
     "prerelease": false,
@@ -1094,7 +1016,6 @@
   {
     "id": 17234332,
     "tag_name": "v0.5.7",
-    "name": "v0.5.7 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.5.7",
     "draft": false,
     "prerelease": false,
@@ -1108,7 +1029,6 @@
   {
     "id": 16067593,
     "tag_name": "v0.5.5",
-    "name": "v0.5.5 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.5.5",
     "draft": false,
     "prerelease": false,
@@ -1122,7 +1042,6 @@
   {
     "id": 16002579,
     "tag_name": "v0.5.4",
-    "name": "v0.5.4 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.5.4",
     "draft": false,
     "prerelease": false,
@@ -1136,7 +1055,6 @@
   {
     "id": 15731361,
     "tag_name": "v0.5.3",
-    "name": "v0.5.3 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.5.3",
     "draft": false,
     "prerelease": false,
@@ -1150,7 +1068,6 @@
   {
     "id": 15659644,
     "tag_name": "v0.5.2",
-    "name": "v0.5.2 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.5.2",
     "draft": false,
     "prerelease": false,
@@ -1164,7 +1081,6 @@
   {
     "id": 15062128,
     "tag_name": "v0.5.1",
-    "name": "Release bug fix patch 0.5.1",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.5.1",
     "draft": false,
     "prerelease": false,
@@ -1178,7 +1094,6 @@
   {
     "id": 14994953,
     "tag_name": "v0.5.0",
-    "name": "V0.5.0 Release - Please use 0.5.1",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.5.0",
     "draft": false,
     "prerelease": false,
@@ -1192,7 +1107,6 @@
   {
     "id": 13619734,
     "tag_name": "v0.4.0",
-    "name": "v0.4.0 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.4.0",
     "draft": false,
     "prerelease": false,
@@ -1206,7 +1120,6 @@
   {
     "id": 12141898,
     "tag_name": "v0.3.15",
-    "name": "v0.3.15 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.3.15",
     "draft": false,
     "prerelease": false,
@@ -1220,7 +1133,6 @@
   {
     "id": 12085729,
     "tag_name": "v0.3.14",
-    "name": "v0.3.14 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.3.14",
     "draft": false,
     "prerelease": false,
@@ -1234,7 +1146,6 @@
   {
     "id": 11427615,
     "tag_name": "v0.3.13",
-    "name": "v0.3.13 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.3.13",
     "draft": false,
     "prerelease": true,
@@ -1248,7 +1159,6 @@
   {
     "id": 11187775,
     "tag_name": "v0.3.12",
-    "name": "v0.3.12 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.3.12",
     "draft": false,
     "prerelease": true,
@@ -1262,7 +1172,6 @@
   {
     "id": 10595092,
     "tag_name": "v0.3.11",
-    "name": "v0.3.11 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.3.11",
     "draft": false,
     "prerelease": false,
@@ -1276,7 +1185,6 @@
   {
     "id": 10090756,
     "tag_name": "v0.3.9",
-    "name": "v0.3.9 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.3.9",
     "draft": false,
     "prerelease": false,
@@ -1290,7 +1198,6 @@
   {
     "id": 10074791,
     "tag_name": "v0.3.8",
-    "name": "v0.3.8 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.3.8",
     "draft": false,
     "prerelease": false,
@@ -1304,7 +1211,6 @@
   {
     "id": 10067592,
     "tag_name": "v0.3.7",
-    "name": "v0.3.7 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.3.7",
     "draft": false,
     "prerelease": false,
@@ -1318,7 +1224,6 @@
   {
     "id": 9474406,
     "tag_name": "v0.3.6",
-    "name": "v0.3.6 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.3.6",
     "draft": false,
     "prerelease": false,
@@ -1332,7 +1237,6 @@
   {
     "id": 9261971,
     "tag_name": "v0.3.5",
-    "name": "v0.3.5 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.3.5",
     "draft": false,
     "prerelease": false,
@@ -1346,7 +1250,6 @@
   {
     "id": 8881012,
     "tag_name": "v0.3.4",
-    "name": "v0.3.4 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.3.4",
     "draft": false,
     "prerelease": false,
@@ -1360,7 +1263,6 @@
   {
     "id": 8786410,
     "tag_name": "v0.3.3",
-    "name": "v0.3.3 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.3.3",
     "draft": false,
     "prerelease": false,
@@ -1374,7 +1276,6 @@
   {
     "id": 7982235,
     "tag_name": "v0.3.2",
-    "name": "v0.3.2 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.3.2",
     "draft": false,
     "prerelease": false,
@@ -1388,7 +1289,6 @@
   {
     "id": 7401801,
     "tag_name": "v0.3.1",
-    "name": "v0.3.1 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.3.1",
     "draft": false,
     "prerelease": false,
@@ -1402,7 +1302,6 @@
   {
     "id": 7334306,
     "tag_name": "v0.3.0",
-    "name": "v0.3.0 Release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.3.0",
     "draft": false,
     "prerelease": false,
@@ -1416,7 +1315,6 @@
   {
     "id": 7334220,
     "tag_name": "v0.2.0",
-    "name": "v0.2.0",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.2.0",
     "draft": false,
     "prerelease": true,
@@ -1430,7 +1328,6 @@
   {
     "id": 6626086,
     "tag_name": "v0.1.1-beta",
-    "name": "v0.1.1-beta release",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v0.1.1-beta",
     "draft": false,
     "prerelease": true,
