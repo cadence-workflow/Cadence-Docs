@@ -1,5 +1,5 @@
 ---
-title: "Eliminating Noisy Neighbor Issues in Cadence Clusters"
+title: "Eliminating Noisy Neighbors in Cadence Clusters"
 description: Learn how new domain-level isolation features in Cadence eliminate noisy neighbor problems, improving cluster stability and performance at scale.
 keywords:
   - cadence noisy neighbor
@@ -51,7 +51,7 @@ On shard reload, each queue resumes processing tasks within range [**Ack Level**
 
 Priorities are assigned to tasks before they are submitted to the scheduler. The scheduler uses a **weighted round-robin** algorithm to schedule tasks across different priority levels, with higher-priority tasks receiving a larger scheduling weight. Tasks with the same priority are scheduled in **FCFS** order, regardless of their domains.
 
-By default, tasks from active domains are assigned high priority, while tasks from standby domains are assigned low priority. A rate limiter is applied to high-priority tasks from active domains to prevent them from consuming excessive scheduling capacity. When the rate limit is exceeded, additional active-domain tasks are assigned low priority and scheduled alongside other low-priority tasks.
+By default, tasks from active domains are assigned high priority, while tasks from standby domains are assigned low priority. A rate limiter is applied to high-priority tasks from active domains to prevent them from consuming excessive scheduling capacity. When the rate limit is exceeded, additional active domain tasks are assigned low priority and scheduled alongside other low-priority tasks.
 
 ## The Problem: Noisy Neighbor Effect
 
@@ -73,15 +73,15 @@ The high-level architecture remains largely unchanged. We added a domain-level t
 
 The new history queue uses a layered structure to process tasks while preventing one slow domain from blocking others. Layers, from the outermost to the innermost layer:
 
-- **Shard context** - Fetches and tracks the queue processing progress from the database.
-- **History engine** - Appends tasks to the database and notifies the transfer/timer queue to fetch new tasks from the database.
-- **Transfer/Timer queue** - The event loop. Manages timing (when to wake up, when to persist state) and owns the root virtual queue.
-- **Virtual queue manager** - Manages a set of virtual queues. Under normal conditions, there is only one (the root queue). When a domain generates too many tasks, the mitigator creates additional virtual queues to isolate and throttle that domain.
-- **Virtual queue** - Each virtual queue runs its own goroutine and processes an ordered list of virtual slices sequentially. It is an isolation unit of the history queue. New tasks are always added to the root queue.
-- **Virtual slice** - Represents a range of tasks with an associated filter. It is the smallest processing unit.
-- **Monitor** - Detects when a domain generates too many tasks and sends a notification to the mitigator.
-- **Mitigator** - Creates additional virtual queues to isolate and throttle tasks from overloaded domains.
-- **Queue reader** - Fetches tasks from the database.
+- **Shard context**: Fetches and tracks the queue processing progress from the database.
+- **History engine**: Appends tasks to the database and notifies the transfer/timer queue to fetch new tasks from the database.
+- **Transfer/Timer queue**: The event loop. Manages timing (when to wake up, when to persist state) and owns the root virtual queue.
+- **Virtual queue manager**: Manages a set of virtual queues. Under normal conditions, there is only one (the root queue). When a domain generates too many tasks, the mitigator creates additional virtual queues to isolate and throttle that domain.
+- **Virtual queue**: Each virtual queue runs its own goroutine and processes an ordered list of virtual slices sequentially. It is an isolation unit of the history queue. New tasks are always added to the root queue.
+- **Virtual slice**: Represents a range of tasks with an associated filter. It is the smallest processing unit.
+- **Monitor**: Detects when a domain generates too many tasks and sends a notification to the mitigator.
+- **Mitigator**: Creates additional virtual queues to isolate and throttle tasks from overloaded domains.
+- **Queue reader**: Fetches tasks from the database.
 
 #### Virtual Slice Operations
 ![split by task key](./split-by-key.png)
@@ -151,8 +151,8 @@ The History Task Scheduler is controlled by the following feature flags:
 
 #### Key Metrics
 
-- `task_scheduler_allowed_counter_per_domain` - Measures the number of tasks per domain that are allowed to proceed by the task scheduler's rate limiter. 
-- `task_scheduler_throttled_counter_per_domain` - Measures the number of tasks per domain that are throttled by the task scheduler's rate limiter.
+- `task_scheduler_allowed_counter_per_domain`: Measures the number of tasks per domain that are allowed to proceed by the task scheduler's rate limiter. 
+- `task_scheduler_throttled_counter_per_domain`: Measures the number of tasks per domain that are throttled by the task scheduler's rate limiter.
 
 These metrics become available after setting `history.taskSchedulerEnableRateLimiter` to `true`. Use them to monitor task scheduling QPS for each domain and tune `history.taskSchedulerGlobalDomainRPS` accordingly.
 
@@ -162,7 +162,7 @@ At Uber, the rate limiter is kept in shadow mode by default. Shadow mode is disa
 - `task_latency_per_domain`: Measures task processing latency broken down by domain.
 - `task_latency`: Measures aggregated task processing latency across domains.
 
-Use these metrics to monitor the task processing latency. In particular, the per-domain task latency metric can help identify noisy-neighbor issues: a latency spike in one domain accompanied by increased latency in other domains may indicate that a high-traffic domain is a noisy neighbor.
+Use these metrics to monitor the task processing latency. In particular, the per-domain task latency metric can help identify noisy neighbors: a latency spike in one domain accompanied by increased latency in other domains may indicate that a high-traffic domain is a noisy neighbor.
 
 **Note:** Cadence [v1.4.1](https://github.com/cadence-workflow/cadence/releases#release-v1.4.1) introduces a metrics migration that changes metric names.
 
@@ -181,7 +181,7 @@ The log message above indicates that the queue is paused because of too many pen
 
 ## Try it now!
 
-The new architecture has been running in production at Uber for over a year, and we have not observed noisy-neighbor issues since its rollout. We are also building new features on top of this architecture, which are available only when History Queue V2 is enabled by setting `history.enableTransferQueueV2` and `history.enableTimerQueueV2` to `true`.
+The new architecture has been running in production at Uber for over a year, and we have not observed noisy neighbors since its rollout. We are also building new features on top of this architecture, which are available only when History Queue V2 is enabled by setting `history.enableTransferQueueV2` and `history.enableTimerQueueV2` to `true`.
 
 In the next release, we plan to enable History Queue V2 by default and begin deprecating History Queue V1. We encourage you to try History Queue V2 now and share your feedback with us!
 
