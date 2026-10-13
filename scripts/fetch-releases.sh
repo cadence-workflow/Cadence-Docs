@@ -23,7 +23,6 @@ for i in "${!repos[@]}"; do
       | map({
           id,
           tag_name,
-          name,
           html_url,
           draft,
           prerelease,
@@ -44,7 +43,6 @@ for file in "${files[@]}"; do
     and all(.[];
       has("id")
       and has("tag_name")
-      and has("name")
       and has("html_url")
       and has("draft")
       and has("prerelease")

@@ -2,7 +2,6 @@
   {
     "id": 398481568,
     "tag_name": "v1.4.0",
-    "name": "Release v1.4.0",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.4.0",
     "draft": false,
     "prerelease": false,
@@ -16,7 +15,6 @@
   {
     "id": 382330598,
     "tag_name": "v1.4.0-rc.5",
-    "name": "v1.4.0-rc.5",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.4.0-rc.5",
     "draft": false,
     "prerelease": true,
@@ -30,7 +28,6 @@
   {
     "id": 378798195,
     "tag_name": "v1.3.1",
-    "name": "Release v1.3.1",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.3.1",
     "draft": false,
     "prerelease": false,
@@ -44,7 +41,6 @@
   {
     "id": 358955231,
     "tag_name": "v1.4.0-rc.4",
-    "name": "v1.4.0-rc.4",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.4.0-rc.4",
     "draft": false,
     "prerelease": true,
@@ -58,7 +54,6 @@
   {
     "id": 351134317,
     "tag_name": "v1.4.0-rc.3",
-    "name": "v1.4.0-rc.3",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.4.0-rc.3",
     "draft": false,
     "prerelease": true,
@@ -72,7 +67,6 @@
   {
     "id": 350483574,
     "tag_name": "v1.4.0-rc.2",
-    "name": "v1.4.0-rc.2",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.4.0-rc.2",
     "draft": false,
     "prerelease": true,
@@ -86,7 +80,6 @@
   {
     "id": 343670848,
     "tag_name": "v1.4.0-rc.1",
-    "name": "v1.4.0",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.4.0-rc.1",
     "draft": false,
     "prerelease": true,
@@ -100,7 +93,6 @@
   {
     "id": 269315067,
     "tag_name": "v1.3.1-rc.18",
-    "name": "v1.3.1-rc.18",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.3.1-rc.18",
     "draft": false,
     "prerelease": true,
@@ -114,7 +106,6 @@
   {
     "id": 264950511,
     "tag_name": "v1.3.1-rc.17",
-    "name": "v1.3.1-rc.17",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.3.1-rc.17",
     "draft": false,
     "prerelease": true,
@@ -128,7 +119,6 @@
   {
     "id": 254928898,
     "tag_name": "v1.3.1-rc.12",
-    "name": "v1.3.1-rc.12",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.3.1-rc.12",
     "draft": false,
     "prerelease": true,
@@ -142,7 +132,6 @@
   {
     "id": 251256231,
     "tag_name": "v1.3.1-rc.11",
-    "name": "v1.3.1-rc.11",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.3.1-rc.11",
     "draft": false,
     "prerelease": true,
@@ -156,7 +145,6 @@
   {
     "id": 248102770,
     "tag_name": "v1.3.1-rc.10",
-    "name": "v1.3.1-rc.10",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.3.1-rc.10",
     "draft": false,
     "prerelease": true,
@@ -170,7 +158,6 @@
   {
     "id": 241034029,
     "tag_name": "v1.3.1-rc.7",
-    "name": "v1.3.1-rc.7",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.3.1-rc.7",
     "draft": false,
     "prerelease": true,
@@ -184,7 +171,6 @@
   {
     "id": 239797360,
     "tag_name": "v1.3.1-rc.6",
-    "name": "v1.3.1-rc.6",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.3.1-rc.6",
     "draft": false,
     "prerelease": true,
@@ -198,7 +184,6 @@
   {
     "id": 238104152,
     "tag_name": "v1.3.1-rc.5",
-    "name": "v1.3.1-rc.5",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.3.1-rc.5",
     "draft": false,
     "prerelease": true,
@@ -212,7 +197,6 @@
   {
     "id": 231288148,
     "tag_name": "v1.3.1-rc.1",
-    "name": "v1.3.1-rc.1",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.3.1-rc.1",
     "draft": false,
     "prerelease": true,
@@ -226,7 +210,6 @@
   {
     "id": 230793402,
     "tag_name": "v1.3.0",
-    "name": "v1.3.0",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.3.0",
     "draft": false,
     "prerelease": false,
@@ -240,7 +223,6 @@
   {
     "id": 228745828,
     "tag_name": "v1.2.10-rc.15",
-    "name": "v1.2.10-rc.15",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.2.10-rc.15",
     "draft": false,
     "prerelease": true,
@@ -254,7 +236,6 @@
   {
     "id": 147983163,
     "tag_name": "v1.2.10-rc.4",
-    "name": "v1.2.10",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.2.10-rc.4",
     "draft": false,
     "prerelease": true,
@@ -268,7 +249,6 @@
   {
     "id": 144395505,
     "tag_name": "v1.2.9",
-    "name": "v1.2.9",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.2.9",
     "draft": false,
     "prerelease": false,
@@ -282,7 +262,6 @@
   {
     "id": 143812722,
     "tag_name": "v1.2.8",
-    "name": "v1.2.8",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.2.8",
     "draft": false,
     "prerelease": false,
@@ -296,7 +275,6 @@
   {
     "id": 133384773,
     "tag_name": "v1.2.7",
-    "name": "v1.2.7",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.2.7",
     "draft": false,
     "prerelease": false,
@@ -310,7 +288,6 @@
   {
     "id": 131338948,
     "tag_name": "v1.2.6",
-    "name": "v1.2.6",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.2.6",
     "draft": false,
     "prerelease": false,
@@ -324,7 +301,6 @@
   {
     "id": 128785213,
     "tag_name": "v1.1.0",
-    "name": "v1.1.0 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.1.0",
     "draft": false,
     "prerelease": false,
@@ -338,7 +314,6 @@
   {
     "id": 122445242,
     "tag_name": "v1.0.2",
-    "name": "v1.0.2 release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.0.2",
     "draft": false,
     "prerelease": false,
@@ -352,7 +327,6 @@
   {
     "id": 117143169,
     "tag_name": "v1.0.1",
-    "name": "v1.0.1 release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.0.1",
     "draft": false,
     "prerelease": false,
@@ -366,7 +340,6 @@
   {
     "id": 101632285,
     "tag_name": "v1.0.0",
-    "name": "v1.0.0",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.0.0",
     "draft": false,
     "prerelease": false,
@@ -380,7 +353,6 @@
   {
     "id": 68508348,
     "tag_name": "v0.19.1",
-    "name": "v0.19.1 release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.19.1",
     "draft": false,
     "prerelease": false,
@@ -394,7 +366,6 @@
   {
     "id": 56445406,
     "tag_name": "v0.19.0",
-    "name": "v0.19.0 release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.19.0",
     "draft": false,
     "prerelease": false,
@@ -408,7 +379,6 @@
   {
     "id": 52966808,
     "tag_name": "v0.18.5",
-    "name": "Retract v0.18.4 and publish v0.18.5",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.18.5",
     "draft": false,
     "prerelease": false,
@@ -422,7 +392,6 @@
   {
     "id": 52959462,
     "tag_name": "v0.18.4",
-    "name": "Retracted, do not use: v0.18.4 release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.18.4",
     "draft": false,
     "prerelease": false,
@@ -436,7 +405,6 @@
   {
     "id": 50922307,
     "tag_name": "v0.18.3",
-    "name": "v0.18.3 release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.18.3",
     "draft": false,
     "prerelease": false,
@@ -450,7 +418,6 @@
   {
     "id": 48410427,
     "tag_name": "v0.18.2",
-    "name": "v0.18.2 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.18.2",
     "draft": false,
     "prerelease": false,
@@ -464,7 +431,6 @@
   {
     "id": 42083793,
     "tag_name": "v0.17.0",
-    "name": "v0.17.0 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.17.0",
     "draft": false,
     "prerelease": false,
@@ -478,7 +444,6 @@
   {
     "id": 37875254,
     "tag_name": "v0.16.0",
-    "name": "v0.16.0 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.16.0",
     "draft": false,
     "prerelease": false,
@@ -492,7 +457,6 @@
   {
     "id": 34792732,
     "tag_name": "v0.15.0",
-    "name": "v0.15.0 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.15.0",
     "draft": false,
     "prerelease": false,
@@ -506,7 +470,6 @@
   {
     "id": 32066591,
     "tag_name": "v0.14.1",
-    "name": "v0.14.1 Release ",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.14.1",
     "draft": false,
     "prerelease": false,
@@ -520,7 +483,6 @@
   {
     "id": 32000400,
     "tag_name": "v0.14.0",
-    "name": "v0.14.0 Release ",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.14.0",
     "draft": false,
     "prerelease": false,
@@ -534,7 +496,6 @@
   {
     "id": 29033273,
     "tag_name": "v0.13.4",
-    "name": "v0.13.4 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.13.4",
     "draft": false,
     "prerelease": false,
@@ -548,7 +509,6 @@
   {
     "id": 28902587,
     "tag_name": "v0.13.3",
-    "name": "v0.13.3 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.13.3",
     "draft": false,
     "prerelease": false,
@@ -562,7 +522,6 @@
   {
     "id": 28726540,
     "tag_name": "v0.13.2",
-    "name": "Release v0.13.2",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.13.2",
     "draft": false,
     "prerelease": false,
@@ -576,7 +535,6 @@
   {
     "id": 28600605,
     "tag_name": "v0.13.1",
-    "name": "v0.13.1 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.13.1",
     "draft": false,
     "prerelease": false,
@@ -590,7 +548,6 @@
   {
     "id": 28490972,
     "tag_name": "v0.13.0",
-    "name": "v0.13.0 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.13.0",
     "draft": false,
     "prerelease": false,
@@ -604,7 +561,6 @@
   {
     "id": 27195749,
     "tag_name": "v0.12.1",
-    "name": "0.12.1 Release ",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.12.1",
     "draft": false,
     "prerelease": false,
@@ -618,7 +574,6 @@
   {
     "id": 26689978,
     "tag_name": "v0.12.0",
-    "name": "v0.12.0 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.12.0",
     "draft": false,
     "prerelease": false,
@@ -632,7 +587,6 @@
   {
     "id": 24308997,
     "tag_name": "v0.11.2",
-    "name": "v0.11.2 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.11.2",
     "draft": false,
     "prerelease": false,
@@ -646,7 +600,6 @@
   {
     "id": 23862417,
     "tag_name": "v0.11.0",
-    "name": "v0.11.0 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.11.0",
     "draft": false,
     "prerelease": false,
@@ -660,7 +613,6 @@
   {
     "id": 22396482,
     "tag_name": "v0.10.5",
-    "name": "v0.10.5 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.10.5",
     "draft": false,
     "prerelease": false,
@@ -674,7 +626,6 @@
   {
     "id": 22005511,
     "tag_name": "v0.10.1",
-    "name": "v0.10.1 Release ",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.10.1",
     "draft": false,
     "prerelease": false,
@@ -688,7 +639,6 @@
   {
     "id": 21670608,
     "tag_name": "v0.10.0",
-    "name": "v0.10.0 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.10.0",
     "draft": false,
     "prerelease": false,
@@ -702,7 +652,6 @@
   {
     "id": 20485259,
     "tag_name": "v0.9.2",
-    "name": "v0.9.2 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.9.2",
     "draft": false,
     "prerelease": false,
@@ -716,7 +665,6 @@
   {
     "id": 19639756,
     "tag_name": "v0.9.1",
-    "name": "v0.9.1 Release ",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.9.1",
     "draft": false,
     "prerelease": false,
@@ -730,7 +678,6 @@
   {
     "id": 19199310,
     "tag_name": "v0.8.9",
-    "name": "v0.8.9 Patch release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.8.9",
     "draft": false,
     "prerelease": false,
@@ -744,7 +691,6 @@
   {
     "id": 19116304,
     "tag_name": "v0.9.0",
-    "name": "v0.9.0 Release ",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.9.0",
     "draft": false,
     "prerelease": false,
@@ -758,7 +704,6 @@
   {
     "id": 18250600,
     "tag_name": "v0.8.8",
-    "name": "v0.8.8 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.8.8",
     "draft": false,
     "prerelease": false,
@@ -772,7 +717,6 @@
   {
     "id": 18222171,
     "tag_name": "0.8.7",
-    "name": "v0.8.7 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/0.8.7",
     "draft": false,
     "prerelease": false,
@@ -786,7 +730,6 @@
   {
     "id": 18106480,
     "tag_name": "v0.8.6",
-    "name": "v0.8.6 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.8.6",
     "draft": false,
     "prerelease": false,
@@ -800,7 +743,6 @@
   {
     "id": 18012141,
     "tag_name": "v0.8.5",
-    "name": "v0.8.5 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.8.5",
     "draft": false,
     "prerelease": false,
@@ -814,7 +756,6 @@
   {
     "id": 18011794,
     "tag_name": "v0.8.4",
-    "name": "v0.8.4 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.8.4",
     "draft": false,
     "prerelease": false,
@@ -828,7 +769,6 @@
   {
     "id": 17501802,
     "tag_name": "v0.8.3",
-    "name": "v0.8.3 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.8.3",
     "draft": false,
     "prerelease": false,
@@ -842,7 +782,6 @@
   {
     "id": 17256997,
     "tag_name": "v0.8.2",
-    "name": "v0.8.2 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.8.2",
     "draft": false,
     "prerelease": false,
@@ -856,7 +795,6 @@
   {
     "id": 16215477,
     "tag_name": "v0.8.1",
-    "name": "v0.8.1 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.8.1",
     "draft": false,
     "prerelease": false,
@@ -870,7 +808,6 @@
   {
     "id": 15064288,
     "tag_name": "v0.8.0",
-    "name": "v0.8.0 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.8.0",
     "draft": false,
     "prerelease": false,
@@ -884,7 +821,6 @@
   {
     "id": 13686075,
     "tag_name": "v0.7.6",
-    "name": "v0.7.6 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.7.6",
     "draft": false,
     "prerelease": false,
@@ -898,7 +834,6 @@
   {
     "id": 13315868,
     "tag_name": "v0.7.5",
-    "name": "v0.7.5 release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.7.5",
     "draft": false,
     "prerelease": false,
@@ -912,7 +847,6 @@
   {
     "id": 12385292,
     "tag_name": "v0.7.4",
-    "name": "v0.7.4 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.7.4",
     "draft": false,
     "prerelease": false,
@@ -926,7 +860,6 @@
   {
     "id": 12173723,
     "tag_name": "v0.7.3",
-    "name": "v0.7.3 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.7.3",
     "draft": false,
     "prerelease": false,
@@ -940,7 +873,6 @@
   {
     "id": 12145443,
     "tag_name": "v0.7.2",
-    "name": "v0.7.2 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.7.2",
     "draft": false,
     "prerelease": false,
@@ -954,7 +886,6 @@
   {
     "id": 11768213,
     "tag_name": "v0.7.1",
-    "name": "v0.7.1 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.7.1",
     "draft": false,
     "prerelease": false,
@@ -968,7 +899,6 @@
   {
     "id": 11186532,
     "tag_name": "v0.7.0",
-    "name": "v0.7.0 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.7.0",
     "draft": false,
     "prerelease": false,
@@ -982,7 +912,6 @@
   {
     "id": 10610579,
     "tag_name": "v0.6.1",
-    "name": "v0.6.1 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.6.1",
     "draft": false,
     "prerelease": false,
@@ -996,7 +925,6 @@
   {
     "id": 10068524,
     "tag_name": "v0.6.0",
-    "name": "v0.6.0 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.6.0",
     "draft": false,
     "prerelease": false,
@@ -1010,7 +938,6 @@
   {
     "id": 9262207,
     "tag_name": "v0.5.0",
-    "name": "v0.5.0 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.5.0",
     "draft": false,
     "prerelease": false,
@@ -1024,7 +951,6 @@
   {
     "id": 8770389,
     "tag_name": "v0.4.1",
-    "name": "v0.4.1 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.4.1",
     "draft": false,
     "prerelease": false,
@@ -1038,7 +964,6 @@
   {
     "id": 7983156,
     "tag_name": "v0.4.0",
-    "name": "v0.4.0 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.4.0",
     "draft": false,
     "prerelease": false,
@@ -1052,7 +977,6 @@
   {
     "id": 7336753,
     "tag_name": "v0.3.1",
-    "name": "v0.3.1 Release",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.3.1",
     "draft": false,
     "prerelease": false,
@@ -1066,7 +990,6 @@
   {
     "id": 6871990,
     "tag_name": "v0.3.0-beta",
-    "name": "Cadence Client v0.3.0",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.3.0-beta",
     "draft": false,
     "prerelease": true,
@@ -1080,7 +1003,6 @@
   {
     "id": 6624935,
     "tag_name": "v0.2.0-beta",
-    "name": "Cadence Client v0.2.0",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v0.2.0-beta",
     "draft": false,
     "prerelease": true,
