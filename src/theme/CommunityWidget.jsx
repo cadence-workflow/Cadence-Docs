@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Icon } from '@iconify/react';
 import Link from '@docusaurus/Link';
+import { useLocation } from '@docusaurus/router';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import styles from './CommunityWidget.module.css';
 
 const JOIN_URL = 'https://lists.cncf.io/g/cncf-cadence-community/join';
@@ -14,6 +16,7 @@ const ACTIONS = [
   },
   {
     id: 'slack',
+    ctaId: 'community-widget-slack',
     label: 'Join us on Slack (CNCF)',
     href: 'https://inviter.co/cncf',
     icon: 'mdi:slack',
@@ -21,6 +24,7 @@ const ACTIONS = [
   },
   {
     id: 'github',
+    ctaId: 'community-widget-github-discussions',
     label: 'Discuss on GitHub',
     href: 'https://github.com/cadence-workflow/cadence/discussions',
     icon: 'mdi:github',
@@ -28,6 +32,7 @@ const ACTIONS = [
   },
   {
     id: 'reddit',
+    ctaId: 'community-widget-reddit',
     label: 'Join us on Reddit',
     href: 'https://www.reddit.com/r/cadenceworkflow/',
     icon: 'mdi:reddit',
@@ -35,6 +40,7 @@ const ACTIONS = [
   },
   {
     id: 'contact',
+    ctaId: 'community-widget-contact',
     label: 'Contact the team',
     href: '/community/contact-us',
     icon: 'mdi:email-outline',
@@ -42,6 +48,9 @@ const ACTIONS = [
 ];
 
 export default function CommunityWidget() {
+  const { pathname } = useLocation();
+  const homepagePath = useBaseUrl('/');
+  const isHomepage = pathname === homepagePath;
   const [open, setOpen] = useState(false);
   const [showTooltip, setShowTooltip] = useState(true);
   const [emailOpen, setEmailOpen] = useState(false);
@@ -112,6 +121,14 @@ export default function CommunityWidget() {
   }
 
   const joinUrl = email ? `${JOIN_URL}?email=${encodeURIComponent(email)}` : JOIN_URL;
+  const homepageCtaProps = (ctaId, ctaText, destination) =>
+    isHomepage
+      ? {
+          'data-homepage-cta-id': ctaId,
+          'data-homepage-cta-text': ctaText,
+          'data-homepage-cta-destination': destination,
+        }
+      : {};
 
   return (
     <div className={styles.widget} aria-label="Community actions">
@@ -185,7 +202,14 @@ export default function CommunityWidget() {
                             </a>
                           </p>
                         ) : (
-                          <form onSubmit={handleEmailSubmit} className={styles.emailForm}>
+                          <form
+                            onSubmit={handleEmailSubmit}
+                            className={styles.emailForm}
+                            {...homepageCtaProps(
+                              'community-widget-newsletter-subscribe',
+                              'Subscribe to updates',
+                              JOIN_URL,
+                            )}>
                             <input
                               ref={emailInputRef}
                               type="email"
@@ -219,6 +243,7 @@ export default function CommunityWidget() {
                     className={styles.actionItem}
                     target="_blank"
                     rel="noopener noreferrer"
+                    {...homepageCtaProps(action.ctaId, action.label, action.href)}
                   >
                     <Icon icon={action.icon} className={styles.actionIcon} width={20} />
                     <span>{action.label}</span>
@@ -226,7 +251,11 @@ export default function CommunityWidget() {
                 </li>
               ) : (
                 <li key={action.id}>
-                  <Link to={action.href} className={styles.actionItem} onClick={() => setOpen(false)}>
+                  <Link
+                    to={action.href}
+                    className={styles.actionItem}
+                    onClick={() => setOpen(false)}
+                    {...homepageCtaProps(action.ctaId, action.label, action.href)}>
                     <Icon icon={action.icon} className={styles.actionIcon} width={20} />
                     <span>{action.label}</span>
                   </Link>
