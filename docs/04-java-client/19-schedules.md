@@ -241,10 +241,10 @@ for (ScheduleInfo.BackfillInfo bf : desc.getInfo().getOngoingBackfills()) {
 // Pause with a reason
 sc.pauseSchedule("daily-etl", "INFRA-4421: cluster maintenance").join();
 
-// Unpause – resume from now, skip missed fires
+// Unpause using the catch-up policy configured in the schedule's SchedulePolicies
 sc.unpauseSchedule("daily-etl", "maintenance complete").join();
 
-// Unpause – override catch-up policy for this resume only
+// Unpause and override the catch-up policy for this resume only
 sc.unpauseSchedule("daily-etl", "maintenance complete", ScheduleCatchUpPolicy.ALL).join();
 ```
 
@@ -252,7 +252,25 @@ The `ScheduleCatchUpPolicy` passed to `unpauseSchedule` overrides the default se
 
 ## Updating a schedule
 
-`updateSchedule` is a full replace: any field omitted from the request is cleared on the server. Call `describeSchedule` first to read the current configuration, then supply all fields you want to keep:
+### Callback update (recommended)
+
+Pass a callback that receives the current `ScheduleDescription` and returns the desired one. The client fetches the current configuration, then sends only the `spec`, `action`, and `policies` fields your callback replaced, so you don't need to carry over fields you aren't changing:
+
+```java
+sc.updateSchedule("daily-etl", current ->
+    current.toBuilder()
+        .setSpec(current.getSpec().toBuilder()
+            .setCronExpression("0 3 * * *")  // move to 3 AM
+            .build())
+        .build()
+).join();
+```
+
+This is a read-then-write operation, not an atomic transaction. Concurrent updates to the same schedule are last-write-wins, with no conflict detection.
+
+### Full replace
+
+The other `updateSchedule` overloads are a full replace: any field omitted from the request is cleared on the server. Call `describeSchedule` first to read the current configuration, then supply all fields you want to keep:
 
 ```java
 // Read current state
@@ -293,7 +311,7 @@ sc.backfillSchedule(
 ).join();
 ```
 
-The `overlapPolicy` argument is optional — use `new ScheduleBackfill(startTime, endTime)` to inherit the schedule's configured overlap policy. Backfill fires are tagged with `CadenceScheduleIsBackfill=true` search attribute.
+The `overlapPolicy` argument is optional. Use `new ScheduleBackfill(startTime, endTime)` to inherit the schedule's configured overlap policy. Backfill fires are tagged with `CadenceScheduleIsBackfill=true` search attribute.
 
 ## Listing schedules
 
@@ -357,8 +375,8 @@ These are set on the internal scheduler workflow (not on triggered runs) so that
 |---|---|---|---|
 | **Client access** | `workflowClient.scheduleClient()` → `ScheduleClient` | `cadenceClient.ScheduleClient()` | Methods directly on `Client` |
 | **API style** | Builder pattern; all methods return `CompletableFuture` | Struct literals; blocking calls | Keyword args; `async`/`await` |
-| **Backfill** | `List<ScheduleBackfill>` — multiple ranges per call | Single range per call | Single range per call |
-| **Update** | Full replace — caller must call `describeSchedule` first to preserve existing fields | Callback: SDK fetches current state, passes mutable view to callback, sends only changed fields | Same callback pattern as Go |
+| **Backfill** | `List<ScheduleBackfill>`: multiple ranges per call | Single range per call | Single range per call |
+| **Update** | Callback overload (SDK fetches current state and sends only changed fields), or full replace where the caller must call `describeSchedule` first | Callback: SDK fetches current state, passes mutable view to callback, sends only changed fields | Same callback pattern as Go |
 | **List pagination** | Explicit token loop | Explicit token loop | Auto-paginated async generator |
 | **Timezone** | `CRON_TZ=` prefix embedded in cron string | `CRON_TZ=` prefix in cron string | Set in spec fields |
 | **`ScheduleInfo` fields** | `ongoingBackfills`, `missedRuns`, `skippedRuns` | Same, plus `bufferedFireCount` and `runningWorkflowCount` | Same as Go (raw proto fields) |
