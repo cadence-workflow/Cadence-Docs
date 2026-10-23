@@ -15,6 +15,7 @@ import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
 const sidebars: SidebarsConfig = {
   // By default, Docusaurus generates a sidebar from the docs folder structure
   docsSidebar: [
+    { type: 'doc', id: 'index', label: 'Overview' },
     {
       label: 'Get Started',
       type: 'category',
@@ -73,6 +74,12 @@ const sidebars: SidebarsConfig = {
     {
       label: 'Codelabs',
       type: 'category',
+      link: {
+        type: 'generated-index',
+        title: 'Codelabs',
+        description: 'Hands-on Cadence tutorials and walkthroughs.',
+        slug: '/codelabs',
+      },
       items: [
         { type: 'doc', id: 'codelabs/workflow-tests-go-replayer-shadower' },
         { type: 'doc', id: 'codelabs/helm-deploy-postgres-opensearch' },
@@ -206,6 +213,12 @@ const sidebars: SidebarsConfig = {
     {
       label: 'Releases',
       type: 'category',
+      link: {
+        type: 'generated-index',
+        title: 'Releases',
+        description: 'Release history and changelogs for Cadence service and clients.',
+        slug: '/releases',
+      },
       items: [
         { type: 'doc', 'id': 'releases/cadence', label: 'Cadence Service' },
         { type: 'doc', 'id': 'releases/cadence-go-client', label: 'Cadence Go Client' },
@@ -232,6 +245,12 @@ const sidebars: SidebarsConfig = {
             {
               label: 'Scope',
               type: 'category',
+              link: {
+                type: 'generated-index',
+                title: 'Scope',
+                description: 'Vision, use cases, roadmap process, personas, and research for Cadence.',
+                slug: '/tech-review/day-0-planning/scope',
+              },
               items: [
                 { type: 'doc', id: 'tech-review/day-0-planning/scope/vision-goals' },
                 { type: 'doc', id: 'tech-review/day-0-planning/scope/primary-use-cases' },
@@ -244,6 +263,12 @@ const sidebars: SidebarsConfig = {
             {
               label: 'Usability',
               type: 'category',
+              link: {
+                type: 'generated-index',
+                title: 'Usability',
+                description: 'Persona interactions, UX, and production integrations.',
+                slug: '/tech-review/day-0-planning/usability',
+              },
               items: [
                 { type: 'doc', id: 'tech-review/day-0-planning/usability/persona-interactions' },
                 { type: 'doc', id: 'tech-review/day-0-planning/usability/ux-ui' },
@@ -253,6 +278,12 @@ const sidebars: SidebarsConfig = {
             {
               label: 'Design',
               type: 'category',
+              link: {
+                type: 'generated-index',
+                title: 'Design',
+                description: 'Architecture, APIs, compliance, availability, and resource requirements.',
+                slug: '/tech-review/day-0-planning/design',
+              },
               items: [
                 { type: 'doc', id: 'tech-review/day-0-planning/design/design-principles' },
                 { type: 'doc', id: 'tech-review/day-0-planning/design/architecture-requirements' },
@@ -270,6 +301,12 @@ const sidebars: SidebarsConfig = {
             {
               label: 'Installation',
               type: 'category',
+              link: {
+                type: 'generated-index',
+                title: 'Installation',
+                description: 'Initialization and validation planning for Cadence deployments.',
+                slug: '/tech-review/day-0-planning/installation',
+              },
               items: [
                 { type: 'doc', id: 'tech-review/day-0-planning/installation/installation-initialization' },
                 { type: 'doc', id: 'tech-review/day-0-planning/installation/validation' },
@@ -278,6 +315,12 @@ const sidebars: SidebarsConfig = {
             {
               label: 'Security',
               type: 'category',
+              link: {
+                type: 'generated-index',
+                title: 'Security',
+                description: 'Security self-assessment, tenets, hygiene, and threat modeling.',
+                slug: '/tech-review/day-0-planning/security',
+              },
               items: [
                 { type: 'doc', id: 'tech-review/day-0-planning/security/security-self-assessment' },
                 { type: 'doc', id: 'tech-review/day-0-planning/security/security-tenets' },
@@ -296,6 +339,12 @@ const sidebars: SidebarsConfig = {
             {
               label: 'Enablement & Rollback',
               type: 'category',
+              link: {
+                type: 'generated-index',
+                title: 'Enablement & Rollback',
+                description: 'Live-cluster enablement, defaults, testing, and resource cleanup.',
+                slug: '/tech-review/day-1-installation/enablement-rollback',
+              },
               items: [
                 { type: 'doc', id: 'tech-review/day-1-installation/enablement-rollback/live-cluster-enablement-rollback' },
                 { type: 'doc', id: 'tech-review/day-1-installation/enablement-rollback/default-behaviors' },
@@ -306,6 +355,12 @@ const sidebars: SidebarsConfig = {
             {
               label: 'Rollout, Upgrade & Rollback Planning',
               type: 'category',
+              link: {
+                type: 'generated-index',
+                title: 'Rollout, Upgrade & Rollback Planning',
+                description: 'Compatibility, rollback procedures, failure scenarios, and deprecations.',
+                slug: '/tech-review/day-1-installation/rollout-upgrade-rollback',
+              },
               items: [
                 { type: 'doc', id: 'tech-review/day-1-installation/rollout-upgrade-rollback/infrastructure-compatibility' },
                 { type: 'doc', id: 'tech-review/day-1-installation/rollout-upgrade-rollback/rollback-procedures' },
@@ -326,6 +381,12 @@ const sidebars: SidebarsConfig = {
             {
               label: 'Scalability & Reliability',
               type: 'category',
+              link: {
+                type: 'generated-index',
+                title: 'Scalability & Reliability',
+                description: 'Scaling, SLOs, load testing, limits, and resilience patterns.',
+                slug: '/tech-review/day-2-operations/scalability-reliability',
+              },
               items: [
                 { type: 'doc', id: 'tech-review/day-2-operations/scalability-reliability/api-object-scaling' },
                 { type: 'doc', id: 'tech-review/day-2-operations/scalability-reliability/slos-slis' },
@@ -340,6 +401,12 @@ const sidebars: SidebarsConfig = {
             {
               label: 'Observability',
               type: 'category',
+              link: {
+                type: 'generated-index',
+                title: 'Observability',
+                description: 'Signals, logging, dashboards, health checks, and service-level indicators.',
+                slug: '/tech-review/day-2-operations/observability',
+              },
               items: [
                 { type: 'doc', id: 'tech-review/day-2-operations/observability/signals' },
                 { type: 'doc', id: 'tech-review/day-2-operations/observability/audit-logging' },
@@ -355,6 +422,12 @@ const sidebars: SidebarsConfig = {
             {
               label: 'Dependencies',
               type: 'category',
+              link: {
+                type: 'generated-index',
+                title: 'Dependencies',
+                description: 'Runtime dependencies, lifecycle policy, and composition analysis.',
+                slug: '/tech-review/day-2-operations/dependencies',
+              },
               items: [
                 { type: 'doc', id: 'tech-review/day-2-operations/dependencies/runtime-dependencies' },
                 { type: 'doc', id: 'tech-review/day-2-operations/dependencies/lifecycle-policy' },
@@ -364,6 +437,12 @@ const sidebars: SidebarsConfig = {
             {
               label: 'Troubleshooting',
               type: 'category',
+              link: {
+                type: 'generated-index',
+                title: 'Troubleshooting',
+                description: 'Component failure recovery and known failure modes.',
+                slug: '/tech-review/day-2-operations/troubleshooting',
+              },
               items: [
                 { type: 'doc', id: 'tech-review/day-2-operations/troubleshooting/component-failure-recovery' },
                 { type: 'doc', id: 'tech-review/day-2-operations/troubleshooting/known-failure-modes' },
@@ -372,6 +451,12 @@ const sidebars: SidebarsConfig = {
             {
               label: 'Compliance',
               type: 'category',
+              link: {
+                type: 'generated-index',
+                title: 'Compliance',
+                description: 'Third-party and CNCF attribution requirements.',
+                slug: '/tech-review/day-2-operations/compliance',
+              },
               items: [
                 { type: 'doc', id: 'tech-review/day-2-operations/compliance/third-party-attribution' },
                 { type: 'doc', id: 'tech-review/day-2-operations/compliance/cncf-attribution' },
@@ -380,6 +465,12 @@ const sidebars: SidebarsConfig = {
             {
               label: 'Security',
               type: 'category',
+              link: {
+                type: 'generated-index',
+                title: 'Security',
+                description: 'Access control and security team practices for operations.',
+                slug: '/tech-review/day-2-operations/security',
+              },
               items: [
                 { type: 'doc', id: 'tech-review/day-2-operations/security/access-control' },
                 { type: 'doc', id: 'tech-review/day-2-operations/security/security-team' },
