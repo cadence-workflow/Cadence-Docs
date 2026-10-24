@@ -1,5 +1,18 @@
 [
   {
+    "id": 414387142,
+    "tag_name": "v1.4.3-prerelease06",
+    "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.4.3-prerelease06",
+    "draft": false,
+    "prerelease": true,
+    "published_at": "2026-10-16T00:00:04Z",
+    "body": "## Schema Upgrades\r\n* Cassandra: from 0.54 to 0.55\r\n\r\n## What's Changed\r\n* feat(persistence): create token rows on first grant instead of seeding by @YaweiZhang-930 in https://github.com/cadence-workflow/cadence/pull/8618\r\n* fix: Gracefully handle partially applied Schema Updates by @natemort in https://github.com/cadence-workflow/cadence/pull/8598\r\n* fix(cli): Update admin config update command to support json file input by @Shaddoll in https://github.com/cadence-workflow/cadence/pull/8627\r\n* fix(cassandra): add missing task_list_kind to resetActivityInfoMap by @fimanishi in https://github.com/cadence-workflow/cadence/pull/8626\r\n* feat(history): record token acquire and grant events in mutable state and replay them by @YaweiZhang-930 in https://github.com/cadence-workflow/cadence/pull/8612\r\n* feat(domain): only accept FailoverDomain at the destination cluster by @c-warren in https://github.com/cadence-workflow/cadence/pull/8542\r\n* feat(idl-update): add memo and searchAttributes to ScheduleListEntry by @abhishekj720 in https://github.com/cadence-workflow/cadence/pull/8616\r\n* feat(persistence): add AsyncWorkflowQueueManager contract and unimplemented store by @c-warren in https://github.com/cadence-workflow/cadence/pull/8629\r\n* refactor(matching): rename AddSemaphoreTask RPC to AcquireSemaphore by @YaweiZhang-930 in https://github.com/cadence-workflow/cadence/pull/8635\r\n* fix(dynamicconfig): accept the int default in config store GetIntValue by @bhargavikvmpl-2001 in https://github.com/cadence-workflow/cadence/pull/8625\r\n* feat(history): handle the token acquire decision by @YaweiZhang-930 in https://github.com/cadence-workflow/cadence/pull/8614\r\n* chore: add AndreasHolt to CODEOWNERS by @AndreasHolt in https://github.com/cadence-workflow/cadence/pull/8636\r\n* docs(configstore): Add a doc showing how to use CLI to manage dynamicconfig by @Shaddoll in https://github.com/cadence-workflow/cadence/pull/8640\r\n* feat: batch map deletion write by @fimanishi in https://github.com/cadence-workflow/cadence/pull/8522\r\n* feat(persistence): wrap AsyncWorkflowQueueManager with error injection, rate limiting and metrics by @c-warren in https://github.com/cadence-workflow/cadence/pull/8630\r\n* feat(schema): add sem name to the transfer_task Cassandra type by @YaweiZhang-930 in https://github.com/cadence-workflow/cadence/pull/8645\r\n* feat(matching): wire tokenw persistence into the matching engine so token buckets can load by @YaweiZhang-930 in https://github.com/cadence-workflow/cadence/pull/8642\r\n* fix(history): check which cluster closed a child run before adopting it by @fimanishi in https://github.com/cadence-workflow/cadence/pull/8644\r\n\r\n## New Contributors\r\n* @bhargavikvmpl-2001 made their first contribution in https://github.com/cadence-workflow/cadence/pull/8625\r\n\r\n**Full Changelog**: https://github.com/cadence-workflow/cadence/compare/v1.4.3-prerelease05...v1.4.3-prerelease06",
+    "author": {
+      "login": "fimanishi",
+      "html_url": "https://github.com/fimanishi"
+    }
+  },
+  {
     "id": 402149710,
     "tag_name": "v1.4.2",
     "html_url": "https://github.com/cadence-workflow/cadence/releases/tag/v1.4.2",
