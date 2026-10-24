@@ -5,6 +5,7 @@ import Heading from '@theme/Heading';
 import styles from './styles.module.css';
 
 interface CardItem {
+  ctaId: string;
   label: string;
   title: string;
   description: string;
@@ -44,6 +45,7 @@ const FolderIcon: React.FC = () => (
 export default function GetInvolvedBanner(): JSX.Element {
   const cards: CardItem[] = [
     {
+      ctaId: 'community-discussions',
       label: 'Discussions',
       title: 'Join Discussions',
       description: 'Ask questions, share ideas, and learn from the community',
@@ -53,6 +55,7 @@ export default function GetInvolvedBanner(): JSX.Element {
       badgeType: 'discussion',
     },
     {
+      ctaId: 'community-contribute-code',
       label: 'Contributing',
       title: 'Contribute Code',
       description: 'Help build Cadence. Submit PRs, fix bugs, improve features',
@@ -62,6 +65,7 @@ export default function GetInvolvedBanner(): JSX.Element {
       badgeType: 'contribute',
     },
     {
+      ctaId: 'community-report-issues',
       label: 'Issues',
       title: 'Report Issues',
       description: 'Found a bug? Have a feature request? Let us know',
@@ -71,6 +75,7 @@ export default function GetInvolvedBanner(): JSX.Element {
       badgeType: 'issues',
     },
     {
+      ctaId: 'community-examples',
       label: 'Examples',
       title: 'See Examples',
       description: 'Explore real-world examples and learn best practices',
@@ -106,7 +111,14 @@ export default function GetInvolvedBanner(): JSX.Element {
           <p className={styles.bannerSubtitle}>Join our open-source community</p>
         </div>
         <span className={styles.communityLinksPill}>
-          <Link href="https://inviter.co/cncf" target="_blank" rel="noopener noreferrer" className={styles.communityLink}>
+          <Link
+            href="https://inviter.co/cncf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.communityLink}
+            data-homepage-cta-id="community-slack"
+            data-homepage-cta-text="Join us on Slack"
+            data-homepage-cta-destination="https://inviter.co/cncf">
             Join us on Slack
           </Link>
         </span>
@@ -119,6 +131,9 @@ export default function GetInvolvedBanner(): JSX.Element {
             target="_blank"
             rel="noopener noreferrer"
             className={`${styles.card} ${styles[`card--${card.badgeType}`]}`}
+            data-homepage-cta-id={card.ctaId}
+            data-homepage-cta-text={card.title}
+            data-homepage-cta-destination={card.href}
           >
             <div className={styles.icon}>{getIcon(card.icon)}</div>
             <Heading as="h3" className={styles.cardTitle}>

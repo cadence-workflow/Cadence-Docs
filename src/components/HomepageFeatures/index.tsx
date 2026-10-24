@@ -83,7 +83,12 @@ export default function HomepageFeatures(): JSX.Element {
         Powering mission-critical workflows at companies like Uber, DoorDash, and NetApp.
       </p>
 
-      <Link to="/docs/concepts" className={styles.cta}>
+      <Link
+        to="/docs/concepts"
+        className={styles.cta}
+        data-homepage-cta-id="concepts-explore"
+        data-homepage-cta-text="Explore Cadence Architecture & Core Concepts"
+        data-homepage-cta-destination="/docs/concepts">
         Explore Cadence Architecture & Core Concepts →
       </Link>
     </section>

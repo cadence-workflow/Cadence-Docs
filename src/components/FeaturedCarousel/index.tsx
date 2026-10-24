@@ -13,6 +13,7 @@ import {
 import styles from './styles.module.css';
 
 type FeaturedItem = {
+  ctaId: string;
   title: string;
   /** Optional shorter label for the carousel title band. */
   shortTitle?: string;
@@ -421,6 +422,9 @@ export default function FeaturedCarousel(): JSX.Element {
                     className={clsx('card', styles.card)}
                     to={item.href}
                     data-tag={item.tag}
+                    data-homepage-cta-id={item.ctaId}
+                    data-homepage-cta-text={item.cta ?? 'Read more'}
+                    data-homepage-cta-destination={item.href}
                     tabIndex={hidden ? -1 : undefined}>
                     <div className={styles.media}>
                       <img
