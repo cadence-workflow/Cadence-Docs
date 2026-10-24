@@ -102,6 +102,7 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'java-client/side-effect' },
         { type: 'doc', id: 'java-client/testing' },
         { type: 'doc', id: 'java-client/workflow-replay-shadowing' },
+        { type: 'doc', id: 'java-client/schedules' },
       ],
     },
     {
