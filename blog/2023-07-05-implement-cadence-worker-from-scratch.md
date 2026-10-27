@@ -18,7 +18,7 @@ tags:
   - introduction-to-cadence
 ---
 
-In the previous [blog](/blog/2023-06-28-components-of-cadence-application-setup.md), we have introduced three critical components for a Cadence application: the Cadence backend, domain, and worker. Among these, the worker service is the most crucial focus for developers as it hosts the activities and workflows of a Cadence application. In this blog, I will provide a short tutorial on how to implement a simple worker service from scratch in Go.
+In the previous [blog](/blog/2023/06/28/components-of-cadence-application-setup/), we have introduced three critical components for a Cadence application: the Cadence backend, domain, and worker. Among these, the worker service is the most crucial focus for developers as it hosts the activities and workflows of a Cadence application. In this blog, I will provide a short tutorial on how to implement a simple worker service from scratch in Go.
 
 To finish this tutorial, there are two prerequisites you need to finish first
 1. Register a Cadence domain for your worker. For this tutorial, I've already registered a domain named `test-domain`
