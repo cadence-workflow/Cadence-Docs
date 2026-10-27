@@ -183,6 +183,16 @@ const config: Config = {
       {
         // redirects here only work in production build, not development
         fromExtensions: ['html'],
+        // trailingSlash: false emits page.html. GitHub Pages serves /page as
+        // 200, but /page/ looks for page/index.html, misses, returns 404.html,
+        // then the SPA recovers. That flashes "Page Not Found" and inflates
+        // GA 404s. Emit a client redirect at the trailing-slash path instead.
+        createRedirects(existingPath) {
+          if (existingPath === '/' || existingPath.endsWith('/')) {
+            return undefined;
+          }
+          return [`${existingPath}/`];
+        },
         redirects: [
           {
             from: ['/docs/team', '/docs/next/team'],
