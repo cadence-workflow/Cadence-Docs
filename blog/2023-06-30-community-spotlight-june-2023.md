@@ -66,7 +66,7 @@ Below are a selection of Cadence related articles, blogs and whitepapers. Please
 
 - [Instaclustr Releases Multi-Region Cadence Workflow](https://www.instaclustr.com/blog/instaclustr-releases-multi-region-cadence-workflow-2/)
 
-- [Understanding Components of Cadence Application](https://cadenceworkflow.io/blog/2023/07/01/components-of-cadence-application-setup/)
+- [Understanding Components of Cadence Application](https://cadenceworkflow.io/blog/2023/06/28/components-of-cadence-application-setup/)
 
 - [Improving the Reliability of Cadence Search Queries That Use OpenSearch/Elasticsearch](https://www.instaclustr.com/blog/improving-the-reliability-of-cadence-search-queries/)
 

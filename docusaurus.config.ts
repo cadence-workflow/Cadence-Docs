@@ -47,7 +47,10 @@ const config: Config = {
   // Usually your repo name.
   projectName: envReplace('${PROJECT_NAME:-Cadence-Docs}', process.env),
 
-  trailingSlash: false,
+  // GitHub Pages cannot serve both `page.html` and `page/index.html`. With
+  // trailingSlash: false, docs are `page.html`, so /page/ 404s (SPA recovers).
+  // Directory URLs (/page/index.html) are what GH Pages expects.
+  trailingSlash: true,
 
   onBrokenLinks: 'throw',
 
@@ -183,31 +186,27 @@ const config: Config = {
       {
         // redirects here only work in production build, not development
         fromExtensions: ['html'],
-        // trailingSlash: false emits page.html. GitHub Pages serves /page as
-        // 200, but /page/ looks for page/index.html, misses, returns 404.html,
-        // then the SPA recovers. That flashes "Page Not Found" and inflates
-        // GA 404s. Emit a client redirect at the trailing-slash path instead.
-        createRedirects(existingPath) {
-          if (existingPath === '/' || existingPath.endsWith('/')) {
-            return undefined;
-          }
-          return [`${existingPath}/`];
-        },
+        // Do not emit no-slash → slash HTML redirects: on GitHub Pages,
+        // `page.html` + `page/index.html` conflict and /page/ 404s.
+        // GH Pages serves /page as the directory when only page/index.html exists.
         redirects: [
           {
+            // With trailingSlash: true, only list each from-path once.
+            // /docs/about/ would write docs/about/index.html and collide
+            // with the about/ doc folder.
             from: ['/docs/team', '/docs/next/team'],
-            to: '/community/team',
+            to: '/community/team/',
           },
           {
             from: ['/docs/about', '/docs/next/about'],
-            to: '/community/contact-us',
+            to: '/community/contact-us/',
           },
           // /docs, /community, and /faq are real overview pages that
           // list first-level sidebar sections. Keep only the leftover
           // meetup path redirect here.
           {
             from: '/community/meetup',
-            to: '/community/contact-us',
+            to: '/community/contact-us/',
           },
         ],
       } satisfies ClientRedirectsOptions,
