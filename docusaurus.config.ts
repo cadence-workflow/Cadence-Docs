@@ -192,28 +192,12 @@ const config: Config = {
             from: ['/docs/about', '/docs/next/about'],
             to: '/community/contact-us',
           },
-          // Bare base paths returned 404s for inbound traffic (Google
-          // Search Console). The docs plugin (used by all three
-          // sections) does not auto-generate a listing page at
-          // routeBasePath, so /docs, /community, and /faq had no
-          // matching route. Redirect both the no-slash (canonical, per
-          // trailingSlash: false) and trailing-slash forms to a sane
-          // landing page that already exists in the navbar.
-          {
-            from: '/docs',
-            to: '/docs/get-started',
-          },
-          {
-            from: '/community',
-            to: '/community/contact-us',
-          },
+          // /docs, /community, and /faq are real overview pages that
+          // list first-level sidebar sections. Keep only the leftover
+          // meetup path redirect here.
           {
             from: '/community/meetup',
             to: '/community/contact-us',
-          },
-          {
-            from: '/faq',
-            to: '/faq/best-practices',
           },
         ],
       } satisfies ClientRedirectsOptions,
@@ -357,16 +341,16 @@ const config: Config = {
           position: 'left'
         },
         {
-          to: '/community/contact-us',
+          to: '/community',
           label: 'Community',
           position: 'left',
-          activeBaseRegex: `/community/`,
+          activeBaseRegex: `/community(/|$)`,
         },
         {
-          to: '/faq/best-practices',
+          to: '/faq',
           label: 'FAQ',
           position: 'left',
-          activeBaseRegex: `/faq/`,
+          activeBaseRegex: `/faq(/|$)`,
         },
         {
           type: 'dropdown',
