@@ -47,10 +47,17 @@ jobs:
         id: lychee
         uses: lycheeverse/lychee-action@v2
         with:
+          # --root-dir resolves root-relative links in the rendered HTML
+          # (href="/docs/foo/", src="/img/bar.svg") against the build
+          # output, so internal links are checked as local files.
+          #
+          # Must be an absolute path; lychee rejects relative directories
+          # such as ./build. github.workspace resolves to the runner's
+          # absolute checkout dir (e.g. /home/runner/work/...).
           args: >-
             --no-progress
             --config lychee.toml
-            --base ./build
+            --root-dir ${{ github.workspace }}/build
             './build/docs/**/*.html'
             './build/blog/**/*.html'
             './build/community/**/*.html'
