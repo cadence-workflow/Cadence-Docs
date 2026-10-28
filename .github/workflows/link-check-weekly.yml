@@ -47,10 +47,17 @@ jobs:
         id: lychee
         uses: lycheeverse/lychee-action@v2
         with:
+          # --root-dir resolves root-relative links in the rendered HTML
+          # (href="/docs/foo/", src="/img/bar.svg") against the build
+          # output, so internal links are checked as local files.
+          #
+          # Must be an absolute path; lychee rejects relative directories
+          # such as ./build. github.workspace resolves to the runner's
+          # absolute checkout dir (e.g. /home/runner/work/...).
           args: >-
             --no-progress
             --config lychee.toml
-            --base ./build
+            --root-dir ${{ github.workspace }}/build
             './build/docs/**/*.html'
             './build/blog/**/*.html'
             './build/community/**/*.html'
@@ -62,6 +69,24 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Find open tracking issue
+        # create-issue-from-file only updates an issue when it is given an
+        # issue-number; without one it opens a new issue on every run.
+        # Look up the newest open report so findings land in one place.
+        id: tracking-issue
+        if: steps.lychee.outputs.exit_code != '0'
+        run: |
+          number=$(gh issue list \
+            --repo "$GITHUB_REPOSITORY" \
+            --state open \
+            --label link-rot \
+            --limit 100 \
+            --json number,title \
+            --jq 'map(select(.title == "Link check report")) | .[0].number // empty')
+          echo "number=$number" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create or update tracking issue
         # lychee-action@v2 exposes exit_code as a STEP OUTPUT, not an env var.
         # Using env.lychee_exit_code here would always be empty, and
@@ -70,6 +95,8 @@ jobs:
         if: steps.lychee.outputs.exit_code != '0'
         uses: peter-evans/create-issue-from-file@v6
         with:
+          # Empty when no report is open, which creates a new issue.
+          issue-number: ${{ steps.tracking-issue.outputs.number }}
           title: 'Link check report'
           content-filepath: ./lychee-report.md
           labels: |
