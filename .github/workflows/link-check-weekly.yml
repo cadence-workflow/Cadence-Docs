@@ -69,6 +69,24 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Find open tracking issue
+        # create-issue-from-file only updates an issue when it is given an
+        # issue-number; without one it opens a new issue on every run.
+        # Look up the newest open report so findings land in one place.
+        id: tracking-issue
+        if: steps.lychee.outputs.exit_code != '0'
+        run: |
+          number=$(gh issue list \
+            --repo "$GITHUB_REPOSITORY" \
+            --state open \
+            --label link-rot \
+            --limit 100 \
+            --json number,title \
+            --jq 'map(select(.title == "Link check report")) | .[0].number // empty')
+          echo "number=$number" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create or update tracking issue
         # lychee-action@v2 exposes exit_code as a STEP OUTPUT, not an env var.
         # Using env.lychee_exit_code here would always be empty, and
@@ -77,6 +95,8 @@ jobs:
         if: steps.lychee.outputs.exit_code != '0'
         uses: peter-evans/create-issue-from-file@v6
         with:
+          # Empty when no report is open, which creates a new issue.
+          issue-number: ${{ steps.tracking-issue.outputs.number }}
           title: 'Link check report'
           content-filepath: ./lychee-report.md
           labels: |
