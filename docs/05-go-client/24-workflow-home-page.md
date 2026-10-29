@@ -136,6 +136,8 @@ Status: {% searchAttributes name="CustomKeywordField" /%}
 
 ### Workflows list
 
+The `workflows` tag needs advanced visibility on the cluster.
+
 ```markdown
 {% workflows
   query="WorkflowType = 'cadence_samples.ExpenseReportWorkflow'"
