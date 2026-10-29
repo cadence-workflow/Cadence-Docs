@@ -1,5 +1,18 @@
 [
   {
+    "id": 412143596,
+    "tag_name": "v3.13.6",
+    "html_url": "https://github.com/cadence-workflow/cadence-java-client/releases/tag/v3.13.6",
+    "draft": false,
+    "prerelease": false,
+    "published_at": "2026-10-13T21:56:50Z",
+    "body": "## What's Changed\r\n* chore(docker): cadence should wait for DB health check by @shijiesheng in https://github.com/cadence-workflow/cadence-java-client/pull/1097\r\n* feat: Support registering a Function as an Activity by @natemort in https://github.com/cadence-workflow/cadence-java-client/pull/1106\r\n* ci(release): use org secrets on v3.13.x by @shijiesheng in https://github.com/cadence-workflow/cadence-java-client/pull/1110\r\n\r\n\r\n**Full Changelog**: https://github.com/cadence-workflow/cadence-java-client/compare/v3.13.5...v3.13.6",
+    "author": {
+      "login": "shijiesheng",
+      "html_url": "https://github.com/shijiesheng"
+    }
+  },
+  {
     "id": 385851060,
     "tag_name": "v3.13.5",
     "html_url": "https://github.com/cadence-workflow/cadence-java-client/releases/tag/v3.13.5",

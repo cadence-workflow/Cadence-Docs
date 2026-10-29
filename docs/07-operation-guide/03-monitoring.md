@@ -70,7 +70,7 @@ Note: `host.docker.internal` [may not work for some docker versions](https://doc
 
 * Go to [local Grafana](http://localhost:3000) , login as `admin/admin`.
 * Configure Prometheus as datasource: use `http://host.docker.internal:9090` as URL of prometheus.
-* Import the [Grafana dashboard template](monitoring#grafanaprometheus-dashboard-templates) as JSON files.
+* Import the [Grafana dashboard template](#grafanaprometheus-dashboard-templates) as JSON files.
 
 Client side dashboard looks like this:
 <img width="1513" alt="Screen Shot 2021-02-20 at 12 32 23 PM" src="https://user-images.githubusercontent.com/4523955/108607838-b7fc4d80-7377-11eb-8fd9-edc0e58afaad.png"></img>

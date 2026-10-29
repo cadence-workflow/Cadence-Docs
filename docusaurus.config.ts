@@ -47,7 +47,10 @@ const config: Config = {
   // Usually your repo name.
   projectName: envReplace('${PROJECT_NAME:-Cadence-Docs}', process.env),
 
-  trailingSlash: false,
+  // GitHub Pages cannot serve both `page.html` and `page/index.html`. With
+  // trailingSlash: false, docs are `page.html`, so /page/ 404s (SPA recovers).
+  // Directory URLs (/page/index.html) are what GH Pages expects.
+  trailingSlash: true,
 
   onBrokenLinks: 'throw',
 
@@ -183,37 +186,27 @@ const config: Config = {
       {
         // redirects here only work in production build, not development
         fromExtensions: ['html'],
+        // Do not emit no-slash → slash HTML redirects: on GitHub Pages,
+        // `page.html` + `page/index.html` conflict and /page/ 404s.
+        // GH Pages serves /page as the directory when only page/index.html exists.
         redirects: [
           {
+            // With trailingSlash: true, only list each from-path once.
+            // /docs/about/ would write docs/about/index.html and collide
+            // with the about/ doc folder.
             from: ['/docs/team', '/docs/next/team'],
-            to: '/community/team',
+            to: '/community/team/',
           },
           {
             from: ['/docs/about', '/docs/next/about'],
-            to: '/community/contact-us',
+            to: '/community/contact-us/',
           },
-          // Bare base paths returned 404s for inbound traffic (Google
-          // Search Console). The docs plugin (used by all three
-          // sections) does not auto-generate a listing page at
-          // routeBasePath, so /docs, /community, and /faq had no
-          // matching route. Redirect both the no-slash (canonical, per
-          // trailingSlash: false) and trailing-slash forms to a sane
-          // landing page that already exists in the navbar.
-          {
-            from: '/docs',
-            to: '/docs/get-started',
-          },
-          {
-            from: '/community',
-            to: '/community/contact-us',
-          },
+          // /docs, /community, and /faq are real overview pages that
+          // list first-level sidebar sections. Keep only the leftover
+          // meetup path redirect here.
           {
             from: '/community/meetup',
-            to: '/community/contact-us',
-          },
-          {
-            from: '/faq',
-            to: '/faq/best-practices',
+            to: '/community/contact-us/',
           },
         ],
       } satisfies ClientRedirectsOptions,
@@ -357,16 +350,16 @@ const config: Config = {
           position: 'left'
         },
         {
-          to: '/community/contact-us',
+          to: '/community',
           label: 'Community',
           position: 'left',
-          activeBaseRegex: `/community/`,
+          activeBaseRegex: `/community(/|$)`,
         },
         {
-          to: '/faq/best-practices',
+          to: '/faq',
           label: 'FAQ',
           position: 'left',
-          activeBaseRegex: `/faq/`,
+          activeBaseRegex: `/faq(/|$)`,
         },
         {
           type: 'dropdown',

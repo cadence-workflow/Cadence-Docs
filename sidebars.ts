@@ -1,4 +1,5 @@
 import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
+import { applyCategoryLinks } from './sidebars.utils';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -15,6 +16,7 @@ import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
 const sidebars: SidebarsConfig = {
   // By default, Docusaurus generates a sidebar from the docs folder structure
   docsSidebar: [
+    { type: 'doc', id: 'index', label: 'Overview' },
     {
       label: 'Get Started',
       type: 'category',
@@ -72,8 +74,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       label: 'Codelabs',
-      type: 'category',
-      items: [
+      type: 'category',      items: [
         { type: 'doc', id: 'codelabs/workflow-tests-go-replayer-shadower' },
         { type: 'doc', id: 'codelabs/helm-deploy-postgres-opensearch' },
       ],
@@ -101,6 +102,7 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'java-client/side-effect' },
         { type: 'doc', id: 'java-client/testing' },
         { type: 'doc', id: 'java-client/workflow-replay-shadowing' },
+        { type: 'doc', id: 'java-client/schedules' },
       ],
     },
     {
@@ -205,8 +207,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       label: 'Releases',
-      type: 'category',
-      items: [
+      type: 'category',      items: [
         { type: 'doc', 'id': 'releases/cadence', label: 'Cadence Service' },
         { type: 'doc', 'id': 'releases/cadence-go-client', label: 'Cadence Go Client' },
         { type: 'doc', 'id': 'releases/cadence-java-client', label: 'Cadence Java Client' },
@@ -393,4 +394,7 @@ const sidebars: SidebarsConfig = {
   ],
 };
 
-export default sidebars;
+export default applyCategoryLinks(sidebars, {
+  // Redirected in docusaurus.config.ts; do not create a category index here.
+  skipSlugs: ['/about'],
+});
