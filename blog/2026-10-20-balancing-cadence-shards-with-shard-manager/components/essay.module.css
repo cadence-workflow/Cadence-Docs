@@ -1,0 +1,133 @@
+/*
+ * Text, headings, width and page colours come from the site theme, like every other post.
+ * This file only styles the post's own pieces (lead, figures, stats) and defines the
+ * chart tokens, scoped to the page that renders .essay (via :has).
+ */
+
+/* Chart tokens live on the article so every figure shares them. */
+:global(article):has(.essay) {
+  /* The site's page colours. Light mode's --ifm-background-color is transparent, so these are explicit. */
+  --paper: #ffffff;
+  --ink: var(--ifm-font-color-base);
+  --ink-2: #52514e;
+  --muted: #898781;
+  --grid: #e8e7e1;
+  --axis: #c3c2b7;
+  --rule: rgba(11, 11, 11, 0.1);
+  --card: #f5f4f0;
+  --before: #eb6834;
+  --after: #2a78d6;
+  --before-wash: rgba(235, 104, 52, 0.14);
+  --after-wash: rgba(42, 120, 214, 0.18);
+  --neutral: #9d9b94;
+  /* Filled buttons: a step darker than --neutral so light text keeps ~5:1 contrast. */
+  --control: #6f6d67;
+  --on-control: #fcfcfb;
+
+  --sans: var(--ifm-font-family-base);
+  --mono: var(--ifm-font-family-monospace);
+}
+
+:global(html[data-theme='dark']) :global(article):has(.essay) {
+  --paper: #1b1b1d;
+  --ink-2: #c3c2b7;
+  --muted: #898781;
+  --grid: #2a2a28;
+  --axis: #3d3d3a;
+  --rule: rgba(255, 255, 255, 0.1);
+  --card: #262624;
+  --before: #d95926;
+  --after: #3987e5;
+  --before-wash: rgba(217, 89, 38, 0.16);
+  --after-wash: rgba(57, 135, 229, 0.2);
+  --neutral: #6f6d67;
+  --control: #6f6d67;
+  --on-control: #f4f3ef;
+}
+
+.essay {
+  padding-bottom: 2rem;
+}
+
+/* Lead paragraph under the post header */
+.standfirst {
+  font-size: 1.25rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+  margin: 0 0 2rem;
+}
+
+/* Figures */
+.figure {
+  margin: 2.5rem 0 3rem;
+}
+.figureTitle {
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+  color: var(--ink);
+}
+.figureSubtitle {
+  font-family: var(--sans);
+  font-size: 0.875rem;
+  color: var(--ink-2);
+  margin: 0 0 1.25rem;
+  line-height: 1.5;
+}
+.caption {
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--muted);
+  margin-top: 0.85rem;
+}
+
+/* Big numbers */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0;
+  margin: 2.5rem 0 3rem;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.stat {
+  padding: 1.25rem 1rem 1.25rem 0;
+}
+.stat + .stat {
+  padding-left: 1rem;
+  border-left: 1px solid var(--rule);
+}
+.statValue {
+  font-family: var(--sans);
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.statLabel {
+  font-family: var(--sans);
+  font-size: 0.875rem;
+  color: var(--ink-2);
+  margin-top: 0.4rem;
+  line-height: 1.4;
+}
+.statDetail {
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  color: var(--muted);
+  margin-top: 0.3rem;
+}
+
+@media (max-width: 640px) {
+  .stat + .stat {
+    padding-left: 0;
+    border-left: none;
+    border-top: 1px solid var(--rule);
+  }
+}
+
+:global(article):has(.essay) .excerpt {
+  display: none;
+}

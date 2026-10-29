@@ -1,0 +1,439 @@
+/* Chart chrome. Colors come from the tokens on .essay (essay.module.css). */
+
+.chart {
+  position: relative;
+  font-family: var(--sans);
+  user-select: none;
+}
+
+/* Wraps a chart's SVG and its tooltip, so tooltip coordinates match the SVG's. */
+.plot {
+  position: relative;
+}
+
+.chart svg {
+  display: block;
+  overflow: visible;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  font-family: var(--sans);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.1rem;
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  color: var(--ink-2);
+}
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.legendBox {
+  width: 14px;
+  height: 10px;
+  border-radius: 2px;
+}
+.legendLine {
+  width: 16px;
+  height: 2px;
+  border-radius: 1px;
+}
+.legendDot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+.legendRing {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  border: 2px solid var(--ink);
+}
+
+.segmented {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 999px;
+  background: var(--card);
+  gap: 2px;
+}
+.segment,
+.segmentActive {
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 999px;
+  padding: 0.3rem 0.85rem;
+  cursor: pointer;
+  background: transparent;
+  color: var(--ink-2);
+  transition: background 150ms ease, color 150ms ease;
+}
+.segment:hover {
+  color: var(--ink);
+}
+.segmentActive {
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 0 0 1px var(--rule), 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+.segment:focus-visible,
+.segmentActive:focus-visible,
+.button:focus-visible {
+  outline: 2px solid var(--after);
+  outline-offset: 2px;
+}
+
+.button {
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 0.3rem 0.85rem;
+  cursor: pointer;
+  background: var(--paper);
+  color: var(--ink);
+  transition: border-color 150ms ease;
+}
+.button:hover {
+  border-color: var(--axis);
+}
+.button[aria-pressed='true'] {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.axisText {
+  font-size: 11px;
+  fill: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.axisTitle {
+  font-size: 11px;
+  fill: var(--muted);
+}
+.gridLine {
+  stroke: var(--grid);
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+.baseline {
+  stroke: var(--axis);
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+.referenceLine {
+  stroke: var(--ink-2);
+  stroke-width: 1.25;
+  stroke-dasharray: 4 4;
+}
+.annotation {
+  font-size: 12px;
+  fill: var(--ink-2);
+}
+.annotationStrong {
+  font-size: 12px;
+  font-weight: 600;
+  fill: var(--ink);
+}
+.marker {
+  stroke: var(--ink-2);
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+.crosshair {
+  stroke: var(--ink);
+  stroke-width: 1;
+  opacity: 0.35;
+  shape-rendering: crispEdges;
+  pointer-events: none;
+}
+
+.tooltip {
+  position: absolute;
+  pointer-events: none;
+  background: var(--paper);
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px var(--rule), 0 6px 20px rgba(0, 0, 0, 0.12);
+  padding: 0.6rem 0.75rem;
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  z-index: 2;
+  transform: translateY(-50%);
+}
+.tooltipTitle {
+  color: var(--muted);
+  font-size: 0.75rem;
+  margin-bottom: 0.35rem;
+}
+.tooltipRow {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  line-height: 1.6;
+}
+.tooltipKey {
+  flex: none;
+  width: 12px;
+  height: 2px;
+  border-radius: 1px;
+  align-self: center;
+}
+.tooltipValue {
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.tooltipLabel {
+  color: var(--ink-2);
+}
+
+.tableToggle {
+  margin-top: 1rem;
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  color: var(--ink-2);
+}
+.tableToggle summary {
+  cursor: pointer;
+  width: fit-content;
+}
+.table {
+  margin-top: 0.75rem;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  display: table;
+  width: auto;
+}
+.table th,
+.table td {
+  border: none;
+  border-bottom: 1px solid var(--rule);
+  padding: 0.3rem 1.25rem 0.3rem 0;
+  text-align: left;
+  background: transparent;
+}
+.table tr {
+  background: transparent !important;
+  border: none;
+}
+.table th {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* Placement demo */
+.demo {
+  position: relative;
+  font-family: var(--sans);
+}
+.demoStage {
+  position: relative;
+  background: var(--card);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.shard {
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 3px;
+  background: var(--neutral);
+  /* Ease in and out so the reader can follow a shard across the chart. */
+  transition: transform 850ms cubic-bezier(0.65, 0, 0.35, 1), height 500ms ease, background 300ms ease;
+  will-change: transform;
+}
+.shardMoving {
+  background: var(--after);
+}
+.shardCooling {
+  background: color-mix(in srgb, var(--after) 45%, var(--neutral));
+}
+.shardHot {
+  background: var(--before);
+}
+.reducedMotion .shard {
+  transition: none;
+}
+.columnLabel {
+  position: absolute;
+  bottom: 10px;
+  font-size: 0.75rem;
+  line-height: 1.3;
+  color: var(--muted);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  transition: color 300ms ease;
+}
+.columnLabelHot {
+  color: var(--before);
+  font-weight: 600;
+}
+.band {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: var(--after-wash);
+  transition: top 500ms ease, height 500ms ease;
+}
+.meanLine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0;
+  border-top: 1px solid var(--after);
+  transition: top 500ms ease;
+}
+.annotationLayer {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+/* Callout labels: a size up from other chart text, so they read at a glance. */
+.calloutTitle {
+  font-size: 14px;
+  font-weight: 600;
+  fill: var(--ink);
+}
+.calloutText {
+  font-size: 13px;
+  fill: var(--ink-2);
+}
+/* For callouts drawn over gridlines on the page background: a halo keeps lines off the text. */
+.calloutHalo tspan {
+  paint-order: stroke;
+  stroke: var(--paper);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+.annotationArrow,
+.annotationArrowHead {
+  fill: none;
+  stroke: var(--ink-2);
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.readouts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: var(--ink-2);
+}
+.readoutValue {
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  margin-right: 0.35rem;
+}
+/* Step header inside the demo card: a one-line caption with the stepper beside it. */
+.stagePlot {
+  position: relative;
+}
+.stageHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem 1.5rem;
+  padding: 0.9rem 1rem 0;
+}
+.stepCaption {
+  flex: 1 1 18rem;
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-family: var(--sans);
+}
+.step,
+.stepActive,
+.stepNav,
+.stepNext {
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  height: 1.875rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease;
+}
+.step,
+.stepActive {
+  min-width: 1.875rem;
+  padding: 0 0.4rem;
+  background: transparent;
+  color: var(--ink-2);
+}
+.step:hover {
+  background: color-mix(in srgb, var(--neutral) 25%, transparent);
+  color: var(--ink);
+}
+/* The shards' grey, a step darker so the light text stays readable. */
+.stepActive,
+.stepNext {
+  background: var(--control);
+  color: var(--on-control);
+}
+.stepNav {
+  background: transparent;
+  color: var(--ink-2);
+  padding: 0 0.5rem;
+}
+.stepNav:hover:not(:disabled) {
+  color: var(--ink);
+}
+.stepNext {
+  padding: 0 0.85rem;
+  margin-left: 0.25rem;
+}
+.stepNav:disabled,
+.stepNext:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.step:focus-visible,
+.stepActive:focus-visible,
+.stepNav:focus-visible,
+.stepNext:focus-visible {
+  outline: 2px solid var(--after);
+  outline-offset: 2px;
+}
+
+/* On phones the stepper wraps under the caption. Two caption lines are reserved so the shards don't jump between steps. */
+@media (max-width: 640px) {
+  .stageHeader {
+    padding: 0.75rem 0.75rem 0;
+  }
+  .stepCaption {
+    min-height: 2.9em;
+  }
+}

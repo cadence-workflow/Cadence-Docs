@@ -17,8 +17,8 @@ const STEPS = [
   },
 ];
 
-const STEP_PAUSE_MS = 600;
-const LOOP_PAUSE_MS = 1500;
+const STEP_PAUSE_MS = 1500;
+const LOOP_PAUSE_MS = 3000;
 
 // Layout constants
 const W = 720;
