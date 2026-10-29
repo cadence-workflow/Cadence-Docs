@@ -125,6 +125,7 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'go-client/continue-as-new' },
         { type: 'doc', id: 'go-client/side-effect' },
         { type: 'doc', id: 'go-client/queries' },
+        { type: 'doc', id: 'go-client/workflow-home-page' },
         { type: 'doc', id: 'go-client/activity-async-completion' },
         { type: 'doc', id: 'go-client/workflow-testing' },
         { type: 'doc', id: 'go-client/workflow-versioning' },
