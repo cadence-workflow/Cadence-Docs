@@ -1,12 +1,12 @@
 /*
- * Text, headings, width and page colours come from the site theme, like every other post.
+ * Text, headings, width and page colors come from the site theme, like every other post.
  * This file only styles the post's own pieces (lead, figures, stats) and defines the
  * chart tokens, scoped to the page that renders .essay (via :has).
  */
 
 /* Chart tokens live on the article so every figure shares them. */
 :global(article):has(.essay) {
-  /* The site's page colours. Light mode's --ifm-background-color is transparent, so these are explicit. */
+  /* The site's page colors. Light mode's --ifm-background-color is transparent, so these are explicit. */
   --paper: #ffffff;
   --ink: var(--ifm-font-color-base);
   --ink-2: #52514e;

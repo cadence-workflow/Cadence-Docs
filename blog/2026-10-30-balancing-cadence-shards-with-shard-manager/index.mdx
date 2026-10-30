@@ -2,7 +2,7 @@
 title: "Introducing Shard Manager"
 description: "Shard Manager is a new standalone, general-purpose sharding service.
 It provides near-optimal load-aware placement. It reduced CPU utilization on the
-hottest Matching host by about a third. And it provides a centralized view of shard
+hottest Matching host by 38%. And it provides a centralized view of shard
 ownership and placement."
 date: 2026-10-30
 authors: [jakobht, andreasholt, gazi-yestemirova, dkrotx]
@@ -28,7 +28,7 @@ import ArchitectureFlow from "../2026-04-20-shard-manager-incident/ArchitectureF
 
 Shard Manager is a new standalone, general-purpose sharding service.
 It provides near-optimal load-aware placement. It reduced CPU utilization on the
-hottest Matching host by about a third. And it provides a centralized view of shard
+hottest Matching host by 38%. And it provides a centralized view of shard
 ownership and placement.
 
 </Excerpt>
@@ -43,7 +43,7 @@ Code](../2026-04-20-shard-manager-incident/2026-04-20-shard-manager-incident.mdx
 We have now onboarded Cadence's Matching service, which routes workflow and
 activity tasks to workers, to Shard Manager across all of Uber. With near-optimal
 load-aware placement, CPU utilization on the hottest Matching host dropped by
-about a third.
+38%.
 To use it in your own service, start with the [Shard Manager
 documentation](/docs/shard-manager).
 
@@ -84,7 +84,8 @@ lets operators drain a host or stop a single shard.
 
 In Matching, the shards are task lists, the queues that workers poll for tasks,
 and each one lives on exactly one host.
-Below we see data over a month in one of Uber's production Matching clusters.
+The figure below shows a month of data from one of Uber's production Matching
+clusters.
 The period covers the time before and after the onboarding.
 
 <CpuFigure />
@@ -232,7 +233,7 @@ easy to follow, each step is a single move.
 
 <Figure
   title="Shard Manager load balancing six hosts"
-  subtitle="Step through it with Next, or the arrow keys. A shard turns blue when it moves and fades back to grey as its cooldown runs out."
+  subtitle="Step through it with Next, or the arrow keys. A shard turns blue when it moves and fades back to gray as its cooldown runs out."
 >
   <ShardManagerDemo />
 </Figure>

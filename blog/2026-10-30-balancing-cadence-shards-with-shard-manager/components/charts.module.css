@@ -402,7 +402,7 @@
   background: color-mix(in srgb, var(--neutral) 25%, transparent);
   color: var(--ink);
 }
-/* The shards' grey, a step darker so the light text stays readable. */
+/* The shards' gray, a step darker so the light text stays readable. */
 .stepActive,
 .stepNext {
   background: var(--control);

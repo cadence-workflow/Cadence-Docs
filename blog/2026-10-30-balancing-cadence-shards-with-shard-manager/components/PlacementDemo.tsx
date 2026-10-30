@@ -304,7 +304,7 @@ function Stage({ shards, width, tick, showBand, scaleMax, header, hottestCallout
 
         {positioned.map(({ shard, left, top, heightPx }) => {
           // Full blue for the shard that moved this step, a clearly lighter blue that fades
-          // toward grey for earlier moves still in their cooldown.
+          // toward gray for earlier moves still in their cooldown.
           const sinceMove = tick - shard.lastMoveTick;
           const cooling = sinceMove < COOLDOWN_TICKS;
           const blueShare = sinceMove === 0 ? 100 : Math.round(50 - (sinceMove / COOLDOWN_TICKS) * 30);
