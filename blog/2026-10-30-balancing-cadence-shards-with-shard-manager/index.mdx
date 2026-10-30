@@ -18,7 +18,7 @@ keywords:
   - shard placement
 ---
 
-import { Essay, Standfirst, Figure, Stats, Stat, Excerpt } from "./components/Essay";
+import { Essay, Figure, Stats, Stat, Excerpt } from "./components/Essay";
 import CpuFigure from "./components/CpuFigure";
 import ShardManagerDemo, { HashRingPlacement, HotTaskListPlacement } from "./components/PlacementDemo";
 import PlacementQuality from "./components/PlacementQuality";
@@ -37,18 +37,13 @@ ownership and placement.
 
 <Essay>
 
-<Standfirst>
-Shard Manager is a new standalone, general-purpose sharding service.
-It provides near-optimal load-aware placement. It reduced CPU utilization on the
-hottest Matching host by about a third. And it provides a centralized view of shard
-ownership and placement.
-</Standfirst>
-
-For the past year the Cadence team has worked on the new Shard Manager service
-(earlier covered in [1 Day, 2 Engineers, 6 Lines of
+For the past year the Cadence team has worked on Shard Manager, a new
+standalone, general-purpose sharding service (earlier covered in [1 Day, 2 Engineers, 6 Lines of
 Code](../2026-04-20-shard-manager-incident/2026-04-20-shard-manager-incident.mdx)).
 We have now onboarded Cadence's Matching service, which routes workflow and
-activity tasks to workers, to Shard Manager across all of Uber.
+activity tasks to workers, to Shard Manager across all of Uber. With near-optimal
+load-aware placement, CPU utilization on the hottest Matching host dropped by
+about a third.
 To use it in your own service, start with the [Shard Manager
 documentation](/docs/shard-manager).
 
