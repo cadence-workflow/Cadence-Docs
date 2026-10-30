@@ -174,7 +174,7 @@ const config: Config = {
         id: 'faq',
         path: 'faq',
         routeBasePath: 'faq',
-        editUrl: 'https://github.com/cadence-workflow/Cadence-Docs/edit/master/faq/',
+        editUrl: 'https://github.com/cadence-workflow/Cadence-Docs/edit/master/',
         remarkPlugins: [npm2yarn],
         sidebarPath: './sidebarsFAQ.js',
         showLastUpdateAuthor: true,
