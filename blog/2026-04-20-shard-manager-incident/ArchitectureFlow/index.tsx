@@ -531,7 +531,7 @@ function StepButton({
 
 export default function ArchitectureFlow() {
   const [stepIdx, setStepIdx] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(false);
   // playToken is used as a React `key` on the animation components so that
   // re-clicking the current step (or resuming auto-play) always re-mounts
   // the animation and replays it from the start.
