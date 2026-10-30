@@ -116,15 +116,15 @@ export default function HostSpread({ region }: HostSpreadProps) {
         <div className={styles.legend}>
           <span className={styles.legendItem}>
             <span className={styles.legendLine} style={{ background: "var(--ink-2)" }} />
-            Hottest host
+            Max
           </span>
           <span className={styles.legendItem}>
             <span className={styles.legendLine} style={{ background: "var(--ink)" }} />
-            Average host
+            Average
           </span>
           <span className={styles.legendItem}>
             <span className={`${styles.legendLine} ${styles.legendLineDashed}`} style={{ background: "var(--ink-2)" }} />
-            Coldest host
+            Min
           </span>
           <span className={styles.legendItem}>
             <span className={styles.legendBox} style={{ background: "var(--before)" }} />
@@ -143,7 +143,7 @@ export default function HostSpread({ region }: HostSpreadProps) {
           width={width}
           height={height}
           role="img"
-          aria-label={`CPU per Matching host, coldest to hottest host and the average, over one month. The range narrows sharply after load-aware placement is enabled.`}
+          aria-label={`CPU per Matching host, min, max and average, over one month. The range narrows sharply after load-aware placement is enabled.`}
           tabIndex={0}
           onKeyDown={onKeyDown}
           onBlur={() => setHoverIndex(null)}
@@ -256,10 +256,9 @@ export default function HostSpread({ region }: HostSpreadProps) {
             containerWidth={width}
             title={`${formatDayTime(hovered[0])} · ${phaseName(hovered[0])}`}
             rows={[
-              { key: "max", value: `${hovered[5].toFixed(2)} cores`, label: "hottest" },
+              { key: "max", value: `${hovered[5].toFixed(2)} cores`, label: "max" },
               { key: "mean", value: `${hovered[3].toFixed(2)} cores`, label: "average", swatch: "var(--ink)" },
-              { key: "min", value: `${hovered[1].toFixed(2)} cores`, label: "coldest" },
-              { key: "hosts", value: String(hovered[6]), label: "hosts reporting" },
+              { key: "min", value: `${hovered[1].toFixed(2)} cores`, label: "min" },
             ]}
           />
         )}

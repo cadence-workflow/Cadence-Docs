@@ -79,10 +79,10 @@ virtual nodes). However, they took them based on their hash rather than their
 load, so they didn't necessarily take the hot shards off the hot host. **Adding
 capacity didn't fix the hotspot.**
 
-We realized we could no longer proceed without a central service, and we
-decided to build Shard Manager. It owns shard placement, balances shards by
-their observed load, gives one authoritative answer to who owns a shard, and
-lets operators drain a host or stop a single shard.
+We realized a central service could solve these problems and built Shard
+Manager. It owns shard placement, balances shards by their observed load, gives
+one authoritative answer to who owns a shard, and lets operators drain a host or
+stop a single shard.
 
 ## Load balancing and results in Uber's production environments
 
@@ -195,27 +195,24 @@ Matching integration.
   <ArchitectureFlow />
 </Figure>
 
-The system consists of three roles. The Shard Manager is the central service,
-backed by etcd, responsible for deciding placements and communicating these
-placements to the rest of the system. The Shard Manager service has multiple
-instances, where one of them is elected as a leader for each namespace. The
-leader is responsible for load balancing and changing assignments when hosts
-join and leave.
+The system consists of three roles, the Shard Manager, the executors and the
+spectators. The Shard Manager is the central service, backed by etcd,
+responsible for deciding placements and communicating these placements to the
+rest of the system. The Shard Manager service has multiple instances, where one
+of them is elected as a leader for each namespace. The leader is responsible for
+load balancing and changing assignments when hosts join and leave.
 
-The executors are the instances of the service responsible for processing the
-shards. Cadence has two sharded services, Matching and History. History
-manages workflow state and execution. In this case the executors are the
-Matching instances. They heartbeat to the Shard Manager, which allows the
-Shard Manager to track liveness. Additionally, the heartbeats include load
-information for all shards the executor owns. The service defines what load
-means (see the [integration guide](/docs/shard-manager/integration)). For
-Matching, the load measure is the number of tasks the task list processes.
+Executors are responsible for processing (executing) the work. In this case the
+executors are Cadence's Matching service. They heartbeat to the Shard Manager,
+reporting liveness and load. The service defines what load means (see the
+[integration guide](/docs/shard-manager/integration)). For Matching, the load
+measure is the number of tasks the task list processes.
 
-The spectators are the services that need to know who owns a shard. In the
-diagram we see Cadence Frontend in the role of spectator, as it routes each
-request to the Matching host that owns the task list. The spectators establish
-a gRPC stream to the Shard Manager, which then pushes new shard assignments to
-the spectators as the assignments change.
+Spectators are services that interact with executors, so they need to know which
+executor owns a shard. In the diagram we see Cadence Frontend in the role of
+spectator, as it routes each request to the Matching host that owns the task
+list. The spectators establish a gRPC stream to the Shard Manager, which then
+pushes new shard assignments to the spectators as the assignments change.
 
 :::tip[A service can play both roles]
 
@@ -337,7 +334,8 @@ the same hosts can now carry roughly 1.6 times the traffic.
 ## Future work
 
 - **History.** We onboarded Matching first. Integrating it is much simpler
-  than History, and the cost of moving a task list between hosts is low.
+  than History, the Cadence service that manages workflow state and execution,
+  and the cost of moving a task list between hosts is low.
   History will be onboarded next. We expect a larger effect on CPU utilization
   there, and with it the ability to handle the same load with fewer instances.
 - **Make etcd optional.** Shard Manager stores its state in etcd today. We plan
