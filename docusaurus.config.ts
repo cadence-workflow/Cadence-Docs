@@ -416,7 +416,7 @@ const config: Config = {
             },
             {
               label: 'Cadence Community on CNCF Slack',
-              href: 'https://inviter.co/cncf',
+              href: 'https://cloud-native.slack.com/archives/C0A7ZBG65PT',
             },
             {
               label: 'LinkedIn',
