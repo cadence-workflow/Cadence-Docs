@@ -198,14 +198,15 @@ andreasholt:
     linkedin: https://www.linkedin.com/in/andreas-holt/
     github: andreasholt
 
-gazi-yestemirova:
+gazizayestemir:
   name: Gaziza Yestemirova
   title: Software Engineer II @ Uber
-  url: https://github.com/gazi-yestemirova
-  image_url: https://github.com/gazi-yestemirova.png
+  url: https://www.linkedin.com/in/gaziza-yestemirova-57b93b106/
+  image_url: https://github.com/gazizayestemir.png
   page: true
   socials:
-    github: gazi-yestemirova
+    linkedin: https://www.linkedin.com/in/gaziza-yestemirova-57b93b106/
+    github: gazizayestemir
 
 dkrotx:
   name: Jan Kisel

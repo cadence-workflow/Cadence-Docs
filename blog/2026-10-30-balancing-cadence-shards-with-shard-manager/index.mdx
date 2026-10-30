@@ -5,7 +5,7 @@ It provides near-optimal load-aware placement. It reduced CPU utilization on the
 hottest Matching host by 38%. And it provides a centralized view of shard
 ownership and placement."
 date: 2026-10-30
-authors: [jakobht, andreasholt, gazi-yestemirova, dkrotx]
+authors: [jakobht, andreasholt, gazizayestemir, dkrotx]
 tags:
   - shard-manager
   - matching
@@ -40,8 +40,8 @@ ownership and placement.
 For the past year the Cadence team has worked on Shard Manager, a new
 standalone, general-purpose sharding service (earlier covered in [1 Day, 2 Engineers, 6 Lines of
 Code](../2026-04-20-shard-manager-incident/2026-04-20-shard-manager-incident.mdx)).
-We have now onboarded Cadence's Matching service, which routes workflow and
-activity tasks to workers, to Shard Manager across all of Uber. With near-optimal
+We have now onboarded Cadence's Matching service to Shard Manager across all of
+Uber. Matching routes workflow and activity tasks to workers. With near-optimal
 load-aware placement, CPU utilization on the hottest Matching host dropped by
 38%.
 To use it in your own service, start with the [Shard Manager
@@ -72,8 +72,8 @@ Both this distribution and coordination became recurring problems:
   keeps all its shards.
 
 We saw this when a Matching host ran hot and our auto-scaler added more hosts.
-Each new host took over a random set of shards, so the hot shards could still
-end up together on one host. **Adding capacity didn't fix the hotspot.**
+The new hosts took over a random set of shards, so the hot shards sometimes all
+ended up on one host. **Adding capacity didn't fix the hotspot.**
 
 We realized we could no longer proceed without a central service, and we
 decided to build Shard Manager. It owns shard placement, balances shards by
@@ -221,19 +221,19 @@ callers of the service to not know about the sharding of the service.
 
 :::
 
-For more information, see the [Shard Manager
+For more information, see [Shard Manager
 architecture](/docs/shard-manager/architecture).
 
 ### How the load balancing works
 
 With the executors reporting the load of each shard they own, we can do
 load-aware balancing. Below is an example with six hosts. It starts from a hash
-ring's placement, where every host has the same number of shards. To keep it
-easy to follow, each step is a single move.
+ring's placement, where every host has the same number of shards. To simplify the
+demo, each step is a single move.
 
 <Figure
   title="Shard Manager load balancing six hosts"
-  subtitle="Step through it with Next, or the arrow keys. A shard turns blue when it moves and fades back to gray as its cooldown runs out."
+  subtitle="Step through it with Next. A shard turns blue when it moves and fades back to gray as its cooldown runs out."
 >
   <ShardManagerDemo />
 </Figure>
