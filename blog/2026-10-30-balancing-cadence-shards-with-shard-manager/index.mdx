@@ -251,14 +251,16 @@ don't trigger moves. Every few seconds it looks for an imbalance:
   and lower load thresholds). A host above the upper band is too hot, and a
   host below the lower band has room to take more load. Anything in between is
   left alone.
-- Shards are moved one at a time, from a hot host to the coldest one, picking
-  the shard that brings the two closest together, excluding shards that would
-  make the cold host hot.
+- Each cycle moves a small batch of shards, by default up to 1% of all shards.
+  Each move goes from a hot host to the coldest one, picking the shard that
+  brings the two closest together, excluding shards that would make the cold
+  host hot.
 - Shards that have recently moved have to cool down before they can be moved
   again, which prevents thrashing.
 
 Below is an example with six hosts. It starts from a hash ring's placement,
-where every host has the same number of shards, and each step is one cycle.
+where every host has the same number of shards. To keep it easy to follow, each
+step is a single move.
 
 <Figure
   title="Shard Manager load balancing six hosts"
