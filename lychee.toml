@@ -24,8 +24,13 @@ exclude = [
   "x\\.com",
   "lf\\.biz",
   "stackoverflow\\.com",
-  "www\\.uber\\.com/blog",
+  "www\\.uber\\.com",
   "doordash\\.engineering",
+  "medium\\.com",
+  "levelup\\.gitconnected\\.com",
+  "betterprogramming\\.pub",
+  "npmjs\\.com",
+  "globenewswire\\.com",
 ]
 
 # Never traverse these paths when expanding inputs.
