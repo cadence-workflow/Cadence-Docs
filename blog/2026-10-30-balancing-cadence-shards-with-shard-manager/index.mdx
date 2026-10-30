@@ -76,8 +76,10 @@ to build Shard Manager.
 The main pain points Shard Manager solves are:
 
 1. **Centralized control** Shard placements live in one place instead of on
-   every host of all four Cadence services, so they are much easier to reason
-   about and change.
+   every host of all four Cadence services. Only Matching and History are
+   sharded, but all four are part of the hash ring so they can route requests
+   to the right host. In one place, placements are much easier to reason about
+   and change.
 2. **Balancing** Shards are balanced by their observed load.
 3. **Operations** An operator can stop processing for a specific shard, or
    drain all shards out of a specific host.
