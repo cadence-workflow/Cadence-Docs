@@ -20,7 +20,8 @@ keywords:
 
 import { Essay, Figure, Stats, Stat, Excerpt } from "./components/Essay";
 import CpuFigure from "./components/CpuFigure";
-import ShardManagerDemo, { BeforeAfterPlacement, HashRingPlacement, HotTaskListPlacement } from "./components/PlacementDemo";
+import ShardManagerDemo, { HashRingPlacement, HotTaskListPlacement } from "./components/PlacementDemo";
+import CpuAtAGlance from "./components/CpuAtAGlance";
 import PlacementQuality from "./components/PlacementQuality";
 import ArchitectureFlow from "../2026-04-20-shard-manager-incident/ArchitectureFlow";
 
@@ -44,10 +45,11 @@ We have now onboarded Cadence's Matching service to Shard Manager across all of
 Uber. Matching routes workflow and activity tasks to workers. With near-optimal
 load-aware placement, CPU utilization on the hottest Matching host dropped by
 38%.
+
+<CpuAtAGlance />
+
 To use it in your own service, start with the [Shard Manager
 documentation](/docs/shard-manager).
-
-<BeforeAfterPlacement />
 
 ## Why we built Shard Manager
 
