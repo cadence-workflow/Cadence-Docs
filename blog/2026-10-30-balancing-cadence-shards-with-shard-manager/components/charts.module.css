@@ -48,6 +48,11 @@
   height: 2px;
   border-radius: 1px;
 }
+.legendLineDashed {
+  width: 22px;
+  -webkit-mask: repeating-linear-gradient(90deg, #000 0 4px, transparent 4px 7px);
+  mask: repeating-linear-gradient(90deg, #000 0 4px, transparent 4px 7px);
+}
 .legendDot {
   width: 9px;
   height: 9px;

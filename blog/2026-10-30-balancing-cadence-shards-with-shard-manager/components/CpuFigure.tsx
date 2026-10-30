@@ -13,7 +13,7 @@ const VIEWS: Record<View, { title: string; subtitle: string; caption: string }> 
   overTime: {
     title: "CPU per Matching host, one production cluster",
     subtitle:
-      "Each band runs from the coldest to the hottest host at that moment. The line is the average host. Hover for values.",
+      "The hottest, average and coldest host at each moment. The lines turn from orange to blue when load-aware placement is switched on. Hover for values.",
     caption: "Aug 28 to Sep 28, 2026. The cluster runs 11 or 12 Matching hosts.",
   },
   daily: {

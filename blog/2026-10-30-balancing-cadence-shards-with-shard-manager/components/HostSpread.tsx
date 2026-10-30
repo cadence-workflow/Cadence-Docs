@@ -75,11 +75,12 @@ export default function HostSpread({ region }: HostSpreadProps) {
 
   const paths = useMemo(() => {
     const top = points.map((p) => `${x(p[0]).toFixed(1)},${y(p[5]).toFixed(1)}`);
-    const bottom = points.map((p) => `${x(p[0]).toFixed(1)},${y(p[1]).toFixed(1)}`).reverse();
+    const bottom = points.map((p) => `${x(p[0]).toFixed(1)},${y(p[1]).toFixed(1)}`);
     const mean = points.map((p) => `${x(p[0]).toFixed(1)},${y(p[3]).toFixed(1)}`);
     return {
-      band: `M${top.join("L")}L${bottom.join("L")}Z`,
+      band: `M${top.join("L")}L${[...bottom].reverse().join("L")}Z`,
       max: `M${top.join("L")}`,
+      min: `M${bottom.join("L")}`,
       mean: `M${mean.join("L")}`,
     };
   }, [points, width, height]);
@@ -111,24 +112,27 @@ export default function HostSpread({ region }: HostSpreadProps) {
   return (
     <div className={styles.chart} ref={ref}>
       <div className={styles.controls}>
+        {/* Line style is the series, color is before or after load-aware placement. */}
         <div className={styles.legend}>
           <span className={styles.legendItem}>
-            <span
-              className={styles.legendBox}
-              style={{ background: "var(--before-wash)", boxShadow: "inset 0 2px 0 var(--before)" }}
-            />
-            Coldest to hottest host, hash ring
-          </span>
-          <span className={styles.legendItem}>
-            <span
-              className={styles.legendBox}
-              style={{ background: "var(--after-wash)", boxShadow: "inset 0 2px 0 var(--after)" }}
-            />
-            Coldest to hottest host, load-aware
+            <span className={styles.legendLine} style={{ background: "var(--ink-2)" }} />
+            Hottest host
           </span>
           <span className={styles.legendItem}>
             <span className={styles.legendLine} style={{ background: "var(--ink)" }} />
             Average host
+          </span>
+          <span className={styles.legendItem}>
+            <span className={`${styles.legendLine} ${styles.legendLineDashed}`} style={{ background: "var(--ink-2)" }} />
+            Coldest host
+          </span>
+          <span className={styles.legendItem}>
+            <span className={styles.legendBox} style={{ background: "var(--before)" }} />
+            Before
+          </span>
+          <span className={styles.legendItem}>
+            <span className={styles.legendBox} style={{ background: "var(--after)" }} />
+            After
           </span>
         </div>
       </div>
@@ -179,6 +183,14 @@ export default function HostSpread({ region }: HostSpreadProps) {
             <g key={phase.id} clipPath={`url(#${clipPrefix}-${phase.id})`}>
               <path d={paths.band} fill={phase.wash} />
               <path d={paths.max} fill="none" stroke={phase.color} strokeWidth={1.25} strokeLinejoin="round" />
+              <path
+                d={paths.min}
+                fill="none"
+                stroke={phase.color}
+                strokeWidth={1.25}
+                strokeDasharray="4 3"
+                strokeLinejoin="round"
+              />
             </g>
           ))}
           <path
