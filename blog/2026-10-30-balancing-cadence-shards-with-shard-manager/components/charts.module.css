@@ -428,6 +428,31 @@
   outline-offset: 2px;
 }
 
+/* Both CPU figure views stacked in one cell; only the active one is visible. */
+.viewStack {
+  display: grid;
+}
+.viewStack > * {
+  display: block;
+  grid-area: 1 / 1;
+  min-width: 0;
+}
+.viewHidden {
+  visibility: hidden;
+}
+
+/* All step captions stacked in one cell; only the current one is visible. */
+.captionStack {
+  display: grid;
+  flex: 1 1 18rem;
+}
+.captionStack > * {
+  grid-area: 1 / 1;
+}
+.captionHidden {
+  visibility: hidden;
+}
+
 /* Before and after placements for the top of the post: two stages with an arrow between them. */
 /* No Figure around it, so it brings the Figure's spacing itself. */
 .beforeAfterBlock {

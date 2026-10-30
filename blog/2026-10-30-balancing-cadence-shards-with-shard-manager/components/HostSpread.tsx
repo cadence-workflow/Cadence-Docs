@@ -1,6 +1,6 @@
-import React, { type ReactNode, useId, useMemo, useState } from "react";
+import React, { useEffect, useId, useMemo, useState } from "react";
 import cluster from "../data/clusterA.json";
-import { Segmented, Tooltip, formatDay, formatDayTime, niceTicks, scaleLinear, useWidth } from "./chartKit";
+import { Tooltip, formatDay, formatDayTime, niceTicks, scaleLinear, useWidth } from "./chartKit";
 import styles from "./charts.module.css";
 
 export type Region = "Region 1" | "Region 2";
@@ -55,16 +55,15 @@ function nearestIndex(points: SpreadPoint[], t: number): number {
   return t - points[low][0] < points[high][0] - t ? low : high;
 }
 
+// The region toggle lives in CpuFigure, shared with DailyComparison.
 interface HostSpreadProps {
   region: Region;
-  onRegionChange: (region: Region) => void;
-  // Rendered before the region toggle, in the same row.
-  controls?: ReactNode;
 }
 
-export default function HostSpread({ region, onRegionChange, controls }: HostSpreadProps) {
+export default function HostSpread({ region }: HostSpreadProps) {
   const [ref, width] = useWidth<HTMLDivElement>();
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+  useEffect(() => setHoverIndex(null), [region]);
   const clipPrefix = useId().replace(/:/g, "");
 
   const height = width < 640 ? 300 : 380;
@@ -112,19 +111,6 @@ export default function HostSpread({ region, onRegionChange, controls }: HostSpr
   return (
     <div className={styles.chart} ref={ref}>
       <div className={styles.controls}>
-        {controls}
-        <Segmented
-          label="Region"
-          value={region}
-          onChange={(value) => {
-            onRegionChange(value);
-            setHoverIndex(null);
-          }}
-          options={[
-            { value: "Region 1", label: "Region 1" },
-            { value: "Region 2", label: "Region 2" },
-          ]}
-        />
         <div className={styles.legend}>
           <span className={styles.legendItem}>
             <span

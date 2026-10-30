@@ -11,15 +11,18 @@ export function Standfirst({ children }: { children: ReactNode }) {
 }
 
 interface FigureProps {
-  title: string;
+  title: ReactNode;
   subtitle?: ReactNode;
   caption?: ReactNode;
+  // Shown above the title, e.g. a toggle that switches what the figure shows.
+  controls?: ReactNode;
   children: ReactNode;
 }
 
-export function Figure({ title, subtitle, caption, children }: FigureProps) {
+export function Figure({ title, subtitle, caption, controls, children }: FigureProps) {
   return (
     <figure className={styles.figure}>
+      {controls}
       <div className={styles.figureTitle}>{title}</div>
       {subtitle && <p className={styles.figureSubtitle}>{subtitle}</p>}
       {children}

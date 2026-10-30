@@ -557,9 +557,15 @@ export default function ShardManagerDemo() {
         scaleMax={scaleMax}
         header={
           <>
-            <p className={styles.stepCaption} aria-live="polite">
-              {frame.caption}
-            </p>
+            {/* Every caption sits in the same grid cell, so the header is as tall as the longest
+                one and the shards don't jump when a caption wraps. */}
+            <div className={styles.captionStack} aria-live="polite">
+              {frames.map((f, i) => (
+                <p key={i} className={`${styles.stepCaption} ${i === index ? "" : styles.captionHidden}`}>
+                  {f.caption}
+                </p>
+              ))}
+            </div>
             <nav className={styles.stepper} aria-label="Steps">
               <button type="button" className={styles.stepNav} onClick={() => go(index - 1)} disabled={index === 0}>
                 Prev

@@ -1,6 +1,6 @@
-import React, { type ReactNode, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import cluster from "../data/clusterA.json";
-import { Segmented, Tooltip, formatDay, scaleLinear, useWidth } from "./chartKit";
+import { Tooltip, formatDay, scaleLinear, useWidth } from "./chartKit";
 import styles from "./charts.module.css";
 
 export type Region = "Region 1" | "Region 2";
@@ -54,16 +54,15 @@ function ratio(value: number): string {
 
 // One dot per day on a calendar axis, with a dashed line at the hash ring's best day:
 // every day after the switch sits below it.
+// The region toggle lives in CpuFigure, shared with HostSpread.
 interface DailyComparisonProps {
   region: Region;
-  onRegionChange: (region: Region) => void;
-  // Rendered before the region toggle, in the same row.
-  controls?: ReactNode;
 }
 
-export default function DailyComparison({ region, onRegionChange, controls }: DailyComparisonProps) {
+export default function DailyComparison({ region }: DailyComparisonProps) {
   const [ref, width] = useWidth<HTMLDivElement>();
   const [hovered, setHovered] = useState<PlacedDay | null>(null);
+  useEffect(() => setHovered(null), [region]);
 
   const narrow = width < 640;
   const height = narrow ? 290 : 330;
@@ -113,22 +112,6 @@ export default function DailyComparison({ region, onRegionChange, controls }: Da
 
   return (
     <div className={styles.chart} ref={ref}>
-      <div className={styles.controls}>
-        {controls}
-        <Segmented
-          label="Region"
-          value={region}
-          onChange={(value) => {
-            onRegionChange(value);
-            setHovered(null);
-          }}
-          options={[
-            { value: "Region 1", label: "Region 1" },
-            { value: "Region 2", label: "Region 2" },
-          ]}
-        />
-      </div>
-
       <div className={styles.plot}>
         <svg
           width={width}
