@@ -210,24 +210,27 @@ architecture diagram of the full system with the Matching integration.
   <ArchitectureFlow />
 </Figure>
 
-The system consists of three roles:
+The system consists of three roles. The Shard Manager is the central service,
+backed by etcd, responsible for deciding placements and communicating these
+placements to the rest of the system. The Shard Manager service has multiple
+instances, where one of them is elected as a leader for each namespace. The
+leader is responsible for load balancing and changing assignments when hosts
+join and leave.
 
-- **The Shard Manager.** The central service, backed by etcd, is responsible for
-  deciding placements and communicating these placements to the rest of the
-  system. The instances of Shard Manager elect a leader for each namespace, which
-  is responsible for load balancing and changing assignments when hosts
-  join and leave.
-- **The Executors.** Cadence has two sharded services, Matching and History.
-  The executors are the instances of the service responsible for processing
-  the shards, in this case Matching. The Matching instances heartbeat to the Shard Manager, which allows
-  the Shard Manager to track liveness. Additionally, the heartbeats include load
-  information for all shards the executor owns. For Matching, the load measure is
-  the number of tasks the task list processes.
-- **The Spectators.** These are the services that need to know who owns a shard.
-  In the diagram we see Cadence Frontend in the role of spectator, as it routes
-  each request to the Matching host that owns the task list. The spectators
-  establish a gRPC stream to the Shard Manager, which then pushes new shard
-  assignments to the spectators as the assignments change.
+The executors are the instances of the service responsible for processing the
+shards. Cadence has two sharded services, Matching and History, and in this
+case the executors are the Matching instances. They heartbeat to the Shard
+Manager, which allows the Shard Manager to track liveness. Additionally, the
+heartbeats include load information for all shards the executor owns. The
+service defines what load means (see the [integration
+guide](/docs/shard-manager/integration)). For Matching, the load measure is the
+number of tasks the task list processes.
+
+The spectators are the services that need to know who owns a shard. In the
+diagram we see Cadence Frontend in the role of spectator, as it routes each
+request to the Matching host that owns the task list. The spectators establish
+a gRPC stream to the Shard Manager, which then pushes new shard assignments to
+the spectators as the assignments change.
 
 :::tip[A service can play both roles]
 
