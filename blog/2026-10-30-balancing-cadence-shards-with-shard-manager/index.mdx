@@ -243,8 +243,19 @@ architecture](/docs/shard-manager/architecture).
 ### How the load balancing works
 
 With the executors reporting the load of each shard they own, we can do
-load-aware balancing. The Shard Manager smooths the loads so small variations
-don't trigger moves. Every few seconds it looks for an imbalance:
+load-aware balancing. Below is an example with six hosts. It starts from a hash
+ring's placement, where every host has the same number of shards. To keep it
+easy to follow, each step is a single move.
+
+<Figure
+  title="Shard Manager load balancing six hosts"
+  subtitle="Step through it with Next, or the arrow keys. A shard turns blue when it moves and fades back to grey as its cooldown runs out."
+>
+  <ShardManagerDemo />
+</Figure>
+
+The Shard Manager smooths the loads so small variations don't trigger moves.
+Every few seconds it looks for an imbalance:
 
 - It compares each host with the average host using hysteresis bands (upper
   and lower load thresholds). A host above the upper band is too hot, and a
@@ -256,17 +267,6 @@ don't trigger moves. Every few seconds it looks for an imbalance:
   host hot.
 - Shards that have recently moved have to cool down before they can be moved
   again, which prevents thrashing.
-
-Below is an example with six hosts. It starts from a hash ring's placement,
-where every host has the same number of shards. To keep it easy to follow, each
-step is a single move.
-
-<Figure
-  title="Shard Manager load balancing six hosts"
-  subtitle="Step through it with Next, or the arrow keys. A shard turns blue when it moves and fades back to grey as its cooldown runs out."
->
-  <ShardManagerDemo />
-</Figure>
 
 :::note[Hysteresis bands]
 
