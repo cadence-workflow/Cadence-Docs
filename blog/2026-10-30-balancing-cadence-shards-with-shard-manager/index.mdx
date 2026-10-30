@@ -67,11 +67,11 @@ had no way to change it, as every instance in the ring had to update its view
 in the same instant.
 
 We saw cases where a Matching host ran hot and our auto-scaler added more
-instances to help. However, because the hash ring redistributes shards without
-looking at load, that "help" could make things even worse. The new hosts
-reshuffled the ring, and more hot task lists ended up on the same host than
-before. Adding capacity increased the hotspot. We realized we could no longer
-proceed without a central service, and we decided to build Shard Manager.
+instances to help. However, the hash ring places shards without looking at load.
+Each new host took over a random set of shards, so the hot task lists could
+still end up together on one host. Adding capacity didn't fix the hotspot. We
+realized we could no longer proceed without a central service, and we decided
+to build Shard Manager.
 
 The main pain points Shard Manager solves are:
 
