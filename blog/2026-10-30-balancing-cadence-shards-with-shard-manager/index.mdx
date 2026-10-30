@@ -74,9 +74,9 @@ Both this distribution and coordination became recurring problems:
   keeps all its shards.
 
 We saw this when a Matching host ran hot and our auto-scaler added more hosts.
-The new hosts took a set of shards from 100 places in the ring (thanks to
-virtual nodes). However, they took them based on their hash rather than their
-load, so they didn't necessarily take the hot shards off the hot host. **Adding
+Each new host took a set of shards from 100 places in the ring (thanks to
+virtual nodes). However, it took them based on their hash rather than their
+load, so it didn't necessarily take the hot shards off the hot host. **Adding
 capacity didn't fix the hotspot.**
 
 We realized a central service could solve these problems and built Shard
