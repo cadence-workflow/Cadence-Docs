@@ -1,0 +1,349 @@
+---
+title: "Introducing Shard Manager"
+description: "Shard Manager is a new standalone, general-purpose sharding service.
+It provides near-optimal load-aware placement. It reduced CPU utilization on the
+hottest Matching host by 38%. And it provides a centralized view of shard
+ownership and placement."
+date: 2026-10-30
+authors: [jakobht, andreasholt, gazizayestemir, dkrotx]
+tags:
+  - shard-manager
+  - matching
+keywords:
+  - cadence shard manager
+  - load balancing
+  - consistent hashing
+  - hash ring
+  - cadence matching service
+  - shard placement
+---
+
+import { Essay, Figure, Stats, Stat, Excerpt } from "./components/Essay";
+import CpuFigure from "./components/CpuFigure";
+import ShardManagerDemo, { HashRingPlacement, HotTaskListPlacement } from "./components/PlacementDemo";
+import CpuAtAGlance from "./components/CpuAtAGlance";
+import PlacementQuality from "./components/PlacementQuality";
+import ArchitectureFlow from "../2026-04-20-shard-manager-incident/ArchitectureFlow";
+
+<Excerpt>
+
+Shard Manager is a new standalone, general-purpose sharding service.
+It provides near-optimal load-aware placement. It reduced CPU utilization on the
+hottest Matching host by 38%. And it provides a centralized view of shard
+ownership and placement.
+
+</Excerpt>
+
+{/* truncate */}
+
+<Essay>
+
+For the past year the Cadence team has worked on Shard Manager, a new
+standalone, general-purpose sharding service (earlier covered in [1 Day, 2 Engineers, 6 Lines of
+Code](../2026-04-20-shard-manager-incident/2026-04-20-shard-manager-incident.mdx)).
+We have now onboarded Cadence's Matching service to Shard Manager across all of
+Uber. Matching routes workflow and activity tasks to workers. With near-optimal
+load-aware placement, CPU utilization on the hottest Matching host dropped by
+38%.
+
+<CpuAtAGlance />
+
+To use it in your own service, start with the [Shard Manager
+documentation](/docs/shard-manager).
+
+## Why we built Shard Manager
+
+Cadence distributes workflows across its hosts, grouping them into shards, and
+distributes the shards evenly using [consistent
+hashing](https://en.wikipedia.org/wiki/Consistent_hashing), via the long
+deprecated [ringpop](https://github.com/uber/ringpop-go) library. So long as
+each host knows the full set of hosts, it's able to determine exactly what it
+should be working on and how to route requests to peers.
+
+Both this distribution and coordination became recurring problems:
+
+- **Hot sharding.** Not all shards are equal, and we constantly saw massive
+  skews in CPU utilization. Evenly distributing the shards doesn't evenly
+  distribute the work.
+- **Distributed membership.** Gossip protocols eventually converge, but
+  discrepancies cause conflicts, slow down the system, and are challenging to
+  debug. Each host is individually responsible for assignment and there's no
+  authoritative answer.
+- **Little control.** The only way to change the distribution is changing the
+  membership, adding or removing hosts. A host that is degraded but still up
+  keeps all its shards.
+
+We saw this when a Matching host ran hot and our auto-scaler added more hosts.
+Each new host took a set of shards from 100 places in the ring (thanks to
+virtual nodes). However, it took them based on their hash rather than their
+load, so it didn't necessarily take the hot shards off the hot host. **Adding
+capacity didn't fix the hotspot.**
+
+We realized a central service could solve these problems and built Shard
+Manager. It owns shard placement, balances shards by their observed load, gives
+one authoritative answer to who owns a shard, and lets operators drain a host or
+stop a single shard.
+
+## Load balancing and results in Uber's production environments
+
+In Matching, the shards are task lists, the queues that workers poll for tasks,
+and each one lives on exactly one host.
+The figure below shows a month of data from one of Uber's production Matching
+clusters.
+The period covers the time before and after the onboarding.
+
+<CpuFigure />
+
+We see that the average barely moves, as total traffic stays about the same.
+However, the spread decreases, leading to much better utilization. Under the
+hash ring, the hottest host regularly ran at twice the average utilization,
+while others sat close to idle. Immediately after we switched on load-aware
+placement, the hottest host dropped from 2.3× to 1.4× the average.
+
+<Stats>
+  <Stat value="−38%" label="CPU on the hottest host" />
+  <Stat value="2.3× → 1.4×" label="hottest host compared with the average host" />
+</Stats>
+
+:::tip[About 40% fewer hosts]
+
+As we size clusters for the hottest host, the same traffic can now run on
+about 40% fewer hosts.
+
+:::
+
+### How close is this to the best possible?
+
+To check how good the placement is, we took a snapshot of the load of every
+shard in each environment we've rolled out to. We then asked a constraint solver
+for the best possible placement of exactly those shards on exactly those hosts.
+
+We measure balance as load spread, the standard deviation of host load divided
+by the average host load. At 0, every host carries the same load. Across
+environments, Shard Manager's spread was within 5% of the solver's in 23 of 24
+snapshots, and within 1% in 14.
+
+The logic underneath the balancing is explained [further down](#how-the-load-balancing-works).
+
+
+{/*
+
+### Why a hash ring can't do this
+
+A hash ring gives every host roughly the same number of shards. The same number
+is not the same load. One task list might see a handful of tasks an hour while
+another drives a busy workflow fleet. And because a task list's host follows from
+its hash, there is no way to move one off a host that's overloaded.
+
+Here are six hosts and thirty task lists, placed by a hash ring.
+
+<Figure
+  title="A hash ring"
+  subtitle="An example with six hosts and thirty shards, five on each host. Each block is one shard, and its height is the shard's load."
+>
+  <HashRingPlacement />
+</Figure>
+
+Every host has exactly five shards, so by count the ring did its job. But host
+4 drew three of the five biggest and runs at more than twice the average, while
+hosts 1 and 3 sit below a third of it. The ring is working as designed. It just
+isn't looking at load.
+*/}
+
+## Controlling shard placement
+
+Because all assignments are now centrally managed, operators can inspect shard
+ownership, drain a host, or isolate a shard with a single `smctl` command.
+
+**Who owns this shard?** With the hash ring, the answer depended on which host
+you asked. Now you ask Shard Manager:
+
+```console
+$ smctl --namespace cadence-matching shard inspect \
+    --shard-key orders-tasklist
+{ "Owner": "6c1f0e2a-…", … }
+```
+
+**A host is misbehaving.** Drain it, and its shards move to the other hosts:
+
+```console
+$ smctl --namespace cadence-matching executor drain \
+    --hostname matching-host-3 --reason "debugging high latency"
+```
+
+**A shard keeps crashing its host.** Moving it just crashes the next host, and
+then the next, until the whole cluster is down. Now we just drain it
+and investigate:
+
+```console
+$ smctl --namespace cadence-matching shard drain \
+    --shard-key orders-tasklist
+```
+
+## How it works
+
+### Architecture
+
+The results above are possible due to the centralized architecture of the Shard
+Manager. Below we see an architecture diagram of the full system with the
+Matching integration.
+
+<Figure
+  title="How requests reach a Matching host"
+  subtitle="Matching hosts heartbeat to Shard Manager, which assigns shards and pushes the routing map to Frontend."
+>
+  <ArchitectureFlow />
+</Figure>
+
+The system consists of three roles, the Shard Manager, the executors and the
+spectators. The Shard Manager is the central service, backed by etcd,
+responsible for deciding placements and communicating these placements to the
+rest of the system. The Shard Manager service has multiple instances, where one
+of them is elected as a leader for each namespace. The leader is responsible for
+load balancing and changing assignments when hosts join and leave.
+
+Executors are responsible for processing (executing) the work. In this case the
+executors are Cadence's Matching service. They heartbeat to the Shard Manager,
+reporting liveness and load. The service defines what load means (see the
+[integration guide](/docs/shard-manager/integration)). For Matching, the load
+measure is the number of tasks the task list processes.
+
+Spectators are services that interact with executors, so they need to know which
+executor owns a shard. In the diagram we see Cadence Frontend in the role of
+spectator, as it routes each request to the Matching host that owns the task
+list. The spectators establish a gRPC stream to the Shard Manager, which then
+pushes new shard assignments to the spectators as the assignments change.
+
+:::tip[A service can play both roles]
+
+The same service can be both spectator and executor. The receiving
+instance can then forward the requests to the correct owner, allowing the
+callers of the service to not know about the sharding of the service.
+
+:::
+
+For more information, see [Shard Manager
+architecture](/docs/shard-manager/architecture).
+
+### How the load balancing works
+
+With the executors reporting the load of each shard they own, we can do
+load-aware balancing. Below is an example with six hosts. It starts from a hash
+ring's placement, where every host has the same number of shards. To simplify the
+demo, each step is a single move.
+
+<Figure
+  title="Shard Manager load balancing six hosts"
+  subtitle="Step through it with Next. A shard turns blue when it moves and fades back to gray as its cooldown runs out."
+>
+  <ShardManagerDemo />
+</Figure>
+
+The Shard Manager smooths the loads so small variations don't trigger moves.
+Every few seconds it looks for an imbalance:
+
+- It compares each host with the average host using hysteresis bands (upper
+  and lower load thresholds). A host above the upper band is too hot, and a
+  host below the lower band has room to take more load. Anything in between is
+  left alone.
+- Each cycle moves a small batch of shards, by default up to 1% of all shards.
+  Each move goes from a hot host to the coldest one, picking the shard that
+  brings the two closest together, excluding shards that would make the cold
+  host hot.
+- Shards that have recently moved have to cool down before they can be moved
+  again, which prevents thrashing.
+
+:::note[Hysteresis bands]
+
+Hosts aren't perfectly balanced when we stop, and that's on purpose. Every
+move has a cost, and past that point more moves would only churn shards
+between hosts.
+
+:::
+
+For more details, see Andreas Holt and Theis Mathiassen's master's thesis
+[Extending the Load Balancing for Cadence](https://kbdk-aub.primo.exlibrisgroup.com/permalink/45KBDK_AUB/42msm8/alma9922496022205762).
+It describes the algorithm, compares it with near-optimal placement, and
+explores extensions.
+
+{/* 
+
+A better result alone doesn't tell us whether the placement is any good. To
+check, we took snapshots of the load Shard Manager saw in every environment
+we've rolled out to, then asked a constraint solver for the best possible
+placement of exactly those shards on exactly those hosts. The solver can move
+every shard at once and doesn't care about churn, so no placement can beat
+it.
+
+<Figure
+  title="Shard Manager's placement compared with the best possible"
+  subtitle="Each row is one environment and region, sorted from easiest to hardest to balance. The dot is Shard Manager's placement, and the ring is the best a solver could find for the same shards and hosts. Spread measures how uneven load is across hosts, so lower is better and 0 means every host carries the same load. Hover a row for details."
+  caption="One snapshot per environment and region, captured Sep 20 to Sep 27, 2026."
+>
+  <PlacementQuality />
+</Figure>
+
+In 23 of 24 snapshots Shard Manager is within 5% of the optimum, and in 14 it
+is within 1%. Most of the dots sit right on top of their rings.
+
+The more interesting thing in this chart is how far apart the rings are.
+Some environments can be balanced almost perfectly. Others have a best possible
+spread above 1, which means that even a perfect placement leaves some hosts with
+several times the load of others. The cluster from the top of this post is on
+the easy end.
+
+The hard ones have a few task lists that carry most of the load. Here is one
+of them, already at the best possible placement.
+
+<Figure
+  title="A production cluster where two task lists carry the load"
+  subtitle="Six Matching hosts in one region. Each block is a task list, and its height is its load. Each host's smallest task lists are drawn as one block."
+  caption="One snapshot, captured Sep 25, 2026."
+>
+  <HotTaskListPlacement />
+</Figure>
+
+Two task lists carry 97% of this cluster's load, so two hosts do nearly all the
+work. The hottest one holds nothing but the biggest task list, so its CPU, the
+cluster's p99, can't come down, however well the other hosts are balanced. It
+didn't change when we switched. In every environment with a best possible spread
+above 1, the biggest task list alone carries at least twice an average host's
+load, and no placement can fix that.
+
+
+
+## What this means for capacity
+
+Clusters are sized for their hottest host. In Region 1, the hottest Matching host
+went from 2.3× to 1.4× the average. Before it reaches the CPU it used to run at,
+the same hosts can now carry roughly 1.6 times the traffic.
+
+## How we measured
+
+- The cluster runs Matching in Region 1 and Region 2. We onboarded it to Shard Manager on
+  Sep 16, 2026, with equal shard counts per host, and switched on load-aware
+  placement the next morning.
+- For the headline numbers, before is the two weeks up to onboarding and after
+  is Sep 18 to Sep 28. Each region is measured on its own, because Shard Manager
+  balances them separately.
+- Best possible placements come from OR-Tools' CP-SAT solver, run offline on
+  each snapshot.
+
+*/}
+
+## Future work
+
+- **History.** We onboarded Matching first. Integrating it is much simpler
+  than History, the Cadence service that manages workflow state and execution,
+  and the cost of moving a task list between hosts is low.
+  History will be onboarded next. We expect a larger effect on CPU utilization
+  there, and with it the ability to handle the same load with fewer instances.
+- **Make etcd optional.** Shard Manager stores its state in etcd today. We plan
+  to remove that dependency, so Shard Manager will be able to run completely
+  in memory.
+- **Beyond Cadence.** Shard Manager is a generic service, not specific to
+  Cadence. Any service that needs to shard its work can use it. The [service integration
+  guide](/docs/shard-manager/integration) shows how, and we'd love to hear from
+  teams who want to use it.
+
+</Essay>
