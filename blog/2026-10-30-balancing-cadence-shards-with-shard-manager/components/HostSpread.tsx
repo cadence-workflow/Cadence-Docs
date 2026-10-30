@@ -55,7 +55,7 @@ function nearestIndex(points: SpreadPoint[], t: number): number {
   return t - points[low][0] < points[high][0] - t ? low : high;
 }
 
-// The region toggle lives in CpuFigure, shared with DailyComparison.
+// CpuFigure picks the region.
 interface HostSpreadProps {
   region: Region;
 }
@@ -139,7 +139,7 @@ export default function HostSpread({ region }: HostSpreadProps) {
           width={width}
           height={height}
           role="img"
-          aria-label={`CPU per Matching host in ${region}, coldest to hottest host and the average, over one month. The range narrows sharply after load-aware placement is enabled.`}
+          aria-label={`CPU per Matching host, coldest to hottest host and the average, over one month. The range narrows sharply after load-aware placement is enabled.`}
           tabIndex={0}
           onKeyDown={onKeyDown}
           onBlur={() => setHoverIndex(null)}

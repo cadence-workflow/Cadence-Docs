@@ -93,12 +93,11 @@ We see that the average barely moves, as total traffic stays about the same.
 However, the spread decreases, leading to much better utilization. Under the
 hash ring, the hottest host regularly ran at twice the average utilization,
 while others sat close to idle. Immediately after we switched on load-aware
-placement, the spread between the hottest and coldest hosts decreased
-significantly, giving us much more headroom on the same hosts.
+placement, the hottest host dropped from 2.3× to 1.4× the average.
 
 <Stats>
-  <Stat value="−38%" label="CPU on the hottest host" detail="Region 1. −31% in Region 2." />
-  <Stat value="2.3× → 1.4×" label="hottest host compared with the average host" detail="Region 1. 2.4× → 1.5× in Region 2." />
+  <Stat value="−38%" label="CPU on the hottest host" />
+  <Stat value="2.3× → 1.4×" label="hottest host compared with the average host" />
 </Stats>
 
 :::tip[1.6× the capacity]

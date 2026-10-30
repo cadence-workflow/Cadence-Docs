@@ -39,7 +39,7 @@ const MARGIN = { top: 40, right: 16, bottom: 34, left: 40 };
 
 const regions = cluster.regions as Record<Region, { daily: Day[] }>;
 
-// One y range for both regions, so switching tabs doesn't rescale the axis.
+// One y range across both regions in the data.
 // The ratio can't go below 1×, where every host carries the same load, so the axis starts there.
 const HIGHEST_RATIO = Math.max(...Object.values(regions).flatMap(({ daily }) => daily.map((day) => day.maxOverMean)));
 const Y_MAX = Math.ceil((HIGHEST_RATIO + 0.05) * 2) / 2;
@@ -54,7 +54,7 @@ function ratio(value: number): string {
 
 // One dot per day on a calendar axis, with a dashed line at the hash ring's best day:
 // every day after the switch sits below it.
-// The region toggle lives in CpuFigure, shared with HostSpread.
+// CpuFigure picks the region.
 interface DailyComparisonProps {
   region: Region;
 }
@@ -117,7 +117,7 @@ export default function DailyComparison({ region }: DailyComparisonProps) {
           width={width}
           height={height}
           role="img"
-          aria-label={`Hottest host divided by the average host, one dot per day in ${region}. Every day with load-aware placement is below the hash ring's best day, ${ratio(bestHashRingDay)}.`}
+          aria-label={`Hottest host divided by the average host, one dot per day. Every day with load-aware placement is below the hash ring's best day, ${ratio(bestHashRingDay)}.`}
         >
           {switchBand && (
             <rect x={switchBand.x0} width={switchBand.x1 - switchBand.x0} y={plotTop} height={plotBottom - plotTop} fill="var(--card)" />
