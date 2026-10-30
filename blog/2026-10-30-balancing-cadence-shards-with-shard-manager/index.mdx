@@ -74,8 +74,10 @@ Both this distribution and coordination became recurring problems:
   keeps all its shards.
 
 We saw this when a Matching host ran hot and our auto-scaler added more hosts.
-The new hosts took over a random set of shards, so the hot shards sometimes all
-ended up on one host. **Adding capacity didn't fix the hotspot.**
+The new hosts took a set of shards from 100 places in the ring (thanks to
+virtual nodes). However, they took them based on their hash rather than their
+load, so they didn't necessarily take the hot shards off the hot host. **Adding
+capacity didn't fix the hotspot.**
 
 We realized we could no longer proceed without a central service, and we
 decided to build Shard Manager. It owns shard placement, balances shards by
@@ -148,7 +150,7 @@ hosts 1 and 3 sit below a third of it. The ring is working as designed. It just
 isn't looking at load.
 */}
 
-## Operations with smctl
+## Controlling shard placement
 
 Because all assignments are now centrally managed, operators can inspect shard
 ownership, drain a host, or isolate a shard with a single `smctl` command.
