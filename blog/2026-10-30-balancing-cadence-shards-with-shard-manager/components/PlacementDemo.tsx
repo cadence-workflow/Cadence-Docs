@@ -478,6 +478,59 @@ export function HotTaskListPlacement() {
   );
 }
 
+// The hash ring's placement next to where Shard Manager settles, for the top of the post.
+// Static, like the hash ring. Side by side on wide screens, stacked on phones.
+export function BeforeAfterPlacement() {
+  const [ref, width] = useWidth<HTMLDivElement>();
+  const frames = useMemo(rebalanceFrames, []);
+  const before = frames[0].shards;
+  const after = frames[frames.length - 1];
+  const scaleMax = useMemo(() => scaleFor([before, after.shards]), [before, after]);
+  const stacked = width < 640;
+  const arrowSpace = stacked ? 0 : 40;
+  const stageWidth = stacked ? width : (width - arrowSpace) / 2;
+
+  return (
+    <div className={`${styles.demo} ${styles.beforeAfterBlock}`} ref={ref}>
+      <div className={stacked ? styles.beforeAfterStacked : styles.beforeAfter}>
+        <Stage
+          shards={before}
+          width={stageWidth}
+          tick={0}
+          showBand
+          scaleMax={scaleMax}
+          header={
+            <p className={styles.stepCaption}>Distribution with hash ring</p>
+          }
+        />
+        <svg className={styles.beforeAfterArrow} width={32} height={32} viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M4 16h22M18 8l8 8-8 8" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        <Stage
+          shards={after.shards}
+          width={stageWidth}
+          tick={after.tick}
+          showBand
+          scaleMax={scaleMax}
+          header={
+            <p className={styles.stepCaption}>Distribution with Shard Manager</p>
+          }
+        />
+      </div>
+      <div className={styles.readouts}>
+        <span className={styles.legend}>
+          <LegendBox background="var(--neutral)" label="shard (height = load)" />
+          <LegendBox
+            background="var(--after-wash)"
+            shadow="inset 0 -1px 0 var(--after)"
+            label="average host and target range"
+          />
+        </span>
+      </div>
+    </div>
+  );
+}
+
 // Shard Manager's rebalance loop from the hash ring's placement, one cycle per step.
 export default function ShardManagerDemo() {
   const [ref, width] = useWidth<HTMLDivElement>();

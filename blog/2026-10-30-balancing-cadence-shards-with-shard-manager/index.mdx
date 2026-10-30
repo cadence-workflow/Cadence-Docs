@@ -20,7 +20,7 @@ keywords:
 
 import { Essay, Figure, Stats, Stat, Excerpt } from "./components/Essay";
 import CpuFigure from "./components/CpuFigure";
-import ShardManagerDemo, { HashRingPlacement, HotTaskListPlacement } from "./components/PlacementDemo";
+import ShardManagerDemo, { BeforeAfterPlacement, HashRingPlacement, HotTaskListPlacement } from "./components/PlacementDemo";
 import PlacementQuality from "./components/PlacementQuality";
 import ArchitectureFlow from "../2026-04-20-shard-manager-incident/ArchitectureFlow";
 
@@ -46,6 +46,8 @@ load-aware placement, CPU utilization on the hottest Matching host dropped by
 about a third.
 To use it in your own service, start with the [Shard Manager
 documentation](/docs/shard-manager).
+
+<BeforeAfterPlacement />
 
 ## Why we built Shard Manager
 

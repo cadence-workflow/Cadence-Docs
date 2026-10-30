@@ -428,6 +428,38 @@
   outline-offset: 2px;
 }
 
+/* Before and after placements for the top of the post: two stages with an arrow between them. */
+/* No Figure around it, so it brings the Figure's spacing itself. */
+.beforeAfterBlock {
+  margin: 2.5rem 0 3rem;
+}
+.beforeAfter {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.beforeAfterStacked {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.beforeAfterStacked > * {
+  align-self: stretch;
+}
+.beforeAfter > .demoStage {
+  flex: 1 1 0;
+  min-width: 0;
+}
+.beforeAfterArrow {
+  flex: none;
+  color: var(--muted);
+}
+.beforeAfterStacked > .beforeAfterArrow {
+  align-self: center;
+  transform: rotate(90deg);
+}
+
 /* On phones the stepper wraps under the caption. Two caption lines are reserved so the shards don't jump between steps. */
 @media (max-width: 640px) {
   .stageHeader {
