@@ -148,22 +148,15 @@ isn't looking at load.
 ## Operations with smctl
 
 Because all assignments are now centrally managed, operators can inspect shard
-ownership, drain a host, or isolate a shard with a single command using the
-`smctl` CLI.
+ownership, drain a host, or isolate a shard with a single `smctl` command.
 
-We can now answer questions such as:
-
-**Who owns this shard?** With the hash ring, the answer depended on
-which host you asked. Each service instance calculated shard ownership from its
-own view of cluster membership. Those views could temporarily differ, producing
-conflicting answers. Now, Shard Manager lets you fetch the owner directly:
+**Who owns this shard?** With the hash ring, the answer depended on which host
+you asked. Now you ask Shard Manager:
 
 ```console
-$ smctl --namespace cadence-matching shard inspect --shard-key orders-tasklist
-{
-  "Owner": "6c1f0e2a-…",
-  …
-}
+$ smctl --namespace cadence-matching shard inspect \
+    --shard-key orders-tasklist
+{ "Owner": "6c1f0e2a-…", … }
 ```
 
 **A host is misbehaving.** Drain it, and its shards move to the other hosts:
@@ -171,23 +164,15 @@ $ smctl --namespace cadence-matching shard inspect --shard-key orders-tasklist
 ```console
 $ smctl --namespace cadence-matching executor drain \
     --hostname matching-host-3 --reason "debugging high latency"
-Host "matching-host-3" currently holds 212 shard(s):
-  executor 6c1f0e2a-…: 212 shard(s)
-Proceed with draining? [y/N]: y
 ```
 
 **A shard keeps crashing its host.** Moving it just crashes the next host, and
-then the next, until the whole cluster is down. Instead we drain the shard so it
-stops being assigned while we investigate.
+then the next, until the whole cluster is down. Now we just drain it
+and investigate:
 
 ```console
-$ smctl --namespace cadence-matching shard drain --shard-key orders-tasklist
-{
-  "Namespace": "cadence-matching",
-  "ShardKeys": [
-    "orders-tasklist"
-  ]
-}
+$ smctl --namespace cadence-matching shard drain \
+    --shard-key orders-tasklist
 ```
 
 ## How it works
