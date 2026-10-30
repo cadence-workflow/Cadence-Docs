@@ -1,0 +1,51 @@
+/*
+ * Colors for the architecture diagram. Light values are the Tailwind slate, blue and
+ * indigo shades the diagram was drawn with. In dark mode the scales flip, so light
+ * fills become dark fills and dark text becomes light text.
+ */
+.root {
+  --af-slate-50: #f8fafc;
+  --af-slate-200: #e2e8f0;
+  --af-slate-300: #cbd5e1;
+  --af-slate-400: #94a3b8;
+  --af-slate-500: #64748b;
+  --af-slate-600: #475569;
+  --af-slate-700: #334155;
+  --af-slate-800: #1e293b;
+  --af-box: #e8eef4;
+  --af-button: #fff;
+  /* Primary buttons keep white text, so their blue stays dark enough in both themes. */
+  --af-button-primary: #3b82f6;
+  --af-blue-100: #dbeafe;
+  --af-blue-200: #bfdbfe;
+  --af-blue-500: #3b82f6;
+  --af-blue-600: #2563eb;
+  --af-blue-700: #1d4ed8;
+  --af-indigo-50: #eef2ff;
+  --af-indigo-200: #c7d2fe;
+  --af-indigo-500: #6366f1;
+  --af-indigo-700: #4338ca;
+}
+
+html[data-theme='dark'] .root {
+  --af-slate-50: #0f172a;
+  --af-slate-200: #334155;
+  --af-slate-300: #475569;
+  --af-slate-400: #64748b;
+  --af-slate-500: #94a3b8;
+  --af-slate-600: #cbd5e1;
+  --af-slate-700: #e2e8f0;
+  --af-slate-800: #f1f5f9;
+  --af-box: #1e293b;
+  --af-button: #1e293b;
+  --af-button-primary: #2563eb;
+  --af-blue-100: #1c2b45;
+  --af-blue-200: #22385e;
+  --af-blue-500: #4a7fc4;
+  --af-blue-600: #4a7fc4;
+  --af-blue-700: #bfdbfe;
+  --af-indigo-50: #312e81;
+  --af-indigo-200: #4338ca;
+  --af-indigo-500: #818cf8;
+  --af-indigo-700: #e0e7ff;
+}
