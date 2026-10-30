@@ -51,39 +51,39 @@ documentation](/docs/shard-manager).
 
 ## Why we built Shard Manager
 
-Since its creation, Cadence has managed shards with a hash ring backed by ringpop,
-which has long since been deprecated. Every time something went wrong with the
-ring, finding the problem was a big challenge. Ownership lived independently on
-every host, so diagnosing a disagreement meant pulling logs from many instances
-and checking whether they agreed on the same state.
+Cadence distributes workflows across its hosts, grouping them into shards, and
+distributes the shards evenly using [consistent
+hashing](https://en.wikipedia.org/wiki/Consistent_hashing), via the long
+deprecated [ringpop](https://github.com/uber/ringpop-go) library. So long as
+each host knows the full set of hosts, it's able to determine exactly what it
+should be working on and how to route requests to peers.
 
-We also kept finding imbalances in how task lists, the queues that workers poll
-for tasks, were distributed across Matching hosts. Some hosts ran hot while
-others sat idle, and we could see how the placement could be improved. But we
-had no way to change it, as every instance in the ring had to update its view
-in the same instant.
+Both this distribution and coordination became recurring problems:
 
-We saw cases where a Matching host ran hot and our auto-scaler added more
-instances to help. However, the hash ring places shards without looking at load.
-Each new host took over a random set of shards, so the hot task lists could
-still end up together on one host. Adding capacity didn't fix the hotspot. We
-realized we could no longer proceed without a central service, and we decided
-to build Shard Manager.
+- **Hot sharding.** Not all shards are equal, and we constantly saw massive
+  skews in CPU utilization. Evenly distributing the shards doesn't evenly
+  distribute the work.
+- **Distributed membership.** Gossip protocols eventually converge, but
+  discrepancies cause conflicts, slow down the system, and are challenging to
+  debug. Each host is individually responsible for assignment and there's no
+  authoritative answer.
+- **Little control.** The only way to change the distribution is changing the
+  membership, adding or removing hosts. A host that is degraded but still up
+  keeps all its shards.
 
-The main pain points Shard Manager solves are:
+We saw this when a Matching host ran hot and our auto-scaler added more hosts.
+Each new host took over a random set of shards, so the hot shards could still
+end up together on one host. **Adding capacity didn't fix the hotspot.**
 
-1. **Centralized control** Shard placements live in one place instead of on
-   every host of all four Cadence services. Only Matching and History are
-   sharded, but all four are part of the hash ring so they can route requests
-   to the right host. In one place, placements are much easier to reason about
-   and change.
-2. **Balancing** Shards are balanced by their observed load.
-3. **Operations** An operator can stop processing for a specific shard, or
-   drain all shards out of a specific host.
+We realized we could no longer proceed without a central service, and we
+decided to build Shard Manager. It owns shard placement, balances shards by
+their observed load, gives one authoritative answer to who owns a shard, and
+lets operators drain a host or stop a single shard.
 
 ## Load balancing and results in Uber's production environments
 
-In Matching, the shards are task lists, and each one lives on exactly one host.
+In Matching, the shards are task lists, the queues that workers poll for tasks,
+and each one lives on exactly one host.
 Below we see data over a month in one of Uber's production Matching clusters.
 The period covers the time before and after the onboarding.
 
@@ -212,18 +212,18 @@ architecture diagram of the full system with the Matching integration.
 
 The system consists of three roles:
 
-- **The Shard Manager** The central service, backed by etcd, is responsible for
+- **The Shard Manager.** The central service, backed by etcd, is responsible for
   deciding placements and communicating these placements to the rest of the
   system. The instances of Shard Manager elect a leader for each namespace, which
   is responsible for load balancing and changing assignments when hosts
   join and leave.
-- **The Executors** Cadence has two sharded services, Matching and History.
+- **The Executors.** Cadence has two sharded services, Matching and History.
   The executors are the instances of the service responsible for processing
   the shards, in this case Matching. The Matching instances heartbeat to the Shard Manager, which allows
   the Shard Manager to track liveness. Additionally, the heartbeats include load
   information for all shards the executor owns. For Matching, the load measure is
   the number of tasks the task list processes.
-- **The Spectators** These are the services that need to know who owns a shard.
+- **The Spectators.** These are the services that need to know who owns a shard.
   In the diagram we see Cadence Frontend in the role of spectator, as it routes
   each request to the Matching host that owns the task list. The spectators
   establish a gRPC stream to the Shard Manager, which then pushes new shard
@@ -343,13 +343,13 @@ the same hosts can now carry roughly 1.6 times the traffic.
 
 ## Future work
 
-- **History** Matching is the first Cadence service on Shard Manager. History
+- **History.** Matching is the first Cadence service on Shard Manager. History
   will be onboarded next. We expect a larger CPU saving there, so the same load
   can run on fewer instances.
-- **Make etcd optional** Shard Manager stores its state in etcd today. We plan
+- **Make etcd optional.** Shard Manager stores its state in etcd today. We plan
   to remove that dependency, so Shard Manager will be able to run completely
   in memory.
-- **Beyond Cadence** Shard Manager is a generic service, not specific to
+- **Beyond Cadence.** Shard Manager is a generic service, not specific to
   Cadence. Any service that needs to shard its work can use it. The [service integration
   guide](/docs/shard-manager/integration) shows how, and we'd love to hear from
   teams who want to use it.
