@@ -180,12 +180,8 @@ $ smctl --namespace cadence-matching shard drain \
 ### Architecture
 
 The results above are possible due to the centralized architecture of the Shard
-Manager. We onboarded Matching first. Integrating it is much simpler than
-History, the Cadence service that manages workflow state and execution, and the
-cost of moving a task list between hosts is low. When we bring History onto
-Shard Manager next, we expect a larger effect on CPU utilization, and with it
-the ability to handle the same load with fewer instances. Below we see an
-architecture diagram of the full system with the Matching integration.
+Manager. Below we see an architecture diagram of the full system with the
+Matching integration.
 
 <Figure
   title="How requests reach a Matching host"
@@ -202,13 +198,13 @@ leader is responsible for load balancing and changing assignments when hosts
 join and leave.
 
 The executors are the instances of the service responsible for processing the
-shards. Cadence has two sharded services, Matching and History, and in this
-case the executors are the Matching instances. They heartbeat to the Shard
-Manager, which allows the Shard Manager to track liveness. Additionally, the
-heartbeats include load information for all shards the executor owns. The
-service defines what load means (see the [integration
-guide](/docs/shard-manager/integration)). For Matching, the load measure is the
-number of tasks the task list processes.
+shards. Cadence has two sharded services, Matching and History. History
+manages workflow state and execution. In this case the executors are the
+Matching instances. They heartbeat to the Shard Manager, which allows the
+Shard Manager to track liveness. Additionally, the heartbeats include load
+information for all shards the executor owns. The service defines what load
+means (see the [integration guide](/docs/shard-manager/integration)). For
+Matching, the load measure is the number of tasks the task list processes.
 
 The spectators are the services that need to know who owns a shard. In the
 diagram we see Cadence Frontend in the role of spectator, as it routes each
@@ -330,9 +326,10 @@ the same hosts can now carry roughly 1.6 times the traffic.
 
 ## Future work
 
-- **History.** Matching is the first Cadence service on Shard Manager. History
-  will be onboarded next. We expect a larger CPU saving there, so the same load
-  can run on fewer instances.
+- **History.** We onboarded Matching first. Integrating it is much simpler
+  than History, and the cost of moving a task list between hosts is low.
+  History will be onboarded next. We expect a larger effect on CPU utilization
+  there, and with it the ability to handle the same load with fewer instances.
 - **Make etcd optional.** Shard Manager stores its state in etcd today. We plan
   to remove that dependency, so Shard Manager will be able to run completely
   in memory.
