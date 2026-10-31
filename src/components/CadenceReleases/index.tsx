@@ -14,7 +14,6 @@ export function getReleaseData(source) {
       /^v?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)/
     );
     return _.extend({}, release, {
-      published_at_string: new Date(release.published_at).toLocaleDateString(),
       published_at_date: new Date(release.published_at)
         .toISOString()
         .split("T", 1)[0],
@@ -90,7 +89,7 @@ function Releases({ releases }): JSX.Element {
       <Heading as="h3" id={release.tag_name} level={3}>
         Release <Link to={release.html_url}>{release.tag_name}</Link> published
         by <Link to={release.author.html_url}>{release.author.login}</Link> on{" "}
-        {release.published_at_string}
+        {release.published_at_date}
       </Heading>
 
       <Markdown remarkPlugins={[remarkGfm]}>{release.body}</Markdown>
