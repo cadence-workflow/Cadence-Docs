@@ -135,11 +135,11 @@ export default function LogHistogram({ data, title }: Props) {
                       <div className={styles.tooltipTime}>{formatTimeWithSeconds(bucket.time)}</div>
                       <div className={styles.tooltipRow}>
                         <span className={styles.legendDot} style={{ background: "#e74c3c" }} />
-                        error <strong>{total > 0 ? bucket.error.toLocaleString() : "0"}</strong>
+                        error <strong>{total > 0 ? bucket.error.toLocaleString("en-US") : "0"}</strong>
                       </div>
                       <div className={styles.tooltipRow}>
                         <span className={styles.legendDot} style={{ background: "#f5a623" }} />
-                        warn <strong>{total > 0 ? bucket.warn.toLocaleString() : "0"}</strong>
+                        warn <strong>{total > 0 ? bucket.warn.toLocaleString("en-US") : "0"}</strong>
                       </div>
                     </div>
                   )}
