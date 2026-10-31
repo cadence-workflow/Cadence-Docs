@@ -165,7 +165,7 @@ export default function LogTable({ data }: { data: LogEntry[] }) {
                   color: "#334155",
                 }}
               >
-                {row.count.toLocaleString()}
+                {row.count.toLocaleString("en-US")}
               </td>
             </tr>
           ))}
