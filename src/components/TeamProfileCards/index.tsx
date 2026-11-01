@@ -88,7 +88,7 @@ function TeamProfileCardCol(props: ProfileProps) {
 const maintainersListUrl =
   "https://github.com/cadence-workflow/cadence/blob/master/MAINTAINERS.md";
 
-function MaintainerListNote(): JSX.Element {
+function MaintainerListNote(): ReactNode {
   return (
     <p>
       Profiles on this page can be out of date. The current list of TSC members
@@ -99,7 +99,7 @@ function MaintainerListNote(): JSX.Element {
 }
 
 /* Maintainers:  */
-export function MaintainersRow(): JSX.Element {
+export function MaintainersRow(): ReactNode {
   return (
     <>
     <MaintainerListNote />
@@ -159,7 +159,7 @@ export function MaintainersRow(): JSX.Element {
 }
 
 /* Technical Steering Committee:  */
-export function TSCRow(): JSX.Element {
+export function TSCRow(): ReactNode {
   return (
     <div className="row">
       <TeamProfileCardCol name="Ender Demirkaya" githubUrl="https://github.com/demirkayaender" linkedinUrl="https://www.linkedin.com/in/enderdemirkaya/">
@@ -179,7 +179,7 @@ export function TSCRow(): JSX.Element {
 }
 
 /* HonoraryContributors */
-export function HonoraryContributorsRow(): JSX.Element {
+export function HonoraryContributorsRow(): ReactNode {
   return (
     <div className="row">
     </div>

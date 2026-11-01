@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {type ReactNode} from 'react';
 import Link from '@docusaurus/Link';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import styles from './styles.module.css';
@@ -6,7 +6,7 @@ import styles from './styles.module.css';
 // Slim credibility band shown directly under the hero. It surfaces Cadence's
 // CNCF membership — the strongest third-party trust signal — as a single
 // pill that links to the project's CNCF landing page.
-export default function CncfBanner(): JSX.Element {
+export default function CncfBanner(): ReactNode {
   const cncfMark = useBaseUrl('/img/cncf/cncf.png');
 
   return (
