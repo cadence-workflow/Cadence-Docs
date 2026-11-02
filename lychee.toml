@@ -14,6 +14,9 @@ max_concurrency = 16
 accept = [200, 203, 206, 429]
 
 # Skip URLs that routinely 403 bots regardless of how politely we crawl.
+# Also skip targets that only appear in old historical blog posts and are
+# gone for good (dead DNS, removed repos, past event/webinar pages). We leave
+# those posts alone rather than rewriting years-old community spotlights.
 exclude = [
   "^http(s)?://localhost",
   "^http(s)?://127\\.0\\.0\\.1",
@@ -31,6 +34,14 @@ exclude = [
   "betterprogramming\\.pub",
   "npmjs\\.com",
   "globenewswire\\.com",
+  "info\\.instaclustr\\.com",
+  "embed\\.emamo\\.com",
+  "credativ\\.de",
+  "ossna2023\\.sched\\.com",
+  "netapp\\.zoom\\.us",
+  "developerweek\\.com/global/conference/enterprise",
+  "github\\.com/cadence-oss/cadence-notification",
+  "instaclustr\\.com/events/",
 ]
 
 # Never traverse these paths when expanding inputs.
