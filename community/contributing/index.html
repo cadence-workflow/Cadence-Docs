@@ -25,7 +25,7 @@
 <link rel="preload" href="https://d1a3f4spazzrp4.cloudfront.net/dotcom-assets/fonts/UberMoveText-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
 <link rel="preload" href="https://d1a3f4spazzrp4.cloudfront.net/dotcom-assets/fonts/UberMoveText-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
 <link rel="preload" href="https://d1a3f4spazzrp4.cloudfront.net/dotcom-assets/fonts/UberMoveText-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.fb6fa4bd.css">
-<script src="/assets/js/runtime~main.5f41599b.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.62320df7.js" defer="defer"></script>
 <script src="/assets/js/main.685a14ba.js" defer="defer"></script>
 </head>
 <body>
@@ -101,7 +101,7 @@
 <p>This produces the same static HTML that GitHub Pages serves, copies it into the gitignored <code>.preview-pages/</code> directory, and serves it without single-page-app fallback so that redirects and 404s behave the way they will in production. It runs <code>npm ci</code> and a full build, so expect it to take longer than <code>npm run start</code>.</p>
 <p>You can also invoke the script directly, which requires making it executable once:</p>
 <div class="language-console codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-console codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">chmod +x scripts/preview-github-pages-build.sh</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">./scripts/preview-github-pages-build.sh --serve</span><br></div></code></pre></div></div>
-<p>The script accepts <code>PORT</code>, <code>PREVIEW_DIR</code>, <code>BASE_URL</code>, and <code>CADENCE_DOCS_URL</code> as environment variables.</p>
+<p>The script accepts <code>PORT</code>, <code>PREVIEW_DIR</code>, <code>BASE_URL</code>, and <code>CADENCE_DOCS_URL</code> as environment variables. To preview the site the way your fork&#x27;s GitHub Pages site serves it, set <code>BASE_URL=/Cadence-Docs/</code> and open <a href="http://localhost:4173/Cadence-Docs/" target="_blank" rel="noopener noreferrer" class="">http://localhost:4173/Cadence-Docs/</a>.</p>
 <p><strong>The production preview is required for any change beyond prose edits in <code>.md</code> files.</strong> That includes <code>.mdx</code>, <code>docusaurus.config.*</code>, <code>sidebars.*</code>, anything under <code>src/</code>, non-markdown files under <code>static/</code>, CSS or SCSS, scripts, and package files. Pull requests that need it and do not mention it will be sent back.</p>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="4-check-dark-mode-and-light-mode">4. Check dark mode and light mode<a href="#4-check-dark-mode-and-light-mode" class="hash-link" aria-label="Direct link to 4. Check dark mode and light mode" title="Direct link to 4. Check dark mode and light mode" translate="no">​</a></h3>
 <p>For any change that affects rendering, check affected pages in both color modes using the theme toggle in the site header.</p>
