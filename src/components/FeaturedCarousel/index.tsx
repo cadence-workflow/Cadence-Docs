@@ -1,4 +1,4 @@
-import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useRef, useState, type ReactNode} from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import {useBaseUrlUtils} from '@docusaurus/useBaseUrl';
@@ -80,9 +80,9 @@ const getPerView = (): number => {
 // shrink to whatever the longest label still needs. Never ellipsis; prefer
 // shortTitle in data when the full title can't fit cleanly.
 function fitSharedCardTitles(track: HTMLElement): void {
-  const headings = [
-    ...track.querySelectorAll<HTMLElement>('[data-card-title]'),
-  ];
+  const headings = Array.from(
+    track.querySelectorAll<HTMLElement>('[data-card-title]'),
+  );
   if (headings.length === 0) {
     return;
   }
@@ -130,7 +130,7 @@ function CardTitle({
 }: {
   title: string;
   label: string;
-}): JSX.Element {
+}): ReactNode {
   const lines = label.split('\n').filter((line) => line.length > 0);
 
   return (
@@ -146,7 +146,7 @@ function CardTitle({
   );
 }
 
-export default function FeaturedCarousel(): JSX.Element {
+export default function FeaturedCarousel(): ReactNode {
   const {withBaseUrl} = useBaseUrlUtils();
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLUListElement>(null);

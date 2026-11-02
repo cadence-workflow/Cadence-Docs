@@ -88,7 +88,7 @@ function TeamProfileCardCol(props: ProfileProps) {
 const maintainersListUrl =
   "https://github.com/cadence-workflow/cadence/blob/master/MAINTAINERS.md";
 
-function MaintainerListNote(): JSX.Element {
+function MaintainerListNote(): ReactNode {
   return (
     <p>
       Profiles on this page can be out of date. The current list of TSC members
@@ -99,7 +99,7 @@ function MaintainerListNote(): JSX.Element {
 }
 
 /* Maintainers:  */
-export function MaintainersRow(): JSX.Element {
+export function MaintainersRow(): ReactNode {
   return (
     <>
     <MaintainerListNote />
@@ -124,7 +124,7 @@ export function MaintainersRow(): JSX.Element {
       <TeamProfileCardCol name="Felipe Imanishi" githubUrl="https://github.com/fimanishi" linkedinUrl="https://www.linkedin.com/in/fimanishi">
       Felipe is a Software Engineer contributing to Cadence from San Francisco. He found CS later in his career, and he is glad he did. Felipe is always looking to learn more and Cadence is provides an endless source of topics. Outside of work, Felipe is probably doing something with his two sons.
       </TeamProfileCardCol>
-      <TeamProfileCardCol name="Gaziza Yestemirova" githubUrl="https://github.com/gazi-yestemirova"> </TeamProfileCardCol>
+      <TeamProfileCardCol name="Gaziza Yestemirova" githubUrl="https://github.com/gazizayestemir"> </TeamProfileCardCol>
       <TeamProfileCardCol name="Ilya Ozherelyev" githubUrl="https://github.com/3vilhamster"> </TeamProfileCardCol>
       <TeamProfileCardCol name="Jakob Haahr Taankvist" githubUrl="https://github.com/jakobht" linkedinUrl="https://www.linkedin.com/in/jakob-taankvist/">
         Jakob Haahr Taankvist is a Software Engineer, contributing to the Cadence project from Denmark. With a background in formal games and traffic optimization, he now explores workflow orchestration.<br />
@@ -159,7 +159,7 @@ export function MaintainersRow(): JSX.Element {
 }
 
 /* Technical Steering Committee:  */
-export function TSCRow(): JSX.Element {
+export function TSCRow(): ReactNode {
   return (
     <div className="row">
       <TeamProfileCardCol name="Ender Demirkaya" githubUrl="https://github.com/demirkayaender" linkedinUrl="https://www.linkedin.com/in/enderdemirkaya/">
@@ -179,7 +179,7 @@ export function TSCRow(): JSX.Element {
 }
 
 /* HonoraryContributors */
-export function HonoraryContributorsRow(): JSX.Element {
+export function HonoraryContributorsRow(): ReactNode {
   return (
     <div className="row">
     </div>

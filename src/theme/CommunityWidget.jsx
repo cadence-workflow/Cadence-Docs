@@ -65,18 +65,30 @@ export default function CommunityWidget() {
   }, [emailOpen]);
 
   useEffect(() => {
-    if (!open) {
+    if (open) {
+      // The panel is rendered before the toggle button, so pressing Tab on the
+      // button would leave the widget. Move focus to the first action instead.
+      panelRef.current?.querySelector('ul a, ul button')?.focus();
+    } else {
       setEmailOpen(false);
       setSubmitted(false);
       setEmail('');
     }
   }, [open]);
 
+  // Used when the panel is dismissed from the keyboard or its close button.
+  // Without this, focus is lost with the unmounted panel and falls back to the
+  // start of the page.
+  function closeAndFocusToggle() {
+    setOpen(false);
+    fabRef.current?.focus();
+  }
+
   useEffect(() => {
     if (!open) return;
 
     function handleKeyDown(e) {
-      if (e.key === 'Escape') setOpen(false);
+      if (e.key === 'Escape') closeAndFocusToggle();
     }
 
     function handleClickOutside(e) {
@@ -120,14 +132,13 @@ export default function CommunityWidget() {
           ref={panelRef}
           className={styles.panel}
           role="dialog"
-          aria-modal="true"
           aria-label="Community actions menu"
         >
           <div className={styles.panelHeader}>
             <span className={styles.panelTitle}>Join the Cadence community</span>
             <button
               className={styles.closeButton}
-              onClick={() => setOpen(false)}
+              onClick={closeAndFocusToggle}
               aria-label="Close community menu"
             >
               <Icon icon="mdi:close" width={16} />

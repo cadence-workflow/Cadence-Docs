@@ -123,7 +123,7 @@ Workflow and activity code runs in **your** processes, not inside the Cadence cl
 - Client-side metrics through the SDK's metrics interface. Go and Java integrate with Tally; Python exposes a metrics emitter backed by `prometheus-client`.
 - Optional TLS on the gRPC connection, including [mutual TLS](/docs/concepts/mutual-tls).
 
-Workers scale independently of the cluster, so worker capacity is an application concern rather than a cluster provisioning one. Client SDKs are available for [Go](/docs/go-client/), [Java](/docs/java-client/), and [Python](/docs/python-client/index), with additional clients in the wider ecosystem.
+Workers scale independently of the cluster, so worker capacity is an application concern rather than a cluster provisioning one. Client SDKs are available for [Go](/docs/go-client/), [Java](/docs/java-client/), and [Python](/docs/python-client/), with additional clients in the wider ecosystem.
 
 ## Related documentation
 
