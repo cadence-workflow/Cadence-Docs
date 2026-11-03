@@ -14,7 +14,7 @@ keywords:
 permalink: /docs/shard-manager
 ---
 
-import ArchitectureDiagram from './ArchitectureDiagram';
+import ArchitectureDiagram from './ArchitectureDiagramImage';
 
 Shard Manager is an open-source, general-purpose sharding service. It assigns the shards of any sharded application to its hosts, and keeps that assignment balanced by load as hosts come and go. It runs as its own service, backed by etcd, and applications integrate through its Go clients. Cadence Matching is one of the services that uses it.
 

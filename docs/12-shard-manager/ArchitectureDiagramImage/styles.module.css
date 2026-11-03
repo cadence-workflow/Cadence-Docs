@@ -1,0 +1,32 @@
+/* Always scales to the content column, never scrolls or clips. It stops at
+   640px so the labels stay a usable size once it is scaled down on a
+   half-width window. */
+.diagram {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* For pages where the diagram is an overview rather than the subject. */
+.compact {
+  max-width: 560px;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  /* ThemedComponent shows the image inline, so drop the gap under the
+     baseline. */
+  vertical-align: top;
+}
+
+.figure {
+  margin: 1.5rem 0;
+}
+
+.caption {
+  margin-top: 0.75rem;
+  text-align: center;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--ifm-color-emphasis-700);
+}
