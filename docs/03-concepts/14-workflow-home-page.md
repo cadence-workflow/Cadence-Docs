@@ -10,7 +10,7 @@ keywords:
   - cadence markdoc tags
   - cadence input-field
   - cadence workflow dashboard
-permalink: /docs/go-client/workflow-home-page
+permalink: /docs/concepts/workflow-home-page
 ---
 
 # Workflow Home Page
