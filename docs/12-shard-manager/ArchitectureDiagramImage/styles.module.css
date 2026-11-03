@@ -6,11 +6,6 @@
   margin: 0 auto;
 }
 
-/* For pages where the diagram is an overview rather than the subject. */
-.compact {
-  max-width: 560px;
-}
-
 .image {
   width: 100%;
   height: auto;

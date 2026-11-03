@@ -30,7 +30,7 @@ Shard Manager solves all of these problems by centralizing the assignment decisi
 
 The diagram below shows how Shard Manager works, with executors processing the shards and spectators routing requests to them.
 
-<ArchitectureDiagram compact />
+<ArchitectureDiagram />
 
 ## Running it
 

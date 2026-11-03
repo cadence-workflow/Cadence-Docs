@@ -14,18 +14,11 @@ const SIZE = { width: 720, height: 452 };
 const ALT =
   'Diagram of the Shard Manager architecture. Executors and spectators in your application talk only to Shard Manager. Shard Manager keeps all state in etcd, and one instance is elected leader per namespace. Requests from a spectator go directly to the executor that owns the shard, not through Shard Manager.';
 
-export default function ArchitectureDiagramImage({
-  compact = false,
-}: {
-  compact?: boolean;
-}): React.ReactElement {
+export default function ArchitectureDiagramImage(): React.ReactElement {
   const images = { light: useBaseUrl(LIGHT_PATH), dark: useBaseUrl(DARK_PATH) };
-  const diagramClassName = compact
-    ? `${styles.diagram} ${styles.compact}`
-    : styles.diagram;
   return (
     <figure className={styles.figure}>
-      <div className={diagramClassName}>
+      <div className={styles.diagram}>
         <ThemedComponent className={styles.image}>
           {({ theme, className }) => (
             <img src={images[theme]} alt={ALT} {...SIZE} className={className} />
