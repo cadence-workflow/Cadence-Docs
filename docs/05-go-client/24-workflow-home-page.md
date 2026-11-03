@@ -82,21 +82,48 @@ On the Home tab, every tag inherits `domain`, `cluster`, `workflowId` and `runId
 | `workflows` | Table of workflows that match a visibility query |
 | `image` | Image with a set width or height |
 
-See [Custom Workflow Controls](/docs/concepts/workflow-queries-formatted-data#tag-reference) for the full `signal`, `start` and `image` attributes.
-
-### Buttons
+### Signal button
 
 ```markdown
 {% signal signalName="approve" label="Approve" input={"reviewer":"finance-ops"} /%}
+```
 
+| Attribute | Required | Description |
+|-----------|----------|-------------|
+| `signalName` | Yes | Signal name the workflow listens for |
+| `label` | Yes | Button text |
+| `input` | No | Signal payload: `true`, `false`, `"string"`, or a JSON object |
+| `workflowId` | No | Inherited from the page |
+| `runId` | No | Inherited from the page, but only when `workflowId` is too |
+| `domain` | No | Inherited from the page |
+| `cluster` | No | Inherited from the page |
+
+If you set `workflowId` without `runId`, the signal goes to the current run of that workflow, not to the run on the page.
+
+### Start button
+
+```markdown
 {% start
   workflowType="cadence_samples.ExpenseReportWorkflow"
   label="Submit another report"
   taskList="cadence-samples-worker"
+  timeoutSeconds=7200
 /%}
 ```
 
-If you set `workflowId` on a `signal` without `runId`, the signal goes to the current run of that workflow, not to the run on the page.
+| Attribute | Required | Description |
+|-----------|----------|-------------|
+| `workflowType` | Yes | Registered workflow type |
+| `label` | Yes | Button text |
+| `taskList` | Yes | Task list of the worker that runs the workflow |
+| `input` | No | Workflow input, sent as the only argument |
+| `wfId` | No | Workflow ID. Default: a random UUID |
+| `timeoutSeconds` | No | Execution timeout in seconds. Default: `60` |
+| `sdkLanguage` | No | `GO` (default) or `JAVA` |
+| `domain` | No | Inherited from the page |
+| `cluster` | No | Inherited from the page |
+
+Set `timeoutSeconds` for any workflow that runs longer than a minute. After the start succeeds, a notification links to the new workflow.
 
 ### Input fields
 
@@ -151,6 +178,22 @@ The `workflows` tag needs advanced visibility on the cluster.
 | `columns` | No | Comma-separated column IDs. Default: `WorkflowID,CloseStatus,RunID,WorkflowType,StartTime,CloseTime` |
 | `domain` | No | Inherited from the page |
 | `cluster` | No | Inherited from the page |
+
+### Images
+
+```markdown
+{% image src="https://cadenceworkflow.io/img/cadence-logo.svg" alt="Cadence logo" width="200" /%}
+```
+
+| Attribute | Required | Description |
+|-----------|----------|-------------|
+| `src` | Yes | Image URL |
+| `alt` | No | Alt text |
+| `title` | No | Text shown on hover |
+| `width` | No | A number in pixels, or any CSS length |
+| `height` | No | A number in pixels, or any CSS length |
+
+If you set only one of `width` and `height`, the other scales to keep the aspect ratio. Plain Markdown images (`![alt](url)`) also work. Raw HTML such as `<img>` does not render.
 
 ## When the page refreshes
 
