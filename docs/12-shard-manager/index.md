@@ -19,7 +19,7 @@ import ArchitectureDiagram from './ArchitectureDiagramImage';
 Shard Manager is an open-source, general-purpose sharding service. It assigns the shards of any sharded application to its hosts, and keeps that assignment balanced by load as hosts come and go. It runs as its own service, backed by etcd, and applications integrate through its Go clients. Cadence Matching is one of the services that uses it.
 
 ## Why Shard Manager
-Sharded services often assign shards to hosts with a [consistent hash ring](https://en.wikipedia.org/wiki/Consistent_hashing). Cadence, for example, has long used [Ringpop](https://github.com/uber/ringpop-go). While mathematically and theoretically beautiful, consistent hashing gives a set of problems:
+A common way to assign shards to hosts is a [consistent hash ring](https://en.wikipedia.org/wiki/Consistent_hashing). Cadence, for example, has long used [Ringpop](https://github.com/uber/ringpop-go). While mathematically and theoretically beautiful, consistent hashing gives a set of problems:
 
 1. **Load Balancing** - A ring balances by shard count, never by shard load. Moving a shard means every host changing its view of the ring at the same instant, and nothing coordinates that. Methods such as virtual nodes make it possible to shuffle the shards, but do not allow fine-grained control.
 2. **Graceful Handovers** - When a shard moves in a traditional consistent hash ring, requests will simultaneously go to both owners, causing availability drops. With a centralized Shard Manager we let the old owner drain before the new one takes over. It also opens the door to warming caches on the new owner before the handover, and truly zero-downtime transfers. Graceful handover is not implemented yet.
