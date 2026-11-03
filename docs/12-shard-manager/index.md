@@ -1,6 +1,7 @@
 ---
 layout: default
-title: Introduction
+title: Introduction to Shard Manager
+sidebar_label: Introduction
 description: Shard Manager is an independent service that assigns shards to the hosts of a sharded application and keeps that assignment balanced as hosts come and go.
 keywords:
   - cadence shard manager
@@ -12,10 +13,6 @@ keywords:
   - shards
 permalink: /docs/shard-manager
 ---
-
-:::note Experimental
-Shard Manager is a new service. It runs the sharding of Cadence Matching at Uber. It is still pre version 1, so breaking changes may occur.
-:::
 
 Shard Manager manages the shards of an application, such as Cadence Matching. It owns the shard-to-owner mapping, and load balances on top of it.
 

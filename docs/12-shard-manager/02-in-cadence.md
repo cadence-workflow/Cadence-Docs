@@ -1,6 +1,7 @@
 ---
 layout: default
-title: Cadence Integration
+title: How Cadence Uses Shard Manager
+sidebar_label: Cadence Integration
 description: How Cadence Matching uses Shard Manager to own task lists, how requests are routed to the owner, and the dynamic config that controls the rollout.
 keywords:
   - cadence matching shard manager

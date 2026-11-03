@@ -1,6 +1,7 @@
 ---
 layout: default
-title: Architecture
+title: Shard Manager Architecture
+sidebar_label: Architecture
 description: The general architecture of Shard Manager, dependencies, how it works and limitations.
 keywords:
   - shard manager architecture
