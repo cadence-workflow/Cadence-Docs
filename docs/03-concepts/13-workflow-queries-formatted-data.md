@@ -381,5 +381,5 @@ Renders an image with optional size control. Standard markdown images (`![alt](u
 | `src` | Yes | Image URL |
 | `alt` | No | Alt text |
 | `title` | No | Text shown on hover |
-| `width` | No | A number in pixels, or any CSS length |
-| `height` | No | A number in pixels, or any CSS length |
+| `width` | No | A number in pixels |
+| `height` | No | A number in pixels |

@@ -174,8 +174,8 @@ The `workflows` tag needs advanced visibility on the cluster.
 | `src` | Yes | Image URL |
 | `alt` | No | Alt text |
 | `title` | No | Text shown on hover |
-| `width` | No | A number in pixels, or any CSS length |
-| `height` | No | A number in pixels, or any CSS length |
+| `width` | No | A number in pixels |
+| `height` | No | A number in pixels |
 
 If you set only one of `width` and `height`, the other scales to keep the aspect ratio. Plain Markdown images (`![alt](url)`) also work. Raw HTML such as `<img>` does not render.
 
