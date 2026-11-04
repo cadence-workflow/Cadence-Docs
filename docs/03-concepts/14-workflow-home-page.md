@@ -76,9 +76,6 @@ On the Home tab, every tag inherits `domain`, `cluster`, `workflowId` and `runId
 | `signal` | Button that signals a workflow |
 | `start` | Button that starts a new workflow |
 | `input-field` | Text or number input whose value a button can send |
-| `input` | Shows the workflow input, or one value in it |
-| `result` | Shows the workflow result, or one value in it |
-| `searchAttributes` | Shows the search attributes, or one of them |
 | `workflows` | Table of workflows that match a visibility query |
 | `image` | Image with a set width or height |
 
@@ -146,21 +143,6 @@ An `input-field` tag defines a variable with the same name. Use `$name` in any `
 
 Number fields send numbers. An empty optional field leaves its key out of the payload. Use `{% $amount %}` in text to show the current value.
 
-### Workflow data
-
-```markdown
-Report ID: {% input path="[0].reportId" /%}
-
-Approved amount: {% result path="approvedAmount" /%}
-
-Status: {% searchAttributes name="CustomKeywordField" /%}
-```
-
-- `input` and `result` take an optional `path`, such as `[0].reportId` or `items[1].amount`. The workflow input is a list of arguments, so start the path with the argument index. Without a path, the tag shows the whole value.
-- `searchAttributes` takes an optional `name`. Without a name, it shows all search attributes.
-- `result` shows "Workflow is still running" until the workflow closes.
-- All three accept `workflowId`, `runId`, `domain` and `cluster`. If you set `workflowId`, also set `runId`.
-
 ### Workflows list
 
 The `workflows` tag needs advanced visibility on the cluster.
@@ -213,4 +195,4 @@ The Home tab runs the query when it opens. It does not poll.
 
 ## Sample
 
-The [query samples](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/query) include an expense report workflow with a full home page: approve and reject buttons, an input field for a partial amount, workflow data tags, and a list of other reports.
+The [query samples](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/query) include an expense report workflow with a full home page: approve and reject buttons, an input field for a partial amount, and a list of other reports.
