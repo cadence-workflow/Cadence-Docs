@@ -19,6 +19,8 @@ Cadence Web can show a **Home** tab on the workflow page. The tab runs a query n
 
 The page uses the same Markdown and Markdoc tags as [Custom Workflow Controls](/docs/concepts/workflow-queries-formatted-data). On the Home tab, the tags also know which workflow they are on, so you write less.
 
+<img src={require('./img/workflow-home-page.png').default} alt="Home tab of an expense report workflow in Cadence Web" style={{border: '1px solid #000'}} />
+
 ## Enable the Home tab
 
 The Home tab is off by default. Start Cadence Web with:
