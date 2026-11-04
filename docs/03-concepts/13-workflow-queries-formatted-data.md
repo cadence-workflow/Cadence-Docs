@@ -379,6 +379,7 @@ Renders an image with optional size control. Standard markdown images (`![alt](u
 | Attribute | Required | Description |
 |-----------|----------|-------------|
 | `src` | Yes | Image URL |
-| `alt` | Yes | Alt text |
-| `width` | No | Width in pixels |
-| `height` | No | Height in pixels |
+| `alt` | No | Alt text |
+| `title` | No | Text shown on hover |
+| `width` | No | A number in pixels, or any CSS length |
+| `height` | No | A number in pixels, or any CSS length |
