@@ -16,7 +16,7 @@ keywords:
 permalink: /docs/shard-manager/architecture
 ---
 
-import ArchitectureDiagram from './ArchitectureDiagram';
+import ArchitectureDiagram from './ArchitectureDiagramImage';
 
 Shard Manager consists of four parts:
 
