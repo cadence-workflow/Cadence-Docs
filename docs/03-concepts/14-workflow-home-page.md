@@ -67,7 +67,7 @@ func ExpenseReportWorkflow(ctx workflow.Context, report ExpenseReport) error {
 | `data` | Yes | The Markdown page |
 | `title` | No | Heading at the top of the Home tab |
 
-Query handlers must not change workflow state or block. Build the page from values the workflow already has.
+Sanitize any values from workflow input or signals before you add them to the page. Cadence Web renders Markdown and Markdoc tags inside them, so a value could add its own links or buttons.
 
 ## Write the page
 
