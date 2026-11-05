@@ -1,0 +1,27 @@
+{
+  "description": "One production Matching cluster, one region, at the best possible placement. Each host lists the load of its task lists with any load, as a multiple of an average host. Task lists below 0.0001 of an average host are left out.",
+  "hosts": [
+    [
+      0.0191,
+      0.0033
+    ],
+    [
+      2.056
+    ],
+    [
+      3.7807
+    ],
+    [
+      0.0245,
+      0.0189
+    ],
+    [
+      0.0212,
+      0.0041,
+      0.0038
+    ],
+    [
+      0.0683
+    ]
+  ]
+}

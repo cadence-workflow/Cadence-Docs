@@ -187,3 +187,33 @@ yoavlevy:
   socials:
     linkedin: https://www.linkedin.com/in/yoav-levy-880557204/
     github: YoavLev
+
+andreasholt:
+  name: Andreas Holt
+  title: Software Engineer I @ Uber
+  url: https://www.linkedin.com/in/andreas-holt/
+  image_url: https://github.com/andreasholt.png
+  page: true
+  socials:
+    linkedin: https://www.linkedin.com/in/andreas-holt/
+    github: andreasholt
+
+gazizayestemir:
+  name: Gaziza Yestemirova
+  title: Software Engineer II @ Uber
+  url: https://www.linkedin.com/in/gaziza-yestemirova-57b93b106/
+  image_url: https://github.com/gazizayestemir.png
+  page: true
+  socials:
+    linkedin: https://www.linkedin.com/in/gaziza-yestemirova-57b93b106/
+    github: gazizayestemir
+
+dkrotx:
+  name: Jan Kisel
+  title: Staff Software Engineer @ Uber
+  url: https://www.linkedin.com/in/jan-kisel-92942518/
+  image_url: https://github.com/dkrotx.png
+  page: true
+  socials:
+    linkedin: https://www.linkedin.com/in/jan-kisel-92942518/
+    github: dkrotx

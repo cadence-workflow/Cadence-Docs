@@ -125,8 +125,8 @@
     "published_at": "2025-10-16T08:41:59Z",
     "body": "## What's Changed\r\n* ci: Lint PR titles with Conventional Commmit standard by @c-warren in https://github.com/cadence-workflow/cadence-go-client/pull/1462\r\n* ci: Allow gpg signed commits to pass DCO checks by @c-warren in https://github.com/cadence-workflow/cadence-go-client/pull/1463\r\n* feat: Introduce FailoverDomain endpoint from cadence-idl by @gazi-yestemirova in https://github.com/cadence-workflow/cadence-go-client/pull/1461\r\n\r\n## New Contributors\r\n* @gazi-yestemirova made their first contribution in https://github.com/cadence-workflow/cadence-go-client/pull/1461\r\n\r\n**Full Changelog**: https://github.com/cadence-workflow/cadence-go-client/compare/v1.3.1-rc.11...v1.3.1-rc.12",
     "author": {
-      "login": "gazi-yestemirova",
-      "html_url": "https://github.com/gazi-yestemirova"
+      "login": "gazizayestemir",
+      "html_url": "https://github.com/gazizayestemir"
     }
   },
   {

@@ -174,7 +174,7 @@ const config: Config = {
         id: 'faq',
         path: 'faq',
         routeBasePath: 'faq',
-        editUrl: 'https://github.com/cadence-workflow/Cadence-Docs/edit/master/faq/',
+        editUrl: 'https://github.com/cadence-workflow/Cadence-Docs/edit/master/',
         remarkPlugins: [npm2yarn],
         sidebarPath: './sidebarsFAQ.js',
         showLastUpdateAuthor: true,
@@ -207,6 +207,13 @@ const config: Config = {
           {
             from: '/community/meetup',
             to: '/community/contact-us/',
+          },
+          // The Python client introduction was served here while its file
+          // was named 00-index.md, which Docusaurus does not treat as the
+          // category index.
+          {
+            from: '/docs/python-client/index',
+            to: '/docs/python-client/',
           },
         ],
       } satisfies ClientRedirectsOptions,

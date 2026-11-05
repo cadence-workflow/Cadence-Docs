@@ -28,7 +28,7 @@ Here are the latest topics:
 
 - [Bad Practices and Anti-Patterns with Cadence - Part 1](https://cadenceworkflow.io/blog/2023/07/10/cadence-bad-practices-part-1/)
 
-- [Non-Determistic Errors, Replayers and Shadowers](https://cadenceworkflow.io/blog/2023/08/27/nondeterministic-errors-replayers-shadowers/)
+- [Non-Determistic Errors, Replayers and Shadowers](/blog/2023/08/28/nondeterministic-errors-replayers-shadowers/)
 
 Even if you have not encountered these use cases - it is good to be prepared and have a solution ready. Please take a look and let us have your feedback.
 

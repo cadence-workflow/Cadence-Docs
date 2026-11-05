@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {type ReactNode} from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
@@ -41,7 +41,7 @@ const FolderIcon: React.FC = () => (
   </svg>
 );
 
-export default function GetInvolvedBanner(): JSX.Element {
+export default function GetInvolvedBanner(): ReactNode {
   const cards: CardItem[] = [
     {
       label: 'Discussions',
