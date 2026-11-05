@@ -370,7 +370,7 @@ Starts a new workflow execution.
 | `wfId` | No | Custom workflow ID |
 | `input` | No | Workflow input |
 | `timeoutSeconds` | No | Execution timeout in seconds |
-| `sdkLanguage` | No | `"GO"` or `"JAVA"` |
+| `sdkLanguage` | No | `"GO"`, `"JAVA"` or `"PYTHON"` |
 
 ### `{% image %}`
 
@@ -381,5 +381,5 @@ Renders an image with optional size control. Standard markdown images (`![alt](u
 | `src` | Yes | Image URL |
 | `alt` | No | Alt text |
 | `title` | No | Text shown on hover |
-| `width` | No | A number in pixels |
-| `height` | No | A number in pixels |
+| `width` | No | CSS width. A bare number means pixels |
+| `height` | No | CSS height. A bare number means pixels |

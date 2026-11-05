@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Workflow Home Page
-description: How to give a Go workflow a Home tab in Cadence Web by registering a home query handler that returns Markdown with Markdoc tags.
+description: How to give a workflow a Home tab in Cadence Web by registering a home query handler that returns Markdown with Markdoc tags.
 keywords:
   - cadence workflow home page
   - cadence web home tab
@@ -13,6 +13,9 @@ keywords:
 permalink: /docs/concepts/workflow-home-page
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Workflow Home Page
 
 Cadence Web can show a **Home** tab on the workflow page. The tab runs a query named `home` on your workflow and renders the Markdown it returns. Use it to show the state of the workflow and the actions people can take on it, on the first page they open.
@@ -21,17 +24,30 @@ The page uses the same Markdown and Markdoc tags as [Custom Workflow Controls](/
 
 <img src={require('./img/workflow-home-page.png').default} alt="Home tab of an expense report workflow in Cadence Web" style={{border: '1px solid #000'}} />
 
+## Samples
+
+| Sample | Description | Code |
+|--------|-------------|------|
+| **ExpenseReportWorkflow** | Approve and reject buttons, an input field for a partial amount, and a list of other reports | [Go](https://github.com/cadence-workflow/cadence-samples/blob/master/new_samples/query/expense_report_workflow.go) · [Java](https://github.com/cadence-workflow/cadence-java-samples/blob/master/src/main/java/com/uber/cadence/samples/query/ExpenseReportWorkflow.java) |
+
 ## Enable the Home tab
 
-The Home tab is off by default. Start Cadence Web with:
+The Home tab is off by default. It is a Cadence Web [feature flag](https://github.com/cadence-workflow/cadence-web#feature-flags), set with an environment variable on the `cadence-web` service. For example, in Docker Compose:
 
-```bash
-CADENCE_WORKFLOW_HOME_ENABLED=true
+```yaml
+cadence-web:
+  image: ubercadence/web:latest
+  environment:
+    - "CADENCE_GRPC_PEERS=cadence:7833"
+    - "CADENCE_WORKFLOW_HOME_ENABLED=true"
 ```
 
 ## Register the `home` query
 
 Register a query handler named `home` that returns a `formattedData` result:
+
+<Tabs groupId="lang">
+<TabItem value="go" label="Go">
 
 ```go
 type homeResponse struct {
@@ -60,6 +76,55 @@ func ExpenseReportWorkflow(ctx workflow.Context, report ExpenseReport) error {
 }
 ```
 
+</TabItem>
+<TabItem value="java" label="Java">
+
+```java
+public class MarkdownFormattedResponse {
+    private final String cadenceResponseType = "formattedData";
+    private final String format = "text/markdown";
+    private final String data;
+    private final String title;
+
+    public MarkdownFormattedResponse(String data, String title) {
+        this.data = data;
+        this.title = title;
+    }
+    public String getCadenceResponseType() { return cadenceResponseType; }
+    public String getFormat() { return format; }
+    public String getData() { return data; }
+    public String getTitle() { return title; }
+}
+
+public interface ExpenseReportWorkflow {
+    @WorkflowMethod
+    void run(ExpenseReport report);
+
+    @QueryMethod(name = "home")
+    MarkdownFormattedResponse homeQuery();
+}
+
+public class ExpenseReportWorkflowImpl implements ExpenseReportWorkflow {
+    private ExpenseReport report;
+    private String status = "pending";
+
+    @Override
+    public void run(ExpenseReport report) {
+        this.report = report;
+        // ...
+    }
+
+    @Override
+    public MarkdownFormattedResponse homeQuery() {
+        return new MarkdownFormattedResponse(
+            "**Status:** " + status, "Expense report " + report.reportId);
+    }
+}
+```
+
+</TabItem>
+</Tabs>
+
 | Field | Required | Value |
 |-------|----------|-------|
 | `cadenceResponseType` | Yes | `"formattedData"` |
@@ -71,7 +136,7 @@ Sanitize any values from workflow input or signals before you add them to the pa
 
 ## Write the page
 
-On the Home tab, every tag inherits `domain`, `cluster`, `workflowId` and `runId` from the workflow page. Leave them out unless you want to point at another workflow.
+On the Home tab, `signal` inherits `domain`, `cluster`, `workflowId` and `runId` from the workflow page. The `start` and `workflows` tags inherit `domain` and `cluster`. Leave them out unless you want to point at another workflow.
 
 | Tag | What it does |
 |-----|--------------|
@@ -118,7 +183,7 @@ If you set `workflowId` without `runId`, the signal goes to the current run of t
 | `input` | No | Workflow input, sent as the only argument |
 | `wfId` | No | Workflow ID. Default: a random UUID |
 | `timeoutSeconds` | No | Execution timeout in seconds. Default: `60` |
-| `sdkLanguage` | No | `GO` (default) or `JAVA` |
+| `sdkLanguage` | No | `GO` (default), `JAVA` or `PYTHON` |
 | `domain` | No | Inherited from the page |
 | `cluster` | No | Inherited from the page |
 
@@ -174,8 +239,8 @@ The `workflows` tag needs advanced visibility on the cluster.
 | `src` | Yes | Image URL |
 | `alt` | No | Alt text |
 | `title` | No | Text shown on hover |
-| `width` | No | A number in pixels |
-| `height` | No | A number in pixels |
+| `width` | No | CSS width. A bare number means pixels |
+| `height` | No | CSS height. A bare number means pixels |
 
 If you set only one of `width` and `height`, the other scales to keep the aspect ratio. Plain Markdown images (`![alt](url)`) also work. Raw HTML such as `<img>` does not render.
 
@@ -194,7 +259,3 @@ The Home tab runs the query when it opens. It does not poll.
 | The result is not `formattedData` with `text/markdown` | An error that names the expected format |
 | The query fails or is rejected | An error with a **Retry** button |
 | The workflow is archived | A message that home pages are not available |
-
-## Sample
-
-The [query samples](https://github.com/cadence-workflow/cadence-samples/tree/master/new_samples/query) include an expense report workflow with a full home page: approve and reject buttons, an input field for a partial amount, and a list of other reports.
