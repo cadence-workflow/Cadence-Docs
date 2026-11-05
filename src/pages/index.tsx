@@ -105,6 +105,9 @@ function HomepageHeader() {
                 href={ADOPTERS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-homepage-cta-id="hero-see-adopters"
+                data-homepage-cta-text="See Adopters"
+                data-homepage-cta-destination={ADOPTERS_URL}
                 className={styles.heroEyebrowLink}>
                 See Adopters
               </Link>
@@ -119,13 +122,21 @@ function HomepageHeader() {
               without worrying about retries, queues, or state persistence.
             </p>
             <div className={styles.heroCtas}>
-              <Link to="/docs/get-started" className={clsx('button button--sm', styles.heroCtaPrimary)}>
+              <Link
+                to="/docs/get-started"
+                data-homepage-cta-id="hero-get-started"
+                data-homepage-cta-text="Get Started in 5 min"
+                data-homepage-cta-destination="/docs/get-started"
+                className={clsx('button button--sm', styles.heroCtaPrimary)}>
                 Get Started in 5 min
               </Link>
               <Link
                 href={GITHUB_REPO_URL}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-homepage-cta-id="hero-view-github"
+                data-homepage-cta-text="View on GitHub"
+                data-homepage-cta-destination={GITHUB_REPO_URL}
                 className={clsx('button button--sm', styles.heroCtaSecondary)}>
                 <GitHubMark className={styles.heroCtaIcon} />
                 View on GitHub
