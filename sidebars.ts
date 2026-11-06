@@ -222,7 +222,7 @@ const sidebars: SidebarsConfig = {
       ],
     },
     {
-      label: 'Tech Review (WIP)',
+      label: 'Tech Review',
       type: 'category',
       items: [
         { type: 'doc', id: 'tech-review/index' },
@@ -321,7 +321,7 @@ const sidebars: SidebarsConfig = {
           ],
         },
         {
-          label: 'Day 2 - Day-to-Day Operations',
+          label: 'Day 2 - Day-to-Day Operations (WIP)',
           type: 'category',
           items: [
             { type: 'doc', id: 'tech-review/day-2-operations/index' },
