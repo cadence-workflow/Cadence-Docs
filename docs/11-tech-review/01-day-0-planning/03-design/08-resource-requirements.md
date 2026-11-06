@@ -13,9 +13,11 @@ Cadence services are stateless, so their CPU, memory, and network use grows with
 
 ## Summary
 
-- **CPU.** A CPU core here means one vCPU, the unit a container or VM is allocated, which is usually one hardware thread. In the reference benchmark, the four Cadence services (not counting Cassandra) had 26 CPU cores allocated and used about 9 of them while sustaining about 610 decisions and 305 activities per second. History accounted for about three quarters of that. The 3-node Cassandra cluster used about 16 of its 21 CPU cores, so the datastore had less headroom than Cadence did.
-- **Memory.** History is the memory-heavy service because it caches workflow state and history events for the shards it owns. It used 71% to 81% of its 96 GB allocation on average, and its busiest instance ran near 94% of its limit. Frontend, Matching, and Worker each stayed between 24% and 40% of their 2 GB allocation.
-- **Network.** All traffic is RPC between your workers, the Cadence services, and the datastore. At the benchmark load, Frontend served about 1,600 requests per second and Cadence sent about 5,400 requests per second to the datastore. With two clusters, each cluster's History also pulls replication tasks in batches from the other cluster's Frontend.
+- **Throughput.** The benchmark sustained about 610 decisions and 305 activities per second. The CPU, memory, datastore, and network figures below are for that load.
+- **CPU.** A CPU core is one vCPU, usually one hardware thread. The four Cadence services had 26 CPU cores in total and averaged about 35% utilization, about 9 cores busy. History did about three quarters of that work.
+- **Memory.** History is the memory-heavy service because it caches workflow state and history events for the shards it owns. It used 71% to 81% of its 96 GB allocation on average, and its busiest instance ran near 94% of its limit. Frontend, Matching, and Worker averaged under about 40% of their 2 GB. One minute on a Frontend instance reached about 43% of its memory limit, and one minute of Frontend or Matching CPU reached about 44%.
+- **Datastore.** Cassandra ran as 3 nodes, 7 CPU cores and 64 GB each. One node had 60 GB. On the single-cluster run it averaged about 76% CPU and 62% memory, so it had less headroom than the Cadence services. It is the first component to scale as load grows.
+- **Network.** The benchmark did not measure bandwidth. Traffic is RPC among workers, the Cadence services, and the datastore. With two clusters in different zones, cross-region bandwidth grows with the event rate and payload size, and that is what drives network cost.
 
 ## What drives resource usage
 
@@ -49,7 +51,7 @@ Every cluster in the tests used the same footprint:
 - **Cluster.** 8,192 history shards, Cassandra for persistence, and one benchmark domain with 30 days of retention.
 - **Workload.** A nested workflow test configured with 400 child workflows, 2 activities per child workflow, 3 activities per grandchild workflow, and 1 KB payloads. It exercises child workflows, activities, timers, search attribute updates, and continue-as-new.
 - **Workers.** Application workers were sized so task lists never built a backlog. Their own usage is not part of the results.
-- **Configuration.** Several rate limits in dynamic configuration were raised so they would not cap throughput. The replicated run set `history.ReplicationTaskProcessorShardQPS` to 50. That setting limits how many replication tasks each shard applies per second, and the default is 5. The full list is in [Dynamic configuration](#dynamic-configuration).
+- **Configuration.** The bench used the dynamic configuration values in [Dynamic configuration](#dynamic-configuration). The replicated run set `history.ReplicationTaskProcessorShardQPS` to 50. That setting limits how many replication tasks each shard applies per second, and the default is 5.
 
 The single-cluster run had no replication. The two-cluster run used a [global domain](/docs/concepts/cross-dc-replication) active in one cluster and replicated to a standby cluster in another region. The standby received no client traffic.
 
@@ -64,7 +66,7 @@ The single-cluster run had no replication. The two-cluster run used a [global do
 | User timers fired per second | 61 | 61 |
 | History tasks processed per second | 2,672 | 2,583 |
 | Frontend requests per second, all APIs | 1,617 | 1,580 |
-| Frontend requests per second, excluding long polls | 1,003 | 925 |
+| Frontend requests per second, excluding long polls | 922 | 925 |
 | Persistence requests per second | 5,359 | 5,434 |
 
 No workflow or activity failed in either run.
@@ -99,8 +101,8 @@ Utilization is usage divided by allocation across all instances of a service, av
 What the measurements show:
 
 - **History does most of the work.** It used about 7 of the 9 CPU cores Cadence consumed, and nearly all of the memory.
-- **History memory fills up over time.** Memory rose steadily through each run in both clusters as the per-shard caches filled, and one active History instance stayed near 94% of its limit. Leave memory headroom on History, and bound the caches through dynamic configuration rather than relying on the container limit.
-- **Load is not perfectly even across instances.** The bench ran against a single domain and a single task list. History, Frontend, and Worker stayed fairly even across instances, while Matching was more skewed: in the single-cluster run, per-instance History CPU ranged from 33% to 48%, and Matching from 7% to 34%. More domains and more diverse workloads reduce that skew. Size each instance for the busiest one, not the average.
+- **History memory fills up over time.** In the two-cluster run, History memory rose through the window as the per-shard caches filled, and one active History instance stayed near 94% of its limit. On the single-cluster run one History instance stayed near 94% for the whole window. Leave memory headroom on History, and bound the caches through dynamic configuration rather than relying on the container limit.
+- **One task list skews Matching.** History work is spread across shards, so its instances stayed closer together (33% to 48% CPU on the single-cluster run). Matching follows task lists. This bench used one task list, so one Matching instance averaged 7% CPU and another 34%. More task lists spread that work. Size each Matching instance for the busiest one, not the average.
 - **Replication adds little to the active cluster.** Compared with the single-cluster run, active History CPU rose from 41% to 44%, and Frontend and Matching did not change.
 - **A standby cluster is not idle.** Its History applies every replicated event and verifies standby tasks, which took about 37% CPU, or roughly 85% of the active cluster's History CPU. Its datastore handled about 5,100 requests per second, close to the active cluster's 5,400. Give a standby cluster the same History and datastore capacity as the active one, which it needs anyway to take over traffic on failover.
 - **The datastore was the most heavily used component.** At about 75% CPU, Cassandra had the least headroom, so it is the first component to scale as load grows.
@@ -126,19 +128,19 @@ The `replication_latency` gauge on the active cluster reports the age of each sh
 
 ## Network
 
-Cadence uses no external message broker for task dispatch. Its network traffic is RPC between components, plus Kafka when advanced visibility is enabled.
+The benchmark did not measure bandwidth. Request rates are in [Benchmark details](#benchmark-details). What follows is which paths have to exist. Cross-region bandwidth, and its cost, grows with the event rate and payload size when the two clusters are in different zones. Cadence uses no external message broker for task dispatch. Traffic is RPC between components, plus Kafka when advanced visibility is enabled.
 
 ### In-cluster
 
-- **Workers to Frontend.** Workers open outbound connections to Frontend and long poll for tasks. Cadence never dials into a worker. At benchmark load, just over 40% of Frontend requests were long polls (`PollForDecisionTask` and `PollForActivityTask`), and each completed decision or activity added one response call.
+- **Workers to Frontend.** Workers open outbound connections to Frontend and long poll for tasks. Cadence never dials into a worker.
 - **Between Cadence services.** Frontend, History, Matching, and Worker must all reach each other for RPC and for ringpop membership.
-- **Cadence to the datastore.** Every service reaches the execution store, and History generated about 88% of the persistence requests in the benchmark. Frontend, History, and Worker also reach the visibility store, and Kafka when advanced visibility is enabled. Each process opens its own connection pool, so total database connections grow with the number of instances.
+- **Cadence to the datastore.** Every service reaches the execution store. Frontend, History, and Worker also reach the visibility store, and Kafka when advanced visibility is enabled. Each process opens its own connection pool, so total database connections grow with the number of instances.
 
 [Service dependencies](/docs/tech-review/day-0-planning/design/service-dependencies) lists every dependency and port.
 
 ### Cross-cluster
 
-History and Worker in each cluster must reach Frontend in the other cluster. History pulls workflow replication tasks in batches, and Worker pulls domain replication messages. In the benchmark, one fetch call took about 100 ms at p50 between regions and carried several hundred tasks, so a few requests per second were enough to move about 2,150 tasks per second. Frontend can also forward API calls to the cluster where a domain is active, depending on the cluster redirection policy. Datastores never talk to each other across clusters. Cadence replicates workflow data itself, which lets the clusters use different databases and makes moving from one database to another a [cluster migration](/docs/operation-guide/migration).
+History and Worker in each cluster must reach Frontend in the other cluster. History pulls workflow replication tasks in batches, and Worker pulls domain replication messages. Frontend can also forward API calls to the cluster where a domain is active, depending on the cluster redirection policy. Datastores never talk to each other across clusters. Cadence replicates workflow data itself, which lets the clusters use different databases and makes moving from one database to another a [cluster migration](/docs/operation-guide/migration).
 
 Replication is asynchronous. Latency between regions does not slow running workflows, but it adds to replication lag, which is how much recent progress a failover can lose. Replication traffic grows with the event rate.
 
@@ -147,8 +149,8 @@ Replication is asynchronous. Latency between regions does not slow running workf
 Treat these as starting points:
 
 - Start History with at least 2 CPU cores and enough memory for its caches. In the benchmark, 12 GB per instance with 1,024 shards per instance ran close to the limit on the busiest instance.
-- Frontend, Matching, and Worker are light. 1 CPU core and 2 GB per instance stayed under 40% CPU and memory at benchmark load.
-- For production, run at least 4 instances each of Frontend, History, and Matching, and at least 2 of Worker, as [Architecture requirements](/docs/tech-review/day-0-planning/design/architecture-requirements#production) recommends. Load spreads more evenly across more instances, and losing one hurts less.
+- Frontend, Matching, and Worker are light at 1 CPU core and 2 GB per instance. Service averages stayed under about 40%. One-minute peaks reached about 44% CPU on Frontend and Matching, and about 43% of Frontend memory.
+- [Architecture requirements](/docs/tech-review/day-0-planning/design/architecture-requirements#production) recommends at least 4 instances each of Frontend, History, and Matching. Run at least 2 Worker instances as well, so internal workflows keep running if one instance is lost. Load spreads more evenly across more instances.
 - Size the datastore first. In the benchmark, it had the least headroom of any component.
 - With two clusters, give the standby the same History and datastore capacity as the active cluster.
 - Before provisioning, run the [bench suite](/docs/operation-guide/setup#stressbench-test-a-cluster) against your own hardware, datastore, and workflow shapes, and run it again whenever the setup changes. The official [Helm chart](https://github.com/cadence-workflow/cadence-charts) sets no CPU or memory requests by default, so set them from your bench results.
@@ -163,7 +165,7 @@ Percentiles come from server latency histograms, so each value is accurate to wi
 
 ### Dynamic configuration
 
-These values were set so the bench would not be capped by the default rate limits or cache sizes. The two-cluster run added `history.ReplicationTaskProcessorShardQPS`. Every other value was the same in both runs.
+These are the values used for both runs. The two-cluster run also set `history.ReplicationTaskProcessorShardQPS` to 50. Several differ from the compiled defaults. New behavior usually ships behind a dynamic configuration flag, and when scalability improves, the ceiling is raised there instead of by changing the default.
 
 | Key | Value |
 | --- | --- |
@@ -267,7 +269,7 @@ Processing time is the time spent executing the task. Queue time is end to end, 
 | API | Requests | Per second |
 | --- | --- | --- |
 | **All APIs** | **9,701,898** | **1,617.0** |
-| All APIs except long polls | 6,016,432 | 1,002.7 |
+| All APIs except long polls | 5,531,895 | 922.0 |
 | PollForDecisionTask | 3,685,466 | 614.2 |
 | RespondDecisionTaskCompleted | 3,666,665 | 611.1 |
 | RespondActivityTaskCompleted | 1,834,179 | 305.7 |
@@ -292,7 +294,7 @@ All 10 errors were "entity not exists": the task or workflow was already gone. T
 | GetHistoryTasks | 2,030,318 | 338.4 |
 | RangeCompleteHistoryTask | 2,022,159 | 337.0 |
 | GetWorkflowExecution | 979,073 | 163.2 |
-| All other operations | 974,218 | 162.4 |
+| All other operations | 975,218 | 162.5 |
 
 | Scope | Requests | p50 (ms) | p99 (ms) |
 | --- | --- | --- | --- |
@@ -457,7 +459,7 @@ The completed workflows are closes replicated from the active cluster, not workf
 | TransferStandbyRecordWorkflowStarted | 809,622 | 122.7 |
 | TransferStandbyCloseExecution | 809,526 | 122.7 |
 | TimerStandbyUserTimer | 596,835 | 90.4 |
-| TransferStandbyStartChildExecution | 421,398 | 63.9 |
+| TransferStandbyStartChildExecution | 421,398 | 63.8 |
 | TransferStandbyUpsertSearchAttributes | 404,808 | 61.3 |
 | TimerStandbyWorkflowTimeout | 394,043 | 59.7 |
 | **Total** | **17,600,399** | **2,666.7** |
