@@ -116,6 +116,11 @@
   color: #2e7d32;
 }
 
+.card--adopter .badge {
+  background-color: #e0f2f1;
+  color: #00695c;
+}
+
 /* Card type styling - colored top borders */
 .card--discussion {
   border-top-color: #1565c0;
@@ -149,6 +154,14 @@
   box-shadow: 0 8px 16px rgba(46, 125, 50, 0.15);
 }
 
+.card--adopter {
+  border-top-color: #00695c;
+}
+
+.card--adopter:hover {
+  box-shadow: 0 8px 16px rgba(0, 105, 92, 0.15);
+}
+
 /* Icon styling */
 .icon {
   width: 44px;
@@ -173,6 +186,10 @@
 
 .card--examples .icon {
   color: #2e7d32;
+}
+
+.card--adopter .icon {
+  color: #00695c;
 }
 
 /* Card title */

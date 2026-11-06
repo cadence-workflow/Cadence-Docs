@@ -8,6 +8,7 @@ const sidebars = {
     //   dirName: '.',
     // },
     {type: 'doc', id: 'index', label: 'Overview'},
+    {type: 'doc', id: 'adopter-program'},
     {type: 'doc', id: 'contact-us'},
     {
       type: 'category',
