@@ -32,7 +32,7 @@ The page uses the same Markdown and Markdoc tags as [Custom Workflow Controls](/
 
 ## Enable the Home tab
 
-The Home tab is off by default. It is a Cadence Web [feature flag](https://github.com/cadence-workflow/cadence-web#feature-flags), set with an environment variable on the `cadence-web` service. For example, in Docker Compose:
+The Home tab needs Cadence Web 4.0.18 or later and is off by default. It is a Cadence Web [feature flag](https://github.com/cadence-workflow/cadence-web#feature-flags), set with an environment variable on the `cadence-web` service. For example, in Docker Compose:
 
 ```yaml
 cadence-web:
