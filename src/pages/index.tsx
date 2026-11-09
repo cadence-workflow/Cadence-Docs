@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import useBaseUrl from '@docusaurus/useBaseUrl';
@@ -96,16 +97,22 @@ function HomepageHeader() {
           <div className={styles.heroCopyMain}>
             <span className={styles.heroEyebrow}>
               <GitHubMark className={styles.heroEyebrowIcon} />
-              9k+ Stars on GitHub
+              9k+ stars
               <span aria-hidden="true" className={styles.heroEyebrowSep}>
-                •
+                ·
               </span>
               <Link
                 href={ADOPTERS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.heroEyebrowLink}>
-                See Adopters
+                Adopters
+              </Link>
+              <span aria-hidden="true" className={styles.heroEyebrowSep}>
+                ·
+              </span>
+              <Link to="/community/adopter-program/" className={styles.heroEyebrowLink}>
+                Join the Adopter Program
               </Link>
             </span>
             {/* The navbar already carries the Cadence wordmark, so the hero leads
@@ -138,7 +145,7 @@ function HomepageHeader() {
   );
 }
 
-export default function Home(): JSX.Element {
+export default function Home(): ReactNode {
   return (
     <Layout
       title={HOMEPAGE_DOCUMENT_TITLE}

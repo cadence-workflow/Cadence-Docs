@@ -116,6 +116,11 @@
   color: #2e7d32;
 }
 
+.card--adopter .badge {
+  background-color: #e0f2f1;
+  color: #00695c;
+}
+
 /* Card type styling - colored top borders */
 .card--discussion {
   border-top-color: #1565c0;
@@ -149,6 +154,14 @@
   box-shadow: 0 8px 16px rgba(46, 125, 50, 0.15);
 }
 
+.card--adopter {
+  border-top-color: #00695c;
+}
+
+.card--adopter:hover {
+  box-shadow: 0 8px 16px rgba(0, 105, 92, 0.15);
+}
+
 /* Icon styling */
 .icon {
   width: 44px;
@@ -173,6 +186,10 @@
 
 .card--examples .icon {
   color: #2e7d32;
+}
+
+.card--adopter .icon {
+  color: #00695c;
 }
 
 /* Card title */
@@ -224,6 +241,10 @@
 
 .card--examples:hover .arrow {
   color: #2e7d32;
+}
+
+.card--adopter:hover .arrow {
+  color: #00695c;
 }
 
 /* Tablet: Keep horizontal, reduce padding */
@@ -386,6 +407,10 @@ html[data-theme='dark'] .card--examples .badge {
   background-color: rgba(46, 125, 50, 0.20);
   color: #7bd68a;
 }
+html[data-theme='dark'] .card--adopter .badge {
+  background-color: rgba(0, 150, 136, 0.20);
+  color: #6fd6c8;
+}
 
 /* Match the icon color to the brighter dark-mode accent used above so the
    glyph and the badge feel like part of the same accent, not two different
@@ -394,6 +419,7 @@ html[data-theme='dark'] .card--discussion .icon { color: #7ab8ff; }
 html[data-theme='dark'] .card--contribute .icon { color: #cdb1ff; }
 html[data-theme='dark'] .card--issues     .icon { color: #ffb266; }
 html[data-theme='dark'] .card--examples   .icon { color: #7bd68a; }
+html[data-theme='dark'] .card--adopter    .icon { color: #6fd6c8; }
 
 html[data-theme='dark'] .cardTitle {
   color: #f5f6f7;

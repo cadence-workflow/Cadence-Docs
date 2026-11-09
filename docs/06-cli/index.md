@@ -49,7 +49,7 @@ For example `docker run --rm ubercadence/cli:0.21.3 --domain samples-domain doma
 See [docker hub page](https://hub.docker.com/r/ubercadence/cli/tags?page=1&ordering=last_updated) for all the CLI image tags.
 Note that CLI versions of 0.20.0 works for all server versions of 0.12 to 0.19 as well. That's because [the CLI version doesn't change in those versions](https://stackoverflow.com/questions/68217385/what-is-clientversionnotsupportederror-and-how-to-resolve-it).
 
-NOTE: On Docker versions 18.03 and later, you may get a "connection refused" error when connecting to local server. You can work around this by setting the host to "host.docker.internal" (see [here](https://docs.docker.com/docker-for-mac/networking/#use-cases-and-workarounds) for more info).
+NOTE: On Docker versions 18.03 and later, you may get a "connection refused" error when connecting to local server. You can work around this by setting the host to "host.docker.internal" (see [here](https://docs.docker.com/desktop/features/networking/networking-how-tos/) for more info).
 
 ```bash
 docker run -it --rm ubercadence/cli:master --address host.docker.internal:7833 --t grpc --domain samples-domain domain describe

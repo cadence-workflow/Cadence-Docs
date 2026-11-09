@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import _ from "lodash";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -14,7 +15,6 @@ export function getReleaseData(source) {
       /^v?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)/
     );
     return _.extend({}, release, {
-      published_at_string: new Date(release.published_at).toLocaleDateString(),
       published_at_date: new Date(release.published_at)
         .toISOString()
         .split("T", 1)[0],
@@ -52,10 +52,10 @@ const getMajorReleases = (releases) => {
 };
 
 function ReleaseTableOfContents({ majorReleases, detailedReleaseIds }) {
-  return _.map(majorReleases, (releases, major): JSX.Element => {
+  return _.map(majorReleases, (releases, major): ReactNode => {
     return (
       <div key={major}>
-        <Heading as="h2" id={major} level={2}>
+        <Heading as="h2" id={major}>
           {major}.x
         </Heading>
         <ul>
@@ -84,13 +84,13 @@ function ReleaseTableOfContents({ majorReleases, detailedReleaseIds }) {
   });
 }
 
-function Releases({ releases }): JSX.Element {
+function Releases({ releases }): ReactNode {
   return releases.map((release) => (
     <div key={release.id}>
-      <Heading as="h3" id={release.tag_name} level={3}>
+      <Heading as="h3" id={release.tag_name}>
         Release <Link to={release.html_url}>{release.tag_name}</Link> published
         by <Link to={release.author.html_url}>{release.author.login}</Link> on{" "}
-        {release.published_at_string}
+        {release.published_at_date}
       </Heading>
 
       <Markdown remarkPlugins={[remarkGfm]}>{release.body}</Markdown>
@@ -100,7 +100,7 @@ function Releases({ releases }): JSX.Element {
   ));
 }
 
-export function ListReleases({ releases }): JSX.Element {
+export function ListReleases({ releases }): ReactNode {
   let majorReleases = getMajorReleases(releases);
   const detailedReleases = getDetailedReleases(releases);
   const detailedReleaseIds = new Set(
@@ -114,7 +114,7 @@ export function ListReleases({ releases }): JSX.Element {
         detailedReleaseIds={detailedReleaseIds}
       />
       <hr></hr>
-      <Heading as="h2" id="recent-release-notes" level={2}>
+      <Heading as="h2" id="recent-release-notes">
         Recent release notes
       </Heading>
       <Releases releases={detailedReleases}></Releases>

@@ -66,6 +66,8 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'concepts/http-api' },
         { type: 'doc', id: 'concepts/data-converter' },
         { type: 'doc', id: 'concepts/workflow-queries-formatted-data' },
+        { type: 'doc', id: 'concepts/workflow-home-page' },
+        { type: 'doc', id: 'concepts/mutual-tls' },
         { type: 'doc', id: 'concepts/workflow-engine' },
         { type: 'doc', id: 'concepts/open-source-workflow-engine' },
         { type: 'doc', id: 'concepts/schedules' },
@@ -221,7 +223,7 @@ const sidebars: SidebarsConfig = {
       ],
     },
     {
-      label: 'Tech Review (WIP)',
+      label: 'Tech Review',
       type: 'category',
       items: [
         { type: 'doc', id: 'tech-review/index' },
@@ -320,7 +322,7 @@ const sidebars: SidebarsConfig = {
           ],
         },
         {
-          label: 'Day 2 - Day-to-Day Operations',
+          label: 'Day 2 - Day-to-Day Operations (WIP)',
           type: 'category',
           items: [
             { type: 'doc', id: 'tech-review/day-2-operations/index' },

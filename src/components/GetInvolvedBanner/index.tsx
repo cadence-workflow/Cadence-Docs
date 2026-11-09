@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {type ReactNode} from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
@@ -11,7 +11,8 @@ interface CardItem {
   href: string;
   icon: string;
   badge: string;
-  badgeType: 'discussion' | 'contribute' | 'issues' | 'examples';
+  badgeType: 'discussion' | 'contribute' | 'issues' | 'examples' | 'adopter';
+  external?: boolean;
 }
 
 const DiscussionIcon: React.FC = () => (
@@ -41,8 +42,27 @@ const FolderIcon: React.FC = () => (
   </svg>
 );
 
-export default function GetInvolvedBanner(): JSX.Element {
+const AdopterIcon: React.FC = () => (
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+    <circle cx="9" cy="7" r="4" />
+    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+  </svg>
+);
+
+export default function GetInvolvedBanner(): ReactNode {
   const cards: CardItem[] = [
+    {
+      label: 'Adopter Program',
+      title: 'Adopter Program',
+      description: 'Get free maintainer help provisioning Cadence in production',
+      href: '/community/adopter-program/',
+      icon: 'adopter',
+      badge: 'Onboard',
+      badgeType: 'adopter',
+      external: false,
+    },
     {
       label: 'Discussions',
       title: 'Join Discussions',
@@ -51,6 +71,7 @@ export default function GetInvolvedBanner(): JSX.Element {
       icon: 'discussion',
       badge: 'Discussion',
       badgeType: 'discussion',
+      external: true,
     },
     {
       label: 'Contributing',
@@ -60,6 +81,7 @@ export default function GetInvolvedBanner(): JSX.Element {
       icon: 'code',
       badge: 'Contribute',
       badgeType: 'contribute',
+      external: true,
     },
     {
       label: 'Issues',
@@ -69,6 +91,7 @@ export default function GetInvolvedBanner(): JSX.Element {
       icon: 'issue',
       badge: 'Report',
       badgeType: 'issues',
+      external: true,
     },
     {
       label: 'Examples',
@@ -78,6 +101,7 @@ export default function GetInvolvedBanner(): JSX.Element {
       icon: 'folder',
       badge: 'Learn',
       badgeType: 'examples',
+      external: true,
     },
   ];
 
@@ -91,6 +115,8 @@ export default function GetInvolvedBanner(): JSX.Element {
         return <IssueIcon />;
       case 'folder':
         return <FolderIcon />;
+      case 'adopter':
+        return <AdopterIcon />;
       default:
         return null;
     }
@@ -112,22 +138,39 @@ export default function GetInvolvedBanner(): JSX.Element {
         </span>
       </div>
       <div className={styles.cardsWrapper}>
-        {cards.map((card) => (
-          <Link
-            key={card.label}
-            href={card.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`${styles.card} ${styles[`card--${card.badgeType}`]}`}
-          >
-            <div className={styles.icon}>{getIcon(card.icon)}</div>
-            <Heading as="h3" className={styles.cardTitle}>
-              {card.title}
-            </Heading>
-            <p className={styles.cardDesc}>{card.description}</p>
-            <div className={styles.arrow}>→</div>
-          </Link>
-        ))}
+        {cards.map((card) => {
+          const className = `${styles.card} ${styles[`card--${card.badgeType}`]}`;
+          const body = (
+            <>
+              <div className={styles.icon}>{getIcon(card.icon)}</div>
+              <Heading as="h3" className={styles.cardTitle}>
+                {card.title}
+              </Heading>
+              <p className={styles.cardDesc}>{card.description}</p>
+              <div className={styles.arrow}>→</div>
+            </>
+          );
+
+          if (card.external) {
+            return (
+              <Link
+                key={card.label}
+                href={card.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={className}
+              >
+                {body}
+              </Link>
+            );
+          }
+
+          return (
+            <Link key={card.label} to={card.href} className={className}>
+              {body}
+            </Link>
+          );
+        })}
       </div>
     </section>
   );

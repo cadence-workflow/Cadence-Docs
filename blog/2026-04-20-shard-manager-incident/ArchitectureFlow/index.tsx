@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
+import styles from "./styles.module.css";
 
 const STEPS = [
   {
@@ -17,8 +18,8 @@ const STEPS = [
   },
 ];
 
-const STEP_PAUSE_MS = 600;
-const LOOP_PAUSE_MS = 1500;
+const STEP_PAUSE_MS = 1500;
+const LOOP_PAUSE_MS = 3000;
 
 // Layout constants
 const W = 720;
@@ -55,8 +56,8 @@ function Box({
   w,
   h,
   label,
-  color = "#e8eef4",
-  stroke = "#94a3b8",
+  color = "var(--af-box)",
+  stroke = "var(--af-slate-400)",
   highlight = false,
 }: {
   x: number;
@@ -76,8 +77,8 @@ function Box({
         width={w}
         height={h}
         rx={6}
-        fill={highlight ? "#dbeafe" : color}
-        stroke={highlight ? "#3b82f6" : stroke}
+        fill={highlight ? "var(--af-blue-100)" : color}
+        stroke={highlight ? "var(--af-blue-500)" : stroke}
         strokeWidth={highlight ? 2 : 1.5}
       />
       <text
@@ -88,7 +89,7 @@ function Box({
         fontSize={13}
         fontFamily="system-ui, sans-serif"
         fontWeight={600}
-        fill="#1e293b"
+        fill="var(--af-slate-800)"
       >
         {label}
       </text>
@@ -124,8 +125,8 @@ function TaskListBoxes({
               width={bw}
               height={bh}
               rx={4}
-              fill={hl ? "#bfdbfe" : "#f8fafc"}
-              stroke={hl ? "#2563eb" : "#cbd5e1"}
+              fill={hl ? "var(--af-blue-200)" : "var(--af-slate-50)"}
+              stroke={hl ? "var(--af-blue-600)" : "var(--af-slate-300)"}
               strokeWidth={hl ? 2 : 1}
             />
             <text
@@ -136,7 +137,7 @@ function TaskListBoxes({
               fontSize={11}
               fontFamily="system-ui, sans-serif"
               fontWeight={500}
-              fill={hl ? "#1d4ed8" : "#475569"}
+              fill={hl ? "var(--af-blue-700)" : "var(--af-slate-600)"}
             >
               {lbl}
             </text>
@@ -169,7 +170,7 @@ function RoutingMap({ visible }: { visible: boolean }) {
         fontSize={11}
         fontFamily="system-ui, sans-serif"
         fontStyle="italic"
-        fill="#94a3b8"
+        fill="var(--af-slate-400)"
       >
         routing map empty
       </text>
@@ -185,7 +186,7 @@ function RoutingMap({ visible }: { visible: boolean }) {
         fontSize={10}
         fontFamily="system-ui, sans-serif"
         fontWeight={700}
-        fill="#64748b"
+        fill="var(--af-slate-500)"
       >
         TaskList
       </text>
@@ -195,7 +196,7 @@ function RoutingMap({ visible }: { visible: boolean }) {
         fontSize={10}
         fontFamily="system-ui, sans-serif"
         fontWeight={700}
-        fill="#64748b"
+        fill="var(--af-slate-500)"
       >
         Owner
       </text>
@@ -204,7 +205,7 @@ function RoutingMap({ visible }: { visible: boolean }) {
         y1={y + 16}
         x2={x + FE.w - 20}
         y2={y + 16}
-        stroke="#cbd5e1"
+        stroke="var(--af-slate-300)"
         strokeWidth={0.5}
       />
       {/* Rows */}
@@ -217,7 +218,7 @@ function RoutingMap({ visible }: { visible: boolean }) {
               y={ry + 10}
               fontSize={10}
               fontFamily="monospace"
-              fill="#334155"
+              fill="var(--af-slate-700)"
             >
               {entry.tl}
             </text>
@@ -227,7 +228,7 @@ function RoutingMap({ visible }: { visible: boolean }) {
               fontSize={10}
               fontFamily="monospace"
               fontWeight={600}
-              fill="#1d4ed8"
+              fill="var(--af-blue-700)"
             >
               → {entry.inst}
             </text>
@@ -257,7 +258,7 @@ function DashedLine({
       y1={y1}
       x2={x2}
       y2={y2}
-      stroke={highlight ? "#3b82f6" : "#cbd5e1"}
+      stroke={highlight ? "var(--af-blue-500)" : "var(--af-slate-300)"}
       strokeWidth={highlight ? 2 : 1.5}
       strokeDasharray={highlight ? "none" : "6 4"}
     />
@@ -403,7 +404,7 @@ function HeartbeatDots({
 
   const sources = [m1Hb, m2Hb, m3Hb];
   const assignments = [["TL1", "TL2"], ["TL3", "TL4"], ["TL5", "TL6"]];
-  const color = reverse ? "#6366f1" : "#10b981";
+  const color = reverse ? "var(--af-indigo-500)" : "#10b981";
 
   return (
     <>
@@ -435,8 +436,8 @@ function HeartbeatDots({
                     width={tw}
                     height={th}
                     rx={3}
-                    fill="#eef2ff"
-                    stroke="#c7d2fe"
+                    fill="var(--af-indigo-50)"
+                    stroke="var(--af-indigo-200)"
                     strokeWidth={1}
                   />
                   <text
@@ -447,7 +448,7 @@ function HeartbeatDots({
                     fontSize={10}
                     fontFamily="system-ui, sans-serif"
                     fontWeight={600}
-                    fill="#4338ca"
+                    fill="var(--af-indigo-700)"
                   >
                     {label}
                   </text>
@@ -503,18 +504,18 @@ function StepButton({
   };
   const variantStyles: Record<StepButtonVariant, React.CSSProperties> = {
     primary: {
-      background: disabled ? "#e2e8f0" : "#3b82f6",
-      color: disabled ? "#94a3b8" : "#fff",
+      background: disabled ? "var(--af-slate-200)" : "var(--af-button-primary)",
+      color: disabled ? "var(--af-slate-400)" : "#fff",
       border: "1px solid transparent",
     },
     secondary: {
-      background: "#fff",
-      color: "#334155",
+      background: "var(--af-button)",
+      color: "var(--af-slate-700)",
       border: "1px solid #cbd5e1",
     },
     ghost: {
       background: "transparent",
-      color: disabled ? "#94a3b8" : "#475569",
+      color: disabled ? "var(--af-slate-400)" : "var(--af-slate-600)",
       border: "1px solid transparent",
     },
   };
@@ -531,7 +532,7 @@ function StepButton({
 
 export default function ArchitectureFlow() {
   const [stepIdx, setStepIdx] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(false);
   // playToken is used as a React `key` on the animation components so that
   // re-clicking the current step (or resuming auto-play) always re-mounts
   // the animation and replays it from the start.
@@ -597,10 +598,11 @@ export default function ArchitectureFlow() {
 
   return (
     <div
+      className={styles.root}
       style={{
         margin: "24px 0",
         padding: "16px",
-        background: "#f8fafc",
+        background: "var(--af-slate-50)",
         borderRadius: 8,
         border: "1px solid #e2e8f0",
       }}
@@ -670,8 +672,8 @@ export default function ArchitectureFlow() {
           w={SM.w}
           h={SM.h}
           label="Shard Manager"
-          color="#dbeafe"
-          stroke="#3b82f6"
+          color="var(--af-blue-100)"
+          stroke="var(--af-blue-500)"
           highlight={isSMHighlighted}
         />
 
@@ -748,7 +750,7 @@ export default function ArchitectureFlow() {
             y1={smLeft.y}
             x2={feRight.x}
             y2={feRight.y}
-            color="#3b82f6"
+            color="var(--af-blue-500)"
             duration={1200}
             onDone={handleStepDone}
           />
@@ -833,7 +835,7 @@ export default function ArchitectureFlow() {
         <div
           style={{
             fontSize: 13,
-            color: "#475569",
+            color: "var(--af-slate-600)",
             fontFamily: "system-ui, sans-serif",
             minHeight: 20,
           }}
