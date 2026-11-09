@@ -31,7 +31,7 @@ When Diagnostics finds an issue, the event that caused it is highlighted in its 
 
 Some issues are about the workflow as a whole rather than one event. These show up on the **Workflow Started** event.
 
-<!-- TODO: screenshot of an expanded event with an issue panel -->
+![An expanded activity event with two Diagnostics issues](./issue-panel.png)
 
 ### Find issues fast
 
@@ -40,7 +40,19 @@ A long history can have thousands of events. To help you find the ones that matt
 - A **"N issues detected"** pill in the History tab takes you to each issue in turn. The same list is also in the navigation menu.
 - A new **Issues** option in the Filters menu shows only the events that have issues.
 
-<!-- TODO: screenshot of the issues pill and the Issues filter -->
+<!-- flex ratios match each image's aspect ratio, so both render at the same height -->
+<div style={{display: 'flex', gap: '1rem', alignItems: 'flex-start'}}>
+  <img
+    src={require('./issues-menu.png').default}
+    alt="The issues detected pill and its menu, listing each event's issues"
+    style={{flex: 0.97, minWidth: 0}}
+  />
+  <img
+    src={require('./issues-filter.png').default}
+    alt="The Filters menu with the Only show events with issues toggle turned on"
+    style={{flex: 1.22, minWidth: 0}}
+  />
+</div>
 
 ### Diagnostics for running workflows
 
@@ -50,19 +62,10 @@ Keep in mind that a running workflow is not finished yet. If no issues show up, 
 
 ### New checks
 
-Along with the UI changes, the Cadence server has new checks. They look for problems that have not caused a failure yet, but are likely to.
+Along with the UI changes, the Cadence server has new diagnostics checks.
 
-**Timeout risks** ([docs](/docs/workflow-troubleshooting/timeout-risks)):
-
-- An activity StartToClose timeout that the server lowered to match the workflow timeout, which leaves no time for retries.
-- A long-running activity with no heartbeat timeout, so a dead worker goes unnoticed until the full timeout passes.
-
-**Antipatterns** ([docs](/docs/workflow-troubleshooting/antipatterns)):
-
-- Many activities scheduled in quick succession, which can overload a single history shard.
-- Continue-As-New called from a cron workflow, which can make the schedule drift or skip runs.
-
-**Failures** ([docs](/docs/workflow-troubleshooting/activity-failures#history-size-or-count-limits)): workflows that fail because their history grew past the size or event count limit.
+- **[Timeout risks](/docs/workflow-troubleshooting/timeout-risks)**: activity timeout settings that put the workflow at risk of timing out.
+- **[Antipatterns](/docs/workflow-troubleshooting/antipatterns)**: workflow patterns that cause problems at scale.
 
 ## Try It Today
 
@@ -77,6 +80,5 @@ See the [Feature Flags section](https://github.com/cadence-workflow/cadence-web#
 
 We'd love to hear what you find, and which checks you want next.
 
-- **Ask a question** - [#cadence-users on CNCF Slack](https://inviter.co/cncf)
+- **Ask a question** - [#cadence-users](https://cloud-native.slack.com/archives/C09J2FQ7XU3) on CNCF Slack ([join here](https://inviter.co/cncf))
 - **Open an issue** - [cadence-web on GitHub](https://github.com/cadence-workflow/cadence-web/issues)
-- **Join the discussion** - [GitHub Discussions](https://github.com/cadence-workflow/cadence/discussions)
