@@ -18,9 +18,9 @@ import TabItem from '@theme/TabItem';
 
 # Workflow Home Page
 
-Cadence Web can show a **Home** tab on the workflow page. The tab runs a query named `home` on your workflow and renders the Markdown it returns. Use it to show the state of the workflow and the actions people can take on it, on the first page they open.
+Workflow Home page gives operators a first-class place in Cadence Web to run day-to-day workflow actions without the CLI or raw JSON forms. Cadence Web shows a **Home** tab on the workflow page, runs a query named `home`, and renders the Markdown it returns as the landing view for that execution: current state, valid next steps, and the buttons to take them.
 
-The page uses the same Markdown and Markdoc tags as [Custom Workflow Controls](/docs/concepts/workflow-queries-formatted-data). On the Home tab, the tags also know which workflow they are on, so you write less.
+That matters most for non-technical operators who need to approve, remediate, or kick off work safely. Application teams do not need a separate ops service for those flows; they register a Markdown home page on the workflow itself. The page uses the same Markdown and Markdoc tags as [Custom Workflow Controls](/docs/concepts/workflow-queries-formatted-data). On the Home tab, the tags also know which workflow they are on, so you write less.
 
 <img src={require('./img/workflow-home-page.png').default} alt="Home tab of an expense report workflow in Cadence Web" style={{border: '1px solid #000'}} />
 
