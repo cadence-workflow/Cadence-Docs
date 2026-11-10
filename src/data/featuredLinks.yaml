@@ -10,6 +10,60 @@
 
 #
 
+- ctaId: whats-new-diagnostics-in-history
+  title: "Workflow Diagnostics, Now in Workflow History"
+  shortTitle: Diagnostics in History
+  description: Cadence Web now shows Diagnostics issues on the history events that caused them, runs diagnostics on running workflows, and adds checks for timeout risks and antipatterns.
+  href: /blog/2026/11/09/2026-11-09-diagnostics-in-workflow-history/diagnostics-in-workflow-history
+  tag: Blog
+  cta: Read post
+
+- ctaId: whats-new-workflow-home-page
+  title: Workflow Home Page
+  description: Give a workflow a Home tab in Cadence Web by registering a home query handler that returns Markdown with Markdoc tags.
+  href: /docs/concepts/workflow-home-page
+  tag: Doc
+  cta: Learn more
+
+- ctaId: whats-new-adopter-program
+  title: Cadence Adopter Program
+  shortTitle: Adopter Program
+  description: Free maintainer assistance for teams bringing Cadence into production, offered first come, first served.
+  href: /community/adopter-program
+  tag: Community
+  cta: Get involved
+
+- ctaId: whats-new-shard-manager-blog
+  title: "Introducing Shard Manager"
+  description: Shard Manager is a new open-source, general-purpose sharding service with load-aware placement. It cut CPU utilization on the hottest Matching host by 38%.
+  href: /blog/2026/10/30/balancing-cadence-shards-with-shard-manager
+  tag: Blog
+  cta: Read post
+
+- ctaId: whats-new-domain-isolation
+  title: Domain Isolation Configuration
+  shortTitle: Domain Isolation
+  description: Configure History Queue V2 and the domain-aware Task Scheduler to isolate domains and eliminate noisy neighbors in Cadence clusters.
+  href: /docs/operation-guide/domain-isolation
+  tag: Doc
+  cta: Learn more
+
+- ctaId: whats-new-shard-manager-doc
+  title: Introduction to Shard Manager
+  shortTitle: Shard Manager Docs
+  description: Shard Manager assigns shards to hosts and keeps them balanced by load as hosts come and go.
+  href: /docs/shard-manager
+  tag: Doc
+  cta: Learn more
+
+- ctaId: whats-new-noisy-neighbors
+  title: "Eliminating Noisy Neighbors in Cadence Clusters"
+  shortTitle: Eliminating Noisy Neighbors
+  description: New domain-level isolation features in Cadence eliminate noisy neighbor problems, improving cluster stability and performance at scale.
+  href: /blog/2026/09/28/2026-09-28-eliminating-noisy-neighbors/eliminating-noisy-neighbors
+  tag: Blog
+  cta: Read post
+
 - title: Batch Future
   description: Use the Cadence Go client to process activities or child workflows with a bounded concurrency limit.
   href: /docs/go-client/batch-future
