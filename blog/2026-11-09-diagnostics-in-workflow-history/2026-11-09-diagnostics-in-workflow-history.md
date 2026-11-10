@@ -10,7 +10,7 @@ keywords:
   - cadence antipatterns
   - cadence hot shard
   - cadence root cause analysis
-date: 2026-10-29
+date: 2026-11-09
 authors: adhityamamallan
 tags:
   - announcement
