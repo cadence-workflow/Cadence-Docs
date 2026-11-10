@@ -138,6 +138,51 @@ teams who want to use it.</li>
         <category label="Cadence Matching" term="Cadence Matching"/>
     </entry>
     <entry>
+        <title type="html"><![CDATA[Workflow Diagnostics, Now in Workflow History]]></title>
+        <id>https://cadenceworkflow.io/blog/2026/10/29/2026-10-29-diagnostics-in-workflow-history/diagnostics-in-workflow-history/</id>
+        <link href="https://cadenceworkflow.io/blog/2026/10/29/2026-10-29-diagnostics-in-workflow-history/diagnostics-in-workflow-history/"/>
+        <updated>2026-10-29T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Cadence Web now shows Workflow Diagnostics issues directly on the history events that caused them, runs diagnostics on running workflows, and adds new checks for timeout risks and antipatterns.]]></summary>
+        <content type="html"><![CDATA[<p><a class="" href="https://cadenceworkflow.io/blog/2025/08/06/workflow-diagnostics/">Workflow Diagnostics</a> scans a workflow's history, finds what went wrong, and tells you how to fix it. Until now, the results lived on their own page. You read an issue there, then went back to the history to find the event it was about.</p>
+<p>Now Diagnostics is part of Workflow History. Issues show up on the events that caused them, so you can debug a workflow in one place.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="whats-new">What's New<a href="https://cadenceworkflow.io/blog/2026/10/29/2026-10-29-diagnostics-in-workflow-history/diagnostics-in-workflow-history/#whats-new" class="hash-link" aria-label="Direct link to What's New" title="Direct link to What's New" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="issues-on-the-events-that-caused-them">Issues on the events that caused them<a href="https://cadenceworkflow.io/blog/2026/10/29/2026-10-29-diagnostics-in-workflow-history/diagnostics-in-workflow-history/#issues-on-the-events-that-caused-them" class="hash-link" aria-label="Direct link to Issues on the events that caused them" title="Direct link to Issues on the events that caused them" translate="no">​</a></h3>
+<p>When Diagnostics finds an issue, the event that caused it is highlighted in its summary row. Expand the event to see the issue, the likely root cause, and a link to a runbook with steps to fix it.</p>
+<p>Some issues are about the workflow as a whole rather than one event. These show up on the <strong>Workflow Started</strong> event.</p>
+<p><img decoding="async" loading="lazy" alt="An expanded activity event with two Diagnostics issues" src="https://cadenceworkflow.io/assets/images/issue-panel-bc6135e3dcb9bf7d2c48082c10bb6648.png" width="2590" height="1546" class="img_ev3q"></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="find-issues-fast">Find issues fast<a href="https://cadenceworkflow.io/blog/2026/10/29/2026-10-29-diagnostics-in-workflow-history/diagnostics-in-workflow-history/#find-issues-fast" class="hash-link" aria-label="Direct link to Find issues fast" title="Direct link to Find issues fast" translate="no">​</a></h3>
+<p>A long history can have thousands of events. To help you find the ones that matter:</p>
+<ul>
+<li class="">A <strong>"N issues detected"</strong> pill in the History tab takes you to each issue in turn. The same list is also in the navigation menu.</li>
+<li class="">A new <strong>Issues</strong> option in the Filters menu shows only the events that have issues.</li>
+</ul>
+<div style="display:flex;gap:1rem;align-items:flex-start"><img src="https://cadenceworkflow.io/assets/images/issues-menu-3b57bdd6d1552aa5eb2dec6cef3ed910.png" alt="The issues detected pill and its menu, listing each event's issues" style="flex:0.97;min-width:0"><img src="https://cadenceworkflow.io/assets/images/issues-filter-1a44b5de135245c7874e83aea5ac499e.png" alt="The Filters menu with the Only show events with issues toggle turned on" style="flex:1.22;min-width:0"></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="diagnostics-for-running-workflows">Diagnostics for running workflows<a href="https://cadenceworkflow.io/blog/2026/10/29/2026-10-29-diagnostics-in-workflow-history/diagnostics-in-workflow-history/#diagnostics-for-running-workflows" class="hash-link" aria-label="Direct link to Diagnostics for running workflows" title="Direct link to Diagnostics for running workflows" translate="no">​</a></h3>
+<p>Diagnostics used to run only on closed workflows. Now it also runs on running workflows, so you can catch problems before they turn into failures.</p>
+<p>Keep in mind that a running workflow is not finished yet. If no issues show up, that does not mean the workflow is healthy. Some problems only appear after more events happen.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="new-checks">New checks<a href="https://cadenceworkflow.io/blog/2026/10/29/2026-10-29-diagnostics-in-workflow-history/diagnostics-in-workflow-history/#new-checks" class="hash-link" aria-label="Direct link to New checks" title="Direct link to New checks" translate="no">​</a></h3>
+<p>Along with the UI changes, the Cadence server has new diagnostics checks.</p>
+<ul>
+<li class=""><strong><a class="" href="https://cadenceworkflow.io/docs/workflow-troubleshooting/timeout-risks/">Timeout risks</a></strong>: activity timeout settings that put the workflow at risk of timing out.</li>
+<li class=""><strong><a class="" href="https://cadenceworkflow.io/docs/workflow-troubleshooting/antipatterns/">Antipatterns</a></strong>: workflow patterns that cause problems at scale.</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="try-it-today">Try It Today<a href="https://cadenceworkflow.io/blog/2026/10/29/2026-10-29-diagnostics-in-workflow-history/diagnostics-in-workflow-history/#try-it-today" class="hash-link" aria-label="Direct link to Try It Today" title="Direct link to Try It Today" translate="no">​</a></h2>
+<p>In-history diagnostics is behind a feature flag in Cadence Web. To turn it on, set both of these environment variables:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token assign-left variable" style="color:#36acaa">CADENCE_WORKFLOW_DIAGNOSTICS_ENABLED</span><span class="token operator" style="color:#393A34">=</span><span class="token plain">true</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token assign-left variable" style="color:#36acaa">CADENCE_WORKFLOW_DIAGNOSTICS_IN_HISTORY_ENABLED</span><span class="token operator" style="color:#393A34">=</span><span class="token plain">true</span><br></div></code></pre></div></div>
+<p>See the <a href="https://github.com/cadence-workflow/cadence-web#feature-flags" target="_blank" rel="noopener noreferrer" class="">Feature Flags section</a> in the Cadence Web README for details. Then open any workflow and go to the History tab.</p>
+<p>We'd love to hear what you find, and which checks you want next.</p>
+<ul>
+<li class=""><strong>Ask a question</strong> - <a href="https://cloud-native.slack.com/archives/C09J2FQ7XU3" target="_blank" rel="noopener noreferrer" class="">#cadence-users</a> on CNCF Slack (<a href="https://inviter.co/cncf" target="_blank" rel="noopener noreferrer" class="">join here</a>)</li>
+<li class=""><strong>Open an issue</strong> - <a href="https://github.com/cadence-workflow/cadence-web/issues" target="_blank" rel="noopener noreferrer" class="">cadence-web on GitHub</a></li>
+</ul>]]></content>
+        <author>
+            <name>Adhitya Mamallan</name>
+            <uri>https://www.linkedin.com/in/adhityamamallan/</uri>
+        </author>
+        <category label="Announcement" term="Announcement"/>
+        <category label="Cadence Web" term="Cadence Web"/>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[Eliminating Noisy Neighbors in Cadence Clusters]]></title>
         <id>https://cadenceworkflow.io/blog/2026/09/28/2026-09-28-eliminating-noisy-neighbors/eliminating-noisy-neighbors/</id>
         <link href="https://cadenceworkflow.io/blog/2026/09/28/2026-09-28-eliminating-noisy-neighbors/eliminating-noisy-neighbors/"/>
@@ -1436,27 +1481,6 @@ During rollouts, the service should continue to serve production traffic, allowi
         <author>
             <name>Adhitya Mamallan</name>
             <uri>https://www.linkedin.com/in/adhityamamallan/</uri>
-        </author>
-        <category label="Announcement" term="Announcement"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Cadence Repositories Have Moved!]]></title>
-        <id>https://cadenceworkflow.io/blog/2024/11/18/cadence-workflows-github-organization/</id>
-        <link href="https://cadenceworkflow.io/blog/2024/11/18/cadence-workflows-github-organization/"/>
-        <updated>2024-11-18T14:00:00.000Z</updated>
-        <summary type="html"><![CDATA[All Cadence GitHub repositories have been consolidated under the cadence-workflow organization. Learn what changed, where to find the new repository URLs, and how to update your bookmarks.]]></summary>
-        <content type="html"><![CDATA[<p>We’re excited to announce that all Cadence GitHub repositories have been consolidated under the <a href="https://github.com/cadence-workflow" target="_blank" rel="noopener noreferrer" class="">cadence-workflow</a> organization! 🎉</p>
-<p>Previously, Cadence repositories were distributed across multiple organizations at Uber: <a href="https://github.com/uber" target="_blank" rel="noopener noreferrer" class=""><code>uber</code></a>, <a href="https://github.com/uber-go" target="_blank" rel="noopener noreferrer" class=""><code>uber-go</code></a>, <a href="https://github.com/uber-common" target="_blank" rel="noopener noreferrer" class=""><code>uber-common</code></a>. To improve developer cohesiveness and simplify access, the Cadence Core team has migrated all open-source repositories to the <a href="https://github.com/cadence-workflow" target="_blank" rel="noopener noreferrer" class=""><code>cadence-workflow</code></a> organization.</p>
-<p>For example, our main repository has moved from:</p>
-<p>👉 <a href="https://github.com/cadence-workflow/cadence" target="_blank" rel="noopener noreferrer" class="">uber/cadence</a></p>
-<p>To its new home:</p>
-<p>👉 <a href="https://github.com/cadence-workflow/cadence" target="_blank" rel="noopener noreferrer" class="">cadence-workflow/cadence</a></p>
-<p>You can find the full list of Cadence repositories here 👉 <a href="https://github.com/orgs/cadence-workflow/repositories" target="_blank" rel="noopener noreferrer" class="">orgs/cadence-workflow/repositories</a></p>
-<p>This move reflects our continued commitment to growing the Cadence community and making the project even more accessible to contributors and users. Please update your bookmarks and links accordingly.</p>
-<p>Thank you for being part of the Cadence journey! 🚀</p>]]></content>
-        <author>
-            <name>Josué Alexander Ibarra</name>
-            <uri>https://github.com/ibarrajo/</uri>
         </author>
         <category label="Announcement" term="Announcement"/>
     </entry>
