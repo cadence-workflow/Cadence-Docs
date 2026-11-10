@@ -10,6 +10,14 @@
 
 #
 
+- ctaId: whats-new-diagnostics-in-history
+  title: "Workflow Diagnostics, Now in Workflow History"
+  shortTitle: Diagnostics in History
+  description: Cadence Web now shows Diagnostics issues on the history events that caused them, runs diagnostics on running workflows, and adds checks for timeout risks and antipatterns.
+  href: /blog/2026/11/09/2026-11-09-diagnostics-in-workflow-history/diagnostics-in-workflow-history
+  tag: Blog
+  cta: Read post
+
 - ctaId: whats-new-workflow-home-page
   title: Workflow Home Page
   description: Give a workflow a Home tab in Cadence Web by registering a home query handler that returns Markdown with Markdoc tags.
@@ -55,20 +63,6 @@
   href: /blog/2026/09/28/2026-09-28-eliminating-noisy-neighbors/eliminating-noisy-neighbors
   tag: Blog
   cta: Read post
-
-- ctaId: whats-new-timeout-risks
-  title: Timeout Risks
-  description: Find activity configurations that put workflows at risk of timing out, such as StartToClose timeouts silently capped by the workflow timeout or missing heartbeats.
-  href: /docs/workflow-troubleshooting/timeout-risks
-  tag: Doc
-  cta: Learn more
-
-- ctaId: whats-new-workflow-antipatterns
-  title: Workflow Antipatterns
-  description: Common Cadence workflow antipatterns, like large activity bursts that cause hot shards and Continue-As-New inside cron workflows, and how to fix them.
-  href: /docs/workflow-troubleshooting/antipatterns
-  tag: Doc
-  cta: Learn more
 
 - title: Batch Future
   description: Use the Cadence Go client to process activities or child workflows with a bounded concurrency limit.
