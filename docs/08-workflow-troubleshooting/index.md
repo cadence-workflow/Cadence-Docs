@@ -70,6 +70,6 @@ Query the diagnostics workflow for the report:
 cadence --do cadence-system workflow query --wid my-domain-my-run-id --rid 5e8b7c0a-... --qt query-diagnostics-report
 ```
 
-The report is JSON. `DiagnosticsCompleted` is `false` until all checks have finished. `DiagnosticsResult` has one field per check, `Timeouts`, `Failures`, `Retries`, `TimeoutRisks`, and `Antipatterns`, which is `null` when the check found nothing. Each check lists its `Issues`, any `RootCause` entries matched to them by `IssueID`, and a `Runbook` link to the page in this guide.
+The report is JSON. `DiagnosticsCompleted` is `false` until all checks have finished. `DiagnosticsResult` has one field per check, `Timeouts`, `Failures`, `Retries`, `TimeoutRisks`, and `Antipatterns`, which is `null` when the check found nothing. Each check lists its `Issues` and a `Runbook` link to the page in this guide. The `Timeouts` and `Failures` checks also list `RootCause` entries matched to their issues by `IssueID`.
 
 Applications can start diagnostics through the `DiagnoseWorkflowExecution` frontend API, which the CLI and Cadence Web use.
