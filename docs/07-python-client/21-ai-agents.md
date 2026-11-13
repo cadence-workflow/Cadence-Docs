@@ -1,7 +1,7 @@
 ---
 layout: default
 title: AI Agents
-description: How to run OpenAI Agents SDK and Google ADK agents as durable Cadence workflows with the Cadence Python client, with every model call and tool call recorded as an activity.
+description: How to run OpenAI Agents SDK and Google ADK agents as durable Cadence workflows with the Cadence Python client, with model calls and tool calls backed by registered activities recorded in workflow history.
 keywords:
   - cadence python ai agents
   - cadence openai agents sdk
@@ -19,9 +19,13 @@ The framework still drives the agent loop. The integration changes where the wor
 
 - Every model call is scheduled as a Cadence activity, so the prompt and the response are recorded in workflow history.
 - Tools that are Cadence activities are scheduled as activities and run on your workers.
-- If a worker crashes, another worker replays the workflow history and continues the run. Model calls and tool calls that already completed are not repeated.
+- If a worker crashes, another worker replays the workflow history and continues the run. Completed model calls and activity-backed tool calls are not repeated.
 
 Because the agent is a workflow, it can also use signals, queries, timers, and `wait_condition` to wait for people or external systems.
+
+:::warning[Workflow history contains agent data]
+Prompts, model responses, and activity inputs and results are stored in workflow history. Do not put sensitive data in them unless your [data converter](/docs/concepts/data-converter) protects it, and account for payload and [history growth](/docs/workflow-troubleshooting/activity-failures#history-size-or-count-limits) in long-running agents.
+:::
 
 ## Samples
 
@@ -37,9 +41,9 @@ The integration READMEs include a complete single-agent example for each framewo
 
 Both integrations need the following.
 
-- **Pydantic data converter.** Model requests and responses pass through activities as the framework's own types, such as Pydantic models. Configure the client with `PydanticDataConverter` to serialize them. See [Data Converters](/docs/python-client/data-converters#pydantic-models).
+- **Pydantic data converter.** Model requests and responses pass through activities as the framework's own types, such as Pydantic models. Configure the client with `PydanticDataConverter` to serialize them. The OpenAI integration requires `PydanticDataConverter(exclude_unset=True)` so that unset optional fields stay omitted. See [Data Converters](/docs/python-client/data-converters#pydantic-models).
 - **Model activities on the worker.** Register `OpenAIActivities` or `GoogleADKActivities` with the worker's registry. The model provider is called from these activities, so the worker process needs the provider's credentials, such as `OPENAI_API_KEY`.
-- **Activities as tools.** Pass a registered activity as a tool. When the agent calls it from workflow code, the activity is scheduled on Cadence instead of running inline. To give a tool its own timeouts or retry policy, pass the result of [`with_options`](/docs/python-client/activities#executing-activities-from-a-workflow), for example `book_flight.with_options(start_to_close_timeout=timedelta(minutes=1))`.
+- **Async activities as tools.** Pass a registered `async` activity as a tool. When the agent calls it from workflow code, the activity is scheduled on Cadence instead of running inline. A synchronous activity used as a tool raises an error when the agent calls it. To give a tool its own timeouts or retry policy, pass the result of [`with_options`](/docs/python-client/activities#executing-activities-from-a-workflow), for example `book_flight.with_options(start_to_close_timeout=timedelta(minutes=1))`.
 
 Tools that are not Cadence activities run inside the workflow, so they must follow the same [workflow constraints](/docs/python-client/workflows#workflow-constraints) as the rest of the workflow code. Use an activity for any tool that does I/O or has side effects.
 
@@ -228,4 +232,4 @@ async def main() -> None:
 asyncio.run(main())
 ```
 
-Open the workflow in Cadence Web, at [http://localhost:8088](http://localhost:8088) for a local server, to follow the run. Each model call and tool call is a separate activity in the history, with its input, result, and any failure.
+Open the workflow in Cadence Web, at [http://localhost:8088](http://localhost:8088) for a local server, to follow the run. Each model call and each tool call backed by a registered `async` activity is a separate activity in the history, with its input, result, and any failure.
