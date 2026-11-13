@@ -39,7 +39,7 @@ Both integrations need the following.
 
 - **Pydantic data converter.** Model requests and responses pass through activities as the framework's own types, such as Pydantic models. Configure the client with `PydanticDataConverter` to serialize them. See [Data Converters](/docs/python-client/data-converters#pydantic-models).
 - **Model activities on the worker.** Register `OpenAIActivities` or `GoogleADKActivities` with the worker's registry. The model provider is called from these activities, so the worker process needs the provider's credentials, such as `OPENAI_API_KEY`.
-- **Async activities as tools.** Pass a registered `async` activity as a tool. When the agent calls it from workflow code, the activity is scheduled on Cadence instead of running inline. Synchronous activities cannot be called from workflow code. To give a tool its own timeouts or retry policy, pass the result of [`with_options`](/docs/python-client/activities#executing-activities-from-a-workflow), for example `book_flight.with_options(start_to_close_timeout=timedelta(minutes=1))`.
+- **Activities as tools.** Pass a registered activity as a tool. When the agent calls it from workflow code, the activity is scheduled on Cadence instead of running inline. To give a tool its own timeouts or retry policy, pass the result of [`with_options`](/docs/python-client/activities#executing-activities-from-a-workflow), for example `book_flight.with_options(start_to_close_timeout=timedelta(minutes=1))`.
 
 Tools that are not Cadence activities run inside the workflow, so they must follow the same [workflow constraints](/docs/python-client/workflows#workflow-constraints) as the rest of the workflow code. Use an activity for any tool that does I/O or has side effects.
 
@@ -212,7 +212,7 @@ async def main() -> None:
     async with Client(
         domain="default",
         target="localhost:7833",
-        data_converter=PydanticDataConverter(),
+        data_converter=PydanticDataConverter(exclude_unset=True),
     ) as client:
         async with Worker(client, "agent-task-list", registry):
             execution = await client.start_workflow(
