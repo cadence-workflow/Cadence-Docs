@@ -163,6 +163,7 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'python-client/schedules' },
         { type: 'doc', id: 'python-client/testing' },
         { type: 'doc', id: 'python-client/metrics' },
+        { type: 'doc', id: 'python-client/ai-agents' },
       ],
     },
     {

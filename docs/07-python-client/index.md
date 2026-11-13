@@ -69,7 +69,7 @@ Decorators for defining activities: `@activity.defn`, `@activity.method`. Contex
 
 ### `cadence.contrib`
 
-Optional integrations include [Pydantic](https://github.com/cadence-workflow/cadence-python-client/tree/v0.4.0/cadence/contrib/pydantic), [OpenAI Agents](https://github.com/cadence-workflow/cadence-python-client/tree/v0.4.0/cadence/contrib/openai), and [Google ADK](https://github.com/cadence-workflow/cadence-python-client/tree/v0.4.0/cadence/contrib/google_adk).
+Optional integrations include [Pydantic](https://github.com/cadence-workflow/cadence-python-client/tree/v0.4.0/cadence/contrib/pydantic), [OpenAI Agents](https://github.com/cadence-workflow/cadence-python-client/tree/v0.4.0/cadence/contrib/openai), and [Google ADK](https://github.com/cadence-workflow/cadence-python-client/tree/v0.4.0/cadence/contrib/google_adk). See [AI Agents](/docs/python-client/ai-agents) for running OpenAI Agents SDK and Google ADK agents as workflows.
 
 ## Feature coverage
 
@@ -95,5 +95,6 @@ Optional integrations include [Pydantic](https://github.com/cadence-workflow/cad
 | Context propagation | Yes |
 | Prometheus and custom metrics emitters | Yes |
 | Custom and Pydantic data converters | Yes |
+| OpenAI Agents SDK and Google ADK agents | Yes |
 | Activity async completion | Not yet |
 | Sessions | Not yet |
