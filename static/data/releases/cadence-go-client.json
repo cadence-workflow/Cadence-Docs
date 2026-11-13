@@ -1,5 +1,18 @@
 [
   {
+    "id": 444087780,
+    "tag_name": "v1.5.0-rc.1",
+    "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.5.0-rc.1",
+    "draft": false,
+    "prerelease": true,
+    "published_at": "2026-11-13T10:21:18Z",
+    "body": "## What's Changed\r\n* Fail unregistered activities immediately, not at schedule-to-close by @1fanwang in https://github.com/cadence-workflow/cadence-go-client/pull/1522\r\n* fix(schedule): use ceiling rounding for jitter in proto->thrift compat path by @abhishekj720 in https://github.com/cadence-workflow/cadence-go-client/pull/1531\r\n* fix(schedule): remove stale always-zero comments on ScheduleInfo timestamps by @abhishekj720 in https://github.com/cadence-workflow/cadence-go-client/pull/1532\r\n* feat(schedule): expose missedRuns, skippedRuns, bufferedFireCount, runningWorkflowCount in ScheduleInfo by @abhishekj720 in https://github.com/cadence-workflow/cadence-go-client/pull/1530\r\n* test(replay): cover replaying histories after a GetVersion call is removed by @vladimir-gavrilenko in https://github.com/cadence-workflow/cadence-go-client/pull/1533\r\n* feat: add UniqueIdentity to WorkerOptions as sticky tasklist identifier by @Skassim-206 in https://github.com/cadence-workflow/cadence-go-client/pull/1535\r\n* ci: move CI image to golang:1.26.9-alpine3.23 by @vladimir-gavrilenko in https://github.com/cadence-workflow/cadence-go-client/pull/1538\r\n* fix(deps): bump google.golang.org/grpc to v1.83.2 by @AndreasHolt in https://github.com/cadence-workflow/cadence-go-client/pull/1540\r\n* fix(deps): bump golang.org/x/net to v0.60.0 by @AndreasHolt in https://github.com/cadence-workflow/cadence-go-client/pull/1541\r\n* fix(deps): bump golang-jwt/jwt/v5 to v5.3.1 by @AndreasHolt in https://github.com/cadence-workflow/cadence-go-client/pull/1542\r\n* fix(deps): bump apache/thrift to v0.25.0 by @AndreasHolt in https://github.com/cadence-workflow/cadence-go-client/pull/1546\r\n* feat(replayer): let DataConverter compare replayed workflow results by @vladimir-gavrilenko in https://github.com/cadence-workflow/cadence-go-client/pull/1547\r\n* fix(deps): bump Go toolchain to go1.26.10 by @AndreasHolt in https://github.com/cadence-workflow/cadence-go-client/pull/1548\r\n* feat: [Part 1/2] implement GetTaskListsByDomain in thrift<->proto compat layer by @abhishekj720 in https://github.com/cadence-workflow/cadence-go-client/pull/1544\r\n* feat(replayer)!: return an error from DataComparer.DataEqual by @vladimir-gavrilenko in https://github.com/cadence-workflow/cadence-go-client/pull/1551\r\n\r\n## New Contributors\r\n* @1fanwang made their first contribution in https://github.com/cadence-workflow/cadence-go-client/pull/1522\r\n* @vladimir-gavrilenko made their first contribution in https://github.com/cadence-workflow/cadence-go-client/pull/1533\r\n* @Skassim-206 made their first contribution in https://github.com/cadence-workflow/cadence-go-client/pull/1535\r\n* @AndreasHolt made their first contribution in https://github.com/cadence-workflow/cadence-go-client/pull/1540\r\n\r\n**Full Changelog**: https://github.com/cadence-workflow/cadence-go-client/compare/v1.4.0...v1.5.0-rc.1",
+    "author": {
+      "login": "vladimir-gavrilenko",
+      "html_url": "https://github.com/vladimir-gavrilenko"
+    }
+  },
+  {
     "id": 398481568,
     "tag_name": "v1.4.0",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.4.0",
