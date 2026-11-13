@@ -214,6 +214,7 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', 'id': 'releases/cadence', label: 'Cadence Service' },
         { type: 'doc', 'id': 'releases/cadence-go-client', label: 'Cadence Go Client' },
         { type: 'doc', 'id': 'releases/cadence-java-client', label: 'Cadence Java Client' },
+        { type: 'doc', 'id': 'releases/cadence-python-client', label: 'Cadence Python Client' },
       ],
     },
     {

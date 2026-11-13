@@ -7,8 +7,8 @@ repo_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$repo_root"
 
 # Define repositories and corresponding output paths using parallel arrays
-repos=("cadence" "cadence-go-client" "cadence-java-client")
-files=("static/data/releases/cadence.json" "static/data/releases/cadence-go-client.json" "static/data/releases/cadence-java-client.json")
+repos=("cadence" "cadence-go-client" "cadence-java-client" "cadence-python-client")
+files=("static/data/releases/cadence.json" "static/data/releases/cadence-go-client.json" "static/data/releases/cadence-java-client.json" "static/data/releases/cadence-python-client.json")
 
 # Fetch complete release histories and keep only fields used by the release pages.
 for i in "${!repos[@]}"; do

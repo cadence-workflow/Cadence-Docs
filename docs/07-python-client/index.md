@@ -31,6 +31,8 @@ uv add cadence-python-client
 
 The SDK supports Python 3.11, 3.12, and 3.13.
 
+For the release history and notes for each version, see [Cadence Python Client Releases](/docs/releases/cadence-python-client).
+
 ## Packages
 
 ### `cadence.client`
