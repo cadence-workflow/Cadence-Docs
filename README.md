@@ -28,7 +28,7 @@ npm run build
 
 ## How the site is deployed
 
-The live site is published by the **Build and Deploy** workflow ([`publish-to-gh-pages.yml`](.github/workflows/publish-to-gh-pages.yml)), which runs on every push to `master` and can also be triggered manually. It builds with `npm ci && npm run build`, deploys the `build` directory to the `gh-pages` branch, and then asks the Algolia crawler to re-index the site.
+The live site is published by the **Build and Deploy** workflow ([`publish-to-gh-pages.yml`](.github/workflows/publish-to-gh-pages.yml)), which runs on every push to `master` except pushes that only change `.github/`, `.gitar/`, or `lychee.toml`, and can also be triggered manually. It builds with `npm ci && npm run build`, deploys the `build` directory to the `gh-pages` branch, and then asks the Algolia crawler to re-index the site.
 
 You can also run `npm run deploy` locally to build and push to `gh-pages`, using either `USE_SSH=true npm run deploy` or `GIT_USER=<your GitHub username> npm run deploy`. In normal use, let the workflow handle deployment.
 
