@@ -1,6 +1,7 @@
 ---
 layout: default
-title: Data Converters
+title: Python Data Converters
+sidebar_label: Data Converters
 description: How Cadence Python serializes workflow and activity values and how to configure custom or Pydantic data converters.
 keywords:
   - cadence python data converter
@@ -10,7 +11,13 @@ keywords:
 permalink: /docs/python-client/data-converters
 ---
 
-# Data Converters
+# Python Data Converters
+
+:::tip
+
+New to data converters? Learn how [Cadence data converters work](/docs/concepts/data-converter) before configuring one for the Python client.
+
+:::
 
 A data converter serializes workflow, activity, signal, query, memo, heartbeat, and marker values into Cadence payloads and deserializes them using Python type hints.
 

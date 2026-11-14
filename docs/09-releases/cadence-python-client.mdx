@@ -1,0 +1,44 @@
+---
+layout: default
+title: Cadence Python Client Releases
+description: This page lists the release history and changelog for the Cadence Python client, including the latest version, supported Python versions, and links to detailed GitHub release notes.
+keywords:
+  - cadence python client releases
+  - cadence python client changelog
+  - cadence python client versions
+  - cadence python sdk releases
+  - cadence python release notes
+permalink: /docs/releases/cadence-python-client
+---
+
+import {ListReleases, getReleaseData, getLatestRelease} from  '@site/src/components/CadenceReleases';
+export const releases = getReleaseData('cadence-python-client.json');
+export const latestRelease = getLatestRelease(releases);
+
+
+The Cadence Python client is published on PyPI as [`cadence-python-client`](https://pypi.org/project/cadence-python-client/) and follows [semantic versioning](https://semver.org/spec/v2.0.0.html). See the Python client's [GitHub Releases](https://github.com/cadence-workflow/cadence-python-client/releases) for changes between versions.
+
+:::tip[Latest release]
+
+> <strong><a href={latestRelease.html_url} target="_blank">{latestRelease.tag_name}</a> </strong>published on {latestRelease.published_at_date}
+
+:::
+
+:::note[0.x release line]
+
+The Python client has not reached 1.0. Semantic versioning treats 0.x as initial development, where any release can include breaking changes, so read the release notes before you upgrade.
+
+:::
+
+:::info[Python Compatibility]
+
+Python versions 3.11, 3.12 and 3.13 are supported at this time.
+
+:::
+
+## Major Releases
+<ListReleases releases={releases}></ListReleases>
+
+---
+
+For a comprehensive list of changes and detailed release notes, please visit the [Cadence Python Client GitHub Releases page](https://github.com/cadence-workflow/cadence-python-client/releases).
