@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Activity and workflow retries
-description: This page explains how to configure retry policies for activities and workflows in Cadence using the Go client, including backoff settings, expiration intervals, and heartbeat-based progress recovery.
+description: This page explains how to configure retry policies for activities and workflows in Cadence using the Go client, including backoff settings, expiration intervals, heartbeat-based progress recovery, and overriding the retry policy for a single activity failure.
 keywords:
   - cadence retries
   - activity retry policy
@@ -10,6 +10,8 @@ keywords:
   - exponential backoff
   - go client retries
   - RetryPolicy
+  - WithNextRetryDelay
+  - FailureCategory
   - heartbeat progress
   - cadence go client
   - cadence go retries tutorial
@@ -133,3 +135,37 @@ For a :workflow: with `RetryPolicy`:
   will have the `ContinueAsNewInitiator` set to `RetryPolicy` and the new `RunID` for the next retry attempt.
 * The new attempt will be created immediately. But the first :decision_task: won't be scheduled until the backoff duration
   which is also recorded in the new run's `WorkflowExecutionStartedEventAttributes` :event: as `firstDecisionTaskBackoffSeconds`.
+
+## Override the retry policy for one failure
+
+An :activity: can change how the server handles one failure without changing the retry policy. Pass one or both of the following options to `cadence.NewCustomError`, together with the reason and any details. They are not included in the error details.
+
+* `cadence.WithNextRetryDelay(delay)` sets how long the server waits before the next attempt, in place of the backoff that the retry policy computes. The delay may be longer than `MaximumInterval`, and it is rounded up to whole seconds. It does not decide whether the :activity: is retried. `MaximumAttempts`, `ExpirationInterval` and `NonRetriableErrorReasons` still apply. If the next attempt would start after the `ExpirationInterval` ends, the :activity: fails instead of being retried.
+* `cadence.WithFailureCategory(category)` sets the category of the failure. The default is `shared.FailureCategoryStandard`, which follows the retry policy. `shared.FailureCategoryFatal` fails the :activity: without any further attempts. `shared.FailureCategoryPoll` is retried like a standard failure, but the worker does not log it as an :activity: error. Use it when failing is the expected result of an attempt, such as when the :activity: polls for a result that is not ready yet.
+
+``` go
+import (
+    "context"
+
+    "go.uber.org/cadence"
+    "go.uber.org/cadence/.gen/go/shared"
+)
+
+func ChargeActivity(ctx context.Context, request ChargeRequest) error {
+    resp, err := paymentClient.Charge(ctx, request)
+    if err != nil {
+        return err
+    }
+    switch {
+    case resp.RateLimited:
+        // Retry when the payment service allows it, even if that is longer than MaximumInterval.
+        return cadence.NewCustomError("rate-limited", cadence.WithNextRetryDelay(resp.RetryAfter))
+    case resp.CardDeclined:
+        // Another attempt cannot succeed, so stop retrying.
+        return cadence.NewCustomError("card-declined", resp.DeclineCode, cadence.WithFailureCategory(shared.FailureCategoryFatal))
+    }
+    return nil
+}
+```
+
+These options need Go client v1.4.0 or later. The server applies them from v1.4.5. Earlier servers retry the :activity: according to its retry policy only. The options only take effect for :activity: failures that the server retries, so the :activity: needs a retry policy. Local activities, child :workflow:workflows: and :workflow:workflows: ignore them.
