@@ -9,6 +9,7 @@ keywords:
   - cadence upgrade server
   - cadence maintenance
   - DB schema upgrade
+  - cadence-server update-schema
   - tasklist partitions
   - cadence rolling restart
 permalink: /docs/operation-guide/maintain
@@ -107,6 +108,65 @@ NOTE: Do not use “auto-setup” images to upgrade your schema. It's mainly for
 
 
 ### How to apply DB schema changes
+There are two ways to apply schema changes:
+* `cadence-server update-schema`, available from v1.4.2, updates every configured store with one command. It reads the same configuration as the server.
+* The schema tools, `cadence-sql-tool` and `cadence-cassandra-tool`, update one database or keyspace at a time. They remain supported.
+
+Both record the schema version in the same `schema_version` table, so you can use the schema tools for one upgrade and `update-schema` for the next.
+
+#### Using `cadence-server update-schema`
+Run the `cadence-server` binary from the release you are about to deploy, with the configuration of your deployment:
+
+```bash
+cadence-server --root /etc/cadence --config config --env production update-schema
+```
+
+`--root`, `--config`, `--env` and `--zone` must come before `update-schema`. They select the configuration files the same way they do for `cadence-server start`; see [Combining Configuration Files](/docs/operation-guide/setup#combining-configuration-files). You can also set them with `CADENCE_ROOT`, `CADENCE_CONFIG_DIR`, `CADENCE_ENVIRONMENT` and `CADENCE_AVAILABILITY_ZONE`.
+
+The command handles every store in the `persistence` section: the default store, the visibility store when it is a database, and the Elasticsearch or OpenSearch advanced visibility store when one is configured. Pinot is not supported, so keep managing a Pinot schema yourself. For each store, the command:
+1. Connects to the store. It retries for up to 90 seconds in total (30 seconds in v1.4.2) so that it can start alongside a database that is still coming up.
+2. Creates the database or keyspace if it does not exist. For SQL databases, the configured user needs permission to create databases in that case.
+3. Updates the schema to the latest version bundled with the binary. A store without the `schema_version` table gets the latest schema in one step. A store that already has a schema gets each pending versioned update in order.
+
+Elasticsearch and OpenSearch stores have no schema version. For them, the command creates the visibility index from the index template bundled with the binary, or adds the fields that are missing from an existing index. The configured index name must start with `cadence-visibility-`.
+
+The schema files are compiled into the binary, so the command does not need the `schema/` directory. Running it again when every store is up to date changes nothing.
+
+Like the schema tools, `update-schema` should run before you deploy the new server binaries. It is safe to run while the previous version is serving traffic.
+
+If you deploy with the `ubercadence/server` image and the config template it ships, render the configuration the same way the image's start script does, then run the command. Use the image tag of the release you are deploying. Here `cadence.env` holds the environment variables your server containers use, such as `DB` and `POSTGRES_SEEDS`:
+
+```bash
+docker run --rm --env-file cadence.env ubercadence/server:v1.4.5 \
+  sh -c 'dockerize -template /etc/cadence/config_template.yaml:/etc/cadence/config/docker.yaml && cadence-server --env docker update-schema'
+```
+
+From v1.4.5, `update-schema` accepts two options. Each can also be set with an environment variable.
+
+| Option | Environment variable | Description |
+|--------|----------------------|-------------|
+| `--setup-option key=value` | `CADENCE_SETUP_OPTION_<KEY>=value` | An option used when the command creates a database or keyspace. Repeat the flag to pass more than one option. Only Cassandra reads an option, `replication_factor`, which defaults to `3`. The keyspace uses `NetworkTopologyStrategy` in the configured `datacenter` if one is set, and `SimpleStrategy` otherwise. |
+| `--resume` | `CADENCE_SETUP_RESUME=true` | Resume an update that stopped partway through. See below. |
+
+For example, to create a Cassandra keyspace with a replication factor of 1 on a single-node test cluster:
+
+```bash
+cadence-server --env development update-schema --setup-option replication_factor=1
+```
+
+#### Resuming an interrupted schema update
+Schema updates are not transactional. If the process stops after some statements of an update have run, the schema version still points at the previous version. When `update-schema` runs again, it re-applies that update and fails when it reaches a table, column or index that the earlier attempt already created. The error looks like this:
+
+```log
+update schema: failed applying schema update v0.8 to postgres/default/localhost:5432/cadence (a previous update may have been interrupted; retry with resume enabled to skip already applied statements): ...
+```
+
+From v1.4.5, run the command again with `--resume`. It skips the statements whose schema element already exists, applies the rest and records the new version. Resume only applies to the first pending update of each store, so it can't hide a conflicting statement in a later update. Earlier versions, and the schema tools, require manual repair instead.
+
+#### Schema verification on startup
+From v1.4.2, the server also checks every configured store on startup, including the advanced visibility store. A store fails the check if it doesn't exist or its schema is older than the latest schema bundled with the binary. By default, a failed check only logs a `SchemaVerificationV2 failed` warning, and the existing Cassandra and SQL version checks still decide whether the server starts. Set the dynamic config `system.enforceSchemaVerificationV2` to `true` to stop the server from starting when this check fails.
+
+#### Using the schema tools
 For how to apply database schema, refer to this doc: [SQL tool README](https://github.com/cadence-workflow/cadence/tree/master/tools/sql)
 [Cassandra tool README](https://github.com/cadence-workflow/cadence/tree/master/tools/cassandra)
 
