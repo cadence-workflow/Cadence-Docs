@@ -106,7 +106,7 @@ function HomepageHeader() {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-homepage-cta-id="hero-see-adopters"
-                data-homepage-cta-text="See Adopters"
+                data-homepage-cta-text="Adopters"
                 data-homepage-cta-destination={ADOPTERS_URL}
                 className={styles.heroEyebrowLink}>
                 Adopters
