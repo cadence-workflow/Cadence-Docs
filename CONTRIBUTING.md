@@ -253,7 +253,7 @@ The first deploy creates the `gh-pages` branch, which is why this comes second.
 
 **Good to know**
 
-- Pushing to master auto-deploys. Any other branch must be run manually.
+- Pushing to master auto-deploys, unless the push only changes `.github/`, `.gitar/`, or `lychee.toml`. Any other branch must be run manually.
 - It's one live site; each run replaces what was there before.
 
 ## Code of Conduct

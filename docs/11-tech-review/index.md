@@ -9,10 +9,6 @@ keywords:
   - cadence technical assessment
 ---
 
-:::note Work in Progress
-This section is actively being written by Cadence maintainers. Pages may be empty or incomplete. The WIP label will be removed once the section is ready.
-:::
-
 This document will help you evaluate Cadence for your needs from use case, technical and operational perspectives. This section was created based on CNCF's standard [General Technical Review](https://github.com/cncf/toc/blob/main/operations/project-reviews/general-technical-questions.md).
 
 The review is organized following the cloud native software lifecycle day schemas:

@@ -122,8 +122,7 @@
   opacity: 0.55;
 }
 
-/* Only this segment is interactive: the star count next to it is static text,
-   so the link affordance sits on the words rather than on the whole pill. */
+/* Interactive eyebrow segments; the star count next to them is static text. */
 .heroEyebrowLink {
   color: inherit;
   text-decoration: underline;
