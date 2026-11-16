@@ -132,7 +132,7 @@ Elasticsearch and OpenSearch stores have no schema version. For them, the comman
 
 The schema files are compiled into the binary, so the command does not need the `schema/` directory. Running it again when every store is up to date changes nothing.
 
-Like the schema tools, `update-schema` should run before you deploy the new server binaries. It is safe to run while the previous version is serving traffic.
+Like the schema tools, `update-schema` should run before you deploy the new server binaries. Schema changes are normally backward compatible with the previous server version, but check the release notes for exceptions.
 
 If you deploy with the `ubercadence/server` image and the config template it ships, render the configuration the same way the image's start script does, then run the command. Use the image tag of the release you are deploying. Here `cadence.env` holds the environment variables your server containers use, such as `DB` and `POSTGRES_SEEDS`:
 
