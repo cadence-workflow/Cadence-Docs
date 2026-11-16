@@ -4,6 +4,14 @@ on:
   push:
     branches:
       - master
+    # Skip the deploy and Algolia reindex when a push only changes CI or
+    # review-bot configuration, none of which is part of the built site.
+    # Run this workflow manually to deploy after such a push, for example
+    # to try out a change to this file.
+    paths-ignore:
+      - '.github/**'
+      - '.gitar/**'
+      - 'lychee.toml'
 
 permissions:
   contents: write
