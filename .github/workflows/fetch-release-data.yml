@@ -67,7 +67,7 @@ jobs:
           body: |
             **What changed?**
 
-            Updated the generated release data for the Cadence service, Go client, and Java client.
+            Updated the generated release data for the Cadence service, Go client, Java client, and Python client.
 
             **Why?**
 
