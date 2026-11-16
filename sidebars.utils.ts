@@ -117,7 +117,12 @@ export function applyCategoryLinks(
   const result: SidebarsConfig = {};
   for (const [key, value] of Object.entries(sidebars)) {
     if (Array.isArray(value)) {
-      result[key] = withCategoryLinks(value as SidebarItem[], options);
+      // SidebarItem is a loose local shape; the items keep the sidebar
+      // config shape they came in with, plus the generated `link`.
+      result[key] = withCategoryLinks(
+        value as SidebarItem[],
+        options,
+      ) as SidebarsConfig[string];
     } else {
       result[key] = value;
     }

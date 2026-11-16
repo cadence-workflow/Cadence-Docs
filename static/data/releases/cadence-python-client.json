@@ -1,0 +1,106 @@
+[
+  {
+    "id": 400321502,
+    "tag_name": "v0.4.1",
+    "html_url": "https://github.com/cadence-workflow/cadence-python-client/releases/tag/v0.4.1",
+    "draft": false,
+    "prerelease": false,
+    "published_at": "2026-09-30T18:22:54Z",
+    "body": "## What's Changed\r\n* chore(scheduler): reenable integration tests by @shijiesheng in https://github.com/cadence-workflow/cadence-python-client/pull/169\r\n* fix(activity): ActivityFailure should have failure_details and heartbeat_details by @shijiesheng in https://github.com/cadence-workflow/cadence-python-client/pull/170\r\n* chore(activity): pass tasklist qps to polling by @shijiesheng in https://github.com/cadence-workflow/cadence-python-client/pull/174\r\n* fix(pydantic): make PydanticDataConverter Pydantic-native by @zawadzkidiana in https://github.com/cadence-workflow/cadence-python-client/pull/180\r\n\r\n## New Contributors\r\n* @zawadzkidiana made their first contribution in https://github.com/cadence-workflow/cadence-python-client/pull/180\r\n\r\n**Full Changelog**: https://github.com/cadence-workflow/cadence-python-client/compare/v0.4.0...v0.4.1",
+    "author": {
+      "login": "shijiesheng",
+      "html_url": "https://github.com/shijiesheng"
+    }
+  },
+  {
+    "id": 389340083,
+    "tag_name": "v0.4.0",
+    "html_url": "https://github.com/cadence-workflow/cadence-python-client/releases/tag/v0.4.0",
+    "draft": false,
+    "prerelease": false,
+    "published_at": "2026-09-15T17:25:14Z",
+    "body": "## What's Changed\r\n* chore(workflow): move out dataconverter from workflowInstance by @shijiesheng in https://github.com/cadence-workflow/cadence-python-client/pull/139\r\n* feat: add tag constants and propagate metrics_emitter by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/140\r\n* feat(test): add TestWorkflowEnvironment by @shijiesheng in https://github.com/cadence-workflow/cadence-python-client/pull/131\r\n* feat: emit poller and worker metrics by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/141\r\n* feat: integrate google adk by @ribaraka in https://github.com/cadence-workflow/cadence-python-client/pull/123\r\n* feat(schedule): expose buffered_fire_count and running_workflow_count in DescribeSchedule by @abhishekj720 in https://github.com/cadence-workflow/cadence-python-client/pull/143\r\n* feat: implement workflow cancellation by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/128\r\n* chore: use proto helpers for time conversion by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/146\r\n* feat(metrics): add duration timing helper methods by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/149\r\n* feat(metrics): configure Prometheus duration buckets by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/148\r\n* refactor(metrics): use typed duration instead of primitive by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/150\r\n* feat: marker state machine by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/142\r\n* chore: pin ruff to 0.15.x version by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/155\r\n* docs(google-adk): expand integration docs by @ribaraka in https://github.com/cadence-workflow/cadence-python-client/pull/147\r\n* feat: Add gRPC client metrics by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/157\r\n* feat: mutable side_effect feature by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/156\r\n* chore: add openai package for type-check by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/159\r\n* fix(decision-worker): avoid missing decision task handling by @shijiesheng in https://github.com/cadence-workflow/cadence-python-client/pull/161\r\n* feat(test): activity test environment by @shijiesheng in https://github.com/cadence-workflow/cadence-python-client/pull/151\r\n* feat: propagate context through workflow execution by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/158\r\n* chore(idl): bump IDL submodule to d6d4d81 and regenerate proto bindings by @abhishekj720 in https://github.com/cadence-workflow/cadence-python-client/pull/165\r\n* feat(schedule): support creating schedule in paused state by @abhishekj720 in https://github.com/cadence-workflow/cadence-python-client/pull/164\r\n* chore(deps): bump mcp from 1.26.0 to 1.28.1 by @dependabot[bot] in https://github.com/cadence-workflow/cadence-python-client/pull/154\r\n* feat: implement workflow versioning support by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/163\r\n* feat(search): add upsert search attributes by @shijiesheng in https://github.com/cadence-workflow/cadence-python-client/pull/166\r\n* fix(versioning): support search attributes in the versioning by @shijiesheng in https://github.com/cadence-workflow/cadence-python-client/pull/167\r\n* chore(contrib): move pydantic data converter into contrib by @shijiesheng in https://github.com/cadence-workflow/cadence-python-client/pull/168\r\n\r\n## New Contributors\r\n* @ribaraka made their first contribution in https://github.com/cadence-workflow/cadence-python-client/pull/123\r\n\r\n**Full Changelog**: https://github.com/cadence-workflow/cadence-python-client/compare/v0.3.0...v0.4.0",
+    "author": {
+      "login": "shijiesheng",
+      "html_url": "https://github.com/shijiesheng"
+    }
+  },
+  {
+    "id": 339820507,
+    "tag_name": "v0.3.0",
+    "html_url": "https://github.com/cadence-workflow/cadence-python-client/releases/tag/v0.3.0",
+    "draft": false,
+    "prerelease": false,
+    "published_at": "2026-06-15T22:13:53Z",
+    "body": "## New Features\r\n\r\n* **Schedule SDK**: Full cadence schedule python SDK support\r\n* **Child workflows**: `execute_child_workflow`, `start_child_workflow`, `ChildWorkflowFuture`, full child workflow lifecycle support\r\n* **Signal external workflows**: `signal_external_workflow` API and `SignalExternalWorkflowStateMachine`\r\n* **Memo support**: memo fields on workflow and child workflow starts\r\n\r\n## Bug Fixes\r\n\r\n* Schedule `describe_schedule` no longer errors during scheduler `ContinueAsNew` transition\r\n* IDL updated to latest version\r\n* Correct dynamic config path in docker-compose integration test stack\r\n\r\n## What's Changed\r\n* feat: define child workflow state machine by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/99\r\n* chore: remove unit test run during integration test by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/112\r\n* feat: add execute_child_workflow by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/114\r\n* test(schedule): remove describe_schedule workaround now that server handles ContinueAsNew by @abhishekj720 in https://github.com/cadence-workflow/cadence-python-client/pull/109\r\n* feat: implement start_child_workflow and ChildWorkflowFuture by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/121\r\n* feat(workflow): add SignalExternalWorkflowStateMachine by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/122\r\n* chore: move child workflow and signal-external errors to cadence.error by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/125\r\n* feat: incorporate SignalExternalWorkflowStateMachine into DecisionManager by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/124\r\n* feat: implement signal_external_workflow and signal API call for child wf by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/126\r\n* feat: Add memo support for workflow and child workflow starts by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/127\r\n* test(schedule): describe-first update_schedule by @abhishekj720 in https://github.com/cadence-workflow/cadence-python-client/pull/129\r\n* fix(idl): Update idl to latest version by @abhishekj720 in https://github.com/cadence-workflow/cadence-python-client/pull/132\r\n* fix(test): correct dynamic config path in docker-compose by @abhishekj720 in https://github.com/cadence-workflow/cadence-python-client/pull/137\r\n\r\nFull Changelog: [v0.2.3...v0.3.0](https://github.com/cadence-workflow/cadence-python-client/compare/v0.2.3...v0.3.0)",
+    "author": {
+      "login": "abhishekj720",
+      "html_url": "https://github.com/abhishekj720"
+    }
+  },
+  {
+    "id": 326236837,
+    "tag_name": "v0.2.3",
+    "html_url": "https://github.com/cadence-workflow/cadence-python-client/releases/tag/v0.2.3",
+    "draft": false,
+    "prerelease": false,
+    "published_at": "2026-05-20T20:23:41Z",
+    "body": "## New Features\r\n\r\n* Schedules API: You can now create/describe/change/terminate/backfill [schedules](https://github.com/cadence-workflow/cadence/issues/7664). This is still an experimental feature and requires server version >= [v1.4.1-prerelease16](https://github.com/cadence-workflow/cadence/releases/tag/v1.4.1-prerelease16)\r\n* Workflow Cancel API: allows user to cancel a workflow from the client.\r\n* Workflow Query: allows users to register and query a workflow state. \r\n\r\n## What's Changed\r\n* chore: update readme doc by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/98\r\n* chore: add codecov check to github CI by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/100\r\n* feat: client method for request_cancel_workflow workflow stub by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/102\r\n* feat(query): add query decorator and client method of query_workflow by @shijiesheng in https://github.com/cadence-workflow/cadence-python-client/pull/103\r\n* fix: typesafety failure on retry test by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/104\r\n* feat(schedule): add schedule control-plane API to Client by @abhishekj720 in https://github.com/cadence-workflow/cadence-python-client/pull/107\r\n* feat(query): support direct query in workflows by @shijiesheng in https://github.com/cadence-workflow/cadence-python-client/pull/105\r\n* test(schedule): add integration tests for schedule client API by @abhishekj720 in https://github.com/cadence-workflow/cadence-python-client/pull/108\r\n* fix: improve typings and remove mypy ignores by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/93\r\n* chore(openai): propagate needs_approval field for tools by @shijiesheng in https://github.com/cadence-workflow/cadence-python-client/pull/110\r\n* feat(query): support default __query_types query by @shijiesheng in https://github.com/cadence-workflow/cadence-python-client/pull/111\r\n\r\n## New Contributors\r\n* @abhishekj720 made their first contribution in https://github.com/cadence-workflow/cadence-python-client/pull/107\r\n\r\n**Full Changelog**: https://github.com/cadence-workflow/cadence-python-client/compare/v0.2.2...v0.2.3",
+    "author": {
+      "login": "shijiesheng",
+      "html_url": "https://github.com/shijiesheng"
+    }
+  },
+  {
+    "id": 317330206,
+    "tag_name": "v0.2.2",
+    "html_url": "https://github.com/cadence-workflow/cadence-python-client/releases/tag/v0.2.2",
+    "draft": false,
+    "prerelease": false,
+    "published_at": "2026-05-04T17:26:05Z",
+    "body": "## What's Changed\r\n\r\nThis release adds several workflow and activity execution features, improves cross-cluster support, and updates the client's generated Cadence IDL bindings.\r\n\r\n### New Features\r\n\r\n* **Workflow ID reuse policy support**  \r\n  Added support for configuring workflow ID reuse behavior when starting workflows. This allows callers to control how Cadence handles new workflow executions that reuse an existing workflow ID.\r\n\r\n* **Activity retry policy support**  \r\n  Added `RetryPolicy` definitions, proto type mapping, and integration with activity options, enabling activities to be configured with retry behavior directly from the Python client.\r\n\r\n* **Workflow retry support**  \r\n  Added retry policy support for workflow executions, allowing workflows to be automatically retried according to configured retry settings.\r\n\r\n* **Workflow signal handling**  \r\n  Added support for handling workflow signals, enabling workflows to receive and react to external signals during execution.\r\n\r\n* **Active-active support**  \r\n  Added client-side support for active-active Cadence deployments.\r\n\r\n### Improvements\r\n\r\n* **Updated Cadence IDL bindings**  \r\n  Updated `cadence-idl` to match the current Cadence server HEAD, keeping generated API types aligned with the server.\r\n\r\n* **Activity retry integration tests**  \r\n  Added integration test coverage for activity retry behavior.\r\n\r\n* **Build fixes**  \r\n  Fixed Makefile dependency handling to ensure required dependencies are installed correctly.\r\n\r\n### Pull Requests\r\n\r\n* Implement workflow ID reuse policy support by @timl3136 — [#89](https://github.com/cadence-workflow/cadence-python-client/pull/89)\r\n* Fix Makefile dependency handling by @timl3136 — [#90](https://github.com/cadence-workflow/cadence-python-client/pull/90)\r\n* Add activity retry policy support by @timl3136 — [#88](https://github.com/cadence-workflow/cadence-python-client/pull/88)\r\n* Add activity retry integration tests by @timl3136 — [#91](https://github.com/cadence-workflow/cadence-python-client/pull/91)\r\n* Add workflow retry support by @timl3136 — [#92](https://github.com/cadence-workflow/cadence-python-client/pull/92)\r\n* Implement workflow signal handling by @timl3136 — [#84](https://github.com/cadence-workflow/cadence-python-client/pull/84)\r\n* Update `cadence-idl` to match server HEAD by @timl3136 — [#97](https://github.com/cadence-workflow/cadence-python-client/pull/97)\r\n* Add active-active support by @timl3136 — [#95](https://github.com/cadence-workflow/cadence-python-client/pull/95)\r\n\r\n\r\n**Full Changelog**: https://github.com/cadence-workflow/cadence-python-client/compare/v0.2.1...v0.2.2",
+    "author": {
+      "login": "timl3136",
+      "html_url": "https://github.com/timl3136"
+    }
+  },
+  {
+    "id": 309005514,
+    "tag_name": "v0.2.1",
+    "html_url": "https://github.com/cadence-workflow/cadence-python-client/releases/tag/v0.2.1",
+    "draft": false,
+    "prerelease": false,
+    "published_at": "2026-04-14T19:08:18Z",
+    "body": "## What's Changed\r\n* fix(client): client should wait for ready to start by @shijiesheng in https://github.com/cadence-workflow/cadence-python-client/pull/72\r\n* fix(activity): ensure async function with activity decorator is still async by @shijiesheng in https://github.com/cadence-workflow/cadence-python-client/pull/75\r\n* feat(activity): add default activity options to make it easier to use by @shijiesheng in https://github.com/cadence-workflow/cadence-python-client/pull/76\r\n* feat(worker): add worker.close() and allow context management of worker class by @shijiesheng in https://github.com/cadence-workflow/cadence-python-client/pull/77\r\n* feat(timer): implement workflow.start_timer api by @shijiesheng in https://github.com/cadence-workflow/cadence-python-client/pull/79\r\n* feat: implement continue-as-new feature by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/80\r\n* feat(openai): support OpenAI SDK integration by @shijiesheng in https://github.com/cadence-workflow/cadence-python-client/pull/78\r\n* feat: Implement activity heartbeat by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/73\r\n* chore: gitignore claude code local files by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/81\r\n* feat(openai): support handoffs by @shijiesheng in https://github.com/cadence-workflow/cadence-python-client/pull/82\r\n* feat: implement heartbeat progress recovery through heartbeat details by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/83\r\n* fix(client): compatible with opentelemetry-instrumentation-grpc by @shijiesheng in https://github.com/cadence-workflow/cadence-python-client/pull/85\r\n* feat(version): use dynamic versioning by @shijiesheng in https://github.com/cadence-workflow/cadence-python-client/pull/86\r\n\r\n\r\n**Full Changelog**: https://github.com/cadence-workflow/cadence-python-client/compare/v0.2.0...v0.2.1",
+    "author": {
+      "login": "shijiesheng",
+      "html_url": "https://github.com/shijiesheng"
+    }
+  },
+  {
+    "id": 294151979,
+    "tag_name": "v0.2.0",
+    "html_url": "https://github.com/cadence-workflow/cadence-python-client/releases/tag/v0.2.0",
+    "draft": false,
+    "prerelease": false,
+    "published_at": "2026-03-07T00:32:17Z",
+    "body": "## What's Changed\r\n* fix: Associate DecisionFutures with the correct event loop by @natemort in https://github.com/cadence-workflow/cadence-python-client/pull/56\r\n* test: Validate typing in tests by @natemort in https://github.com/cadence-workflow/cadence-python-client/pull/62\r\n* feat: add cadence-caller-type to headers with value sdk by @fimanishi in https://github.com/cadence-workflow/cadence-python-client/pull/64\r\n* fix: Rewrite Type Handling by @natemort in https://github.com/cadence-workflow/cadence-python-client/pull/63\r\n* feat: Add NonDeterminism Tracking by @natemort in https://github.com/cadence-workflow/cadence-python-client/pull/65\r\n* feat: Add delay_start and jitter_start support to StartWorkflowOptions by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/68\r\n* feat: Add cron_overlap_policy support to StartWorkflowOptions by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/67\r\n* feat: Add first_run_at support to StartWorkflowOptions by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/69\r\n* feat: Upgrade to protobuf 6.31.x and relax grpcio constraints by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/70\r\n* chore: bump version to 0.2.0 by @timl3136 in https://github.com/cadence-workflow/cadence-python-client/pull/71\r\n\r\n## New Contributors\r\n* @fimanishi made their first contribution in https://github.com/cadence-workflow/cadence-python-client/pull/64\r\n\r\n**Full Changelog**: https://github.com/cadence-workflow/cadence-python-client/compare/v0.1.1...v0.2.0",
+    "author": {
+      "login": "timl3136",
+      "html_url": "https://github.com/timl3136"
+    }
+  },
+  {
+    "id": 276187133,
+    "tag_name": "v0.1.0",
+    "html_url": "https://github.com/cadence-workflow/cadence-python-client/releases/tag/v0.1.0",
+    "draft": false,
+    "prerelease": false,
+    "published_at": "2026-01-13T00:00:26Z",
+    "body": "# cadence-python-client v0.1.0\r\n\r\nThis is the **initial release** of the Cadence Python Client.  \r\nIt provides the core functionality required to build and run Cadence workflows and activities in Python.\r\n\r\n### Features\r\n- Workflow and activity registration via definitions\r\n- Deterministic workflow execution\r\n- Workflow completion, failure, and signaling support\r\n- Activity scheduling from workflows\r\n- Client APIs for starting and signaling workflows\r\n- gRPC-based Cadence service client with retries and error mapping\r\n- Default DataConverter aligned with the Cadence Go client\r\n\r\n### Build, Test, and Tooling\r\n- Python project setup using `pyproject.toml`\r\n- Protobuf and gRPC code generation\r\n- Linting, formatting, and type-safety checks\r\n- Unit and integration tests\r\n\r\n> **Note**: This release is a **v0.1.0** and the API is not yet stable. Breaking changes may occur in future releases.\r\n\r\n**Full Changelog**:  \r\nhttps://github.com/cadence-workflow/cadence-python-client/commits/v0.1.0\r\n",
+    "author": {
+      "login": "timl3136",
+      "html_url": "https://github.com/timl3136"
+    }
+  }
+]

@@ -111,7 +111,7 @@ To support Zonal Isolation, please upgrade your SDK versions:
 
 **For Go SDK users**, set the [`isolationGroup`](https://github.com/cadence-workflow/cadence-go-client/blob/v1.0.2/internal/worker.go#L132) field to the zone of the instance when creating `Worker`. Additionally, you need to use [this method](https://github.com/cadence-workflow/cadence-go-client/blob/v1.0.2/isolationgroup/wrapper.go#L29C39-L29C70) to wrap `workflowserviceclient.Interface`.
 ## How to drain a zone explicitly?
-Drains can be done via the [Admin APIs](https://github.com/cadence-workflow/cadence-idl/blob/50a4ee241e50c6baab8e5d47540b176c5ee022a4/proto/cadence-workflow/cadence/admin/v1/service.proto#L125) of cadence-frontend or CLI.
+Drains can be done via the [Admin APIs](https://github.com/cadence-workflow/cadence-idl/blob/50a4ee241e50c6baab8e5d47540b176c5ee022a4/proto/uber/cadence/admin/v1/service.proto#L125) of cadence-frontend or CLI.
 
 You can check the help message for the CLI by running:
 ```bash

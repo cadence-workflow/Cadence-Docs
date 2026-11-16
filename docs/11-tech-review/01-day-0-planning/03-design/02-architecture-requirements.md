@@ -79,7 +79,7 @@ Test/Staging environments should match the **shape** of production rather than i
 
 This is also the tier where two things are cheapest to validate:
 
-- **Capacity.** The server repository ships a [bench suite](https://github.com/cadence-workflow/cadence/tree/master/bench), and cluster configuration recommends running it against your own setup whenever the setup changes. A bench result is a rough estimate of what that workload will use in production. Payload size, workflow diversity, and traffic patterns can change how much CPU and memory each node uses. Reference sizes are on [Resource requirements](/docs/tech-review/day-0-planning/design/resource-requirements).
+- **Capacity.** The server repository ships a [bench suite](https://github.com/cadence-workflow/cadence/tree/master/bench), and cluster configuration recommends running it against your own setup whenever the setup changes. A bench result is a rough estimate of what that workload will use in production. Payload size, workflow diversity, and traffic patterns can change how much CPU and memory each node uses. Reference benchmark results are on [Resource requirements](/docs/tech-review/day-0-planning/design/resource-requirements).
 - **Upgrades and rollback.** Schema changes are applied before server binaries and are generally backward compatible, which is what makes rolling upgrades possible. Rehearse that ordering here.
 
 ### Production
@@ -123,7 +123,7 @@ Workflow and activity code runs in **your** processes, not inside the Cadence cl
 - Client-side metrics through the SDK's metrics interface. Go and Java integrate with Tally; Python exposes a metrics emitter backed by `prometheus-client`.
 - Optional TLS on the gRPC connection, including [mutual TLS](/docs/concepts/mutual-tls).
 
-Workers scale independently of the cluster, so worker capacity is an application concern rather than a cluster provisioning one. Client SDKs are available for [Go](/docs/go-client/), [Java](/docs/java-client/), and [Python](/docs/python-client/index), with additional clients in the wider ecosystem.
+Workers scale independently of the cluster, so worker capacity is an application concern rather than a cluster provisioning one. Client SDKs are available for [Go](/docs/go-client/), [Java](/docs/java-client/), and [Python](/docs/python-client/), with additional clients in the wider ecosystem.
 
 ## Related documentation
 

@@ -1,6 +1,7 @@
 ---
 layout: default
-title: Service Integration
+title: Integrating a Service with Shard Manager
+sidebar_label: Service Integration
 description: How to integrate a new service with Shard Manager as an executor, a spectator, or both, including the client config and routing with YARPC.
 keywords:
   - shard manager integration

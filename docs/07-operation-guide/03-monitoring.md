@@ -58,7 +58,7 @@ scrape_configs:
           - 'host.docker.internal:9098'
 ```
 
-Note: `host.docker.internal` [may not work for some docker versions](https://docs.docker.com/docker-for-mac/networking/#use-cases-and-workarounds)
+Note: `host.docker.internal` [may not work for some docker versions](https://docs.docker.com/desktop/features/networking/networking-how-tos/)
 
 * After updating the prometheus_config.yaml as above, run `docker-compose up` to start the local Cadence instance
 

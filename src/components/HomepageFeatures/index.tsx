@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {type ReactNode} from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
@@ -56,7 +56,7 @@ const FEATURES: FeatureItem[] = [
   },
 ];
 
-export default function HomepageFeatures(): JSX.Element {
+export default function HomepageFeatures(): ReactNode {
   return (
     <section className={styles.features}>
       <Heading as="h2" className={clsx('homepage-section-heading', styles.heading)}>

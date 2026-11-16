@@ -163,5 +163,5 @@ Workflow-code versioning is separate from wire-API versioning. A Protobuf-compat
 - [Production integrations](/docs/tech-review/day-0-planning/usability/production-integrations)
 - [Mutual TLS](/docs/concepts/mutual-tls)
 - [Data converter](/docs/concepts/data-converter)
-- [Go workers](/docs/go-client/workers), [Java client](/docs/java-client/starting-workflow-executions), [Python client](/docs/python-client/index)
+- [Go workers](/docs/go-client/workers), [Java client](/docs/java-client/starting-workflow-executions), [Python client](/docs/python-client/)
 - [CLI](/docs/cli)

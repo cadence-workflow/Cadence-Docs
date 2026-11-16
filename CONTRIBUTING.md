@@ -125,7 +125,7 @@ chmod +x scripts/preview-github-pages-build.sh
 ./scripts/preview-github-pages-build.sh --serve
 ```
 
-The script accepts `PORT`, `PREVIEW_DIR`, `BASE_URL`, and `CADENCE_DOCS_URL` as environment variables.
+The script accepts `PORT`, `PREVIEW_DIR`, `BASE_URL`, and `CADENCE_DOCS_URL` as environment variables. To preview the site the way your fork's GitHub Pages site serves it, set `BASE_URL=/Cadence-Docs/` and open http://localhost:4173/Cadence-Docs/.
 
 **The production preview is required for any change beyond prose edits in `.md` files.** That includes `.mdx`, `docusaurus.config.*`, `sidebars.*`, anything under `src/`, non-markdown files under `static/`, CSS or SCSS, scripts, and package files. Pull requests that need it and do not mention it will be sent back.
 
@@ -253,7 +253,7 @@ The first deploy creates the `gh-pages` branch, which is why this comes second.
 
 **Good to know**
 
-- Pushing to master auto-deploys. Any other branch must be run manually.
+- Pushing to master auto-deploys, unless the push only changes `.github/`, `.gitar/`, or `lychee.toml`. Any other branch must be run manually.
 - It's one live site; each run replaces what was there before.
 
 ## Code of Conduct
