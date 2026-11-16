@@ -168,4 +168,4 @@ func ChargeActivity(ctx context.Context, request ChargeRequest) error {
 }
 ```
 
-These options need Go client v1.4.0 or later. The server applies them from v1.4.5. Earlier servers retry the :activity: according to its retry policy only. The options only take effect for :activity: failures that the server retries, so the :activity: needs a retry policy. Local activities, child :workflow:workflows: and :workflow:workflows: ignore them.
+Both options need Go client v1.4.0 or later. The worker's logging behavior for `FailureCategoryPoll` comes from the client alone, so it works with any server version. `WithNextRetryDelay` and `FailureCategoryFatal` change how the server retries, so they also need server v1.4.5 or later. Earlier servers retry the :activity: according to its retry policy only. The effects on retries only apply to :activity: failures that the server retries, so the :activity: needs a retry policy. Local activities, child :workflow:workflows: and :workflow:workflows: ignore them.
