@@ -5,6 +5,7 @@ import Heading from '@theme/Heading';
 import styles from './styles.module.css';
 
 interface CardItem {
+  ctaId: string;
   label: string;
   title: string;
   description: string;
@@ -54,6 +55,7 @@ const AdopterIcon: React.FC = () => (
 export default function GetInvolvedBanner(): ReactNode {
   const cards: CardItem[] = [
     {
+      ctaId: 'community-adopter-program',
       label: 'Adopter Program',
       title: 'Adopter Program',
       description: 'Get free maintainer help provisioning Cadence in production',
@@ -64,6 +66,7 @@ export default function GetInvolvedBanner(): ReactNode {
       external: false,
     },
     {
+      ctaId: 'community-discussions',
       label: 'Discussions',
       title: 'Join Discussions',
       description: 'Ask questions, share ideas, and learn from the community',
@@ -74,6 +77,7 @@ export default function GetInvolvedBanner(): ReactNode {
       external: true,
     },
     {
+      ctaId: 'community-contribute-code',
       label: 'Contributing',
       title: 'Contribute Code',
       description: 'Help build Cadence. Submit PRs, fix bugs, improve features',
@@ -84,6 +88,7 @@ export default function GetInvolvedBanner(): ReactNode {
       external: true,
     },
     {
+      ctaId: 'community-report-issues',
       label: 'Issues',
       title: 'Report Issues',
       description: 'Found a bug? Have a feature request? Let us know',
@@ -94,6 +99,7 @@ export default function GetInvolvedBanner(): ReactNode {
       external: true,
     },
     {
+      ctaId: 'community-examples',
       label: 'Examples',
       title: 'See Examples',
       description: 'Explore real-world examples and learn best practices',
@@ -132,7 +138,14 @@ export default function GetInvolvedBanner(): ReactNode {
           <p className={styles.bannerSubtitle}>Join our open-source community</p>
         </div>
         <span className={styles.communityLinksPill}>
-          <Link href="https://inviter.co/cncf" target="_blank" rel="noopener noreferrer" className={styles.communityLink}>
+          <Link
+            href="https://inviter.co/cncf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.communityLink}
+            data-homepage-cta-id="community-slack"
+            data-homepage-cta-text="Join us on Slack"
+            data-homepage-cta-destination="https://inviter.co/cncf">
             Join us on Slack
           </Link>
         </span>
@@ -159,6 +172,9 @@ export default function GetInvolvedBanner(): ReactNode {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={className}
+                data-homepage-cta-id={card.ctaId}
+                data-homepage-cta-text={card.title}
+                data-homepage-cta-destination={card.href}
               >
                 {body}
               </Link>
@@ -166,7 +182,13 @@ export default function GetInvolvedBanner(): ReactNode {
           }
 
           return (
-            <Link key={card.label} to={card.href} className={className}>
+            <Link
+              key={card.label}
+              to={card.href}
+              className={className}
+              data-homepage-cta-id={card.ctaId}
+              data-homepage-cta-text={card.title}
+              data-homepage-cta-destination={card.href}>
               {body}
             </Link>
           );
