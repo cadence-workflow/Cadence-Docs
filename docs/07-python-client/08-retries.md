@@ -24,6 +24,7 @@ from cadence.workflow import RetryPolicy
 policy = RetryPolicy(
     initial_interval=timedelta(seconds=1),     # delay before first retry
     backoff_coefficient=2.0,                   # multiply delay by this each attempt
+    jitter_coefficient=0.1,                    # randomly shorten each delay by up to 10%
     maximum_interval=timedelta(minutes=5),     # cap the delay
     maximum_attempts=5,                        # stop after 5 total attempts
     non_retryable_error_reasons=["InvalidInput"],
@@ -35,6 +36,7 @@ policy = RetryPolicy(
 |---|---|
 | `initial_interval` | Delay before the first retry. Required; must be greater than zero. |
 | `backoff_coefficient` | Multiplier applied to delay on each attempt. Must be >= 1.0. Server default when unset: 2.0. |
+| `jitter_coefficient` | Multiplies each retry delay by a random factor in (1 - `jitter_coefficient`, 1] to spread retries out. Must be between 0 and 1. Default 0 (no jitter); values within [0, 0.2] are recommended. |
 | `maximum_interval` | Cap on retry delay. Must be >= `initial_interval`. If unset, no cap is applied. |
 | `maximum_attempts` | Stop after this many total attempts. 0 means unlimited; requires `expiration_interval` to be set. |
 | `non_retryable_error_reasons` | Error reason strings that bypass retries immediately. |

@@ -41,6 +41,13 @@ Coefficient used to calculate the next retry backoff interval.
 The next retry interval is previous interval multiplied by this coefficient.
 Must be 1 or larger. Default is 2.0.
 
+### JitterCoefficient
+Coefficient for proportional jitter, used to spread retries out. Must be between 0 and 1.
+Each retry interval is multiplied by a random factor in (1 - JitterCoefficient, 1], applied after
+MaximumInterval is enforced. Default is 0 (no jitter). Values within [0, 0.2] are recommended.
+Also settable via `@MethodRetry(jitterCoefficient = ...)`. Not applied by `Workflow.retry` and `Async.retry`,
+which must stay deterministic.
+
 ### MaximumInterval
 Maximum backoff interval between retries. Exponential backoff leads to interval increase.
 This value is the cap of the interval. Default is 100x of initial interval.

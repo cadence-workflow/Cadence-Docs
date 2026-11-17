@@ -50,6 +50,7 @@ As Cadence doesn't recover an :activity:'s state and they can communicate to any
 
 - `InitialInterval` is a delay before the first retry.
 - `BackoffCoefficient`. Retry policies are exponential. The coefficient specifies how fast the retry interval is growing. The coefficient of 1 means that the retry interval is always equal to the `InitialInterval`.
+- `JitterCoefficient` randomizes each retry interval by a factor in (1 - `JitterCoefficient`, 1] so that retries don't all fire at the same time. Must be between 0 and 1. Default is 0 (no jitter).
 - `MaximumInterval` specifies the maximum interval between retries. Useful for coefficients more than 1.
 - `MaximumAttempts` specifies how many times to attempt to execute an :activity: in the presence of failures. If this limit is exceeded, the error is returned back to the :workflow: that invoked the :activity:. Not required if `ExpirationInterval` is specified.
 - `ExpirationInterval` specifies for how long to attempt executing an :activity: in the presence of failures. If this interval is exceeded, the error is returned back to the :workflow: that invoked the :activity:. Not required if `MaximumAttempts` is specified.
