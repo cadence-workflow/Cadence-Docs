@@ -203,6 +203,7 @@ Some :workflow:workflows: require a guarantee that they keep running even in pre
 
 - `InitialInterval` is a delay before the first retry.
 - `BackoffCoefficient`. Retry policies are exponential. The coefficient specifies how fast the retry interval is growing. The coefficient of 1 means that the retry interval is always equal to the `InitialInterval`.
+- `JitterCoefficient` randomizes each retry interval by a factor in (1 - `JitterCoefficient`, 1] so that retries don't all fire at the same time. Must be between 0 and 1. Default is 0 (no jitter).
 - `MaximumInterval` specifies the maximum interval between retries. Useful for coefficients of more than 1.
 - `MaximumAttempts` specifies how many times to attempt to execute a :workflow: in the presence of failures. If this limit is exceeded, the :workflow: fails without retry. Not required if `ExpirationInterval` is specified.
 - `ExpirationInterval` specifies for how long to attempt executing a :workflow: in the presence of failures. If this interval is exceeded, the :workflow: fails without retry. Not required if `MaximumAttempts` is specified.
