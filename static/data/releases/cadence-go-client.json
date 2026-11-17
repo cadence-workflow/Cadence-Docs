@@ -1,5 +1,18 @@
 [
   {
+    "id": 448495990,
+    "tag_name": "v1.5.0-rc.2",
+    "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.5.0-rc.2",
+    "draft": false,
+    "prerelease": true,
+    "published_at": "2026-11-17T10:53:59Z",
+    "body": "## What's Changed\r\n* fix: remove UniqueIdentity sticky tasklist identifier by @Skassim-206 in https://github.com/cadence-workflow/cadence-go-client/pull/1553\r\n\r\n\r\n**Full Changelog**: https://github.com/cadence-workflow/cadence-go-client/compare/v1.5.0-rc.1...v1.5.0-rc.2",
+    "author": {
+      "login": "vladimir-gavrilenko",
+      "html_url": "https://github.com/vladimir-gavrilenko"
+    }
+  },
+  {
     "id": 444087780,
     "tag_name": "v1.5.0-rc.1",
     "html_url": "https://github.com/cadence-workflow/cadence-go-client/releases/tag/v1.5.0-rc.1",
