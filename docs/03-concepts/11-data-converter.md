@@ -606,6 +606,7 @@ Cadence enforces a per-payload size limit of approximately 2 MB by default (clus
 
 - [Go SDK godoc: `go.uber.org/cadence/encoded`](https://pkg.go.dev/go.uber.org/cadence/encoded)
 - [Java SDK Javadoc: `com.uber.cadence.converter`](https://javadoc.io/doc/com.uber.cadence/cadence-client/latest/com/uber/cadence/converter/package-summary.html)
-- [Python SDK: Data Converters](/docs/python-client/data-converters)
-- [Blog: Your Workflow History Is Storing More Than You Think](/blog/2026/06/03/2026-06-03-workflow-history-data-converter/workflow-history-data-converter)
+- [Python SDK: `Data Converters`](/docs/python-client/data-converters)
+- [Python SDK source: `cadence/data_converter.py`](https://github.com/cadence-workflow/cadence-python-client/blob/v0.4.0/cadence/data_converter.py)
+- [Blog: `Your Workflow History Is Storing More Than You Think`](/blog/2026/06/03/2026-06-03-workflow-history-data-converter/workflow-history-data-converter)
 
