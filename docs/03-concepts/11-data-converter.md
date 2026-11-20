@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Data Converters, Encryption, Compression, ...
-description: Implement custom Cadence DataConverters to compress, encrypt, serialize or offload workflow payloads using the Go and Java samples.
+description: Implement custom Cadence DataConverters to compress, encrypt, serialize or offload workflow payloads, with Go, Java, and Python examples.
 keywords:
   - data converter
   - payload compression
@@ -87,6 +87,21 @@ public interface DataConverter {
 ```
 
 </TabItem>
+<TabItem value="python" label="Python">
+
+```python
+# cadence.data_converter
+class DataConverter(Protocol):
+    def to_data(self, values: List[Any]) -> Payload: ...
+
+    def from_data(
+        self, payload: Payload, type_hints: List[Type | None]
+    ) -> List[Any]: ...
+```
+
+`to_data` encodes all values, in order, into one `Payload`. `from_data` returns one decoded value for each requested type hint. `Payload` comes from `cadence.api.v1.common_pb2`, and its bytes are in `Payload.data`.
+
+</TabItem>
 </Tabs>
 
 You can replace the JSON step in any of these patterns with another serializer (Protobuf, MessagePack, CBOR, Avro) without changing the converter contract.
@@ -156,6 +171,33 @@ public <T> T fromData(byte[] content, Class<T> valueClass, Type valueType)
     // if output would exceed maxDecompressedBytes (default: 10 MB)
     return delegate.fromData(decompress(content, maxDecompressedBytes), valueClass, valueType);
 }
+```
+
+</TabItem>
+<TabItem value="python" label="Python">
+
+```python
+class CompressedJsonDataConverter:
+    def __init__(self, max_decompressed_bytes: int = 10 * 1024 * 1024) -> None:
+        self._delegate = DefaultDataConverter()
+        self._max_decompressed_bytes = max_decompressed_bytes
+
+    def to_data(self, values):
+        json_payload = self._delegate.to_data(values)
+        return Payload(data=gzip.compress(json_payload.data))
+
+    def from_data(self, payload, type_hints):
+        # Stop at max_decompressed_bytes + 1 so a malformed input cannot
+        # drive unbounded memory growth
+        decompressor = zlib.decompressobj(wbits=16 + zlib.MAX_WBITS)
+        data = decompressor.decompress(
+            payload.data, self._max_decompressed_bytes + 1
+        )
+        if len(data) > self._max_decompressed_bytes:
+            raise ValueError(
+                f"decompressed payload exceeds {self._max_decompressed_bytes} bytes"
+            )
+        return self._delegate.from_data(Payload(data=data), type_hints)
 ```
 
 </TabItem>
@@ -243,6 +285,34 @@ public <T> T fromData(byte[] content, Class<T> valueClass, Type valueType)
         throw new DataConverterException("AES-256-GCM decrypt failed", e);
     }
 }
+```
+
+</TabItem>
+<TabItem value="python" label="Python">
+
+```python
+# requires: pip install cryptography (AESGCM from cryptography.hazmat.primitives.ciphers.aead)
+NONCE_BYTES = 12
+
+
+class EncryptedJsonDataConverter:
+    def __init__(self, key: bytes) -> None:  # 32 bytes for AES-256
+        self._delegate = DefaultDataConverter()
+        self._aead = AESGCM(key)
+
+    def to_data(self, values):
+        json_bytes = self._delegate.to_data(values).data
+        nonce = os.urandom(NONCE_BYTES)  # fresh nonce per call
+        # encrypt returns ciphertext || tag(16)
+        ciphertext = self._aead.encrypt(nonce, json_bytes, None)
+        return Payload(data=nonce + ciphertext)  # nonce(12) || ciphertext || tag(16)
+
+    def from_data(self, payload, type_hints):
+        nonce = payload.data[:NONCE_BYTES]
+        ciphertext = payload.data[NONCE_BYTES:]
+        # raises cryptography.exceptions.InvalidTag if the data was tampered with
+        json_bytes = self._aead.decrypt(nonce, ciphertext, None)
+        return self._delegate.from_data(Payload(data=json_bytes), type_hints)
 ```
 
 </TabItem>
@@ -344,6 +414,48 @@ public <T> T fromData(byte[] content, Class<T> valueClass, Type valueType)
 ```
 
 </TabItem>
+<TabItem value="python" label="Python">
+
+```python
+INLINE_PREFIX = b"\x00"
+OFFLOAD_PREFIX = b"\x01"
+
+
+class BlobStore(Protocol):
+    def put(self, key: str, data: bytes) -> None: ...
+
+    def get(self, key: str) -> bytes: ...
+
+
+class ClaimCheckDataConverter:
+    def __init__(self, store: BlobStore, bucket: str, threshold_bytes: int = 4096) -> None:
+        self._delegate = DefaultDataConverter()
+        self._store = store
+        self._bucket = bucket
+        self._threshold_bytes = threshold_bytes
+
+    def to_data(self, values):
+        json_bytes = self._delegate.to_data(values).data
+        if len(json_bytes) <= self._threshold_bytes:
+            return Payload(data=INLINE_PREFIX + json_bytes)
+        # SHA-256 key makes to_data idempotent across workflow replays
+        key = f"{self._bucket}/{hashlib.sha256(json_bytes).hexdigest()}"
+        self._store.put(key, json_bytes)
+        envelope = json.dumps({"s3_ref": key}).encode()
+        return Payload(data=OFFLOAD_PREFIX + envelope)
+
+    def from_data(self, payload, type_hints):
+        prefix, body = payload.data[:1], payload.data[1:]
+        if prefix == INLINE_PREFIX:
+            json_bytes = body
+        elif prefix == OFFLOAD_PREFIX:
+            json_bytes = self._store.get(json.loads(body)["s3_ref"])
+        else:
+            raise ValueError(f"unknown prefix: {prefix!r}")
+        return self._delegate.from_data(Payload(data=json_bytes), type_hints)
+```
+
+</TabItem>
 </Tabs>
 
 **Full sample:** [Go](https://github.com/cadence-workflow/cadence-samples/blob/master/new_samples/data/s3_dataconverter_workflow.go) · [Java](https://github.com/cadence-workflow/cadence-java-samples/tree/master/src/main/java/com/uber/cadence/samples/claimcheck)
@@ -423,6 +535,35 @@ factory.start();
 ```
 
 </TabItem>
+<TabItem value="python" label="Python">
+
+```python
+import asyncio
+
+from cadence import Registry
+from cadence.client import Client
+from cadence.worker import Worker
+
+converter = CompressedJsonDataConverter()
+registry = Registry()
+# Register your @registry.workflow() classes and @registry.activity() functions on registry.
+
+
+async def main() -> None:
+    # Client side: used when starting or signaling workflows
+    async with Client(
+        domain="my-domain",
+        target="localhost:7833",
+        data_converter=converter,
+    ) as client:
+        # Worker side: the worker uses its client's converter
+        async with Worker(client, "my-task-list", registry):
+            await asyncio.Event().wait()
+```
+
+Python has no separate worker option for the converter. A `Worker` always uses the converter of the `Client` it is created with.
+
+</TabItem>
 </Tabs>
 
 :::caution
@@ -455,3 +596,7 @@ Cadence enforces a per-payload size limit of approximately 2 MB by default (clus
 
 - [Go SDK godoc: `go.uber.org/cadence/encoded`](https://pkg.go.dev/go.uber.org/cadence/encoded)
 - [Java SDK Javadoc: `com.uber.cadence.converter`](https://javadoc.io/doc/com.uber.cadence/cadence-client/latest/com/uber/cadence/converter/package-summary.html)
+- [Python SDK: `Data Converters`](/docs/python-client/data-converters)
+- [Python SDK source: `cadence/data_converter.py`](https://github.com/cadence-workflow/cadence-python-client/blob/v0.4.0/cadence/data_converter.py)
+- [Blog: `Your Workflow History Is Storing More Than You Think`](/blog/2026/06/03/2026-06-03-workflow-history-data-converter/workflow-history-data-converter)
+
