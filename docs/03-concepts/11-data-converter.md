@@ -177,10 +177,6 @@ public <T> T fromData(byte[] content, Class<T> valueClass, Type valueType)
 <TabItem value="python" label="Python">
 
 ```python
-import gzip
-import zlib
-
-
 class CompressedJsonDataConverter:
     def __init__(self, max_decompressed_bytes: int = 10 * 1024 * 1024) -> None:
         self._delegate = DefaultDataConverter()
@@ -295,10 +291,7 @@ public <T> T fromData(byte[] content, Class<T> valueClass, Type valueType)
 <TabItem value="python" label="Python">
 
 ```python
-import os
-
-from cryptography.hazmat.primitives.ciphers.aead import AESGCM  # pip install cryptography
-
+# requires: pip install cryptography (AESGCM from cryptography.hazmat.primitives.ciphers.aead)
 NONCE_BYTES = 12
 
 
@@ -424,9 +417,6 @@ public <T> T fromData(byte[] content, Class<T> valueClass, Type valueType)
 <TabItem value="python" label="Python">
 
 ```python
-import hashlib
-import json
-
 INLINE_PREFIX = b"\x00"
 OFFLOAD_PREFIX = b"\x01"
 
