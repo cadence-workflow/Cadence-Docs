@@ -45,7 +45,7 @@ In Cadence Web you can:
 - Search workflows in a domain, including query-based search when [advanced visibility](/docs/concepts/search-workflows) is enabled.
 - Open a workflow to see its event history, pending activities, and payloads.
 - Check which workers are polling a task list.
-- Use Workflow Diagnostics, an opt-in feature, to list common problems found in a workflow's history.
+- Use [Workflow Diagnostics](/docs/workflow-troubleshooting/workflow-diagnostics), an opt-in feature, to list common problems found in a workflow's history.
 
 Docker Compose includes Cadence Web, and the Helm chart can deploy it. See [UX and UI](/docs/tech-review/day-0-planning/usability/ux-ui) for a list of its other features and the [cadence-web README](https://github.com/cadence-workflow/cadence-web/blob/master/README.md#feature-flags) for opt-in features.
 

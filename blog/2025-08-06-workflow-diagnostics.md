@@ -22,6 +22,10 @@ Cadence users, especially new users, often struggle with failed/stuck workflows 
 
 <!-- truncate -->
 
+:::note
+This post is the original announcement. Diagnostics has gained new checks and Cadence Web options since then. For current behavior, version requirements, and setup, see [Workflow Diagnostics](/docs/workflow-troubleshooting/workflow-diagnostics) in the docs.
+:::
+
 ## Introducing Workflow Diagnostics
 
 Cadence workflow diagnostics fetches the workflow execution history and identifies the issues in the workflow i.e. points out the different items that did not work as expected. For example, workflow timeouts. Next, for the issue identified, it provides the potential root cause by listing the different reasons that must've caused the issue. For example, the tasklist does not have pollers. Lastly, it provides ways to resolve the issue since we want the cadence users to have actionable diagnostics. For example, timeouts could occur when the workflow is running on a tasklist without enough workers to start the activities

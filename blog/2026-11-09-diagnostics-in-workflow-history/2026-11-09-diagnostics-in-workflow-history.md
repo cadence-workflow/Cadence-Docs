@@ -78,6 +78,8 @@ CADENCE_WORKFLOW_DIAGNOSTICS_IN_HISTORY_ENABLED=true
 
 See the [Feature Flags section](https://github.com/cadence-workflow/cadence-web#feature-flags) in the Cadence Web README for details. Then open any workflow and go to the History tab.
 
+For the full list of checks, version requirements, the CLI, and the report format, see [Workflow Diagnostics](/docs/workflow-troubleshooting/workflow-diagnostics) in the docs.
+
 We'd love to hear what you find, and which checks you want next.
 
 - **Ask a question** - [#cadence-users](https://cloud-native.slack.com/archives/C09J2FQ7XU3) on CNCF Slack ([join here](https://inviter.co/cncf))

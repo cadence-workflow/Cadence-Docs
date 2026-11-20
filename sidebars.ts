@@ -206,6 +206,7 @@ const sidebars: SidebarsConfig = {
         { type: 'doc', id: 'workflow-troubleshooting/retries' },
         { type: 'doc', id: 'workflow-troubleshooting/antipatterns' },
         { type: 'doc', id: 'workflow-troubleshooting/timeout-risks' },
+        { type: 'doc', id: 'workflow-troubleshooting/workflow-diagnostics' },
       ],
     },
     {
