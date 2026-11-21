@@ -426,7 +426,7 @@ export default function FeaturedCarousel(): ReactNode {
                     data-homepage-cta-text={item.cta ?? 'Read more'}
                     data-homepage-cta-destination={item.href}
                     tabIndex={hidden ? -1 : undefined}>
-                    <div className={styles.media}>
+                    <div className={clsx(styles.media, item.image && styles.mediaPhoto)}>
                       <img
                         src={imgSrc}
                         alt=""
@@ -444,7 +444,11 @@ export default function FeaturedCarousel(): ReactNode {
                         }
                       />
                       {item.tag && <span className={styles.tag} data-tag={item.tag}>{item.tag}</span>}
-                      <div className={styles.mediaShade} aria-hidden="true" />
+                      {item.image ? (
+                        <div className={styles.mediaPhotoShade} aria-hidden="true" />
+                      ) : (
+                        <div className={styles.mediaShade} aria-hidden="true" />
+                      )}
                       <CardTitle
                         title={item.title}
                         label={item.shortTitle ?? item.title}

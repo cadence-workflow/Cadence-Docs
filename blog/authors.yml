@@ -10,7 +10,7 @@ chopincode:
 
 enderdemirkaya:
   name: Ender Demirkaya
-  title: Senior Manager at Uber, Cadence. Author of the Software Engineering Handbook
+  title: Director of Engineering at Uber, Cadence. Author of the Software Engineering Handbook
   url: https://www.linkedin.com/in/enderdemirkaya/
   image_url: https://github.com/demirkayaender.png
   page: true
@@ -217,3 +217,23 @@ dkrotx:
   socials:
     linkedin: https://www.linkedin.com/in/jan-kisel-92942518/
     github: dkrotx
+
+shijiesheng:
+  name: Shijie Sheng
+  title: Staff Software Engineer @ Uber
+  url: https://www.linkedin.com/in/liouvetren/
+  image_url: https://github.com/shijiesheng.png
+  page: true
+  socials:
+    linkedin: https://www.linkedin.com/in/liouvetren/
+    github: shijiesheng
+
+zawadzkidiana:
+  name: Diana Zawadzki
+  title: Software Engineer @ Uber
+  url: https://www.linkedin.com/in/diana-zawadzki-9b3607202/
+  image_url: https://github.com/zawadzkidiana.png
+  page: true
+  socials:
+    linkedin: https://www.linkedin.com/in/diana-zawadzki-9b3607202/
+    github: zawadzkidiana

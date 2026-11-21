@@ -11,6 +11,15 @@
 
 #
 
+- ctaId: whats-new-kubecon-na-2026
+  title: "Cadence at KubeCon + CloudNativeCon North America 2026"
+  shortTitle: Cadence at KubeCon
+  description: A recap of Cadence at KubeCon North America 2026, covering the sessions, announcements, and what the team learned in Salt Lake City.
+  href: /blog/2026/11/20/2026-11-20-kubecon-na-2026/kubecon-na-2026
+  tag: Blog
+  image: /img/featured/kubecon-welcome-paint-sidewalk.jpg
+  cta: Read post
+
 - ctaId: whats-new-diagnostics-in-history
   title: "Workflow Diagnostics, Now in Workflow History"
   shortTitle: Diagnostics in History
